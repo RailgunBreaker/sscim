@@ -1,8 +1,16 @@
 import express from 'express';
 import cors from 'cors';
 import './db.js';
+import { seedIfEmpty, seedCounts } from './seed-logic.js';
 import { publicRouter } from './routes/public.js';
 import { adminRouter } from './routes/admin.js';
+
+// Bootstrap a brand-new database automatically (e.g. first boot on a fresh
+// host) — a no-op if the vault is already populated, so this never clobbers
+// live admin-API edits on a restart/redeploy.
+if (seedIfEmpty()) {
+  console.log('Vault was empty — auto-seeded on startup:', seedCounts());
+}
 
 const app = express();
 app.use(cors());

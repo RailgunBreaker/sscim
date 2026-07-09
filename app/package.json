@@ -4,7 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "predev": "npm run snapshot",
     "dev": "vite",
+    "snapshot": "node scripts/build-vault-snapshot.mjs",
+    "prebuild": "npm run snapshot",
     "build": "vite build",
     "preview": "vite preview"
   },

@@ -75,7 +75,7 @@ function VaultGate() {
 }
 
 function Dashboard() {
-  const { data, engine } = useVault();
+  const { data, engine, source } = useVault();
   const { EVENTS, SCENARIOS, COMPANY_BY_ID } = data;
   const { STAGE_BY_ID, OUT, eventShock, mergeShocks, COMPANY_IMPACTS, stageComponents, total, countryData, HISTORY } = engine;
 
@@ -186,8 +186,11 @@ function Dashboard() {
       {showBriefing && <Briefing onClose={() => setShowBriefing(false)} model={model} scenario={scenario} />}
 
       <footer className="mono" style={{ padding: "10px 16px", fontSize: 10, color: C.faint, borderTop: `1px solid ${C.line}`, lineHeight: 1.6 }}>
-        DEMO · Shares, stakes, values, policies and events are illustrative/best-effort model inputs served live from the SSCIM vault — not a real-time market feed, not investment advice.
+        DEMO · Shares, stakes, values, policies and events are illustrative/best-effort model inputs — not a real-time market feed, not investment advice.
         Map data © OpenStreetMap contributors · exposure(company) = within-stage share × propagated stage shock.
+        {source === 'static' && (
+          <span style={{ color: C.amber }}> · STATIC SNAPSHOT — no vault API connected, showing a build-time data snapshot instead of the live backend.</span>
+        )}
       </footer>
     </div>
   );
