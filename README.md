@@ -341,21 +341,25 @@ This framework directly implements the data-integrity rules from the original pr
 
 ## 10. File Structure & Deployment
 
+All three public pages — the landing page, the guide, and the dashboard — are React pages built from one Vite project (`app/`), sharing theme, the i18n pattern, and components like `Tex` (KaTeX formula rendering). Data (companies, stages, customer graph, shareholders, policies, events, scenarios) lives separately, in the `server/` vault.
+
 ```
 /
-├── index.html            Static landing page — positioning, use cases, pricing tiers
-├── intro.html            Static introduction and user-guide page
 ├── README.md / README.ja.md / README.zh.md   This document, in English/Japanese/Simplified Chinese
-├── app/                  The dashboard — Vite + React source
+├── app/                  The site — Vite + React source, three entry points
+│   ├── index.html          Vite entry → landing page (built output: index.html)
+│   ├── intro.html          Vite entry → guide page (built output: intro.html)
+│   ├── sscim-app.html      Vite entry → dashboard (built output: sscim-app.html)
 │   ├── src/
-│   │   ├── components/   UI components (Header, FlowGraph, OsmMap, Detail, Briefing, Methodology, …)
-│   │   ├── data/          VaultContext.jsx (fetches the API bundle) + compMeta.js (static UI labels)
-│   │   ├── engine/         index.js — buildEngine(data): chokepoint centrality, HHI, propagation, rankings, history
-│   │   ├── i18n/           language dictionary + t()
-│   │   ├── utils/          color/label helpers
-│   │   ├── App.jsx, main.jsx, theme.js
-│   ├── index.html         Vite entry template
-│   ├── vite.config.js      base: './' (relative asset paths), outputs to ../dist-app
+│   │   ├── landing/         Landing.jsx, main.jsx, i18n.js — marketing/positioning page
+│   │   ├── intro/            Intro.jsx, main.jsx, i18n.js — guide/walkthrough page
+│   │   ├── components/       Dashboard UI components (Header, FlowGraph, OsmMap, Detail, Briefing, Methodology, Tex, …)
+│   │   ├── data/              VaultContext.jsx (fetches the API bundle) + compMeta.js (static UI labels)
+│   │   ├── engine/             index.js — buildEngine(data): chokepoint centrality, HHI, propagation, rankings, history
+│   │   ├── i18n/                dashboard language dictionary + t()
+│   │   ├── utils/                color/label helpers
+│   │   ├── App.jsx, main.jsx, theme.js   — dashboard root
+│   ├── vite.config.js      multi-page build (rollupOptions.input: landing/intro/dashboard), base: './' (relative asset paths), outputs to ../dist-app
 │   └── package.json
 └── server/               The vault — Node/Express + SQLite API
     ├── src/
@@ -369,10 +373,10 @@ This framework directly implements the data-integrity rules from the original pr
     └── package.json
 ```
 
-**Development:** `cd server && npm install && cp .env.example .env && npm run seed && npm run dev` (serves the API on `:8787`), then `cd app && npm install && npm run dev` (serves the dashboard on `:5173`, reading `VITE_API_BASE_URL` — defaults to `http://localhost:8787`).
+**Development:** `cd server && npm install && cp .env.example .env && npm run seed && npm run dev` (serves the API on `:8787`), then `cd app && npm install && npm run dev` (serves all three pages on `:5173` — `/index.html`, `/intro.html`, `/sscim-app.html` — the dashboard reads `VITE_API_BASE_URL`, defaulting to `http://localhost:8787`).
 
-**Production deployment** now needs two things running, not one static bundle:
-- **Frontend** (`app/`): `npm run build` produces `dist-app/`; deploy it as static files (GitHub Pages, Netlify, etc.) alongside the root `index.html`/`intro.html`, with `VITE_API_BASE_URL` set at build time to the deployed backend's URL.
+**Production deployment** needs two things running, not one static bundle:
+- **Frontend** (`app/`): `npm run build` produces `dist-app/` containing all three built pages (`index.html`, `intro.html`, `sscim-app.html`) plus a shared `assets/` folder — deploy that directory as-is (GitHub Pages, Netlify, etc.), with `VITE_API_BASE_URL` set at build time to the deployed backend's URL.
 - **Backend** (`server/`): needs an actual Node host (Render, Fly.io, Railway, a VPS, etc.) — it is no longer a "drop the HTML file anywhere" deploy. Set `ADMIN_TOKEN` to a real secret before exposing it publicly; without it the admin write API is disabled by default (503), not open.
 
 ---

@@ -1,4 +1,5 @@
-# Build the Vite dashboard and deploy the static site (landing pages + built dashboard) to GitHub Pages.
+# Build the SSCIM site (landing page, guide, and dashboard — all three are React
+# pages built from app/) and deploy it to GitHub Pages.
 #
 # IMPORTANT: this only deploys the frontend. The dashboard fetches its data from the
 # server/ API at runtime (see README §6/§10) — that backend is NOT deployed by this
@@ -37,23 +38,15 @@ jobs:
           cache: 'npm'
           cache-dependency-path: app/package-lock.json
 
-      - name: Install frontend dependencies
+      - name: Install dependencies
         working-directory: app
         run: npm install
 
-      - name: Build dashboard
+      - name: Build site (landing + intro + dashboard)
         working-directory: app
         env:
           VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
         run: npm run build
-
-      - name: Assemble static site
-        run: |
-          mkdir -p dist
-          cp index.html intro.html dist/
-          cp README.md README.ja.md README.zh.md dist/ 2>/dev/null || true
-          cp dist-app/index.html dist/sscim-app.html
-          cp -r dist-app/assets dist/assets
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -61,7 +54,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: dist-app
 
   deploy:
     needs: build

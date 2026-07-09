@@ -341,21 +341,25 @@ $$\text{ChainIndex}(t) = \frac{\sum_n \text{total}(\text{stage}_n, \text{shock}_
 
 ## 10. ファイル構成とデプロイ
 
+公開される3つのページ——ランディングページ、ガイド、ダッシュボード——はすべて、1つのViteプロジェクト(`app/`)からビルドされるReactページであり、テーマ、i18nのパターン、`Tex`(KaTeX数式レンダリング)などのコンポーネントを共有している。データ(企業、ステージ、顧客グラフ、株主、政策、イベント、シナリオ)は別途、`server/`のvaultに存在する。
+
 ```
 /
-├── index.html            静的ランディングページ——ポジショニング、ユースケース、料金プラン
-├── intro.html            静的な紹介・ユーザーガイドページ
 ├── README.md / README.ja.md / README.zh.md   本ドキュメント(英語/日本語/簡体字中国語)
-├── app/                  ダッシュボード——Vite + Reactのソース
+├── app/                  サイト本体——Vite + Reactのソース、3つのエントリポイント
+│   ├── index.html          Viteエントリ → ランディングページ(ビルド出力: index.html)
+│   ├── intro.html          Viteエントリ → ガイドページ(ビルド出力: intro.html)
+│   ├── sscim-app.html      Viteエントリ → ダッシュボード(ビルド出力: sscim-app.html)
 │   ├── src/
-│   │   ├── components/   UIコンポーネント(Header、FlowGraph、OsmMap、Detail、Briefing、Methodologyほか)
-│   │   ├── data/          VaultContext.jsx(APIバンドルを取得)+ compMeta.js(静的UIラベル)
-│   │   ├── engine/         index.js — buildEngine(data): チョークポイント中心性、HHI、伝播、ランキング、履歴
-│   │   ├── i18n/           言語辞書 + t()
-│   │   ├── utils/          色・ラベルのヘルパー
-│   │   ├── App.jsx、main.jsx、theme.js
-│   ├── index.html         Viteのエントリテンプレート
-│   ├── vite.config.js      base: './'(相対アセットパス)、出力先は ../dist-app
+│   │   ├── landing/         Landing.jsx、main.jsx、i18n.js——マーケティング/ポジショニングページ
+│   │   ├── intro/            Intro.jsx、main.jsx、i18n.js——ガイド/ウォークスルーページ
+│   │   ├── components/       ダッシュボードのUIコンポーネント(Header、FlowGraph、OsmMap、Detail、Briefing、Methodology、Texほか)
+│   │   ├── data/              VaultContext.jsx(APIバンドルを取得)+ compMeta.js(静的UIラベル)
+│   │   ├── engine/             index.js — buildEngine(data): チョークポイント中心性、HHI、伝播、ランキング、履歴
+│   │   ├── i18n/                ダッシュボードの言語辞書 + t()
+│   │   ├── utils/                色・ラベルのヘルパー
+│   │   ├── App.jsx、main.jsx、theme.js   — ダッシュボードのルート
+│   ├── vite.config.js      マルチページビルド(rollupOptions.input: landing/intro/dashboard)、base: './'(相対アセットパス)、出力先は ../dist-app
 │   └── package.json
 └── server/               vault(金庫)——Node/Express + SQLiteのAPI
     ├── src/
@@ -369,10 +373,10 @@ $$\text{ChainIndex}(t) = \frac{\sum_n \text{total}(\text{stage}_n, \text{shock}_
     └── package.json
 ```
 
-**開発環境での起動:** `cd server && npm install && cp .env.example .env && npm run seed && npm run dev`(APIを `:8787` で起動)。続いて `cd app && npm install && npm run dev`(ダッシュボードを `:5173` で起動。`VITE_API_BASE_URL` を参照し、デフォルトは `http://localhost:8787`)。
+**開発環境での起動:** `cd server && npm install && cp .env.example .env && npm run seed && npm run dev`(APIを `:8787` で起動)。続いて `cd app && npm install && npm run dev`(3つのページすべてを `:5173` で起動——`/index.html`、`/intro.html`、`/sscim-app.html`。ダッシュボードは `VITE_API_BASE_URL` を参照し、デフォルトは `http://localhost:8787`)。
 
 **本番デプロイ**では、単一の静的バンドルではなく、二つのものを稼働させる必要がある:
-- **フロントエンド**(`app/`): `npm run build` により `dist-app/` が生成される。これをルートの `index.html`/`intro.html` と並べて静的ファイルとしてデプロイする(GitHub Pages、Netlifyなど)。ビルド時に `VITE_API_BASE_URL` をデプロイ済みバックエンドのURLに設定する。
+- **フロントエンド**(`app/`): `npm run build` により、ビルド済みの3ページ(`index.html`、`intro.html`、`sscim-app.html`)と共有の `assets/` フォルダを含む `dist-app/` が生成される。このディレクトリをそのまま静的ファイルとしてデプロイする(GitHub Pages、Netlifyなど)。ビルド時に `VITE_API_BASE_URL` をデプロイ済みバックエンドのURLに設定する。
 - **バックエンド**(`server/`): 実際のNodeホスト(Render、Fly.io、Railway、VPSなど)が必要である——もはや「HTMLファイルをどこかに置くだけ」のデプロイではない。公開する前に `ADMIN_TOKEN` を実際のシークレット値に設定すること。設定しない場合、管理用書き込みAPIはデフォルトで無効化される(503を返す。オープンにはならない)。
 
 ---

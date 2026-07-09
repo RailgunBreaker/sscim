@@ -341,39 +341,43 @@ $$\text{ChainIndex}(t) = \frac{\sum_n \text{total}(\text{stage}_n, \text{shock}_
 
 ## 10. 文件结构与部署
 
+三个公开页面——落地页、指南与仪表盘——现在都是从同一个 Vite 项目（`app/`）构建出的 React 页面，共享主题、i18n 模式，以及 `Tex`（KaTeX 公式渲染）等组件。数据（公司、阶段、客户图谱、股东、政策、事件、情景）则单独保存在 `server/` 的数据金库中。
+
 ```
 /
-├── index.html            静态落地页——产品定位、使用场景、定价方案
-├── intro.html            静态的介绍与用户指南页面
 ├── README.md / README.ja.md / README.zh.md   本文档（英语/日语/简体中文）
-├── app/                  仪表盘——Vite + React源代码
+├── app/                  站点本体——Vite + React 源代码，三个入口
+│   ├── index.html          Vite 入口 → 落地页（构建输出：index.html）
+│   ├── intro.html          Vite 入口 → 指南页（构建输出：intro.html）
+│   ├── sscim-app.html      Vite 入口 → 仪表盘（构建输出：sscim-app.html）
 │   ├── src/
-│   │   ├── components/   UI组件（Header、FlowGraph、OsmMap、Detail、Briefing、Methodology等）
-│   │   ├── data/          VaultContext.jsx（获取API数据包）+ compMeta.js（静态UI标签）
-│   │   ├── engine/         index.js — buildEngine(data)：关键节点中心性、HHI、传导、排名、历史记录
-│   │   ├── i18n/           语言词典 + t()
-│   │   ├── utils/          颜色/标签辅助函数
-│   │   ├── App.jsx、main.jsx、theme.js
-│   ├── index.html         Vite入口模板
-│   ├── vite.config.js      base: './'（相对资源路径），输出至 ../dist-app
+│   │   ├── landing/         Landing.jsx、main.jsx、i18n.js——营销/定位页面
+│   │   ├── intro/            Intro.jsx、main.jsx、i18n.js——指南/使用步骤页面
+│   │   ├── components/       仪表盘 UI 组件（Header、FlowGraph、OsmMap、Detail、Briefing、Methodology、Tex 等）
+│   │   ├── data/              VaultContext.jsx（获取 API 数据包）+ compMeta.js（静态 UI 标签）
+│   │   ├── engine/             index.js — buildEngine(data)：关键节点中心性、HHI、传导、排名、历史记录
+│   │   ├── i18n/                仪表盘语言词典 + t()
+│   │   ├── utils/                颜色/标签辅助函数
+│   │   ├── App.jsx、main.jsx、theme.js   — 仪表盘根组件
+│   ├── vite.config.js      多页面构建（rollupOptions.input：landing/intro/dashboard），base: './'（相对资源路径），输出至 ../dist-app
 │   └── package.json
-└── server/               数据金库（vault）——Node/Express + SQLite的API
+└── server/               数据金库（vault）——Node/Express + SQLite 的 API
     ├── src/
     │   ├── db.js           数据模式（stages、companies、customers、owners、policies、events、scenarios、data_notes）
     │   ├── seed-data.js     当前数据集（已完成真实数据核校的数值，见§9）
     │   ├── data-notes.js    重大修正背后的引用出处
-    │   ├── seed.js          将seed-data.js的数据写入data/sscim.db
-    │   ├── routes/public.js  GET接口（包括GET /api/bundle——仪表盘启动时的单次数据获取）
-    │   ├── routes/admin.js   经Bearer令牌认证的写操作（PUT/POST/DELETE）
-    │   └── index.js          Express应用
+    │   ├── seed.js          将 seed-data.js 的数据写入 data/sscim.db
+    │   ├── routes/public.js  GET 接口（包括 GET /api/bundle——仪表盘启动时的单次数据获取）
+    │   ├── routes/admin.js   经 Bearer 令牌认证的写操作（PUT/POST/DELETE）
+    │   └── index.js          Express 应用
     └── package.json
 ```
 
-**开发环境启动方式：** `cd server && npm install && cp .env.example .env && npm run seed && npm run dev`（在`:8787`端口启动API），然后 `cd app && npm install && npm run dev`（在`:5173`端口启动仪表盘，读取`VITE_API_BASE_URL`——默认值为`http://localhost:8787`）。
+**开发环境启动方式：** `cd server && npm install && cp .env.example .env && npm run seed && npm run dev`（在 `:8787` 端口启动 API），然后 `cd app && npm install && npm run dev`（在 `:5173` 端口启动全部三个页面——`/index.html`、`/intro.html`、`/sscim-app.html`；仪表盘读取 `VITE_API_BASE_URL`，默认值为 `http://localhost:8787`）。
 
-**生产环境部署**现在需要同时运行两个部分，而不再是单一的静态包：
-- **前端**（`app/`）：`npm run build`会生成`dist-app/`；将其与根目录的`index.html`/`intro.html`一起作为静态文件部署（GitHub Pages、Netlify等）。构建时需将`VITE_API_BASE_URL`设置为已部署后端的URL。
-- **后端**（`server/`）：需要一个真正的Node托管环境（Render、Fly.io、Railway、VPS等）——不再是"把HTML文件放到任何地方"式的部署。在对外公开之前，务必将`ADMIN_TOKEN`设置为真实的密钥值。若不设置，管理写入API默认会被禁用（返回503，而不是开放状态）。
+**生产环境部署**需要同时运行两个部分，而不再是单一的静态包：
+- **前端**（`app/`）：`npm run build` 会生成 `dist-app/`，其中包含已构建好的三个页面（`index.html`、`intro.html`、`sscim-app.html`）及共享的 `assets/` 文件夹——将该目录原样部署为静态文件（GitHub Pages、Netlify 等）。构建时需将 `VITE_API_BASE_URL` 设置为已部署后端的 URL。
+- **后端**（`server/`）：需要一个真正的 Node 托管环境（Render、Fly.io、Railway、VPS 等）——不再是"把 HTML 文件放到任何地方"式的部署。在对外公开之前，务必将 `ADMIN_TOKEN` 设置为真实的密钥值。若不设置，管理写入 API 默认会被禁用（返回 503，而不是开放状态）。
 
 ---
 
