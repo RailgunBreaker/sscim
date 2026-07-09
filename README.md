@@ -1,8 +1,10 @@
 # SSCIM — Semiconductor Supply Chain Intelligence Map
 
+**Language:** English · [日本語](README.ja.md) · [简体中文](README.zh.md)
+
 **A live intelligence layer over the global semiconductor supply chain**
 
-Version: v4 (current build) · Status: working demo, pre-MVP1 · Data: curated sample, not yet sourced
+Version: v5 (current build) · Status: working demo, pre-MVP1 · Data: best-effort real-data pass (see §8, §9)
 
 ---
 
@@ -19,6 +21,7 @@ Version: v4 (current build) · Status: working demo, pre-MVP1 · Data: curated s
 9. [Known Limitations](#9-known-limitations)
 10. [File Structure & Deployment](#10-file-structure--deployment)
 11. [Roadmap](#11-roadmap)
+12. [Acknowledgements & Methodology Citations](#12-acknowledgements--methodology-citations)
 
 ---
 
@@ -107,11 +110,11 @@ Each stage carries: a sample global value figure ($B), country market shares (su
 
 United States, China, Taiwan, South Korea, Japan, Netherlands, Germany, France, United Kingdom, Belgium, Ireland, Israel, Singapore, Malaysia, Vietnam, Philippines. Country risk scores and map-node sizing are **fully derived** — computed as the share-weighted aggregate of every stage a country participates in. No country score is hand-set.
 
-### 3.3 Companies (107)
+### 3.3 Companies (109)
 
-Each company carries: a home country, a set of **stakes** — `{stageId: withinStageShare}` describing its production footprint, and (for ~45 of the 107) entries in the **customer graph** and/or **shareholder table**.
+Each company carries: a home country, a set of **stakes** — `{stageId: withinStageShare}` describing its production footprint, and (for a subset of the 109) entries in the **customer graph** and/or **shareholder table**. (Two entries — CXMT and Kioxia — were added during the §9 real-data pass: the original dataset merged CXMT's DRAM output into a combined "YMTC / CXMT" entry and omitted Kioxia, Japan's NAND maker, entirely.)
 
-### 3.4 Customer graph (238 relationships)
+### 3.4 Customer graph (243 relationships)
 
 A directed supplier→customer dataset: `supplier: [[customer, shareOfSupplierSales], ...]`. This is a *revenue relationship* dataset — "ASML → TSMC (35%)" means 35% of ASML's sales go to TSMC, which is a different quantity from how dependent TSMC is on ASML for lithography input. The product deliberately displays both numbers side by side wherever this distinction matters (see §4.5).
 
@@ -228,14 +231,14 @@ The 21-day sparkline and the "Movers 7D" list are not decorative — they re-run
 | Feature | Description |
 |---|---|
 | **World Map** | Real OpenStreetMap geography (CARTO dark basemap, OSM-tile fallback), 16 countries, node size = chain participation, color = risk score |
-| **Derived country links** | Connections between countries computed from the 238-relationship customer graph — hover shows sectors and example company pairs, not manually asserted arcs |
+| **Derived country links** | Connections between countries computed from the 243-relationship customer graph — hover shows sectors and example company pairs, not manually asserted arcs |
 | **Industry Flow Graph** | 24-stage DAG, edge thickness = value weight, node size = computed importance, tap to open a stage subsection |
 | **Stage subsections** | Per-stage company list with market-share bars, live shock exposure, and each company's top customers with percentages |
 | **Company detail** | Company Impact Index, production footprint, customers & suppliers with sales shares, major shareholders, two-layer upstream origin trace, two spread trees |
 | **Customer-graph spread tree** | Named-relationship propagation: source → direct customers → their customers, with path-weight percentages and engine-computed exposure |
 | **Stage-level spread tree** | Structural propagation view: hop 0/1/2 by graph distance, top 5 companies per hop |
 | **Upstream origins tree** | Two supplier layers *behind* any company, via the reversed customer graph |
-| **Company Impact Rank** | All 107 companies ranked by CII — the answer to "whose disruption hurts the chain most?" |
+| **Company Impact Rank** | All 109 companies ranked by CII — the answer to "whose disruption hurts the chain most?" |
 | **Capital Power Rank** | Shareholders ranked by ownership × chain-impact; state-linked capital flagged |
 | **Movers 7D** | Stages ranked by absolute score change over the trailing week, computed via engine replay |
 | **21-day sparkline** | Chain-wide risk index recomputed at each of the past 21 days |
@@ -244,7 +247,7 @@ The 21-day sparkline and the "Movers 7D" list are not decorative — they re-run
 | **Global search** | Jump to any stage, company, or country by name |
 | **GP Briefing generator** | Composes a full daily intelligence briefing from live model state — what changed, most-shocked nodes, company exposure leaders, country risk board, watch-next; copy or download as .txt |
 | **Rich event detail** | Background paragraph, source citation, dated confidence timeline, and computed most-exposed-companies list per event |
-| **Company logos** | Favicon-based identification for all 107 companies via each company's official domain, with monogram fallback |
+| **Company logos** | Favicon-based identification for all 109 companies via each company's official domain, with monogram fallback |
 | **In-app Guide** | Seven-step walkthrough, fully localized |
 | **Methodology overlay** | Every formula (rendered in TeX/KaTeX), every propagation constant, explicit computed-vs-analyst source tags, and stated limitations |
 | **Language switcher** | English, Simplified Chinese, Traditional Chinese, Japanese — UI chrome and guide fully translated (see §7) |
@@ -255,21 +258,20 @@ The 21-day sparkline and the "Movers 7D" list are not decorative — they re-run
 
 ### 6.1 Stack
 
-- **React 18** (function components, hooks: `useState`, `useEffect`, `useMemo`, `useRef`)
-- **Leaflet 1.9.4** for the map layer, with CARTO dark tiles (OpenStreetMap data) and automatic fallback to standard OSM tiles
-- **KaTeX 0.16.9** for formula rendering, loaded on demand
-- No build step in the shipped artifact: React, ReactDOM, and Babel Standalone load from cdnjs; JSX transpiles in-browser
-- No backend, no database — the entire computed model lives in a single `useMemo` block, recalculated when the scenario selection changes
+- **Frontend**: React 18 + Vite, built as a proper ES-module project under `app/` (`src/components`, `src/data`, `src/engine`, `src/i18n`, `src/utils`) — no more in-browser Babel transpilation; `npm run build` produces a minified, code-bundled artifact.
+- **Leaflet** and **KaTeX** are real npm dependencies, imported directly (`import L from 'leaflet'`, `import katex from 'katex'`) instead of being injected from a CDN `<script>` tag at runtime.
+- **Backend**: a small Node/Express API (`server/`) backed by **SQLite** (via `better-sqlite3`) — the vault described in §3 and §9. Public `GET` endpoints serve the current dataset; a bearer-token-authenticated `/api/admin/*` surface supports live writes (update a company's stakes, add an event, revise a shareholder stake) without touching application code or redeploying the frontend.
+- The frontend fetches the entire dataset once on load (`GET /api/bundle`) and builds the derived engine (risk scores, propagation, rankings) from whatever the vault currently holds.
 
-### 6.2 Why a single computed model
+### 6.2 Why the data moved out of the bundle
 
-The core engineering decision is that **nothing about risk, importance, or impact is stored — everything is derived at render time** from the four source tables (`STAGES`, `COMPANIES`, `CUSTOMERS`, `POLICIES`) plus whichever events/scenario are active. This means:
+Earlier builds computed everything from four **hardcoded** JS tables (`STAGES`, `COMPANIES`, `CUSTOMERS`, `POLICIES`) baked into the shipped file — accurate to the "one engine, three uses" claim, but it meant every data correction required a code change and a redeploy. The vault split separates *that* concern from the algorithm:
 
-- Adding a new company, policy, or event automatically ripples through every dependent number (risk scores, rankings, spread trees, briefings) with no manual recalculation
-- The "one engine, three uses" claim is structurally true, not just a marketing description — `propagate()` is one function called with three different input shapes
-- The historical sparkline is trivially consistent with the live state, since it's the same function called with shifted event ages
+- `server/` owns the data — companies, stages, the customer graph, shareholder table, policies, events, scenarios — in a real relational/JSON-hybrid SQLite schema, with a `data_notes` table carrying the evidence-tier citation for each headline correction (see §9).
+- `app/src/engine/index.js` is a **factory**, `buildEngine(data)`, not a set of modules computed once at import time. It takes whatever the vault returns and (re)computes chokepoint centrality, HHI, propagation, rankings, and history from it. The "one engine, three uses" claim from v4 still holds — `propagate()` is still one function called three ways — it's just now parameterized over runtime data instead of closed over static imports.
+- Editing data is now: call the admin API (or a future admin UI) — not edit a JS array and rebuild. Adding a new company, policy, or event still ripples through every dependent number automatically, the same as before, because the derivation logic didn't change, only where the source tables come from.
 
-The tradeoff: all computation happens client-side on every model-affecting state change. At current scale (24 stages, 107 companies, 34 edges) this is sub-millisecond and imperceptible. A production version ingesting hundreds of nodes and thousands of daily events would need to move propagation server-side and cache aggressively — the algorithm doesn't change, only where it executes.
+The tradeoff: the app now depends on the vault API being reachable (there's a loading state, and a clear error screen if it isn't — see `App.jsx`). At current scale (24 stages, ~109 companies) the single-`GET`-then-compute-client-side approach is still sub-second and simple; a production version ingesting thousands of daily events would want the propagation itself computed server-side and cached, which is a change to *where* `buildEngine` runs, not to the algorithm.
 
 ### 6.3 Graph algorithms used
 
@@ -290,7 +292,7 @@ Company identification uses each company's official domain plus Google's public 
 
 ## 7. Internationalization
 
-The product ships with English, Simplified Chinese (简体), Traditional Chinese (繁體), and Japanese (日本語) support via a lightweight in-house dictionary (no external i18n framework, to keep the standalone-file, zero-build-step property).
+The product ships with English, Simplified Chinese (简体), Traditional Chinese (繁體), and Japanese (日本語) support via a lightweight in-house dictionary (no external i18n framework — kept intentionally simple even after the move to a Vite build, since the dictionary itself has no need for the tooling a larger i18n framework provides).
 
 **Fully localized:** UI chrome (pane titles, tabs, buttons), the product's full name, scenario names, risk labels, the What-Changed and Chain-Index labels, search placeholder, and — most substantially — the complete seven-step in-app guide, independently written (not machine-translated in place) for each language.
 
@@ -319,7 +321,7 @@ This framework directly implements the data-integrity rules from the original pr
 
 ## 9. Known Limitations
 
-**All figures are sample data.** Every market share, company stake, customer percentage, stage value, policy severity, shareholder stake, and event is illustrative — chosen to be directionally realistic but not individually cited. This is disclosed in-product (footer, briefing output, methodology) and must not be represented as sourced until Phase 1 data work is complete.
+**Real-data pass applied, not full Phase-1 sourcing.** A best-effort research pass (four parallel research tracks covering foundry/fab/packaging, equipment/materials, memory/EDA/design, and analog/systems/end-markets) replaced the original illustrative sample with current, cited figures wherever a reliable public source exists — company 10-K/20-F filings, TrendForce/TechInsights/Gartner market-share tracking, and named trade press. Headline corrections (e.g., the U.S. government's 9.9% Intel stake, Nvidia overtaking Apple as TSMC's top customer, corrected HBM shares) are logged with their source in the vault's `data_notes` table (`GET /api/data-notes`) and cross-referenced from the data files. Figures **without** a `data_notes` entry are still carried-over analyst judgment (Tier D per §8), not individually verified — this dataset is a meaningfully-improved snapshot, not a fully sourced production database, and should not be represented as such until every figure has an individual citation.
 
 **Edges are value-weighted, not capacity-constrained.** The model captures relative value flow between stages but does not model absolute production capacity or bottleneck saturation — a real capacity-constrained shock (e.g., a fab physically destroyed) would propagate differently than the current value-weight-only model predicts.
 
@@ -327,32 +329,57 @@ This framework directly implements the data-integrity rules from the original pr
 
 **Customer-graph relationships are one axis of dependency.** A supplier's sales share to a customer is not the same as that customer's *input* dependence on the supplier (ASML → TSMC at 35% of ASML's sales does not mean TSMC is 35% dependent on ASML — for EUV specifically, it's closer to complete dependence). The product surfaces both the relationship percentage and the engine-computed exposure number side by side specifically to prevent this conflation, but the underlying dataset does not yet capture reverse (input-side) concentration explicitly.
 
-**Long-tail coverage is incomplete by design.** Stage company lists show a curated top set plus an "Others" remainder; 107 companies is a deliberate ceiling — beyond this, additional entries add sourcing burden without materially changing chain-impact rankings.
+**Long-tail coverage is incomplete by design.** Stage company lists show a curated top set plus an "Others" remainder; ~110 companies is a deliberate ceiling — beyond this, additional entries add sourcing burden without materially changing chain-impact rankings.
 
 **Shareholder data ages quickly.** Ownership stakes shift quarterly; this is the most compliance-sensitive dataset in the product and requires the tightest citation-and-date discipline in production.
 
-**Client-side computation ceiling.** As noted in §6.2, the current single-model-in-memory architecture is appropriate at demo scale but would need server-side computation and caching at production data volumes.
+**Client-side computation, server-side data.** As noted in §6.2, the propagation engine still runs client-side after a single bundle fetch — appropriate at demo scale (24 stages, ~109 companies) but a production version ingesting thousands of daily events would want propagation computed and cached server-side.
+
+**Vault availability is now a dependency.** The dashboard requires the `server/` API to be reachable at load time; if it isn't, the app shows an explicit error screen rather than silently falling back to stale data (see `App.jsx`'s `VaultGate`). Self-hosting both halves is required for the dashboard to function — a static-only deploy of `app/` alone will not render data.
 
 ---
 
 ## 10. File Structure & Deployment
 
-| File | Purpose |
-|---|---|
-| `sscim-app.html` | The complete standalone product — single file, no build step, React/Babel from CDN |
-| `sscim-v4.jsx` | Source JSX (same code, as an editable React component, for further development) |
-| `index.html` | Commercial landing page — positioning, use cases, pricing tiers |
-| `intro.html` | Introduction and user guide page |
-| `README-launch.md` | Deploy instructions and the two-week validation playbook |
-| `SSCIM-status-report.md` | Project status and phased roadmap (companion document to this one) |
+```
+/
+├── index.html            Static landing page — positioning, use cases, pricing tiers
+├── intro.html            Static introduction and user-guide page
+├── README.md / README.ja.md / README.zh.md   This document, in English/Japanese/Simplified Chinese
+├── app/                  The dashboard — Vite + React source
+│   ├── src/
+│   │   ├── components/   UI components (Header, FlowGraph, OsmMap, Detail, Briefing, Methodology, …)
+│   │   ├── data/          VaultContext.jsx (fetches the API bundle) + compMeta.js (static UI labels)
+│   │   ├── engine/         index.js — buildEngine(data): chokepoint centrality, HHI, propagation, rankings, history
+│   │   ├── i18n/           language dictionary + t()
+│   │   ├── utils/          color/label helpers
+│   │   ├── App.jsx, main.jsx, theme.js
+│   ├── index.html         Vite entry template
+│   ├── vite.config.js      base: './' (relative asset paths), outputs to ../dist-app
+│   └── package.json
+└── server/               The vault — Node/Express + SQLite API
+    ├── src/
+    │   ├── db.js           schema (stages, companies, customers, owners, policies, events, scenarios, data_notes)
+    │   ├── seed-data.js     current dataset (real-data-pass values, see §9)
+    │   ├── data-notes.js    citations behind the headline corrections
+    │   ├── seed.js          populates data/sscim.db from seed-data.js
+    │   ├── routes/public.js  GET endpoints (including GET /api/bundle — the dashboard's single startup fetch)
+    │   ├── routes/admin.js   bearer-token-authenticated writes (PUT/POST/DELETE)
+    │   └── index.js          Express app
+    └── package.json
+```
 
-**Deployment:** any static host works. Drag the HTML files onto Netlify Drop, or push to a GitHub Pages repository — no server, no environment variables, no build pipeline. External dependencies are limited to the cdnjs script CDN, Google Fonts, CARTO/OpenStreetMap tile servers, and the Google favicon service.
+**Development:** `cd server && npm install && cp .env.example .env && npm run seed && npm run dev` (serves the API on `:8787`), then `cd app && npm install && npm run dev` (serves the dashboard on `:5173`, reading `VITE_API_BASE_URL` — defaults to `http://localhost:8787`).
+
+**Production deployment** now needs two things running, not one static bundle:
+- **Frontend** (`app/`): `npm run build` produces `dist-app/`; deploy it as static files (GitHub Pages, Netlify, etc.) alongside the root `index.html`/`intro.html`, with `VITE_API_BASE_URL` set at build time to the deployed backend's URL.
+- **Backend** (`server/`): needs an actual Node host (Render, Fly.io, Railway, a VPS, etc.) — it is no longer a "drop the HTML file anywhere" deploy. Set `ADMIN_TOKEN` to a real secret before exposing it publicly; without it the admin write API is disabled by default (503), not open.
 
 ---
 
 ## 11. Roadmap
 
-Phased plan (detailed further in `SSCIM-status-report.md`):
+Phased plan:
 
 1. **Demand validation** — structured demos with target users (funds, strategy teams, journalists, researchers); collect explicit willingness-to-pay signals before further build-out.
 2. **Sourced database** — replace sample figures with cited, dated values for the highest-importance ~150–250 nodes; formalize the analyst rubric for substitutability and market sensitivity.
@@ -361,6 +388,48 @@ Phased plan (detailed further in `SSCIM-status-report.md`):
 5. **Calibration** — backtest propagation parameters (hop factors, decay constant, confidence weights) against documented historical episodes (2021 ABF substrate shortage, 2023 Ga/Ge licensing action, successive export-control rounds) before any score ships without a "sample data" label.
 6. **Capital-flow layer expansion** — extend the capital layer from ownership stakes to directed money-flow edges: CHIPS Act/EU Chips Act/METI subsidy disbursements and announced fab investments as tracked flows on the same graph.
 7. **Dashboard premium tier** — full interactive product (scenario mode, company impact analysis) as the paid tier once briefing subscribers validate demand.
+
+---
+
+## 12. Acknowledgements & Methodology Citations
+
+The risk-scoring and shock-propagation algorithm in §4 is original engineering, but it builds on established results from network science, industrial-organization economics, and production-network macroeconomics. The citations below identify the specific concept each formula borrows; they are not a claim that the cited authors designed, reviewed, or endorse this system. Formatted per the *Chicago Manual of Style* (17th ed.), author-date system.
+
+**Chokepoint centrality (§4.2)** adapts path-participation / betweenness-style centrality from network science:
+
+> Freeman, Linton C. 1977. "A Set of Measures of Centrality Based on Betweenness." *Sociometry* 40 (1): 35–41. https://doi.org/10.2307/3033543.
+
+**The topological sort underlying chokepoint centrality (§4.2, §6.3)** uses Kahn's algorithm:
+
+> Kahn, Arthur B. 1962. "Topological Sorting of Large Networks." *Communications of the ACM* 5 (11): 558–62. https://doi.org/10.1145/368996.369025.
+
+**Geographic concentration (§4.3)** uses the Herfindahl-Hirschman Index:
+
+> Hirschman, Albert O. 1945. *National Power and the Structure of Foreign Trade*. Berkeley: University of California Press.
+>
+> Herfindahl, Orris C. 1950. "Concentration in the U.S. Steel Industry." PhD diss., Columbia University.
+>
+> Rhoades, Stephen A. 1993. "The Herfindahl-Hirschman Index." *Federal Reserve Bulletin* 79 (3): 188–89.
+
+**Shock propagation and the shock-as-network-fluctuation framing (§4.7–§4.9)** draws on production-network macroeconomics:
+
+> Acemoglu, Daron, Vasco M. Carvalho, Asuman Ozdaglar, and Alireza Tahbaz-Salehi. 2012. "The Network Origins of Aggregate Fluctuations." *Econometrica* 80 (5): 1977–2016. https://doi.org/10.3982/ECTA9623.
+>
+> Carvalho, Vasco M. 2014. "From Micro to Macro via Production Networks." *Journal of Economic Perspectives* 28 (4): 23–48. https://doi.org/10.1257/jep.28.4.23.
+
+**The max-combination rule for merging multiple shock sources on one node (§4.7, §6.3)**, rather than summation, follows the cascade/threshold logic used in financial-network contagion models:
+
+> Elliott, Matthew, Benjamin Golub, and Matthew O. Jackson. 2014. "Financial Networks and Contagion." *American Economic Review* 104 (10): 3115–53. https://doi.org/10.1257/aer.104.10.3115.
+
+**Institutional and industry sources** informing the evidence framework (§8) and the dataset's directional calibration:
+
+> Semiconductor Industry Association and Boston Consulting Group. 2021. *Strengthening the Global Semiconductor Supply Chain in an Uncertain Era*. Washington, DC: SIA/BCG.
+>
+> Center for Security and Emerging Technology, Georgetown University. 2021. "The Semiconductor Supply Chain." Issue Brief, January 2021. https://cset.georgetown.edu/publication/the-semiconductor-supply-chain/.
+>
+> Company 10-K, 20-F, and annual-report disclosures; SEMI capacity statistics; TrendForce, TechInsights, and Gartner market-share estimates, cited inline in the data files where a specific figure is drawn from them.
+
+None of the individuals or institutions above were consulted on, reviewed, or endorse SSCIM. These citations are provided for methodological transparency and academic attribution, not as a claim of collaboration.
 
 ---
 

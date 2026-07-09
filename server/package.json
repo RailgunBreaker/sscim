@@ -1,0 +1,16 @@
+{
+  "name": "sscim-server",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node src/index.js",
+    "start": "node src/index.js",
+    "seed": "node src/seed.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.3.0",
+    "cors": "^2.8.5",
+    "express": "^4.19.2"
+  }
+}
