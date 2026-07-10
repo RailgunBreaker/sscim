@@ -13,6 +13,45 @@ const F = ({ tex, children }) => (
   <div className="mono" style={{ fontSize: 11, color: C.text, background: C.panel, border: `1px solid ${C.line}`, borderRadius: 4, padding: "6px 10px", margin: "5px 0", lineHeight: 1.6, overflowX: "auto", whiteSpace: "pre-wrap" }}>{tex ? <Tex tex={tex} block /> : children}</div>
 );
 
+/* Every displayed number in the Layer 3 · Intelligence Panel, in one
+   place — which formula it comes from and what its scale actually is.
+   Hovering the number itself (or its tab's caption line) repeats this in
+   the app; this table exists so it's also readable without hunting
+   through §0–§13 first. */
+const READING_ROWS = [
+  ["EVENTS tab · “index”", "operationalIndex → toDisplayIndex (§4), for that one event's own propagated field", "0–10, 5 = neutral, >5 net adverse, <5 net mitigating"],
+  ["EVENTS tab · “excluded from score”", "the event's declared assumption (§6) marks it hazard-signal / mixed / long-term-strategic", "not a number — see the card's own reason text"],
+  ["COMPANIES tab · rank number", "systemic criticality (§9): full-disruption simulation, network-influence-weighted", "0–10"],
+  ["MOVERS 7D tab · score", "a stage's baseline operational display index, replayed 7 days ago vs. now (§4)", "0–10, 5 = neutral; Δ is the difference"],
+  ["CAPITAL tab · power number", "Capital Power (§10): Σ ownership share × company criticality", "unbounded — ranks owners against each other only, not a 0–10 score"],
+  ["Flow graph · node number", "structural vulnerability (§0) — time-invariant, never includes an event/scenario term", "0–10"],
+  ["Flow graph · “NI x.x”", "network influence (§1) — node dot/border size", "0–10"],
+  ["Detail view · VULNERABILITY / CRITICALITY", "§9 — share-independent average impact / full-disruption simulation", "0–10"],
+  ["Detail view · CONTRIBUTION", "§9 — share-weighted modeled effect; market share never cancels out", "unbounded — compare companies to each other, not to a 0–10 scale"],
+];
+const ReadingTable = () => (
+  <div style={{ overflowX: "auto", margin: "6px 0 4px" }}>
+    <table className="mono" style={{ width: "100%", borderCollapse: "collapse", fontSize: 10.5 }}>
+      <thead>
+        <tr style={{ textAlign: "left", color: C.copper }}>
+          <th style={{ padding: "3px 8px 3px 0", borderBottom: `1px solid ${C.line}` }}>Where you see it</th>
+          <th style={{ padding: "3px 8px", borderBottom: `1px solid ${C.line}` }}>What it is</th>
+          <th style={{ padding: "3px 0 3px 8px", borderBottom: `1px solid ${C.line}` }}>Scale</th>
+        </tr>
+      </thead>
+      <tbody>
+        {READING_ROWS.map(([where, what, scale]) => (
+          <tr key={where}>
+            <td style={{ padding: "4px 8px 4px 0", color: C.text, verticalAlign: "top", whiteSpace: "nowrap" }}>{where}</td>
+            <td style={{ padding: "4px 8px", color: C.dim, verticalAlign: "top" }}>{what}</td>
+            <td style={{ padding: "4px 0 4px 8px", color: C.faint, verticalAlign: "top" }}>{scale}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+);
+
 /* Every formula below is transcribed directly from app/src/engine/{priors,
    math,graph,index}.js and app/src/engine/event-assumptions.js — this
    overlay exists so nothing is described differently here than what the
@@ -32,6 +71,11 @@ export default function Methodology({ onClose }) {
         <div className="mono" style={{ fontSize: 10, color: C.amber, background: "#2A1E14", border: `1px solid ${C.copperDim}`, borderRadius: 5, padding: "7px 10px", marginBottom: 12, lineHeight: 1.6 }}>
           RESEARCH PROTOTYPE — a sensitivity/comparison tool over a frozen curated demonstration snapshot (dataset as of {MODEL_PRIORS.datasetAsOf}). Not a calibrated, causal, or probabilistic forecast; not measured trade flow; not investment advice. Every coefficient below is a declared, unvalidated prior — see §10 and MODEL_ROADMAP.md.
         </div>
+
+        <S n="R" t="READING THE NUMBERS (Layer 3 · Intelligence Panel, and everywhere else)">
+          Every displayed number is one of exactly two families — <b>structural</b> (§0, time-invariant, 0–10) or <b>operational</b> (§4, event/scenario-driven, 0–10, 5=neutral) — plus two company numbers that are deliberately <b>not</b> on a 0–10 scale at all (contribution, capital power). Hovering any number in the app repeats its own explanation; this table is the same information in one place.
+          <ReadingTable />
+        </S>
 
         <S n="0" t="STRUCTURAL VULNERABILITY (per stage — time-invariant)">
           Five components, renormalized to sum to 1 after excluding the event-driven term entirely. Three are graph/data-derived (network influence, geographic concentration, policy exposure); two are declared analyst judgments (substitutability, market sensitivity) — every breakdown bar is source-tagged [GRAPH/DATA] or [ANALYST].
