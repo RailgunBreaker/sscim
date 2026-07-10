@@ -65,12 +65,32 @@ would need to keep as separate series with explicit units and dates:
 
 - **DRAM / NAND / HBM** must not share one denominator — they are
   different products with different supply/demand dynamics and different
-  leading suppliers; the current `memory_fab`/`hbm` stages already keep
-  HBM separate, but DRAM and NAND remain combined under `memory_fab`.
+  leading suppliers; `hbm` is already its own stage. `memory_fab` still
+  combines DRAM and NAND into one stage/denominator, but as of this
+  snapshot each company's share is a revenue-weighted *blend* of its
+  separate DRAM and NAND shares (see `data-notes.js` `stage:memory_fab`)
+  rather than one segment's share entered directly against the combined
+  total — the earlier version mixed the two without blending, which let
+  the modeled total exceed 100% (`audit:data` caught this as a >100%
+  warning). Splitting DRAM and NAND into two genuinely separate stages
+  remains the real fix; the blend is a stopgap that keeps the combined
+  total honest in the meantime.
 - **Merchant AI accelerators vs. captive hyperscaler ASICs** are different
   markets (one is a company selling silicon to many buyers; the other is a
   hyperscaler designing chips for its own infrastructure) and should not
-  share one "AI accelerator market share" denominator.
+  share one "AI accelerator market share" denominator. `logic_ai` still
+  does — its modeled shares currently sum to just over 100%
+  (`audit:data` flags this) because NVIDIA's ~78% figure is a real,
+  tier-B-sourced share of the *merchant AI-accelerator* segment
+  specifically, while the other entries (AMD, Broadcom, Marvell, Google,
+  Amazon) are broader-logic/captive-silicon figures on a different,
+  not-directly-comparable base. Unlike `memory_fab`, this one hasn't been
+  corrected: public market-research estimates for AI-accelerator-segment
+  size and total-logic-market size disagree by roughly 4x depending on
+  source, so a blended combined-market number can't currently be computed
+  to the same evidence standard — the real fix is splitting `logic_ai`
+  into separate merchant-AI-accelerator and general-logic stages once
+  each has its own reliably sourced denominator.
 - **Advanced-node foundry capacity vs. total foundry revenue** are
   different measures (a foundry can lead one and trail the other); the
   current `adv_fab` stage's shares are a capacity-weighted judgment, not a
