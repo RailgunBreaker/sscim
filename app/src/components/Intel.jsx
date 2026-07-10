@@ -4,13 +4,14 @@ import { useVault } from '../data/VaultContext.jsx';
 import { getEventAssumption } from '../engine/event-assumptions.js';
 import { TYPE_COLORS, riskColor } from '../utils/colors.js';
 import { onEnterSpace } from '../utils/a11y.js';
+import { STAGE_INTRO, introForCompany } from '../data/glossary.js';
 import Logo from './Logo.jsx';
 import Detail from './Detail.jsx';
 
 /* ================= Intelligence Panel ================= */
 export default function Intel({ sel, setSel, model, scenarioActive, horizontal, feedTab, setFeedTab }) {
   const { data, engine } = useVault();
-  const { EVENTS, COMPANY_BY_ID, COUNTRY_NAMES } = data;
+  const { EVENTS, COMPANY_BY_ID, COUNTRY_NAMES, SUPPLIERS, CUSTOMERS } = data;
   const { STAGE_BY_ID, CAP_RANK, MOVERS7D, COMPANY_CRITICALITY, COMPANY_RANK, eventField, operationalIndex, toDisplayIndex } = engine;
   return (
     <div style={{ display: horizontal ? "grid" : "block", gridTemplateColumns: horizontal ? "1.5fr 1fr" : undefined }}>
@@ -71,6 +72,7 @@ export default function Intel({ sel, setSel, model, scenarioActive, horizontal, 
             return (
               <div key={m.id} className="evcard" onClick={() => setSel({ type: "stage", id: m.id })}
                 role="button" tabIndex={0} onKeyDown={onEnterSpace(() => setSel({ type: "stage", id: m.id }))}
+                title={STAGE_INTRO[m.id]}
                 style={{ border: `1px solid ${C.line}`, background: C.panel, borderRadius: 6, padding: "7px 10px", marginBottom: 6, display: "flex", alignItems: "center", gap: 8 }}>
                 <span style={{ fontSize: 12.5, fontWeight: 600, flex: 1 }}>{st.name}</span>
                 <span className="mono" style={{ fontSize: 10, color: C.dim }}>{m.now.toFixed(1)}</span>
@@ -86,6 +88,7 @@ export default function Intel({ sel, setSel, model, scenarioActive, horizontal, 
             return (
               <div key={co.id} className="evcard" onClick={() => setSel({ type: "company", id: co.id })}
                 role="button" tabIndex={0} onKeyDown={onEnterSpace(() => setSel({ type: "company", id: co.id }))}
+                title={introForCompany(co, { STAGE_BY_ID, COUNTRY_NAMES, CUSTOMERS, SUPPLIERS })}
                 style={{ border: `1px solid ${active ? C.copper : C.line}`, background: active ? "#1A2132" : C.panel, borderRadius: 6, padding: "7px 10px", marginBottom: 6, display: "flex", alignItems: "center", gap: 8 }}>
                 <span className="mono" style={{ fontSize: 10, color: C.faint, width: 20 }}>#{i + 1}</span>
                 <Logo cid={co.id} />

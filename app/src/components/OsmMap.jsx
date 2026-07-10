@@ -4,7 +4,8 @@ import 'leaflet/dist/leaflet.css';
 import { C } from '../theme.js';
 import { useVault } from '../data/VaultContext.jsx';
 import { riskColor, riskLabel } from '../utils/colors.js';
-import { buildTooltipEl } from '../utils/tooltip.js';
+import { buildTooltipEl, buildCountryPopupEl } from '../utils/tooltip.js';
+import { introForCountry, flagEmoji } from '../data/glossary.js';
 import Legend from './Legend.jsx';
 
 /* ================= OpenStreetMap layer =================
@@ -18,8 +19,8 @@ import Legend from './Legend.jsx';
    physical shipping routes. */
 export default function OsmMap({ sel, setSel, hl, model, scenarioActive }) {
   const { data, engine } = useVault();
-  const { COUNTRY_NAMES, COUNTRY_POS } = data;
-  const { COUNTRY_LINKS } = engine;
+  const { COUNTRY_NAMES, COUNTRY_POS, COMPANIES } = data;
+  const { COUNTRY_LINKS, STAGE_BY_ID } = engine;
   const divRef = useRef(null), mapRef = useRef(null), layerRef = useRef(null);
   const selRef = useRef(setSel); selRef.current = setSel;
   const [tileStatus, setTileStatus] = useState("loading");
@@ -110,7 +111,18 @@ export default function OsmMap({ sel, setSel, hl, model, scenarioActive }) {
           { permanent: true, className: "sscim-label", direction: "bottom", offset: [0, r * 0.5 + 2] }
         );
       }
-      const go = () => selRef.current({ type: "country", id });
+      /* Click opens a popup introducing the country — its flag, its role
+         in the modeled supply chain, and every company headquartered
+         there (tap a chip to jump straight to that company's detail) —
+         in addition to updating the shared selection. */
+      const hqCompanies = COMPANIES.filter((co) => co.country === id);
+      core.bindPopup(() => buildCountryPopupEl({
+        flag: flagEmoji(id), name: COUNTRY_NAMES[id],
+        intro: introForCountry(id, { COUNTRY_NAMES, STAGE_BY_ID, COMPANIES }, model),
+        companies: hqCompanies, colors: C,
+        onSelectCompany: (cid) => selRef.current({ type: "company", id: cid }),
+      }), { className: "sscim-tip", maxWidth: 280 });
+      const go = () => { selRef.current({ type: "country", id }); core.openPopup(); };
       halo.on("click", go); core.on("click", go);
     });
   }, [model, sel, hl, scenarioActive]);

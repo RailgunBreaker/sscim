@@ -34,7 +34,15 @@ const GLOBAL_STYLE = `
   .sscim-map .leaflet-control-attribution a { color: ${C.copperDim}; }
   .sscim-tip { background: ${C.panel} !important; color: ${C.text} !important; border: 1px solid ${C.line} !important; border-radius: 4px; font-family: 'IBM Plex Mono', monospace; font-size: 10px; padding: 2px 6px; box-shadow: none !important; }
   .sscim-tip::before { display: none; }
+  .sscim-tip.leaflet-popup .leaflet-popup-content-wrapper { background: ${C.panel}; color: ${C.text}; border: 1px solid ${C.copperDim}; border-radius: 6px; box-shadow: 0 6px 20px rgba(0,0,0,.4); }
+  .sscim-tip.leaflet-popup .leaflet-popup-content { margin: 10px 12px; font-family: 'Space Grotesk', sans-serif; }
+  .sscim-tip.leaflet-popup .leaflet-popup-tip { background: ${C.panel}; box-shadow: none; }
+  .sscim-tip.leaflet-popup .leaflet-popup-close-button { color: ${C.faint} !important; }
+  .sscim-tip.leaflet-popup .leaflet-popup-close-button:hover { color: ${C.copper} !important; }
   .sscim-label { background: transparent !important; border: none !important; box-shadow: none !important; color: ${C.text}; font-family: 'Space Grotesk', sans-serif; font-size: 10.5px; font-weight: 600; text-shadow: 0 0 4px #000; white-space: nowrap; }
+  .tour-target { position: relative; z-index: 1300; scroll-margin: 90px; border-radius: 6px; outline: 3px solid ${C.copper}; outline-offset: 2px; box-shadow: 0 0 0 6px rgba(201,138,63,.18), 0 0 28px rgba(201,138,63,.35); animation: tourPulse 1.7s ease-in-out infinite; }
+  @keyframes tourPulse { 0%,100% { outline-color: ${C.copper}; } 50% { outline-color: ${C.amber}; } }
+  @media (prefers-reduced-motion: reduce) { .tour-target { animation: none !important; } }
 `;
 
 export default function App() {
@@ -89,6 +97,7 @@ function Dashboard() {
   const [custom, setCustom] = useState(null);
   const [showBuilder, setShowBuilder] = useState(false);
   const [lang, setLang] = useState("en");
+  const [tourTarget, setTourTarget] = useState(null);
   setLangV(lang);
 
   useEffect(() => {
@@ -97,6 +106,21 @@ function Dashboard() {
     fn(); mq.addEventListener("change", fn);
     return () => mq.removeEventListener("change", fn);
   }, []);
+
+  /* Guided tour: clicking a step in the in-app Guide sets tourTarget to a
+     DOM id (a Pane's id or a Header button's id); this effect makes sure
+     the target is actually visible — switching tabs on the narrow layout
+     if needed — then scrolls it into view. The .tour-target CSS class
+     (GLOBAL_STYLE) supplies the pulsing highlight ring itself. */
+  useEffect(() => {
+    if (!tourTarget) return;
+    const paneTab = { "pane-map": "map", "pane-flow": "flow", "pane-intel": "intel" }[tourTarget];
+    if (paneTab && !wide) setTab(paneTab);
+    const raf = requestAnimationFrame(() => {
+      document.getElementById(tourTarget)?.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+    return () => cancelAnimationFrame(raf);
+  }, [tourTarget, wide]);
 
   const scenario = scenarioId === "custom" ? custom : SCENARIOS.find((s) => s.id === scenarioId);
 
@@ -137,6 +161,7 @@ function Dashboard() {
         scenarioId={scenarioId} setScenarioId={setScenarioId} custom={custom}
         setShowBuilder={setShowBuilder} setShowGuide={setShowGuide}
         setShowBriefing={setShowBriefing} setShowMethod={setShowMethod}
+        tourTarget={tourTarget}
       />
 
       <ScenarioBar model={model} whatChanged={whatChanged} />
@@ -148,25 +173,30 @@ function Dashboard() {
       {wide ? (
         <>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1.9fr", gap: 1, background: C.line }}>
-            <Pane title="LAYER 1 · WORLD MAP · OPENSTREETMAP"><OsmMap sel={sel} setSel={setSel} hl={hl} model={model} scenarioActive={model.scenarioActive} /></Pane>
-            <Pane title="LAYER 2 · INDUSTRY FLOW · TAP A STAGE FOR ITS SUBSECTION"><FlowGraph sel={sel} setSel={setSel} hl={hl} model={model} scenarioActive={model.scenarioActive} /></Pane>
+            <Pane id="pane-map" highlight={tourTarget === "pane-map"} title="LAYER 1 · WORLD MAP · OPENSTREETMAP"><OsmMap sel={sel} setSel={setSel} hl={hl} model={model} scenarioActive={model.scenarioActive} /></Pane>
+            <Pane id="pane-flow" highlight={tourTarget === "pane-flow"} title="LAYER 2 · INDUSTRY FLOW · TAP A STAGE FOR ITS SUBSECTION"><FlowGraph sel={sel} setSel={setSel} hl={hl} model={model} scenarioActive={model.scenarioActive} /></Pane>
           </div>
           <div style={{ borderTop: `1px solid ${C.line}` }}>
-            <Pane title="LAYER 3 · INTELLIGENCE PANEL">
+            <Pane id="pane-intel" highlight={tourTarget === "pane-intel"} title="LAYER 3 · INTELLIGENCE PANEL">
               <Intel sel={sel} setSel={setSel} model={model} scenarioActive={model.scenarioActive} feedTab={feedTab} setFeedTab={setFeedTab} horizontal />
             </Pane>
           </div>
         </>
       ) : (
         <>
-          {tab === "map" && <Pane title="LAYER 1 · WORLD MAP · OPENSTREETMAP"><OsmMap sel={sel} setSel={setSel} hl={hl} model={model} scenarioActive={model.scenarioActive} /></Pane>}
-          {tab === "flow" && <Pane title="LAYER 2 · INDUSTRY FLOW"><FlowGraph sel={sel} setSel={setSel} hl={hl} model={model} scenarioActive={model.scenarioActive} /></Pane>}
-          {tab === "intel" && <Pane title="LAYER 3 · INTELLIGENCE PANEL"><Intel sel={sel} setSel={setSel} model={model} scenarioActive={model.scenarioActive} feedTab={feedTab} setFeedTab={setFeedTab} /></Pane>}
+          {tab === "map" && <Pane id="pane-map" highlight={tourTarget === "pane-map"} title="LAYER 1 · WORLD MAP · OPENSTREETMAP"><OsmMap sel={sel} setSel={setSel} hl={hl} model={model} scenarioActive={model.scenarioActive} /></Pane>}
+          {tab === "flow" && <Pane id="pane-flow" highlight={tourTarget === "pane-flow"} title="LAYER 2 · INDUSTRY FLOW"><FlowGraph sel={sel} setSel={setSel} hl={hl} model={model} scenarioActive={model.scenarioActive} /></Pane>}
+          {tab === "intel" && <Pane id="pane-intel" highlight={tourTarget === "pane-intel"} title="LAYER 3 · INTELLIGENCE PANEL"><Intel sel={sel} setSel={setSel} model={model} scenarioActive={model.scenarioActive} feedTab={feedTab} setFeedTab={setFeedTab} /></Pane>}
         </>
       )}
 
       {showMethod && <Methodology onClose={() => setShowMethod(false)} />}
-      {showGuide && <Guide onClose={() => setShowGuide(false)} />}
+      {showGuide && (
+        <Guide
+          onClose={() => { setShowGuide(false); setTourTarget(null); }}
+          tourTarget={tourTarget} onHighlight={setTourTarget}
+        />
+      )}
       {showBriefing && <Briefing onClose={() => setShowBriefing(false)} model={model} scenario={scenario} />}
 
       <footer className="mono" style={{ padding: "10px 16px", fontSize: 10, color: C.faint, borderTop: `1px solid ${C.line}`, lineHeight: 1.6 }}>

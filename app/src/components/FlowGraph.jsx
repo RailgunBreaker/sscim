@@ -2,6 +2,7 @@ import { C } from '../theme.js';
 import { useVault } from '../data/VaultContext.jsx';
 import { riskColor } from '../utils/colors.js';
 import { onEnterSpace } from '../utils/a11y.js';
+import { STAGE_INTRO, introForCompany } from '../data/glossary.js';
 import Logo from './Logo.jsx';
 import Legend from './Legend.jsx';
 
@@ -14,7 +15,7 @@ import Legend from './Legend.jsx';
    measured trade flow or value-weighted edge). */
 export default function FlowGraph({ sel, setSel, hl, model, scenarioActive }) {
   const { data, engine } = useVault();
-  const { STAGES, FLOW_EDGES, TIER_LABELS, COUNTRY_NAMES, COMPANY_BY_ID, CUSTOMERS } = data;
+  const { STAGES, FLOW_EDGES, TIER_LABELS, COUNTRY_NAMES, COMPANY_BY_ID, CUSTOMERS, SUPPLIERS } = data;
   const { STAGE_BY_ID, D, NETWORK_INFLUENCE, STRUCTURAL_VULNERABILITY, STAGE_COMPANIES, companyContribution } = engine;
   const dimAll = hl.s.size > 0;
   const subStage = sel.type === "stage" ? STAGE_BY_ID[sel.id] : null;
@@ -43,7 +44,8 @@ export default function FlowGraph({ sel, setSel, hl, model, scenarioActive }) {
             return (
               <g key={st.id} className="node" opacity={dimAll && !active ? 0.3 : 1} onClick={() => setSel({ type: "stage", id: st.id })}
                 onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && (e.preventDefault(), setSel({ type: "stage", id: st.id }))}
-                tabIndex={0} role="button" aria-label={`${st.name}, structural vulnerability ${structural.toFixed(1)} of 10`}>
+                tabIndex={0} role="button" aria-label={`${st.name}, structural vulnerability ${structural.toFixed(1)} of 10. ${STAGE_INTRO[st.id] ?? ""}`}>
+                <title>{STAGE_INTRO[st.id]}</title>
                 <rect x={st.x - 47} y={st.y - 20} width={94} height={40} rx={5}
                   fill={active ? "#1B2436" : C.panel} stroke={isSel ? C.text : active ? col : C.line} strokeWidth={isSel ? 1.5 : 0.6 + ni / 8} />
                 <circle cx={st.x - 37} cy={st.y - 10} r={2 + ni / 3.2} fill={col}>
@@ -67,10 +69,11 @@ export default function FlowGraph({ sel, setSel, hl, model, scenarioActive }) {
       {/* ---- STAGE SUBSECTION: companies & shares of the selected stage ---- */}
       {subStage && (
         <div style={{ marginTop: 8, border: `1px solid ${C.copperDim}`, borderRadius: 6, background: C.panel2, padding: "8px 10px" }}>
-          <div className="mono" style={{ fontSize: 9.5, letterSpacing: 2, color: C.copper, marginBottom: 6 }}>
+          <div className="mono" style={{ fontSize: 9.5, letterSpacing: 2, color: C.copper, marginBottom: 4 }}>
             SUBSECTION · {subStage.name.toUpperCase()} · MAJOR COMPANIES & MARKET SHARES
             {Math.abs(model.activeField[subStage.id] ?? 0) > 0.05 && <span style={{ color: riskColor((model.activeField[subStage.id] + 1) * 5), marginLeft: 8 }}>· operational impact {model.activeField[subStage.id].toFixed(2)}</span>}
           </div>
+          <div style={{ fontSize: 11, color: C.dim, lineHeight: 1.5, marginBottom: 8 }}>{STAGE_INTRO[subStage.id]}</div>
           <div style={{ display: "flex", gap: 8, overflowX: "auto", paddingBottom: 4 }}>
             {STAGE_COMPANIES[subStage.id].map(([cid, sh]) => {
               const co = COMPANY_BY_ID[cid];
@@ -78,6 +81,7 @@ export default function FlowGraph({ sel, setSel, hl, model, scenarioActive }) {
               return (
                 <div key={cid} className="evcard" onClick={() => setSel({ type: "company", id: cid })}
                   role="button" tabIndex={0} onKeyDown={onEnterSpace(() => setSel({ type: "company", id: cid }))}
+                  title={introForCompany(co, { STAGE_BY_ID, COUNTRY_NAMES, CUSTOMERS, SUPPLIERS })}
                   style={{ minWidth: 128, border: `1px solid ${C.line}`, borderRadius: 6, background: C.panel, padding: "7px 9px", flexShrink: 0 }}>
                   <div style={{ fontSize: 11.5, fontWeight: 600, lineHeight: 1.2, display: "flex", alignItems: "center", gap: 5 }}><Logo cid={cid} size={15} />{co.name}</div>
                   <div className="mono" style={{ fontSize: 9, color: C.faint, margin: "2px 0 4px" }}>HQ: {COUNTRY_NAMES[co.country]}</div>

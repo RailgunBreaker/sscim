@@ -3,6 +3,7 @@ import { useVault } from '../data/VaultContext.jsx';
 import { getEventAssumption } from '../engine/event-assumptions.js';
 import { riskColor, riskLabel, confColor, TYPE_COLORS } from '../utils/colors.js';
 import { onEnterSpace } from '../utils/a11y.js';
+import { STAGE_INTRO, introForCompany, introForCountry } from '../data/glossary.js';
 import Tex from './Tex.jsx';
 import Logo from './Logo.jsx';
 import Chip from './Chip.jsx';
@@ -102,6 +103,7 @@ export default function Detail({ sel, setSel, model, scenarioActive }) {
           <span className="mono" style={{ fontSize: 10, color: C.dim }}>HQ: {COUNTRY_NAMES[co.country]}</span>
           <span className="mono" style={{ fontSize: 10, color: C.copper, marginLeft: "auto" }}>criticality rank #{rank} of {COMPANIES.length}</span>
         </div>
+        <p style={{ margin: "6px 0 4px", fontSize: 12.5, color: C.dim, lineHeight: 1.55 }}>{introForCompany(co, { STAGE_BY_ID, COUNTRY_NAMES, CUSTOMERS, SUPPLIERS })}</p>
         <div className="mono" style={{ margin: "8px 0", fontSize: 12, display: "flex", flexWrap: "wrap", gap: 14 }}>
           <span>SYSTEMIC CRITICALITY <b style={{ fontSize: 16, color: riskColor(criticality) }}>{criticality.toFixed(2)}</b><span style={{ color: C.faint }}>/10</span></span>
           <span>VULNERABILITY <b style={{ fontSize: 16, color: riskColor(vulnerability) }}>{vulnerability.toFixed(2)}</b><span style={{ color: C.faint }}>/10 (share-independent)</span></span>
@@ -191,6 +193,9 @@ export default function Detail({ sel, setSel, model, scenarioActive }) {
           <span className="mono" style={{ fontSize: 11, color: delta >= 0 ? C.red : C.green }}>{delta >= 0 ? "▲" : "▼"} operational Δ {delta >= 0 ? "+" : ""}{delta.toFixed(3)}<MetricTag kind="scenario" /></span>
         )}
       </div>
+      <p style={{ margin: "6px 0 4px", fontSize: 12.5, color: C.dim, lineHeight: 1.55 }}>
+        {isStage ? STAGE_INTRO[sel.id] : introForCountry(sel.id, { COUNTRY_NAMES, STAGE_BY_ID, COMPANIES }, model)}
+      </p>
       <div className="mono" style={{ fontSize: 10.5, color: C.dim, margin: "6px 0" }}>
         Operational impact (current): <b style={{ color: (operationalNow ?? 0) > 0 ? C.red : (operationalNow ?? 0) < 0 ? C.green : C.dim }}>{(operationalNow ?? 0).toFixed(3)}</b> (positive = adverse, negative = mitigating)<MetricTag kind="operational" />
       </div>

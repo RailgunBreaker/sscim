@@ -5,7 +5,7 @@ import SearchBox from './SearchBox.jsx';
 
 export default function Header({
   lang, setLang, setSel, scenarioId, setScenarioId, custom,
-  setShowBuilder, setShowGuide, setShowBriefing, setShowMethod,
+  setShowBuilder, setShowGuide, setShowBriefing, setShowMethod, tourTarget,
 }) {
   const { data } = useVault();
   const { COMPANIES, SCENARIOS } = data;
@@ -30,30 +30,34 @@ export default function Header({
           ))}
         </span>
         <SearchBox setSel={setSel} />
-        {SCENARIOS.map((sc) => (
-          <button key={sc.id} onClick={() => setScenarioId(sc.id)}
-            style={{ background: scenarioId === sc.id ? C.copper : "transparent", color: scenarioId === sc.id ? "#0C111C" : C.dim,
-              border: `1px solid ${scenarioId === sc.id ? C.copper : C.line}`, borderRadius: 4, padding: "5px 9px",
-              fontSize: 11.5, cursor: "pointer", fontFamily: "inherit", fontWeight: scenarioId === sc.id ? 700 : 400 }}>
-            {lang === "en" ? sc.name : t("scn_" + sc.id)}
+        <span id="header-scenarios" className={tourTarget === "header-scenarios" ? "tour-target" : undefined} style={{ display: "flex", gap: 6, flexWrap: "wrap", borderRadius: 6 }}>
+          {SCENARIOS.map((sc) => (
+            <button key={sc.id} onClick={() => setScenarioId(sc.id)}
+              style={{ background: scenarioId === sc.id ? C.copper : "transparent", color: scenarioId === sc.id ? "#0C111C" : C.dim,
+                border: `1px solid ${scenarioId === sc.id ? C.copper : C.line}`, borderRadius: 4, padding: "5px 9px",
+                fontSize: 11.5, cursor: "pointer", fontFamily: "inherit", fontWeight: scenarioId === sc.id ? 700 : 400 }}>
+              {lang === "en" ? sc.name : t("scn_" + sc.id)}
+            </button>
+          ))}
+          <button onClick={() => (scenarioId === "custom" && custom ? setScenarioId("custom") : setShowBuilder(true))}
+            onDoubleClick={() => setShowBuilder(true)}
+            style={{ background: scenarioId === "custom" ? C.copper : "transparent", color: scenarioId === "custom" ? "#0C111C" : C.dim,
+              border: `1px dashed ${scenarioId === "custom" ? C.copper : C.copperDim}`, borderRadius: 4, padding: "5px 9px",
+              fontSize: 11.5, cursor: "pointer", fontFamily: "inherit", fontWeight: scenarioId === "custom" ? 700 : 400 }}>
+            {custom ? "✦ " + custom.name : t("✦ Build scenario")}
           </button>
-        ))}
-        <button onClick={() => (scenarioId === "custom" && custom ? setScenarioId("custom") : setShowBuilder(true))}
-          onDoubleClick={() => setShowBuilder(true)}
-          style={{ background: scenarioId === "custom" ? C.copper : "transparent", color: scenarioId === "custom" ? "#0C111C" : C.dim,
-            border: `1px dashed ${scenarioId === "custom" ? C.copper : C.copperDim}`, borderRadius: 4, padding: "5px 9px",
-            fontSize: 11.5, cursor: "pointer", fontFamily: "inherit", fontWeight: scenarioId === "custom" ? 700 : 400 }}>
-          {custom ? "✦ " + custom.name : t("✦ Build scenario")}
-        </button>
+        </span>
         <button onClick={() => setShowGuide(true)}
           style={{ background: "transparent", color: C.dim, border: `1px solid ${C.line}`, borderRadius: 4, padding: "5px 9px", fontSize: 11.5, cursor: "pointer", fontFamily: "inherit" }}>
           {t("? Guide")}
         </button>
-        <button onClick={() => setShowBriefing(true)}
+        <button id="btn-briefing" onClick={() => setShowBriefing(true)}
+          className={tourTarget === "btn-briefing" ? "tour-target" : undefined}
           style={{ background: C.copper, color: "#0C111C", border: `1px solid ${C.copper}`, borderRadius: 4, padding: "5px 9px", fontSize: 11.5, cursor: "pointer", fontFamily: "inherit", fontWeight: 700 }}>
           {t("⚡ GP Briefing")}
         </button>
-        <button onClick={() => setShowMethod(true)}
+        <button id="btn-methodology" onClick={() => setShowMethod(true)}
+          className={tourTarget === "btn-methodology" ? "tour-target" : undefined}
           style={{ background: "transparent", color: C.copper, border: `1px dashed ${C.copperDim}`, borderRadius: 4, padding: "5px 9px", fontSize: 11.5, cursor: "pointer", fontFamily: "inherit" }}>
           {t("ⓘ Methodology")}
         </button>
