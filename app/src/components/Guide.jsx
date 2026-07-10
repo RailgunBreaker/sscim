@@ -86,7 +86,7 @@ export default function Guide({ onClose, onHighlight }) {
     return (
       <div ref={cardRef} tabIndex={-1} role="dialog" aria-label={`${stepTitle(n)} (step ${n} of 7)`}
         onKeyDown={(e) => e.key === 'Escape' && exitTour()}
-        style={{ position: "fixed", bottom: 20, right: 20, left: "auto", zIndex: 1200, maxWidth: 320, width: "calc(100vw - 40px)", background: C.panel2, border: `1px solid ${C.copper}`, borderRadius: 8, padding: "14px 16px", boxShadow: "0 10px 34px rgba(0,0,0,.55)", color: C.text, outline: "none" }}>
+        style={{ position: "fixed", bottom: 20, right: 20, left: "auto", zIndex: 1400, maxWidth: 320, width: "calc(100vw - 40px)", background: C.panel2, border: `1px solid ${C.copper}`, borderRadius: 8, padding: "14px 16px", boxShadow: "0 10px 34px rgba(0,0,0,.55)", color: C.text, outline: "none" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
           <span className="mono" style={{ fontSize: 9, letterSpacing: 1.3, color: C.copper }}>STEP {n} OF 7 · LOOK FOR THE GLOW</span>
           <button onClick={onClose} aria-label="Close guide" style={{ background: "transparent", border: "none", color: C.faint, cursor: "pointer", fontSize: 15, lineHeight: 1 }}>✕</button>

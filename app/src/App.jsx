@@ -40,7 +40,13 @@ const GLOBAL_STYLE = `
   .sscim-tip.leaflet-popup .leaflet-popup-close-button { color: ${C.faint} !important; }
   .sscim-tip.leaflet-popup .leaflet-popup-close-button:hover { color: ${C.copper} !important; }
   .sscim-label { background: transparent !important; border: none !important; box-shadow: none !important; color: ${C.text}; font-family: 'Space Grotesk', sans-serif; font-size: 10.5px; font-weight: 600; text-shadow: 0 0 4px #000; white-space: nowrap; }
-  .tour-target { position: relative; z-index: 1300; scroll-margin: 90px; border-radius: 6px; outline: 3px solid ${C.copper}; outline-offset: 2px; box-shadow: 0 0 0 6px rgba(201,138,63,.18), 0 0 28px rgba(201,138,63,.35); animation: tourPulse 1.7s ease-in-out infinite; }
+  /* Deliberately a LOW z-index — just enough to lift the glow above its
+     own siblings (e.g. the map/flow grid cells) without it ever
+     out-stacking the floating tour card (zIndex 1400) or any modal
+     (zIndex 1200): a target and the card sitting at the same z-index
+     tier was exactly what made the "Next" card disappear behind a
+     highlighted pane whenever the two visually overlapped. */
+  .tour-target { position: relative; z-index: 2; scroll-margin: 90px; border-radius: 6px; outline: 3px solid ${C.copper}; outline-offset: 2px; box-shadow: 0 0 0 6px rgba(201,138,63,.18), 0 0 28px rgba(201,138,63,.35); animation: tourPulse 1.7s ease-in-out infinite; }
   @keyframes tourPulse { 0%,100% { outline-color: ${C.copper}; } 50% { outline-color: ${C.amber}; } }
   @media (prefers-reduced-motion: reduce) { .tour-target { animation: none !important; } }
 `;
