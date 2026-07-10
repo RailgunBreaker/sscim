@@ -4,6 +4,7 @@ import { getEventAssumption } from '../engine/event-assumptions.js';
 import { riskColor, riskLabel, confColor, TYPE_COLORS } from '../utils/colors.js';
 import { onEnterSpace } from '../utils/a11y.js';
 import { STAGE_INTRO, introForCompany, introForCountry } from '../data/glossary.js';
+import ScenarioSummary from './ScenarioSummary.jsx';
 import Tex from './Tex.jsx';
 import Logo from './Logo.jsx';
 import Chip from './Chip.jsx';
@@ -23,7 +24,7 @@ const MetricTag = ({ kind }) => {
   return <span className="mono" style={{ fontSize: 7.5, letterSpacing: 1, color, border: `1px solid ${color}`, borderRadius: 3, padding: "0 4px", marginLeft: 5 }}>{label}</span>;
 };
 
-export default function Detail({ sel, setSel, model, scenarioActive }) {
+export default function Detail({ sel, setSel, model, scenario, onResetScenario, onPlayScenario, scenarioActive }) {
   const { data: vault, engine } = useVault();
   const { COMPANY_BY_ID, COMPANIES, COUNTRY_NAMES, SUPPLIERS, CUSTOMERS, EVENTS, POLICIES, OWNERS } = vault;
   const {
@@ -31,6 +32,11 @@ export default function Detail({ sel, setSel, model, scenarioActive }) {
     structuralComponents, COUNTRY_LINKS, eventField, operationalIndex, toDisplayIndex,
     COMPANY_CRITICALITY, COMPANY_RANK, companyVulnerability, companyContribution,
   } = engine;
+
+  /* ---- SCENARIO: synthetic frontend entity → Scenario Impact Summary (§9) ---- */
+  if (sel.type === "scenario") {
+    return <ScenarioSummary model={model} scenario={scenario} setSel={setSel} onReset={onResetScenario} onPlay={onPlayScenario} />;
+  }
 
   /* ---- EVENT: summary + engine math + company-to-company spread ---- */
   if (sel.type === "event") {

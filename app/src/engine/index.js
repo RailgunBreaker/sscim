@@ -18,7 +18,7 @@
    ==================================================================== */
 import { MODEL_PRIORS, SENSITIVITY_PRESETS } from './priors.js';
 import { clamp, clamp10, clampSigned, decay, combineSigned, hhiWithResidual, log1pNormalized, topologicalSort } from './math.js';
-import { buildAdjacency, buildDependenceMatrices, propagateFromSource } from './graph.js';
+import { buildAdjacency, buildDependenceMatrices, propagateFromSource, findTopPaths } from './graph.js';
 import { validateGraph, createDiagnostics } from './diagnostics.js';
 import { getEventAssumption } from './event-assumptions.js';
 
@@ -79,6 +79,100 @@ export function buildEngine({ STAGES, FLOW_EDGES, COMPANIES, CUSTOMERS, POLICIES
       sourceId, magnitude, channel, stageIds, OUT, IN, TOPO, REV_TOPO,
       D: matrices.D, U: matrices.U, tolerance: priors.contributionTolerance,
     });
+  }
+
+  /* Single-source traced propagation — same field as propagateSignedSource,
+     plus a hop-by-hop trace for playback (see graph.js). */
+  function propagateTrace(sourceId, magnitude, channel, priors = MODEL_PRIORS) {
+    let matrices = { D, U };
+    if (priors !== MODEL_PRIORS) {
+      matrices = buildDependenceMatrices(stageIds, OUT, IN, (id) => STAGE_BY_ID[id]?.subst, priors);
+    }
+    return propagateFromSource({
+      sourceId, magnitude, channel, stageIds, OUT, IN, TOPO, REV_TOPO,
+      D: matrices.D, U: matrices.U, tolerance: priors.contributionTolerance, trace: true,
+    });
+  }
+
+  /* Combines several single-source traces into one synchronized playback
+     trace over the SAME combined field the rest of the engine produces
+     (per-source fields, noisy-OR combined at each node — identical to
+     eventField / companyCriticalityRaw). This never re-derives the field:
+     `field` here equals combineSigned across the per-source fields, and a
+     node is revealed at the last step any contributing source reaches it,
+     so the cumulative field at the final step equals `field` exactly.
+
+     `sources`: [{ stageId, magnitude, channel }]. Returns
+     { field, trace, sources } where sources echoes the effective inputs. */
+  function buildTrace(sources, priors = MODEL_PRIORS) {
+    const per = (sources || [])
+      .filter((s) => Number.isFinite(s.magnitude) && s.magnitude !== 0 && stageIds.includes(s.stageId))
+      .map((s) => ({ stageId: s.stageId, magnitude: s.magnitude, channel: s.channel, ...propagateTrace(s.stageId, s.magnitude, s.channel, priors) }));
+
+    const field = {};
+    stageIds.forEach((id) => {
+      const vals = per.map((p) => p.field[id]).filter((v) => v);
+      field[id] = vals.length ? combineSigned(vals) : 0;
+    });
+
+    // A node is revealed at the latest step any source settles it; an edge
+    // lights up when the node it feeds ("affected": the buyer for downstream
+    // links, the supplier for upstream echoes) is revealed.
+    const revealStep = {};
+    const allEdges = [];
+    per.forEach((p) => p.trace.forEach((step) => {
+      step.nodes.forEach((id) => { revealStep[id] = Math.max(revealStep[id] ?? 0, step.step); });
+      step.edges.forEach((e) => allEdges.push(e));
+    }));
+    // Anchor every injected source at step 0 so playback opens on the shock
+    // itself. A source's displayed value is its final combined field value,
+    // so pinning it early keeps the reveal monotonic (it never changes) and
+    // the cumulative-at-final-step-equals-field guarantee intact.
+    per.forEach((p) => { revealStep[p.stageId] = 0; });
+
+    const reached = stageIds.filter((id) => id in revealStep && field[id]);
+    const maxStep = reached.reduce((m, id) => Math.max(m, revealStep[id]), 0);
+
+    const edgeAt = {};
+    const seenEdge = new Set();
+    allEdges.forEach((e) => {
+      const affected = e.dir === 'downstream' ? e.to : e.from;
+      if (!(affected in revealStep) || !field[affected]) return;
+      const key = `${e.from}|${e.to}|${e.dir}`;
+      if (seenEdge.has(key)) return; seenEdge.add(key);
+      (edgeAt[revealStep[affected]] ||= []).push(e);
+    });
+
+    const trace = [];
+    const cumulative = {};
+    for (let k = 0; k <= maxStep; k++) {
+      const nodesAtK = reached.filter((id) => revealStep[id] === k);
+      const incremental = {};
+      nodesAtK.forEach((id) => { incremental[id] = field[id]; cumulative[id] = field[id]; });
+      trace.push({
+        step: k,
+        nodes: nodesAtK,
+        edges: edgeAt[k] || [],
+        incrementalContribution: incremental,
+        cumulativeContribution: { ...cumulative },
+      });
+    }
+    return { field, trace, sources: per.map(({ stageId, magnitude, channel }) => ({ stageId, magnitude, channel })) };
+  }
+
+  /* Playback trace for one event — the multi-source companion to
+     eventField(); its `field` equals eventField(e).field exactly. */
+  function eventTrace(e, priors = MODEL_PRIORS) {
+    const { magnitude, assumption } = eventCentralMagnitude(e, priors);
+    const sources = (e.stages || []).map((sid) => ({ stageId: sid, magnitude, channel: assumption.channel }));
+    return { ...buildTrace(sources, priors), magnitude, assumption };
+  }
+
+  /* Strongest modeled propagation paths between two stages, for the
+     explain-path view (§11). Pure graph structure + the same dependence
+     priors — an unvalidated modeled route, not a measured shipment path. */
+  function topPaths(sourceId, targetId, opts = {}) {
+    return findTopPaths({ sourceId, targetId, OUT, IN, D, U, ...opts });
   }
 
   /* ---------------- economic weight ("modeled turnover proxy") ---------------- */
@@ -150,7 +244,10 @@ export function buildEngine({ STAGES, FLOW_EDGES, COMPANIES, CUSTOMERS, POLICIES
      confidence — confidence is metadata only (see event-assumptions.js /
      Detail.jsx / Briefing.jsx), never a multiplier on physical impact. */
   function eventCentralMagnitude(e, priors = MODEL_PRIORS) {
-    const assumption = getEventAssumption(e.id);
+    // A scenario built in-app can carry its own semantic classification
+    // (direction/channel/operational) on the event object; otherwise fall
+    // back to the curated id lookup, then to the safe unclassified default.
+    const assumption = e.assumption || getEventAssumption(e.id);
     const sign = assumption.direction === 'mitigating' ? -1 : 1;
     const intensity = clamp((e.sev ?? 0) / 10, 0, 1) * decay(e.daysAgo ?? 0, priors.halfLifeDays);
     return { magnitude: clampSigned(sign * intensity), assumption };
@@ -403,6 +500,7 @@ export function buildEngine({ STAGES, FLOW_EDGES, COMPANIES, CUSTOMERS, POLICIES
 
     clamp10, clampSigned, decay,
     eventCentralMagnitude, eventField, operationalField, operationalIndex, toDisplayIndex, sensitivityEnvelope,
+    propagateTrace, buildTrace, eventTrace, topPaths,
 
     companyVulnerability, companyContribution, companyCriticality,
     COMPANY_IMPACTS, COMPANY_CRITICALITY, COMPANY_RANK, CAP_RANK,

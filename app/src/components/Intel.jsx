@@ -9,14 +9,14 @@ import Logo from './Logo.jsx';
 import Detail from './Detail.jsx';
 
 /* ================= Intelligence Panel ================= */
-export default function Intel({ sel, setSel, model, scenarioActive, horizontal, feedTab, setFeedTab }) {
+export default function Intel({ sel, setSel, model, scenario, onResetScenario, onPlayScenario, scenarioActive, horizontal, feedTab, setFeedTab }) {
   const { data, engine } = useVault();
   const { EVENTS, COMPANY_BY_ID, COUNTRY_NAMES, SUPPLIERS, CUSTOMERS } = data;
   const { STAGE_BY_ID, CAP_RANK, MOVERS7D, COMPANY_CRITICALITY, COMPANY_RANK, eventField, operationalIndex, toDisplayIndex } = engine;
   return (
     <div style={{ display: horizontal ? "grid" : "block", gridTemplateColumns: horizontal ? "1.5fr 1fr" : undefined }}>
       <div style={{ padding: 12, borderRight: horizontal ? `1px solid ${C.line}` : "none", borderBottom: horizontal ? "none" : `1px solid ${C.line}` }}>
-        <Detail sel={sel} setSel={setSel} model={model} scenarioActive={scenarioActive} />
+        <Detail sel={sel} setSel={setSel} model={model} scenario={scenario} onResetScenario={onResetScenario} onPlayScenario={onPlayScenario} scenarioActive={scenarioActive} />
       </div>
       <div>
         <div style={{ display: "flex", gap: 0, borderBottom: `1px solid ${C.line}` }}>

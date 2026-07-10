@@ -1,11 +1,16 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { C } from './theme.js';
 import { t, setLangV } from './i18n/index.js';
 import { VaultProvider, useVault } from './data/VaultContext.jsx';
 import { buildModel } from './engine/buildModel.js';
+import { InteractionProvider, useInteraction } from './interaction/InteractionContext.jsx';
+import { frameFromTrace } from './interaction/playback.js';
 
 import Header from './components/Header.jsx';
 import ScenarioBar from './components/ScenarioBar.jsx';
+import LensBar from './components/LensBar.jsx';
+import PlaybackBar from './components/PlaybackBar.jsx';
+import ScenarioComposer from './components/ScenarioComposer.jsx';
 import TabBar from './components/TabBar.jsx';
 import Pane from './components/Pane.jsx';
 import OsmMap from './components/OsmMap.jsx';
@@ -25,8 +30,9 @@ const GLOBAL_STYLE = `
   .evcard { cursor: pointer; transition: border-color .2s; }
   .evcard:hover { border-color: ${C.copper} !important; }
   button:focus-visible, .node:focus-visible { outline: 2px solid ${C.copper}; outline-offset: 2px; }
+  .pulse { animation: pulse 1.4s ease-in-out infinite; }
   @media (prefers-reduced-motion: reduce) { .pulse { animation: none !important; } }
-  @keyframes pulse { 0%,100% { opacity:.35 } 50% { opacity:.9 } }
+  @keyframes pulse { 0%,100% { opacity:.4 } 50% { opacity:1 } }
   .mono { font-family: 'IBM Plex Mono', ui-monospace, monospace; }
   .sscim-map { background: ${C.panel2}; }
   .sscim-map .osm-soft { filter: brightness(.75) invert(1) contrast(1.1) hue-rotate(200deg) saturate(.3); }
@@ -87,12 +93,26 @@ function VaultGate() {
   return <Dashboard />;
 }
 
+/* Provides the shared interaction controller, then renders the real
+   dashboard body. Splitting these means DashboardBody can consume
+   useInteraction() while the provider still lives above it. */
 function Dashboard() {
+  const { data } = useVault();
+  return (
+    <InteractionProvider defaultSelected={{ type: 'event', id: data.EVENTS[0]?.id }}>
+      <DashboardBody />
+    </InteractionProvider>
+  );
+}
+
+function DashboardBody() {
   const { data, engine, source } = useVault();
   const { EVENTS, SCENARIOS, COMPANY_BY_ID } = data;
   const { STAGE_BY_ID, OUT, COMPANY_CRITICALITY, COMPANY_RANK } = engine;
 
-  const [sel, setSel] = useState({ type: "event", id: EVENTS[0]?.id });
+  const { state, setSel, clear, setScenarioActive, playback } = useInteraction();
+  const sel = state.selected || { type: 'event', id: EVENTS[0]?.id };
+
   const [scenarioId, setScenarioId] = useState("none");
   const [tab, setTab] = useState("flow");
   const [feedTab, setFeedTab] = useState("events");
@@ -161,8 +181,59 @@ function Dashboard() {
   }, [tourTarget, wide]);
 
   const scenario = scenarioId === "custom" ? custom : SCENARIOS.find((s) => s.id === scenarioId);
+  const scenarioActive = Boolean(scenario?.event);
 
   const model = useMemo(() => buildModel({ data, engine, scenario }), [scenarioId, custom]);
+
+  /* Hop-by-hop propagation trace for the active scenario shock — the
+     playback source of truth (see engine.eventTrace / playback.js). Its
+     final field is the scenario shock's own propagated field; the engine's
+     baseline/active fields are never touched, so enabling playback cannot
+     change any model result. Recomputed only when the scenario changes. */
+  const trace = useMemo(
+    () => (scenarioActive && scenario?.event ? engine.eventTrace(scenario.event) : null),
+    [scenarioId, custom] // eslint-disable-line react-hooks/exhaustive-deps
+  );
+  const frame = useMemo(
+    () => frameFromTrace(trace, state.playback.step, STAGE_BY_ID),
+    [trace, state.playback.step, STAGE_BY_ID]
+  );
+  // Overlay the map/graph with the playback frame only once the user has
+  // engaged playback (play or manual step); at rest the panels keep showing
+  // the normal lens so the scenario Δ heatmap stays available.
+  const playbackEngaged = Boolean(trace) && (state.playback.status === 'playing' || state.playback.status === 'paused');
+  const pb = playbackEngaged ? frame : null;
+
+  const resetScenario = () => { setScenarioId("none"); setCustom(null); };
+  const playScenario = () => playback({ status: 'playing', step: 0 });
+
+  /* Build a scenario composed directly on the map/graph (§10): run it
+     through the same custom-scenario path every other scenario uses. If the
+     user asked to Play, the scenario-sync effect below starts playback once
+     the new trace exists. */
+  const playAfterBuildRef = useRef(false);
+  const buildFromDraft = (scenarioObj, { play } = {}) => {
+    playAfterBuildRef.current = Boolean(play);
+    setCustom(scenarioObj);
+    setScenarioId("custom");
+  };
+
+  /* Keep the interaction controller in sync with the active scenario:
+     activating a scenario flips the lens to Scenario Δ and opens the
+     synthetic { type:'scenario' } entity in Layer 3 (so the old event
+     explanation no longer masquerades as the scenario's — §9);
+     deactivating clears that synthetic selection if it is still showing.
+     Also (re)arms the playback clock to the new trace length at step 0 —
+     or starts it playing when a Build & Play was just requested. */
+  useEffect(() => {
+    setScenarioActive(scenarioActive);
+    const startPlaying = playAfterBuildRef.current && (trace?.trace.length || 0) > 0;
+    playback({ length: trace?.trace.length || 0, step: 0, status: startPlaying ? 'playing' : 'idle' });
+    playAfterBuildRef.current = false;
+    if (scenarioActive) setSel({ type: 'scenario', id: 'active' });
+    else if (state.selected?.type === 'scenario') clear();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [scenarioId, custom]);
 
   const hl = useMemo(() => {
     const s = new Set(), c = new Set();
@@ -180,9 +251,14 @@ function Dashboard() {
       const co = COMPANY_BY_ID[sel.id];
       c.add(co.country);
       Object.entries(COMPANY_CRITICALITY[sel.id].field).forEach(([sid, v]) => Math.abs(v) > 0.15 && s.add(sid));
+    } else if (sel.type === "scenario" && scenario?.event) {
+      // Make the active scenario visually obvious on both maps by lighting
+      // its declared source stages/countries (§16 acceptance criterion).
+      (scenario.event.stages || []).forEach((x) => { s.add(x); (OUT[x] || []).forEach((d) => s.add(d)); });
+      (scenario.event.countries || []).forEach((x) => c.add(x));
     }
     return { s, c };
-  }, [sel]);
+  }, [sel, scenarioId, custom]);
 
   const whatChanged = !model.scenarioActive
     ? "Jul 03 (snapshot) — AI-chip export-control shock spread from NVIDIA / SK hynix / TSMC outward: highest company contribution now in packaging and systems tiers."
@@ -203,6 +279,11 @@ function Dashboard() {
       />
 
       <ScenarioBar model={model} whatChanged={whatChanged} />
+      <LensBar scenarioName={scenario?.name} />
+      {(state.draft.builderMode || state.draft.sources.length > 0) && (
+        <ScenarioComposer onBuild={buildFromDraft} onReset={resetScenario} activeIsCustom={scenarioId === 'custom'} />
+      )}
+      {scenarioActive && <PlaybackBar frame={frame} scenarioName={scenario?.name} />}
 
       {showBuilder && <ScenarioBuilder onClose={() => setShowBuilder(false)} onRun={(sc) => { setCustom(sc); setScenarioId("custom"); setShowBuilder(false); }} />}
 
@@ -211,20 +292,20 @@ function Dashboard() {
       {wide ? (
         <>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1.9fr", gap: 1, background: C.line }}>
-            <Pane id="pane-map" highlight={tourTarget === "pane-map"} title="LAYER 1 · WORLD MAP · OPENSTREETMAP"><OsmMap sel={sel} setSel={setSel} hl={hl} model={model} scenarioActive={model.scenarioActive} /></Pane>
-            <Pane id="pane-flow" highlight={tourTarget === "pane-flow"} title="LAYER 2 · INDUSTRY FLOW · TAP A STAGE FOR ITS SUBSECTION"><FlowGraph sel={sel} setSel={setSel} hl={hl} model={model} scenarioActive={model.scenarioActive} /></Pane>
+            <Pane id="pane-map" highlight={tourTarget === "pane-map"} title="LAYER 1 · WORLD MAP · OPENSTREETMAP"><OsmMap model={model} hl={hl} pb={pb} /></Pane>
+            <Pane id="pane-flow" highlight={tourTarget === "pane-flow"} title="LAYER 2 · INDUSTRY FLOW · TAP A STAGE FOR ITS SUBSECTION"><FlowGraph sel={sel} setSel={setSel} hl={hl} model={model} scenarioActive={model.scenarioActive} pb={pb} /></Pane>
           </div>
           <div style={{ borderTop: `1px solid ${C.line}` }}>
             <Pane id="pane-intel" highlight={tourTarget === "pane-intel"} title="LAYER 3 · INTELLIGENCE PANEL">
-              <Intel sel={sel} setSel={setSel} model={model} scenarioActive={model.scenarioActive} feedTab={feedTab} setFeedTab={setFeedTab} horizontal />
+              <Intel sel={sel} setSel={setSel} model={model} scenario={scenario} onResetScenario={resetScenario} onPlayScenario={playScenario} scenarioActive={model.scenarioActive} feedTab={feedTab} setFeedTab={setFeedTab} horizontal />
             </Pane>
           </div>
         </>
       ) : (
         <>
-          {tab === "map" && <Pane id="pane-map" highlight={tourTarget === "pane-map"} title="LAYER 1 · WORLD MAP · OPENSTREETMAP"><OsmMap sel={sel} setSel={setSel} hl={hl} model={model} scenarioActive={model.scenarioActive} /></Pane>}
-          {tab === "flow" && <Pane id="pane-flow" highlight={tourTarget === "pane-flow"} title="LAYER 2 · INDUSTRY FLOW"><FlowGraph sel={sel} setSel={setSel} hl={hl} model={model} scenarioActive={model.scenarioActive} /></Pane>}
-          {tab === "intel" && <Pane id="pane-intel" highlight={tourTarget === "pane-intel"} title="LAYER 3 · INTELLIGENCE PANEL"><Intel sel={sel} setSel={setSel} model={model} scenarioActive={model.scenarioActive} feedTab={feedTab} setFeedTab={setFeedTab} /></Pane>}
+          {tab === "map" && <Pane id="pane-map" highlight={tourTarget === "pane-map"} title="LAYER 1 · WORLD MAP · OPENSTREETMAP"><OsmMap model={model} hl={hl} pb={pb} /></Pane>}
+          {tab === "flow" && <Pane id="pane-flow" highlight={tourTarget === "pane-flow"} title="LAYER 2 · INDUSTRY FLOW"><FlowGraph sel={sel} setSel={setSel} hl={hl} model={model} scenarioActive={model.scenarioActive} pb={pb} /></Pane>}
+          {tab === "intel" && <Pane id="pane-intel" highlight={tourTarget === "pane-intel"} title="LAYER 3 · INTELLIGENCE PANEL"><Intel sel={sel} setSel={setSel} model={model} scenario={scenario} onResetScenario={resetScenario} onPlayScenario={playScenario} scenarioActive={model.scenarioActive} feedTab={feedTab} setFeedTab={setFeedTab} /></Pane>}
         </>
       )}
 

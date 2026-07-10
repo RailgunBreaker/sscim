@@ -101,6 +101,63 @@ describe('buildEngine() — scenario vs. baseline chain index', () => {
   });
 });
 
+describe('buildEngine() — propagation trace is a pure decomposition of the field', () => {
+  it('eventTrace(e).field equals eventField(e).field exactly (multi-source events)', () => {
+    const { engine, data } = fixtureEngine();
+    // pick an operational event with more than one source stage if available,
+    // else any operational event
+    const e = data.EVENTS.find((ev) => (ev.stages || []).length > 1) || data.EVENTS[0];
+    const plain = engine.eventField(e).field;
+    const traced = engine.eventTrace(e).field;
+    expect(traced).toEqual(plain);
+  });
+
+  it('the combined trace cumulative at the final step reproduces the field', () => {
+    const { engine, data } = fixtureEngine();
+    const scenario = { id: 's', sev: 10, daysAgo: 0, stages: ['s1', 's2'], countries: ['us'] };
+    const { field, trace } = engine.eventTrace(scenario);
+    const finalCumulative = trace.length ? trace[trace.length - 1].cumulativeContribution : {};
+    Object.keys(field).forEach((id) => {
+      expect(finalCumulative[id] ?? 0).toBeCloseTo(field[id], 12);
+    });
+  });
+
+  it('buildTrace exposes source stages at step 0 and reveals each node once', () => {
+    const { engine } = fixtureEngine();
+    const { trace } = engine.buildTrace([
+      { stageId: 's1', magnitude: 0.8, channel: 'both' },
+      { stageId: 's2', magnitude: 0.8, channel: 'both' },
+    ]);
+    if (trace.length) {
+      expect(trace[0].step).toBe(0);
+      expect(trace[0].nodes).toEqual(expect.arrayContaining(['s1', 's2']));
+      const seen = [];
+      trace.forEach((s) => s.nodes.forEach((n) => seen.push(n)));
+      expect(new Set(seen).size).toBe(seen.length);
+    }
+  });
+});
+
+describe('buildEngine() — in-app scenario carries its own direction', () => {
+  it('an inline mitigating assumption flips the sign vs the adverse id default', () => {
+    const { engine } = fixtureEngine();
+    const base = { id: 'custom', sev: 8, daysAgo: 0, stages: ['s1'], countries: [] };
+    const adverse = engine.eventCentralMagnitude(base); // id "custom" defaults to adverse
+    const mitigating = engine.eventCentralMagnitude({ ...base, assumption: { direction: 'mitigating', channel: 'downstream', operational: true } });
+    expect(adverse.magnitude).toBeGreaterThan(0);
+    expect(mitigating.magnitude).toBeLessThan(0);
+    expect(Math.abs(mitigating.magnitude)).toBeCloseTo(Math.abs(adverse.magnitude), 12);
+  });
+
+  it('topPaths returns a source→target route over the fixture chain', () => {
+    const { engine } = fixtureEngine();
+    const paths = engine.topPaths('s1', 's5');
+    expect(paths.length).toBeGreaterThan(0);
+    expect(paths[0].nodes[0]).toBe('s1');
+    expect(paths[0].nodes.at(-1)).toBe('s5');
+  });
+});
+
 describe('buildEngine() — every score finite and within its documented range', () => {
   it('STRUCTURAL_VULNERABILITY and NETWORK_INFLUENCE are within [0,10]', () => {
     const { engine, data } = fixtureEngine();
