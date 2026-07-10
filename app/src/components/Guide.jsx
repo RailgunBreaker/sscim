@@ -4,10 +4,25 @@ import { LANGV, t } from '../i18n/index.js';
 import { onEnterSpace } from '../utils/a11y.js';
 import { useModalA11y } from './useModalA11y.js';
 
-/* Step -> the DOM id (a Pane or a Header button, see App.jsx/Header.jsx)
-   that step is actually about. Shared across languages since ids never
-   change with locale. */
-const STEP_TARGET = { 1: 'pane-intel', 2: 'pane-flow', 3: 'pane-intel', 4: 'pane-intel', 5: 'header-scenarios', 6: 'btn-briefing', 7: 'btn-methodology' };
+/* Step -> what to highlight. Most steps just need a DOM id (a Pane or a
+   Header button — see App.jsx/Header.jsx), but "drill into a company"
+   and "company rank" describe content that only appears inside the
+   Intel panel's own COMPANIES tab (it defaults to "events"), and step 3
+   specifically describes a company's detail view — so those two carry a
+   richer descriptor (see App.jsx's handleHighlight) that also switches
+   Intel's internal tab and selects the #1-ranked company, instead of
+   just glowing an outer pane whose visible content doesn't match what
+   the step is talking about. Shared across languages since ids/keys
+   never change with locale. */
+const STEP_TARGET = {
+  1: { id: 'pane-intel', feedTab: 'events' },
+  2: { id: 'pane-flow' },
+  3: { id: 'pane-intel', feedTab: 'companies', selectTopCompany: true },
+  4: { id: 'pane-intel', feedTab: 'companies' },
+  5: { id: 'header-scenarios' },
+  6: { id: 'btn-briefing' },
+  7: { id: 'btn-methodology' },
+};
 
 const EN_TITLE = {
   1: 'Start with the event feed (Intelligence panel)',

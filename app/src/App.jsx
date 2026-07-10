@@ -84,7 +84,7 @@ function VaultGate() {
 function Dashboard() {
   const { data, engine, source } = useVault();
   const { EVENTS, SCENARIOS, COMPANY_BY_ID } = data;
-  const { STAGE_BY_ID, OUT, COMPANY_CRITICALITY } = engine;
+  const { STAGE_BY_ID, OUT, COMPANY_CRITICALITY, COMPANY_RANK } = engine;
 
   const [sel, setSel] = useState({ type: "event", id: EVENTS[0]?.id });
   const [scenarioId, setScenarioId] = useState("none");
@@ -110,6 +110,22 @@ function Dashboard() {
      drops any lingering highlight. */
   const openGuide = () => { setShowGuide(true); setTourTarget(null); setGuideKey((k) => k + 1); };
 
+  /* Guided tour: a step can target more than just a DOM id to glow —
+     "drill into a company" and "company rank" only make sense once
+     something is actually showing in the Intel panel's own COMPANIES
+     tab, which defaults to "events" and doesn't automatically follow the
+     tour. Guide.jsx passes either a plain DOM-id string or a small
+     descriptor { id, feedTab, selectTopCompany }; this normalizes it and
+     drives feedTab/sel so the highlighted pane shows the content the
+     step is actually describing, not just an empty/unrelated view. */
+  const handleHighlight = (target) => {
+    if (!target) { setTourTarget(null); return; }
+    const { id, feedTab: ft, selectTopCompany } = typeof target === "string" ? { id: target } : target;
+    setTourTarget(id);
+    if (ft) setFeedTab(ft);
+    if (selectTopCompany && COMPANY_RANK[0]) setSel({ type: "company", id: COMPANY_RANK[0].id });
+  };
+
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 1080px)");
     const fn = () => setWide(mq.matches);
@@ -117,19 +133,25 @@ function Dashboard() {
     return () => mq.removeEventListener("change", fn);
   }, []);
 
-  /* Guided tour: clicking a step in the in-app Guide sets tourTarget to a
-     DOM id (a Pane's id or a Header button's id); this effect makes sure
-     the target is actually visible — switching tabs on the narrow layout
-     if needed — then scrolls it into view. The .tour-target CSS class
-     (GLOBAL_STYLE) supplies the pulsing highlight ring itself. */
+  /* Makes sure the current tourTarget is actually visible — switching
+     tabs on the narrow layout if needed — then scrolls it into view. The
+     .tour-target CSS class (GLOBAL_STYLE) supplies the pulsing highlight
+     ring itself. Waits two animation frames (not one) before measuring:
+     a single rAF can still land before React has painted a tab/feedTab
+     switch that was set in the same render pass, which is exactly what
+     made the Layer-3 target for "drill into a company" / "company rank"
+     feel like it was scrolling to the wrong (or no) place. */
   useEffect(() => {
     if (!tourTarget) return;
     const paneTab = { "pane-map": "map", "pane-flow": "flow", "pane-intel": "intel" }[tourTarget];
     if (paneTab && !wide) setTab(paneTab);
-    const raf = requestAnimationFrame(() => {
-      document.getElementById(tourTarget)?.scrollIntoView({ behavior: "smooth", block: "center" });
+    let raf2;
+    const raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(() => {
+        document.getElementById(tourTarget)?.scrollIntoView({ behavior: "smooth", block: "center" });
+      });
     });
-    return () => cancelAnimationFrame(raf);
+    return () => { cancelAnimationFrame(raf1); if (raf2) cancelAnimationFrame(raf2); };
   }, [tourTarget, wide]);
 
   const scenario = scenarioId === "custom" ? custom : SCENARIOS.find((s) => s.id === scenarioId);
@@ -205,7 +227,7 @@ function Dashboard() {
         <Guide
           key={guideKey}
           onClose={() => { setShowGuide(false); setTourTarget(null); }}
-          tourTarget={tourTarget} onHighlight={setTourTarget}
+          tourTarget={tourTarget} onHighlight={handleHighlight}
         />
       )}
       {showBriefing && <Briefing onClose={() => setShowBriefing(false)} model={model} scenario={scenario} />}
