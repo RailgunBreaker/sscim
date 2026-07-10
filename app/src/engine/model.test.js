@@ -78,6 +78,15 @@ describe('buildEngine() — company vulnerability vs. contribution vs. criticali
     const largeShare = { id: 'tmp', name: 'tmp', country: 'us', stakes: { s1: 0.9 } };
     expect(engine.companyCriticality(largeShare).value).toBeGreaterThanOrEqual(engine.companyCriticality(smallShare).value);
   });
+
+  it('criticality is normalized against the most critical company in the snapshot, not an unreachable theoretical ceiling', () => {
+    const { engine, data } = fixtureEngine();
+    const values = data.COMPANIES.map((c) => engine.COMPANY_CRITICALITY[c.id].value);
+    // the most critical company in the set should land at (or essentially at) the
+    // top of the 0-10 scale — not squashed into a sliver near 0 the way dividing
+    // by the sum of network influence across every stage would produce.
+    expect(Math.max(...values)).toBeCloseTo(10, 6);
+  });
 });
 
 describe('buildEngine() — scenario vs. baseline chain index', () => {

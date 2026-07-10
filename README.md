@@ -207,9 +207,9 @@ $$\text{contribution}_c = \sum_{s\in S_c}\text{share}_{c,s}\cdot\max(0,\text{fie
 
 Share-**weighted**: market share does not cancel — a larger stake at the same impact level always yields a larger contribution. (The earlier version divided by the sum of company shares in the exposure formula, which made market share cancel out algebraically for any single-stage company — a company with 5% share and one with 50% share of the same stage produced an identical number. Fixed.) If a stage's disclosed company shares sum to more than 1, shares are normalized for this computation and flagged as "within modeled sample."
 
-$$\text{criticality}_c = 10\cdot\frac{\sum_n \max(0,\text{propagate}_{\text{both}}(\text{stakes}_c))_n\cdot NI_n}{\sum_n NI_n}$$
+$$\text{raw}_c = \frac{\sum_n \max(0,\text{propagate}_{\text{both}}(\text{stakes}_c))_n\cdot NI_n}{\sum_n NI_n}, \qquad \text{criticality}_c = 10\cdot\frac{\text{raw}_c}{\max_k \text{raw}_k}$$
 
-"If this company were fully disrupted": inject a shock at every stage it occupies (sized to its within-stage share), propagate in both directions, and take the network-influence-weighted mean. Increasing a company's market share can never reduce this number.
+"If this company were fully disrupted": inject a shock at every stage it occupies (sized to its within-stage share), propagate in both directions, and take the network-influence-weighted mean — then normalize against the largest raw value actually achieved across every company in the current snapshot, the same max-observed approach §4.2's network influence uses, rather than the theoretical ceiling of every stage saturating at once. That ceiling is practically unreachable by any real company footprint (even a company touching all 24 stages via propagation came out under 2 on a nominal 0–10 scale), which squashed every company's criticality into a sliver near 0 and made the "0–10" framing misleading — normalizing against the observed maximum instead means the single most systemically critical company in the snapshot scores at (or near) 10, and increasing a company's market share still can never reduce its own number.
 
 ### 4.10 Capital Power
 

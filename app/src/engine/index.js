@@ -237,10 +237,12 @@ export function buildEngine({ STAGES, FLOW_EDGES, COMPANIES, CUSTOMERS, POLICIES
     return total;
   }
 
-  function companyCriticality(c, priors = MODEL_PRIORS) {
+  function companyCriticalityRaw(c, priors = MODEL_PRIORS) {
     // "If this company were fully disrupted" — inject a shock at every
     // stage it occupies, sized to its within-stage share, propagate in
     // both directions, and take the network-influence-weighted mean.
+    // Unnormalized: this is the raw NI-weighted mean impact, before the
+    // max-observed scaling companyCriticality() applies below.
     const perStageFields = Object.entries(c.stakes).map(([sid, share]) => propagateSignedSource(sid, clampSigned(share), 'both', priors));
     const field = {};
     stageIds.forEach((id) => {
@@ -249,7 +251,25 @@ export function buildEngine({ STAGES, FLOW_EDGES, COMPANIES, CUSTOMERS, POLICIES
     });
     let num = 0, den = 0;
     stageIds.forEach((id) => { const w = NETWORK_INFLUENCE[id] ?? 0; num += adverseOnly(field[id]) * w; den += w; });
-    return { field, value: den ? clamp10(10 * (num / den)) : 0 };
+    return { field, raw: den ? num / den : 0 };
+  }
+
+  // Criticality is normalized against the largest raw score actually
+  // achieved across the current company set — the same max-observed
+  // approach NETWORK_INFLUENCE uses (§1) — rather than against the
+  // theoretical, practically-unreachable ceiling of every stage being
+  // saturated at once. Dividing by that ceiling squashed every real
+  // company's score into a sliver near 0 (the most systemically
+  // important company in the snapshot scored under 2/10, indistinguishable
+  // from a minor one at ~1/10). This is a strictly increasing rescaling of
+  // the same raw number, so "larger market share never reduces
+  // criticality" still holds — it just means the single most critical
+  // company in the current snapshot now scores at (or near) 10.
+  const MAX_CRITICALITY_RAW = Math.max(...COMPANIES.map((c) => companyCriticalityRaw(c).raw), 1e-9);
+
+  function companyCriticality(c, priors = MODEL_PRIORS) {
+    const { field, raw } = companyCriticalityRaw(c, priors);
+    return { field, value: clamp10(10 * (raw / MAX_CRITICALITY_RAW)) };
   }
 
   const COMPANY_CRITICALITY = Object.fromEntries(COMPANIES.map((c) => [c.id, companyCriticality(c)]));

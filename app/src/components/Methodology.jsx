@@ -134,8 +134,8 @@ export default function Methodology({ onClose }) {
           Share-<b>independent</b>: the average adverse impact across the stages the company occupies, regardless of its relative size there.
           <F tex={"\\mathrm{contribution}_c = \\sum_{s\\in S_c}\\mathrm{share}_{c,s}\\cdot\\max(0,\\mathrm{field}_s)\\cdot EW_s"} />
           Share-<b>weighted</b>: market share does not cancel — a larger stake at the same impact level always yields a larger contribution. If a stage's disclosed company shares sum to more than 1, shares are normalized for this computation and flagged as "within modeled sample."
-          <F tex={"\\mathrm{criticality}_c = 10\\cdot\\dfrac{\\sum_n \\max(0,\\mathrm{propagate}_{\\text{both}}(\\mathrm{stakes}_c))_n\\cdot NI_n}{\\sum_n NI_n}"} />
-          "If this company were fully disrupted": inject a shock at every stage it occupies (sized to its within-stage share), propagate in both directions, and take the network-influence-weighted mean. Increasing a company's market share can never reduce this number.
+          <F tex={"\\mathrm{raw}_c = \\dfrac{\\sum_n \\max(0,\\mathrm{propagate}_{\\text{both}}(\\mathrm{stakes}_c))_n\\cdot NI_n}{\\sum_n NI_n},\\qquad \\mathrm{criticality}_c = 10\\cdot\\dfrac{\\mathrm{raw}_c}{\\max_k \\mathrm{raw}_k}"} />
+          "If this company were fully disrupted": inject a shock at every stage it occupies (sized to its within-stage share), propagate in both directions, and take the network-influence-weighted mean — then normalize against the largest raw value actually achieved across every company in the snapshot, the same max-observed approach network influence uses (§1), rather than the theoretical, practically-unreachable ceiling of every stage saturating at once (which squashed every company's score into a sliver near 0, indistinguishable from each other). Increasing a company's market share can never reduce this number, and the single most critical company in the current snapshot scores at (or near) 10.
         </S>
 
         <S n="10" t="CAPITAL LAYER (sample ownership data)">

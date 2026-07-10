@@ -110,8 +110,8 @@ export default function Detail({ sel, setSel, model, scenarioActive }) {
           <span>CONTRIBUTION <b style={{ fontSize: 16, color: C.copper }}>{contribution.toFixed(3)}</b><span style={{ color: C.faint }}> (share-weighted)</span></span>
         </div>
         <div className="mono" style={{ fontSize: 10, color: C.faint, marginBottom: 8, lineHeight: 1.5 }}>
-          Criticality = modeled chain effect if this company's production were fully disrupted (network-influence-weighted). Vulnerability = average adverse impact across its stages, independent of market share — a small and a large single-stage company can share this number. Contribution = market-share-weighted modeled effect; share does not cancel here.
-          <Tex tex={"\\mathrm{criticality}_c=\\mathrm{clamp}_{10}\\!\\left(10\\cdot\\frac{\\sum_n \\max(0,\\mathrm{field}_n)\\cdot NI_n}{\\sum_n NI_n}\\right)"} />
+          Criticality = modeled chain effect if this company's production were fully disrupted (network-influence-weighted, then scaled against the most critical company in the snapshot — so 10 means "the most systemically critical company here," not a theoretical ceiling no company can reach). Vulnerability = average adverse impact across its stages, independent of market share — a small and a large single-stage company can share this number. Contribution = market-share-weighted modeled effect; share does not cancel here.
+          <Tex tex={"\\mathrm{criticality}_c=\\mathrm{clamp}_{10}\\!\\left(10\\cdot\\frac{\\mathrm{raw}_c}{\\max_k \\mathrm{raw}_k}\\right),\\quad \\mathrm{raw}_c=\\frac{\\sum_n \\max(0,\\mathrm{field}_n)\\cdot NI_n}{\\sum_n NI_n}"} />
         </div>
         <div className="mono" style={{ fontSize: 9, letterSpacing: 2, color: C.dim, margin: "8px 0 4px" }}>PRODUCTION FOOTPRINT (WITHIN-STAGE SHARE)</div>
         {Object.entries(co.stakes).sort((a, b) => b[1] - a[1]).map(([sid, sh]) => (
