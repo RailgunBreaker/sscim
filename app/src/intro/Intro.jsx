@@ -10,10 +10,12 @@ const STYLE = `
   .wrap{max-width:820px;margin:0 auto;padding:0 20px}
   a{color:var(--copper);text-decoration:none}
   header{border-bottom:1px solid var(--line);padding:14px 0;position:sticky;top:0;background:rgba(12,17,28,.92);backdrop-filter:blur(6px);z-index:10}
-  header .wrap{display:flex;align-items:center;gap:14px;flex-wrap:wrap;max-width:980px}
+  header .wrap{display:flex;align-items:center;gap:12px;flex-wrap:wrap;max-width:980px}
   .logo{font-weight:700;font-size:19px;letter-spacing:1px}
-  .btn{display:inline-block;border-radius:5px;padding:8px 16px;font-weight:700;font-size:13.5px;border:1px solid var(--copper)}
+  .badge{font-size:9px;letter-spacing:1.5px;color:var(--amber);border:1px solid var(--amber);border-radius:3px;padding:2px 7px;font-family:'IBM Plex Mono',monospace;white-space:nowrap}
+  .btn{display:inline-block;border-radius:5px;padding:8px 16px;font-weight:700;font-size:13.5px;border:1px solid var(--copper);transition:transform .15s ease,box-shadow .15s ease}
   .btn.solid{background:var(--copper);color:#0C111C}
+  .btn:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(201,138,63,.22)}
   h1{font-size:clamp(26px,4.5vw,38px);line-height:1.15;margin:48px 0 10px}
   h1 em{color:var(--copper);font-style:normal}
   .lede{color:var(--dim);font-size:16px;max-width:640px;margin-bottom:8px}
@@ -31,21 +33,24 @@ const STYLE = `
   .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--dim);margin:10px 0}
   .legend span::before{content:"●";margin-right:5px}
   .g::before{color:var(--green)} .a::before{color:var(--amber)} .r::before{color:var(--red)} .c::before{color:var(--copper)}
-  .formula{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:10px 14px;font-size:11.5px;overflow-x:auto;margin:10px 0}
-  .langbar b{cursor:pointer;border:1px solid var(--line);border-radius:3px;padding:2px 7px;font-size:10px;color:var(--faint);font-weight:700}
+  .formula{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:12px 14px;font-size:11.5px;overflow-x:auto;margin:10px 0}
+  .formula > div + div{margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}
+  .langbar b{cursor:pointer;border:1px solid var(--line);border-radius:3px;padding:2px 7px;font-size:10px;color:var(--faint);font-weight:700;transition:background .15s ease,color .15s ease}
   .langbar b.on{background:var(--copper);color:#0C111C;border-color:var(--copper)}
+  .disclaimer{border:1px solid var(--copperDim);background:rgba(223,168,61,.06);border-radius:6px;padding:12px 14px;color:var(--amber);font-size:11.5px;line-height:1.7;margin:14px 0}
   footer{margin-top:56px;padding:24px 0;border-top:1px solid var(--line);font-size:10.5px;color:var(--faint);line-height:1.7}
+  @media (max-width:640px){ header .wrap{gap:8px} .badge{display:none} }
 `;
 
 const Html = ({ tag: Tag = 'span', html, ...rest }) => <Tag {...rest} dangerouslySetInnerHTML={{ __html: html }} />;
 
-function Step({ n, titleKey, tipKey, t, children }) {
+function Step({ n, titleKey, tipKey, bodyKey, t }) {
   return (
     <div className="step">
       <div className="n">{n}</div>
       <div>
         <h3>{t(titleKey)}</h3>
-        {children}
+        <Html tag="p" html={t(bodyKey)} />
         {tipKey && <div className="tip">{t(tipKey)}</div>}
       </div>
     </div>
@@ -64,6 +69,7 @@ export default function Intro() {
         <div className="wrap">
           <span className="logo">SSCIM</span>
           <span className="k mono">INTRODUCTION & USER GUIDE</span>
+          <span className="badge">RESEARCH PROTOTYPE</span>
           <span className="langbar mono" style={{ marginLeft: 'auto', display: 'flex', gap: 3 }}>
             {Object.entries(LANG_LABELS).map(([l, label]) => (
               <b key={l} className={lang === l ? 'on' : ''} onClick={() => setLang(l)}>{label}</b>
@@ -78,63 +84,46 @@ export default function Intro() {
         <p className="lede">{t('lede')}</p>
 
         <h2>{t('h2_1')}</h2>
-        <p>Semiconductors are the most geopolitically concentrated industry on earth: one company in the Netherlands makes every EUV lithography machine, one island fabricates most leading-edge logic, one country dominates HBM memory. Excellent static maps of this structure exist — but they can't tell you <strong>what changed today, which nodes are newly exposed, and how a shock will travel</strong>.</p>
-        <p>SSCIM fills that gap with three synchronized layers over one computational engine:</p>
+        <p>{t('s1p1')}</p>
+        <p>{t('s1p2')}</p>
         <div className="card">
-          <p><strong>Layer 1 — World Map.</strong> Real OpenStreetMap geography with all 16 countries participating in the chain. Node size shows how much of the chain a country touches; color shows its current risk level. Every country score is derived from its stage participation — nothing is hand-set.</p>
-          <p><strong>Layer 2 — Industry Flow.</strong> The complete production pipeline: 24 stages from research/IP and EDA through wafers, chemicals, five equipment categories, three fab types, chip products, packaging, and end markets — connected by 34 value-weighted dependency edges.</p>
-          <p><strong>Layer 3 — Intelligence Panel.</strong> The event feed, the company impact ranking, and a detail view that always shows its work: score breakdowns, engine arithmetic, first- and second-order effects, and hop-by-hop impact spread.</p>
+          <Html tag="p" html={t('layer1')} />
+          <Html tag="p" html={t('layer2')} />
+          <Html tag="p" html={t('layer3')} />
         </div>
-        <p>Underneath sits <strong>one propagation engine with three uses</strong>: live events, hypothetical scenarios, and company-disruption simulations all run through the identical code path. When an event lands, it decays over time (half-strength in about twelve days), travels downstream along value-weighted edges, and echoes one hop upstream — and every affected node, company, and country updates at once.</p>
+        <p>{t('s1Under')}</p>
 
         <h2>{t('h2_2')}</h2>
         <div className="legend">
-          <span className="g">Moderate risk &lt; 5.5</span>
-          <span className="a">Elevated 5.5 – 7.5</span>
-          <span className="r">High ≥ 7.5</span>
-          <span className="c">Copper = importance, value flow, and scenario deltas</span>
+          <span className="g">{t('legendG')}</span>
+          <span className="a">{t('legendA')}</span>
+          <span className="r">{t('legendR')}</span>
+          <span className="c">{t('legendC')}</span>
         </div>
-        <p>In the flow graph, <strong>edge thickness</strong> is the share of value flowing down that path, and each stage's <strong>dot and border size</strong> is its computed importance (structural centrality blended with economic value). The <strong>WHAT CHANGED</strong> strip at the top always summarizes the current state in one line — it turns copper when a scenario is active.</p>
+        <Html tag="p" html={t('s2Body')} />
 
         <h2>{t('h2_3')}</h2>
 
-        <Step n="1" titleKey="step1" tipKey="tip1" t={t}>
-          <p>Start with the top card — the U.S. export-control expansion. The map highlights affected countries, the flow highlights affected stages, and the detail view shows the engine arithmetic (severity × confidence × time decay), the chain-impact index, and the <strong>impact spread tree</strong>: source companies at hop 0, their direct downstream at hop 1, second-order at hop 2, each with an exposure number.</p>
-        </Step>
-
-        <Step n="2" titleKey="step2" t={t}>
-          <p>Tap any stage in the flow — say <strong>Deposition</strong>. A subsection opens beneath the graph listing the major companies with their market shares (Applied Materials 30%, Lam Research 15%, Tokyo Electron 15%…), their current shock exposure, and each one's top customers with percentages.</p>
-        </Step>
-
-        <Step n="3" titleKey="step3" tipKey="tip3" t={t}>
-          <p>Tap a company card. You get its <strong>Company Impact Index</strong> — a simulated full disruption injected as 10 × market share at every stage it occupies and propagated through the engine — plus its production footprint, its customers and suppliers with sales shares, and two spread trees: the <strong>customer-graph view</strong> (ASML → TSMC 35% → NVIDIA/Apple…) and the structural stage-level view.</p>
-        </Step>
-
-        <Step n="4" titleKey="step4" t={t}>
-          <p>The second tab of the intelligence panel ranks every company by chain impact. TSMC, ASML and NVIDIA emerge at the top from the mathematics, not by assertion — tap any name to see why.</p>
-        </Step>
-
-        <Step n="5" titleKey="step5" t={t}>
-          <p>The header buttons inject simulated events — <strong>Taiwan Strait crisis</strong>, <strong>China materials ban</strong>, <strong>Export controls max</strong> — into the same engine. Copper +deltas appear on every affected stage and country; company exposures recompute. <strong>Baseline</strong> resets everything.</p>
-        </Step>
-
-        <Step n="6" titleKey="step6" t={t}>
-          <p>The <strong>⚡ GP Briefing</strong> button composes a full daily intelligence briefing from the current model state — what changed, most-shocked nodes, company exposure leaders, country risk board, watch-next — ready to copy. Run it in a scenario and you get the scenario briefing. This is the product GP News subscribers receive each morning.</p>
-        </Step>
-
-        <Step n="7" titleKey="step7" t={t}>
-          <p>The <strong>ⓘ Methodology</strong> button documents every formula, every propagation factor, which components are computed versus analyst judgment, and the known limitations. The <strong>? Guide</strong> button inside the app repeats this walkthrough in short form.</p>
-        </Step>
+        <Step n="1" titleKey="step1" tipKey="tip1" bodyKey="step1Body" t={t} />
+        <Step n="2" titleKey="step2" bodyKey="step2Body" t={t} />
+        <Step n="3" titleKey="step3" tipKey="tip3" bodyKey="step3Body" t={t} />
+        <Step n="4" titleKey="step4" bodyKey="step4Body" t={t} />
+        <Step n="5" titleKey="step5" bodyKey="step5Body" t={t} />
+        <Step n="6" titleKey="step6" bodyKey="step6Body" t={t} />
+        <Step n="7" titleKey="step7" bodyKey="step7Body" t={t} />
 
         <h2>{t('h2_4')}</h2>
         <div className="formula mono">
-          <div><Tex tex={"\\text{risk}=0.25\\,C_{\\text{choke}}+0.20\\,C_{\\text{geo}}+0.20\\,C_{\\text{policy}}+0.15\\,C_{\\text{subst}}+0.10\\,C_{\\text{shock}}+0.10\\,C_{\\text{mkt}}"} block /></div>
-          <div><Tex tex={"s_0=\\sigma\\cdot\\kappa\\cdot e^{-d/12},\\qquad f_{\\downarrow}=0.55(0.5+0.5w),\\qquad \\mathrm{CII}_c=\\frac{\\sum_n s_n I_n}{\\sum_n I_n},\\qquad e_{c,s}=\\text{share}_{c,s}\\times s_s"} block /></div>
+          <div><Tex tex={"\\text{struct}_n = w_{\\text{ni}}\\,NI_n + w_{\\text{geo}}\\,GEO_n + w_{\\text{pol}}\\,POL_n + w_{\\text{subst}}\\,\\text{subst}_n + w_{\\text{mkt}}\\,\\text{mkt}_n"} block /></div>
+          <div><Tex tex={"\\text{decay}(\\text{age},H)=2^{-\\text{age}/H},\\ H{=}12\\text{d}"} block /></div>
+          <div><Tex tex={"\\text{vulnerability}_c=10\\cdot\\overline{\\max(0,\\text{field})},\\qquad \\text{contribution}_c=\\textstyle\\sum_s \\text{share}_{c,s}\\cdot\\max(0,\\text{field}_s)\\cdot EW_s"} block /></div>
         </div>
-        <p>Four of six risk components are computed; two are declared analyst inputs, tagged as such on every breakdown bar. Explainability isn't a feature here — it's the entire trust model.</p>
+        <Html tag="p" html={t('s4Body')} />
 
         <h2>{t('h2_5')}</h2>
-        <p>The current build has been through a <strong>best-effort real-data pass</strong>: company market shares, customer relationships and shareholder stakes now draw on public filings and market-share trackers wherever a reliable source exists, and headline corrections are logged with their citation in the vault's data notes. Figures without a logged citation are still carried-over analyst judgment, not yet individually sourced — policy entries and events remain illustrative. Propagation parameters get calibrated against documented historical episodes before scores ship without any caveat. Everything SSCIM produces is descriptive supply-chain analysis — <strong>never investment advice</strong>.</p>
+        <div className="disclaimer">
+          <Html tag="span" html={t('s5Body')} />
+        </div>
 
         <p style={{ marginTop: 28 }}><a className="btn solid" href="sscim-app.html">{t('launchDashboardBottom')}</a></p>
       </div>
