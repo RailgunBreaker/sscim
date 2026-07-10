@@ -1,6 +1,7 @@
 import { Fragment } from 'react';
 import { C } from '../theme.js';
 import { useVault } from '../data/VaultContext.jsx';
+import { onEnterSpace } from '../utils/a11y.js';
 import Logo from './Logo.jsx';
 
 /* ================= Upstream origins: two supplier layers behind a company ================= */
@@ -29,12 +30,13 @@ export default function UpstreamTree({ cid, setSel }) {
               {col.rows.length === 0 && <div className="mono" style={{ fontSize: 10, color: C.faint }}>—</div>}
               {col.rows.map((r) => (
                 <div key={r.cid} className="evcard" onClick={() => setSel({ type: "company", id: r.cid })}
+                  role="button" tabIndex={0} onKeyDown={onEnterSpace(() => setSel({ type: "company", id: r.cid }))}
                   style={{ border: `1px solid ${C.line}`, borderLeft: `3px solid ${h === 2 ? C.copper : C.copperDim}`, borderRadius: 4, background: C.panel, padding: "5px 7px", marginBottom: 4 }}>
                   <div style={{ display: "flex", justifyContent: "space-between", gap: 6 }}>
                     <span style={{ fontSize: 11, fontWeight: 600, display: "flex", alignItems: "center", gap: 4 }}><Logo cid={r.cid} size={13} />{COMPANY_BY_ID[r.cid].name}</span>
                     {h < 2 && <span className="mono" style={{ fontSize: 10, color: C.dim }}>{(r.rel * 100).toFixed(0)}%</span>}
                   </div>
-                  <div className="mono" style={{ fontSize: 8.5, color: C.faint }}>{COUNTRY_NAMES[COMPANY_BY_ID[r.cid].country]}</div>
+                  <div className="mono" style={{ fontSize: 8.5, color: C.faint }}>HQ: {COUNTRY_NAMES[COMPANY_BY_ID[r.cid].country]}</div>
                 </div>
               ))}
             </div>

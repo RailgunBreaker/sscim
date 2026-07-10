@@ -1,4 +1,6 @@
 import { C } from '../theme.js';
+import { useVault } from '../data/VaultContext.jsx';
+import { useModalA11y } from './useModalA11y.js';
 import Tex from './Tex.jsx';
 
 const S = ({ n, t, children }) => (
@@ -11,51 +13,104 @@ const F = ({ tex, children }) => (
   <div className="mono" style={{ fontSize: 11, color: C.text, background: C.panel, border: `1px solid ${C.line}`, borderRadius: 4, padding: "6px 10px", margin: "5px 0", lineHeight: 1.6, overflowX: "auto", whiteSpace: "pre-wrap" }}>{tex ? <Tex tex={tex} block /> : children}</div>
 );
 
+/* Every formula below is transcribed directly from app/src/engine/{priors,
+   math,graph,index}.js and app/src/engine/event-assumptions.js — this
+   overlay exists so nothing is described differently here than what the
+   code actually computes. See MODEL_ROADMAP.md for the data-layer work
+   this model still needs before any of these numbers could be calibrated. */
 export default function Methodology({ onClose }) {
+  const { engine } = useVault();
+  const { MODEL_PRIORS } = engine;
+  const { ref, onKeyDown } = useModalA11y(onClose);
   return (
-    <div onClick={onClose} style={{ position: "fixed", inset: 0, background: "rgba(6,9,16,.85)", zIndex: 1200, display: "flex", alignItems: "center", justifyContent: "center", padding: 16 }}>
-      <div onClick={(e) => e.stopPropagation()} style={{ background: C.panel2, border: `1px solid ${C.copper}`, borderRadius: 8, maxWidth: 660, maxHeight: "85vh", overflowY: "auto", padding: "18px 20px", color: C.text }}>
+    <div onClick={onClose} role="dialog" aria-modal="true" aria-label="Model methodology" onKeyDown={onKeyDown} style={{ position: "fixed", inset: 0, background: "rgba(6,9,16,.85)", zIndex: 1200, display: "flex", alignItems: "center", justifyContent: "center", padding: 16 }}>
+      <div ref={ref} tabIndex={-1} onClick={(e) => e.stopPropagation()} style={{ background: C.panel2, border: `1px solid ${C.copper}`, borderRadius: 8, maxWidth: 660, maxHeight: "85vh", overflowY: "auto", padding: "18px 20px", color: C.text, outline: "none" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
-          <h3 style={{ margin: 0, fontSize: 16 }}>Risk & Impact Algorithm — v4 Methodology</h3>
+          <h3 style={{ margin: 0, fontSize: 16 }}>Model Methodology — {MODEL_PRIORS.modelVersion}</h3>
           <button onClick={onClose} style={{ background: "transparent", border: `1px solid ${C.line}`, color: C.dim, borderRadius: 4, padding: "3px 10px", cursor: "pointer", fontFamily: "inherit" }}>Close</button>
         </div>
-        <S n="0" t="RISK SCORE (per node)">
-          <F tex={"\\text{risk}=0.25\\,C_{\\text{choke}}+0.20\\,C_{\\text{geo}}+0.20\\,C_{\\text{policy}}+0.15\\,C_{\\text{subst}}+0.10\\,C_{\\text{shock}}+0.10\\,C_{\\text{mkt}}"} />
-          Four components computed, two declared analyst inputs — every breakdown bar is source-tagged.
+        <div className="mono" style={{ fontSize: 10, color: C.amber, background: "#2A1E14", border: `1px solid ${C.copperDim}`, borderRadius: 5, padding: "7px 10px", marginBottom: 12, lineHeight: 1.6 }}>
+          RESEARCH PROTOTYPE — a sensitivity/comparison tool over a frozen curated demonstration snapshot (dataset as of {MODEL_PRIORS.datasetAsOf}). Not a calibrated, causal, or probabilistic forecast; not measured trade flow; not investment advice. Every coefficient below is a declared, unvalidated prior — see §10 and MODEL_ROADMAP.md.
+        </div>
+
+        <S n="0" t="STRUCTURAL VULNERABILITY (per stage — time-invariant)">
+          Five components, renormalized to sum to 1 after excluding the event-driven term entirely. Three are graph/data-derived (network influence, geographic concentration, policy exposure); two are declared analyst judgments (substitutability, market sensitivity) — every breakdown bar is source-tagged [GRAPH/DATA] or [ANALYST].
+          <F tex={"\\mathrm{struct}_n = w_{\\mathrm{ni}}\\,NI_n + w_{\\mathrm{geo}}\\,GEO_n + w_{\\mathrm{pol}}\\,POL_n + w_{\\mathrm{subst}}\\,\\mathrm{subst}_n + w_{\\mathrm{mkt}}\\,\\mathrm{mkt}_n"} />
+          This never includes any event/scenario term — it is deliberately a separate, time-invariant number from the operational impact below (§4), so one score never stands in for both.
         </S>
-        <S n="1" t="STAGE IMPORTANCE & VALUE-WEIGHTED EDGES">
-          <F tex={"\\begin{aligned} I_n &= 10\\left(0.6\\,\\tfrac{C_{\\text{choke}}}{10}+0.4\\,\\tfrac{\\ln v_n}{\\ln v_{\\max}}\\right)\\\\[2pt] w_{a\\to b} &= \\tfrac{v_b}{\\sum_{c\\in\\mathrm{out}(a)} v_c},\\quad f_{\\downarrow}=0.55(0.5+0.5w),\\;\\; f_{\\uparrow}=0.30 \\end{aligned}"} />
+
+        <S n="1" t="NETWORK INFLUENCE (Leontief-style sensitivity proxy)">
+          For each stage: inject a unit adverse shock at that stage only, propagate it downstream over every reachable path (§3), weight each affected stage by its log-compressed economic weight, sum, then normalize 0–10 against the largest such sum in the graph.
+          <F tex={"NI_j = 10\\cdot\\dfrac{\\sum_n EW_n\\cdot\\left|\\mathrm{propagate}_{\\downarrow}(j\\!\\to\\!1)_n\\right|}{\\max_k \\sum_n EW_n\\cdot\\left|\\mathrm{propagate}_{\\downarrow}(k\\!\\to\\!1)_n\\right|},\\qquad EW_n=\\dfrac{\\ln(1+v_n)}{\\max_m \\ln(1+v_m)}"} />
+          This replaces raw graph-path-count "chokepoint centrality" (highly sensitive to how the graph happens to be drawn) with a magnitude-weighted propagation measure. It is a modeled sensitivity proxy, not a validated centrality metric or measured economic loss — the "CHOKE" name survives only as a compatibility alias; every visible label reads "Network influence."
         </S>
-        <S n="2" t="EVENT SHOCK & CHAIN IMPACT INDEX">
-          <F tex={"s_0=\\sigma\\cdot\\kappa_{\\text{conf}}\\cdot e^{-d/12},\\qquad \\mathrm{EII}=\\frac{\\sum_n s_n I_n}{\\sum_n I_n}"} />
+
+        <S n="2" t="DIRECTIONAL DEPENDENCE MATRICES (priors, not measured trade flow)">
+          Two distinct matrices replace the old single value-weighted edge. For every edge a→b (a=supplier, b=buyer):
+          <F tex={"D[b][a] = f_{\\downarrow}\\cdot\\underbrace{\\tfrac{1}{\\mathrm{indeg}(b)}}_{\\text{base input share}}\\cdot\\big(\\phi + (1-\\phi)\\cdot\\mathrm{spec}(a)\\big),\\qquad U[a][b] = \\dfrac{f_{\\uparrow}}{\\mathrm{outdeg}(a)}"} />
+          <F tex={`f_{\\downarrow}=${MODEL_PRIORS.downstreamTransmission},\\quad f_{\\uparrow}=${MODEL_PRIORS.upstreamTransmission},\\quad \\phi=${MODEL_PRIORS.specificityFloor}\\ (\\text{specificity floor}),\\quad \\mathrm{spec}(a)=\\mathrm{clamp}(\\mathrm{subst}_a/10,0,1)`} />
+          <b>D[b][a]</b> is a downstream <i>input-dependence</i> proxy: how much buyer stage b's output depends on supplier stage a, given b's in-degree (an equal-allocation prior across b's declared inputs) and a's substitutability-derived specificity. <b>U[a][b]</b> is an upstream <i>supplier-revenue-dependence</i> proxy: the demand-side echo felt by supplier a when buyer b is disrupted. Neither is a measured input–output coefficient or bilateral trade value — no facility/BOM/inventory data exists yet to build one (see MODEL_ROADMAP.md).
         </S>
-        <S n="3" t="COMPANY→COMPANY SPREAD (new in v4)">
-          The spread tree translates stage-level propagation to the company level. Stages are grouped by hop distance from the event source (hop 0, 1, 2 downstream); within each hop, every company's exposure is its within-stage production share multiplied by the propagated shock at that stage. Companies appear at their earliest hop; the top five per hop are shown.
-          <F tex={"e_{c,s}=\\text{share}_{c,s}\\times s_s,\\qquad \\bar e_c=\\frac{\\sum_s \\text{share}_{c,s}\\, s_s}{\\sum_s \\text{share}_{c,s}}"} />
-          This is how one event at ASML becomes measurable pressure on TSMC (hop 1), then NVIDIA and SK hynix (hop 2).
+
+        <S n="3" t="ALL-REACHABLE-PATHS PROPAGATION">
+          A shock at any stage propagates downstream (topological order, via D) and/or upstream (reverse-topological order, via U) across <i>every</i> reachable path in the graph — not a fixed two-hop cutoff. At each node, contributions from all its direct predecessors (downstream) or successors (upstream) are combined via the bounded noisy-OR below (§5); propagation along a path stops once a contribution's magnitude falls below the tolerance <Tex tex={`\\tau=${MODEL_PRIORS.contributionTolerance}`} />, not after a fixed number of hops. The stage graph is validated first (no dangling edges, no duplicate edges, no cycles) — an invalid graph surfaces as a diagnostic rather than silently propagating.
         </S>
-        <S n="3b" t="CUSTOMER GRAPH (sample revenue shares)">
-          A supplier→customer relationship dataset holds each company's customers and the share of the supplier's sales they represent (e.g., ASML → TSMC 35%; SK hynix → NVIDIA 45% of HBM). The customer-graph spread resolves hop-1/hop-2 at named-relationship level: hop-2 path weight = product of the two sales shares along the path. Sales-share percentages describe the supplier's revenue mix, not the customer's input dependence — the engine exposure number captures the latter via stage shares.
+
+        <S n="4" t="EVENT MAGNITUDE, DECAY & OPERATIONAL IMPACT">
+          <F tex={"s_0 = \\mathrm{sign}\\cdot\\mathrm{clamp}(\\mathrm{sev}/10,0,1)\\cdot\\mathrm{decay}(\\mathrm{age},H),\\qquad \\mathrm{decay}(\\mathrm{age},H)=2^{-\\mathrm{age}/H}"} />
+          <F tex={`H=${MODEL_PRIORS.halfLifeDays}\\text{ days (a true half-life: decay}(H,H)=0.5\\text{, not }e^{-\\mathrm{age}/H}\\text{)}`} />
+          <b>sign</b> is +1 (adverse) or −1 (mitigating), from the event's declared assumption (§6) — never inferred from severity. <b>age</b> is measured in days before the frozen snapshot date ({MODEL_PRIORS.datasetAsOf}), never the visitor's real-time clock. Confidence (High/Medium/Low/Simulated) is <b>never</b> multiplied into this magnitude — it is reported alongside as evidence-quality metadata only (§6).
+          <F tex={"\\mathrm{operationalIndex}(\\mathrm{field}) = \\mathrm{clamp}_{[-1,1]}\\!\\left(\\dfrac{\\sum_n EW_n\\cdot\\mathrm{field}_n}{\\sum_n EW_n}\\right),\\qquad \\mathrm{displayIndex}=5+5\\cdot\\mathrm{operationalIndex}"} />
+          Only events whose declared assumption marks them <b>operational: true</b> contribute to this single aggregate score; hazard-signal, mixed-reallocative, and long-term-strategic events are still displayed and individually propagated, but excluded from it (§6). A scenario's chain index is shown as <b>active</b> vs. <b>baseline</b> plus their signed delta — never as a silent overwrite of the historical series, which stays baseline-only. A deterministic <b>sensitivity envelope</b> (low/base/high) re-runs the same computation at ±30% on the transmission coefficients and half-life — bounds on model sensitivity, not a confidence interval.
         </S>
-        <S n="4" t="COMPANY IMPACT INDEX">
-          <F tex={"s_0(s)=10\\cdot\\text{share}_{c,s}\\;\\Rightarrow\\;\\mathrm{CII}_c=\\frac{\\sum_n s_n I_n}{\\sum_n I_n}"} />
+
+        <S n="5" t="COMBINING SIMULTANEOUS SHOCKS (bounded noisy-OR)">
+          <F tex={"\\mathrm{combinePositive}(v_1,\\dots,v_k) = 1-\\prod_i(1-v_i),\\qquad \\mathrm{combinePositive}(0.4,0.5)=0.7"} />
+          Signed values combine by separating positive (adverse) and negative (mitigating) magnitudes, combining each set with the formula above, then netting and clamping to [-1,1]. A second simultaneous adverse contribution can only add to, never subtract from, the combined effect, and the combined magnitude never exceeds 1 — replacing the old <code>Math.max</code> merge (which discarded all but the single largest shock) and naive summation (which was unbounded). This is a declared pragmatic aggregation prior, not a formula drawn from the cited literature (§10).
         </S>
-        <S n="5" t="COUNTRY SCORES & MAP LAYER">
-          Country components are share-weighted aggregates of stage components (plus direct country-tagged event shock, max-combined); no hand-set values. The map is OpenStreetMap via Leaflet — real geography, dark-filtered tiles, node radius = Σ stage participation. Map data © OpenStreetMap contributors.
+
+        <S n="6" t="EVENT SEMANTICS — explicit, hand-curated, never inferred">
+          Every event/scenario id is looked up in a small, versioned table (<code>event-assumptions.js</code>) giving its direction (adverse/mitigating/mixed), propagation channel (downstream/upstream/both), and whether it counts toward the scored operational aggregate at all. This is <b>not</b> inferred at runtime from prose — no LLM, no keyword matching, no sentiment analysis. An id with no recorded assumption defaults to "unclassified": displayed, but excluded from the score rather than guessed. In the current snapshot: export-control and material-licensing events are adverse/operational; a reported capacity increase is mitigating/operational; a hazard-signal event whose own text states no disruption occurred, a reallocative event with simultaneous winners and losers, and a long-term strategic/subsidy signal are all displayed but excluded — collapsing any of those three into one signed magnitude would misrepresent what they describe.
         </S>
-        <S n="6" t="ONE ENGINE, THREE USES">
-          Live events, hypothetical scenarios, and company disruptions run through the same propagation code path.
+
+        <S n="7" t="GEOGRAPHIC CONCENTRATION (HHI + explicit residual)">
+          <F tex={"HHI = \\sum_i \\mathrm{share}_i^2 + \\mathrm{residual}^2,\\qquad \\mathrm{residual}=\\max(0,1-\\textstyle\\sum_i\\mathrm{share}_i)"} />
+          <F tex={"\\{a\\!:\\!0.5,\\,b\\!:\\!0.25\\}\\ \\Rightarrow\\ \\mathrm{residual}=0.25\\ \\Rightarrow\\ HHI=0.375\\ \\Rightarrow\\ \\mathrm{score}_{10}=3.75"} />
+          When a stage's disclosed country shares sum to less than 1, the shortfall is treated as an unmodeled "Other" and included in the index — omitting it (as the prior version did) understates concentration. Shares that sum to materially more than 1 are normalized for the computation and flagged as a diagnostic rather than silently accepted.
         </S>
-        <S n="7" t="KNOWN LIMITATIONS">
-          Shares, stakes and values are illustrative samples; spread shows the top five companies per hop only; edges are value-weighted but not capacity-constrained; propagation factors are priors pending calibration against historical episodes.
+
+        <S n="8" t="POLICY EXPOSURE (unchanged — not a flagged defect)">
+          <F tex={"\\mathrm{policy}_n = \\mathrm{clamp}_{10}\\!\\left(\\mathrm{sev}_{\\max} + 0.4\\!\\!\\sum_{\\text{other}}\\mathrm{sev}\\right)"} />
+          The highest-severity policy instrument touching a stage counts in full; every additional instrument counts at 40% weight, capped at 10.
         </S>
-        <S n="8" t="EVIDENCE FRAMEWORK — how the production system is grounded">
-          Every parameter and datum carries an evidence tier, and the model design draws on four source classes:
-          <F>A · ACADEMIC — peer-reviewed foundations: production-network shock propagation (network economics, e.g. sectoral-shock literature), Herfindahl concentration from industrial-organization economics, path centrality from network science.{"\n"}B · INSTITUTIONAL REPORTS — SIA/BCG resilience studies, SEMI capacity data, CSET Supply Chain Explorer, TrendForce/TechInsights/Gartner share estimates.{"\n"}C · OFFICIAL SOURCES — BIS/METI/MOFCOM rule texts, NIST & CHIPS Program documents, EU Chips Act, company filings (10-K/20-F, 13F).{"\n"}D · ANALYST JUDGMENT — declared expert inputs (substitutability, market sensitivity) scored against a written rubric.</F>
-          Production data points display [tier · citation · date]; a claim supported by A+B+C ranks above any single class. Where classes conflict, the model shows the range rather than picking silently. Weights and propagation factors are treated as D-tier priors until calibrated (Section 7) — the combination of all four classes, checked against observed episodes, is the evaluation standard.
+
+        <S n="9" t="COMPANY METRICS — three separately-labeled numbers">
+          Never blended into one "impact index." A small and a large single-stage company can share the same vulnerability, but never the same contribution or criticality.
+          <F tex={"\\mathrm{vulnerability}_c = 10\\cdot\\dfrac{1}{|S_c|}\\sum_{s\\in S_c}\\max(0,\\mathrm{field}_s)"} />
+          Share-<b>independent</b>: the average adverse impact across the stages the company occupies, regardless of its relative size there.
+          <F tex={"\\mathrm{contribution}_c = \\sum_{s\\in S_c}\\mathrm{share}_{c,s}\\cdot\\max(0,\\mathrm{field}_s)\\cdot EW_s"} />
+          Share-<b>weighted</b>: market share does not cancel — a larger stake at the same impact level always yields a larger contribution. If a stage's disclosed company shares sum to more than 1, shares are normalized for this computation and flagged as "within modeled sample."
+          <F tex={"\\mathrm{criticality}_c = 10\\cdot\\dfrac{\\sum_n \\max(0,\\mathrm{propagate}_{\\text{both}}(\\mathrm{stakes}_c))_n\\cdot NI_n}{\\sum_n NI_n}"} />
+          "If this company were fully disrupted": inject a shock at every stage it occupies (sized to its within-stage share), propagate in both directions, and take the network-influence-weighted mean. Increasing a company's market share can never reduce this number.
         </S>
-        <S n="9" t="CAPITAL LAYER (sample)">
-          Major-shareholder stakes come from public filings (13F, annual reports, exchange disclosures). Capital Power Index below; a first-order measure of who holds rights over the chain's most critical capacity, with state-linked capital flagged.<F tex={"\\mathrm{CPI}_o=\\sum_c \\mathrm{own}_{o,c}\\cdot \\mathrm{CII}_c"} /> Roadmap: capex and subsidy flow tracking (CHIPS/EU/METI disbursements, announced fab investments) as directed money-flow edges on the same graph.
+
+        <S n="10" t="CAPITAL LAYER (sample ownership data)">
+          <F tex={"\\mathrm{CapitalPower}_o = \\sum_c \\mathrm{own}_{o,c}\\cdot \\mathrm{criticality}_c"} />
+          Major-shareholder stakes from public filings (13F, annual reports, exchange disclosures), weighted by the company systemic-criticality number above (§9) — state-linked capital is flagged.
+        </S>
+
+        <S n="11" t="COUNTRIES & MAP LAYER">
+          Country structural/operational scores are share-weighted aggregates of the stage-level numbers above (§0, §4) — production geography, not company headquarters. Company headquarters is shown separately and labeled "HQ:" throughout; it is never substituted for facility-level production exposure. Map links aggregate the sample's supplier-revenue relationships between company <i>headquarters</i> countries — labeled "modeled supplier-revenue relationship weight," never "trade intensity," since it measures neither bilateral trade nor buyer input dependence. Map data © OpenStreetMap contributors.
+        </S>
+
+        <S n="12" t="EVIDENCE FRAMEWORK">
+          Every parameter and datum carries an evidence tier:
+          <F>A · ACADEMIC — production-network shock propagation (Acemoglu et al.; Carvalho et al.; Barrot & Sauvagnat; Inoue & Todo; Baqaee & Farhi), Herfindahl concentration, aggregation-limitation critiques (Diem et al.), risk-exposure indices (Gao/Simchi-Levi/Teo/Yan).{"\n"}B · INSTITUTIONAL REPORTS — SIA/BCG resilience studies, SEMI capacity data, TrendForce/TechInsights/Gartner share estimates.{"\n"}C · OFFICIAL SOURCES — BIS/METI/MOFCOM rule texts, company filings (10-K/20-F/Annual Report, 13F).{"\n"}D · ANALYST JUDGMENT — declared expert inputs (substitutability, market sensitivity) against a written rubric.</F>
+          These sources justify the model's <i>architecture and known limitations</i> — none of them are cited as evidence that the specific coefficients in §0–§9 are calibrated. They are not.
+        </S>
+
+        <S n="13" t="MODEL STATUS & LIMITATIONS">
+          This is a static, curated demonstration snapshot with unvalidated propagation priors — not fit to any observed disruption episode. There is no facility-level, bill-of-materials, inventory-days, capacity/utilization, or time-to-recover data behind any number here. Nothing above is a causal or probabilistic forecast. Scores support comparison and sensitivity ranking within this snapshot only — company and country results are not predicted financial losses. See MODEL_ROADMAP.md for the data-layer work (facility geography, buyer-input vs. supplier-revenue dependence, DRAM/NAND/HBM and merchant/captive-accelerator denominator splits, evidence-tiered market-share estimates, and more) this model would need before any of these numbers could be calibrated.
         </S>
       </div>
     </div>

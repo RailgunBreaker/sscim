@@ -4,5 +4,3 @@ export const C = {
   red: "#E25C4A", amber: "#DFA83D", green: "#4FA97F",
   text: "#E9E4D8", dim: "#8C96A8", faint: "#5A6478",
 };
-
-export const WEIGHTS = { choke: 0.25, geo: 0.2, policy: 0.2, subst: 0.15, shock: 0.1, market: 0.1 };

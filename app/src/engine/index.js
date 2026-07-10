@@ -1,24 +1,43 @@
 /* ====================================================================
-   Engine factory — takes the vault data fetched from the backend API at
-   runtime and returns every derived computation (graph structure, risk
-   scores, shock propagation, spread trees, capital power, history).
-   This used to be a set of modules that computed everything once at
-   import time from statically-imported data tables; now that the tables
-   themselves come from a live API call, the same computations run once
-   per data load instead, wrapped in a single factory so nothing is
-   computed from stale/partial data.
-   ==================================================================== */
+   Engine factory — takes the vault data (fetched live from server/, or
+   from the static build-time snapshot fallback — see VaultContext.jsx)
+   and returns every derived computation: graph structure, structural
+   vulnerability, directional shock propagation, company vulnerability/
+   contribution/criticality, capital power, spread trees, and history.
 
-const clamp10 = (v) => Math.min(10, Math.max(0, v));
-const CONF_W = { High: 1.0, Medium: 0.75, Low: 0.5, Simulated: 1.0 };
-const WEIGHTS = { choke: 0.25, geo: 0.2, policy: 0.2, subst: 0.15, shock: 0.1, market: 0.1 };
+   This is a sensitivity/comparison tool over a frozen demonstration
+   snapshot — not a calibrated, causal, or probabilistic forecasting
+   model. See MODEL_ROADMAP.md and README "Model status and limitations".
+
+   buildEngine()'s input signature is intentionally unchanged (locked by
+   VaultContext.jsx, which is out of scope for this pass): it still
+   accepts exactly { STAGES, FLOW_EDGES, COMPANIES, CUSTOMERS, POLICIES,
+   EVENTS, OWNERS }. Everything about how those tables are used internally
+   has been rebuilt — see priors.js, math.js, graph.js, diagnostics.js,
+   event-assumptions.js for the pieces this file composes.
+   ==================================================================== */
+import { MODEL_PRIORS, SENSITIVITY_PRESETS } from './priors.js';
+import { clamp, clamp10, clampSigned, decay, combineSigned, hhiWithResidual, log1pNormalized, topologicalSort } from './math.js';
+import { buildAdjacency, buildDependenceMatrices, propagateFromSource } from './graph.js';
+import { validateGraph, createDiagnostics } from './diagnostics.js';
+import { getEventAssumption } from './event-assumptions.js';
 
 export function buildEngine({ STAGES, FLOW_EDGES, COMPANIES, CUSTOMERS, POLICIES, EVENTS, OWNERS }) {
-  const OUT = {}, IN = {};
-  STAGES.forEach((s) => { OUT[s.id] = []; IN[s.id] = []; });
-  FLOW_EDGES.forEach(([a, b]) => { OUT[a].push(b); IN[b].push(a); });
+  const diagnostics = createDiagnostics();
+  const stageIds = STAGES.map((s) => s.id);
+
+  const graphCheck = validateGraph(stageIds, FLOW_EDGES);
+  graphCheck.errors.forEach((e) => diagnostics.error('graph', e));
+
+  const { OUT, IN } = buildAdjacency(stageIds, FLOW_EDGES);
   const STAGE_BY_ID = Object.fromEntries(STAGES.map((s) => [s.id, s]));
   const COMPANY_BY_ID = Object.fromEntries(COMPANIES.map((c) => [c.id, c]));
+
+  // If the graph is invalid (cycle / dangling edge), fall back to a stable
+  // node order so the rest of the engine can still run and expose the
+  // diagnostic, rather than throwing or silently propagating garbage.
+  const TOPO = graphCheck.valid ? graphCheck.order : stageIds.slice();
+  const REV_TOPO = [...TOPO].reverse();
 
   const SUPPLIERS = {};
   Object.entries(CUSTOMERS).forEach(([supId, list]) => {
@@ -48,43 +67,76 @@ export function buildEngine({ STAGES, FLOW_EDGES, COMPANIES, CUSTOMERS, POLICIES
     return Object.values(m).sort((a, b) => b.w - a.w);
   })();
 
-  const TOPO = (() => {
-    const indeg = {}; STAGES.forEach((s) => (indeg[s.id] = IN[s.id].length));
-    const q = STAGES.filter((s) => indeg[s.id] === 0).map((s) => s.id), order = [];
-    while (q.length) { const n = q.shift(); order.push(n); OUT[n].forEach((m) => { if (--indeg[m] === 0) q.push(m); }); }
-    return order;
-  })();
+  /* ---------------- directional dependence matrices (all reachable paths) ---------------- */
+  const { D, U } = buildDependenceMatrices(stageIds, OUT, IN, (id) => STAGE_BY_ID[id]?.subst, MODEL_PRIORS);
 
-  const CHOKE = (() => {
-    const pTo = {}, pFrom = {};
-    TOPO.forEach((n) => (pTo[n] = IN[n].length ? IN[n].reduce((a, p) => a + pTo[p], 0) : 1));
-    [...TOPO].reverse().forEach((n) => (pFrom[n] = OUT[n].length ? OUT[n].reduce((a, c) => a + pFrom[c], 0) : 1));
-    const th = {}; let max = 0;
-    STAGES.forEach((s) => { th[s.id] = pTo[s.id] * pFrom[s.id]; max = Math.max(max, th[s.id]); });
-    const o = {}; STAGES.forEach((s) => (o[s.id] = 10 * Math.sqrt(th[s.id] / max)));
-    return o;
-  })();
-
-  const MAX_LOG_V = Math.max(...STAGES.map((s) => Math.log(s.value)));
-  const IMPORTANCE = (() => {
-    const o = {};
-    STAGES.forEach((s) => (o[s.id] = 10 * (0.6 * (CHOKE[s.id] / 10) + 0.4 * (Math.log(s.value) / MAX_LOG_V))));
-    return o;
-  })();
-  const IMP_RANK = Object.entries(IMPORTANCE).sort((a, b) => b[1] - a[1]).map(([id]) => id);
-  const EDGE_W = (() => {
-    const o = {};
-    STAGES.forEach((s) => {
-      const tot = OUT[s.id].reduce((a, c) => a + STAGE_BY_ID[c].value, 0);
-      OUT[s.id].forEach((c) => (o[s.id + ">" + c] = STAGE_BY_ID[c].value / tot));
+  function propagateSignedSource(sourceId, magnitude, channel, priors = MODEL_PRIORS) {
+    let matrices = { D, U };
+    if (priors !== MODEL_PRIORS) {
+      matrices = buildDependenceMatrices(stageIds, OUT, IN, (id) => STAGE_BY_ID[id]?.subst, priors);
+    }
+    return propagateFromSource({
+      sourceId, magnitude, channel, stageIds, OUT, IN, TOPO, REV_TOPO,
+      D: matrices.D, U: matrices.U, tolerance: priors.contributionTolerance,
     });
-    return o;
-  })();
+  }
 
-  const GEO = Object.fromEntries(STAGES.map((s) => [s.id, 10 * Object.values(s.shares).reduce((a, v) => a + v * v, 0)]));
-  const POLICY = Object.fromEntries(STAGES.map((s) => {
+  /* ---------------- economic weight ("modeled turnover proxy") ---------------- */
+  const ECONOMIC_WEIGHT = log1pNormalized(STAGES.map((s) => [s.id, s.value]));
+
+  /* ---------------- network influence (Leontief-style sensitivity proxy) ----------------
+     For each stage j: inject a unit adverse shock, propagate downstream
+     over all paths, weight affected stages by ECONOMIC_WEIGHT, sum, then
+     normalize 0-10. This is a MODELED SENSITIVITY measure, not measured
+     economic loss or a validated centrality metric. */
+  const NETWORK_INFLUENCE_RAW = {};
+  STAGES.forEach((s) => {
+    const field = propagateSignedSource(s.id, 1, 'downstream');
+    let sum = 0;
+    stageIds.forEach((id) => { sum += (ECONOMIC_WEIGHT[id] ?? 0) * Math.abs(field[id] ?? 0); });
+    NETWORK_INFLUENCE_RAW[s.id] = sum;
+  });
+  const maxInfluence = Math.max(...Object.values(NETWORK_INFLUENCE_RAW), 1e-9);
+  const NETWORK_INFLUENCE = Object.fromEntries(stageIds.map((id) => [id, clamp10(10 * NETWORK_INFLUENCE_RAW[id] / maxInfluence)]));
+  const NETWORK_INFLUENCE_RANK = [...stageIds].sort((a, b) => NETWORK_INFLUENCE[b] - NETWORK_INFLUENCE[a]);
+  const CHOKE = NETWORK_INFLUENCE; // compatibility alias — see MISSION spec; UI now labels this "Network influence"
+
+  /* ---------------- geographic concentration (HHI + explicit residual) ---------------- */
+  const GEO_CONCENTRATION = {}, GEO_DIAGNOSTIC = {};
+  STAGES.forEach((s) => {
+    const r = hhiWithResidual(s.shares);
+    GEO_CONCENTRATION[s.id] = r.score10;
+    if (r.overAllocated) diagnostics.warn('geo', `Stage "${s.id}" country shares sum to more than 1 — normalized for computation.`);
+  });
+  const GEO = GEO_CONCENTRATION; // compatibility alias
+
+  /* ---------------- policy exposure (unchanged formula — not a flagged defect) ---------------- */
+  const POLICY_EXPOSURE = Object.fromEntries(STAGES.map((s) => {
     const sevs = POLICIES.filter((p) => p.stages.includes(s.id)).map((p) => p.sev).sort((a, b) => b - a);
     return [s.id, sevs.length ? clamp10(sevs[0] + 0.4 * sevs.slice(1).reduce((a, v) => a + v, 0)) : 0];
+  }));
+  const POLICY = POLICY_EXPOSURE; // compatibility alias
+
+  /* ---------------- structural vulnerability (5 static components, renormalized weights) ----------------
+     Excludes any event-driven "shock" term entirely — this is the
+     time-invariant structural layer. Weights are derived from
+     MODEL_PRIORS.componentWeights (the single source of truth for every
+     model coefficient — see priors.js) by dropping "choke" -> renamed to
+     "networkInfluence" and "shock" (event-driven, not structural), then
+     renormalizing the remaining four so they sum to 1. */
+  const { shock: _shockWeight, choke: chokeWeight, ...restWeights } = MODEL_PRIORS.componentWeights;
+  const structuralWeightSum = chokeWeight + Object.values(restWeights).reduce((a, w) => a + w, 0);
+  const STRUCTURAL_WEIGHTS = Object.freeze({
+    networkInfluence: chokeWeight / structuralWeightSum,
+    ...Object.fromEntries(Object.entries(restWeights).map(([k, w]) => [k, w / structuralWeightSum])),
+  });
+  function structuralComponents(stage) {
+    return { networkInfluence: NETWORK_INFLUENCE[stage.id], geo: GEO_CONCENTRATION[stage.id], policy: POLICY_EXPOSURE[stage.id], subst: stage.subst, market: stage.market };
+  }
+  const STRUCTURAL_VULNERABILITY = Object.fromEntries(STAGES.map((s) => {
+    const comp = structuralComponents(s);
+    const val = Object.entries(STRUCTURAL_WEIGHTS).reduce((a, [k, w]) => a + w * clamp10(comp[k]), 0);
+    return [s.id, clamp10(val)];
   }));
 
   const STAGE_COMPANIES = {};
@@ -92,42 +144,122 @@ export function buildEngine({ STAGES, FLOW_EDGES, COMPANIES, CUSTOMERS, POLICIES
   COMPANIES.forEach((c) => Object.entries(c.stakes).forEach(([sid, sh]) => STAGE_COMPANIES[sid]?.push([c.id, sh])));
   Object.values(STAGE_COMPANIES).forEach((arr) => arr.sort((a, b) => b[1] - a[1]));
 
-  function propagate(sources, confW, decay) {
-    const shock = {}; STAGES.forEach((s) => (shock[s.id] = 0));
-    const bump = (id, v) => (shock[id] = Math.max(shock[id], clamp10(v)));
-    for (const [s0, sev] of sources) {
-      const base = sev * confW * decay;
-      bump(s0, base);
-      (OUT[s0] || []).forEach((d1) => {
-        const f1 = 0.55 * (0.5 + 0.5 * EDGE_W[s0 + ">" + d1]);
-        bump(d1, base * f1);
-        (OUT[d1] || []).forEach((d2) => bump(d2, base * f1 * 0.55 * (0.5 + 0.5 * EDGE_W[d1 + ">" + d2])));
-      });
-      (IN[s0] || []).forEach((u1) => bump(u1, base * 0.3));
+  /* ---------------- operational impact: signed, all-paths, noisy-OR combined ----------------
+     eventCentral(e) returns the event's signed origin magnitude at the
+     declared snapshot date (MODEL_PRIORS.datasetAsOf), independent of
+     confidence — confidence is metadata only (see event-assumptions.js /
+     Detail.jsx / Briefing.jsx), never a multiplier on physical impact. */
+  function eventCentralMagnitude(e, priors = MODEL_PRIORS) {
+    const assumption = getEventAssumption(e.id);
+    const sign = assumption.direction === 'mitigating' ? -1 : 1;
+    const intensity = clamp((e.sev ?? 0) / 10, 0, 1) * decay(e.daysAgo ?? 0, priors.halfLifeDays);
+    return { magnitude: clampSigned(sign * intensity), assumption };
+  }
+
+  /* One event's full propagated field (used for the per-event Detail view
+     regardless of whether it counts toward the aggregate operational
+     score — hazard/mixed/strategic events are still shown their own
+     propagated field, just excluded from the combined aggregate below). */
+  function eventField(e, priors = MODEL_PRIORS) {
+    const { magnitude, assumption } = eventCentralMagnitude(e, priors);
+    const perStageFields = (e.stages || []).map((sid) => propagateSignedSource(sid, magnitude, assumption.channel, priors));
+    const combined = {};
+    stageIds.forEach((id) => {
+      const vals = perStageFields.map((f) => f[id]).filter((v) => v);
+      combined[id] = vals.length ? combineSigned(vals) : 0;
+    });
+    return { field: combined, magnitude, assumption };
+  }
+
+  /* Aggregate operational field across a list of events — ONLY events whose
+     EVENT_ASSUMPTIONS mark them `operational: true` contribute; hazard-only,
+     mixed-reallocative, and long-term-strategic events are real and
+     individually inspectable (via eventField above) but excluded from this
+     single score, per the MISSION spec. */
+  function operationalField(eventList, priors = MODEL_PRIORS) {
+    const perNode = {}; stageIds.forEach((id) => (perNode[id] = []));
+    for (const e of eventList) {
+      const { field, assumption } = eventField(e, priors);
+      if (!assumption.operational) continue;
+      stageIds.forEach((id) => { if (field[id]) perNode[id].push(field[id]); });
     }
-    return shock;
-  }
-  const eventShock = (e) => propagate(e.stages.map((s) => [s, e.sev]), CONF_W[e.conf] ?? 0.75, Math.exp(-e.daysAgo / 12));
-  function mergeShocks(list) {
-    const m = {}; STAGES.forEach((s) => (m[s.id] = 0));
-    list.forEach((sh) => STAGES.forEach((s) => (m[s.id] = Math.max(m[s.id], sh[s.id]))));
-    return m;
+    const combined = {};
+    stageIds.forEach((id) => { combined[id] = combineSigned(perNode[id]); });
+    return combined;
   }
 
-  const TOT_IMP = STAGES.reduce((a, s) => a + IMPORTANCE[s.id], 0);
-  const chainImpact = (shock) => STAGES.reduce((a, s) => a + shock[s.id] * IMPORTANCE[s.id], 0) / TOT_IMP;
-
-  function companyImpact(c) {
-    const shock = propagate(Object.entries(c.stakes).map(([s, sh]) => [s, 10 * sh]), 1.0, 1.0);
-    return { shock, index: chainImpact(shock) };
+  function operationalIndex(field) {
+    let num = 0, den = 0;
+    stageIds.forEach((id) => { const w = ECONOMIC_WEIGHT[id] ?? 0; num += (field[id] ?? 0) * w; den += w; });
+    return den ? clampSigned(num / den) : 0;
   }
-  const COMPANY_IMPACTS = Object.fromEntries(COMPANIES.map((c) => [c.id, companyImpact(c)]));
-  const COMPANY_RANK = [...COMPANIES].sort((a, b) => COMPANY_IMPACTS[b.id].index - COMPANY_IMPACTS[a.id].index);
+  // 5 = neutral (no net active operational effect); >5 net adverse, <5 net mitigating.
+  // This is a deliberately different, separately-labeled metric from
+  // STRUCTURAL_VULNERABILITY (see README "Model status and limitations").
+  const toDisplayIndex = (signed) => clamp10(5 + 5 * signed);
+
+  function sensitivityEnvelope(eventList) {
+    const low = operationalIndex(operationalField(eventList, SENSITIVITY_PRESETS.low));
+    const base = operationalIndex(operationalField(eventList, SENSITIVITY_PRESETS.base));
+    const high = operationalIndex(operationalField(eventList, SENSITIVITY_PRESETS.high));
+    const vals = [low, base, high].sort((a, b) => a - b);
+    return { low: vals[0], base, high: vals[2] };
+  }
+
+  /* ---------------- company metrics: vulnerability / contribution / criticality ----------------
+     Three deliberately distinct numbers — see README "Model status and
+     limitations" and MISSION spec "SEPARATE THE METRICS". */
+  function adverseOnly(v) { return Math.max(0, v ?? 0); }
+
+  function companyVulnerability(c, field) {
+    // Share-INDEPENDENT: the average adverse impact across the stages the
+    // company is present in. Two companies exposed only to the same stage
+    // get the same vulnerability regardless of their relative size there.
+    const stages = Object.keys(c.stakes);
+    if (!stages.length) return 0;
+    const sum = stages.reduce((a, sid) => a + adverseOnly(field[sid]), 0);
+    return clamp10(10 * (sum / stages.length));
+  }
+
+  function companyContribution(c, field) {
+    // Share-WEIGHTED: market share does not cancel. A larger stage share
+    // at the same adverse-impact level produces a larger contribution.
+    let total = 0;
+    Object.entries(c.stakes).forEach(([sid, share]) => {
+      const stageTotal = STAGE_COMPANIES[sid]?.reduce((a, [, sh]) => a + sh, 0) ?? share;
+      let normShare = share;
+      if (stageTotal > 1 + 1e-6) {
+        normShare = share / stageTotal;
+        diagnostics.warn('company-share', `Stage "${sid}" company shares sum to ${stageTotal.toFixed(3)} (>1) — contribution normalized for computation; treat as within modeled sample.`);
+      }
+      total += normShare * adverseOnly(field[sid]) * (ECONOMIC_WEIGHT[sid] ?? 0);
+    });
+    return total;
+  }
+
+  function companyCriticality(c, priors = MODEL_PRIORS) {
+    // "If this company were fully disrupted" — inject a shock at every
+    // stage it occupies, sized to its within-stage share, propagate in
+    // both directions, and take the network-influence-weighted mean.
+    const perStageFields = Object.entries(c.stakes).map(([sid, share]) => propagateSignedSource(sid, clampSigned(share), 'both', priors));
+    const field = {};
+    stageIds.forEach((id) => {
+      const vals = perStageFields.map((f) => f[id]).filter((v) => v);
+      field[id] = vals.length ? combineSigned(vals) : 0;
+    });
+    let num = 0, den = 0;
+    stageIds.forEach((id) => { const w = NETWORK_INFLUENCE[id] ?? 0; num += adverseOnly(field[id]) * w; den += w; });
+    return { field, value: den ? clamp10(10 * (num / den)) : 0 };
+  }
+
+  const COMPANY_CRITICALITY = Object.fromEntries(COMPANIES.map((c) => [c.id, companyCriticality(c)]));
+  const COMPANY_IMPACTS = COMPANY_CRITICALITY; // compatibility alias (was "companyImpact"/CII)
+  const COMPANY_RANK = [...COMPANIES].sort((a, b) => COMPANY_CRITICALITY[b.id].value - COMPANY_CRITICALITY[a.id].value);
 
   const CAP_RANK = (() => {
     const m = {};
     Object.entries(OWNERS).forEach(([cid, list]) => {
-      const w = COMPANY_IMPACTS[cid]?.index ?? 0;
+      const w = COMPANY_CRITICALITY[cid]?.value ?? 0;
       list.forEach(([o, sh]) => {
         const e = (m[o] = m[o] || { power: 0, holdings: [] });
         e.power += sh * w;
@@ -140,6 +272,7 @@ export function buildEngine({ STAGES, FLOW_EDGES, COMPANIES, CUSTOMERS, POLICIES
     })).sort((a, b) => b.power - a.power);
   })();
 
+  /* ---------------- spread trees (pure graph traversal — not a flagged defect) ---------------- */
   function supplierSpread(cid) {
     const seen = new Set([cid]);
     const mk = (list) => list.filter(([c]) => !seen.has(c)).map(([c, rel]) => ({ cid: c, rel })).sort((a, b) => b.rel - a.rel).slice(0, 5);
@@ -152,13 +285,7 @@ export function buildEngine({ STAGES, FLOW_EDGES, COMPANIES, CUSTOMERS, POLICIES
     return [h1, h2];
   }
 
-  function companyExposure(c, shock) {
-    let num = 0, den = 0;
-    Object.entries(c.stakes).forEach(([sid, sh]) => { num += sh * shock[sid]; den += sh; });
-    return den ? num / den : 0;
-  }
-
-  function companySpread(sourceStages, shock, excludeCompany) {
+  function companySpread(sourceStages, field, excludeCompany) {
     const hops = [new Set(sourceStages)];
     const seenStage = new Set(sourceStages);
     for (let h = 1; h <= 2; h++) {
@@ -171,22 +298,22 @@ export function buildEngine({ STAGES, FLOW_EDGES, COMPANIES, CUSTOMERS, POLICIES
       const rows = [];
       stageSet.forEach((sid) => (STAGE_COMPANIES[sid] || []).forEach(([cid, sh]) => {
         if (seenCo.has(cid)) return;
-        rows.push({ cid, sid, exp: sh * shock[sid] });
+        rows.push({ cid, sid, contribution: sh * adverseOnly(field[sid]) * (ECONOMIC_WEIGHT[sid] ?? 0) * 10 });
       }));
       const best = {};
-      rows.forEach((r) => { if (!best[r.cid] || r.exp > best[r.cid].exp) best[r.cid] = r; });
-      const top = Object.values(best).sort((a, b) => b.exp - a.exp).slice(0, 5);
+      rows.forEach((r) => { if (!best[r.cid] || r.contribution > best[r.cid].contribution) best[r.cid] = r; });
+      const top = Object.values(best).sort((a, b) => b.contribution - a.contribution).slice(0, 5);
       top.forEach((r) => seenCo.add(r.cid));
       return top;
     });
   }
 
-  function customerSpread(cid, shock) {
+  function customerSpread(cid, field) {
     const seen = new Set([cid]);
     const mk = (list) => list
       .filter(([c]) => !seen.has(c))
-      .map(([c, rel]) => ({ cid: c, rel, exp: companyExposure(COMPANY_BY_ID[c], shock) }))
-      .sort((a, b) => b.rel * b.exp - a.rel * a.exp).slice(0, 5);
+      .map(([c, rel]) => ({ cid: c, rel, contribution: companyContribution(COMPANY_BY_ID[c], field) }))
+      .sort((a, b) => b.rel * b.contribution - a.rel * a.contribution).slice(0, 5);
     const h1 = mk(CUSTOMERS[cid] || []);
     h1.forEach((r) => seen.add(r.cid));
     const pool = [];
@@ -194,49 +321,73 @@ export function buildEngine({ STAGES, FLOW_EDGES, COMPANIES, CUSTOMERS, POLICIES
     const best = {};
     pool.forEach(([c, w]) => { if (!seen.has(c) && (!best[c] || w > best[c])) best[c] = w; });
     const h2 = Object.entries(best)
-      .map(([c, w]) => ({ cid: c, rel: w, exp: companyExposure(COMPANY_BY_ID[c], shock) }))
-      .sort((a, b) => b.rel * b.exp - a.rel * a.exp).slice(0, 5);
+      .map(([c, w]) => ({ cid: c, rel: w, contribution: companyContribution(COMPANY_BY_ID[c], field) }))
+      .sort((a, b) => b.rel * b.contribution - a.rel * a.contribution).slice(0, 5);
     return [h1, h2];
   }
 
-  const stageComponents = (s, shock) => ({ choke: CHOKE[s.id], geo: GEO[s.id], policy: POLICY[s.id], subst: s.subst, shock: shock[s.id], market: s.market });
-  const total = (comp) => Object.keys(WEIGHTS).reduce((a, k) => a + WEIGHTS[k] * clamp10(comp[k]), 0);
-
-  function countryData(events, shock, COUNTRY_NAMES) {
+  /* ---------------- country aggregation: structural (static) + operational (event-driven) ---------------- */
+  function countryData(eventList, field, COUNTRY_NAMES) {
     const acc = {};
-    Object.keys(COUNTRY_NAMES).forEach((c) => (acc[c] = { w: 0, comp: { choke: 0, geo: 0, policy: 0, subst: 0, shock: 0, market: 0 }, stages: [] }));
+    Object.keys(COUNTRY_NAMES).forEach((c) => (acc[c] = { w: 0, structComp: { networkInfluence: 0, geo: 0, policy: 0, subst: 0, market: 0 }, stages: [] }));
     STAGES.forEach((s) => {
-      const comp = stageComponents(s, shock);
+      const comp = structuralComponents(s);
       Object.entries(s.shares).forEach(([c, sh]) => {
         if (!acc[c]) return;
         acc[c].w += sh; acc[c].stages.push([s.id, sh]);
-        Object.keys(comp).forEach((k) => (acc[c].comp[k] += sh * clamp10(comp[k])));
+        Object.keys(comp).forEach((k) => (acc[c].structComp[k] += sh * clamp10(comp[k])));
       });
     });
     const out = {};
     Object.entries(acc).forEach(([c, a]) => {
       if (!a.w) return;
-      const comp = {}; Object.keys(a.comp).forEach((k) => (comp[k] = a.comp[k] / a.w));
-      let direct = 0;
-      for (const e of events) if (e.countries?.includes(c))
-        direct = Math.max(direct, e.sev * (CONF_W[e.conf] ?? 0.75) * Math.exp(-e.daysAgo / 12));
-      comp.shock = Math.max(comp.shock, direct);
-      out[c] = { comp, score: total(comp), weight: a.w, stages: a.stages.sort((x, y) => y[1] - x[1]) };
+      const structComp = {}; Object.keys(a.structComp).forEach((k) => (structComp[k] = a.structComp[k] / a.w));
+      const structural = clamp10(Object.entries(STRUCTURAL_WEIGHTS).reduce((s, [k, w]) => s + w * clamp10(structComp[k]), 0));
+
+      // operational: share-weighted mean of stage operational field for stages this country participates in,
+      // combined (not maxed) with any direct country-tagged event effect.
+      let opNum = 0, opDen = 0;
+      a.stages.forEach(([sid, sh]) => { opNum += sh * (field[sid] ?? 0); opDen += sh; });
+      const stageOperational = opDen ? opNum / opDen : 0;
+      const directSignals = [];
+      for (const e of eventList) {
+        if (e.countries?.includes(c)) {
+          const { magnitude, assumption } = eventCentralMagnitude(e);
+          if (assumption.operational) directSignals.push(magnitude);
+        }
+      }
+      const operational = clampSigned(combineSigned([stageOperational, ...directSignals]));
+      out[c] = { structComp, structural, operational, weight: a.w, stages: a.stages.sort((x, y) => y[1] - x[1]) };
     });
     return out;
   }
 
-  const shockAtT = (t) => mergeShocks(EVENTS.filter((e) => e.daysAgo - t >= 0).map((e) => eventShock({ ...e, daysAgo: e.daysAgo - t })));
-  const chainIndexAt = (t) => { const sh = shockAtT(t); return STAGES.reduce((a, s) => a + total(stageComponents(s, sh)) * IMPORTANCE[s.id], 0) / TOT_IMP; };
-  const HISTORY = Array.from({ length: 22 }, (_, i) => chainIndexAt(21 - i));
-  const stageScoreAt = (sid, t) => total(stageComponents(STAGE_BY_ID[sid], shockAtT(t)));
+  /* ---------------- history: baseline-only, at past offsets from the snapshot date ---------------- */
+  const shiftedEvents = (t) => EVENTS.map((e) => ({ ...e, daysAgo: (e.daysAgo ?? 0) + t }));
+  const chainIndexAt = (t) => toDisplayIndex(operationalIndex(operationalField(shiftedEvents(t))));
+  const HISTORY = Array.from({ length: 22 }, (_, i) => chainIndexAt(21 - i)); // 21 days before snapshot -> snapshot date
+  const stageScoreAt = (sid, t) => toDisplayIndex(operationalField(shiftedEvents(t))[sid] ?? 0);
   const MOVERS7D = STAGES.map((s) => { const now = stageScoreAt(s.id, 0), prev = stageScoreAt(s.id, 7); return { id: s.id, now, d: now - prev }; })
     .sort((a, b) => Math.abs(b.d) - Math.abs(a.d));
 
+  // bounded-output self-check — surfaces as a diagnostic rather than silently shipping NaN/Infinity to the UI
+  Object.entries(NETWORK_INFLUENCE).forEach(([id, v]) => { if (!Number.isFinite(v)) diagnostics.error('bounds', `NETWORK_INFLUENCE[${id}] is not finite.`); });
+  HISTORY.forEach((v, i) => { if (!Number.isFinite(v) || v < 0 || v > 10) diagnostics.error('bounds', `HISTORY[${i}] out of [0,10] bounds: ${v}`); });
+
   return {
-    OUT, IN, STAGE_BY_ID, COMPANY_BY_ID, SUPPLIERS, COUNTRY_LINKS, TOPO, CHOKE, IMPORTANCE, IMP_RANK, EDGE_W,
-    GEO, POLICY, STAGE_COMPANIES, clamp10, CONF_W, WEIGHTS, propagate, eventShock, mergeShocks, TOT_IMP, chainImpact,
-    companyImpact, COMPANY_IMPACTS, COMPANY_RANK, CAP_RANK, supplierSpread, companyExposure, companySpread,
-    customerSpread, stageComponents, total, countryData, shockAtT, chainIndexAt, HISTORY, stageScoreAt, MOVERS7D,
+    OUT, IN, STAGE_BY_ID, COMPANY_BY_ID, SUPPLIERS, COUNTRY_LINKS, TOPO, REV_TOPO,
+    MODEL_PRIORS, SENSITIVITY_PRESETS, diagnostics, graphValid: graphCheck.valid,
+
+    D, U, NETWORK_INFLUENCE, NETWORK_INFLUENCE_RANK, CHOKE, GEO_CONCENTRATION, GEO, POLICY_EXPOSURE, POLICY,
+    STRUCTURAL_VULNERABILITY, STRUCTURAL_WEIGHTS, ECONOMIC_WEIGHT, STAGE_COMPANIES,
+
+    clamp10, clampSigned, decay,
+    eventCentralMagnitude, eventField, operationalField, operationalIndex, toDisplayIndex, sensitivityEnvelope,
+
+    companyVulnerability, companyContribution, companyCriticality,
+    COMPANY_IMPACTS, COMPANY_CRITICALITY, COMPANY_RANK, CAP_RANK,
+
+    supplierSpread, companySpread, customerSpread, countryData,
+    structuralComponents, HISTORY, stageScoreAt, MOVERS7D,
   };
 }

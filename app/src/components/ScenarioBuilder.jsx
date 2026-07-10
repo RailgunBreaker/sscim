@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { C } from '../theme.js';
 import { useVault } from '../data/VaultContext.jsx';
 import { riskColor } from '../utils/colors.js';
+import { useModalA11y } from './useModalA11y.js';
 
 export default function ScenarioBuilder({ onClose, onRun }) {
   const { data } = useVault();
@@ -9,21 +10,22 @@ export default function ScenarioBuilder({ onClose, onRun }) {
   const [sev, setSev] = useState(7);
   const [name, setName] = useState("Custom shock");
   const toggle = (id) => setPicked((p) => { const n = new Set(p); n.has(id) ? n.delete(id) : n.add(id); return n; });
+  const { ref, onKeyDown } = useModalA11y(onClose);
   return (
-    <div onClick={onClose} style={{ position: "fixed", inset: 0, background: "rgba(6,9,16,.85)", zIndex: 1200, display: "flex", alignItems: "center", justifyContent: "center", padding: 16 }}>
-      <div onClick={(e) => e.stopPropagation()} style={{ background: C.panel2, border: `1px solid ${C.copper}`, borderRadius: 8, maxWidth: 620, width: "100%", maxHeight: "85vh", overflowY: "auto", padding: "18px 20px", color: C.text }}>
+    <div onClick={onClose} role="dialog" aria-modal="true" aria-label="Build a custom scenario" onKeyDown={onKeyDown} style={{ position: "fixed", inset: 0, background: "rgba(6,9,16,.85)", zIndex: 1200, display: "flex", alignItems: "center", justifyContent: "center", padding: 16 }}>
+      <div ref={ref} tabIndex={-1} onClick={(e) => e.stopPropagation()} style={{ background: C.panel2, border: `1px solid ${C.copper}`, borderRadius: 8, maxWidth: 620, width: "100%", maxHeight: "85vh", overflowY: "auto", padding: "18px 20px", color: C.text, outline: "none" }}>
         <h3 style={{ margin: "0 0 4px", fontSize: 16 }}>Build a custom scenario</h3>
-        <p style={{ margin: "0 0 12px", fontSize: 12, color: C.dim }}>Pick the stages hit by your hypothetical shock and set severity. It runs through the identical propagation engine as live events.</p>
+        <p style={{ margin: "0 0 12px", fontSize: 12, color: C.dim }}>Pick the stages hit by your hypothetical shock and set severity. It runs through the identical propagation engine as every other scenario — a sensitivity comparison, not a forecast.</p>
         <input value={name} onChange={(e) => setName(e.target.value)}
           style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: 4, color: C.text, padding: "6px 10px", fontSize: 12.5, fontFamily: "inherit", width: "100%", outline: "none", marginBottom: 10 }} />
         <div style={{ display: "flex", flexWrap: "wrap", gap: 5, marginBottom: 12 }}>
           {data.STAGES.map((s) => (
-            <span key={s.id} onClick={() => toggle(s.id)}
-              style={{ fontSize: 11, padding: "3px 9px", borderRadius: 12, cursor: "pointer",
+            <button key={s.id} type="button" onClick={() => toggle(s.id)} aria-pressed={picked.has(s.id)}
+              style={{ fontSize: 11, padding: "3px 9px", borderRadius: 12, cursor: "pointer", fontFamily: "inherit",
                 background: picked.has(s.id) ? C.copper : C.panel, color: picked.has(s.id) ? "#0C111C" : C.text,
                 border: `1px solid ${picked.has(s.id) ? C.copper : C.line}`, fontWeight: picked.has(s.id) ? 700 : 400 }}>
               {s.name}
-            </span>
+            </button>
           ))}
         </div>
         <div className="mono" style={{ fontSize: 11, color: C.dim, marginBottom: 4 }}>

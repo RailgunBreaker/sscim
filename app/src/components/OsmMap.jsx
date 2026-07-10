@@ -4,11 +4,18 @@ import 'leaflet/dist/leaflet.css';
 import { C } from '../theme.js';
 import { useVault } from '../data/VaultContext.jsx';
 import { riskColor, riskLabel } from '../utils/colors.js';
+import { buildTooltipEl } from '../utils/tooltip.js';
 import Legend from './Legend.jsx';
 
 /* ================= OpenStreetMap layer =================
    leaflet is a real npm dependency now — imported directly instead of
-   injected from a CDN <script>, so there's no loading-state hook needed. */
+   injected from a CDN <script>, so there's no loading-state hook needed.
+   Country circles are colored/sized by STRUCTURAL vulnerability (time-
+   invariant); the operational scenario delta is shown separately in the
+   tooltip and the permanent label, never blended into one number. Links
+   are the sample's supplier-revenue relationship between company
+   headquarters countries — not a measurement of bilateral trade or
+   physical shipping routes. */
 export default function OsmMap({ sel, setSel, hl, model, scenarioActive }) {
   const { data, engine } = useVault();
   const { COUNTRY_NAMES, COUNTRY_POS } = data;
@@ -49,6 +56,9 @@ export default function OsmMap({ sel, setSel, hl, model, scenarioActive }) {
     const g = layerRef.current;
     g.clearLayers();
     const dimAll = hl.c.size > 0;
+    const countries = model.countriesActive;
+    const countriesBase = model.countriesBase;
+
     COUNTRY_LINKS.slice(0, 30).forEach((l) => {
       const involved = hl.c.has(l.a) || hl.c.has(l.b);
       const lit = (hl.c.has(l.a) && hl.c.has(l.b)) || (sel.type === "country" && (sel.id === l.a || sel.id === l.b));
@@ -59,18 +69,24 @@ export default function OsmMap({ sel, setSel, hl, model, scenarioActive }) {
         dashArray: "4 7",
       });
       line.bindTooltip(
-        `<b>${COUNTRY_NAMES[l.a]} → ${COUNTRY_NAMES[l.b]}</b><br>${l.top.join(" · ")}<br><span style="color:${C.faint}">${l.ex.join("<br>")}</span>`,
+        () => buildTooltipEl([
+          { text: `${COUNTRY_NAMES[l.a]} (HQ) → ${COUNTRY_NAMES[l.b]} (HQ)`, bold: true },
+          { text: l.top.join(" · "), size: "10px" },
+          { text: l.ex.join(" · "), color: C.faint, size: "9px" },
+          { text: "modeled supplier-revenue relationship weight — sample coverage only, not measured bilateral trade", color: C.faint, size: "8.5px" },
+        ]),
         { className: "sscim-tip", sticky: true }
       );
       line.addTo(g);
     });
-    const maxW = Math.max(...Object.values(model.countries).map((c) => c.weight));
-    Object.entries(model.countries).forEach(([id, c]) => {
-      const col = riskColor(c.score);
+
+    const maxW = Math.max(...Object.values(countries).map((c) => c.weight), 1e-9);
+    Object.entries(countries).forEach(([id, c]) => {
+      const col = riskColor(c.structural);
       const active = hl.c.has(id);
       const isSel = sel.type === "country" && sel.id === id;
       const r = 6 + 12 * (c.weight / maxW);
-      const delta = c.score - (model.countriesBase[id]?.score ?? c.score);
+      const opDelta = c.operational - (countriesBase[id]?.operational ?? c.operational);
       const halo = L.circleMarker(COUNTRY_POS[id], {
         radius: r, color: col, weight: active ? 1.5 : 0, fillColor: col,
         fillOpacity: dimAll && !active ? 0.06 : 0.16, opacity: 0.8,
@@ -79,14 +95,18 @@ export default function OsmMap({ sel, setSel, hl, model, scenarioActive }) {
         radius: r * 0.5, color: isSel ? C.text : col, weight: isSel ? 2 : 1,
         fillColor: col, fillOpacity: dimAll && !active ? 0.3 : 0.9,
       }).addTo(g);
-      core.bindTooltip(
-        `<span style="font-weight:700">${COUNTRY_NAMES[id]}</span> · <span style="color:${col}">${c.score.toFixed(1)} ${riskLabel(c.score)}</span>` +
-        (scenarioActive && delta > 0.05 ? ` <span style="color:${C.copper}">+${delta.toFixed(1)}</span>` : ""),
-        { className: "sscim-tip", direction: "top", offset: [0, -r * 0.5 - 2] }
-      );
+      const tipLines = [
+        { text: COUNTRY_NAMES[id], bold: true },
+        { text: `structural vulnerability ${c.structural.toFixed(1)} ${riskLabel(c.structural)}`, color: col, size: "10px" },
+        { text: `operational impact ${c.operational >= 0 ? "+" : ""}${c.operational.toFixed(2)}`, color: C.faint, size: "10px" },
+      ];
+      if (scenarioActive && Math.abs(opDelta) > 0.02) {
+        tipLines.push({ text: `scenario Δ ${opDelta >= 0 ? "+" : ""}${opDelta.toFixed(2)} vs baseline`, color: C.copper, size: "10px" });
+      }
+      core.bindTooltip(() => buildTooltipEl(tipLines), { className: "sscim-tip", direction: "top", offset: [0, -r * 0.5 - 2] });
       if (c.weight / maxW > 0.35) {
         core.bindTooltip(
-          `${COUNTRY_NAMES[id]} <span style="color:${col}">${c.score.toFixed(1)}</span>`,
+          () => buildTooltipEl([{ text: `${COUNTRY_NAMES[id]} ${c.structural.toFixed(1)}`, color: col }]),
           { permanent: true, className: "sscim-label", direction: "bottom", offset: [0, r * 0.5 + 2] }
         );
       }
@@ -105,8 +125,8 @@ export default function OsmMap({ sel, setSel, hl, model, scenarioActive }) {
           </div>
         )}
       </div>
-      <Legend items={[["Moderate < 5.5", C.green], ["Elevated 5.5–7.5", C.amber], ["High ≥ 7.5", C.red], ["Link width = trade intensity", C.copperDim]]}
-        note="Country links derived from the customer graph — hover a link for sectors & company pairs" />
+      <Legend items={[["Moderate < 5.5", C.green], ["Elevated 5.5–7.5", C.amber], ["High ≥ 7.5", C.red], ["Link width = modeled supplier-revenue relationship weight (HQ↔HQ, sample only)", C.copperDim]]}
+        note="Color/size = structural vulnerability · hover a country for its operational impact & scenario Δ · links aggregate sample supplier-revenue shares between company headquarters, not measured trade" />
     </div>
   );
 }

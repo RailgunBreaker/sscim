@@ -13,12 +13,12 @@ Version: v5 (current build) · Status: working demo, pre-MVP1 · Data: best-effo
 1. [Introduction](#1-introduction)
 2. [Product Architecture](#2-product-architecture)
 3. [Data Model](#3-data-model)
-4. [Risk & Impact Algorithm](#4-risk--impact-algorithm)
+4. [Model Methodology](#4-model-methodology)
 5. [Feature Reference](#5-feature-reference)
 6. [Technical Implementation](#6-technical-implementation)
 7. [Internationalization](#7-internationalization)
 8. [Evidence Framework & Data Integrity](#8-evidence-framework--data-integrity)
-9. [Known Limitations](#9-known-limitations)
+9. [Model Status, Limitations & Known Issues](#9-model-status-limitations--known-issues)
 10. [File Structure & Deployment](#10-file-structure--deployment)
 11. [Roadmap](#11-roadmap)
 12. [Acknowledgements & Methodology Citations](#12-acknowledgements--methodology-citations)
@@ -64,11 +64,11 @@ SSCIM is built as **three synchronized layers over one computational engine**. S
 ┌─────────────────────────────────────────────────────────────┐
 │  LAYER 1: WORLD MAP          LAYER 2: INDUSTRY FLOW          │
 │  (OpenStreetMap / Leaflet)   (24-stage dependency DAG)       │
-│  16 countries, risk-colored  Value-weighted edges,           │
-│  derived country links       importance-sized nodes          │
+│  16 countries, structural     Modeled input-dependence        │
+│  vulnerability colored        edges, network-influence-sized │
 ├─────────────────────────────────────────────────────────────┤
 │  LAYER 3: INTELLIGENCE PANEL                                 │
-│  Event feed · Company impact rank · Movers · Capital rank    │
+│  Event feed · Company criticality rank · Movers · Capital    │
 │  Detail view: score breakdown, spread trees, sources          │
 └─────────────────────────────────────────────────────────────┘
                           │
@@ -134,95 +134,96 @@ For ~25 major companies, a list of `[ownerName, ownershipShare]` pairs sourced f
 
 ---
 
-## 4. Risk & Impact Algorithm
+## 4. Model Methodology
 
-### 4.1 Node risk score
+> **This section was rewritten to describe exactly what `app/src/engine/{priors,math,graph,index}.js` computes** — no formula below is aspirational or simplified for exposition. See `MODEL_ROADMAP.md` for the data-layer work this model would need before any of it could be called calibrated, and §9 for the full "Model status and limitations" statement. Every numerical coefficient lives in one place, `app/src/engine/priors.js` (`MODEL_PRIORS`), so this document, the in-app Methodology overlay, and the code cannot silently drift apart.
 
-$$\text{risk} = 0.25\,C_{\text{choke}} + 0.20\,C_{\text{geo}} + 0.20\,C_{\text{policy}} + 0.15\,C_{\text{subst}} + 0.10\,C_{\text{shock}} + 0.10\,C_{\text{market}}$$
+### 4.1 Structural vulnerability (per stage — time-invariant)
 
-Four of six components are **computed**; two are **declared analyst inputs**. Every score breakdown in the UI tags each component with its source: `[GRAPH]`, `[HHI]`, `[POLICY DB]`, `[EVENT ENGINE]`, or `[ANALYST]`.
+$$\text{struct}_n = w_{\text{ni}}\,NI_n + w_{\text{geo}}\,GEO_n + w_{\text{pol}}\,POL_n + w_{\text{subst}}\,\text{subst}_n + w_{\text{mkt}}\,\text{mkt}_n$$
 
-### 4.2 Chokepoint centrality — computed from graph structure
+Five components, renormalized to sum to 1 after dropping the event-driven term entirely (weights derive from `MODEL_PRIORS.componentWeights`, which also feeds the in-app breakdown — see §4.9 for why the event/scenario layer is kept structurally separate from this number). Three components are graph/data-derived (network influence, geographic concentration, policy exposure); two are declared analyst judgments (substitutability, market sensitivity) — every breakdown bar in the UI tags its source `[GRAPH/DATA]` or `[ANALYST]`.
 
-Path-participation centrality on the DAG: how many source→sink production paths run through a node.
+### 4.2 Network influence — a Leontief-style sensitivity proxy
 
-$$\text{through}(n) = \text{pathsTo}(n) \times \text{pathsFrom}(n), \qquad C_{\text{choke}}(n) = 10\sqrt{\frac{\text{through}(n)}{\max_m \text{through}(m)}}$$
+For every stage $j$: inject a unit adverse shock at $j$ alone, propagate it downstream over every reachable path (§4.4), weight each affected stage by its log-compressed economic weight, sum, then normalize 0–10 against the largest such sum in the graph.
 
-`pathsTo` and `pathsFrom` are computed via topological sort (Kahn's algorithm) in $O(V+E)$. The square root compresses the distribution so mid-tier nodes aren't crushed toward zero.
+$$NI_j = 10\cdot\frac{\sum_n EW_n\cdot\left|\text{propagate}_{\downarrow}(j)_n\right|}{\max_k \sum_n EW_n\cdot\left|\text{propagate}_{\downarrow}(k)_n\right|}, \qquad EW_n=\frac{\ln(1+v_n)}{\max_m \ln(1+v_m)}$$
 
-### 4.3 Geographic concentration — Herfindahl-Hirschman Index
+This replaces the earlier version's raw path-count "chokepoint centrality," which counted source→sink paths through a node and was highly sensitive to how the graph happened to be drawn (adding an unrelated parallel path could move a node's centrality without changing anything about how disruptive it actually is). Network influence is a **modeled sensitivity proxy**, not a validated centrality metric or a measure of realized economic loss.
 
-Standard HHI over each stage's country market shares:
+### 4.3 Geographic concentration — HHI with an explicit residual
 
-$$C_{\text{geo}}(n) = 10\sum_i \text{share}_i^2$$
+$$HHI = \sum_i \text{share}_i^2 + \text{residual}^2, \qquad \text{residual} = \max(0,\,1-\textstyle\sum_i \text{share}_i)$$
 
-A single-country monopoly (e.g. lithography: NL 80%, JP 20%) scores $10(0.8^2+0.2^2)=6.8$.
+Example: shares `{a: 0.5, b: 0.25}` → residual `0.25` → `HHI = 0.5² + 0.25² + 0.25² = 0.375` → `score₁₀ = 3.75`. When a stage's disclosed country shares sum to less than 1, the shortfall is treated as an unmodeled "Other" and included in the index — the earlier version silently ignored this residual, which **understated** concentration whenever the sample's disclosed shares didn't sum to 1 (several stages in the current snapshot are in exactly this situation — see the `audit:data` warnings). Shares summing to materially more than 1 are normalized for the computation and flagged as a diagnostic, not silently accepted.
 
-### 4.4 Policy exposure — from the policy-instrument database
+### 4.4 Directional dependence matrices — priors, not measured trade flow
 
-$$C_{\text{policy}}(n) = \min\left(10,\ \max_p \sigma_p + 0.4\sum_{p \neq \text{max}} \sigma_p\right)$$
+For every edge $a\to b$ ($a$ = supplier stage, $b$ = buyer stage), two distinct matrices replace the earlier version's single value-weighted edge:
 
-where $\sigma_p$ is the severity of each policy instrument affecting node $n$. The dominant policy sets the floor; secondary policies add a damped increment.
+$$D[b][a] = f_{\downarrow}\cdot\underbrace{\frac{1}{\text{indeg}(b)}}_{\text{base input share}}\cdot\big(\phi + (1-\phi)\cdot\text{spec}(a)\big), \qquad U[a][b] = \frac{f_{\uparrow}}{\text{outdeg}(a)}$$
 
-### 4.5 Stage importance — structural × economic
+with $f_{\downarrow}=0.55$ (`downstreamTransmission`), $f_{\uparrow}=0.30$ (`upstreamTransmission`), $\phi=0.25$ (`specificityFloor`), and $\text{spec}(a)=\text{clamp}(\text{subst}_a/10,\,0,\,1)$.
 
-$$I_n = 10\left(0.6\cdot\frac{C_{\text{choke}}(n)}{10} + 0.4\cdot\frac{\ln v_n}{\ln v_{\max}}\right)$$
+- **`D[b][a]`** is a downstream **input-dependence** proxy: how much buyer stage $b$'s output depends on supplier stage $a$, given $b$'s in-degree (an equal-allocation prior across $b$'s declared inputs — not a bill-of-materials weight) and $a$'s substitutability-derived specificity.
+- **`U[a][b]`** is an upstream **supplier-revenue-dependence** proxy: the demand-side echo felt by supplier $a$ when buyer $b$ is disrupted, split evenly across $a$'s declared outputs.
 
-Blends graph centrality with log-compressed economic value (so a high-volume, low-differentiation stage like final assembly doesn't dominate purely on revenue). Used to weight every aggregate index below, and rendered visually as node/dot size in the flow graph.
+Neither matrix is a measured input–output coefficient or a bilateral trade value — no facility-level, bill-of-materials, or inventory dataset exists yet to build one. Both are declared, transparent priors built only from graph structure (in/out-degree) and the one analyst-judgment input the dataset already has (stage substitutability). Edge thickness in the flow graph now renders `D[b][a]`, labeled "modeled input-dependence weight (prior)" — never "value flow" or "trade intensity."
 
-### 4.6 Value-weighted edges
+### 4.5 All-reachable-paths propagation
 
-$$w_{a\to b} = \frac{v_b}{\sum_{c \,\in\, \text{out}(a)} v_c}$$
+A shock at any stage propagates downstream (topological order, via $D$) and/or upstream (reverse-topological order, via $U$) across **every** reachable path in the graph — not a fixed two-hop-downstream/one-hop-upstream cutoff as in the earlier version. At each node, contributions from all direct predecessors (downstream) or successors (upstream) are combined via the bounded noisy-OR rule in §4.7; propagation along a path stops once a contribution's magnitude falls below a tolerance ($\tau=10^{-4}$), not after a fixed hop count. The stage graph is validated before any of this runs — no dangling edges, no duplicate edges, no cycles (a DAG is required for a topological order to exist) — and an invalid graph surfaces as an explicit diagnostic rather than silently propagating arbitrary values.
 
-Each edge's weight is the destination stage's share of value among its siblings. Rendered as edge thickness in the flow graph.
+### 4.6 Event magnitude, decay, and operational impact
 
-### 4.7 Event shock — decay and propagation
+$$s_0 = \text{sign}\cdot\text{clamp}(\text{sev}/10,\,0,\,1)\cdot\text{decay}(\text{age},\,H), \qquad \text{decay}(\text{age},H)=2^{-\text{age}/H}, \qquad H = 12\text{ days}$$
 
-Source shock at the event's origin stage(s):
+This is a **true half-life**: `decay(0,12)=1`, `decay(12,12)=0.5`, `decay(24,12)=0.25`. The earlier version used $e^{-\text{age}/12}$ and *called* it a 12-day half-life, but that function's actual half-life is $12\ln 2 \approx 8.32$ days — a real, if subtle, correctness bug, now fixed. `sign` is $+1$ (adverse) or $-1$ (mitigating), taken from the event's declared assumption (§4.8), never inferred from severity. `age` is measured in days before the frozen snapshot date (`MODEL_PRIORS.datasetAsOf`), never the visitor's real-time clock — this is a static demonstration snapshot, not a live feed.
 
-$$s_0 = \sigma \cdot \kappa_{\text{conf}} \cdot e^{-d/12}$$
+$$\text{operationalIndex}(\text{field}) = \text{clamp}_{[-1,1]}\!\left(\frac{\sum_n EW_n\cdot\text{field}_n}{\sum_n EW_n}\right), \qquad \text{displayIndex}=5+5\cdot\text{operationalIndex}$$
 
-where $\sigma$ is severity (0–10), $\kappa_{\text{conf}} \in \{1.0, 0.75, 0.5\}$ for High/Medium/Low confidence (Simulated events use 1.0), and $d$ is days since the event — giving roughly a 12-day half-life.
+Critically, **confidence (High/Medium/Low/Simulated) is never multiplied into this magnitude.** The earlier version multiplied a confidence weight ($\kappa_{\text{conf}}\in\{1.0,0.75,0.5\}$) directly into the shock, conflating *how sure we are* with *how large the effect is* — a Low-confidence severity-8 event and a High-confidence severity-6 event could render identically. Confidence is now reported only as evidence-quality metadata alongside the magnitude. Only events whose declared assumption marks them `operational: true` contribute to this aggregate; hazard-signal, mixed-reallocative, and long-term-strategic events are still displayed and individually propagated (§4.8), but excluded from the single score. A scenario's chain index is shown as **active** vs. **baseline** with their signed delta, never as a silent rewrite of the historical series (which stays baseline-only — a hypothetical scenario cannot change the past). A deterministic **sensitivity envelope** (low/base/high) re-runs the computation at ±30% on the transmission coefficients and half-life — bounds on model sensitivity, explicitly not a confidence interval.
 
-Propagation from the source outward:
+### 4.7 Combining simultaneous shocks — bounded noisy-OR
 
-$$f_{\downarrow}(a\to b) = 0.55\,(0.5 + 0.5\,w_{a\to b}), \qquad f_{\uparrow} = 0.30$$
+$$\text{combinePositive}(v_1,\dots,v_k) = 1-\prod_i(1-v_i), \qquad \text{combinePositive}(0.4,\,0.5)=0.7$$
 
-Downstream shock travels up to 2 hops, each hop multiplying by $f_\downarrow$ using that specific edge's value weight (so shock spreads more strongly along high-value paths). Upstream shock travels 1 hop at a flat $0.30$ multiplier (suppliers feel a demand-side echo, not a full mirror of the downstream effect). Where multiple events affect the same node, the node takes the **maximum** shock across all sources — shocks don't naively sum, avoiding runaway values when many events cluster on one stage.
+Signed values combine by separating positive (adverse) and negative (mitigating) magnitudes, combining each set with the formula above, then netting and clamping to $[-1,1]$. A second simultaneous adverse contribution can only add to, never subtract from, the combined effect, and the combined magnitude never exceeds 1. This replaces two problems in the earlier version at once: `Math.max`-merging multiple shocks on one node (which silently discarded every contribution but the single largest) and any naive-sum alternative (which is unbounded and can exceed the score's valid range). This is a declared pragmatic aggregation prior, not a formula drawn from the cited literature (§12).
 
-### 4.8 Chain Impact Index — one comparable number per shock field
+### 4.8 Event semantics — explicit, hand-curated, never inferred
 
-$$\text{CII/EII} = \frac{\sum_n s_n \, I_n}{\sum_n I_n}$$
+Every event/scenario id is looked up in a small, versioned table (`app/src/engine/event-assumptions.js`) giving its direction (adverse/mitigating/mixed), propagation channel (downstream/upstream/both), and whether it counts toward the scored operational aggregate at all — **not** inferred at runtime from event prose (no LLM, no keyword matching, no sentiment analysis). An id with no recorded assumption defaults to "unclassified": displayed, but excluded from the score rather than guessed. In the current snapshot: the export-control and material-licensing events are adverse/operational; the reported capacity-increase event is mitigating/operational; a hazard-signal event whose own text states no disruption occurred, a reallocative event with simultaneous winners and losers, and a long-term strategic/subsidy signal are all displayed but excluded from the aggregate — collapsing any of those three into one signed magnitude would misrepresent what they actually describe.
 
-An importance-weighted mean of the propagated shock field across all 24 nodes. Applied to an event's shock field, this is the **Event Impact Index (EII)** shown on every event card. Applied to a company-disruption shock field, it's the **Company Impact Index (CII)**.
+### 4.9 Company metrics — three separately-labeled numbers, never blended
 
-### 4.9 Company Impact Index — simulated disruption
+A small and a large single-stage company can share the same vulnerability, but never the same contribution or criticality:
 
-$$s_0(\text{stage}) = 10 \cdot \text{share}_{c,\text{stage}} \quad \Rightarrow \quad \text{propagate} \quad \Rightarrow \quad \text{CII}_c = \frac{\sum_n s_n I_n}{\sum_n I_n}$$
+$$\text{vulnerability}_c = 10\cdot\frac{1}{|S_c|}\sum_{s\in S_c}\max(0,\text{field}_s)$$
 
-To simulate "what if company $c$ were fully disrupted," the engine injects a shock at every stage $c$ occupies, sized to $10\times$ its within-stage production share, with confidence 1.0 and zero decay — then runs the *identical* propagation function used for live events. The resulting per-node shock field is aggregated into the CII. Companies are ranked by this index; the ranking is a mathematical output, not an asserted list.
+Share-**independent**: the average adverse impact across the stages $c$ occupies, regardless of relative size there.
 
-### 4.10 Company exposure — footprint-weighted mean
+$$\text{contribution}_c = \sum_{s\in S_c}\text{share}_{c,s}\cdot\max(0,\text{field}_s)\cdot EW_s$$
 
-$$e_{c,\text{stage}} = \text{share}_{c,\text{stage}} \times s_{\text{stage}}, \qquad \bar e_c = \frac{\sum_{\text{stage}} \text{share}_{c,\text{stage}}\, s_{\text{stage}}}{\sum_{\text{stage}} \text{share}_{c,\text{stage}}}$$
+Share-**weighted**: market share does not cancel — a larger stake at the same impact level always yields a larger contribution. (The earlier version divided by the sum of company shares in the exposure formula, which made market share cancel out algebraically for any single-stage company — a company with 5% share and one with 50% share of the same stage produced an identical number. Fixed.) If a stage's disclosed company shares sum to more than 1, shares are normalized for this computation and flagged as "within modeled sample."
 
-Given *any* shock field (from a live event, a scenario, or another company's disruption), this computes how exposed a specific company is — used for the "most-exposed companies" list on every event and for the customer-graph spread trees.
+$$\text{criticality}_c = 10\cdot\frac{\sum_n \max(0,\text{propagate}_{\text{both}}(\text{stakes}_c))_n\cdot NI_n}{\sum_n NI_n}$$
 
-### 4.11 Country scores — fully derived
+"If this company were fully disrupted": inject a shock at every stage it occupies (sized to its within-stage share), propagate in both directions, and take the network-influence-weighted mean. Increasing a company's market share can never reduce this number.
 
-Every country's six components are the **share-weighted average** of the components of every stage it participates in, plus direct country-tagged event shock (max-combined in). No country score is hand-set anywhere in the model; the map layer is a pure function of the stage-level data.
+### 4.10 Capital Power
 
-### 4.12 Capital Power Index
+$$\text{CapitalPower}_o = \sum_c \text{own}_{o,c}\cdot\text{criticality}_c$$
 
-$$\text{CPI}_o = \sum_c \text{own}_{o,c} \cdot \text{CII}_c$$
+For each owner $o$, sum their ownership share in each company weighted by that company's systemic-criticality number (§4.9) — a ranking of who holds rights over the chain's most structurally critical capacity, with state-linked capital flagged.
 
-For each owner $o$ (a fund, a government entity, a family holding), sum their ownership share in each company weighted by that company's Company Impact Index. This produces a ranking of "who holds rights over the chain's most structurally important capacity" — distinct from simple market-cap-weighted ownership rankings, because it's weighted by *chain criticality*, not just company size.
+### 4.11 Countries and the map layer
 
-### 4.13 Computed history
+Country structural/operational scores are share-weighted aggregates of the stage-level numbers above (§4.1, §4.6) — **production geography**, not company headquarters. Company headquarters is shown separately and labeled "HQ:" throughout; it is never substituted for facility-level production exposure, which this dataset does not yet contain (see `MODEL_ROADMAP.md`). Map links aggregate the sample's supplier-revenue relationships between company *headquarters* countries, labeled "modeled supplier-revenue relationship weight" — never "trade intensity," since the underlying number measures neither bilateral trade nor buyer input dependence.
 
-$$\text{ChainIndex}(t) = \frac{\sum_n \text{total}(\text{stage}_n, \text{shock}_t)\, I_n}{\sum_n I_n}, \qquad \text{shock}_t = \text{propagate}\big(\{e : e.\text{daysAgo} - t \geq 0\}\big)$$
+### 4.12 Computed history
 
-The 21-day sparkline and the "Movers 7D" list are not decorative — they re-run the *entire* engine at each past day by shifting every event's `daysAgo` back in time and re-propagating. This means historical values are internally consistent with the live model rather than being a separately-maintained time series.
+The 21-day sparkline and the "Movers 7D" list re-run the operational-impact computation (§4.6) at each past day by shifting every event's `daysAgo` forward from the frozen snapshot date and re-propagating — never using `Date.now()`. History is always the **baseline** series (real snapshot events only); an active hypothetical scenario is shown as a separate current-value comparison point and never rewrites this series.
 
 ---
 
@@ -230,26 +231,26 @@ The 21-day sparkline and the "Movers 7D" list are not decorative — they re-run
 
 | Feature | Description |
 |---|---|
-| **World Map** | Real OpenStreetMap geography (CARTO dark basemap, OSM-tile fallback), 16 countries, node size = chain participation, color = risk score |
-| **Derived country links** | Connections between countries computed from the 243-relationship customer graph — hover shows sectors and example company pairs, not manually asserted arcs |
-| **Industry Flow Graph** | 24-stage DAG, edge thickness = value weight, node size = computed importance, tap to open a stage subsection |
-| **Stage subsections** | Per-stage company list with market-share bars, live shock exposure, and each company's top customers with percentages |
-| **Company detail** | Company Impact Index, production footprint, customers & suppliers with sales shares, major shareholders, two-layer upstream origin trace, two spread trees |
-| **Customer-graph spread tree** | Named-relationship propagation: source → direct customers → their customers, with path-weight percentages and engine-computed exposure |
-| **Stage-level spread tree** | Structural propagation view: hop 0/1/2 by graph distance, top 5 companies per hop |
+| **World Map** | Real OpenStreetMap geography (CARTO dark basemap, OSM-tile fallback), 16 countries, node size/color = structural vulnerability, hover shows operational impact & scenario Δ separately |
+| **Derived country links** | Connections between countries computed from the customer graph, labeled "modeled supplier-revenue relationship weight" (HQ↔HQ, sample only) — never "trade intensity" |
+| **Industry Flow Graph** | 24-stage DAG, edge thickness = modeled input-dependence prior, node color/size = structural vulnerability, +Δ badge = current operational scenario delta, tap to open a stage subsection |
+| **Stage subsections** | Per-stage company list with market-share bars, modeled contribution, and each company's top customers with percentages |
+| **Company detail** | Three separately-labeled numbers — systemic criticality, vulnerability (share-independent), contribution (share-weighted) — plus production footprint, customers & suppliers, major shareholders, two-layer upstream origin trace, two spread trees |
+| **Customer-graph spread tree** | Named-relationship propagation: source → direct customers → their customers, with path-weight percentages and engine-computed contribution |
+| **Stage-level spread tree** | All-reachable-paths propagation view, ranked by modeled contribution |
 | **Upstream origins tree** | Two supplier layers *behind* any company, via the reversed customer graph |
-| **Company Impact Rank** | All 109 companies ranked by CII — the answer to "whose disruption hurts the chain most?" |
-| **Capital Power Rank** | Shareholders ranked by ownership × chain-impact; state-linked capital flagged |
-| **Movers 7D** | Stages ranked by absolute score change over the trailing week, computed via engine replay |
-| **21-day sparkline** | Chain-wide risk index recomputed at each of the past 21 days |
-| **Scenario presets** | Taiwan Strait crisis, China materials ban, Export controls max — each a pre-configured simulated event |
-| **Scenario Builder** | User selects any stages, sets severity, names it, and runs a fully custom simulated event through the engine |
+| **Company Rank** | All 109 companies ranked by systemic criticality — the answer to "whose disruption hurts the chain most?" |
+| **Capital Power Rank** | Shareholders ranked by ownership × company systemic criticality; state-linked capital flagged |
+| **Movers 7D** | Stages ranked by absolute baseline operational-impact change over the trailing week, computed via engine replay |
+| **21-day sparkline** | Baseline operational chain index recomputed at each of the past 21 days (never rewritten by an active scenario) |
+| **Scenario presets** | Taiwan Strait crisis, China materials ban, Export controls max — each a pre-configured hypothetical event, shown as active vs. baseline with a signed delta |
+| **Scenario Builder** | User selects any stages, sets severity, names it, and runs a fully custom hypothetical event through the identical engine |
 | **Global search** | Jump to any stage, company, or country by name |
-| **GP Briefing generator** | Composes a full daily intelligence briefing from live model state — what changed, most-shocked nodes, company exposure leaders, country risk board, watch-next; copy or download as .txt |
-| **Rich event detail** | Background paragraph, source citation, dated confidence timeline, and computed most-exposed-companies list per event |
+| **GP Briefing generator** | Composes a daily intelligence briefing — ranked by scenario marginal delta when active, by baseline operational impact otherwise; every line labeled structural/operational/scenario-delta; copy or download as .txt |
+| **Rich event detail** | Background paragraph, source citation, dated confidence timeline, explicit exclusion banner for hazard/mixed/strategic events, and computed top-contribution companies list per event |
 | **Company logos** | Favicon-based identification for all 109 companies via each company's official domain, with monogram fallback |
 | **In-app Guide** | Seven-step walkthrough, fully localized |
-| **Methodology overlay** | Every formula (rendered in TeX/KaTeX), every propagation constant, explicit computed-vs-analyst source tags, and stated limitations |
+| **Methodology overlay** | Every formula (rendered in TeX/KaTeX) transcribed directly from the engine source, every propagation prior, explicit structural/operational/scenario-delta tags, and the full "Model status and limitations" statement |
 | **Language switcher** | English, Simplified Chinese, Traditional Chinese, Japanese — UI chrome and guide fully translated (see §7) |
 
 ---
@@ -268,17 +269,17 @@ The 21-day sparkline and the "Movers 7D" list are not decorative — they re-run
 Earlier builds computed everything from four **hardcoded** JS tables (`STAGES`, `COMPANIES`, `CUSTOMERS`, `POLICIES`) baked into the shipped file — accurate to the "one engine, three uses" claim, but it meant every data correction required a code change and a redeploy. The vault split separates *that* concern from the algorithm:
 
 - `server/` owns the data — companies, stages, the customer graph, shareholder table, policies, events, scenarios — in a real relational/JSON-hybrid SQLite schema, with a `data_notes` table carrying the evidence-tier citation for each headline correction (see §9).
-- `app/src/engine/index.js` is a **factory**, `buildEngine(data)`, not a set of modules computed once at import time. It takes whatever the vault returns and (re)computes chokepoint centrality, HHI, propagation, rankings, and history from it. The "one engine, three uses" claim from v4 still holds — `propagate()` is still one function called three ways — it's just now parameterized over runtime data instead of closed over static imports.
+- `app/src/engine/index.js` is a **factory**, `buildEngine(data)`, not a set of modules computed once at import time. It takes whatever the vault returns and (re)computes structural vulnerability, network influence, directional propagation, company metrics, rankings, and history from it (see §4). The "one engine, three uses" claim still holds — the same propagation code path runs for live events, hypothetical scenarios, and company-disruption simulations — it's just parameterized over runtime data instead of closed over static imports.
 - Editing data is now: call the admin API (or a future admin UI) — not edit a JS array and rebuild. Adding a new company, policy, or event still ripples through every dependent number automatically, the same as before, because the derivation logic didn't change, only where the source tables come from.
 
 The tradeoff: the app now depends on the vault API being reachable (there's a loading state, and a clear error screen if it isn't — see `App.jsx`). At current scale (24 stages, ~109 companies) the single-`GET`-then-compute-client-side approach is still sub-second and simple; a production version ingesting thousands of daily events would want the propagation itself computed server-side and cached, which is a change to *where* `buildEngine` runs, not to the algorithm.
 
 ### 6.3 Graph algorithms used
 
-- **Topological sort** (Kahn's algorithm) to establish a valid processing order over the DAG, required before computing path-participation centrality
-- **Forward/backward path counting** (`pathsTo`, `pathsFrom`) via single passes over the topological order — $O(V+E)$
-- **Bounded-hop BFS-style propagation** (2 hops downstream, 1 hop upstream) rather than full graph diffusion, keeping shock computation fast and the effect interpretable ("this is a direct effect, this is second-order")
-- **Max-combination** rather than summation when merging multiple shock sources onto one node, preventing unbounded accumulation
+- **Graph validation** (`engine/diagnostics.js`) before anything else runs: every edge's endpoints must exist among the declared stage ids, no duplicate edges, and the graph must be acyclic — an invalid graph surfaces as a diagnostic instead of propagating arbitrary values.
+- **Topological sort** (Kahn's algorithm, `engine/math.js`) establishes the processing order for downstream propagation; its reverse establishes the order for upstream propagation.
+- **All-reachable-paths propagation** (`engine/graph.js`) — a single forward pass in topological order (downstream) and/or a single backward pass in reverse-topological order (upstream), each node combining all its direct predecessors'/successors' contributions via the bounded noisy-OR in §4.7, truncated once a contribution's magnitude falls below a fixed tolerance rather than after a fixed hop count. This replaces the earlier version's bounded-hop BFS (2 hops downstream, 1 hop upstream), which structurally could not represent an effect reaching a stage more than two hops from its source.
+- **Bounded noisy-OR combination** (§4.7) rather than `Math.max` or naive summation when merging multiple simultaneous shock sources onto one node — monotonic (a second contribution never reduces the combined effect) and bounded (never exceeds the valid range).
 
 ### 6.4 Rendering approach
 
@@ -319,77 +320,82 @@ This framework directly implements the data-integrity rules from the original pr
 
 ---
 
-## 9. Known Limitations
+## 9. Model Status, Limitations & Known Issues
 
-**Real-data pass applied, not full Phase-1 sourcing.** A best-effort research pass (four parallel research tracks covering foundry/fab/packaging, equipment/materials, memory/EDA/design, and analog/systems/end-markets) replaced the original illustrative sample with current, cited figures wherever a reliable public source exists — company 10-K/20-F filings, TrendForce/TechInsights/Gartner market-share tracking, and named trade press. Headline corrections (e.g., the U.S. government's 9.9% Intel stake, Nvidia overtaking Apple as TSMC's top customer, corrected HBM shares) are logged with their source in the vault's `data_notes` table (`GET /api/data-notes`) and cross-referenced from the data files. Figures **without** a `data_notes` entry are still carried-over analyst judgment (Tier D per §8), not individually verified — this dataset is a meaningfully-improved snapshot, not a fully sourced production database, and should not be represented as such until every figure has an individual citation.
+**This is a research prototype and sensitivity-ranking tool, not a calibrated forecasting system.** SSCIM's public dashboard runs entirely client-side against a static, curated, frozen demonstration snapshot (`app/src/data/vault-snapshot.json`, built from `server/src/seed-data.js` — see §6.2) — not a live feed, not real-time data, and not a database of verified current trade flows. Every propagation coefficient in §4 (`MODEL_PRIORS` in `app/src/engine/priors.js`) is a **declared, unvalidated sensitivity prior**: chosen to produce directionally sensible, reproducible, inspectable behavior, not fit to any observed disruption episode. Nothing in this system is a causal or probabilistic forecast. Scores support **comparison and sensitivity ranking within this snapshot only** — a company's or country's number here is not a predicted financial loss, and should never be represented as one.
 
-**Edges are value-weighted, not capacity-constrained.** The model captures relative value flow between stages but does not model absolute production capacity or bottleneck saturation — a real capacity-constrained shock (e.g., a fab physically destroyed) would propagate differently than the current value-weight-only model predicts.
+**No facility-level, bill-of-materials, inventory, capacity, or time-to-recover data exists in this dataset.** The directional dependence matrices in §4.4 are transparent equal-allocation priors built from graph structure (in/out-degree) and one analyst-judgment input (stage substitutability) — not a measured input–output coefficient, not a bill of materials, and not a capacity-constrained flow model. A real capacity-constrained shock (e.g., a fab physically destroyed) would propagate differently than this model predicts. See `MODEL_ROADMAP.md` for the full list of data-layer work (facility geography, buyer-input vs. supplier-revenue dependence, capacity/utilization, inventory days, time-to-recover/time-to-switch, alternative-supplier counts, and more) this model would need before any of it could be calibrated.
 
-**Propagation constants are unvalidated priors.** The 0.55 downstream factor, 0.30 upstream factor, and 12-day decay half-life were chosen to produce directionally sensible behavior, not fit to data. Section 11 outlines the calibration plan.
+**Real-data pass applied to company/market-share figures, not full Phase-1 sourcing.** A best-effort research pass replaced the original illustrative sample with current, cited figures wherever a reliable public source exists — company 10-K/20-F/Annual Report filings, TrendForce/TechInsights/Gartner market-share tracking, and named trade press. Headline corrections (e.g., the U.S. government's 9.9% Intel stake, Nvidia overtaking Apple as TSMC's top customer, corrected HBM shares) are logged with their source in `server/src/data-notes.js` and surfaced by `npm run audit:data` (§10). Figures **without** a data-note entry are still carried-over analyst judgment (Tier D per §8), not individually verified — `npm run audit:data` currently reports 20/24 stages and 105/109 companies with no evidence note. This dataset is a meaningfully-improved snapshot, not a fully sourced production database, and should not be represented as such.
 
-**Customer-graph relationships are one axis of dependency.** A supplier's sales share to a customer is not the same as that customer's *input* dependence on the supplier (ASML → TSMC at 35% of ASML's sales does not mean TSMC is 35% dependent on ASML — for EUV specifically, it's closer to complete dependence). The product surfaces both the relationship percentage and the engine-computed exposure number side by side specifically to prevent this conflation, but the underlying dataset does not yet capture reverse (input-side) concentration explicitly.
+**Customer-graph relationships are one axis of dependency, and the two directions are not interchangeable.** A supplier's sales share to a customer (§4.4's `U`, a supplier-revenue-dependence proxy) is not the same as that customer's *input* dependence on the supplier (§4.4's `D`, a downstream input-dependence proxy) — ASML → TSMC at some percentage of ASML's sales does not mean TSMC is that percentage dependent on ASML for EUV input; for EUV specifically it is closer to complete dependence. The product now exposes `D` and `U` as two separately-labeled matrices for exactly this reason (§4.4), but the underlying disclosed-relationship dataset (`CUSTOMERS`) is still supplier-revenue-share data, not directly-measured buyer input dependence.
 
-**Long-tail coverage is incomplete by design.** Stage company lists show a curated top set plus an "Others" remainder; ~110 companies is a deliberate ceiling — beyond this, additional entries add sourcing burden without materially changing chain-impact rankings.
+**Long-tail coverage is incomplete by design.** Stage company lists show a curated top set plus an "Others"/residual remainder; ~110 companies is a deliberate ceiling. `npm run audit:data` reports each supplier's disclosed customer-revenue coverage explicitly (most suppliers disclose well under 100% — by design, the sample lists top customers only, not an exhaustive revenue reconciliation).
 
-**Shareholder data ages quickly.** Ownership stakes shift quarterly; this is the most compliance-sensitive dataset in the product and requires the tightest citation-and-date discipline in production.
+**Shareholder data ages quickly.** Ownership stakes shift quarterly; this is the most compliance-sensitive dataset in the product and would require the tightest citation-and-date discipline in any production version.
 
-**Client-side computation, server-side data.** As noted in §6.2, the propagation engine still runs client-side after a single bundle fetch — appropriate at demo scale (24 stages, ~109 companies) but a production version ingesting thousands of daily events would want propagation computed and cached server-side.
-
-**Vault availability is now a dependency.** The dashboard requires the `server/` API to be reachable at load time; if it isn't, the app shows an explicit error screen rather than silently falling back to stale data (see `App.jsx`'s `VaultGate`). Self-hosting both halves is required for the dashboard to function — a static-only deploy of `app/` alone will not render data.
+**Static-only deployment is intentional, not a fallback of last resort.** The public dashboard is deployed as a static GitHub Pages site with no backend. `VaultContext.jsx` first attempts to reach a configured API and falls back to the bundled static snapshot when none is reachable — on the public deployment, that fallback path is the only path, by design (see the footer's "STATIC SNAPSHOT" notice). The `server/` API exists in this repository for local development and is out of scope for the frontend/model corrections described in §4; it is not modified, re-enabled, or required by the static deployment.
 
 ---
 
 ## 10. File Structure & Deployment
 
-All three public pages — the landing page, the guide, and the dashboard — are React pages built from one Vite project (`app/`), sharing theme, the i18n pattern, and components like `Tex` (KaTeX formula rendering). Data (companies, stages, customer graph, shareholders, policies, events, scenarios) lives separately, in the `server/` vault.
+All three public pages — the landing page, the guide, and the dashboard — are React pages built from one Vite project (`app/`), sharing theme, the i18n pattern, and components like `Tex` (KaTeX formula rendering). The public deployment is **static-only**: the dashboard runs entirely against the bundled snapshot in `app/src/data/vault-snapshot.json` (see §9). `server/` (a small Node/Express + SQLite API) exists for local development and is not part of the public deployment.
 
 ```
 /
 ├── README.md / README.ja.md / README.zh.md   This document, in English/Japanese/Simplified Chinese
+├── MODEL_ROADMAP.md      Deferred data-layer work (facility geography, dependence-type splits, evidence tiers, …) — describes, does not implement
 ├── app/                  The site — Vite + React source, three entry points
 │   ├── index.html          Vite entry → landing page (built output: index.html)
 │   ├── intro.html          Vite entry → guide page (built output: intro.html)
 │   ├── sscim-app.html      Vite entry → dashboard (built output: sscim-app.html)
+│   ├── vitest.config.js    Vitest config (node environment, @vitejs/plugin-react for JSX)
+│   ├── scripts/
+│   │   ├── build-vault-snapshot.mjs   generates vault-snapshot.json from server/src/seed-data.js
+│   │   └── audit-snapshot.mjs          read-only diagnostics over the committed snapshot — npm run audit:data
 │   ├── src/
 │   │   ├── landing/         Landing.jsx, main.jsx, i18n.js — marketing/positioning page
 │   │   ├── intro/            Intro.jsx, main.jsx, i18n.js — guide/walkthrough page
-│   │   ├── components/       Dashboard UI components (Header, FlowGraph, OsmMap, Detail, Briefing, Methodology, Tex, …)
-│   │   ├── data/              VaultContext.jsx (fetches the API bundle) + compMeta.js (static UI labels)
-│   │   ├── engine/             index.js — buildEngine(data): chokepoint centrality, HHI, propagation, rankings, history
+│   │   ├── components/       Dashboard UI components (Header, FlowGraph, OsmMap, Detail, Briefing, Methodology, Tex, …) + *.test.js
+│   │   ├── data/              VaultContext.jsx (fetches the API, falls back to vault-snapshot.json) + vault-snapshot.json + compMeta.js
+│   │   ├── engine/             priors.js, math.js, graph.js, diagnostics.js, event-assumptions.js, index.js (buildEngine), buildModel.js + *.test.js
 │   │   ├── i18n/                dashboard language dictionary + t()
-│   │   ├── utils/                color/label helpers
+│   │   ├── utils/                color/label/accessibility helpers (colors.js, a11y.js, tooltip.js) + tooltip.test.js
 │   │   ├── App.jsx, main.jsx, theme.js   — dashboard root
 │   ├── vite.config.js      multi-page build (rollupOptions.input: landing/intro/dashboard), base: './' (relative asset paths), outputs to ../dist-app
-│   └── package.json
-└── server/               The vault — Node/Express + SQLite API
+│   └── package.json        scripts: dev, build, test (vitest run), audit:data
+└── server/               Local-dev-only vault — Node/Express + SQLite API (out of scope for the static deployment)
     ├── src/
     │   ├── db.js           schema (stages, companies, customers, owners, policies, events, scenarios, data_notes)
-    │   ├── seed-data.js     current dataset (real-data-pass values, see §9)
+    │   ├── seed-data.js     current dataset (real-data-pass values, see §9) — source of vault-snapshot.json
     │   ├── data-notes.js    citations behind the headline corrections
     │   ├── seed.js          populates data/sscim.db from seed-data.js
-    │   ├── routes/public.js  GET endpoints (including GET /api/bundle — the dashboard's single startup fetch)
+    │   ├── routes/public.js  GET endpoints (including GET /api/bundle)
     │   ├── routes/admin.js   bearer-token-authenticated writes (PUT/POST/DELETE)
     │   └── index.js          Express app
     └── package.json
 ```
 
-**Development:** `cd server && npm install && cp .env.example .env && npm run seed && npm run dev` (serves the API on `:8787`), then `cd app && npm install && npm run dev` (serves all three pages on `:5173` — `/index.html`, `/intro.html`, `/sscim-app.html` — the dashboard reads `VITE_API_BASE_URL`, defaulting to `http://localhost:8787`).
+**Development:** `cd app && npm install && npm run dev` (serves all three pages on `:5173` — `/index.html`, `/intro.html`, `/sscim-app.html` — falling back to the static snapshot automatically with no backend running). Optionally, `cd server && npm install && cp .env.example .env && npm run seed && npm run dev` to also run the local API (`:8787`) and exercise the live-data code path.
 
-**Production deployment** needs two things running, not one static bundle:
-- **Frontend** (`app/`): `npm run build` produces `dist-app/` containing all three built pages (`index.html`, `intro.html`, `sscim-app.html`) plus a shared `assets/` folder — deploy that directory as-is (GitHub Pages, Netlify, etc.), with `VITE_API_BASE_URL` set at build time to the deployed backend's URL.
-- **Backend** (`server/`): needs an actual Node host (Render, Fly.io, Railway, a VPS, etc.) — it is no longer a "drop the HTML file anywhere" deploy. Set `ADMIN_TOKEN` to a real secret before exposing it publicly; without it the admin write API is disabled by default (503), not open.
+**Verification:** `cd app && npm run audit:data && npm test && npm run build` — data-integrity diagnostics, the unit-test suite, then the production build (see §4, §6.3, and `.github/workflows/static.yml`, which runs the same three steps on every push to `main`).
+
+**Production deployment (public site):** `app/` only. `npm run build` produces `dist-app/` containing all three built pages (`index.html`, `intro.html`, `sscim-app.html`) plus a shared `assets/` folder — deployed as-is to GitHub Pages by `.github/workflows/static.yml`. No backend is required or deployed; `VITE_API_BASE_URL` may optionally be set to point at a self-hosted `server/` instance, but the dashboard is fully functional without one via the bundled static snapshot.
 
 ---
 
 ## 11. Roadmap
 
-Phased plan:
+**Model/data-layer roadmap:** see `MODEL_ROADMAP.md` for the specific deferred data work this model needs before it could be calibrated — facility geography, buyer-input vs. supplier-revenue vs. qualification dependence, capacity/utilization, inventory days, time-to-recover/time-to-switch, alternative-supplier counts, evidence-tiered market-share estimates and denominators (DRAM/NAND/HBM kept separate, merchant vs. captive AI accelerators kept separate, advanced-node vs. total foundry capacity kept separate), and backtesting the propagation priors against documented historical episodes. That document describes deferred work; it does not implement any of it.
+
+**Product/business roadmap:**
 
 1. **Demand validation** — structured demos with target users (funds, strategy teams, journalists, researchers); collect explicit willingness-to-pay signals before further build-out.
 2. **Sourced database** — replace sample figures with cited, dated values for the highest-importance ~150–250 nodes; formalize the analyst rubric for substitutability and market sensitivity.
 3. **GP News briefing launch** — weekly-to-daily briefing as the demand-validation and data-collection vehicle, using the manually curated internal graph.
 4. **Live ingestion pipeline** — automated monitoring of official sources and trusted media, entity extraction and event classification with mandatory human review, automated event-to-node mapping.
-5. **Calibration** — backtest propagation parameters (hop factors, decay constant, confidence weights) against documented historical episodes (2021 ABF substrate shortage, 2023 Ga/Ge licensing action, successive export-control rounds) before any score ships without a "sample data" label.
+5. **Calibration** — backtest propagation parameters (transmission coefficients, decay half-life) against documented historical episodes (2021 ABF substrate shortage, 2023 Ga/Ge licensing action, successive export-control rounds) before any score ships without a "sample data" label.
 6. **Capital-flow layer expansion** — extend the capital layer from ownership stakes to directed money-flow edges: CHIPS Act/EU Chips Act/METI subsidy disbursements and announced fab investments as tracked flows on the same graph.
 7. **Dashboard premium tier** — full interactive product (scenario mode, company impact analysis) as the paid tier once briefing subscribers validate demand.
 
@@ -397,13 +403,21 @@ Phased plan:
 
 ## 12. Acknowledgements & Methodology Citations
 
-The risk-scoring and shock-propagation algorithm in §4 is original engineering, but it builds on established results from network science, industrial-organization economics, and production-network macroeconomics. The citations below identify the specific concept each formula borrows; they are not a claim that the cited authors designed, reviewed, or endorse this system. Formatted per the *Chicago Manual of Style* (17th ed.), author-date system.
+The propagation/scoring model in §4 is original engineering, but its **architecture and stated limitations** draw on established results from network science, industrial-organization economics, and production-network macroeconomics. The citations below identify the specific concept each part of the model borrows, or the limitation it is designed to be honest about — **they are not a claim that any coefficient in this model has been calibrated to, validated against, or endorsed by the cited work.** None of the individuals or institutions below were consulted on, reviewed, or endorse SSCIM. Formatted per the *Chicago Manual of Style* (17th ed.), author-date system.
 
-**Chokepoint centrality (§4.2)** adapts path-participation / betweenness-style centrality from network science:
+**Production-network shock propagation and the network-origins-of-fluctuations framing (§4.2, §4.4–§4.7)** motivate treating a supply chain as a directed graph whose structure shapes how idiosyncratic shocks aggregate — the specific dependence-proxy formulas and noisy-OR combination in this model are original, not drawn from these papers:
 
-> Freeman, Linton C. 1977. "A Set of Measures of Centrality Based on Betweenness." *Sociometry* 40 (1): 35–41. https://doi.org/10.2307/3033543.
+> Acemoglu, Daron, Vasco M. Carvalho, Asuman Ozdaglar, and Alireza Tahbaz-Salehi. 2012. "The Network Origins of Aggregate Fluctuations." *Econometrica* 80 (5): 1977–2016. https://doi.org/10.3982/ECTA9623.
+>
+> Carvalho, Vasco M., Makoto Nirei, Yukiko U. Saito, and Alireza Tahbaz-Salehi. 2021. "Supply Chain Disruptions: Evidence from the Great East Japan Earthquake." *Quarterly Journal of Economics* 136 (2): 1255–1321. https://doi.org/10.1093/qje/qjaa044.
+>
+> Barrot, Jean-Noël, and Julien Sauvagnat. 2016. "Input Specificity and the Propagation of Idiosyncratic Shocks in Production Networks." *Quarterly Journal of Economics* 131 (3): 1543–92. https://doi.org/10.1093/qje/qjw018. (Motivates §4.4's specificity term — input specificity shapes how strongly a supplier-side shock transmits downstream.)
+>
+> Inoue, Hiroyasu, and Yasuyuki Todo. 2019. "Firm-Level Propagation of Shocks Through Supply-Chain Networks." *Nature Sustainability* 2: 841–47. https://doi.org/10.1038/s41893-019-0351-x.
+>
+> Baqaee, David Rezza, and Emmanuel Farhi. 2019. "The Macroeconomic Impact of Microeconomic Shocks: Beyond Hulten's Theorem." *Econometrica* 87 (4): 1155–1203. https://doi.org/10.3982/ECTA15202.
 
-**The topological sort underlying chokepoint centrality (§4.2, §6.3)** uses Kahn's algorithm:
+**The topological sort underlying all-reachable-paths propagation (§4.5, §6.3)** uses Kahn's algorithm:
 
 > Kahn, Arthur B. 1962. "Topological Sorting of Large Networks." *Communications of the ACM* 5 (11): 558–62. https://doi.org/10.1145/368996.369025.
 
@@ -415,25 +429,33 @@ The risk-scoring and shock-propagation algorithm in §4 is original engineering,
 >
 > Rhoades, Stephen A. 1993. "The Herfindahl-Hirschman Index." *Federal Reserve Bulletin* 79 (3): 188–89.
 
-**Shock propagation and the shock-as-network-fluctuation framing (§4.7–§4.9)** draws on production-network macroeconomics:
+**Risk-exposure indexing across a supply network (§4.2, §4.9)** motivates separating structural sensitivity from realized/operational impact:
 
-> Acemoglu, Daron, Vasco M. Carvalho, Asuman Ozdaglar, and Alireza Tahbaz-Salehi. 2012. "The Network Origins of Aggregate Fluctuations." *Econometrica* 80 (5): 1977–2016. https://doi.org/10.3982/ECTA9623.
+> Gao, Sky (Xibei), David Simchi-Levi, Chung-Piaw Teo, and Zhaotong Yan. 2019. "Disruption Risk Mitigation in Supply Chains: The Risk Exposure Index Revisited." *Operations Research* 67 (3): 831–52. https://doi.org/10.1287/opre.2018.1776.
+
+**Aggregation-limitation critique (throughout §4, §9)** — this model's explicit "structural vs. operational vs. scenario-delta" separation, its refusal to collapse hazard/mixed/strategic events into one signed number, and its sensitivity-envelope framing are motivated by documented risks of over-aggregating supply-chain network data into a single score:
+
+> Diem, Christian, András Borsos, Tobias Reisch, János Kertész, and Stefan Thurner. 2022. "Quantifying Firm-Level Economic Systemic Risk from Nation-Wide Supply Networks." *Scientific Reports* 12: 7719. https://doi.org/10.1038/s41598-022-11522-z.
+
+**Company disclosures** informing specific data-note corrections (§8, `server/src/data-notes.js`) — cited inline in the data files where a specific figure is drawn from them, not reproduced wholesale here:
+
+> ASML Holding N.V. 2026. *Annual Report 2025*. Veldhoven: ASML.
 >
-> Carvalho, Vasco M. 2014. "From Micro to Macro via Production Networks." *Journal of Economic Perspectives* 28 (4): 23–48. https://doi.org/10.1257/jep.28.4.23.
-
-**The max-combination rule for merging multiple shock sources on one node (§4.7, §6.3)**, rather than summation, follows the cascade/threshold logic used in financial-network contagion models:
-
-> Elliott, Matthew, Benjamin Golub, and Matthew O. Jackson. 2014. "Financial Networks and Contagion." *American Economic Review* 104 (10): 3115–53. https://doi.org/10.1257/aer.104.10.3115.
-
-**Institutional and industry sources** informing the evidence framework (§8) and the dataset's directional calibration:
-
+> NVIDIA Corporation. 2026. *Form 10-K for Fiscal Year 2026*. Santa Clara, CA: U.S. Securities and Exchange Commission.
+>
+> Micron Technology, Inc. 2025. *Form 10-K for Fiscal Year 2025*. Boise, ID: U.S. Securities and Exchange Commission.
+>
+> Taiwan Semiconductor Manufacturing Company. 2026. *Annual Report 2025*. Hsinchu: TSMC.
+>
+> Tokyo Electron Limited. 2025. *Integrated Report 2025*. Tokyo: Tokyo Electron.
+>
 > Semiconductor Industry Association and Boston Consulting Group. 2021. *Strengthening the Global Semiconductor Supply Chain in an Uncertain Era*. Washington, DC: SIA/BCG.
 >
 > Center for Security and Emerging Technology, Georgetown University. 2021. "The Semiconductor Supply Chain." Issue Brief, January 2021. https://cset.georgetown.edu/publication/the-semiconductor-supply-chain/.
 >
-> Company 10-K, 20-F, and annual-report disclosures; SEMI capacity statistics; TrendForce, TechInsights, and Gartner market-share estimates, cited inline in the data files where a specific figure is drawn from them.
+> Additional company 10-K/20-F/annual-report disclosures; SEMI capacity statistics; TrendForce, TechInsights, and Gartner market-share estimates, cited inline in the data files where a specific figure is drawn from them.
 
-None of the individuals or institutions above were consulted on, reviewed, or endorse SSCIM. These citations are provided for methodological transparency and academic attribution, not as a claim of collaboration.
+These citations are provided for methodological transparency and academic attribution — see §9 and `MODEL_ROADMAP.md` for what would actually be required before any coefficient here could be called calibrated.
 
 ---
 

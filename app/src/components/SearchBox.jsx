@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react';
 import { C } from '../theme.js';
 import { t } from '../i18n/index.js';
 import { useVault } from '../data/VaultContext.jsx';
+import { onEnterSpace } from '../utils/a11y.js';
 
 export default function SearchBox({ setSel }) {
   const { data } = useVault();
@@ -22,7 +23,9 @@ export default function SearchBox({ setSel }) {
       {results.length > 0 && (
         <div style={{ position: "absolute", top: "110%", right: 0, zIndex: 100, background: C.panel, border: `1px solid ${C.copper}`, borderRadius: 6, minWidth: 220, overflow: "hidden" }}>
           {results.map((r) => (
-            <div key={r.type + r.id} onClick={() => { setSel({ type: r.type, id: r.id }); setQ(""); }}
+            <div key={r.type + r.id} role="button" tabIndex={0}
+              onClick={() => { setSel({ type: r.type, id: r.id }); setQ(""); }}
+              onKeyDown={onEnterSpace(() => { setSel({ type: r.type, id: r.id }); setQ(""); })}
               style={{ padding: "6px 10px", fontSize: 12, cursor: "pointer", display: "flex", justifyContent: "space-between", gap: 10, borderBottom: `1px solid ${C.line}` }}>
               <span>{r.label}</span><span className="mono" style={{ fontSize: 8.5, color: C.copper }}>{r.k}</span>
             </div>

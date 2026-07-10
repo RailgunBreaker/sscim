@@ -34,13 +34,25 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
           cache: 'npm'
           cache-dependency-path: app/package-lock.json
 
       - name: Install dependencies
         working-directory: app
-        run: npm install
+        run: npm ci
+
+      # Read-only diagnostic over the committed static snapshot (app/src/data/
+      # vault-snapshot.json) — fails the build on malformed data (dangling
+      # references, non-finite values, out-of-range shares, an invalid stage
+      # graph); see app/scripts/audit-snapshot.mjs.
+      - name: Audit static data snapshot
+        working-directory: app
+        run: npm run audit:data
+
+      - name: Run unit tests
+        working-directory: app
+        run: npm test
 
       - name: Build site (landing + intro + dashboard)
         working-directory: app

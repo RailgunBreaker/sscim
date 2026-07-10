@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { C } from './theme.js';
 import { t, setLangV } from './i18n/index.js';
 import { VaultProvider, useVault } from './data/VaultContext.jsx';
+import { buildModel } from './engine/buildModel.js';
 
 import Header from './components/Header.jsx';
 import ScenarioBar from './components/ScenarioBar.jsx';
@@ -44,9 +45,10 @@ export default function App() {
   );
 }
 
-/* Renders a loading/error state until the vault API responds, then mounts
-   the real dashboard — all vault-dependent hooks live inside Dashboard so
-   they only ever run once data actually exists. */
+/* Renders a loading/error state until the vault (live API or static
+   snapshot fallback) is ready, then mounts the real dashboard — all
+   vault-dependent hooks live inside Dashboard so they only ever run
+   once data actually exists. */
 function VaultGate() {
   const { status, error } = useVault();
   if (status === 'error') {
@@ -54,11 +56,8 @@ function VaultGate() {
       <div style={{ minHeight: "100vh", background: C.bg, color: C.text, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Space Grotesk', system-ui, sans-serif", padding: 24, textAlign: "center" }}>
         <style>{GLOBAL_STYLE}</style>
         <div>
-          <div style={{ fontSize: 18, fontWeight: 700, marginBottom: 8 }}>Can't reach the SSCIM vault API</div>
-          <div className="mono" style={{ fontSize: 12, color: C.dim, maxWidth: 480 }}>
-            {String(error?.message || error)}<br /><br />
-            Start the backend (<code>cd server && npm run dev</code>) or set <code>VITE_API_BASE_URL</code> to where it's running, then reload.
-          </div>
+          <div style={{ fontSize: 18, fontWeight: 700, marginBottom: 8 }}>Can't load the SSCIM vault</div>
+          <div className="mono" style={{ fontSize: 12, color: C.dim, maxWidth: 480 }}>{String(error?.message || error)}</div>
         </div>
       </div>
     );
@@ -77,7 +76,7 @@ function VaultGate() {
 function Dashboard() {
   const { data, engine, source } = useVault();
   const { EVENTS, SCENARIOS, COMPANY_BY_ID } = data;
-  const { STAGE_BY_ID, OUT, eventShock, mergeShocks, COMPANY_IMPACTS, stageComponents, total, countryData, HISTORY } = engine;
+  const { STAGE_BY_ID, OUT, COMPANY_CRITICALITY } = engine;
 
   const [sel, setSel] = useState({ type: "event", id: EVENTS[0]?.id });
   const [scenarioId, setScenarioId] = useState("none");
@@ -101,22 +100,7 @@ function Dashboard() {
 
   const scenario = scenarioId === "custom" ? custom : SCENARIOS.find((s) => s.id === scenarioId);
 
-  const model = useMemo(() => {
-    const baseShock = mergeShocks(EVENTS.map(eventShock));
-    const evts = scenario?.event ? [...EVENTS, { ...scenario.event, id: "sim" }] : EVENTS;
-    const shock = mergeShocks(evts.map(eventShock));
-    const stages = {}, stagesBase = {};
-    Object.values(STAGE_BY_ID).forEach((s) => {
-      stages[s.id] = { comp: stageComponents(s, shock), score: total(stageComponents(s, shock)) };
-      stagesBase[s.id] = total(stageComponents(s, baseShock));
-    });
-    return {
-      stages, stagesBase,
-      countries: countryData(evts, shock, data.COUNTRY_NAMES),
-      countriesBase: countryData(EVENTS, baseShock, data.COUNTRY_NAMES),
-      shock,
-    };
-  }, [scenarioId, custom]);
+  const model = useMemo(() => buildModel({ data, engine, scenario }), [scenarioId, custom]);
 
   const hl = useMemo(() => {
     const s = new Set(), c = new Set();
@@ -133,14 +117,14 @@ function Dashboard() {
     } else if (sel.type === "company") {
       const co = COMPANY_BY_ID[sel.id];
       c.add(co.country);
-      Object.entries(COMPANY_IMPACTS[sel.id].shock).forEach(([sid, v]) => v > 0.4 && s.add(sid));
+      Object.entries(COMPANY_CRITICALITY[sel.id].field).forEach(([sid, v]) => Math.abs(v) > 0.15 && s.add(sid));
     }
     return { s, c };
   }, [sel]);
 
-  const whatChanged = scenarioId === "none"
-    ? "Jul 03 — AI-chip export-control shock spread from NVIDIA / SK hynix / TSMC outward: highest company exposures now in packaging and systems tiers."
-    : `SCENARIO ACTIVE — ${scenario.name}: ${scenario.desc} Company exposures recomputed through the same engine.`;
+  const whatChanged = !model.scenarioActive
+    ? "Jul 03 (snapshot) — AI-chip export-control shock spread from NVIDIA / SK hynix / TSMC outward: highest company contribution now in packaging and systems tiers."
+    : `SCENARIO ACTIVE — ${scenario.name}: ${scenario.desc} Company/country/stage figures below are recomputed through the same engine and ranked by their marginal delta vs. baseline.`;
 
   const panes = { map: t("Map"), flow: t("Flow"), intel: t("Intel") };
 
@@ -155,7 +139,7 @@ function Dashboard() {
         setShowBriefing={setShowBriefing} setShowMethod={setShowMethod}
       />
 
-      <ScenarioBar scenarioId={scenarioId} whatChanged={whatChanged} />
+      <ScenarioBar model={model} whatChanged={whatChanged} />
 
       {showBuilder && <ScenarioBuilder onClose={() => setShowBuilder(false)} onRun={(sc) => { setCustom(sc); setScenarioId("custom"); setShowBuilder(false); }} />}
 
@@ -164,20 +148,20 @@ function Dashboard() {
       {wide ? (
         <>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1.9fr", gap: 1, background: C.line }}>
-            <Pane title="LAYER 1 · WORLD MAP · OPENSTREETMAP"><OsmMap sel={sel} setSel={setSel} hl={hl} model={model} scenarioActive={scenarioId !== "none"} /></Pane>
-            <Pane title="LAYER 2 · INDUSTRY FLOW · TAP A STAGE FOR ITS SUBSECTION"><FlowGraph sel={sel} setSel={setSel} hl={hl} model={model} scenarioActive={scenarioId !== "none"} /></Pane>
+            <Pane title="LAYER 1 · WORLD MAP · OPENSTREETMAP"><OsmMap sel={sel} setSel={setSel} hl={hl} model={model} scenarioActive={model.scenarioActive} /></Pane>
+            <Pane title="LAYER 2 · INDUSTRY FLOW · TAP A STAGE FOR ITS SUBSECTION"><FlowGraph sel={sel} setSel={setSel} hl={hl} model={model} scenarioActive={model.scenarioActive} /></Pane>
           </div>
           <div style={{ borderTop: `1px solid ${C.line}` }}>
             <Pane title="LAYER 3 · INTELLIGENCE PANEL">
-              <Intel sel={sel} setSel={setSel} model={model} scenarioActive={scenarioId !== "none"} feedTab={feedTab} setFeedTab={setFeedTab} horizontal />
+              <Intel sel={sel} setSel={setSel} model={model} scenarioActive={model.scenarioActive} feedTab={feedTab} setFeedTab={setFeedTab} horizontal />
             </Pane>
           </div>
         </>
       ) : (
         <>
-          {tab === "map" && <Pane title="LAYER 1 · WORLD MAP · OPENSTREETMAP"><OsmMap sel={sel} setSel={setSel} hl={hl} model={model} scenarioActive={scenarioId !== "none"} /></Pane>}
-          {tab === "flow" && <Pane title="LAYER 2 · INDUSTRY FLOW"><FlowGraph sel={sel} setSel={setSel} hl={hl} model={model} scenarioActive={scenarioId !== "none"} /></Pane>}
-          {tab === "intel" && <Pane title="LAYER 3 · INTELLIGENCE PANEL"><Intel sel={sel} setSel={setSel} model={model} scenarioActive={scenarioId !== "none"} feedTab={feedTab} setFeedTab={setFeedTab} /></Pane>}
+          {tab === "map" && <Pane title="LAYER 1 · WORLD MAP · OPENSTREETMAP"><OsmMap sel={sel} setSel={setSel} hl={hl} model={model} scenarioActive={model.scenarioActive} /></Pane>}
+          {tab === "flow" && <Pane title="LAYER 2 · INDUSTRY FLOW"><FlowGraph sel={sel} setSel={setSel} hl={hl} model={model} scenarioActive={model.scenarioActive} /></Pane>}
+          {tab === "intel" && <Pane title="LAYER 3 · INTELLIGENCE PANEL"><Intel sel={sel} setSel={setSel} model={model} scenarioActive={model.scenarioActive} feedTab={feedTab} setFeedTab={setFeedTab} /></Pane>}
         </>
       )}
 
@@ -186,10 +170,13 @@ function Dashboard() {
       {showBriefing && <Briefing onClose={() => setShowBriefing(false)} model={model} scenario={scenario} />}
 
       <footer className="mono" style={{ padding: "10px 16px", fontSize: 10, color: C.faint, borderTop: `1px solid ${C.line}`, lineHeight: 1.6 }}>
-        DEMO · Shares, stakes, values, policies and events are illustrative/best-effort model inputs — not a real-time market feed, not investment advice.
-        Map data © OpenStreetMap contributors · exposure(company) = within-stage share × propagated stage shock.
+        RESEARCH PROTOTYPE · A sensitivity/comparison tool over a frozen curated demonstration snapshot (as of {model.datasetAsOf}) — not a calibrated, causal, or probabilistic forecast, and not investment advice.
+        Map data © OpenStreetMap contributors · model {model.modelVersion}.
         {source === 'static' && (
           <span style={{ color: C.amber }}> · STATIC SNAPSHOT — no vault API connected, showing a build-time data snapshot instead of the live backend.</span>
+        )}
+        {!model.graphValid && (
+          <span style={{ color: C.red }}> · MODEL DIAGNOSTIC: the stage graph failed validation — see ⓘ Methodology.</span>
         )}
       </footer>
     </div>
