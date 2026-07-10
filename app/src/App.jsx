@@ -98,7 +98,17 @@ function Dashboard() {
   const [showBuilder, setShowBuilder] = useState(false);
   const [lang, setLang] = useState("en");
   const [tourTarget, setTourTarget] = useState(null);
+  const [guideKey, setGuideKey] = useState(0);
   setLangV(lang);
+
+  /* The header's "? Guide" button must always land back on the full
+     step list — including while the guide is already open in its small
+     tour-card mode (showGuide never goes false in that case, so simply
+     calling setShowGuide(true) again would be a no-op and the button
+     would appear to do nothing). Bumping guideKey forces Guide to
+     remount, resetting its internal tour state, and clearing tourTarget
+     drops any lingering highlight. */
+  const openGuide = () => { setShowGuide(true); setTourTarget(null); setGuideKey((k) => k + 1); };
 
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 1080px)");
@@ -159,7 +169,7 @@ function Dashboard() {
       <Header
         lang={lang} setLang={setLang} setSel={setSel}
         scenarioId={scenarioId} setScenarioId={setScenarioId} custom={custom}
-        setShowBuilder={setShowBuilder} setShowGuide={setShowGuide}
+        setShowBuilder={setShowBuilder} setShowGuide={openGuide}
         setShowBriefing={setShowBriefing} setShowMethod={setShowMethod}
         tourTarget={tourTarget}
       />
@@ -193,6 +203,7 @@ function Dashboard() {
       {showMethod && <Methodology onClose={() => setShowMethod(false)} />}
       {showGuide && (
         <Guide
+          key={guideKey}
           onClose={() => { setShowGuide(false); setTourTarget(null); }}
           tourTarget={tourTarget} onHighlight={setTourTarget}
         />
