@@ -18,6 +18,7 @@ import Pane from './components/Pane.jsx';
 import OsmMap from './components/OsmMap.jsx';
 import FlowGraph from './components/FlowGraph.jsx';
 import NetworkGraph from './components/NetworkGraph.jsx';
+import NetworkToolbar from './components/NetworkToolbar.jsx';
 import { buildBaseGraph } from './engine/network.js';
 import Intel from './components/Intel.jsx';
 import Methodology from './components/Methodology.jsx';
@@ -384,6 +385,7 @@ function DashboardBody() {
         <ScenarioComposer onBuild={buildFromDraft} onReset={resetScenario} activeIsCustom={scenarioId === 'custom'} />
       )}
       {scenarioActive && <PlaybackBar frame={frame} scenarioName={scenario?.name} />}
+      {viewMode !== 'geographic' && <NetworkToolbar />}
 
       {showBuilder && <ScenarioBuilder onClose={() => setShowBuilder(false)} onRun={(sc) => { setCustom(sc); setScenarioId("custom"); setShowBuilder(false); }} />}
 

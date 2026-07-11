@@ -142,6 +142,62 @@ describe('interactionReducer — draft scenario composition', () => {
   });
 });
 
+describe('interactionReducer — reversible network playground', () => {
+  const R = (s, type, payload) => interactionReducer(s, { type, payload });
+
+  it('toggling a node removal adds then removes it, recording undo history', () => {
+    let s = initInteraction(null);
+    s = R(s, 'PG_TOGGLE_NODE', 'tw::adv_fab');
+    expect(s.playground.removedNodeIds).toEqual(['tw::adv_fab']);
+    expect(s.playground.past).toHaveLength(1);
+    s = R(s, 'PG_TOGGLE_NODE', 'tw::adv_fab');
+    expect(s.playground.removedNodeIds).toEqual([]);
+  });
+
+  it('undo/redo are deterministic inverses', () => {
+    let s = initInteraction(null);
+    s = R(s, 'PG_TOGGLE_NODE', 'a::s1');
+    s = R(s, 'PG_TOGGLE_EDGE', 'a::s1->b::s2');
+    const removedBefore = { n: [...s.playground.removedNodeIds], e: [...s.playground.removedEdgeIds] };
+    s = R(s, 'PG_UNDO');
+    expect(s.playground.removedEdgeIds).toEqual([]); // undid the edge removal
+    expect(s.playground.removedNodeIds).toEqual(['a::s1']);
+    s = R(s, 'PG_REDO');
+    expect(s.playground.removedNodeIds).toEqual(removedBefore.n);
+    expect(s.playground.removedEdgeIds).toEqual(removedBefore.e);
+  });
+
+  it('reset clears all removals and is itself undoable', () => {
+    let s = initInteraction(null);
+    s = R(s, 'PG_TOGGLE_NODE', 'a::s1');
+    s = R(s, 'PG_RESET');
+    expect(s.playground.removedNodeIds).toEqual([]);
+    s = R(s, 'PG_UNDO');
+    expect(s.playground.removedNodeIds).toEqual(['a::s1']); // reset was reversible
+  });
+
+  it('a new removal clears the redo stack', () => {
+    let s = initInteraction(null);
+    s = R(s, 'PG_TOGGLE_NODE', 'a::s1');
+    s = R(s, 'PG_UNDO');
+    expect(s.playground.future).toHaveLength(1);
+    s = R(s, 'PG_TOGGLE_NODE', 'b::s2');
+    expect(s.playground.future).toHaveLength(0);
+  });
+
+  it('multi-select toggles membership without touching the undo stack', () => {
+    let s = initInteraction(null);
+    s = R(s, 'PG_TOGGLE_MULTI', { type: 'centre', id: 'a::s1' });
+    s = R(s, 'PG_TOGGLE_MULTI', { type: 'centre', id: 'b::s2' });
+    expect(s.playground.multi).toHaveLength(2);
+    expect(s.playground.past).toHaveLength(0);
+    s = R(s, 'PG_TOGGLE_MULTI', { type: 'centre', id: 'a::s1' });
+    expect(s.playground.multi).toEqual([{ type: 'centre', id: 'b::s2' }]);
+    s = R(s, 'PG_CLEAR_MULTI');
+    expect(s.playground.multi).toEqual([]);
+  });
+});
+
 describe('sameSel', () => {
   it('compares type+id, treats null carefully', () => {
     expect(sameSel(S('country', 'tw'), S('country', 'tw'))).toBe(true);

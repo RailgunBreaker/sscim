@@ -49,6 +49,14 @@ export function InteractionProvider({ defaultSelected = null, children }) {
     draftToggleSource: (src) => dispatch({ type: 'DRAFT_TOGGLE_SOURCE', payload: src }),
     draftSet: (patch) => dispatch({ type: 'DRAFT_SET', payload: patch }),
     draftClear: () => dispatch({ type: 'DRAFT_CLEAR' }),
+    // network playground: reversible removals + multi-select (§26/§32)
+    pgToggleNode: (id) => dispatch({ type: 'PG_TOGGLE_NODE', payload: id }),
+    pgToggleEdge: (id) => dispatch({ type: 'PG_TOGGLE_EDGE', payload: id }),
+    pgReset: () => dispatch({ type: 'PG_RESET' }),
+    pgUndo: () => dispatch({ type: 'PG_UNDO' }),
+    pgRedo: () => dispatch({ type: 'PG_REDO' }),
+    pgToggleMulti: (entity) => dispatch({ type: 'PG_TOGGLE_MULTI', payload: entity }),
+    pgClearMulti: () => dispatch({ type: 'PG_CLEAR_MULTI' }),
     lensAvailable: (lens) => lensAvailable(lens, state.scenarioActive),
     // cross-panel flyTo plumbing
     subscribeFlyTo,

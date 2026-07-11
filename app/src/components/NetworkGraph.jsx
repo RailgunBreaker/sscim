@@ -26,14 +26,19 @@ const tierColor = (tierId) => TIER_COLORS[tierId % TIER_COLORS.length] || C.copp
 export default function NetworkGraph({ baseGraph, filters = {} }) {
   const { engine } = useVault();
   const { STAGE_BY_ID } = engine;
-  const { state, select, hover, clearHover } = useInteraction();
-  const { selected, hovered } = state;
+  const { state, select, hover, clearHover, pgToggleMulti } = useInteraction();
+  const { selected, hovered, playground } = state;
 
+  // Post-removal analysis graph drives edges/metrics; layout is over ALL base
+  // centres so positions stay stable and removed centres can still be drawn
+  // as ghosts (§26). Removals come from the reversible playground state.
   const analysis = useMemo(
-    () => deriveAnalysisGraph(baseGraph, { removedNodeIds: filters.removedNodeIds, removedEdgeIds: filters.removedEdgeIds }),
-    [baseGraph, filters.removedNodeIds, filters.removedEdgeIds]
+    () => deriveAnalysisGraph(baseGraph, { removedNodeIds: playground.removedNodeIds, removedEdgeIds: playground.removedEdgeIds }),
+    [baseGraph, playground.removedNodeIds, playground.removedEdgeIds]
   );
-  const pos = useMemo(() => layoutCentres(analysis.centres, { width: W, height: H }), [analysis]);
+  const removedNodes = useMemo(() => new Set(playground.removedNodeIds), [playground.removedNodeIds]);
+  const multiSet = useMemo(() => new Set(playground.multi.filter((m) => m.type === 'centre').map((m) => m.id)), [playground.multi]);
+  const pos = useMemo(() => layoutCentres(baseGraph.centres, { width: W, height: H }), [baseGraph]);
 
   const selId = selected?.type === 'centre' ? selected.id : null;
   const hovId = hovered?.type === 'centre' ? hovered.id : null;
@@ -110,27 +115,35 @@ export default function NetworkGraph({ baseGraph, filters = {} }) {
             );
           })}
 
-          {/* nodes */}
-          {analysis.centres.map((c) => {
+          {/* nodes — all base centres; removed ones drawn as ghosts (§26) */}
+          {baseGraph.centres.map((c) => {
             const p = pos[c.id];
             if (!p) return null;
+            const isRemoved = removedNodes.has(c.id);
             const shown = shownNodeIds.has(c.id);
             const isSel = c.id === selId;
             const isHov = c.id === hovId;
+            const isMulti = multiSet.has(c.id);
             const r = 3.5 + 9 * c.countryShare;
             const col = tierColor(c.tierId);
+            const opacity = isRemoved ? 0.28 : (shown || isSel ? 1 : 0.12);
+            // Shift-click marks the centre for multi-selection (§14); a plain
+            // click inspects it (or, when removed, still inspects to restore).
+            const onActivate = (ev) => (ev.shiftKey ? pgToggleMulti({ type: 'centre', id: c.id }) : select({ type: 'centre', id: c.id }));
             return (
-              <g key={c.id} className="node" opacity={shown || isSel ? 1 : 0.12}
+              <g key={c.id} className="node" opacity={opacity}
                 transform={`translate(${p.x},${p.y})`}
-                onClick={() => select({ type: 'centre', id: c.id })}
-                onKeyDown={(ev) => (ev.key === 'Enter' || ev.key === ' ') && (ev.preventDefault(), select({ type: 'centre', id: c.id }))}
+                onClick={onActivate}
+                onKeyDown={(ev) => (ev.key === 'Enter' || ev.key === ' ') && (ev.preventDefault(), onActivate(ev))}
                 onMouseEnter={() => hover({ type: 'centre', id: c.id })} onMouseLeave={clearHover}
-                tabIndex={0} role="button" aria-label={centreAria(c)}>
+                tabIndex={0} role="button" aria-label={`${isRemoved ? 'Temporarily removed. ' : ''}${isMulti ? 'Multi-selected. ' : ''}${centreAria(c)}`}>
                 {isSel && <circle r={r + 5} fill="none" stroke={C.copper} strokeWidth={2} />}
-                {isHov && !isSel && <circle r={r + 4} fill="none" stroke={C.copper} strokeWidth={1.3} strokeDasharray="2 3" />}
-                <circle r={r} fill={col} fillOpacity={0.85} stroke={isSel ? C.text : col} strokeWidth={isSel ? 1.4 : 0.5} />
-                {(isSel || isHov || r > 8) && (
-                  <text x={0} y={-r - 4} textAnchor="middle" fill={C.text} fontSize="8.5" fontWeight="600" style={{ pointerEvents: 'none' }}>
+                {isMulti && !isSel && <circle r={r + 5} fill="none" stroke={C.amber} strokeWidth={1.6} strokeDasharray="3 2" />}
+                {isHov && !isSel && !isMulti && <circle r={r + 4} fill="none" stroke={C.copper} strokeWidth={1.3} strokeDasharray="2 3" />}
+                <circle r={r} fill={col} fillOpacity={isRemoved ? 0.25 : 0.85} stroke={isSel ? C.text : col} strokeWidth={isSel ? 1.4 : 0.5} />
+                {isRemoved && <g stroke={C.red} strokeWidth={1.4}><line x1={-r} y1={-r} x2={r} y2={r} /><line x1={-r} y1={r} x2={r} y2={-r} /></g>}
+                {(isSel || isHov || isMulti || r > 8) && (
+                  <text x={0} y={-r - 4} textAnchor="middle" fill={isRemoved ? C.faint : C.text} fontSize="8.5" fontWeight="600" style={{ pointerEvents: 'none' }}>
                     {centreLabel(c)}
                   </text>
                 )}

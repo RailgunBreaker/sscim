@@ -53,6 +53,18 @@ export function initInteraction(defaultSelected = null) {
     // sources are the stages/countries the user has marked as shock origins;
     // building it hands off to the same engine every preset scenario uses.
     draft: { builderMode: false, sources: [], severity: 6, direction: 'adverse' },
+    // Reversible network-playground modifications (§26/§32): temporary node/
+    // edge removals over the immutable base graph, an undo/redo stack, and a
+    // multi-selection set. Reset clears the removals and restores baseline.
+    playground: { removedNodeIds: [], removedEdgeIds: [], multi: [], past: [], future: [] },
+  };
+}
+
+// Snapshot the current removals onto the undo stack (bounded) and clear redo.
+function pushPlaygroundHistory(pg) {
+  return {
+    past: [...pg.past, { removedNodeIds: pg.removedNodeIds, removedEdgeIds: pg.removedEdgeIds }].slice(-50),
+    future: [],
   };
 }
 
@@ -151,6 +163,70 @@ export function interactionReducer(state, action) {
 
     case 'DRAFT_CLEAR':
       return { ...state, draft: { ...state.draft, sources: [] } };
+
+    // ---- network playground: reversible node/edge removal (§26/§32) ----
+    case 'PG_TOGGLE_NODE': {
+      const pg = state.playground;
+      const id = action.payload;
+      if (!id) return state;
+      const has = pg.removedNodeIds.includes(id);
+      const removedNodeIds = has ? pg.removedNodeIds.filter((x) => x !== id) : [...pg.removedNodeIds, id];
+      return { ...state, playground: { ...pg, ...pushPlaygroundHistory(pg), removedNodeIds } };
+    }
+
+    case 'PG_TOGGLE_EDGE': {
+      const pg = state.playground;
+      const id = action.payload;
+      if (!id) return state;
+      const has = pg.removedEdgeIds.includes(id);
+      const removedEdgeIds = has ? pg.removedEdgeIds.filter((x) => x !== id) : [...pg.removedEdgeIds, id];
+      return { ...state, playground: { ...pg, ...pushPlaygroundHistory(pg), removedEdgeIds } };
+    }
+
+    case 'PG_RESET': {
+      const pg = state.playground;
+      if (!pg.removedNodeIds.length && !pg.removedEdgeIds.length) return state;
+      return { ...state, playground: { ...pg, ...pushPlaygroundHistory(pg), removedNodeIds: [], removedEdgeIds: [] } };
+    }
+
+    case 'PG_UNDO': {
+      const pg = state.playground;
+      if (!pg.past.length) return state;
+      const prev = pg.past[pg.past.length - 1];
+      return { ...state, playground: {
+        ...pg,
+        removedNodeIds: prev.removedNodeIds,
+        removedEdgeIds: prev.removedEdgeIds,
+        past: pg.past.slice(0, -1),
+        future: [{ removedNodeIds: pg.removedNodeIds, removedEdgeIds: pg.removedEdgeIds }, ...pg.future],
+      } };
+    }
+
+    case 'PG_REDO': {
+      const pg = state.playground;
+      if (!pg.future.length) return state;
+      const next = pg.future[0];
+      return { ...state, playground: {
+        ...pg,
+        removedNodeIds: next.removedNodeIds,
+        removedEdgeIds: next.removedEdgeIds,
+        past: [...pg.past, { removedNodeIds: pg.removedNodeIds, removedEdgeIds: pg.removedEdgeIds }],
+        future: pg.future.slice(1),
+      } };
+    }
+
+    case 'PG_TOGGLE_MULTI': {
+      const pg = state.playground;
+      const e = action.payload;
+      if (!e) return state;
+      const key = `${e.type}:${e.id}`;
+      const has = pg.multi.some((m) => `${m.type}:${m.id}` === key);
+      const multi = has ? pg.multi.filter((m) => `${m.type}:${m.id}` !== key) : [...pg.multi, { type: e.type, id: e.id }];
+      return { ...state, playground: { ...pg, multi } };
+    }
+
+    case 'PG_CLEAR_MULTI':
+      return { ...state, playground: { ...state.playground, multi: [] } };
 
     case 'PLAYBACK': {
       const p = { ...state.playback, ...action.payload };

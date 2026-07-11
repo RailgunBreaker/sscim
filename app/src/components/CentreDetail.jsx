@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { C } from '../theme.js';
 import { useVault } from '../data/VaultContext.jsx';
+import { useInteraction } from '../interaction/InteractionContext.jsx';
 import { onEnterSpace } from '../utils/a11y.js';
 import { flagEmoji } from '../data/glossary.js';
 import { fmtSigned } from '../interaction/lensEncoding.js';
@@ -15,9 +16,16 @@ export default function CentreDetail({ centreId, baseGraph, model, setSel }) {
   const { data, engine } = useVault();
   const { COUNTRY_NAMES } = data;
   const { STAGE_BY_ID } = engine;
+  const { state, pgToggleNode, pgToggleMulti } = useInteraction();
+  const { playground } = state;
 
-  const analysis = useMemo(() => deriveAnalysisGraph(baseGraph), [baseGraph]);
+  const analysis = useMemo(
+    () => deriveAnalysisGraph(baseGraph, { removedNodeIds: playground.removedNodeIds, removedEdgeIds: playground.removedEdgeIds }),
+    [baseGraph, playground.removedNodeIds, playground.removedEdgeIds]
+  );
   const centre = baseGraph.centreById[centreId];
+  const isRemoved = playground.removedNodeIds.includes(centreId);
+  const isMulti = playground.multi.some((m) => m.type === 'centre' && m.id === centreId);
 
   if (!centre) {
     return <div className="mono" style={{ fontSize: 12, color: C.dim }}>Functional centre not found in the current graph.</div>;
@@ -61,7 +69,19 @@ export default function CentreDetail({ centreId, baseGraph, model, setSel }) {
         <span className="mono" style={{ fontSize: 9, letterSpacing: 1, color: '#0C111C', background: C.copper, borderRadius: 3, padding: '2px 7px', fontWeight: 700 }}>FUNCTIONAL CENTRE</span>
         <h3 style={{ margin: 0, fontSize: 15 }}>{flagEmoji(centre.countryId)} {COUNTRY_NAMES[centre.countryId] || centre.countryId} · {stage?.name || centre.stageId}</h3>
       </div>
-      <div className="mono" style={{ fontSize: 10, color: C.faint, margin: '4px 0 8px' }}>{centre.tierLabel} tier · country × stage centre</div>
+      <div className="mono" style={{ fontSize: 10, color: C.faint, margin: '4px 0 8px' }}>{centre.tierLabel} tier · country × stage centre{isRemoved ? ' · TEMPORARILY REMOVED' : ''}</div>
+
+      {/* Node actions (§25) — also available here in the accessible side panel */}
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 8 }}>
+        <button type="button" onClick={() => pgToggleNode(centreId)}
+          style={{ fontSize: 10.5, padding: '4px 9px', borderRadius: 4, fontFamily: 'inherit', cursor: 'pointer', background: isRemoved ? 'rgba(201,138,63,.16)' : 'transparent', color: isRemoved ? C.copper : C.dim, border: `1px solid ${isRemoved ? C.copper : C.line}` }}>
+          {isRemoved ? '↺ Restore centre' : '✕ Temporarily remove'}
+        </button>
+        <button type="button" onClick={() => pgToggleMulti({ type: 'centre', id: centreId })}
+          style={{ fontSize: 10.5, padding: '4px 9px', borderRadius: 4, fontFamily: 'inherit', cursor: 'pointer', background: isMulti ? 'rgba(224,164,88,.16)' : 'transparent', color: isMulti ? C.amber : C.dim, border: `1px solid ${isMulti ? C.amber : C.line}` }}>
+          {isMulti ? '− Remove from selection' : '+ Add to multi-selection'}
+        </button>
+      </div>
 
       <div style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: 6, padding: '8px 10px', marginBottom: 8 }}>
         <Row label="COUNTRY SHARE OF STAGE" value={`${(centre.countryShare * 100).toFixed(1)}%`} />
