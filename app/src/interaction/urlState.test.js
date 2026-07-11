@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { encodeInteractionState, decodeInteractionState } from './urlState.js';
+import { encodeInteractionState, decodeInteractionState, encodeNetworkState, decodeNetworkState } from './urlState.js';
 
 describe('urlState encode/decode', () => {
   it('omits defaults and encodes only meaningful state', () => {
@@ -49,5 +49,31 @@ describe('urlState encode/decode', () => {
 
   it('clamps a negative playback step out of the encoding', () => {
     expect(encodeInteractionState({ playbackStep: -4 })).toBe('');
+  });
+});
+
+describe('network state encode/decode (§33)', () => {
+  it('omits everything when empty', () => {
+    expect(encodeNetworkState({})).toBe('');
+    expect(decodeNetworkState('')).toEqual({});
+  });
+
+  it('round-trips metric, removals, and a pinned route', () => {
+    const s = {
+      analysisMetric: 'betweenness',
+      removedNodeIds: ['tw::adv_fab', 'kr::hbm'],
+      removedEdgeIds: ['jp::resist->nl::litho'],
+      route: { origin: 'tw::adv_fab', dest: 'us::m_ai', objective: 'max_bottleneck' },
+    };
+    const decoded = decodeNetworkState(encodeNetworkState(s));
+    expect(decoded.analysisMetric).toBe('betweenness');
+    expect(decoded.removedNodeIds).toEqual(['tw::adv_fab', 'kr::hbm']);
+    expect(decoded.removedEdgeIds).toEqual(['jp::resist->nl::litho']);
+    expect(decoded.route).toEqual({ origin: 'tw::adv_fab', dest: 'us::m_ai', objective: 'max_bottleneck' });
+  });
+
+  it('defaults a route objective when omitted', () => {
+    const decoded = decodeNetworkState('rt=a::x>b::y');
+    expect(decoded.route).toEqual({ origin: 'a::x', dest: 'b::y', objective: 'strongest' });
   });
 });

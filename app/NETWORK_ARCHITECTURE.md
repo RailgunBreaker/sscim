@@ -86,5 +86,35 @@ _Revisit trigger:_ if a future dataset pushes displayed elements past ~5–10k, 
 `network.js` produces plain data (frozen POJOs + adjacency indices). Geographic mode (Leaflet), topology mode (SVG), the industry graph, and the intelligence panel all read the **same** derived graph + selection state, so a future renderer swap is localized to a view component.
 
 ## 6. Phase status
-- **Phase 1 — shared graph foundation:** ✅ immutable base graph, functional centres, derived connections + weight formula, technology decision (this doc). Centralized interaction state already exists (`interaction/`) and is extended per phase.
-- **Phases 2–6** (playground modes, routes, scenario play over centres, network analysis, production refinement): built on this foundation, each kept green and deployable.
+- **Phase 1 — shared graph foundation:** ✅ immutable base graph, functional centres, derived connections + weight formula, technology decision.
+- **Phase 2 — core playground:** ✅ geographic/topology/split views, centre selection + neighborhood expansion, centre detail (§11), reversible node/edge removal with undo/redo/reset, multi-select, playground toolbar.
+- **Phase 3 — routes:** ✅ deterministic multi-centre pathfinding + route explorer + synchronized topology/industry-graph highlighting.
+- **Phase 4 — scenario play:** ✅ apply shocks to centres, multi-source scenarios, synchronized hop-by-hop playback across map/topology/industry-graph/panel, baseline comparison.
+- **Phase 5 — network analysis:** ✅ weighted degree, reachability, betweenness, node-removal impact, edge criticality, comparison workspace — with §22 guardrails.
+- **Phase 6 — production refinement:** ✅ shareable URL state (view/selection/scenario/removals/route/metric), accessibility, mobile refinements, performance memoization; guided-tour update ongoing.
+
+---
+
+## 7. Delivery reference (§41)
+
+**Graph architecture.** `engine/network.js` builds the deep-frozen base graph (`buildFunctionalCentres`, `buildCentreConnections`, `buildBaseGraph`). `engine/networkOps.js` derives per-interaction analysis views (`deriveAnalysisGraph` applying temporary removals), plus `neighborhood`, `reachableSet`, `weightedDegree`, `reachabilitySummary`, `directNeighbors`, `filterConnections`. The base graph is never mutated; Reset = re-derive with no removals.
+
+**Connection-weight formula.** `W(i,a → b,j) = share(i,a) × D[b][a] × share(j,b)` (§2). `rawDisplayWeight` preserved; `normalizedDisplayWeight` display-only.
+
+**Network-analysis methods** (`engine/networkAnalysis.js`). Brandes unweighted-directed **betweenness** (normalized); **node-removal impact** and **edge criticality** as before/after reachability deltas; weighted degree + reachability. Every metric carries a plain-language question + explicit limitation (§22); generic centrality is kept separate from SSCIM's propagation-based Network Influence and never merged into a composite score.
+
+**Pathfinding methods** (`engine/networkPaths.js`). Bounded DFS enumeration over the DAG (capped), ranked by objective — strongest (max Π weight), max bottleneck (widest path), fewest hops, max cumulative — with deterministic tie-breaks and top-K distinct routes; avoidance of node/edge/country/stage/company yields alternative-after-removal paths. No higher-weight→lower-cost transform is used (objectives operate on weights directly), so no cost transform needs documenting.
+
+**Playground interaction.** Select / shift-click multi-select / double-context expand; temporarily remove nodes & edges (crossed-out ghosts); undo/redo/reset; apply shock to centres (→ shared scenario engine); pin routes; compare up to 4 centres; every hypothetical action reversible over the immutable base.
+
+**Accessibility.** SVG centres/edges are focusable with descriptive aria-labels; keyboard Enter/Space selection; all node actions available in the centre-detail side panel; full **textual route descriptions**; non-colour status (crossed ghosts, dashed rings, badges); reduced-motion respected.
+
+**Performance.** Base graph + layout + metrics memoized; betweenness/removal sims computed on demand and memoized on `[analysis]` (changes only on removals, not on hover/playback); topology playback and draft edits update overlays without rebuilding the main renderer; path enumeration capped.
+
+**Tests added (network layer, ~50).** `network.test.js` (centres/connections/immutability), `networkOps.test.js` (derive/neighborhood/reachability/degree/filter), `networkPaths.test.js` (objectives, avoidance, determinism), `networkAnalysis.test.js` (betweenness/removal/criticality), `topologyLayout.test.js` (layout), plus reducer slices (view mode, playground removal/undo/redo/multi-select, comparison) and URL-state round-trips (view, centre, metric, removals, route).
+
+**Commands run.** `vitest run` (all green), `npm run build` (exit 0, `dist-app/`), `npm run audit:data` (0 hard failures, 10 pre-existing warnings).
+
+**Remaining limitations.** Weights are unvalidated propagation priors, not measured trade; a centre shock resolves at stage granularity (the engine propagates at stage level); topology layout is deterministic-hierarchical (drag-to-reposition is local-only and not yet persisted); the guided tour's network steps are still being expanded.
+
+**No API/backend/data-layer file modified.** All functionality is client-side over the existing static snapshot; `vault-snapshot.json`, `server/**`, `seed-data.js`, `data-notes.js` are unchanged across every network commit (verified by a locked-file guard before each commit).

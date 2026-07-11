@@ -55,6 +55,7 @@ export function InteractionProvider({ defaultSelected = null, children }) {
     draftClear: () => dispatch({ type: 'DRAFT_CLEAR' }),
     // network playground: reversible removals + multi-select (§26/§32)
     pgToggleNode: (id) => dispatch({ type: 'PG_TOGGLE_NODE', payload: id }),
+    pgSet: (payload) => dispatch({ type: 'PG_SET', payload }),
     pgToggleEdge: (id) => dispatch({ type: 'PG_TOGGLE_EDGE', payload: id }),
     pgReset: () => dispatch({ type: 'PG_RESET' }),
     pgUndo: () => dispatch({ type: 'PG_UNDO' }),

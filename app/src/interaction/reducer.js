@@ -242,6 +242,14 @@ export function interactionReducer(state, action) {
       } };
     }
 
+    case 'PG_SET': {
+      // Set removals directly (used when restoring a shared URL); clears the
+      // undo/redo stacks since there is no prior in-session history.
+      const pg = state.playground;
+      const { removedNodeIds = [], removedEdgeIds = [] } = action.payload || {};
+      return { ...state, playground: { ...pg, removedNodeIds, removedEdgeIds, past: [], future: [] } };
+    }
+
     case 'PG_TOGGLE_MULTI': {
       const pg = state.playground;
       const e = action.payload;

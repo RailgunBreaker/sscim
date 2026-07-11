@@ -5,8 +5,10 @@ import { VaultProvider, useVault } from './data/VaultContext.jsx';
 import { buildModel } from './engine/buildModel.js';
 import { InteractionProvider, useInteraction } from './interaction/InteractionContext.jsx';
 import { frameFromTrace } from './interaction/playback.js';
-import { encodeInteractionState, decodeInteractionState } from './interaction/urlState.js';
+import { encodeInteractionState, decodeInteractionState, encodeNetworkState, decodeNetworkState } from './interaction/urlState.js';
 import { draftToScenario } from './interaction/scenarioDraft.js';
+import { deriveAnalysisGraph } from './engine/networkOps.js';
+import { findCentreRoutes } from './engine/networkPaths.js';
 
 import Header from './components/Header.jsx';
 import ScenarioBar from './components/ScenarioBar.jsx';
@@ -130,7 +132,7 @@ function DashboardBody() {
   const { EVENTS, SCENARIOS, COMPANY_BY_ID } = data;
   const { STAGE_BY_ID, OUT, COMPANY_CRITICALITY, COMPANY_RANK } = engine;
 
-  const { state, setSel, clear, setScenarioActive, playback, setLens, setFocusedPath, draftSet, setViewMode } = useInteraction();
+  const { state, setSel, clear, setScenarioActive, playback, setLens, setFocusedPath, draftSet, setViewMode, setMetric, setRoute, pgSet } = useInteraction();
   const sel = state.selected || { type: 'event', id: EVENTS[0]?.id };
 
   const [scenarioId, setScenarioId] = useState("none");
@@ -309,6 +311,21 @@ function DashboardBody() {
       if (paths[0]) setFocusedPath({ sourceId: decoded.focusedPath.sourceId, targetId: decoded.focusedPath.targetId, path: paths[0] });
     }
     if (decoded.playbackStep) setTimeout(() => playback({ step: decoded.playbackStep }), 0);
+
+    // Network-playground state (§33): metric, temporary removals, pinned route.
+    const net = decodeNetworkState(window.location.hash);
+    if (net.analysisMetric) setMetric(net.analysisMetric);
+    if (net.removedNodeIds || net.removedEdgeIds) pgSet({ removedNodeIds: net.removedNodeIds || [], removedEdgeIds: net.removedEdgeIds || [] });
+    if (net.route) {
+      const g = deriveAnalysisGraph(baseGraph, { removedNodeIds: net.removedNodeIds, removedEdgeIds: net.removedEdgeIds });
+      const [r] = findCentreRoutes(g, net.route.origin, net.route.dest, { objective: net.route.objective, k: 1 });
+      if (r) {
+        setRoute(r);
+        const edges = r.edges.map((e) => ({ from: e.sourceStage, to: e.targetStage, dir: 'downstream' }));
+        const nodes = [r.edges[0]?.sourceStage, ...r.edges.map((e) => e.targetStage)].filter(Boolean);
+        if (nodes.length) setFocusedPath({ sourceId: nodes[0], targetId: nodes.at(-1), path: { nodes, edges, attenuation: r.weightProduct, channel: 'downstream' } });
+      }
+    }
     urlRestoredRef.current = true;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -317,16 +334,24 @@ function DashboardBody() {
      history entry) whenever it changes, once the initial restore is done. */
   useEffect(() => {
     if (!urlRestoredRef.current) return;
-    const qs = encodeInteractionState({
+    const core = encodeInteractionState({
       lens: state.lens, viewMode: state.viewMode, selected: state.selected, scenarioId,
       draft: state.draft, playbackStep: state.playback.step, focusedPath: state.focusedPath,
     });
+    const sr = state.selectedRoute;
+    const net = encodeNetworkState({
+      analysisMetric: state.analysisMetric,
+      removedNodeIds: state.playground.removedNodeIds,
+      removedEdgeIds: state.playground.removedEdgeIds,
+      route: sr ? { origin: sr.centres[0], dest: sr.centres[sr.centres.length - 1], objective: sr.objective } : null,
+    });
+    const qs = [core, net].filter(Boolean).join('&');
     const targetHash = qs ? `#${qs}` : '';
     if (window.location.hash !== targetHash) {
       window.history.replaceState(null, '', qs ? `#${qs}` : window.location.pathname + window.location.search);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.lens, state.viewMode, state.selected, scenarioId, custom, state.playback.step, state.focusedPath, state.draft]);
+  }, [state.lens, state.viewMode, state.selected, scenarioId, custom, state.playback.step, state.focusedPath, state.draft, state.analysisMetric, state.playground.removedNodeIds, state.playground.removedEdgeIds, state.selectedRoute]);
 
   const hl = useMemo(() => {
     const s = new Set(), c = new Set();

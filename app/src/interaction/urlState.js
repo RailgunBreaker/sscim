@@ -56,6 +56,36 @@ export function encodeInteractionState({ lens, viewMode, selected, scenarioId, d
   return p.toString();
 }
 
+/* Network-playground state (§33): active metric, temporary removals, and the
+   pinned route (origin>dest>objective, re-derived on restore). Kept in a
+   separate helper so the core codec above stays focused. */
+export function encodeNetworkState({ analysisMetric, removedNodeIds, removedEdgeIds, route } = {}) {
+  const p = new URLSearchParams();
+  if (analysisMetric) p.set('metric', analysisMetric);
+  if (removedNodeIds?.length) p.set('rn', removedNodeIds.join(','));
+  if (removedEdgeIds?.length) p.set('re', removedEdgeIds.join(','));
+  if (route?.origin && route?.dest) p.set('rt', `${route.origin}>${route.dest}>${route.objective || 'strongest'}`);
+  return p.toString();
+}
+
+export function decodeNetworkState(str) {
+  const out = {};
+  if (!str) return out;
+  const p = new URLSearchParams(str.replace(/^[#?]/, ''));
+  const metric = p.get('metric');
+  if (metric) out.analysisMetric = metric;
+  const rn = p.get('rn');
+  if (rn) out.removedNodeIds = rn.split(',').filter(Boolean);
+  const re = p.get('re');
+  if (re) out.removedEdgeIds = re.split(',').filter(Boolean);
+  const rt = p.get('rt');
+  if (rt) {
+    const [origin, dest, objective] = rt.split('>');
+    if (origin && dest) out.route = { origin, dest, objective: objective || 'strongest' };
+  }
+  return out;
+}
+
 export function decodeInteractionState(str) {
   const out = {};
   if (!str) return out;

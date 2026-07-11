@@ -84,11 +84,17 @@ export default function NetworkToolbar() {
       )}
 
       {pg.multi.length > 0 && (
-        <span className="mono" style={{ fontSize: 9.5, color: C.dim, marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 6 }}>
+        <span className="mono" style={{ fontSize: 9.5, color: C.dim, display: 'flex', alignItems: 'center', gap: 6 }}>
           {pg.multi.length} centre{pg.multi.length === 1 ? '' : 's'} multi-selected
           <button type="button" onClick={pgClearMulti} style={btn(false)}>Clear</button>
         </span>
       )}
+
+      <button type="button" style={{ ...btn(false), marginLeft: 'auto' }}
+        title="Copy a link that reconstructs this exact view (mode, selection, scenario, removals, route, metric) from the static snapshot"
+        onClick={() => { try { navigator.clipboard?.writeText(window.location.href); } catch { /* clipboard unavailable */ } }}>
+        🔗 Copy analysis link
+      </button>
     </div>
   );
 }
