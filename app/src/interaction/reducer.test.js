@@ -198,6 +198,19 @@ describe('interactionReducer — reversible network playground', () => {
   });
 });
 
+describe('interactionReducer — comparison workspace (§31)', () => {
+  const R = (s, type, payload) => interactionReducer(s, { type, payload });
+  it('toggles up to four pinned items and no more', () => {
+    let s = initInteraction(null);
+    ['a::1', 'b::2', 'c::3', 'd::4', 'e::5'].forEach((id) => { s = R(s, 'CMP_TOGGLE', { type: 'centre', id }); });
+    expect(s.comparison).toHaveLength(4); // 5th ignored
+    s = R(s, 'CMP_TOGGLE', { type: 'centre', id: 'a::1' }); // remove
+    expect(s.comparison.map((c) => c.id)).toEqual(['b::2', 'c::3', 'd::4']);
+    s = R(s, 'CMP_CLEAR');
+    expect(s.comparison).toEqual([]);
+  });
+});
+
 describe('sameSel', () => {
   it('compares type+id, treats null carefully', () => {
     expect(sameSel(S('country', 'tw'), S('country', 'tw'))).toBe(true);

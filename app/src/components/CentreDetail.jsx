@@ -16,8 +16,9 @@ export default function CentreDetail({ centreId, baseGraph, model, setSel }) {
   const { data, engine } = useVault();
   const { COUNTRY_NAMES } = data;
   const { STAGE_BY_ID } = engine;
-  const { state, pgToggleNode, pgToggleMulti, draftSet } = useInteraction();
-  const { playground } = state;
+  const { state, pgToggleNode, pgToggleMulti, draftSet, cmpToggle } = useInteraction();
+  const { playground, comparison } = state;
+  const inComparison = comparison.some((c) => c.type === 'centre' && c.id === centreId);
 
   const analysis = useMemo(
     () => deriveAnalysisGraph(baseGraph, { removedNodeIds: playground.removedNodeIds, removedEdgeIds: playground.removedEdgeIds }),
@@ -85,6 +86,11 @@ export default function CentreDetail({ centreId, baseGraph, model, setSel }) {
           title="Turn this centre's stage into a scenario shock source (opens the composer)"
           style={{ fontSize: 10.5, padding: '4px 9px', borderRadius: 4, fontFamily: 'inherit', cursor: 'pointer', background: 'transparent', color: C.copper, border: `1px solid ${C.copperDim}` }}>
           ⚡ Apply shock here
+        </button>
+        <button type="button" onClick={() => cmpToggle({ type: 'centre', id: centreId })}
+          title="Add this centre to the comparison workspace (up to 4)"
+          style={{ fontSize: 10.5, padding: '4px 9px', borderRadius: 4, fontFamily: 'inherit', cursor: 'pointer', background: inComparison ? 'rgba(201,138,63,.16)' : 'transparent', color: inComparison ? C.copper : C.dim, border: `1px solid ${inComparison ? C.copper : C.line}` }}>
+          {inComparison ? '− Remove from comparison' : '⊞ Add to comparison'}
         </button>
       </div>
 

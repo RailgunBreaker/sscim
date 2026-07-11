@@ -51,6 +51,8 @@ export function initInteraction(defaultSelected = null) {
     // Active network-analysis metric (§21/§23) driving topology node size +
     // ranking; null = size by country-stage share.
     analysisMetric: null,
+    // Comparison workspace (§31): up to 4 pinned centres compared side by side.
+    comparison: [],
     scenarioActive: false,
     playback: { status: 'idle', step: 0, speed: 1, length: 0 },
     history: [],
@@ -115,6 +117,20 @@ export function interactionReducer(state, action) {
 
     case 'SET_METRIC':
       return { ...state, analysisMetric: action.payload };
+
+    // ---- comparison workspace (§31): up to 4 pinned items ----
+    case 'CMP_TOGGLE': {
+      const e = action.payload;
+      if (!e) return state;
+      const key = `${e.type}:${e.id}`;
+      const has = state.comparison.some((c) => `${c.type}:${c.id}` === key);
+      if (has) return { ...state, comparison: state.comparison.filter((c) => `${c.type}:${c.id}` !== key) };
+      if (state.comparison.length >= 4) return state; // cap at 4
+      return { ...state, comparison: [...state.comparison, { type: e.type, id: e.id }] };
+    }
+
+    case 'CMP_CLEAR':
+      return { ...state, comparison: [] };
 
     case 'BACK': {
       if (!state.history.length) return { ...state, selected: null };
