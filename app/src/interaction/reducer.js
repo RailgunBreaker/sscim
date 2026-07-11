@@ -48,6 +48,9 @@ export function initInteraction(defaultSelected = null) {
     focusedPath: null,
     // A pinned multi-centre route (§16/§20) selected in the route explorer.
     selectedRoute: null,
+    // Active network-analysis metric (§21/§23) driving topology node size +
+    // ranking; null = size by country-stage share.
+    analysisMetric: null,
     scenarioActive: false,
     playback: { status: 'idle', step: 0, speed: 1, length: 0 },
     history: [],
@@ -109,6 +112,9 @@ export function interactionReducer(state, action) {
 
     case 'SET_ROUTE':
       return { ...state, selectedRoute: action.payload };
+
+    case 'SET_METRIC':
+      return { ...state, analysisMetric: action.payload };
 
     case 'BACK': {
       if (!state.history.length) return { ...state, selected: null };

@@ -43,6 +43,7 @@ export function InteractionProvider({ defaultSelected = null, children }) {
     setLens: (lens) => dispatch({ type: 'SET_LENS', payload: lens }),
     setFocusedPath: (path) => dispatch({ type: 'SET_FOCUSED_PATH', payload: path }),
     setRoute: (route) => dispatch({ type: 'SET_ROUTE', payload: route }),
+    setMetric: (metricId) => dispatch({ type: 'SET_METRIC', payload: metricId }),
     setViewMode: (mode) => dispatch({ type: 'SET_VIEW_MODE', payload: mode }),
     setScenarioActive: (active) => dispatch({ type: 'SET_SCENARIO_ACTIVE', payload: active }),
     playback: (patch) => dispatch({ type: 'PLAYBACK', payload: patch }),

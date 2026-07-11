@@ -3,6 +3,7 @@ import { C } from '../theme.js';
 import { useVault } from '../data/VaultContext.jsx';
 import { useInteraction } from '../interaction/InteractionContext.jsx';
 import { deriveAnalysisGraph, neighborhood, filterConnections } from '../engine/networkOps.js';
+import { metricValues, betweenness, METRICS } from '../engine/networkAnalysis.js';
 import { layoutCentres, edgePath } from '../interaction/topologyLayout.js';
 import { flagEmoji } from '../data/glossary.js';
 import Legend from './Legend.jsx';
@@ -27,7 +28,7 @@ export default function NetworkGraph({ baseGraph, filters = {}, pb = null }) {
   const { engine } = useVault();
   const { STAGE_BY_ID } = engine;
   const { state, select, hover, clearHover, pgToggleMulti } = useInteraction();
-  const { selected, hovered, playground, selectedRoute } = state;
+  const { selected, hovered, playground, selectedRoute, analysisMetric } = state;
 
   // Scenario playback overlay (§28): a centre lights up when its stage is
   // reached at the current hop, in lockstep with the map + industry graph.
@@ -58,6 +59,16 @@ export default function NetworkGraph({ baseGraph, filters = {}, pb = null }) {
   const removedNodes = useMemo(() => new Set(playground.removedNodeIds), [playground.removedNodeIds]);
   const multiSet = useMemo(() => new Set(playground.multi.filter((m) => m.type === 'centre').map((m) => m.id)), [playground.multi]);
   const pos = useMemo(() => layoutCentres(baseGraph.centres, { width: W, height: H }), [baseGraph]);
+
+  // Node size can encode the active network-analysis metric (§23/§29); by
+  // default it encodes the country's share of the stage.
+  const sizeMetric = analysisMetric === 'removal_impact' ? 'betweenness' : analysisMetric;
+  const metricVals = useMemo(
+    () => (sizeMetric ? metricValues(analysis, sizeMetric, { betweenness: sizeMetric === 'betweenness' ? betweenness(analysis) : undefined }) : null),
+    [analysis, sizeMetric]
+  );
+  const metricMax = useMemo(() => (metricVals ? Math.max(...Object.values(metricVals), 1e-9) : 1), [metricVals]);
+  const sizeLabel = sizeMetric ? (METRICS.find((m) => m.id === sizeMetric)?.label || sizeMetric) : 'country share of stage';
 
   const selId = selected?.type === 'centre' ? selected.id : null;
   const hovId = hovered?.type === 'centre' ? hovered.id : null;
@@ -101,6 +112,7 @@ export default function NetworkGraph({ baseGraph, filters = {}, pb = null }) {
     <div style={{ padding: 10 }}>
       <div className="mono" style={{ fontSize: 9.5, letterSpacing: 1, color: C.copper, marginBottom: 6 }}>
         FUNCTIONAL-CENTRE NETWORK · {analysis.centres.length} CENTRES · {shownEdges.length} SHOWN CONNECTIONS
+        <span style={{ color: C.faint }}> · node colour: tier · node size: {sizeLabel}</span>
       </div>
       <div style={{ overflowX: 'auto' }}>
         <svg viewBox={`0 0 ${W} ${H}`} style={{ width: '100%', minWidth: 900, display: 'block', background: C.panel2, borderRadius: 6, border: `1px solid ${C.line}` }}
@@ -151,7 +163,7 @@ export default function NetworkGraph({ baseGraph, filters = {}, pb = null }) {
             const isMulti = multiSet.has(c.id);
             const pbReached = pbActive && pb.reachedStages.has(c.stageId);
             const pbNew = pbActive && pb.newStages.has(c.stageId);
-            const r = 3.5 + 9 * c.countryShare;
+            const r = metricVals ? 3.5 + 9 * ((metricVals[c.id] || 0) / metricMax) : 3.5 + 9 * c.countryShare;
             const col = tierColor(c.tierId);
             const opacity = isRemoved ? 0.28
               : pbActive ? (pbReached ? 1 : 0.1)
