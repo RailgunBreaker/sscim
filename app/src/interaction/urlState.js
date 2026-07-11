@@ -16,9 +16,9 @@
      path  = "<sourceId>>" + "<targetId>"  explained route endpoints
    ==================================================================== */
 
-import { LENSES, DRAFT_DIRECTIONS } from './reducer.js';
+import { LENSES, DRAFT_DIRECTIONS, VIEW_MODES } from './reducer.js';
 
-const SEL_TYPES = ['country', 'stage', 'company', 'event', 'scenario'];
+const SEL_TYPES = ['country', 'stage', 'company', 'event', 'scenario', 'centre'];
 const SRC_TYPES = ['stage', 'country'];
 
 function parseEntity(str, allowed) {
@@ -31,9 +31,10 @@ function parseEntity(str, allowed) {
   return { type, id };
 }
 
-export function encodeInteractionState({ lens, selected, scenarioId, draft, playbackStep, focusedPath } = {}) {
+export function encodeInteractionState({ lens, viewMode, selected, scenarioId, draft, playbackStep, focusedPath } = {}) {
   const p = new URLSearchParams();
 
+  if (viewMode && viewMode !== 'geographic' && VIEW_MODES.includes(viewMode)) p.set('view', viewMode);
   if (lens && lens !== 'structural' && LENSES.includes(lens)) p.set('lens', lens);
   if (selected && SEL_TYPES.includes(selected.type) && selected.id) p.set('sel', `${selected.type}:${selected.id}`);
 
@@ -59,6 +60,9 @@ export function decodeInteractionState(str) {
   const out = {};
   if (!str) return out;
   const p = new URLSearchParams(str.replace(/^[#?]/, ''));
+
+  const view = p.get('view');
+  if (view && VIEW_MODES.includes(view)) out.viewMode = view;
 
   const lens = p.get('lens');
   if (lens && LENSES.includes(lens)) out.lens = lens;

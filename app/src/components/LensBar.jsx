@@ -1,7 +1,9 @@
 import { C } from '../theme.js';
 import { useVault } from '../data/VaultContext.jsx';
 import { useInteraction } from '../interaction/InteractionContext.jsx';
-import { LENSES, LENS_LABELS } from '../interaction/reducer.js';
+import { LENSES, LENS_LABELS, VIEW_MODES } from '../interaction/reducer.js';
+
+const VIEW_LABELS = { geographic: 'Geographic', topology: 'Topology', split: 'Split' };
 
 /* Global analytical-lens control + focus breadcrumb, shared by the world
    map and industry graph (task §4 / §11). Sits directly under the scenario
@@ -12,6 +14,10 @@ import { LENSES, LENS_LABELS } from '../interaction/reducer.js';
 function entityLabel(sel, { COUNTRY_NAMES, STAGE_BY_ID, COMPANY_BY_ID, EVENTS }, scenarioName) {
   if (!sel) return null;
   if (sel.type === 'scenario') return { kind: 'Scenario', name: scenarioName || 'Active scenario' };
+  if (sel.type === 'centre') {
+    const [cid, sid] = String(sel.id).split('::');
+    return { kind: 'Centre', name: `${COUNTRY_NAMES[cid] || cid} · ${STAGE_BY_ID[sid]?.name || sid}` };
+  }
   if (sel.type === 'country') return { kind: 'Country', name: COUNTRY_NAMES[sel.id] || sel.id };
   if (sel.type === 'stage') return { kind: 'Stage', name: STAGE_BY_ID[sel.id]?.name || sel.id };
   if (sel.type === 'company') return { kind: 'Company', name: COMPANY_BY_ID[sel.id]?.name || sel.id };
@@ -21,14 +27,30 @@ function entityLabel(sel, { COUNTRY_NAMES, STAGE_BY_ID, COMPANY_BY_ID, EVENTS },
 
 export default function LensBar({ scenarioName }) {
   const { data, engine } = useVault();
-  const { state, setLens, clear, back, lensAvailable, draftSet } = useInteraction();
-  const { lens, selected, history, scenarioActive, draft } = state;
+  const { state, setLens, clear, back, lensAvailable, draftSet, setViewMode } = useInteraction();
+  const { lens, selected, history, scenarioActive, draft, viewMode } = state;
   const composing = draft.builderMode || draft.sources.length > 0;
   const names = { COUNTRY_NAMES: data.COUNTRY_NAMES, STAGE_BY_ID: engine.STAGE_BY_ID, COMPANY_BY_ID: data.COMPANY_BY_ID, EVENTS: data.EVENTS };
   const label = entityLabel(selected, names, scenarioName);
 
   return (
     <div className="cbar" style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap', padding: '6px 16px', background: C.panel2, borderBottom: `1px solid ${C.line}` }}>
+      <span className="mono" style={{ fontSize: 9, letterSpacing: 1.5, color: C.faint, flexShrink: 0 }}>VIEW</span>
+      <div role="radiogroup" aria-label="View mode" style={{ display: 'flex', gap: 4 }}>
+        {VIEW_MODES.map((v) => {
+          const on = viewMode === v;
+          return (
+            <button key={v} type="button" role="radio" aria-checked={on} onClick={() => setViewMode(v)}
+              title={v === 'geographic' ? 'World map' : v === 'topology' ? 'Functional-centre network' : 'Map + network together'}
+              style={{ fontSize: 11, padding: '4px 10px', borderRadius: 4, fontFamily: 'inherit', cursor: 'pointer',
+                background: on ? C.copper : 'transparent', color: on ? '#0C111C' : C.dim,
+                border: `1px solid ${on ? C.copper : C.line}`, fontWeight: on ? 700 : 400 }}>
+              {VIEW_LABELS[v]}
+            </button>
+          );
+        })}
+      </div>
+      <span style={{ width: 1, alignSelf: 'stretch', background: C.line, margin: '0 2px' }} aria-hidden="true" />
       <span className="mono" style={{ fontSize: 9, letterSpacing: 1.5, color: C.faint, flexShrink: 0 }}>LENS</span>
       <div role="radiogroup" aria-label="Analytical lens" style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
         {LENSES.map((l) => {

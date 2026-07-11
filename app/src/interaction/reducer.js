@@ -35,9 +35,14 @@ export function sameSel(a, b) {
 
 export const DRAFT_DIRECTIONS = ['adverse', 'mitigating', 'neutral'];
 
+export const VIEW_MODES = ['geographic', 'topology', 'split'];
+
 export function initInteraction(defaultSelected = null) {
   return {
     lens: 'structural',
+    // Which renderer(s) are shown (spec §9/§20): geographic (Leaflet),
+    // topology (SVG functional-centre network), or both side by side.
+    viewMode: 'geographic',
     selected: defaultSelected,
     hovered: null,
     focusedPath: null,
@@ -102,6 +107,12 @@ export function interactionReducer(state, action) {
 
     case 'SET_FOCUSED_PATH':
       return { ...state, focusedPath: action.payload };
+
+    case 'SET_VIEW_MODE': {
+      const viewMode = action.payload;
+      if (!VIEW_MODES.includes(viewMode)) return state;
+      return { ...state, viewMode };
+    }
 
     // Kept in sync from App whenever the active scenario changes. Activating
     // a scenario makes Scenario Δ the default lens; deactivating it while Δ

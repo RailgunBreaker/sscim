@@ -17,6 +17,8 @@ import TabBar from './components/TabBar.jsx';
 import Pane from './components/Pane.jsx';
 import OsmMap from './components/OsmMap.jsx';
 import FlowGraph from './components/FlowGraph.jsx';
+import NetworkGraph from './components/NetworkGraph.jsx';
+import { buildBaseGraph } from './engine/network.js';
 import Intel from './components/Intel.jsx';
 import Methodology from './components/Methodology.jsx';
 import Guide from './components/Guide.jsx';
@@ -124,7 +126,7 @@ function DashboardBody() {
   const { EVENTS, SCENARIOS, COMPANY_BY_ID } = data;
   const { STAGE_BY_ID, OUT, COMPANY_CRITICALITY, COMPANY_RANK } = engine;
 
-  const { state, setSel, clear, setScenarioActive, playback, setLens, setFocusedPath, draftSet } = useInteraction();
+  const { state, setSel, clear, setScenarioActive, playback, setLens, setFocusedPath, draftSet, setViewMode } = useInteraction();
   const sel = state.selected || { type: 'event', id: EVENTS[0]?.id };
 
   const [scenarioId, setScenarioId] = useState("none");
@@ -198,6 +200,12 @@ function DashboardBody() {
   const scenarioActive = Boolean(scenario?.event);
 
   const model = useMemo(() => buildModel({ data, engine, scenario }), [scenarioId, custom]);
+
+  // Immutable frontend-derived multilayer graph (functional centres +
+  // stage-mediated connections). Built once per vault; the topology view and
+  // network-analysis tools derive from it without mutating it (§7).
+  const baseGraph = useMemo(() => buildBaseGraph({ data, engine }), [data, engine]);
+  const viewMode = state.viewMode;
 
   /* Hop-by-hop propagation trace for the active scenario shock — the
      playback source of truth (see engine.eventTrace / playback.js). Its
@@ -289,6 +297,7 @@ function DashboardBody() {
         setScenarioId(decoded.scenarioId);
       }
     }
+    if (decoded.viewMode) setViewMode(decoded.viewMode);
     if (decoded.lens) pendingLensRef.current = decoded.lens;
     if (decoded.selected) setSel(decoded.selected);
     if (decoded.focusedPath) {
@@ -305,7 +314,7 @@ function DashboardBody() {
   useEffect(() => {
     if (!urlRestoredRef.current) return;
     const qs = encodeInteractionState({
-      lens: state.lens, selected: state.selected, scenarioId,
+      lens: state.lens, viewMode: state.viewMode, selected: state.selected, scenarioId,
       draft: state.draft, playbackStep: state.playback.step, focusedPath: state.focusedPath,
     });
     const targetHash = qs ? `#${qs}` : '';
@@ -313,7 +322,7 @@ function DashboardBody() {
       window.history.replaceState(null, '', qs ? `#${qs}` : window.location.pathname + window.location.search);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.lens, state.selected, scenarioId, custom, state.playback.step, state.focusedPath, state.draft]);
+  }, [state.lens, state.viewMode, state.selected, scenarioId, custom, state.playback.step, state.focusedPath, state.draft]);
 
   const hl = useMemo(() => {
     const s = new Set(), c = new Set();
@@ -346,6 +355,17 @@ function DashboardBody() {
 
   const panes = { map: t("Map"), flow: t("Flow"), intel: t("Intel") };
 
+  // Layer-1 content follows the view mode (§9): world map, functional-centre
+  // topology network, or both stacked.
+  const mapPane = <OsmMap model={displayModel} hl={hl} pb={pb} lensOverride={compareLens} />;
+  const networkPane = <NetworkGraph baseGraph={baseGraph} />;
+  const layer1 = viewMode === 'topology' ? networkPane
+    : viewMode === 'split' ? (<>{mapPane}{networkPane}</>)
+      : mapPane;
+  const layer1Title = viewMode === 'topology' ? 'LAYER 1 · FUNCTIONAL-CENTRE NETWORK · MODELED STAGE-MEDIATED CONNECTIVITY'
+    : viewMode === 'split' ? 'LAYER 1 · WORLD MAP + FUNCTIONAL-CENTRE NETWORK'
+      : 'LAYER 1 · WORLD MAP · OPENSTREETMAP';
+
   return (
     <div style={{ minHeight: "100vh", background: C.bg, color: C.text, fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
       <style>{GLOBAL_STYLE}</style>
@@ -371,21 +391,21 @@ function DashboardBody() {
 
       {wide ? (
         <>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1.9fr", gap: 1, background: C.line }}>
-            <Pane id="pane-map" highlight={tourTarget === "pane-map"} title="LAYER 1 · WORLD MAP · OPENSTREETMAP"><OsmMap model={displayModel} hl={hl} pb={pb} lensOverride={compareLens} /></Pane>
+          <div style={{ display: "grid", gridTemplateColumns: viewMode === 'geographic' ? "1fr 1.9fr" : "1.9fr 1fr", gap: 1, background: C.line }}>
+            <Pane id="pane-map" highlight={tourTarget === "pane-map"} title={layer1Title}>{layer1}</Pane>
             <Pane id="pane-flow" highlight={tourTarget === "pane-flow"} title="LAYER 2 · INDUSTRY FLOW · TAP A STAGE FOR ITS SUBSECTION"><FlowGraph sel={sel} setSel={setSel} hl={hl} model={displayModel} scenarioActive={model.scenarioActive} pb={pb} lensOverride={compareLens} /></Pane>
           </div>
           <div style={{ borderTop: `1px solid ${C.line}` }}>
             <Pane id="pane-intel" highlight={tourTarget === "pane-intel"} title="LAYER 3 · INTELLIGENCE PANEL">
-              <Intel sel={sel} setSel={setSel} model={model} scenario={scenario} onResetScenario={resetScenario} onPlayScenario={playScenario} scenarioActive={model.scenarioActive} feedTab={feedTab} setFeedTab={setFeedTab} horizontal />
+              <Intel sel={sel} setSel={setSel} model={model} scenario={scenario} onResetScenario={resetScenario} onPlayScenario={playScenario} scenarioActive={model.scenarioActive} feedTab={feedTab} setFeedTab={setFeedTab} baseGraph={baseGraph} horizontal />
             </Pane>
           </div>
         </>
       ) : (
         <>
-          {tab === "map" && <Pane id="pane-map" highlight={tourTarget === "pane-map"} title="LAYER 1 · WORLD MAP · OPENSTREETMAP"><OsmMap model={displayModel} hl={hl} pb={pb} lensOverride={compareLens} /></Pane>}
+          {tab === "map" && <Pane id="pane-map" highlight={tourTarget === "pane-map"} title={layer1Title}>{layer1}</Pane>}
           {tab === "flow" && <Pane id="pane-flow" highlight={tourTarget === "pane-flow"} title="LAYER 2 · INDUSTRY FLOW"><FlowGraph sel={sel} setSel={setSel} hl={hl} model={displayModel} scenarioActive={model.scenarioActive} pb={pb} lensOverride={compareLens} /></Pane>}
-          {tab === "intel" && <Pane id="pane-intel" highlight={tourTarget === "pane-intel"} title="LAYER 3 · INTELLIGENCE PANEL"><Intel sel={sel} setSel={setSel} model={model} scenario={scenario} onResetScenario={resetScenario} onPlayScenario={playScenario} scenarioActive={model.scenarioActive} feedTab={feedTab} setFeedTab={setFeedTab} /></Pane>}
+          {tab === "intel" && <Pane id="pane-intel" highlight={tourTarget === "pane-intel"} title="LAYER 3 · INTELLIGENCE PANEL"><Intel sel={sel} setSel={setSel} model={model} scenario={scenario} onResetScenario={resetScenario} onPlayScenario={playScenario} scenarioActive={model.scenarioActive} feedTab={feedTab} setFeedTab={setFeedTab} baseGraph={baseGraph} /></Pane>}
         </>
       )}
 

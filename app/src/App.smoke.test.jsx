@@ -73,4 +73,22 @@ describe('App smoke (static snapshot, Leaflet mocked)', () => {
     await act(async () => { root.unmount(); });
     container.remove();
   });
+
+  it('restores topology view from the URL hash and mounts the functional-centre network', async () => {
+    window.location.hash = '#view=topology';
+    const container = document.createElement('div');
+    document.body.appendChild(container);
+    const root = createRoot(container);
+    await act(async () => { root.render(<App />); });
+    await flush(0);
+    await flush(0);
+
+    const text = container.textContent || '';
+    // The topology renderer (functional-centre network) should be on screen.
+    expect(text.toUpperCase()).toContain('FUNCTIONAL-CENTRE NETWORK');
+
+    await act(async () => { root.unmount(); });
+    container.remove();
+    window.location.hash = '';
+  });
 });

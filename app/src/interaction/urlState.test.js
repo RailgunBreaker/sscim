@@ -6,6 +6,13 @@ describe('urlState encode/decode', () => {
     expect(encodeInteractionState({ lens: 'structural', scenarioId: 'none', playbackStep: 0 })).toBe('');
   });
 
+  it('round-trips view mode and a functional-centre selection', () => {
+    const s = { viewMode: 'topology', selected: { type: 'centre', id: 'tw::adv_fab' } };
+    const decoded = decodeInteractionState(encodeInteractionState(s));
+    expect(decoded.viewMode).toBe('topology');
+    expect(decoded.selected).toEqual({ type: 'centre', id: 'tw::adv_fab' });
+  });
+
   it('round-trips a preset-scenario view', () => {
     const s = { lens: 'delta', selected: { type: 'stage', id: 'litho' }, scenarioId: 'strait', playbackStep: 3, focusedPath: { sourceId: 'litho', targetId: 'fab' } };
     const decoded = decodeInteractionState(encodeInteractionState(s));
