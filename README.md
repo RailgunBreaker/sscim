@@ -84,6 +84,19 @@ SSCIM is built as **three synchronized layers over one computational engine**. S
 
 The central design principle — **"one engine, three uses"** — is a methodological consistency claim: live events, hypothetical scenarios, and company-disruption simulations are not three separate features with three separate formulas. They are three different *inputs* to the same shock-propagation function. This is what lets the product make a credible claim to explainability rather than presenting three black boxes under one roof.
 
+### 2.1 Interactive multilayer network playground
+
+On top of the three layers, the dashboard now exposes the supply chain as a **directly manipulable multilayer network** rather than only a set of bilateral country links. Full design and method notes are in **`app/NETWORK_ARCHITECTURE.md`**; in brief:
+
+- **Functional supply centres** — a frontend-derived entity, `country × stage`, created only where the snapshot already gives that country a positive share of that stage. On the current snapshot this yields **126 centres across 7 tiers**, so a single country visibly performs several distinct semiconductor functions instead of collapsing to one dot.
+- **Modeled stage-mediated connections** — for every existing directed stage edge `a → b`, a derived connection `countryA::a → countryB::b` with weight `W = share(i,a) × D[b][a] × share(j,b)` (**1030 connections**). This is labeled a *modeled stage-mediated connection weight* — explicitly **not** bilateral trade volume, a shipment route, or a measured dependence. `rawDisplayWeight` is preserved; `normalizedDisplayWeight` is display-only.
+- **Three synchronized views** (§9 of the spec): **Geographic** (Leaflet), **Topology** (an SVG functional-centre network laid out by supply-chain tier), and **Split** (both at once). Selecting an entity in any view highlights it everywhere, over the same scenario, filters, route, and metric.
+- **A reversible playground** — select / shift-multi-select centres, expand upstream/downstream neighborhoods, **trace multi-centre routes** (strongest / max-bottleneck / fewest-hops / max-cumulative, with alternative-after-removal), **apply shocks** to centres (which run through the same propagation engine), **play the propagation hop-by-hop** across map + topology + industry graph in lockstep, **temporarily remove nodes/edges** (hypothetical removal sensitivity), and **undo/redo/reset** to the untouched baseline. The base graph is immutable — Reset simply re-derives with no modifications.
+- **Network analysis** — weighted degree, reachability, **betweenness centrality**, node-removal impact, and edge criticality, plus a 2–4 item comparison workspace. Every metric shows its plain-language question and an explicit limitation; generic centrality is kept **separate** from SSCIM's propagation-based network influence and is never merged into a hidden risk score.
+- **Shareable analysis links** — view mode, selection, active scenario, temporary removals, pinned route, and active metric persist in the URL hash and reconstruct the exact view from the static snapshot; no dataset is stored in the URL.
+
+Everything above is **frontend-derived from the existing static snapshot** — no facility locations, shipment routes, trade volumes, BOM coefficients, or new relationships are invented, and the snapshot is never mutated.
+
 ---
 
 ## 3. Data Model
@@ -232,7 +245,14 @@ The 21-day sparkline and the "Movers 7D" list re-run the operational-impact comp
 | Feature | Description |
 |---|---|
 | **World Map** | Real OpenStreetMap geography (CARTO dark basemap, OSM-tile fallback), 16 countries, node size/color = structural vulnerability, hover shows operational impact & scenario Δ separately |
-| **Derived country links** | Connections between countries computed from the customer graph, labeled "modeled supplier-revenue relationship weight" (HQ↔HQ, sample only) — never "trade intensity" |
+| **View modes** | Geographic / Topology / Split switch — the world map, the functional-centre network, or both, kept in sync over the same selection, scenario, route, and metric |
+| **Functional-centre network (topology)** | Frontend-derived `country × stage` centres (126) laid out by supply-chain tier, connected by modeled stage-mediated connections (1030); a country visibly performs several functions instead of one dot |
+| **Functional-centre detail** | Country/stage/tier/share, structural + operational + scenario-Δ, weighted in/out degree, upstream/downstream reach, companies, and clickable direct upstream/downstream neighbors |
+| **Route pathfinding** | Origin→destination multi-centre routes by objective (strongest / max-bottleneck / fewest-hops / max-cumulative), with per-edge weights, cumulative weight, bottleneck, hop count, textual description, and alternative-after-removal — highlighted across topology + industry graph |
+| **Network playground** | Shift-multi-select, expand neighborhoods, temporarily remove nodes/edges (crossed-out ghosts), undo/redo, reset-to-baseline, "apply shock to centres" → shared scenario engine, hop-by-hop playback synchronized across all views |
+| **Network analysis** | Weighted degree, reachability, betweenness, node-removal impact, edge criticality + 2–4 item comparison workspace — each with a plain-language question and explicit limitation; centrality kept separate from network influence |
+| **Shareable analysis link** | View/selection/scenario/removals/route/metric persist in the URL hash and reconstruct the exact view from the static snapshot (no dataset in the URL) |
+| **Derived country links** | Connections between countries computed from the customer graph, labeled "modeled supplier-revenue relationship weight" (HQ↔HQ, sample only) — never "trade intensity"; retained as a secondary "Modeled HQ supplier–customer relationships" mode, no longer the primary structure |
 | **Industry Flow Graph** | 24-stage DAG, edge thickness = modeled input-dependence prior, node color/size = structural vulnerability, +Δ badge = current operational scenario delta, tap to open a stage subsection |
 | **Stage subsections** | Per-stage company list with market-share bars, modeled contribution, and each company's top customers with percentages |
 | **Company detail** | Three separately-labeled numbers — systemic criticality, vulnerability (share-independent), contribution (share-weighted) — plus production footprint, customers & suppliers, major shareholders, two-layer upstream origin trace, two spread trees |
@@ -346,6 +366,7 @@ All three public pages — the landing page, the guide, and the dashboard — ar
 /
 ├── README.md / README.ja.md / README.zh.md   This document, in English/Japanese/Simplified Chinese
 ├── MODEL_ROADMAP.md      Deferred data-layer work (facility geography, dependence-type splits, evidence tiers, …) — describes, does not implement
+├── app/NETWORK_ARCHITECTURE.md   Multilayer functional-centre network playground — technology decision, graph architecture, weight formula, analysis/pathfinding methods (§2.1)
 ├── app/                  The site — Vite + React source, three entry points
 │   ├── index.html          Vite entry → landing page (built output: index.html)
 │   ├── intro.html          Vite entry → guide page (built output: intro.html)
@@ -357,9 +378,10 @@ All three public pages — the landing page, the guide, and the dashboard — ar
 │   ├── src/
 │   │   ├── landing/         Landing.jsx, main.jsx, i18n.js — marketing/positioning page
 │   │   ├── intro/            Intro.jsx, main.jsx, i18n.js — guide/walkthrough page
-│   │   ├── components/       Dashboard UI components (Header, FlowGraph, OsmMap, Detail, Briefing, Methodology, Tex, …) + *.test.js
+│   │   ├── components/       Dashboard UI components (Header, FlowGraph, OsmMap, Detail, Briefing, Methodology, Tex, …); network playground (NetworkGraph, NetworkToolbar, NetworkRoutePanel, NetworkAnalysisPanel, NetworkComparePanel, CentreDetail); interaction bars (LensBar, PlaybackBar, ScenarioComposer) + *.test.js
 │   │   ├── data/              VaultContext.jsx (fetches the API, falls back to vault-snapshot.json) + vault-snapshot.json + compMeta.js
-│   │   ├── engine/             priors.js, math.js, graph.js, diagnostics.js, event-assumptions.js, index.js (buildEngine), buildModel.js + *.test.js
+│   │   ├── engine/             priors.js, math.js, graph.js, diagnostics.js, event-assumptions.js, index.js (buildEngine), buildModel.js; multilayer network: network.js, networkOps.js, networkPaths.js, networkAnalysis.js + *.test.js
+│   │   ├── interaction/        centralized interaction controller (reducer.js, InteractionContext.jsx), lens/lensEncoding, playback, topologyLayout, scenarioDraft, urlState (shareable state) + *.test.js
 │   │   ├── i18n/                dashboard language dictionary + t()
 │   │   ├── utils/                color/label/accessibility helpers (colors.js, a11y.js, tooltip.js) + tooltip.test.js
 │   │   ├── App.jsx, main.jsx, theme.js   — dashboard root

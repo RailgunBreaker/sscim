@@ -78,6 +78,38 @@ export const T = {
     ja: 'ワンタップで仮想的な衝撃をエンジンに流し込み、シナリオの限界差分でランク付けされたブリーフィングを生成します——何が変わったか、最も影響を受けたノード、企業リーダー、国別リスクボード、次に見るべき点——過去の基準系列を書き換えることは決してありません。',
   },
 
+  h2Network: { en: 'Explore it as a network', zh: '作为网络来探索', tw: '作為網路來探索', ja: 'ネットワークとして探索' },
+  subNetwork: {
+    en: 'The chain is not bilateral. SSCIM organises it around functional centres — country × stage — connected through modeled stage edges, and lets you trace routes, apply shocks, and analyse the network directly. Modeled connectivity, not verified shipments.',
+    zh: '供应链并非双边关系。SSCIM 围绕"国家×环节"的功能中心来组织，并通过建模的环节边相连，让你直接追踪路线、施加冲击并分析网络。这是建模的连通性，而非经核实的实物运输。',
+    tw: '供應鏈並非雙邊關係。SSCIM 圍繞「國家×環節」的功能中心來組織，並透過建模的環節邊相連，讓你直接追蹤路線、施加衝擊並分析網路。這是建模的連通性，而非經核實的實物運輸。',
+    ja: 'サプライチェーンは二国間関係ではありません。SSCIMは「国 × 工程」の機能センターを軸に構成し、モデル化された工程エッジで結び、経路の追跡・衝撃の付与・ネットワーク分析を直接行えます。モデル化された連結性であり、検証された出荷ではありません。',
+  },
+  cardN1K: { en: 'FUNCTIONAL CENTRES', zh: '功能中心', tw: '功能中心', ja: '機能センター' },
+  cardN1H: { en: 'One country, many functions', zh: '一国多能', tw: '一國多能', ja: '一国に複数の機能' },
+  cardN1P: {
+    en: 'The map organises around country × stage functional centres and the stage edges that connect them — 126 centres, 1030 modeled stage-mediated connections — so a single country shows the several semiconductor functions it performs, not one dot.',
+    zh: '地图围绕"国家×环节"的功能中心及连接它们的环节边组织——126 个功能中心、1030 条建模的环节中介连接——因此单个国家会显示它承担的多项半导体功能，而非一个圆点。',
+    tw: '地圖圍繞「國家×環節」的功能中心及連接它們的環節邊組織——126 個功能中心、1030 條建模的環節中介連接——因此單一國家會顯示它承擔的多項半導體功能，而非一個圓點。',
+    ja: '地図は「国 × 工程」の機能センターと、それらをつなぐ工程エッジを軸に構成されます——126センター、1030のモデル化された工程媒介の接続——ひとつの国が担う複数の半導体機能が示され、単なる点にはなりません。',
+  },
+  cardN2K: { en: 'TRACE & PLAY', zh: '追踪与演示', tw: '追蹤與演示', ja: '追跡と再生' },
+  cardN2H: { en: 'Trace a route, play the shock', zh: '追踪路线，演示冲击', tw: '追蹤路線，演示衝擊', ja: '経路を追跡し、衝撃を再生' },
+  cardN2P: {
+    en: 'Pick an origin and destination and trace the strongest modeled route across several centres; apply a shock to any centres and watch it propagate hop-by-hop across the map and the topology view together.',
+    zh: '选择起点与终点，追踪跨越多个功能中心的最强建模路径；对任意功能中心施加冲击，并在地图与拓扑视图中同步逐跳观看其传导。',
+    tw: '選擇起點與終點，追蹤跨越多個功能中心的最強建模路徑；對任意功能中心施加衝擊，並在地圖與拓撲視圖中同步逐跳觀看其傳導。',
+    ja: '起点と終点を選び、複数のセンターにまたがる最も強いモデル化された経路を追跡。任意のセンターに衝撃を与え、地図とトポロジー表示の両方でホップごとに伝播する様子を確認できます。',
+  },
+  cardN3K: { en: 'NETWORK ANALYSIS', zh: '网络分析', tw: '網路分析', ja: 'ネットワーク分析' },
+  cardN3H: { en: 'Inspect, remove, compare', zh: '检视、移除、比较', tw: '檢視、移除、比較', ja: '検査・除去・比較' },
+  cardN3P: {
+    en: 'Weighted degree, reachability, betweenness, and hypothetical node/edge-removal sensitivity — every metric labeled a topology measure, kept separate from network influence and never a calibrated risk score.',
+    zh: '加权度、可达性、介数中心性，以及假设性的节点/边移除敏感性——每个指标都标注为拓扑度量，与网络影响力分开，且绝非经过校准的风险分数。',
+    tw: '加權度、可達性、介數中心性，以及假設性的節點/邊移除敏感性——每個指標都標註為拓撲度量，與網路影響力分開，且絕非經過校準的風險分數。',
+    ja: '加重次数・到達可能性・媒介中心性、そして仮想的なノード／エッジ除去の感度——各指標はトポロジー指標として明示し、ネットワーク影響力とは分離、較正済みのリスクスコアでは決してありません。',
+  },
+
   h2Explain: { en: 'Explainable by construction', zh: '结构性可解释', tw: '結構性可解釋', ja: '構造から説明可能' },
   subExplain: {
     en: 'Every score separates into a structural component (time-invariant) and an operational component (event-driven, signed) — never blended into one hidden number. Structural vulnerability breaks into five source-tagged components: three computed from the graph and data, two declared analyst judgments.',

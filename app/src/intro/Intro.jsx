@@ -91,6 +91,9 @@ export default function Intro() {
           <Html tag="p" html={t('layer2')} />
           <Html tag="p" html={t('layer3')} />
         </div>
+        <div className="card">
+          <Html tag="p" html={t('netCard')} />
+        </div>
         <p>{t('s1Under')}</p>
 
         <h2>{t('h2_2')}</h2>

@@ -93,6 +93,18 @@ export default function Landing() {
 
       <section>
         <div className="wrap">
+          <h2>{t('h2Network')}</h2>
+          <p className="sub">{t('subNetwork')}</p>
+          <div className="grid">
+            <div className="card"><span className="k mono">{t('cardN1K')}</span><h3>{t('cardN1H')}</h3><p>{t('cardN1P')}</p></div>
+            <div className="card"><span className="k mono">{t('cardN2K')}</span><h3>{t('cardN2H')}</h3><p>{t('cardN2P')}</p></div>
+            <div className="card"><span className="k mono">{t('cardN3K')}</span><h3>{t('cardN3H')}</h3><p>{t('cardN3P')}</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div className="wrap">
           <h2>{t('h2Explain')}</h2>
           <p className="sub">{t('subExplain')}</p>
           <div className="formula mono">
