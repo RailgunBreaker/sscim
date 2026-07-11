@@ -19,6 +19,7 @@ import OsmMap from './components/OsmMap.jsx';
 import FlowGraph from './components/FlowGraph.jsx';
 import NetworkGraph from './components/NetworkGraph.jsx';
 import NetworkToolbar from './components/NetworkToolbar.jsx';
+import NetworkRoutePanel from './components/NetworkRoutePanel.jsx';
 import { buildBaseGraph } from './engine/network.js';
 import Intel from './components/Intel.jsx';
 import Methodology from './components/Methodology.jsx';
@@ -359,7 +360,7 @@ function DashboardBody() {
   // Layer-1 content follows the view mode (§9): world map, functional-centre
   // topology network, or both stacked.
   const mapPane = <OsmMap model={displayModel} hl={hl} pb={pb} lensOverride={compareLens} />;
-  const networkPane = <NetworkGraph baseGraph={baseGraph} />;
+  const networkPane = <><NetworkGraph baseGraph={baseGraph} /><NetworkRoutePanel baseGraph={baseGraph} /></>;
   const layer1 = viewMode === 'topology' ? networkPane
     : viewMode === 'split' ? (<>{mapPane}{networkPane}</>)
       : mapPane;

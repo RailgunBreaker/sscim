@@ -42,6 +42,7 @@ export function InteractionProvider({ defaultSelected = null, children }) {
     back: () => dispatch({ type: 'BACK' }),
     setLens: (lens) => dispatch({ type: 'SET_LENS', payload: lens }),
     setFocusedPath: (path) => dispatch({ type: 'SET_FOCUSED_PATH', payload: path }),
+    setRoute: (route) => dispatch({ type: 'SET_ROUTE', payload: route }),
     setViewMode: (mode) => dispatch({ type: 'SET_VIEW_MODE', payload: mode }),
     setScenarioActive: (active) => dispatch({ type: 'SET_SCENARIO_ACTIVE', payload: active }),
     playback: (patch) => dispatch({ type: 'PLAYBACK', payload: patch }),

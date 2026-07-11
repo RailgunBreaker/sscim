@@ -46,6 +46,8 @@ export function initInteraction(defaultSelected = null) {
     selected: defaultSelected,
     hovered: null,
     focusedPath: null,
+    // A pinned multi-centre route (§16/§20) selected in the route explorer.
+    selectedRoute: null,
     scenarioActive: false,
     playback: { status: 'idle', step: 0, speed: 1, length: 0 },
     history: [],
@@ -103,7 +105,10 @@ export function interactionReducer(state, action) {
       return { ...state, hovered: null };
 
     case 'CLEAR':
-      return { ...state, selected: null, hovered: null, focusedPath: null };
+      return { ...state, selected: null, hovered: null, focusedPath: null, selectedRoute: null };
+
+    case 'SET_ROUTE':
+      return { ...state, selectedRoute: action.payload };
 
     case 'BACK': {
       if (!state.history.length) return { ...state, selected: null };

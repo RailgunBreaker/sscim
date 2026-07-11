@@ -27,7 +27,17 @@ export default function NetworkGraph({ baseGraph, filters = {} }) {
   const { engine } = useVault();
   const { STAGE_BY_ID } = engine;
   const { state, select, hover, clearHover, pgToggleMulti } = useInteraction();
-  const { selected, hovered, playground } = state;
+  const { selected, hovered, playground, selectedRoute } = state;
+
+  // A pinned route (§18): its centres/edges are emphasized with numbered hop
+  // markers; unrelated elements dim.
+  const routeCentreIds = useMemo(() => new Set(selectedRoute?.centres || []), [selectedRoute]);
+  const routeHopIndex = useMemo(() => {
+    const m = {};
+    (selectedRoute?.centres || []).forEach((id, i) => { m[id] = i; });
+    return m;
+  }, [selectedRoute]);
+  const routeEdgeKeys = useMemo(() => new Set((selectedRoute?.edges || []).map((e) => e.id)), [selectedRoute]);
 
   // Post-removal analysis graph drives edges/metrics; layout is over ALL base
   // centres so positions stay stable and removed centres can still be drawn
@@ -46,19 +56,21 @@ export default function NetworkGraph({ baseGraph, filters = {} }) {
   // Progressive disclosure (§30): when a centre is pinned show its up/down
   // neighborhood; otherwise show the strongest connections globally.
   const shownEdges = useMemo(() => {
+    if (selectedRoute?.edges?.length) return selectedRoute.edges; // pinned route dominates (§18)
     if (selId && analysis.centreById[selId]) {
       const { edgeIds } = neighborhood(analysis, selId, { direction: 'both', hops: 2 });
       return [...edgeIds].map((id) => analysis.edgeById[id]).filter(Boolean);
     }
     return filterConnections(analysis.centreEdges, { topN: filters.topN ?? 60, minWeight: filters.minWeight ?? 0 });
-  }, [analysis, selId, filters.topN, filters.minWeight]);
+  }, [analysis, selId, selectedRoute, filters.topN, filters.minWeight]);
 
   const shownNodeIds = useMemo(() => {
     const s = new Set();
     shownEdges.forEach((e) => { s.add(e.sourceId); s.add(e.targetId); });
     if (selId) s.add(selId);
+    routeCentreIds.forEach((id) => s.add(id));
     return s;
-  }, [shownEdges, selId]);
+  }, [shownEdges, selId, routeCentreIds]);
 
   const maxNorm = Math.max(...shownEdges.map((e) => e.normalizedDisplayWeight), 1e-9);
 
@@ -101,15 +113,16 @@ export default function NetworkGraph({ baseGraph, filters = {} }) {
           {shownEdges.map((e) => {
             const p1 = pos[e.sourceId], p2 = pos[e.targetId];
             if (!p1 || !p2) return null;
+            const onRoute = routeEdgeKeys.has(e.id);
             const onHover = hoverIncident.has(e.id);
-            const w = 0.5 + 3 * (e.normalizedDisplayWeight / maxNorm);
+            const w = 0.5 + 3 * (e.normalizedDisplayWeight / maxNorm || 0.3);
             return (
               <path key={e.id} d={edgePath(p1, p2)} fill="none"
-                className={onHover ? 'pulse' : undefined}
-                stroke={onHover ? C.copper : C.copperDim}
-                strokeWidth={onHover ? w + 1 : w}
+                className={onRoute || onHover ? 'pulse' : undefined}
+                stroke={onRoute || onHover ? C.copper : C.copperDim}
+                strokeWidth={onRoute ? w + 1.6 : onHover ? w + 1 : w}
                 markerEnd="url(#ng-arrow)"
-                opacity={onHover ? 1 : 0.5}>
+                opacity={onRoute || onHover ? 1 : 0.5}>
                 <title>{`${e.sourceCountry} · ${STAGE_BY_ID[e.sourceStage]?.name} → ${e.targetCountry} · ${STAGE_BY_ID[e.targetStage]?.name} · modeled weight ${e.rawDisplayWeight.toFixed(4)} (share×prior×share) — modeled stage-mediated connectivity, not a verified shipment`}</title>
               </path>
             );
@@ -142,7 +155,14 @@ export default function NetworkGraph({ baseGraph, filters = {} }) {
                 {isHov && !isSel && !isMulti && <circle r={r + 4} fill="none" stroke={C.copper} strokeWidth={1.3} strokeDasharray="2 3" />}
                 <circle r={r} fill={col} fillOpacity={isRemoved ? 0.25 : 0.85} stroke={isSel ? C.text : col} strokeWidth={isSel ? 1.4 : 0.5} />
                 {isRemoved && <g stroke={C.red} strokeWidth={1.4}><line x1={-r} y1={-r} x2={r} y2={r} /><line x1={-r} y1={r} x2={r} y2={-r} /></g>}
-                {(isSel || isHov || isMulti || r > 8) && (
+                {routeCentreIds.has(c.id) && (
+                  <g>
+                    <circle r={r + 7} fill="none" stroke={C.copper} strokeWidth={1.6} />
+                    <circle cx={r + 4} cy={-r - 4} r={6} fill={C.copper} />
+                    <text x={r + 4} y={-r - 1.5} textAnchor="middle" fill="#0C111C" fontSize="8" fontWeight="700" style={{ pointerEvents: 'none' }}>{routeHopIndex[c.id] + 1}</text>
+                  </g>
+                )}
+                {(isSel || isHov || isMulti || routeCentreIds.has(c.id) || r > 8) && (
                   <text x={0} y={-r - 4} textAnchor="middle" fill={isRemoved ? C.faint : C.text} fontSize="8.5" fontWeight="600" style={{ pointerEvents: 'none' }}>
                     {centreLabel(c)}
                   </text>
