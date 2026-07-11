@@ -28,7 +28,7 @@ export default function LensBar({ scenarioName }) {
   const label = entityLabel(selected, names, scenarioName);
 
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap', padding: '6px 16px', background: C.panel2, borderBottom: `1px solid ${C.line}` }}>
+    <div className="cbar" style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap', padding: '6px 16px', background: C.panel2, borderBottom: `1px solid ${C.line}` }}>
       <span className="mono" style={{ fontSize: 9, letterSpacing: 1.5, color: C.faint, flexShrink: 0 }}>LENS</span>
       <div role="radiogroup" aria-label="Analytical lens" style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
         {LENSES.map((l) => {

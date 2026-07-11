@@ -29,12 +29,14 @@ function legendFor(lens, legend) {
   return { items: [['Moderate < 5.5', C.green], ['Elevated 5.5–7.5', C.amber], ['High ≥ 7.5', C.red]], note: legend.encoding + ' · dot/border size = network influence · edge = input-dependence prior' };
 }
 
-export default function FlowGraph({ sel, setSel, hl, model, scenarioActive, pb }) {
+export default function FlowGraph({ sel, setSel, hl, model, scenarioActive, pb, lensOverride }) {
   const { data, engine } = useVault();
   const { STAGES, FLOW_EDGES, TIER_LABELS, COUNTRY_NAMES, COMPANY_BY_ID, CUSTOMERS, SUPPLIERS } = data;
   const { STAGE_BY_ID, D, NETWORK_INFLUENCE, STAGE_COMPANIES, companyContribution } = engine;
   const { state, hover, clearHover, draftToggleSource, setFocusedPath } = useInteraction();
-  const { lens, hovered, draft, focusedPath } = state;
+  const { hovered, draft, focusedPath } = state;
+  // The comparison toggle (§12) can override the global lens for this panel.
+  const lens = lensOverride ?? state.lens;
 
   // Explain-path highlight (§11): edges belonging to the pinned route are
   // drawn bold copper with direction arrowheads, on top of everything else.

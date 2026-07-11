@@ -81,7 +81,7 @@ export default function PlaybackBar({ frame, scenarioName }) {
   const speeds = [0.5, 1, 2];
 
   return (
-    <div id="playback-bar" role="group" aria-label="Propagation playback"
+    <div id="playback-bar" role="group" aria-label="Propagation playback" className="cbar"
       style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap', padding: '7px 14px', borderBottom: `1px solid ${C.line}`, background: C.panel }}>
       <span className="mono" style={{ fontSize: 9.5, letterSpacing: 1.2, color: C.copper }}>▶ PROPAGATION</span>
 

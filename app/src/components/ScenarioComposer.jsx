@@ -43,7 +43,7 @@ export default function ScenarioComposer({ onBuild, onReset, activeIsCustom }) {
   };
 
   return (
-    <div role="group" aria-label="Scenario composer"
+    <div role="group" aria-label="Scenario composer" className="cbar"
       style={{ padding: '8px 16px', background: C.panel, borderBottom: `1px solid ${C.line}`, display: 'flex', flexWrap: 'wrap', gap: 10, alignItems: 'center' }}>
       <span className="mono" style={{ fontSize: 9.5, letterSpacing: 1.2, color: C.copper }}>✎ COMPOSE</span>
 

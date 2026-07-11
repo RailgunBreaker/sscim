@@ -199,12 +199,13 @@ export function propagateFromSource({ sourceId, magnitude, channel, stageIds, OU
    coefficient U[p][n] per p→n edge). Returns up to `k` paths, strongest
    first, each: { nodes:[ids], edges:[{from,to,dir,coeff}], attenuation,
    channel }. Empty array if unreachable in either direction. */
-export function findTopPaths({ sourceId, targetId, OUT, IN, D, U, k = 3, maxDepth = 9 }) {
+export function findTopPaths({ sourceId, targetId, OUT, IN, D, U, k = 3, maxDepth = 9, maxPaths = 4000 }) {
   if (!sourceId || !targetId || sourceId === targetId) return [];
 
   function enumerate(nextMap, coeffFn, orient, channel) {
     const out = [];
     const dfs = (node, visited, nodes, edges, strength, depth) => {
+      if (out.length >= maxPaths) return; // guard against combinatorial blow-up on dense graphs
       if (node === targetId) { out.push({ nodes: [...nodes], edges: [...edges], attenuation: strength, channel }); return; }
       if (depth >= maxDepth) return;
       for (const nxt of nextMap[node] || []) {

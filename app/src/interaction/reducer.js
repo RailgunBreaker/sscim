@@ -128,9 +128,11 @@ export function interactionReducer(state, action) {
     }
 
     case 'DRAFT_SET': {
-      // Patch severity / direction / builderMode.
+      // Patch severity / direction / builderMode, and optionally replace the
+      // whole source list (used when restoring a shared URL).
       const patch = action.payload || {};
       const draft = { ...state.draft, ...patch };
+      if (Array.isArray(patch.sources)) draft.sources = patch.sources.filter((s) => s && s.type && s.id);
       if (typeof draft.severity === 'number') draft.severity = Math.max(1, Math.min(10, draft.severity));
       if (patch.direction && !DRAFT_DIRECTIONS.includes(patch.direction)) draft.direction = state.draft.direction;
       return { ...state, draft };

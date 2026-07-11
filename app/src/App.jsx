@@ -5,6 +5,8 @@ import { VaultProvider, useVault } from './data/VaultContext.jsx';
 import { buildModel } from './engine/buildModel.js';
 import { InteractionProvider, useInteraction } from './interaction/InteractionContext.jsx';
 import { frameFromTrace } from './interaction/playback.js';
+import { encodeInteractionState, decodeInteractionState } from './interaction/urlState.js';
+import { draftToScenario } from './interaction/scenarioDraft.js';
 
 import Header from './components/Header.jsx';
 import ScenarioBar from './components/ScenarioBar.jsx';
@@ -55,6 +57,18 @@ const GLOBAL_STYLE = `
   .tour-target { position: relative; z-index: 2; scroll-margin: 90px; border-radius: 6px; outline: 3px solid ${C.copper}; outline-offset: 2px; box-shadow: 0 0 0 6px rgba(201,138,63,.18), 0 0 28px rgba(201,138,63,.35); animation: tourPulse 1.7s ease-in-out infinite; }
   @keyframes tourPulse { 0%,100% { outline-color: ${C.copper}; } 50% { outline-color: ${C.amber}; } }
   @media (prefers-reduced-motion: reduce) { .tour-target { animation: none !important; } }
+  /* --- Small-screen (≈375–560px) refinements (task §12 mobile) ---
+     The three tiers already collapse to one-at-a-time tabs below 1080px
+     (TabBar). Here we make the many HTML control buttons tap-friendly and
+     let the dense control bars breathe without forcing page-level
+     horizontal scroll. SVG nodes are <g>/<rect>, not <button>, so the
+     min-height never distorts the flow graph. */
+  @media (max-width: 560px) {
+    body { overflow-x: hidden; }
+    button:not(.node) { min-height: 34px; }
+    .mono { letter-spacing: .5px; }
+    .cbar { padding: 7px 10px !important; gap: 7px !important; }
+  }
 `;
 
 export default function App() {
@@ -110,7 +124,7 @@ function DashboardBody() {
   const { EVENTS, SCENARIOS, COMPANY_BY_ID } = data;
   const { STAGE_BY_ID, OUT, COMPANY_CRITICALITY, COMPANY_RANK } = engine;
 
-  const { state, setSel, clear, setScenarioActive, playback } = useInteraction();
+  const { state, setSel, clear, setScenarioActive, playback, setLens, setFocusedPath, draftSet } = useInteraction();
   const sel = state.selected || { type: 'event', id: EVENTS[0]?.id };
 
   const [scenarioId, setScenarioId] = useState("none");
@@ -204,6 +218,19 @@ function DashboardBody() {
   const playbackEngaged = Boolean(trace) && (state.playback.status === 'playing' || state.playback.status === 'paused');
   const pb = playbackEngaged ? frame : null;
 
+  /* Baseline / Scenario / Difference comparison (§12). An opt-in overlay on
+     the world map + industry graph only: 'lens' (default) follows the global
+     lens; 'baseline' shows the pre-scenario field; 'scenario' the active
+     field; 'difference' the signed Δ. Decoupled from the global lens so the
+     structural/share lenses stay usable. */
+  const [compare, setCompare] = useState('lens');
+  useEffect(() => { setCompare('lens'); }, [scenarioId, custom]);
+  const compareLens = compare === 'difference' ? 'delta' : (compare === 'baseline' || compare === 'scenario') ? 'operational' : undefined;
+  const displayModel = useMemo(
+    () => (compare === 'baseline' ? { ...model, activeField: model.baselineField, countriesActive: model.countriesBase } : model),
+    [model, compare]
+  );
+
   const resetScenario = () => { setScenarioId("none"); setCustom(null); };
   const playScenario = () => playback({ status: 'playing', step: 0 });
 
@@ -217,6 +244,14 @@ function DashboardBody() {
     setCustom(scenarioObj);
     setScenarioId("custom");
   };
+
+  // URL state (§12): a lens the URL asked for can only be applied AFTER the
+  // scenario-sync effect below has run (activating a scenario forces the Δ
+  // lens); this ref carries it across to that effect. urlRestoredRef gates
+  // the write-back effect so we never clobber the incoming hash before it is
+  // restored.
+  const pendingLensRef = useRef(null);
+  const urlRestoredRef = useRef(false);
 
   /* Keep the interaction controller in sync with the active scenario:
      activating a scenario flips the lens to Scenario Δ and opens the
@@ -232,8 +267,53 @@ function DashboardBody() {
     playAfterBuildRef.current = false;
     if (scenarioActive) setSel({ type: 'scenario', id: 'active' });
     else if (state.selected?.type === 'scenario') clear();
+    // Apply a lens the restored URL asked for, now that scenario activation
+    // (which forces Δ) has been reconciled. setLens itself refuses an
+    // unavailable lens, so a stale delta with no scenario is a safe no-op.
+    if (pendingLensRef.current) { setLens(pendingLensRef.current); pendingLensRef.current = null; }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [scenarioId, custom]);
+
+  /* Restore shareable state from the URL hash once, on mount (§12). Order:
+     set the scenario first (so the sync effect above re-runs and reconciles
+     the lens), stash the requested lens for it to apply, then restore the
+     pinned entity, playback hop, and explained path. */
+  useEffect(() => {
+    const decoded = decodeInteractionState(window.location.hash);
+    if (decoded.scenarioId && decoded.scenarioId !== 'none') {
+      if (decoded.scenarioId === 'custom' && decoded.draft?.sources?.length) {
+        draftSet({ sources: decoded.draft.sources, severity: decoded.draft.severity, direction: decoded.draft.direction });
+        const built = draftToScenario(decoded.draft, { stageById: STAGE_BY_ID });
+        if (built) { setCustom(built); setScenarioId('custom'); }
+      } else if (SCENARIOS.some((s) => s.id === decoded.scenarioId)) {
+        setScenarioId(decoded.scenarioId);
+      }
+    }
+    if (decoded.lens) pendingLensRef.current = decoded.lens;
+    if (decoded.selected) setSel(decoded.selected);
+    if (decoded.focusedPath) {
+      const paths = engine.topPaths(decoded.focusedPath.sourceId, decoded.focusedPath.targetId, { k: 1 });
+      if (paths[0]) setFocusedPath({ sourceId: decoded.focusedPath.sourceId, targetId: decoded.focusedPath.targetId, path: paths[0] });
+    }
+    if (decoded.playbackStep) setTimeout(() => playback({ step: decoded.playbackStep }), 0);
+    urlRestoredRef.current = true;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  /* Write the shareable slice back to the URL hash (replaceState — no new
+     history entry) whenever it changes, once the initial restore is done. */
+  useEffect(() => {
+    if (!urlRestoredRef.current) return;
+    const qs = encodeInteractionState({
+      lens: state.lens, selected: state.selected, scenarioId,
+      draft: state.draft, playbackStep: state.playback.step, focusedPath: state.focusedPath,
+    });
+    const targetHash = qs ? `#${qs}` : '';
+    if (window.location.hash !== targetHash) {
+      window.history.replaceState(null, '', qs ? `#${qs}` : window.location.pathname + window.location.search);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.lens, state.selected, scenarioId, custom, state.playback.step, state.focusedPath, state.draft]);
 
   const hl = useMemo(() => {
     const s = new Set(), c = new Set();
@@ -278,7 +358,7 @@ function DashboardBody() {
         tourTarget={tourTarget}
       />
 
-      <ScenarioBar model={model} whatChanged={whatChanged} />
+      <ScenarioBar model={model} whatChanged={whatChanged} compare={compare} setCompare={setCompare} scenarioActive={scenarioActive} />
       <LensBar scenarioName={scenario?.name} />
       {(state.draft.builderMode || state.draft.sources.length > 0) && (
         <ScenarioComposer onBuild={buildFromDraft} onReset={resetScenario} activeIsCustom={scenarioId === 'custom'} />
@@ -292,8 +372,8 @@ function DashboardBody() {
       {wide ? (
         <>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1.9fr", gap: 1, background: C.line }}>
-            <Pane id="pane-map" highlight={tourTarget === "pane-map"} title="LAYER 1 · WORLD MAP · OPENSTREETMAP"><OsmMap model={model} hl={hl} pb={pb} /></Pane>
-            <Pane id="pane-flow" highlight={tourTarget === "pane-flow"} title="LAYER 2 · INDUSTRY FLOW · TAP A STAGE FOR ITS SUBSECTION"><FlowGraph sel={sel} setSel={setSel} hl={hl} model={model} scenarioActive={model.scenarioActive} pb={pb} /></Pane>
+            <Pane id="pane-map" highlight={tourTarget === "pane-map"} title="LAYER 1 · WORLD MAP · OPENSTREETMAP"><OsmMap model={displayModel} hl={hl} pb={pb} lensOverride={compareLens} /></Pane>
+            <Pane id="pane-flow" highlight={tourTarget === "pane-flow"} title="LAYER 2 · INDUSTRY FLOW · TAP A STAGE FOR ITS SUBSECTION"><FlowGraph sel={sel} setSel={setSel} hl={hl} model={displayModel} scenarioActive={model.scenarioActive} pb={pb} lensOverride={compareLens} /></Pane>
           </div>
           <div style={{ borderTop: `1px solid ${C.line}` }}>
             <Pane id="pane-intel" highlight={tourTarget === "pane-intel"} title="LAYER 3 · INTELLIGENCE PANEL">
@@ -303,8 +383,8 @@ function DashboardBody() {
         </>
       ) : (
         <>
-          {tab === "map" && <Pane id="pane-map" highlight={tourTarget === "pane-map"} title="LAYER 1 · WORLD MAP · OPENSTREETMAP"><OsmMap model={model} hl={hl} pb={pb} /></Pane>}
-          {tab === "flow" && <Pane id="pane-flow" highlight={tourTarget === "pane-flow"} title="LAYER 2 · INDUSTRY FLOW"><FlowGraph sel={sel} setSel={setSel} hl={hl} model={model} scenarioActive={model.scenarioActive} pb={pb} /></Pane>}
+          {tab === "map" && <Pane id="pane-map" highlight={tourTarget === "pane-map"} title="LAYER 1 · WORLD MAP · OPENSTREETMAP"><OsmMap model={displayModel} hl={hl} pb={pb} lensOverride={compareLens} /></Pane>}
+          {tab === "flow" && <Pane id="pane-flow" highlight={tourTarget === "pane-flow"} title="LAYER 2 · INDUSTRY FLOW"><FlowGraph sel={sel} setSel={setSel} hl={hl} model={displayModel} scenarioActive={model.scenarioActive} pb={pb} lensOverride={compareLens} /></Pane>}
           {tab === "intel" && <Pane id="pane-intel" highlight={tourTarget === "pane-intel"} title="LAYER 3 · INTELLIGENCE PANEL"><Intel sel={sel} setSel={setSel} model={model} scenario={scenario} onResetScenario={resetScenario} onPlayScenario={playScenario} scenarioActive={model.scenarioActive} feedTab={feedTab} setFeedTab={setFeedTab} /></Pane>}
         </>
       )}

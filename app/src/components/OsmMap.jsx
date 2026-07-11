@@ -40,12 +40,14 @@ function legendFor(lens, legend) {
   };
 }
 
-export default function OsmMap({ model, hl, pb }) {
+export default function OsmMap({ model, hl, pb, lensOverride }) {
   const { data, engine } = useVault();
   const { COUNTRY_NAMES, COUNTRY_POS, COMPANIES } = data;
   const { COUNTRY_LINKS, STAGE_BY_ID } = engine;
   const { state, select, hover, clearHover, subscribeFlyTo, draftToggleSource } = useInteraction();
-  const { lens, selected, scenarioActive, draft } = state;
+  const { selected, scenarioActive, draft } = state;
+  // The comparison toggle (§12) can override the global lens for this panel.
+  const lens = lensOverride ?? state.lens;
   const sel = selected || { type: null, id: null };
 
   const divRef = useRef(null), mapRef = useRef(null), layerRef = useRef(null), pbLayerRef = useRef(null), draftLayerRef = useRef(null);
