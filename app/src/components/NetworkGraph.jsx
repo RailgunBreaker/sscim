@@ -23,11 +23,20 @@ const H = 580;
 const TIER_COLORS = ['#6EA8FE', '#63C7B2', '#C98A3F', '#E0A458', '#D46A6A', '#B57EDC', '#8FBF6A'];
 const tierColor = (tierId) => TIER_COLORS[tierId % TIER_COLORS.length] || C.copper;
 
-export default function NetworkGraph({ baseGraph, filters = {} }) {
+export default function NetworkGraph({ baseGraph, filters = {}, pb = null }) {
   const { engine } = useVault();
   const { STAGE_BY_ID } = engine;
   const { state, select, hover, clearHover, pgToggleMulti } = useInteraction();
   const { selected, hovered, playground, selectedRoute } = state;
+
+  // Scenario playback overlay (§28): a centre lights up when its stage is
+  // reached at the current hop, in lockstep with the map + industry graph.
+  const pbActive = Boolean(pb);
+  const pbStageEdges = useMemo(() => {
+    const s = new Set();
+    (pb?.edges || []).forEach((e) => s.add(`${e.from}|${e.to}`));
+    return s;
+  }, [pb]);
 
   // A pinned route (§18): its centres/edges are emphasized with numbered hop
   // markers; unrelated elements dim.
@@ -56,13 +65,14 @@ export default function NetworkGraph({ baseGraph, filters = {} }) {
   // Progressive disclosure (§30): when a centre is pinned show its up/down
   // neighborhood; otherwise show the strongest connections globally.
   const shownEdges = useMemo(() => {
+    if (pbActive) return analysis.centreEdges.filter((e) => pb.reachedStages.has(e.sourceStage) && pb.reachedStages.has(e.targetStage));
     if (selectedRoute?.edges?.length) return selectedRoute.edges; // pinned route dominates (§18)
     if (selId && analysis.centreById[selId]) {
       const { edgeIds } = neighborhood(analysis, selId, { direction: 'both', hops: 2 });
       return [...edgeIds].map((id) => analysis.edgeById[id]).filter(Boolean);
     }
     return filterConnections(analysis.centreEdges, { topN: filters.topN ?? 60, minWeight: filters.minWeight ?? 0 });
-  }, [analysis, selId, selectedRoute, filters.topN, filters.minWeight]);
+  }, [analysis, selId, selectedRoute, pbActive, pb, filters.topN, filters.minWeight]);
 
   const shownNodeIds = useMemo(() => {
     const s = new Set();
@@ -113,16 +123,18 @@ export default function NetworkGraph({ baseGraph, filters = {} }) {
           {shownEdges.map((e) => {
             const p1 = pos[e.sourceId], p2 = pos[e.targetId];
             if (!p1 || !p2) return null;
-            const onRoute = routeEdgeKeys.has(e.id);
-            const onHover = hoverIncident.has(e.id);
             const w = 0.5 + 3 * (e.normalizedDisplayWeight / maxNorm || 0.3);
+            const onHop = pbActive && (pbStageEdges.has(`${e.sourceStage}|${e.targetStage}`) || pbStageEdges.has(`${e.targetStage}|${e.sourceStage}`));
+            const onRoute = !pbActive && routeEdgeKeys.has(e.id);
+            const onHover = !pbActive && hoverIncident.has(e.id);
+            const emph = onHop || onRoute || onHover;
             return (
               <path key={e.id} d={edgePath(p1, p2)} fill="none"
-                className={onRoute || onHover ? 'pulse' : undefined}
-                stroke={onRoute || onHover ? C.copper : C.copperDim}
-                strokeWidth={onRoute ? w + 1.6 : onHover ? w + 1 : w}
+                className={emph ? 'pulse' : undefined}
+                stroke={emph ? C.copper : C.copperDim}
+                strokeWidth={onRoute ? w + 1.6 : emph ? w + 1 : w}
                 markerEnd="url(#ng-arrow)"
-                opacity={onRoute || onHover ? 1 : 0.5}>
+                opacity={emph ? 1 : pbActive ? 0.55 : 0.5}>
                 <title>{`${e.sourceCountry} · ${STAGE_BY_ID[e.sourceStage]?.name} → ${e.targetCountry} · ${STAGE_BY_ID[e.targetStage]?.name} · modeled weight ${e.rawDisplayWeight.toFixed(4)} (share×prior×share) — modeled stage-mediated connectivity, not a verified shipment`}</title>
               </path>
             );
@@ -137,9 +149,13 @@ export default function NetworkGraph({ baseGraph, filters = {} }) {
             const isSel = c.id === selId;
             const isHov = c.id === hovId;
             const isMulti = multiSet.has(c.id);
+            const pbReached = pbActive && pb.reachedStages.has(c.stageId);
+            const pbNew = pbActive && pb.newStages.has(c.stageId);
             const r = 3.5 + 9 * c.countryShare;
             const col = tierColor(c.tierId);
-            const opacity = isRemoved ? 0.28 : (shown || isSel ? 1 : 0.12);
+            const opacity = isRemoved ? 0.28
+              : pbActive ? (pbReached ? 1 : 0.1)
+              : (shown || isSel ? 1 : 0.12);
             // Shift-click marks the centre for multi-selection (§14); a plain
             // click inspects it (or, when removed, still inspects to restore).
             const onActivate = (ev) => (ev.shiftKey ? pgToggleMulti({ type: 'centre', id: c.id }) : select({ type: 'centre', id: c.id }));
@@ -150,6 +166,7 @@ export default function NetworkGraph({ baseGraph, filters = {} }) {
                 onKeyDown={(ev) => (ev.key === 'Enter' || ev.key === ' ') && (ev.preventDefault(), onActivate(ev))}
                 onMouseEnter={() => hover({ type: 'centre', id: c.id })} onMouseLeave={clearHover}
                 tabIndex={0} role="button" aria-label={`${isRemoved ? 'Temporarily removed. ' : ''}${isMulti ? 'Multi-selected. ' : ''}${centreAria(c)}`}>
+                {pbNew && <circle className="pulse" r={r + 6} fill="none" stroke={C.copper} strokeWidth={2} />}
                 {isSel && <circle r={r + 5} fill="none" stroke={C.copper} strokeWidth={2} />}
                 {isMulti && !isSel && <circle r={r + 5} fill="none" stroke={C.amber} strokeWidth={1.6} strokeDasharray="3 2" />}
                 {isHov && !isSel && !isMulti && <circle r={r + 4} fill="none" stroke={C.copper} strokeWidth={1.3} strokeDasharray="2 3" />}

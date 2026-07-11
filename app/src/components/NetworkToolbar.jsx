@@ -17,8 +17,12 @@ function btn(disabled, primary) {
   };
 }
 
+// A centre id is `${countryId}::${stageId}`; a shock applied to a centre
+// enters the engine at its stage (the propagation resolves at stage level).
+const stageOf = (centreId) => String(centreId).split('::')[1];
+
 export default function NetworkToolbar() {
-  const { state, pgToggleNode, pgToggleEdge, pgUndo, pgRedo, pgReset, pgClearMulti } = useInteraction();
+  const { state, pgToggleNode, pgToggleEdge, pgUndo, pgRedo, pgReset, pgClearMulti, draftSet } = useInteraction();
   const { selected, playground: pg } = state;
 
   const modified = pg.removedNodeIds.length + pg.removedEdgeIds.length;
@@ -26,6 +30,13 @@ export default function NetworkToolbar() {
   const selIsEdge = selected?.type === 'edge';
   const centreRemoved = selIsCentre && pg.removedNodeIds.includes(selected.id);
   const edgeRemoved = selIsEdge && pg.removedEdgeIds.includes(selected.id);
+
+  // Convert centres into scenario shock sources (§27), then hand off to the
+  // shared scenario composer + playback engine (no new model path).
+  const applyShock = (centreIds) => {
+    const stages = [...new Set(centreIds.map(stageOf).filter(Boolean))];
+    if (stages.length) draftSet({ sources: stages.map((id) => ({ type: 'stage', id })), builderMode: true });
+  };
 
   return (
     <div className="cbar" role="toolbar" aria-label="Network playground tools"
@@ -44,8 +55,20 @@ export default function NetworkToolbar() {
           {edgeRemoved ? '↺ Restore connection' : '✕ Remove connection'}
         </button>
       )}
+      {selIsCentre && (
+        <button type="button" onClick={() => applyShock([selected.id])} style={btn(false)}
+          title="Turn this functional centre into a scenario shock source (opens the composer)">
+          ⚡ Apply shock here
+        </button>
+      )}
+      {pg.multi.length > 0 && (
+        <button type="button" onClick={() => applyShock(pg.multi.map((m) => m.id))} style={btn(false, true)}
+          title="Turn the multi-selected centres into scenario shock sources">
+          ⚡ Apply shock to selection ({pg.multi.length})
+        </button>
+      )}
       {!selIsCentre && !selIsEdge && (
-        <span className="mono" style={{ fontSize: 10, color: C.faint }}>select a centre or connection to remove it…</span>
+        <span className="mono" style={{ fontSize: 10, color: C.faint }}>select a centre or connection to remove it, or multi-select centres to shock…</span>
       )}
 
       <span style={{ width: 1, alignSelf: 'stretch', background: C.line }} aria-hidden="true" />

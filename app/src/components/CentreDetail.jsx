@@ -16,7 +16,7 @@ export default function CentreDetail({ centreId, baseGraph, model, setSel }) {
   const { data, engine } = useVault();
   const { COUNTRY_NAMES } = data;
   const { STAGE_BY_ID } = engine;
-  const { state, pgToggleNode, pgToggleMulti } = useInteraction();
+  const { state, pgToggleNode, pgToggleMulti, draftSet } = useInteraction();
   const { playground } = state;
 
   const analysis = useMemo(
@@ -80,6 +80,11 @@ export default function CentreDetail({ centreId, baseGraph, model, setSel }) {
         <button type="button" onClick={() => pgToggleMulti({ type: 'centre', id: centreId })}
           style={{ fontSize: 10.5, padding: '4px 9px', borderRadius: 4, fontFamily: 'inherit', cursor: 'pointer', background: isMulti ? 'rgba(224,164,88,.16)' : 'transparent', color: isMulti ? C.amber : C.dim, border: `1px solid ${isMulti ? C.amber : C.line}` }}>
           {isMulti ? '− Remove from selection' : '+ Add to multi-selection'}
+        </button>
+        <button type="button" onClick={() => draftSet({ sources: [{ type: 'stage', id: centre.stageId }], builderMode: true })}
+          title="Turn this centre's stage into a scenario shock source (opens the composer)"
+          style={{ fontSize: 10.5, padding: '4px 9px', borderRadius: 4, fontFamily: 'inherit', cursor: 'pointer', background: 'transparent', color: C.copper, border: `1px solid ${C.copperDim}` }}>
+          ⚡ Apply shock here
         </button>
       </div>
 
