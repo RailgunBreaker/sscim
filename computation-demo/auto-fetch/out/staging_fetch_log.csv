@@ -1,0 +1,3 @@
+fetched_on,feed,endpoint,records
+2026-07-12,federal_register_bis_rules,federalregister.gov/api/v1/documents.json,3
+2026-07-12,edgar_company_facts,data.sec.gov/api/xbrl/companyfacts/CIK{cik}.json,16

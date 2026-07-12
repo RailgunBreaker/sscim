@@ -1,0 +1,17 @@
+fetched_on,source,company_id,entity_name,cik,xbrl_concept,unit,period_start,period_end,value,form,accession_number
+2026-07-12,data.sec.gov XBRL API,amat,APPLIED MATERIALS INC /DE,0000006951,us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax,USD,2022-10-31,2023-10-29,26517000000,10-K,0001628280-25-056742
+2026-07-12,data.sec.gov XBRL API,amat,APPLIED MATERIALS INC /DE,0000006951,us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax,USD,2023-10-30,2024-10-27,27176000000,10-K,0001628280-25-056742
+2026-07-12,data.sec.gov XBRL API,amat,APPLIED MATERIALS INC /DE,0000006951,us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax,USD,2024-10-28,2025-10-26,28368000000,10-K,0001628280-25-056742
+2026-07-12,data.sec.gov XBRL API,asml,ASML HOLDING NV,0000937966,us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax,EUR,2023-01-01,2023-12-31,27558500000,20-F,0001628280-26-011378
+2026-07-12,data.sec.gov XBRL API,asml,ASML HOLDING NV,0000937966,us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax,EUR,2024-01-01,2024-12-31,28262900000,20-F,0001628280-26-011378
+2026-07-12,data.sec.gov XBRL API,asml,ASML HOLDING NV,0000937966,us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax,EUR,2025-01-01,2025-12-31,32667300000,20-F,0001628280-26-011378
+2026-07-12,data.sec.gov XBRL API,micron,"Micron Technology, Inc.",0000723125,us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax,USD,2022-09-02,2023-08-31,15540000000,10-K,0000723125-25-000028
+2026-07-12,data.sec.gov XBRL API,micron,"Micron Technology, Inc.",0000723125,us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax,USD,2023-09-01,2024-08-29,25111000000,10-K,0000723125-25-000028
+2026-07-12,data.sec.gov XBRL API,micron,"Micron Technology, Inc.",0000723125,us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax,USD,2024-08-30,2025-08-28,37378000000,10-K,0000723125-25-000028
+2026-07-12,data.sec.gov XBRL API,nvidia,NVIDIA CORP,0001045810,us-gaap:Revenues,USD,2023-01-30,2024-01-28,60922000000,10-K,0001045810-26-000021
+2026-07-12,data.sec.gov XBRL API,nvidia,NVIDIA CORP,0001045810,us-gaap:Revenues,USD,2024-01-29,2025-01-26,130497000000,10-K,0001045810-26-000021
+2026-07-12,data.sec.gov XBRL API,nvidia,NVIDIA CORP,0001045810,us-gaap:Revenues,USD,2025-01-27,2026-01-25,215938000000,10-K,0001045810-26-000021
+2026-07-12,data.sec.gov XBRL API,tsmc,Taiwan Semiconductor Manufacturing Company Limited,0001046179,ifrs-full:Revenue,TWD,2023-01-01,2023-12-31,2161735800000,20-F,0001193125-25-083423
+2026-07-12,data.sec.gov XBRL API,tsmc,Taiwan Semiconductor Manufacturing Company Limited,0001046179,ifrs-full:Revenue,USD,2023-01-01,2023-12-31,70598800000,20-F,0001193125-24-099840
+2026-07-12,data.sec.gov XBRL API,tsmc,Taiwan Semiconductor Manufacturing Company Limited,0001046179,ifrs-full:Revenue,TWD,2024-01-01,2024-12-31,2894307700000,20-F,0001193125-25-083423
+2026-07-12,data.sec.gov XBRL API,tsmc,Taiwan Semiconductor Manufacturing Company Limited,0001046179,ifrs-full:Revenue,USD,2024-01-01,2024-12-31,88268000000,20-F,0001193125-25-083423
