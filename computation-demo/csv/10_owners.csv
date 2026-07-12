@@ -1,0 +1,76 @@
+company_id,owner,ownership_share,state_linked_flag
+tsmc,Taiwan NDF (gov),0.0638,true
+tsmc,BlackRock,0.051,false
+tsmc,GIC (Singapore gov),0.032,true
+tsmc,Vanguard,0.039,false
+asml,Vanguard,0.089,false
+asml,BlackRock,0.08,false
+asml,Capital Group,0.07,false
+asml,Baillie Gifford,0.025,false
+nvidia,Vanguard,0.087,false
+nvidia,BlackRock,0.075,false
+nvidia,Fidelity (FMR),0.05,false
+nvidia,State Street,0.04,false
+samsung,Lee family & affiliates,0.18,false
+samsung,Korea NPS (gov),0.07,true
+samsung,BlackRock,0.05,false
+skhynix,SK Square (chaebol),0.205,false
+skhynix,Korea NPS (gov),0.08,true
+skhynix,BlackRock,0.05,false
+intel,US Treasury/CHIPS equity (gov),0.099,true
+intel,Vanguard,0.085,false
+intel,BlackRock,0.075,false
+intel,Nvidia,0.041,false
+intel,SoftBank,0.015,false
+micron,Vanguard,0.085,false
+micron,BlackRock,0.075,false
+micron,State Street,0.04,false
+amd,Vanguard,0.09,false
+amd,BlackRock,0.075,false
+amd,Fidelity (FMR),0.05,false
+apple,Vanguard,0.0947,false
+apple,BlackRock,0.0768,false
+apple,State Street,0.0402,false
+apple,Berkshire Hathaway,0.02,false
+qualcomm,Vanguard,0.09,false
+qualcomm,BlackRock,0.08,false
+broadcom,Vanguard,0.095,false
+broadcom,BlackRock,0.08,false
+broadcom,State Street,0.04,false
+amat,BlackRock,0.082,false
+amat,Vanguard,0.075,false
+amat,State Street,0.04,false
+lam,BlackRock,0.098,false
+lam,Vanguard,0.095,false
+lam,State Street,0.046,false
+kla,Vanguard,0.095,false
+kla,BlackRock,0.08,false
+arm,SoftBank Group,0.9,false
+arm,Vanguard,0.01,false
+smic,China Big Fund (gov),0.15,true
+smic,Datang (SOE),0.126,true
+smic,Shanghai IC Industry Fund (gov),0.115,true
+ymtc,Hubei Changsheng Development (gov),0.3,true
+ymtc,National Big Fund I+II (gov),0.122,true
+tel,Master Trust Bank of Japan (nominee),0.254,false
+tel,Custody Bank of Japan (nominee),0.092,false
+tel,Vanguard,0.072,false
+tel,BlackRock,0.065,false
+shinetsu,Nomura AM,0.05,false
+shinetsu,BlackRock,0.05,false
+rapidus,NEDO / Japan govt (golden share),0.115,true
+rapidus,"Consortium of 32 Japanese firms (Toyota, Sony, SoftBank, Kioxia, NTT, NEC, MUFG, others)",0.885,false
+hisilicon,Huawei (private),1,false
+microsoft,Vanguard,0.09,false
+microsoft,BlackRock,0.072,false
+microsoft,Steven Ballmer,0.045,false
+google,Founders — voting power via Class B (economic ~11.5%),0.527,false
+google,Vanguard,0.07,false
+meta,Zuckerberg — voting power via Class B (economic ~13.5%),0.61,false
+meta,Vanguard,0.075,false
+foxconn,Terry Gou & family (declining),0.05,false
+foxconn,Vanguard,0.03,false
+ti,Vanguard,0.1061,false
+ti,BlackRock,0.0552,false
+infineon,BlackRock,0.06,false
+infineon,Vanguard,0.04,false

@@ -1,0 +1,7 @@
+event_id,date,days_ago,severity_0_10,type,confidence,title,stages,countries,direction,channel,operational,assumption_reason
+e1,Jul 03,3,8,Export Control,High,U.S. expands AI-chip export-control rules,logic_ai|hbm|adv_fab|adv_pkg,us|cn|tw|kr,adverse,both,true,Export-control policy shock; both directions per BIS rule scope.
+e2,Jul 02,4,4,Technology Update,Medium,TSMC accelerates CoWoS capacity expansion,adv_pkg|logic_ai,tw,mitigating,downstream,true,Reported capacity pull-in eases a downstream bottleneck.
+e3,Jun 30,6,6,Geopolitical Risk,Medium,Elevated military activity around Taiwan Strait,adv_fab|adv_pkg|osat,tw|cn|us,adverse,downstream,false,"Event text states no supply disruption occurred — hazard signal only, not realized operational loss."
+e4,Jun 27,9,7,Critical Material Risk,High,China tightens gallium / germanium licensing,gases|analog,cn|jp|de|fr,adverse,downstream,true,Administrative licensing slowdown reduces material availability downstream.
+e5,Jun 25,11,5,Company Guidance,Medium,Major memory maker trims 2026 capex,memory_fab|depo|etch,kr|us|jp,mixed,downstream,false,Reallocative signal with both winners and losers; not reducible to one signed operational effect.
+e6,Jun 24,12,3,Policy Signal,Medium,Japan approves next Rapidus funding tranche,adv_fab|depo|resist,jp,adverse,downstream,false,"Long-term strategic/resilience signal (multi-year subsidy), not a current-period operational shock."

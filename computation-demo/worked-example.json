@@ -1,0 +1,440 @@
+{
+  "diagnostics": {
+    "list": [
+      {
+        "level": "warning",
+        "scope": "company-share",
+        "message": "Stage \"logic_ai\" company shares sum to 1.051 (>1) — contribution normalized for computation; treat as within modeled sample."
+      },
+      {
+        "level": "warning",
+        "scope": "company-share",
+        "message": "Stage \"logic_ai\" company shares sum to 1.051 (>1) — contribution normalized for computation; treat as within modeled sample."
+      },
+      {
+        "level": "warning",
+        "scope": "company-share",
+        "message": "Stage \"logic_ai\" company shares sum to 1.051 (>1) — contribution normalized for computation; treat as within modeled sample."
+      },
+      {
+        "level": "warning",
+        "scope": "company-share",
+        "message": "Stage \"logic_ai\" company shares sum to 1.051 (>1) — contribution normalized for computation; treat as within modeled sample."
+      },
+      {
+        "level": "warning",
+        "scope": "company-share",
+        "message": "Stage \"logic_ai\" company shares sum to 1.051 (>1) — contribution normalized for computation; treat as within modeled sample."
+      },
+      {
+        "level": "warning",
+        "scope": "company-share",
+        "message": "Stage \"logic_ai\" company shares sum to 1.051 (>1) — contribution normalized for computation; treat as within modeled sample."
+      },
+      {
+        "level": "warning",
+        "scope": "company-share",
+        "message": "Stage \"logic_ai\" company shares sum to 1.051 (>1) — contribution normalized for computation; treat as within modeled sample."
+      },
+      {
+        "level": "warning",
+        "scope": "company-share",
+        "message": "Stage \"logic_ai\" company shares sum to 1.051 (>1) — contribution normalized for computation; treat as within modeled sample."
+      },
+      {
+        "level": "warning",
+        "scope": "company-share",
+        "message": "Stage \"logic_ai\" company shares sum to 1.051 (>1) — contribution normalized for computation; treat as within modeled sample."
+      }
+    ],
+    "hasErrors": false
+  },
+  "graphValid": true,
+  "topo_order": [
+    "research",
+    "wafers",
+    "resist",
+    "gases",
+    "substrates",
+    "cmp",
+    "metro",
+    "eda",
+    "litho",
+    "depo",
+    "etch",
+    "design",
+    "memory_fab",
+    "adv_fab",
+    "mature_fab",
+    "hbm",
+    "logic_ai",
+    "analog",
+    "adv_pkg",
+    "osat",
+    "systems",
+    "m_ai",
+    "m_auto",
+    "m_consumer"
+  ],
+  "structural_weights": {
+    "networkInfluence": 0.2777777777777778,
+    "geo": 0.22222222222222224,
+    "policy": 0.22222222222222224,
+    "subst": 0.16666666666666666,
+    "market": 0.11111111111111112
+  },
+  "litho_stage_record": {
+    "id": "litho",
+    "name": "Lithography (EUV/DUV)",
+    "x": 300,
+    "y": 85,
+    "value": 30,
+    "subst": 9.8,
+    "market": 7,
+    "shares": {
+      "nl": 0.9,
+      "jp": 0.09
+    }
+  },
+  "litho_hhi": {
+    "hhi": 0.8182,
+    "score10": 8.182,
+    "residual": 0.010000000000000009,
+    "overAllocated": false
+  },
+  "litho_geo_score": 8.182,
+  "litho_policy": 10,
+  "litho_networkInfluence": 5.592036042297101,
+  "litho_structural": 8.004898900638084,
+  "litho_components": {
+    "networkInfluence": 5.592036042297101,
+    "geo": 8.182,
+    "policy": 10,
+    "subst": 9.8,
+    "market": 7
+  },
+  "adv_fab_in_edges": [
+    "design",
+    "wafers",
+    "litho",
+    "depo",
+    "etch",
+    "cmp",
+    "metro"
+  ],
+  "D_advfab_litho": 0.07739285714285715,
+  "U_litho_advfab": 0.09999999999999999,
+  "litho_outdeg": 3,
+  "unit_shock_litho_downstream_field": {
+    "litho": 1,
+    "adv_fab": 0.077393,
+    "mature_fab": 0.135437,
+    "memory_fab": 0.135437,
+    "logic_ai": 0.04097,
+    "analog": 0.046557,
+    "hbm": 0.054937,
+    "adv_pkg": 0.014429,
+    "osat": 0.035251,
+    "systems": 0.009049,
+    "m_ai": 0.002551,
+    "m_auto": 0.002551,
+    "m_consumer": 0.002551
+  },
+  "economic_weight_sample": {
+    "litho": 0.552389,
+    "adv_fab": 0.771448,
+    "logic_ai": 0.918043
+  },
+  "stage_values": {
+    "research": 20,
+    "eda": 15,
+    "design": 250,
+    "wafers": 15,
+    "resist": 3,
+    "gases": 8,
+    "substrates": 12,
+    "litho": 30,
+    "depo": 20,
+    "etch": 22,
+    "cmp": 6,
+    "metro": 13,
+    "adv_fab": 120,
+    "mature_fab": 90,
+    "memory_fab": 130,
+    "logic_ai": 300,
+    "analog": 90,
+    "hbm": 25,
+    "adv_pkg": 45,
+    "osat": 40,
+    "systems": 500,
+    "m_ai": 350,
+    "m_auto": 90,
+    "m_consumer": 250
+  },
+  "network_influence_all": {
+    "research": 5.654609,
+    "eda": 4.159911,
+    "design": 6.164613,
+    "wafers": 4.55685,
+    "resist": 4.025906,
+    "gases": 5.558864,
+    "substrates": 3.278994,
+    "litho": 5.592036,
+    "depo": 4.145243,
+    "etch": 4.091135,
+    "cmp": 2.266983,
+    "metro": 3.82617,
+    "adv_fab": 7.730715,
+    "mature_fab": 5.966746,
+    "memory_fab": 7.209803,
+    "logic_ai": 6.1349,
+    "analog": 5.091036,
+    "hbm": 4.008292,
+    "adv_pkg": 5.916472,
+    "osat": 5.087031,
+    "systems": 10,
+    "m_ai": 5.478599,
+    "m_auto": 4.216702,
+    "m_consumer": 5.165133
+  },
+  "e1": {
+    "sev": 8,
+    "daysAgo": 3,
+    "stages": [
+      "logic_ai",
+      "hbm",
+      "adv_fab",
+      "adv_pkg"
+    ],
+    "decay": 0.840896,
+    "magnitude": 0.672717,
+    "assumption": {
+      "direction": "adverse",
+      "channel": "both",
+      "operational": true,
+      "reason": "Export-control policy shock; both directions per BIS rule scope."
+    }
+  },
+  "e1_field_nonzero": {
+    "research": 0.027115,
+    "eda": 0.041697,
+    "design": 0.136043,
+    "wafers": 0.103517,
+    "resist": 0.031702,
+    "gases": 0.044272,
+    "substrates": 0.201815,
+    "litho": 0.103517,
+    "depo": 0.152984,
+    "etch": 0.136043,
+    "cmp": 0.263761,
+    "metro": 0.152984,
+    "adv_fab": 0.754584,
+    "memory_fab": 0.128125,
+    "logic_ai": 0.831798,
+    "hbm": 0.738768,
+    "adv_pkg": 0.747808,
+    "systems": 0.205315,
+    "m_ai": 0.059895,
+    "m_auto": 0.059895,
+    "m_consumer": 0.059895
+  },
+  "baseline_operational_index_signed": 0.227145,
+  "baseline_chain_index_display": 6.135723,
+  "sensitivity_envelope": {
+    "low": 0.174738,
+    "base": 0.227145,
+    "high": 0.281683,
+    "low_display": 5.873691,
+    "high_display": 6.408413
+  },
+  "tsmc": {
+    "stakes": {
+      "adv_fab": 0.85,
+      "mature_fab": 0.2,
+      "adv_pkg": 0.35
+    },
+    "criticality": 10,
+    "vulnerability": 3.938994,
+    "contribution": 0.587908
+  },
+  "company_rank_top10": [
+    [
+      "tsmc",
+      10
+    ],
+    [
+      "nvidia",
+      5.166705
+    ],
+    [
+      "asml",
+      4.678799
+    ],
+    [
+      "samsung",
+      4.017283
+    ],
+    [
+      "foxconn",
+      3.86803
+    ],
+    [
+      "skhynix",
+      3.188772
+    ],
+    [
+      "ase",
+      2.965899
+    ],
+    [
+      "amat",
+      2.729414
+    ],
+    [
+      "micron",
+      1.945489
+    ],
+    [
+      "quanta",
+      1.934145
+    ]
+  ],
+  "cap_rank_top10": [
+    [
+      "BlackRock",
+      2.853523,
+      false
+    ],
+    [
+      "Vanguard",
+      2.757369,
+      false
+    ],
+    [
+      "SoftBank Group",
+      1.440561,
+      false
+    ],
+    [
+      "Lee family & affiliates",
+      0.723111,
+      false
+    ],
+    [
+      "SK Square (chaebol)",
+      0.653698,
+      false
+    ],
+    [
+      "Taiwan NDF (gov)",
+      0.638,
+      true
+    ],
+    [
+      "Huawei (private)",
+      0.550503,
+      false
+    ],
+    [
+      "State Street",
+      0.544167,
+      false
+    ],
+    [
+      "Korea NPS (gov)",
+      0.536312,
+      true
+    ],
+    [
+      "Founders — voting power via Class B (economic ~11.5%)",
+      0.471121,
+      false
+    ]
+  ],
+  "events_all_magnitudes": [
+    {
+      "id": "e1",
+      "sev": 8,
+      "daysAgo": 3,
+      "decay": 0.840896,
+      "magnitude": 0.672717,
+      "direction": "adverse",
+      "channel": "both",
+      "operational": true
+    },
+    {
+      "id": "e2",
+      "sev": 4,
+      "daysAgo": 4,
+      "decay": 0.793701,
+      "magnitude": -0.31748,
+      "direction": "mitigating",
+      "channel": "downstream",
+      "operational": true
+    },
+    {
+      "id": "e3",
+      "sev": 6,
+      "daysAgo": 6,
+      "decay": 0.707107,
+      "magnitude": 0.424264,
+      "direction": "adverse",
+      "channel": "downstream",
+      "operational": false
+    },
+    {
+      "id": "e4",
+      "sev": 7,
+      "daysAgo": 9,
+      "decay": 0.594604,
+      "magnitude": 0.416222,
+      "direction": "adverse",
+      "channel": "downstream",
+      "operational": true
+    },
+    {
+      "id": "e5",
+      "sev": 5,
+      "daysAgo": 11,
+      "decay": 0.529732,
+      "magnitude": 0.264866,
+      "direction": "mixed",
+      "channel": "downstream",
+      "operational": false
+    },
+    {
+      "id": "e6",
+      "sev": 3,
+      "daysAgo": 12,
+      "decay": 0.5,
+      "magnitude": 0.15,
+      "direction": "adverse",
+      "channel": "downstream",
+      "operational": false
+    }
+  ],
+  "history": [
+    5.391121,
+    5.412864,
+    5.43572,
+    5.459735,
+    5.484952,
+    5.511419,
+    5.53918,
+    5.56828,
+    5.598762,
+    5.63067,
+    5.664044,
+    5.698921,
+    5.735338,
+    5.773327,
+    5.812913,
+    5.854121,
+    5.896965,
+    5.941454,
+    5.987589,
+    6.03536,
+    6.084749,
+    6.135723
+  ]
+}

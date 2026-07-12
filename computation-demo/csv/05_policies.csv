@@ -1,0 +1,8 @@
+policy_id,name,severity_0_10,affected_stages
+bis,U.S. BIS AI-chip & SME export controls,9,logic_ai|hbm|adv_fab|litho|depo|etch|metro
+nl,Dutch lithography export licensing,8,litho
+meti,Japan METI equipment & material controls,6,depo|etch|resist|metro
+cnmat,China Ga/Ge/graphite export licensing,7,gases|analog|wafers
+chips,CHIPS Act / EU Chips Act incentives,4,adv_fab|mature_fab|memory_fab
+twp,Taiwan core-technology protection rules,5,adv_fab|adv_pkg
+tariff,Section-301 / retaliatory tariffs,4,mature_fab|systems|m_consumer|m_auto

@@ -1,0 +1,17 @@
+country,name,structural_0_10,operational_signed,total_share_weight,top_stages
+us,United States,5.097438,0.749815,6.97,metro:0.68|logic_ai:0.68|eda:0.63
+cn,China,4.685611,0.836399,3.06,systems:0.4|m_consumer:0.4|mature_fab:0.3
+tw,Taiwan,5.410728,0.462223,2.77,adv_fab:0.62|adv_pkg:0.5|osat:0.4
+kr,South Korea,5.812821,0.797045,2.77,hbm:0.74|memory_fab:0.6|adv_fab:0.2
+jp,Japan,4.948905,0.51605,4,resist:0.76|wafers:0.55|substrates:0.38
+nl,Netherlands,7.653084,0.128904,1.1,litho:0.9|depo:0.12|metro:0.08
+de,Germany,4.550996,0.524743,1.19,gases:0.22|analog:0.15|eda:0.13
+fr,France,4.45194,0.59123,0.42,gases:0.18|analog:0.07|research:0.05
+uk,United Kingdom,3.528082,0.041323,0.23,research:0.2|design:0.03
+be,Belgium,3.398502,0.027115,0.15,research:0.15
+ie,Ireland,7.876976,0.760112,0.02,adv_fab:0.02
+il,Israel,5.303426,0.128806,0.145,metro:0.06|design:0.05|mature_fab:0.03
+sg,Singapore,4.669112,0.136903,0.27,osat:0.06|adv_pkg:0.05|systems:0.05
+my,Malaysia,4.488121,0.154406,0.28,osat:0.13|systems:0.1|adv_pkg:0.05
+vn,Vietnam,4.674213,0.09609,0.19,systems:0.1|m_consumer:0.05|osat:0.04
+ph,Philippines,3.287953,0.076353,0.04,osat:0.04

@@ -1,0 +1,14 @@
+parameter,value,meaning
+halfLifeDays,12,"Half-life (days) of event-shock decay: decay(age,H)=2^(-age/H)"
+downstreamTransmission,0.55,f_down: supplier->buyer input-dependence transmission coefficient
+upstreamTransmission,0.3,f_up: buyer->supplier revenue-echo transmission coefficient
+specificityFloor,0.25,phi: floor of the specificity multiplier so fully-substitutable inputs still transmit
+contributionTolerance,0.0001,tau: propagation truncation tolerance (stop below this magnitude)
+datasetAsOf,2026-07-06,"Frozen snapshot date; event daysAgo is relative to this, never the visitor clock"
+componentWeights.choke,0.25,raw weight of network influence (renormalized after dropping shock)
+componentWeights.geo,0.2,raw weight of geographic concentration
+componentWeights.policy,0.2,raw weight of policy exposure
+componentWeights.subst,0.15,raw weight of substitutability (analyst judgment)
+componentWeights.shock,0.1,raw weight of event shock — DROPPED from structural vulnerability
+componentWeights.market,0.1,raw weight of market sensitivity (analyst judgment)
+modelVersion,sscim-model-v6-client-sensitivity,Version tag

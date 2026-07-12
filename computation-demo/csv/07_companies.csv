@@ -1,0 +1,110 @@
+company_id,name,hq_country,domain,stakes
+arm,Arm,uk,arm.com,research:0.35
+imec,imec,be,imec-int.com,research:0.2
+synopsys,Synopsys,us,synopsys.com,eda:0.34
+cadence,Cadence,us,cadence.com,eda:0.3
+siemens_eda,Siemens EDA,de,eda.sw.siemens.com,eda:0.13
+nvidia,NVIDIA,us,nvidia.com,design:0.22|logic_ai:0.78
+amd,AMD,us,amd.com,design:0.1|logic_ai:0.07
+qualcomm,Qualcomm,us,qualcomm.com,design:0.12
+apple,Apple (silicon),us,apple.com,design:0.1|m_consumer:0.26
+mediatek,MediaTek,tw,mediatek.com,design:0.1
+hisilicon,HiSilicon (Huawei),cn,hisilicon.com,design:0.06|logic_ai:0.05
+shinetsu,Shin-Etsu,jp,shinetsu.co.jp,wafers:0.29|resist:0.18
+sumco,SUMCO,jp,sumcosi.com,wafers:0.24
+globalwafers,GlobalWafers,tw,sas-globalwafers.com,wafers:0.155
+jsr,JSR,jp,jsr.co.jp,resist:0.24
+tok,TOK,jp,tok.co.jp,resist:0.2
+linde,Linde,de,linde.com,gases:0.2
+airliquide,Air Liquide,fr,airliquide.com,gases:0.18
+ibiden,Ibiden,jp,ibiden.com,substrates:0.17
+unimicron,Unimicron,tw,unimicron.com,substrates:0.18
+asml,ASML,nl,asml.com,litho:0.9|metro:0.1
+nikon,Nikon,jp,nikon.com,litho:0.045
+canon,Canon,jp,global.canon,litho:0.055
+amat,Applied Materials,us,appliedmaterials.com,depo:0.3|etch:0.3|cmp:0.4|metro:0.09
+tel,Tokyo Electron,jp,tel.com,depo:0.15|etch:0.15
+lam,Lam Research,us,lamresearch.com,depo:0.15|etch:0.32
+kla,KLA,us,kla.com,metro:0.58
+tsmc,TSMC,tw,tsmc.com,adv_fab:0.85|mature_fab:0.2|adv_pkg:0.35
+samsung,Samsung,kr,samsung.com,adv_fab:0.07|memory_fab:0.35|hbm:0.21|m_consumer:0.2
+intel,Intel,us,intel.com,adv_fab:0.025|adv_pkg:0.08
+rapidus,Rapidus,jp,rapidus.inc,adv_fab:0.008
+smic,SMIC,cn,smics.com,mature_fab:0.11
+umc,UMC,tw,umc.com,mature_fab:0.11
+gf,GlobalFoundries,us,gf.com,mature_fab:0.07
+ti,Texas Instruments,us,ti.com,mature_fab:0.05|analog:0.19
+infineon,Infineon,de,infineon.com,analog:0.065
+st,STMicro,fr,st.com,analog:0.045|mature_fab:0.03
+tower,Tower Semi,il,towersemi.com,mature_fab:0.02
+skhynix,SK hynix,kr,skhynix.com,memory_fab:0.253|hbm:0.53
+micron,Micron,us,micron.com,memory_fab:0.19|hbm:0.24
+ymtc,YMTC,cn,ymtc.com,memory_fab:0.044
+cxmt,CXMT,cn,cxmt.com,memory_fab:0.053
+kioxia,Kioxia,jp,kioxia.com,memory_fab:0.047
+ase,ASE,tw,aseglobal.com,adv_pkg:0.12|osat:0.4
+amkor,Amkor,us,amkor.com,osat:0.14|adv_pkg:0.08
+jcet,JCET,cn,jcetglobal.com,osat:0.11
+foxconn,Foxconn,tw,foxconn.com,systems:0.4
+ibm_res,IBM Research,us,ibm.com,research:0.1
+leti,CEA-Leti,fr,leti-cea.fr,research:0.08
+ansys,Ansys,us,ansys.com,
+empyrean,Empyrean,cn,empyrean.com.cn,eda:0.015
+broadcom,Broadcom,us,broadcom.com,design:0.12|logic_ai:0.03
+marvell,Marvell,us,marvell.com,design:0.05|logic_ai:0.01
+unisoc,UNISOC,cn,unisoc.com,design:0.04
+sksiltron,SK Siltron,kr,sksiltron.com,wafers:0.095
+siltronic,Siltronic,de,siltronic.com,wafers:0.085
+nsig,NSIG,cn,nsig.com.cn,wafers:0.025
+sumitomo_chem,Sumitomo Chemical,jp,sumitomo-chem.co.jp,resist:0.08
+dupont,DuPont,us,dupont.com,resist:0.07
+resonac,Resonac,jp,resonac.com,gases:0.12
+tnsc,Taiyo Nippon Sanso,jp,tn-sanso.co.jp,gases:0.13
+airproducts,Air Products,us,airproducts.com,gases:0.1
+skmaterials,SK Materials,kr,sk-inc.com,gases:0.08
+shinko,Shinko Electric,jp,shinko.co.jp,substrates:0.13
+samsungem,Samsung Electro-Mech,kr,samsungsem.com,substrates:0.12
+ats,AT&S,de,ats.net,substrates:0.13
+asmi,ASM International,nl,asm.com,depo:0.12
+kokusai,Kokusai Electric,jp,kokusai-electric.com,depo:0.08
+naura,NAURA,cn,naura.com,depo:0.1|etch:0.08
+amec,AMEC,cn,amec-inc.com,etch:0.07
+hitachiht,Hitachi High-Tech,jp,hitachi-hightech.com,metro:0.06|etch:0.05
+ebara,Ebara,jp,ebara.com,cmp:0.3
+entegris,Entegris,us,entegris.com,cmp:0.12
+onto,Onto Innovation,us,ontoinnovation.com,metro:0.08
+nova,Nova,il,novami.com,metro:0.06
+huahong,Hua Hong,cn,huahonggrace.com,mature_fab:0.05
+vis,Vanguard (VIS),tw,vis.com.tw,mature_fab:0.025
+nexchip,Nexchip,cn,nexchip.com.cn,mature_fab:0.03
+sonysemi,Sony Semiconductor,jp,sony-semicon.com,mature_fab:0.05
+renesas,Renesas,jp,renesas.com,analog:0.025|mature_fab:0.04
+bosch,Bosch,de,bosch.com,mature_fab:0.03|m_auto:0.1
+nanya,Nanya,tw,nanya.com,memory_fab:0.013
+winbond,Winbond,tw,winbond.com,memory_fab:0.005
+google,Google (TPU/Cloud),us,google.com,logic_ai:0.06|m_ai:0.17
+amazon,Amazon (AWS),us,amazon.com,logic_ai:0.04|m_ai:0.18
+cambricon,Cambricon,cn,cambricon.com,logic_ai:0.008
+biren,Biren,cn,birentech.com,logic_ai:0.003
+onsemi,onsemi,us,onsemi.com,analog:0.035
+adi,Analog Devices,us,analog.com,analog:0.135
+nxp,NXP,nl,nxp.com,analog:0.035
+microchip,Microchip,us,microchip.com,analog:0.03
+spil,SPIL,tw,spil.com.tw,adv_pkg:0.08
+pti,Powertech (PTI),tw,pti.com.tw,adv_pkg:0.06
+utac,UTAC,sg,utacgroup.com,osat:0.015
+kyec,KYEC,tw,kyec.com.tw,osat:0.02
+inari,Inari Amertron,my,inari-amertron.com,osat:0.015
+quanta,Quanta,tw,quantatw.com,systems:0.2
+wistron,Wistron,tw,wistron.com,systems:0.09
+supermicro,Supermicro,us,supermicro.com,systems:0.04
+luxshare,Luxshare,cn,luxshare-ict.com,systems:0.05
+microsoft,Microsoft (Azure),us,microsoft.com,m_ai:0.1
+meta,Meta,us,meta.com,m_ai:0.12
+alibaba,Alibaba Cloud,cn,alibabacloud.com,m_ai:0.03
+tesla,Tesla,us,tesla.com,m_auto:0.04
+denso,Toyota / Denso,jp,denso.com,m_auto:0.13
+vw,VW Group,de,volkswagen-group.com,m_auto:0.1
+xiaomi,Xiaomi,cn,xiaomi.com,m_consumer:0.1
+lenovo,Lenovo,cn,lenovo.com,m_consumer:0.1
+hp,HP,us,hp.com,m_consumer:0.07

@@ -1,0 +1,257 @@
+{
+  "STAGES": [
+    {
+      "id": "wafers",
+      "name": "Silicon wafers",
+      "value": 11.5,
+      "subst": 7.5,
+      "market": 4,
+      "shares": {
+        "jp": 0.53,
+        "tw": 0.16,
+        "de": 0.12,
+        "kr": 0.11,
+        "cn": 0.05
+      }
+    },
+    {
+      "id": "litho",
+      "name": "Lithography equipment",
+      "value": 34,
+      "subst": 9.8,
+      "market": 7,
+      "shares": {
+        "nl": 0.9,
+        "jp": 0.1
+      }
+    },
+    {
+      "id": "adv_fab",
+      "name": "Advanced-node fab (<=7nm)",
+      "value": 66,
+      "subst": 9.5,
+      "market": 8.5,
+      "shares": {
+        "tw": 0.9,
+        "kr": 0.08,
+        "us": 0.02
+      }
+    },
+    {
+      "id": "hbm",
+      "name": "High-bandwidth memory",
+      "value": 16,
+      "subst": 8.5,
+      "market": 9,
+      "shares": {
+        "kr": 0.95,
+        "us": 0.05
+      }
+    },
+    {
+      "id": "logic_ai",
+      "name": "Logic & AI accelerators",
+      "value": 150,
+      "subst": 6.5,
+      "market": 9.5,
+      "shares": {
+        "us": 0.87,
+        "cn": 0.08,
+        "tw": 0.05
+      }
+    },
+    {
+      "id": "adv_pkg",
+      "name": "Advanced packaging (CoWoS)",
+      "value": 43,
+      "subst": 8,
+      "market": 7.5,
+      "shares": {
+        "tw": 0.55,
+        "kr": 0.13,
+        "us": 0.12,
+        "cn": 0.12
+      }
+    }
+  ],
+  "FLOW_EDGES": [
+    [
+      "wafers",
+      "adv_fab"
+    ],
+    [
+      "wafers",
+      "hbm"
+    ],
+    [
+      "litho",
+      "adv_fab"
+    ],
+    [
+      "litho",
+      "hbm"
+    ],
+    [
+      "adv_fab",
+      "logic_ai"
+    ],
+    [
+      "hbm",
+      "adv_pkg"
+    ],
+    [
+      "logic_ai",
+      "adv_pkg"
+    ]
+  ],
+  "COMPANIES": [
+    {
+      "id": "asml",
+      "name": "ASML",
+      "country": "nl",
+      "domain": "asml.com",
+      "stakes": {
+        "litho": 0.9
+      }
+    },
+    {
+      "id": "tsmc",
+      "name": "TSMC",
+      "country": "tw",
+      "domain": "tsmc.com",
+      "stakes": {
+        "adv_fab": 0.9,
+        "adv_pkg": 0.3
+      }
+    },
+    {
+      "id": "skhynix",
+      "name": "SK hynix",
+      "country": "kr",
+      "domain": "skhynix.com",
+      "stakes": {
+        "hbm": 0.525
+      }
+    },
+    {
+      "id": "samsung",
+      "name": "Samsung",
+      "country": "kr",
+      "domain": "samsung.com",
+      "stakes": {
+        "hbm": 0.424,
+        "adv_fab": 0.08
+      }
+    },
+    {
+      "id": "micron",
+      "name": "Micron",
+      "country": "us",
+      "domain": "micron.com",
+      "stakes": {
+        "hbm": 0.051
+      }
+    },
+    {
+      "id": "nvidia",
+      "name": "NVIDIA",
+      "country": "us",
+      "domain": "nvidia.com",
+      "stakes": {
+        "logic_ai": 0.77
+      }
+    }
+  ],
+  "CUSTOMERS": {
+    "tsmc": [
+      [
+        "nvidia",
+        0.11
+      ]
+    ]
+  },
+  "POLICIES": [
+    {
+      "id": "bis_2024_28270",
+      "name": "BIS 2024 HBM/SME export controls (89 FR 96790)",
+      "sev": 9,
+      "stages": [
+        "hbm",
+        "adv_fab",
+        "logic_ai",
+        "litho"
+      ]
+    },
+    {
+      "id": "nl_litho",
+      "name": "Dutch advanced-litho export licensing",
+      "sev": 8,
+      "stages": [
+        "litho"
+      ]
+    }
+  ],
+  "EVENTS": [
+    {
+      "id": "fr_2026_00789",
+      "date": "Jan 15",
+      "daysAgo": 16,
+      "sev": 4,
+      "type": "Export Control Easing",
+      "conf": "High",
+      "title": "BIS eases license review for H200-class exports (91 FR 1684)",
+      "stages": [
+        "logic_ai"
+      ],
+      "countries": [
+        "us",
+        "cn"
+      ],
+      "assumption": {
+        "direction": "mitigating",
+        "channel": "downstream",
+        "operational": true,
+        "reason": "Manual classification: rule text eases licensing (denial -> case-by-case), so a mitigating supply signal — keyword matching on \"export control\" would have gotten the sign WRONG."
+      }
+    },
+    {
+      "id": "fr_2024_28270",
+      "date": "Dec 05 2024",
+      "daysAgo": 422,
+      "sev": 8,
+      "type": "Export Control",
+      "conf": "High",
+      "title": "BIS HBM/SME export controls (89 FR 96790)",
+      "stages": [
+        "hbm",
+        "adv_fab",
+        "logic_ai"
+      ],
+      "countries": [
+        "us",
+        "cn",
+        "kr"
+      ],
+      "assumption": {
+        "direction": "adverse",
+        "channel": "both",
+        "operational": true,
+        "reason": "Manual classification: adverse export-control shock, both directions."
+      }
+    }
+  ],
+  "OWNERS": {
+    "tsmc": [
+      [
+        "National Development Fund, Executive Yuan (gov)",
+        0.0638
+      ]
+    ],
+    "asml": [
+      [
+        "BlackRock",
+        0.079
+      ]
+    ]
+  }
+}

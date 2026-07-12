@@ -1,0 +1,110 @@
+company_id,name,hq_country,systemic_criticality_0_10,vulnerability_baseline_0_10,contribution_baseline
+tsmc,TSMC,tw,10,3.938994,0.587908
+nvidia,NVIDIA,us,5.166705,3.261831,0.378386
+asml,ASML,nl,4.678799,1.282505,0.057958
+samsung,Samsung,kr,4.017283,4.215143,0.16955
+foxconn,Foxconn,tw,3.86803,1.321935,0.052877
+skhynix,SK hynix,kr,3.188772,4.431371,0.234641
+ase,ASE,tw,2.965899,2.390597,0.047937
+amat,Applied Materials,us,2.729414,2.52331,0.127203
+micron,Micron,us,1.945489,4.431371,0.114854
+quanta,Quanta,tw,1.934145,1.321935,0.026439
+shinetsu,Shin-Etsu,jp,1.747548,0.676095,0.014661
+kla,KLA,us,1.624107,1.529839,0.037668
+arm,Arm,uk,1.600624,0.271149,0.004648
+lam,Lam Research,us,1.494335,2.962896,0.068974
+apple,Apple (silicon),us,1.310784,0.878572,0.02126
+amkor,Amkor,us,1.308087,2.390597,0.02618
+synopsys,Synopsys,us,1.122775,0.416971,0.006323
+ti,Texas Instruments,us,1.074986,2.200103,0.058651
+linde,Linde,de,1.010247,4.420673,0.031249
+cadence,Cadence,us,0.990684,0.416971,0.005579
+jsr,JSR,jp,0.966294,0.317019,0.001697
+tel,Tokyo Electron,jp,0.963275,2.962896,0.044167
+imec,imec,be,0.916908,0.271149,0.002656
+airliquide,Air Liquide,fr,0.909238,4.420673,0.028124
+google,Google (TPU/Cloud),us,0.893967,2.779971,0.033418
+wistron,Wistron,tw,0.870398,1.321935,0.011897
+sumco,SUMCO,jp,0.849217,1.03517,0.01108
+amd,AMD,us,0.84545,3.261831,0.043662
+amazon,Amazon (AWS),us,0.820844,2.779971,0.024772
+tok,TOK,jp,0.805247,0.317019,0.001414
+intel,Intel,us,0.763449,5.809388,0.034455
+broadcom,Broadcom,us,0.726739,3.261831,0.02804
+tnsc,Taiyo Nippon Sanso,jp,0.6567,4.420673,0.020312
+resonac,Resonac,jp,0.606189,4.420673,0.01875
+smic,SMIC,cn,0.59197,0.198206,0.001582
+umc,UMC,tw,0.59197,0.198206,0.001582
+jcet,JCET,cn,0.585307,0.763534,0.005017
+adi,Analog Devices,us,0.584509,4.202,0.041162
+naura,NAURA,cn,0.580181,2.962896,0.026526
+qualcomm,Qualcomm,us,0.567146,1.360432,0.01451
+spil,SPIL,tw,0.565714,4.01766,0.019795
+hisilicon,HiSilicon (Huawei),cn,0.550503,3.261831,0.029805
+globalwafers,GlobalWafers,tw,0.548463,1.03517,0.007156
+airproducts,Air Products,us,0.505166,4.420673,0.015625
+luxshare,Luxshare,cn,0.483348,1.321935,0.00661
+mediatek,MediaTek,tw,0.472658,1.360432,0.012092
+ibm_res,IBM Research,us,0.458943,0.271149,0.001328
+bosch,Bosch,de,0.437593,0.297459,0.00331
+siemens_eda,Siemens EDA,de,0.429007,0.416971,0.002418
+pti,Powertech (PTI),tw,0.424286,4.01766,0.014846
+ebara,Ebara,jp,0.419508,2.637608,0.024769
+meta,Meta,us,0.404237,0.396712,0.004488
+skmaterials,SK Materials,kr,0.403556,4.420673,0.0125
+unimicron,Unimicron,tw,0.398833,2.018151,0.014988
+asmi,ASM International,nl,0.396715,3.032571,0.017822
+supermicro,Supermicro,us,0.386487,1.321935,0.005288
+gf,GlobalFoundries,us,0.376709,0.198206,0.001007
+ibiden,Ibiden,jp,0.376675,2.018151,0.014156
+leti,CEA-Leti,fr,0.367005,0.271149,0.001062
+denso,Toyota / Denso,jp,0.360456,0.396712,0.003742
+st,STMicro,fr,0.353335,2.200103,0.014152
+cxmt,CXMT,cn,0.33804,1.454062,0.006044
+microsoft,Microsoft (Azure),us,0.336864,0.396712,0.00374
+sksiltron,SK Siltron,kr,0.336159,1.03517,0.004386
+hitachiht,Hitachi High-Tech,jp,0.324341,2.211529,0.011193
+sumitomo_chem,Sumitomo Chemical,jp,0.322102,0.317019,0.000566
+xiaomi,Xiaomi,cn,0.321941,0.396712,0.003526
+lenovo,Lenovo,cn,0.321941,0.396712,0.003526
+renesas,Renesas,jp,0.321744,2.200103,0.008198
+siltronic,Siltronic,de,0.300774,1.03517,0.003924
+kioxia,Kioxia,jp,0.299772,1.454062,0.005359
+marvell,Marvell,us,0.288302,3.261831,0.010556
+shinko,Shinko Electric,jp,0.288046,2.018151,0.010825
+ats,AT&S,de,0.288046,2.018151,0.010825
+infineon,Infineon,de,0.28143,4.202,0.019819
+dupont,DuPont,us,0.281218,0.317019,0.000495
+ymtc,YMTC,cn,0.280638,1.454062,0.005017
+vw,VW Group,de,0.276791,0.396712,0.002879
+canon,Canon,jp,0.269335,1.03517,0.003145
+huahong,Hua Hong,cn,0.269078,0.198206,0.000719
+sonysemi,Sony Semiconductor,jp,0.269078,0.198206,0.000719
+samsungem,Samsung Electro-Mech,kr,0.265888,2.018151,0.009992
+kokusai,Kokusai Electric,jp,0.264478,3.032571,0.011881
+hp,HP,us,0.224638,0.396712,0.002468
+onto,Onto Innovation,us,0.224024,1.529839,0.005196
+nikon,Nikon,jp,0.220366,1.03517,0.002573
+amec,AMEC,cn,0.218935,2.89322,0.010215
+unisoc,UNISOC,cn,0.188757,1.360432,0.004837
+nova,Nova,il,0.168019,1.529839,0.003897
+entegris,Entegris,us,0.167803,2.637608,0.009907
+nexchip,Nexchip,cn,0.160876,0.198206,0.000431
+onsemi,onsemi,us,0.15154,4.202,0.010672
+nxp,NXP,nl,0.15154,4.202,0.010672
+vis,Vanguard (VIS),tw,0.134064,0.198206,0.00036
+microchip,Microchip,us,0.129891,4.202,0.009147
+tesla,Tesla,us,0.110304,0.396712,0.001151
+tower,Tower Semi,il,0.107251,0.198206,0.000288
+kyec,KYEC,tw,0.106119,0.763534,0.000912
+alibaba,Alibaba Cloud,cn,0.100222,0.396712,0.001122
+nsig,NSIG,cn,0.088089,1.03517,0.001154
+nanya,Nanya,tw,0.082917,1.454062,0.001482
+utac,UTAC,sg,0.079375,0.763534,0.000684
+inari,Inari Amertron,my,0.079375,0.763534,0.000684
+rapidus,Rapidus,jp,0.063684,7.601117,0.004691
+empyrean,Empyrean,cn,0.049406,0.416971,0.000279
+cambricon,Cambricon,cn,0.042008,5.163231,0.003608
+winbond,Winbond,tw,0.031411,1.454062,0.00057
+biren,Biren,cn,0.014679,5.163231,0.001353
+ansys,Ansys,us,0,0,0

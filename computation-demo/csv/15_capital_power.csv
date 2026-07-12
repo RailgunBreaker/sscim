@@ -1,0 +1,32 @@
+owner,capital_power,state_linked,holdings
+BlackRock,2.853523,false,lam:0.098|amat:0.082|asml:0.08|qualcomm:0.08|broadcom:0.08|kla:0.08|apple:0.0768|nvidia:0.075|intel:0.075|micron:0.075|amd:0.075|microsoft:0.072|tel:0.065|infineon:0.06|ti:0.0552|tsmc:0.051|samsung:0.05|skhynix:0.05|shinetsu:0.05
+Vanguard,2.757369,false,ti:0.1061|broadcom:0.095|lam:0.095|kla:0.095|apple:0.0947|amd:0.09|qualcomm:0.09|microsoft:0.09|asml:0.089|nvidia:0.087|intel:0.085|micron:0.085|amat:0.075|meta:0.075|tel:0.072|google:0.07|infineon:0.04|tsmc:0.039|foxconn:0.03|arm:0.01
+SoftBank Group,1.440561,false,arm:0.9
+Lee family & affiliates,0.723111,false,samsung:0.18
+SK Square (chaebol),0.653698,false,skhynix:0.205
+Taiwan NDF (gov),0.638,true,tsmc:0.0638
+Huawei (private),0.550503,false,hisilicon:1
+State Street,0.544167,false,lam:0.046|apple:0.0402|nvidia:0.04|micron:0.04|broadcom:0.04|amat:0.04
+Korea NPS (gov),0.536312,true,skhynix:0.08|samsung:0.07
+Founders — voting power via Class B (economic ~11.5%),0.471121,false,google:0.527
+Capital Group,0.327516,false,asml:0.07
+GIC (Singapore gov),0.32,true,tsmc:0.032
+Fidelity (FMR),0.300608,false,nvidia:0.05|amd:0.05
+Zuckerberg — voting power via Class B (economic ~13.5%),0.246585,false,meta:0.61
+Master Trust Bank of Japan (nominee),0.244672,false,tel:0.254
+Terry Gou & family (declining),0.193401,false,foxconn:0.05
+Baillie Gifford,0.11697,false,asml:0.025
+China Big Fund (gov),0.088795,true,smic:0.15
+Custody Bank of Japan (nominee),0.088621,false,tel:0.092
+Nomura AM,0.087377,false,shinetsu:0.05
+Hubei Changsheng Development (gov),0.084191,true,ymtc:0.3
+US Treasury/CHIPS equity (gov),0.075581,true,intel:0.099
+Datang (SOE),0.074588,true,smic:0.126
+Shanghai IC Industry Fund (gov),0.068077,true,smic:0.115
+"Consortium of 32 Japanese firms (Toyota, Sony, SoftBank, Kioxia, NTT, NEC, MUFG, others)",0.05636,false,rapidus:0.885
+National Big Fund I+II (gov),0.034238,true,ymtc:0.122
+Nvidia,0.031301,false,intel:0.041
+Berkshire Hathaway,0.026216,false,apple:0.02
+Steven Ballmer,0.015159,false,microsoft:0.045
+SoftBank,0.011452,false,intel:0.015
+NEDO / Japan govt (golden share),0.007324,true,rapidus:0.115

@@ -1,0 +1,263 @@
+{
+  "graphValid": true,
+  "diagnostics": {
+    "list": [],
+    "hasErrors": false
+  },
+  "topo": [
+    "wafers",
+    "litho",
+    "adv_fab",
+    "hbm",
+    "logic_ai",
+    "adv_pkg"
+  ],
+  "economicWeight": {
+    "wafers": 0.503406,
+    "litho": 0.708621,
+    "adv_fab": 0.838042,
+    "hbm": 0.564691,
+    "logic_ai": 1,
+    "adv_pkg": 0.754231
+  },
+  "D": {
+    "wafers": {},
+    "litho": {},
+    "adv_fab": {
+      "wafers": 0.223438,
+      "litho": 0.270875
+    },
+    "hbm": {
+      "wafers": 0.223438,
+      "litho": 0.270875
+    },
+    "logic_ai": {
+      "adv_fab": 0.529375
+    },
+    "adv_pkg": {
+      "hbm": 0.244063,
+      "logic_ai": 0.202813
+    }
+  },
+  "U": {
+    "wafers": {
+      "adv_fab": 0.15,
+      "hbm": 0.15
+    },
+    "litho": {
+      "adv_fab": 0.15,
+      "hbm": 0.15
+    },
+    "adv_fab": {
+      "logic_ai": 0.3
+    },
+    "hbm": {
+      "adv_pkg": 0.3
+    },
+    "logic_ai": {
+      "adv_pkg": 0.3
+    },
+    "adv_pkg": {}
+  },
+  "hhi": {
+    "wafers": {
+      "hhi": 0.3364000000000001,
+      "score10": 3.3640000000000008,
+      "residual": 0.029999999999999916,
+      "overAllocated": false
+    },
+    "litho": {
+      "hhi": 0.8200000000000001,
+      "score10": 8.200000000000001,
+      "residual": 0,
+      "overAllocated": false
+    },
+    "adv_fab": {
+      "hhi": 0.8168,
+      "score10": 8.168,
+      "residual": 0,
+      "overAllocated": false
+    },
+    "hbm": {
+      "hhi": 0.9049999999999999,
+      "score10": 9.049999999999999,
+      "residual": 0,
+      "overAllocated": false
+    },
+    "logic_ai": {
+      "hhi": 0.7657999999999999,
+      "score10": 7.6579999999999995,
+      "residual": 0,
+      "overAllocated": false
+    },
+    "adv_pkg": {
+      "hhi": 0.35460000000000014,
+      "score10": 3.546000000000001,
+      "residual": 0.07999999999999996,
+      "overAllocated": false
+    }
+  },
+  "geo": {
+    "wafers": 3.364,
+    "litho": 8.2,
+    "adv_fab": 8.168,
+    "hbm": 9.05,
+    "logic_ai": 7.658,
+    "adv_pkg": 3.546
+  },
+  "policy": {
+    "wafers": 0,
+    "litho": 10,
+    "adv_fab": 9,
+    "hbm": 9,
+    "logic_ai": 9,
+    "adv_pkg": 0
+  },
+  "networkInfluence": {
+    "wafers": 6.858272,
+    "litho": 8.991526,
+    "adv_fab": 10,
+    "hbm": 5.16966,
+    "logic_ai": 7.960314,
+    "adv_pkg": 5.207361
+  },
+  "structuralWeights": {
+    "networkInfluence": 0.2777777777777778,
+    "geo": 0.22222222222222224,
+    "policy": 0.22222222222222224,
+    "subst": 0.16666666666666666,
+    "market": 0.11111111111111112
+  },
+  "structural": {
+    "wafers": 4.347076,
+    "litho": 8.953202,
+    "adv_fab": 9.120667,
+    "hbm": 7.863794,
+    "logic_ai": 8.051865,
+    "adv_pkg": 4.401156
+  },
+  "eventMagnitudes": [
+    {
+      "id": "fr_2026_00789",
+      "sev": 4,
+      "daysAgo": 16,
+      "decay": 0.39685,
+      "magnitude": -0.15874,
+      "assumption": {
+        "direction": "mitigating",
+        "channel": "downstream",
+        "operational": true,
+        "reason": "Manual classification: rule text eases licensing (denial -> case-by-case), so a mitigating supply signal — keyword matching on \"export control\" would have gotten the sign WRONG."
+      }
+    },
+    {
+      "id": "fr_2024_28270",
+      "sev": 8,
+      "daysAgo": 422,
+      "decay": 0,
+      "magnitude": 0,
+      "assumption": {
+        "direction": "adverse",
+        "channel": "both",
+        "operational": true,
+        "reason": "Manual classification: adverse export-control shock, both directions."
+      }
+    }
+  ],
+  "eventFields": {
+    "fr_2026_00789": {
+      "logic_ai": -0.15874,
+      "adv_pkg": -0.032194
+    },
+    "fr_2024_28270": {
+      "adv_fab": 0,
+      "hbm": 0,
+      "logic_ai": 0
+    }
+  },
+  "baselineOperationalField": {
+    "wafers": 0,
+    "litho": 0,
+    "adv_fab": 0,
+    "hbm": 0,
+    "logic_ai": -0.15874,
+    "adv_pkg": -0.032194
+  },
+  "operationalIndexSigned": -0.041891,
+  "chainIndexDisplay": 4.790544,
+  "envelope": {
+    "low": 4.730432,
+    "base": 4.790544,
+    "high": 4.864657
+  },
+  "companies": {
+    "asml": {
+      "criticality": 7.383262,
+      "vulnerability": 0,
+      "contribution": 0
+    },
+    "tsmc": {
+      "criticality": 10,
+      "vulnerability": 0,
+      "contribution": 0
+    },
+    "skhynix": {
+      "criticality": 2.578525,
+      "vulnerability": 0,
+      "contribution": 0
+    },
+    "samsung": {
+      "criticality": 2.837351,
+      "vulnerability": 0,
+      "contribution": 0
+    },
+    "micron": {
+      "criticality": 0.250485,
+      "vulnerability": 0,
+      "contribution": 0
+    },
+    "nvidia": {
+      "criticality": 5.459432,
+      "vulnerability": 0,
+      "contribution": 0
+    }
+  },
+  "companyRank": [
+    [
+      "tsmc",
+      10
+    ],
+    [
+      "asml",
+      7.383262
+    ],
+    [
+      "nvidia",
+      5.459432
+    ],
+    [
+      "samsung",
+      2.837351
+    ],
+    [
+      "skhynix",
+      2.578525
+    ],
+    [
+      "micron",
+      0.250485
+    ]
+  ],
+  "capRank": [
+    [
+      "National Development Fund, Executive Yuan (gov)",
+      0.638,
+      true
+    ],
+    [
+      "BlackRock",
+      0.583278,
+      false
+    ]
+  ]
+}

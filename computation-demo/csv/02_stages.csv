@@ -1,0 +1,25 @@
+stage_id,name,value_usd_bn,subst_0_10,market_0_10,n_country_shares,share_sum
+research,Research / IP,20,6.5,3,7,1
+eda,EDA software,15,9,5,4,0.84
+design,Chip design,250,6,9,7,1
+wafers,Silicon wafers,15,7.5,4,5,0.96
+resist,Photoresists,3,8.5,3.5,4,0.96
+gases,Specialty gases / chem,8,7,3.5,6,1
+substrates,IC substrates (ABF),12,7.5,4.5,5,1
+litho,Lithography (EUV/DUV),30,9.8,7,2,0.99
+depo,Deposition,20,7.5,6,5,1
+etch,Etch & clean,22,7.5,6,4,0.95
+cmp,CMP & slurries,6,6.5,4,4,1
+metro,Metrology / inspection,13,8,5.5,5,1
+adv_fab,Advanced fab (≤7nm),120,9.5,8.5,5,1
+mature_fab,Mature-node fab,90,5,6,9,1
+memory_fab,Memory fab (DRAM/NAND),130,6.5,8.5,6,1
+logic_ai,Logic & AI accelerators,300,6.5,9.5,4,1
+analog,Analog / power / RF,90,5,6,6,0.905
+hbm,HBM,25,8.5,9,2,1
+adv_pkg,Advanced packaging,45,8,7.5,6,1
+osat,OSAT / test,40,4.5,5,7,1
+systems,Final systems (ODM/EMS),500,3.5,6.5,7,1
+m_ai,AI data centers,350,3,9,5,1
+m_auto,Automotive / industrial,90,3.5,6,6,1
+m_consumer,Consumer / mobile,250,3,6.5,5,1
