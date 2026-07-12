@@ -61,6 +61,21 @@ The dataset is a **frozen, curated demonstration snapshot**, not a live feed:
 | `componentWeights` | choke 0.25, geo 0.20, policy 0.20, subst 0.15, shock 0.10, market 0.10 | Raw structural-score weights. `shock` is dropped (event-driven, not structural) and the rest renormalized — see Step 6. |
 | Sensitivity presets | low = base × 0.7, high = base × 1.3 | Applied to f↓, f↑, H only — a deterministic sensitivity envelope, **not** a confidence interval. |
 
+#### How these parameters were decided — and what kind of numbers they are
+
+Every value in the table above lives in one frozen object, `MODEL_PRIORS` (`app/src/engine/priors.js`, version-tagged `sscim-model-v6-client-sensitivity`). **None of them is measured, fetched, or fitted to historical data.** Each is a hand-chosen **declared sensitivity prior**: the model author picked a defensible number, wrote the reasoning next to it in the source file, and exposed it so the choice can be inspected — and eventually calibrated against documented episodes (2021 ABF substrate shortage, 2023 Ga/Ge licensing — see `MODEL_ROADMAP.md`). The individual rationales:
+
+- **`halfLifeDays = 12`** — encodes "an operational headline loses half its bite every ~12 days." Chosen so a fresh severity-8 event still dominates after a week (≈66% strength), is minor after a month (≈18%), and is effectively gone after two months (<3%). A pure news-cycle/logistics-absorption judgment, not an estimate.
+- **`downstreamTransmission = 0.55`** — a supplier failure hits its buyers hard but not one-for-one (inventories, buffers, partial second sources). Set **above 0.5** so supply shocks matter strongly at the first hop, and **below 1.0** so effects always attenuate with distance instead of amplifying.
+- **`upstreamTransmission = 0.30`** — the demand echo (buyer disrupted → supplier loses orders) is set at roughly half the downstream strength, encoding the judgment that a supplier can redirect output more easily than a buyer can re-qualify a missing input.
+- **`specificityFloor = 0.25`** — even a "fully substitutable" input transmits 25% of the base effect, because switching suppliers is never free or instant. Also a safety property: it prevents `subst = 0` from silently severing an edge.
+- **`contributionTolerance = 1e-4`** — purely numerical, not a modeling claim: once a propagated contribution falls below 0.01% of a unit shock it cannot visibly move any 0–10 score, so propagation stops there instead of chasing infinite tails.
+- **`datasetAsOf = 2026-07-06`** — an editorial choice: the date the curated snapshot was frozen. All decay arithmetic keys off it (never the visitor's clock) so every result is reproducible.
+- **`componentWeights`** — a **rank-ordering judgment** about what drives structural fragility: network position (0.25) first; geographic concentration and policy exposure tied next (0.20 each); substitutability (0.15); market sensitivity and the event term last (0.10 each). The *ordering* is the substantive claim — the exact values are round numbers. The event term (`shock`) is then dropped from the structural score entirely (events belong to the operational layer) and the rest renormalized (Step 7).
+- **Sensitivity presets (±30%)** — a symmetric, admittedly arbitrary band applied to the three most influential priors (f↓, f↑, H). It exists *because* the above are uncalibrated: the envelope shows how far the headline number moves if the guesses are 30% off in either direction.
+
+Do not confuse these **model parameters** with the two per-stage **data fields** that look similar: `subst` and `market` are analyst-judgment *inputs* entered per stage (Tier D, §1.2), not global constants — they vary by stage and are meant to be re-scored against a written rubric, while `MODEL_PRIORS` applies identically to every stage and event.
+
 ### 2.2 Stages — 24 DAG nodes (CSV: `02_stages.csv` + `03_stage_country_shares.csv`)
 
 Per-stage fields: `value` = sample global stage value in $B (Tier B/D estimate); `subst` = substitutability score 0–10 (**analyst judgment**; by dataset convention *high = hard to substitute*, i.e. high specificity); `market` = market-sensitivity score 0–10 (**analyst judgment**); `shares` = country market shares (sum ≤ 1; any shortfall is an explicit unmodeled "Other" residual).
@@ -161,6 +176,8 @@ design, memory_fab, adv_fab, mature_fab, hbm, logic_ai, analog, adv_pkg, osat,
 systems, m_ai, m_auto, m_consumer
 ```
 
+> **Why this step exists:** every propagation below is done in a single pass per direction, which is only valid if each stage is processed after all of its suppliers — a topological order guarantees that, and only a DAG has one. Validating first means a data error (typo'd edge id, accidental cycle) surfaces as a visible diagnostic instead of quietly corrupting every downstream number.
+
 ### Step 2 — Economic weight `EW` (log-compressed turnover proxy)
 
 **Formula:** `EW_n = ln(1 + value_n) / max_m ln(1 + value_m)` — compresses the skewed $B values into 0–1 without a hand-picked cap.
@@ -170,6 +187,8 @@ systems, m_ai, m_auto, m_consumer
 `EW_systems = 1.0` (the max), `EW_logic_ai = ln(301)/ln(501) = 0.918043`.
 
 **Output:** column `economic_weight_0_1` in `12_stage_metrics.csv`.
+
+> **What it means:** EW is the "how economically big is this stage" weight used whenever impacts are aggregated (Steps 4 and 10). Stage values span $3B (photoresists) to $500B (systems) — weighting by raw dollars would let the giant stages drown out chokepoints, so `ln(1+v)` compresses the range while preserving the ordering, and dividing by the max pins every weight into (0, 1] without a hand-picked ceiling.
 
 ### Step 3 — Directional dependence matrices D and U (CSV: `11_dependence_matrices.csv`)
 
@@ -194,6 +213,8 @@ U[litho][adv_fab] = 0.30 / 3 = 0.100000             ✔ engine: 0.100000
 
 All 34 edge coefficient pairs are in `11_dependence_matrices.csv`.
 
+> **What it means:** D and U answer two different questions and are deliberately kept separate. `D[b][a]`: "if supplier *a* is disrupted, what fraction of that hits buyer *b*'s output?" — built from *b*'s declared input count (an equal split, because no bill-of-materials data exists) scaled up when *a* is hard to substitute. `U[a][b]`: "if buyer *b* is disrupted, how much revenue echo does supplier *a* feel?" — split evenly over *a*'s outputs. Dependence is asymmetric in reality: 35% of ASML's sales going to TSMC does **not** mean TSMC is 35% dependent on ASML — for EUV it is closer to totally dependent. One symmetric edge weight cannot express that; two matrices can.
+
 ### Step 4 — Network influence `NI` (Leontief-style sensitivity proxy)
 
 **Algorithm:** for each stage *j*: inject a **unit adverse shock** (+1) at *j*, propagate **downstream** over all reachable paths (Step 9 mechanics), weight each affected stage's absolute contribution by `EW`, sum; then normalize the 24 sums to 0–10 against the largest.
@@ -215,6 +236,8 @@ NI_j = 10 · Σ_n EW_n·|field_j(n)|  /  max_k Σ_n EW_n·|field_k(n)|
 
 The EW-weighted sum of these, normalized against the largest such sum (achieved by `systems`, which scores NI = 10), gives **NI_litho = 5.592**. Full ranking in `12_stage_metrics.csv`; top values: systems 10.0, adv_fab 7.73, memory_fab 7.21, design 6.16, logic_ai 6.13.
 
+> **What it means:** NI answers "if this stage alone failed, how much of the economically-weighted chain downstream of it feels the hit?" It replaces the old path-count centrality, which rewarded a stage merely for sitting on many drawn paths (adding an unrelated parallel edge could change its score). Because NI reuses the exact same propagation machinery events use (Step 9), a stage's NI and an event's impact live on commensurable scales — which is what makes NI usable as the weighting inside company criticality (Step 11).
+
 ### Step 5 — Geographic concentration (HHI with explicit residual)
 
 ```
@@ -225,6 +248,8 @@ residual = max(0, 1 − Σ shares);  HHI = Σ share_i² + residual²;  GEO = 10 
 **Worked example (litho):** shares nl 0.90, jp 0.09 → residual = 0.01.
 `HHI = 0.90² + 0.09² + 0.01² = 0.81 + 0.0081 + 0.0001 = 0.8182` → **GEO_litho = 8.182** ✔
 
+> **What it means:** HHI is the standard industrial-organization concentration index; squaring the shares makes one 90% country far more alarming than nine 10% countries (0.81 vs 0.09). The explicit residual is an honesty device: when disclosed shares sum below 1, the undisclosed tail is counted as one "Other" participant instead of being silently ignored — ignoring it *understates* concentration exactly when data is least complete.
+
 ### Step 6 — Policy exposure
 
 For each stage, collect severities of all policies naming it, sort descending:
@@ -233,6 +258,8 @@ POL = clamp10( sev₁ + 0.4 · Σ remaining sevs )
 ```
 
 **Worked example (litho):** hit by `bis` (9) and `nl` (8) → `9 + 0.4×8 = 12.2` → clamped → **POL_litho = 10** ✔
+
+> **What it means:** the most severe instrument hitting a stage dominates, and each additional overlapping instrument adds only 40% of its severity — overlapping rules compound exposure, but two severity-8 regimes do not make a stage twice as constrained as one. The clamp at 10 keeps the scale bounded. Severities themselves are analyst-set (Tier D); which stages a policy touches comes from the rule text (Tier C).
 
 ### Step 7 — Structural vulnerability (static layer)
 
@@ -252,6 +279,8 @@ struct = 0.277778×5.592036 + 0.222222×8.182 + 0.222222×10 + 0.166667×9.8 + 0
        = 1.553343 + 1.818222 + 2.222222 + 1.633333 + 0.777778
        = 8.004899   ✔ engine: 8.004899
 ```
+
+> **What it means:** this is the single static "how fragile is this stage by construction" number — three graph/data-derived components and two declared analyst judgments, blended with the declared weights (each UI breakdown bar is tagged `[GRAPH/DATA]` or `[ANALYST]` accordingly). It is time-invariant by design: live events never move it. Events live in the separate operational layer (Steps 8–10), so a headline can never silently rewrite what the chain structurally *is*.
 
 ### Step 8 — Event magnitude: severity × true half-life decay
 
@@ -273,6 +302,8 @@ magnitude = sign · clamp(sev/10, 0, 1) · decay(daysAgo, 12)
 | e6 | 3 | 12 | 0.500000 | +0.150000 | no (strategic) |
 
 **Hand-check (e1):** `2^(−3/12) = 2^(−0.25) = 0.840896`; `+1 × (8/10) × 0.840896 = +0.672717` ✔
+
+> **What it means:** an event's shock size is (how severe) × (how fresh), with the *sign* taken from the hand-curated classification — never inferred from severity or text. Confidence is deliberately kept **out** of the arithmetic: "how sure we are" and "how big it is" are different quantities, and multiplying them (as the old model did) made a low-confidence severity-8 event indistinguishable from a high-confidence severity-6 one. The `2^(−age/H)` form is a genuine half-life: at age = H the effect is exactly half.
 
 ### Step 9 — All-reachable-paths propagation with bounded noisy-OR
 
@@ -303,6 +334,8 @@ The full 79-row per-event propagated fields (6 events × reached stages) are in 
 
 **Baseline operational field:** noisy-OR combination of the fields of the three *operational* events only (e1 adverse, e2 mitigating, e4 adverse) — e3/e5/e6 are displayed individually but excluded from the score. Result per stage: column `baseline_operational_field_signed` in `12_stage_metrics.csv` (e.g. adv_fab +0.760112, hbm +0.740868, gases +0.442067).
 
+> **What it means:** the shock walks *every* reachable path — one forward pass along D and/or one backward pass along U, which the topological order makes sufficient. When several contributions land on the same node, noisy-OR treats them like probabilities of independent partial failures: a second shock always makes things worse (unlike `max`, which discards everything but the largest) but the total never exceeds saturation at 1 (unlike a plain sum, which is unbounded). The tolerance τ just stops the infinitely-thinning tail.
+
 ### Step 10 — Operational chain index and sensitivity envelope
 
 ```
@@ -312,6 +345,8 @@ displayIndex     = 5 + 5 × operationalIndex          (5 = neutral)
 
 **Snapshot result:** signed index **+0.227145** → chain index **6.136** (net adverse).
 **Sensitivity envelope** (re-run at ±30% on f↓, f↑, H — a model-sensitivity bound, *not* a confidence interval): low 5.874 / base 6.136 / high 6.408.
+
+> **What it means:** the chain index compresses the whole operational field into one number — the economy-weighted average of every stage's net signed impact, mapped onto 0–10 with **5 = no net active operational effect** (above 5 net adverse, below 5 net mitigating). Only events classified `operational: true` enter it. The envelope re-runs the entire computation at ±30% on the three main priors: it bounds how sensitive the answer is to the model's own assumptions — it is **not** a confidence interval about the world.
 
 ### Step 11 — Company metrics: three separately-labeled numbers (CSV: `14_company_metrics.csv`)
 
@@ -337,6 +372,8 @@ criticality_c = 10 × raw_c / max over all 109 companies
 ```
 TSMC has the largest raw value in the snapshot → **criticality = 10.0** (the normalization anchor). Top 10: TSMC 10.0, NVIDIA 5.17, ASML 4.68, Samsung 4.02, Foxconn 3.87, SK hynix 3.19, ASE 2.97, Applied Materials 2.73, Micron 1.95, Quanta 1.93.
 
+> **What it means:** three numbers, never blended, because they answer three different questions. **Vulnerability**: "how exposed is the *kind* of footprint this company has?" — share-independent, so a boutique and a giant in the same stage score alike. **Contribution**: "how much of the *current* shock actually flows through this company?" — share-weighted, so size matters. **Criticality**: "what would happen if *this company itself* were fully disrupted?" — a counterfactual simulation through the same engine, normalized so the most critical company in the snapshot sits at 10. Blending them was the old model's defect: market share cancelled out algebraically and a 5%-share firm could score like a 50%-share firm.
+
 ### Step 12 — Capital power (CSV: `15_capital_power.csv`)
 
 ```
@@ -345,13 +382,19 @@ CapitalPower_owner = Σ_companies ownership_share × criticality_company
 **Hand-check:** Taiwan NDF holds 6.38% of TSMC (criticality 10) and nothing else → `0.0638 × 10 = 0.638` ✔ engine: 0.638.
 Top 5: BlackRock 2.854, Vanguard 2.757, SoftBank Group 1.441, Lee family & affiliates 0.723, SK Square 0.654. State-linked flags: Taiwan NDF, Korea NPS, etc.
 
+> **What it means:** ownership stake × investee criticality, summed per owner — a ranking of who holds financial rights over the chain's most systemically critical capacity, with state-linked owners flagged. It inherits every assumption criticality makes and adds one more: that ownership share is a usable proxy for influence. Ownership data ages quarterly, making this the most citation-sensitive table in the product.
+
 ### Step 13 — Country aggregation (CSV: `16_country_metrics.csv`)
 
 Per country: share-weighted mean of the stage-level structural components over every stage the country participates in (production geography, **not** company HQ), re-scored with the Step-7 weights; operational = share-weighted mean of the baseline field, noisy-OR combined with any direct country-tagged operational event magnitudes. Nothing is hand-set at country level.
 
+> **What it means:** country scores are pure roll-ups of the stage-level numbers, weighted by each country's *production share* in every stage it participates in — production geography, not company headquarters (HQ is displayed separately and never substituted). Nothing at country level is hand-set: a country's score can only move because a stage score or a share moved.
+
 ### Step 14 — Computed history and movers (CSVs: `17`, `18`)
 
 The 21-day sparkline **re-runs the whole Step 8–10 computation** at each past day by shifting every event's `daysAgo` by +t (t = 21…0) — never `Date.now()`, never scenario-adjusted. Result rises from **5.391** (21 days before snapshot) to **6.136** (snapshot date) as the recent events' decay terms grow. Movers-7D = per-stage display-index change vs 7 days prior (top mover: `gases`, driven by e4).
+
+> **What it means:** there is no stored time series anywhere — "history" is the same deterministic pipeline replayed with every event aged forward by *t* days, for t = 21…0. That is only possible because the whole computation is a pure function of the snapshot. It also guarantees a hypothetical scenario can never rewrite the past: the replay always uses baseline events only.
 
 ---
 
@@ -417,6 +460,31 @@ Full 109-company table in `14_company_metrics.csv` (criticality, vulnerability, 
 | 16 | `16_country_metrics.csv` | Country structural/operational aggregates | 16 |
 | 17 | `17_history_chain_index.csv` | 22-day baseline chain-index replay | 22 |
 | 18 | `18_movers_7d.csv` | Per-stage 7-day display-index change | 24 |
+
+---
+
+### 6.1 Where the CSV data comes from
+
+None of these CSVs was fetched from an external feed at generation time — they are an export of the project's **frozen curated snapshot** plus this run's engine computations. The full provenance chain:
+
+```
+server/src/seed-data.js            hand-curated tables (the manual research pass of §1.2:
+  │                                10-K/20-F filings, TrendForce/TechInsights/Gartner,
+  │                                SIA/BCG/CSET — citations for headline figures in
+  │                                server/src/data-notes.js; the rest Tier-D analyst judgment)
+  └─ app/scripts/build-vault-snapshot.mjs
+       └─ app/src/data/vault-snapshot.json     frozen input snapshot (asOf 2026-07-06)
+            └─ buildEngine(snapshot)           executed for this demonstration
+                 └─ computation-demo/csv/*.csv
+```
+
+By file group:
+
+- **`01_model_priors.csv`** — verbatim from `app/src/engine/priors.js` (hand-declared constants, §2.1).
+- **`02` – `10`** (stages, shares, edges, policies, events, companies, stakes, customers, owners) — **verbatim exports of the snapshot's input tables**. Their ultimate origin is the manual research pass: some figures carry a citation in `server/src/data-notes.js` (16 notes in this snapshot; run `npm run audit:data` to list them), the remainder are carried-over analyst judgment (~20/24 stages, ~105/109 companies uncited — §1.2).
+- **`11` – `18`** (dependence matrices, stage metrics, propagated fields, company metrics, capital power, country metrics, history, movers) — **computed by the engine during this run** from files 01–10; they have no independent source.
+
+For the version of this exercise where inputs come from **live external sources** (SEC EDGAR API, Federal Register API, named published reports) instead of the curated snapshot, see `REAL_DATA_EXAMPLE.md`.
 
 ---
 
