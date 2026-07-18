@@ -245,6 +245,44 @@ The 21-day sparkline, the multi-year history chart, and the "Movers 7D" list re-
 
 **`LONG_HISTORY`** extends this to the whole event record: the same computation sampled weekly back to the oldest vault event (~5.5 years), plus an exact sample on each event's own date so spikes aren't attenuated by grid placement. Events whose decayed magnitude falls below $10^{-4}$ (older than ~160 days at the 12-day half-life) are skipped per sample, which keeps ~350 full propagation re-runs cheap. The result — rendered in the Events feed (`IndexHistory.jsx`) — shows the index spiking on the Oct 2022 BIS controls (≈6.9, the largest), the Dec 2024 HBM/entity package, the Q1 2026 memory squeeze, etc., and relaxing to the neutral 5.0 between shocks. History is always the **baseline** series (real snapshot events only); an active hypothetical scenario is shown as a separate current-value comparison point and never rewrites this series.
 
+### 4.13 Parameter reference — every symbol, its value, and how the number is found
+
+The same information ships inside the product (ⓘ Methodology, which renders a per-equation parameter legend under every formula). Sources reuse the §8 evidence tiers: **[A]** academic · **[B]** institutional reports · **[C]** official filings/rule texts · **[D]** declared analyst judgment / unvalidated prior · **[GRAPH]** computed from the vault's stage graph.
+
+| Symbol / coefficient | Meaning | Value / range | How it's found |
+|---|---|---|---|
+| $H$ (`halfLifeDays`) | half-life of an event shock, $\text{decay}=2^{-\text{age}/H}$ | 12 days | declared prior [D]; swept ±30% by the sensitivity envelope |
+| $f_{\downarrow}$ (`downstreamTransmission`) | fraction of a supplier disruption passed to a buyer per edge | 0.55 | declared prior [D], unvalidated |
+| $f_{\uparrow}$ (`upstreamTransmission`) | demand-echo fraction passed back to a supplier per edge | 0.30 | declared prior [D]; set below $f_{\downarrow}$ deliberately |
+| $\phi$ (`specificityFloor`) | residual transmission of a fully substitutable input | 0.25 | declared prior [D] |
+| $\tau$ (`contributionTolerance`) | propagation truncation threshold (replaces a hop cutoff) | $10^{-4}$ | declared prior [D] |
+| $w_{\text{ni}},w_{\text{geo}},w_{\text{pol}},w_{\text{subst}},w_{\text{shock}},w_{\text{mkt}}$ | structural-vulnerability component weights | .25/.20/.20/.15/.10/.10 | declared prior [D]; renormalized after excluding the event term |
+| `datasetAsOf` | the frozen snapshot date all event ages are measured against | 2026-07-06 | declared — a snapshot, never the visitor's clock |
+| $\text{sev}$ (per event) | realized-scale magnitude judgment, 1–10 | per event | hand-curated against each event's cited sources [B/C] (`events.source`) |
+| sign / channel / operational (per event) | adverse vs mitigating; downstream/upstream/both; counts toward the scored index | per event id | hand-curated lookup [D] in `app/src/engine/event-assumptions.js` — never inferred from prose |
+| $\text{age}$ (per event) | days before `datasetAsOf`; historical events derive it from authoritative `dateISO` | per event | `events.days_ago`, computed at seed/backfill time |
+| $v_n$ (`stages.value`) | a stage's annual economic value (US$B) | per stage | segment-size estimates [B: SIA/WSTS, SEMI, Gartner-tier] |
+| $EW_n$ | log-compressed economic weight $\ln(1+v_n)/\max_m \ln(1+v_m)$ | 0–1 | derived from $v_n$; log form is a modeling choice [D] |
+| $\text{subst}_n$, $\text{mkt}_n$ (`stages.subst/market`) | substitutability / market sensitivity | 0–10 | analyst judgment [D] against a written rubric |
+| $\text{share}_i$ (`stages.shares_json`) | country $i$'s share of a stage's production | 0–1 | capacity/market estimates [B: TrendForce, SEMI, company disclosures]; undisclosed remainder kept as an explicit residual |
+| $\text{share}_{c,s}$ (`companies.stakes_json`) | company $c$'s within-stage market share | 0–1 | share estimates [B: TrendForce, TechInsights, Gartner-tier, filings] |
+| edges $a\to b$ (`flow_edges`) | which stage supplies which (34 edges, validated acyclic) | topology | curated from published process-flow descriptions [B] |
+| $\text{indeg}(b), \text{outdeg}(a)$ | equal-allocation input/customer split per edge | per node | [GRAPH] counted — a stand-in until real BOM/input-share data exists |
+| customer shares (`customers`) | supplier→customer revenue shares (243 edges) | 0–1 | filings & disclosed customer concentration [C] + trade-press estimates [B]; top customers only |
+| $\text{own}_{o,c}$ (`owners`) | major-shareholder stakes (75 rows) | 0–1 | public filings [C: 13F, annual reports, exchange disclosures] |
+| policy $\text{sev}$ + 0.4 factor (`policies`) | instrument severity; diminishing weight per additional instrument | 1–10; 0.4 | rule texts [C: BIS/METI/MOFCOM/EU]; severity + 0.4 are judgments [D] |
+| $NI_j$, criticality, HHI, field | every remaining quantity in §4 | 0–10 / [−1,1] | [GRAPH] computed from the above — no independent inputs |
+| quotes (price, P/E) | market metadata per listed company (92 of 109) | live per build | Yahoo Finance via curated ticker map (`server/src/tickers.js`) — **display only, never a model input** |
+
+### 4.14 Worked computation demos (companion documents)
+
+Four companion documents under [`computation-demo/`](computation-demo/) walk the exact same model with real numbers — read them in this order if you want to verify any figure by hand:
+
+- **[COMPUTATION_DEMO.md](computation-demo/COMPUTATION_DEMO.md)** — the full step-by-step numeric demonstration: every input table (exact values, exported as CSVs under [`computation-demo/csv/`](computation-demo/csv/)), every intermediate result, every formula from §4 executed number-by-number.
+- **[PLAIN_ENGLISH_GUIDE.md](computation-demo/PLAIN_ENGLISH_GUIDE.md)** — the same system explained from zero with no math background assumed, including where things honestly stand.
+- **[REAL_DATA_EXAMPLE.md](computation-demo/REAL_DATA_EXAMPLE.md)** — an end-to-end run on genuinely fetched data (SEC EDGAR XBRL, Federal Register API) with no seed/dummy values, showing which kinds of data can be pulled live and which must be manually extracted with citations.
+- **[DATA_PIPELINE.md](computation-demo/DATA_PIPELINE.md)** — the production data-pipeline design: every input table, its candidate feed, and its automation ceiling (free/keyless vs licensed vs never-automatable).
+
 ---
 
 ## 5. Feature Reference
@@ -362,7 +400,7 @@ The product ships with English, Simplified Chinese (简体), Traditional Chinese
 
 **Fully localized:** UI chrome (pane titles, tabs, buttons), the product's full name, scenario names, risk labels, the What-Changed and Chain-Index labels, search placeholder, and — most substantially — the complete seven-step in-app guide, independently written (not machine-translated in place) for each language.
 
-**Deliberately left in English for now:** sample event background/source/timeline text, the Methodology overlay's prose, and the generated briefing text. This is a considered Phase-1 boundary: these are exactly the strings that will be replaced once real, cited data replaces the sample dataset, so translating them now would be discarded work. The in-app guide explicitly discloses this boundary to the user in their selected language.
+**Methodology overlay (ⓘ):** translated into 简体/繁體/日本語 via `src/i18n/methodology.js` — each section shows a native-language title and summary above the canonical English detail; formulas, symbols, and the per-parameter legend tables stay in English as the shared notation (a note in the reader's language says so). **Deliberately left in English for now:** event background/source/timeline text and the generated briefing text — these are the strings tied to the underlying (partly sample) dataset, so they follow the data, not the UI dictionary.
 
 The landing (`index.html`) and introduction (`intro.html`) pages carry an equivalent language switcher with headline, section, and pricing translations.
 
