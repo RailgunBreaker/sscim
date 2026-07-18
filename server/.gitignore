@@ -1,5 +1,6 @@
 node_modules/
-data/*.db
+# data/sscim.db is committed (source of truth for the static Pages build);
+# only the transient WAL/journal sidecars stay untracked.
 data/*.db-journal
 data/*.db-wal
 data/*.db-shm

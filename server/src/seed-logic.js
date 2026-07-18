@@ -4,6 +4,7 @@ import {
   COMPANIES, DOMAINS, CUSTOMERS, POLICIES, EVENTS, SCENARIOS, OWNERS,
 } from './seed-data.js';
 import { DATA_NOTES } from './data-notes.js';
+import { HISTORY_EVENTS, daysAgoOf } from './history-events.js';
 
 const TABLES = ['countries', 'stages', 'flow_edges', 'tier_labels', 'companies', 'customers', 'owners', 'policies', 'events', 'scenarios', 'data_notes'];
 
@@ -49,7 +50,10 @@ export const seedAll = db.transaction(() => {
 
   const insEvent = db.prepare(`INSERT INTO events (id, date, days_ago, sev, type, conf, title, summary, first, second, watch, detail, source, stages_json, countries_json, timeline_json)
     VALUES (@id, @date, @days_ago, @sev, @type, @conf, @title, @summary, @first, @second, @watch, @detail, @source, @stages_json, @countries_json, @timeline_json)`);
-  for (const e of EVENTS) {
+  // Historical backfill events (2021–2026) carry an authoritative dateISO;
+  // days_ago is derived from it here, never hand-maintained.
+  const allEvents = [...EVENTS, ...HISTORY_EVENTS.map((e) => ({ ...e, daysAgo: daysAgoOf(e.dateISO) }))];
+  for (const e of allEvents) {
     insEvent.run({
       id: e.id, date: e.date, days_ago: e.daysAgo, sev: e.sev, type: e.type, conf: e.conf,
       title: e.title, summary: e.summary, first: e.first, second: e.second, watch: e.watch,

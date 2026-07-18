@@ -137,9 +137,14 @@ A reversed index (`SUPPLIERS`) is derived automatically from the customer graph 
 
 Each policy carries a severity (0–10) and a list of affected stages, e.g. `{ id: "bis", sev: 9, stages: ["logic_ai","hbm","adv_fab","litho","depo","etch","metro"] }`. Policy exposure per stage is computed from this table, not hand-set.
 
-### 3.6 Events (6 sample) and Scenarios (3 preset + unlimited custom)
+### 3.6 Events (42: 6 current-window sample + 36 sourced historical) and Scenarios (3 preset + unlimited custom)
 
 Events carry severity, confidence (High/Medium/Low), age in days, affected stages/countries, first/second-order effect text, a background paragraph, a source citation, and a dated timeline. Scenarios inject a simulated event (severity, stages, `conf: "Simulated"`, `daysAgo: 0`) into the identical engine — including user-built custom scenarios via the in-app Scenario Builder.
+
+The event table has two provenance tiers:
+
+- **6 current-window sample events** (`e1`–`e6`, `server/src/seed-data.js`) — illustrative, dated around the frozen snapshot date; these drive the *current* chain index.
+- **36 historical backfill events** (`h2102_uri` … `h2606_mpban`, `server/src/history-events.js`) — real, sourced events from Feb 2021 to Jun 2026 (Winter Storm Uri, the Renesas fire, the Oct 7 2022 BIS controls, China's Ga/Ge and rare-earth controls, the Nexperia crisis, the 2025–26 memory shortage, …). Each carries an authoritative `dateISO` from which `days_ago` is *derived* at seed/backfill time, a source citation, and a hand-curated semantic classification in `app/src/engine/event-assumptions.js`. Because the engine's 12-day half-life decays them to ~0 by the snapshot date, they contribute nothing to the *current* index — they exist to make the computed multi-year history (§4.12) real.
 
 ### 3.7 Shareholder table (sample)
 
@@ -236,7 +241,9 @@ Country structural/operational scores are share-weighted aggregates of the stage
 
 ### 4.12 Computed history
 
-The 21-day sparkline and the "Movers 7D" list re-run the operational-impact computation (§4.6) at each past day by shifting every event's `daysAgo` forward from the frozen snapshot date and re-propagating — never using `Date.now()`. History is always the **baseline** series (real snapshot events only); an active hypothetical scenario is shown as a separate current-value comparison point and never rewrites this series.
+The 21-day sparkline, the multi-year history chart, and the "Movers 7D" list re-run the operational-impact computation (§4.6) at each past offset from the frozen snapshot date and re-propagate — never using `Date.now()`. At a date $t$ days before the snapshot, an event's age is $(\text{daysAgo} - t)$; events with a negative age **had not happened yet and are excluded**, so each event first appears — at full magnitude — on its own date and decays from there. (The earlier version *added* $t$, which pre-echoed future events into the past and meant no event could ever peak on its own date — a time-direction bug, now fixed.)
+
+**`LONG_HISTORY`** extends this to the whole event record: the same computation sampled weekly back to the oldest vault event (~5.5 years), plus an exact sample on each event's own date so spikes aren't attenuated by grid placement. Events whose decayed magnitude falls below $10^{-4}$ (older than ~160 days at the 12-day half-life) are skipped per sample, which keeps ~350 full propagation re-runs cheap. The result — rendered in the Events feed (`IndexHistory.jsx`) — shows the index spiking on the Oct 2022 BIS controls (≈6.9, the largest), the Dec 2024 HBM/entity package, the Q1 2026 memory squeeze, etc., and relaxing to the neutral 5.0 between shocks. History is always the **baseline** series (real snapshot events only); an active hypothetical scenario is shown as a separate current-value comparison point and never rewrites this series.
 
 ---
 
@@ -292,7 +299,7 @@ Earlier builds computed everything from four **hardcoded** JS tables (`STAGES`, 
 - `app/src/engine/index.js` is a **factory**, `buildEngine(data)`, not a set of modules computed once at import time. It takes whatever the vault returns and (re)computes structural vulnerability, network influence, directional propagation, company metrics, rankings, and history from it (see §4). The "one engine, three uses" claim still holds — the same propagation code path runs for live events, hypothetical scenarios, and company-disruption simulations — it's just parameterized over runtime data instead of closed over static imports.
 - Editing data is now: call the admin API (or a future admin UI) — not edit a JS array and rebuild. Adding a new company, policy, or event still ripples through every dependent number automatically, the same as before, because the derivation logic didn't change, only where the source tables come from.
 
-The tradeoff: the app now depends on the vault API being reachable (there's a loading state, and a clear error screen if it isn't — see `App.jsx`). At current scale (24 stages, ~109 companies) the single-`GET`-then-compute-client-side approach is still sub-second and simple; a production version ingesting thousands of daily events would want the propagation itself computed server-side and cached, which is a change to *where* `buildEngine` runs, not to the algorithm.
+The tradeoff is managed by a two-path load (see `VaultContext.jsx`): the app tries the live vault API first and, if unreachable (e.g. the static GitHub Pages deploy), falls back to the build-time snapshot exported from the same committed database — so the static site works standalone and still reflects the latest committed vault edits (§6.6). At current scale (24 stages, ~109 companies) the single-`GET`-then-compute-client-side approach is still sub-second and simple; a production version ingesting thousands of daily events would want the propagation itself computed server-side and cached, which is a change to *where* `buildEngine` runs, not to the algorithm.
 
 ### 6.3 Graph algorithms used
 
@@ -308,6 +315,44 @@ The map and flow graph are both hand-built (Leaflet API calls for the map; raw S
 ### 6.5 Logo system
 
 Company identification uses each company's official domain plus Google's public favicon service (`google.com/s2/favicons?domain=...`), a standard nominative-use pattern (the same approach used by many financial and news apps) rather than embedding or redistributing trademarked artwork. Failed loads degrade to a generated two-letter monogram — the UI never shows a broken image.
+
+### 6.6 Updating the vault database
+
+The committed SQLite file **`server/data/sscim.db` is the single source of truth** for all product data. GitHub Pages is static hosting — it cannot run the Express backend — so the deploy pipeline *exports* the database into a JSON snapshot at build time and bundles that into the site. Updating the deployed data therefore never touches application code:
+
+```
+edit sscim.db  →  npm run snapshot (app/)  →  commit .db  →  push  →  Pages rebuilds
+```
+
+**Ways to edit the database:**
+
+1. **Admin API (recommended for one-off edits).** Start the backend locally:
+   ```bash
+   cd server && cp .env.example .env   # set a real ADMIN_TOKEN
+   npm ci && npm run dev               # API on http://localhost:8787
+   ```
+   Then write with bearer-token-authenticated requests, e.g.:
+   ```bash
+   # upsert a company (partial updates: omitted fields keep current values)
+   curl -X PUT http://localhost:8787/api/admin/companies/tsmc \
+     -H "Authorization: Bearer $ADMIN_TOKEN" -H "Content-Type: application/json" \
+     -d '{"stakes": {"adv_fab": 62, "mature_fab": 15}}'
+   # add an event
+   curl -X POST http://localhost:8787/api/admin/events \
+     -H "Authorization: Bearer $ADMIN_TOKEN" -H "Content-Type: application/json" \
+     -d '{"id":"e7","title":"...","date":"Jul 18, 2026","daysAgo":0,"sev":6,"type":"Export Control","conf":"High","stages":["logic_ai"],"countries":["us","cn"]}'
+   ```
+   Full surface (`server/src/routes/admin.js`): `PUT/DELETE /api/admin/companies/:id`, `PUT /api/admin/stages/:id` (update-only — stages are structural DAG nodes), `PUT/DELETE /api/admin/customers/:supplierId/:customerId`, `PUT/DELETE /api/admin/owners/:companyId/:ownerName`, `POST/PUT/DELETE /api/admin/events[/:id]`, `POST /api/admin/data-notes`. Public read endpoints mirror each table; `GET /api/bundle` returns everything at once.
+
+2. **Direct SQL** for bulk edits: `sqlite3 server/data/sscim.db` (schema in `server/src/db.js`; nested per-entity attributes live in `*_json` columns, true many-to-many edges in real tables).
+
+3. **The curated history dataset.** Real 2021–2026 events live as *code* in `server/src/history-events.js`; after editing it run `node scripts/backfill-history.mjs` (from `server/`) to upsert them into the live DB without touching other rows. New event ids must also be classified in `app/src/engine/event-assumptions.js` — an unclassified id is displayed but excluded from the scored index by design.
+
+**Then publish:** run `npm run snapshot` in `app/` — it regenerates `app/src/data/vault-snapshot.json` from the DB (via the same `server/src/bundle.js` the live API uses, so shapes are byte-identical) *and* checkpoints the SQLite WAL so the `.db` file on disk is complete. Commit `server/data/sscim.db` (plus `history-events.js` / `event-assumptions.js` if you touched them) and push; the Pages workflow (`.github/workflows/static.yml`) installs server deps, re-runs the export from your committed DB, audits it (`npm run audit:data` — fails the build on dangling stage/country references, non-finite values, out-of-range shares), tests, builds, and deploys.
+
+**Bootstrap/reset:** a fresh empty DB is auto-seeded from `server/src/seed-data.js` + `history-events.js` (on server start or first snapshot run); `npm run seed` in `server/` is the explicit full reset. `daysAgo` for historical events is always derived from their `dateISO` against `DATASET_AS_OF` — never hand-edited.
+
+**Stock quotes (price + P/E):** each company with a public listing (92 of 109; the ticker map with per-company notes is `server/src/tickers.js`) carries a market quote — price, day change, trailing/forward P/E, market cap — in the `quotes` table, shown in the company detail view and the Companies feed. Refresh with `node scripts/fetch-quotes.mjs` (from `server/`; Yahoo Finance batch endpoint, no API key). Because GitHub Pages is static, "live" means *as of the last build*: the deploy workflow re-fetches quotes best-effort on every build **and runs on a daily schedule** (`cron: 0 6 * * *`), so the public site's quotes refresh daily without a commit; the committed DB values are the fallback when the fetch fails. Companies quoted via a listed parent (Google/Alphabet, Sony Semiconductor/Sony Group, Siemens EDA/Siemens) are labeled with the parent's ticker; loss-making listings show "P/E n/a". Quotes are display metadata only — **never an input to any risk computation**.
 
 ---
 
@@ -360,7 +405,7 @@ This framework directly implements the data-integrity rules from the original pr
 
 ## 10. File Structure & Deployment
 
-All three public pages — the landing page, the guide, and the dashboard — are React pages built from one Vite project (`app/`), sharing theme, the i18n pattern, and components like `Tex` (KaTeX formula rendering). The public deployment is **static-only**: the dashboard runs entirely against the bundled snapshot in `app/src/data/vault-snapshot.json` (see §9). `server/` (a small Node/Express + SQLite API) exists for local development and is not part of the public deployment.
+All three public pages — the landing page, the guide, and the dashboard — are React pages built from one Vite project (`app/`), sharing theme, the i18n pattern, and components like `Tex` (KaTeX formula rendering). The public deployment is **static-only**: the dashboard runs against a snapshot **exported at build time from the committed SQLite database** (`server/data/sscim.db` → `app/src/data/vault-snapshot.json`, a generated build artifact). `server/` (a small Node/Express + SQLite API) is how you *edit* that database locally (§6.6); the server process itself is not part of the public deployment, but its database file is.
 
 ```
 /
@@ -373,8 +418,8 @@ All three public pages — the landing page, the guide, and the dashboard — ar
 │   ├── sscim-app.html      Vite entry → dashboard (built output: sscim-app.html)
 │   ├── vitest.config.js    Vitest config (node environment, @vitejs/plugin-react for JSX)
 │   ├── scripts/
-│   │   ├── build-vault-snapshot.mjs   generates vault-snapshot.json from server/src/seed-data.js
-│   │   └── audit-snapshot.mjs          read-only diagnostics over the committed snapshot — npm run audit:data
+│   │   ├── build-vault-snapshot.mjs   exports vault-snapshot.json from server/data/sscim.db (npm run snapshot; auto-runs pre-dev/pre-build)
+│   │   └── audit-snapshot.mjs          read-only diagnostics over the exported snapshot — npm run audit:data
 │   ├── src/
 │   │   ├── landing/         Landing.jsx, main.jsx, i18n.js — marketing/positioning page
 │   │   ├── intro/            Intro.jsx, main.jsx, i18n.js — guide/walkthrough page
@@ -387,15 +432,19 @@ All three public pages — the landing page, the guide, and the dashboard — ar
 │   │   ├── App.jsx, main.jsx, theme.js   — dashboard root
 │   ├── vite.config.js      multi-page build (rollupOptions.input: landing/intro/dashboard), base: './' (relative asset paths), outputs to ../dist-app
 │   └── package.json        scripts: dev, build, test (vitest run), audit:data
-└── server/               Local-dev-only vault — Node/Express + SQLite API (out of scope for the static deployment)
+└── server/               The vault — Node/Express + SQLite API; the DB file is the committed source of truth (§6.6)
+    ├── data/sscim.db      THE DATABASE — committed; every deploy's data is exported from this file
     ├── src/
     │   ├── db.js           schema (stages, companies, customers, owners, policies, events, scenarios, data_notes)
-    │   ├── seed-data.js     current dataset (real-data-pass values, see §9) — source of vault-snapshot.json
+    │   ├── seed-data.js     bootstrap dataset for a brand-new empty DB (real-data-pass values, see §9)
+    │   ├── history-events.js  curated real 2021–2026 event backfill (dateISO-authoritative, sourced)
     │   ├── data-notes.js    citations behind the headline corrections
-    │   ├── seed.js          populates data/sscim.db from seed-data.js
+    │   ├── bundle.js        reads the whole vault in wire format — shared by the API and the snapshot export
+    │   ├── seed.js          explicit full reset: repopulates data/sscim.db from seed-data.js + history-events.js
     │   ├── routes/public.js  GET endpoints (including GET /api/bundle)
     │   ├── routes/admin.js   bearer-token-authenticated writes (PUT/POST/DELETE)
     │   └── index.js          Express app
+    ├── scripts/backfill-history.mjs   upserts history-events.js into an already-populated DB
     └── package.json
 ```
 

@@ -1,10 +1,15 @@
 node_modules/
 dist-app/
 dist/
-server/data/*.db
+# The vault database (server/data/sscim.db) IS committed — it is the single
+# source of truth the Pages build exports its static snapshot from. Only the
+# transient WAL/journal sidecars stay untracked (npm run snapshot checkpoints
+# the WAL into the .db before you commit).
 server/data/*.db-journal
 server/data/*.db-wal
 server/data/*.db-shm
+# Build artifact — regenerated from the database by app/scripts/build-vault-snapshot.mjs.
+app/src/data/vault-snapshot.json
 .env
 .env.local
 .claude/

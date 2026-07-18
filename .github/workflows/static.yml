@@ -1,19 +1,28 @@
 # Build the SSCIM site (landing page, guide, and dashboard — all three are React
 # pages built from app/) and deploy it to GitHub Pages.
 #
-# IMPORTANT: this only deploys the frontend. The dashboard fetches its data from the
-# server/ API at runtime (see README §6/§10) — that backend is NOT deployed by this
-# workflow (GitHub Pages is static-hosting only) and must be hosted separately (Render,
-# Fly.io, Railway, a VPS, etc.). Set the VITE_API_BASE_URL repository variable (Settings
-# → Secrets and variables → Actions → Variables) to that backend's public URL before
-# relying on this deployment — without it, the deployed dashboard falls back to
-# http://localhost:8787 and will show its "can't reach the vault API" error screen.
+# Data comes from the committed SQLite database (server/data/sscim.db): the build
+# exports it into app/src/data/vault-snapshot.json (app/scripts/
+# build-vault-snapshot.mjs, run automatically by "prebuild") and bundles that
+# snapshot into the static site. Updating the deployed data = edit the vault
+# locally (admin API or SQL), run `npm run snapshot` in app/, commit the updated
+# .db, and push.
+#
+# GitHub Pages is static-hosting only, so the Express backend itself does not run
+# here — it's for local editing, or optionally hostable elsewhere (Render, Fly.io,
+# a VPS, …). If you do host it, set the VITE_API_BASE_URL repository variable
+# (Settings → Secrets and variables → Actions → Variables) to its public URL and
+# the deployed dashboard will fetch live data instead of the bundled snapshot.
 name: Build and deploy to Pages
 
 on:
   push:
     branches: ["main"]
   workflow_dispatch:
+  schedule:
+    # Daily rebuild so the bundled stock quotes (price/PE) stay fresh on the
+    # static deploy even without a commit — see "Refresh stock quotes" below.
+    - cron: "0 6 * * *"
 
 permissions:
   contents: read
@@ -36,17 +45,36 @@ jobs:
         with:
           node-version: 24
           cache: 'npm'
-          cache-dependency-path: app/package-lock.json
+          cache-dependency-path: |
+            app/package-lock.json
+            server/package-lock.json
 
-      - name: Install dependencies
+      # better-sqlite3 lives here — the snapshot export reads the committed
+      # database through the server's own db/bundle modules.
+      - name: Install server dependencies
+        working-directory: server
+        run: npm ci
+
+      - name: Install app dependencies
         working-directory: app
         run: npm ci
 
-      # Read-only diagnostic over the committed static snapshot (app/src/data/
-      # vault-snapshot.json) — fails the build on malformed data (dangling
-      # references, non-finite values, out-of-range shares, an invalid stage
-      # graph); see app/scripts/audit-snapshot.mjs.
-      - name: Audit static data snapshot
+      # Best-effort: pull current prices + P/E into the quotes table before the
+      # export, so the deployed site carries quotes as of this build. On failure
+      # (rate limit, endpoint change) the build proceeds with the quotes already
+      # committed in the database — quotes are display metadata, never engine input.
+      - name: Refresh stock quotes (best-effort)
+        working-directory: server
+        run: node scripts/fetch-quotes.mjs || echo "::warning::Quote refresh failed — deploying with committed quotes."
+
+      - name: Export vault snapshot from database
+        working-directory: app
+        run: npm run snapshot
+
+      # Read-only diagnostic over the exported snapshot — fails the build on
+      # malformed data (dangling references, non-finite values, out-of-range
+      # shares, an invalid stage graph); see app/scripts/audit-snapshot.mjs.
+      - name: Audit data snapshot
         working-directory: app
         run: npm run audit:data
 

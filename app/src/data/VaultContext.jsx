@@ -11,10 +11,11 @@ import snapshot from './vault-snapshot.json';
    so updating the data means writing to the vault's admin API, not
    editing and redeploying this app.
 
-   Fallback: if no vault API is reachable (e.g. a static-only deploy with
-   no backend hosted yet), this falls back to `vault-snapshot.json` — a
-   build-time snapshot of the same seed data the backend seeds from (see
-   scripts/build-vault-snapshot.mjs) — so the site still works standalone.
+   Fallback: if no vault API is reachable (e.g. the GitHub Pages deploy,
+   which is static-only), this falls back to `vault-snapshot.json` — a
+   build-time export of the same committed SQLite database the backend
+   serves (see scripts/build-vault-snapshot.mjs) — so the site works
+   standalone and still reflects the latest committed vault edits.
    The moment a real backend is configured (VITE_API_BASE_URL) and
    reachable, live data takes over automatically; no code change needed. */
 
@@ -43,6 +44,8 @@ function buildVaultState(bundle, source) {
     SCENARIOS: bundle.scenarios,
     OWNERS: bundle.owners,
     DATA_NOTES: bundle.dataNotes,
+    QUOTES: bundle.quotes || {}, // market quotes (price/PE) — display metadata, never an engine input
+
     COMP_META,
   };
   const engine = buildEngine({

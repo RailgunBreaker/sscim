@@ -7,11 +7,13 @@ import { onEnterSpace } from '../utils/a11y.js';
 import { STAGE_INTRO, introForCompany } from '../data/glossary.js';
 import Logo from './Logo.jsx';
 import Detail from './Detail.jsx';
+import IndexHistory from './IndexHistory.jsx';
+import Quote from './Quote.jsx';
 
 /* ================= Intelligence Panel ================= */
 export default function Intel({ sel, setSel, model, scenario, onResetScenario, onPlayScenario, scenarioActive, horizontal, feedTab, setFeedTab, baseGraph }) {
   const { data, engine } = useVault();
-  const { EVENTS, COMPANY_BY_ID, COUNTRY_NAMES, SUPPLIERS, CUSTOMERS } = data;
+  const { EVENTS, COMPANY_BY_ID, COUNTRY_NAMES, SUPPLIERS, CUSTOMERS, QUOTES } = data;
   const { STAGE_BY_ID, CAP_RANK, MOVERS7D, COMPANY_CRITICALITY, COMPANY_RANK, eventField, operationalIndex, toDisplayIndex } = engine;
   return (
     <div style={{ display: horizontal ? "grid" : "block", gridTemplateColumns: horizontal ? "1.5fr 1fr" : undefined }}>
@@ -30,10 +32,11 @@ export default function Intel({ sel, setSel, model, scenario, onResetScenario, o
         <div style={{ overflowY: "auto", padding: "8px 12px 12px", maxHeight: horizontal ? 420 : 440 }}>
           {feedTab === "events" && (
             <>
+              <IndexHistory engine={engine} events={EVENTS} onSelectEvent={(id) => setSel({ type: "event", id })} />
               <div className="mono" style={{ fontSize: 9.5, color: C.faint, marginBottom: 8, lineHeight: 1.5 }}>
                 "index" = this event's own operational-impact display index (0–10, 5 = neutral, &gt;5 net adverse, &lt;5 net mitigating) — propagated through the graph alone, not combined with other events. <span style={{ color: C.faint }}>"excluded from score" = a hazard-signal/mixed/strategic event, shown but not scored — see its card for why.</span>
               </div>
-              {EVENTS.map((e) => {
+              {[...EVENTS].sort((a, b) => (a.daysAgo ?? 0) - (b.daysAgo ?? 0)).map((e) => {
                 const active = sel.type === "event" && sel.id === e.id;
                 const assumption = getEventAssumption(e.id);
                 const ownIndex = toDisplayIndex(operationalIndex(eventField(e).field));
@@ -117,6 +120,7 @@ export default function Intel({ sel, setSel, model, scenario, onResetScenario, o
                     <span className="mono" style={{ fontSize: 10, color: C.faint, width: 20 }}>#{i + 1}</span>
                     <Logo cid={co.id} />
                     <span style={{ fontSize: 12.5, fontWeight: 600, flex: 1 }}>{co.name}</span>
+                    <Quote quote={(QUOTES || {})[co.id]} compact />
                     <span className="mono" style={{ fontSize: 9.5, color: C.dim }}>HQ: {COUNTRY_NAMES[co.country]}</span>
                     <span className="mono" style={{ fontSize: 11, fontWeight: 600, color: riskColor(criticality) }}
                       title="Systemic criticality: modeled chain effect if this company's production were fully disrupted. Scale 0–10.">

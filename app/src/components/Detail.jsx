@@ -8,6 +8,7 @@ import ScenarioSummary from './ScenarioSummary.jsx';
 import CentreDetail from './CentreDetail.jsx';
 import Tex from './Tex.jsx';
 import Logo from './Logo.jsx';
+import Quote from './Quote.jsx';
 import Chip from './Chip.jsx';
 import SpreadTree from './SpreadTree.jsx';
 import UpstreamTree from './UpstreamTree.jsx';
@@ -27,7 +28,7 @@ const MetricTag = ({ kind }) => {
 
 export default function Detail({ sel, setSel, model, scenario, onResetScenario, onPlayScenario, scenarioActive, baseGraph }) {
   const { data: vault, engine } = useVault();
-  const { COMPANY_BY_ID, COMPANIES, COUNTRY_NAMES, SUPPLIERS, CUSTOMERS, EVENTS, POLICIES, OWNERS } = vault;
+  const { COMPANY_BY_ID, COMPANIES, COUNTRY_NAMES, SUPPLIERS, CUSTOMERS, EVENTS, POLICIES, OWNERS, QUOTES } = vault;
   const {
     STAGE_BY_ID, NETWORK_INFLUENCE, NETWORK_INFLUENCE_RANK, STRUCTURAL_VULNERABILITY, STRUCTURAL_WEIGHTS,
     structuralComponents, COUNTRY_LINKS, eventField, operationalIndex, toDisplayIndex,
@@ -115,6 +116,7 @@ export default function Detail({ sel, setSel, model, scenario, onResetScenario, 
           <span className="mono" style={{ fontSize: 10, color: C.dim }}>HQ: {COUNTRY_NAMES[co.country]}</span>
           <span className="mono" style={{ fontSize: 10, color: C.copper, marginLeft: "auto" }}>criticality rank #{rank} of {COMPANIES.length}</span>
         </div>
+        <div style={{ margin: "5px 0 0" }}><Quote quote={(QUOTES || {})[co.id]} /></div>
         <p style={{ margin: "6px 0 4px", fontSize: 12.5, color: C.dim, lineHeight: 1.55 }}>{introForCompany(co, { STAGE_BY_ID, COUNTRY_NAMES, CUSTOMERS, SUPPLIERS })}</p>
         <div className="mono" style={{ margin: "8px 0", fontSize: 12, display: "flex", flexWrap: "wrap", gap: 14 }}>
           <span>SYSTEMIC CRITICALITY <b style={{ fontSize: 16, color: riskColor(criticality) }}>{criticality.toFixed(2)}</b><span style={{ color: C.faint }}>/10</span></span>

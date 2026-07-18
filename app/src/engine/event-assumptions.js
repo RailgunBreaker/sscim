@@ -60,6 +60,48 @@ export const EVENT_ASSUMPTIONS = Object.freeze({
   // a current-period operational shock.
   e6: Object.freeze({ direction: 'adverse', channel: 'downstream', operational: false, reason: 'Long-term strategic/resilience signal (multi-year subsidy), not a current-period operational shock.' }),
 
+  /* ---- Historical backfill events (server/src/history-events.js) ----
+     Real, sourced 2021–2026 events. Classified once per id, same rules as
+     above: `operational: false` = displayed + individually propagated but
+     excluded from the scored index (hazard signals, policy signals that
+     never took effect, mixed-reallocative shocks). */
+  h2102_uri:       Object.freeze({ direction: 'adverse', channel: 'downstream', operational: true,  reason: 'Realized multi-week fab outage (Texas grid failure).' }),
+  h2103_renesas:   Object.freeze({ direction: 'adverse', channel: 'downstream', operational: true,  reason: 'Realized capacity loss — fab fire with ~3-month recovery.' }),
+  h2108_malaysia:  Object.freeze({ direction: 'adverse', channel: 'downstream', operational: true,  reason: 'Realized backend assembly/test throughput loss under lockdowns.' }),
+  h2202_kioxia:    Object.freeze({ direction: 'adverse', channel: 'downstream', operational: true,  reason: 'Realized NAND output loss from contamination.' }),
+  h2202_neon:      Object.freeze({ direction: 'adverse', channel: 'downstream', operational: true,  reason: 'Realized input-material supply cut (neon) with severe price effect.' }),
+  h2204_shanghai:  Object.freeze({ direction: 'adverse', channel: 'downstream', operational: true,  reason: 'Realized assembly/logistics disruption during lockdown.' }),
+  h2208_strait22:  Object.freeze({ direction: 'adverse', channel: 'downstream', operational: false, reason: 'Hazard signal — exercises disrupted no physical chip flows.' }),
+  h2208_chips:     Object.freeze({ direction: 'mitigating', channel: 'downstream', operational: false, reason: 'Long-term strategic subsidy signal, not a current-period supply change.' }),
+  h2210_bis:       Object.freeze({ direction: 'adverse', channel: 'both', operational: true,  reason: 'Broadest realized export-control shock; cuts both tool supply and chip demand paths.' }),
+  h2301_alliance:  Object.freeze({ direction: 'adverse', channel: 'downstream', operational: false, reason: 'Policy signal — restrictions arrived via later national rules, counted separately.' }),
+  h2307_gage:      Object.freeze({ direction: 'adverse', channel: 'downstream', operational: true,  reason: 'Realized material-export licensing pause; exports fell to zero for two months.' }),
+  h2307_jpsme:     Object.freeze({ direction: 'adverse', channel: 'both', operational: true,  reason: 'Realized tool-export restriction effective on this date.' }),
+  h2308_mate60:    Object.freeze({ direction: 'mixed', channel: 'downstream', operational: false, reason: 'Controls-effectiveness signal with winners and losers; no supply change.' }),
+  h2309_duv:       Object.freeze({ direction: 'adverse', channel: 'both', operational: true,  reason: 'Realized lithography-tool export restriction effective on this date.' }),
+  h2310_bisupdate: Object.freeze({ direction: 'adverse', channel: 'both', operational: true,  reason: 'Realized widening of AI-chip controls (A800/H800 path closed).' }),
+  h2401_noto:      Object.freeze({ direction: 'adverse', channel: 'downstream', operational: true,  reason: 'Realized (limited) wafer/materials plant outages after the quake.' }),
+  h2404_hualien:   Object.freeze({ direction: 'adverse', channel: 'downstream', operational: true,  reason: 'Realized fab halts and wafer scrap, fast recovery.' }),
+  h2405_huawei:    Object.freeze({ direction: 'adverse', channel: 'downstream', operational: true,  reason: 'Realized supply cutoff for one major buyer — modest magnitude.' }),
+  h2412_bis3:      Object.freeze({ direction: 'adverse', channel: 'both', operational: true,  reason: 'Realized HBM controls + mass entity listing.' }),
+  h2412_gaban:     Object.freeze({ direction: 'adverse', channel: 'downstream', operational: true,  reason: 'Realized country-targeted material export ban.' }),
+  h2501_diffusion: Object.freeze({ direction: 'adverse', channel: 'both', operational: false, reason: 'Rescinded before its compliance date — policy volatility, not a realized supply change.' }),
+  h2501_deepseek:  Object.freeze({ direction: 'mixed', channel: 'downstream', operational: false, reason: 'Demand-side sentiment shock with winners and losers; no supply disruption.' }),
+  h2504_ree:       Object.freeze({ direction: 'adverse', channel: 'downstream', operational: true,  reason: 'Realized heavy-REE/magnet export pause with downstream line stoppages.' }),
+  h2504_h20:       Object.freeze({ direction: 'adverse', channel: 'both', operational: true,  reason: 'Realized halt of compliant-SKU accelerator sales; inventory written down.' }),
+  h2505_rescind:   Object.freeze({ direction: 'mitigating', channel: 'downstream', operational: true,  reason: 'Realized removal of pending worldwide caps — supply-path easing.' }),
+  h2507_h20back:   Object.freeze({ direction: 'mitigating', channel: 'downstream', operational: true,  reason: 'Realized partial restoration of China accelerator flows.' }),
+  h2509_nexperia:  Object.freeze({ direction: 'adverse', channel: 'downstream', operational: true,  reason: 'Realized packaged-output freeze with automaker production cuts.' }),
+  h2510_reemax:    Object.freeze({ direction: 'adverse', channel: 'downstream', operational: true,  reason: 'Realized (weeks-active) sweeping REE controls with extraterritorial reach before suspension.' }),
+  h2510_truce:     Object.freeze({ direction: 'mitigating', channel: 'downstream', operational: true,  reason: 'Realized one-year suspension of the October REE package.' }),
+  h2512_memory:    Object.freeze({ direction: 'adverse', channel: 'downstream', operational: true,  reason: 'Realized conventional DRAM/NAND supply squeeze from HBM reallocation.' }),
+  h2512_yilan:     Object.freeze({ direction: 'adverse', channel: 'downstream', operational: false, reason: 'Hazard signal — fabs confirmed unharmed.' }),
+  h2601_ease:      Object.freeze({ direction: 'mitigating', channel: 'downstream', operational: true,  reason: 'Realized licensing-path easing for near-frontier accelerators.' }),
+  h2603_memorypeak: Object.freeze({ direction: 'adverse', channel: 'downstream', operational: true,  reason: 'Realized peak of the memory price/allocation squeeze.' }),
+  h2604_match:     Object.freeze({ direction: 'adverse', channel: 'downstream', operational: false, reason: 'Introduced bill — no realized supply change unless enacted.' }),
+  h2606_subs:      Object.freeze({ direction: 'adverse', channel: 'downstream', operational: true,  reason: 'Realized closure of the offshore-subsidiary accelerator channel.' }),
+  h2606_mpban:     Object.freeze({ direction: 'adverse', channel: 'downstream', operational: true,  reason: 'Realized blacklist cutting Chinese inputs to U.S. REE producers.' }),
+
   // Bundled scenario presets (see server seed-data SCENARIOS) and the
   // in-app custom scenario builder, which — absent an explicit direction
   // supplied by the builder itself — defaults to an adverse downstream

@@ -1,43 +1,35 @@
-/* Generates app/src/data/vault-snapshot.json — a static snapshot of the vault,
-   built straight from server/src/seed-data.js (the same source the live
-   backend seeds from). Bundled into the frontend as a fallback for when the
-   vault API isn't reachable (e.g. a GitHub-Pages-only deploy with no backend
-   hosted yet) — see VaultContext.jsx. Runs automatically before `npm run
-   build` (see package.json "prebuild"); re-run manually via `npm run snapshot`
-   whenever server/src/seed-data.js changes and you want the static fallback
-   to reflect it. */
+/* Generates app/src/data/vault-snapshot.json — a static export of the vault,
+   read straight from the SQLite database at server/data/sscim.db (the same
+   database the live backend serves and the admin API writes to). The database
+   file is committed to the repo, so it — not any JS seed file — is the single
+   source of truth: edit the vault (admin API or SQL), re-run this script (or
+   just build), commit the updated .db, and the GitHub Pages deploy rebuilds
+   the bundled snapshot from it.
+
+   Runs automatically before `npm run dev` and `npm run build` (see package.json
+   "predev"/"prebuild"); re-run manually via `npm run snapshot`. If the database
+   is missing or empty (e.g. a fresh clone before the .db was ever committed),
+   it is bootstrapped once from server/src/seed-data.js. Also checkpoints the
+   WAL so the .db file on disk is complete and safe to commit. */
 import { writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
-import {
-  COUNTRY_NAMES, COUNTRY_POS, STAGES, FLOW_EDGES, TIER_LABELS,
-  COMPANIES, DOMAINS, CUSTOMERS, POLICIES, EVENTS, SCENARIOS, OWNERS,
-} from '../../server/src/seed-data.js';
-import { DATA_NOTES } from '../../server/src/data-notes.js';
+import { db } from '../../server/src/db.js';
+import { seedIfEmpty } from '../../server/src/seed-logic.js';
+import { buildBundle } from '../../server/src/bundle.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-const bundle = {
-  stages: STAGES,
-  flowEdges: FLOW_EDGES,
-  tierLabels: TIER_LABELS,
-  countries: Object.entries(COUNTRY_NAMES).map(([id, name]) => {
-    const [lat, lng] = COUNTRY_POS[id];
-    return { id, name, lat, lng };
-  }),
-  companies: COMPANIES.map((c) => ({ id: c.id, name: c.name, country: c.country, domain: DOMAINS[c.id] || null, stakes: c.stakes })),
-  customers: CUSTOMERS,
-  owners: OWNERS,
-  policies: POLICIES,
-  events: EVENTS.map((e) => ({
-    id: e.id, date: e.date, daysAgo: e.daysAgo, sev: e.sev, type: e.type, conf: e.conf,
-    title: e.title, summary: e.summary, first: e.first, second: e.second, watch: e.watch,
-    detail: e.detail ?? null, source: e.source ?? null, stages: e.stages, countries: e.countries, timeline: e.timeline ?? [],
-  })),
-  scenarios: SCENARIOS,
-  dataNotes: DATA_NOTES.map((n) => ({ scope: n.scope, tier: n.tier, note: n.note, source: n.source ?? null, created_at: null })),
-};
+if (seedIfEmpty()) {
+  console.log('Vault database was empty — bootstrapped it from server/src/seed-data.js.');
+}
+
+const bundle = buildBundle();
+
+// Fold any WAL content into the main .db file so the committed file is the
+// whole database (the -wal/-shm sidecars stay gitignored).
+db.pragma('wal_checkpoint(TRUNCATE)');
 
 const outPath = resolve(__dirname, '../src/data/vault-snapshot.json');
 writeFileSync(outPath, JSON.stringify(bundle), 'utf8');
-console.log(`Wrote static vault snapshot: ${outPath} (${COMPANIES.length} companies, ${STAGES.length} stages)`);
+console.log(`Wrote static vault snapshot from database: ${outPath} (${bundle.companies.length} companies, ${bundle.stages.length} stages, ${bundle.events.length} events)`);

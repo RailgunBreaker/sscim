@@ -109,4 +109,19 @@ CREATE TABLE IF NOT EXISTS data_notes (
   source     TEXT,
   created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
+
+-- Market quotes (price + P/E), refreshed by scripts/fetch-quotes.mjs from
+-- the curated ticker map (src/tickers.js). Display metadata only — never an
+-- input to the risk engine. Companies without a public listing have no row.
+CREATE TABLE IF NOT EXISTS quotes (
+  company_id  TEXT PRIMARY KEY REFERENCES companies(id),
+  ticker      TEXT NOT NULL,
+  price       REAL,
+  currency    TEXT,
+  change_pct  REAL,            -- regular-market day change, percent
+  trailing_pe REAL,            -- null when N/A (e.g. loss-making)
+  forward_pe  REAL,
+  market_cap  REAL,
+  as_of       TEXT NOT NULL    -- ISO timestamp of the fetch
+);
 `);

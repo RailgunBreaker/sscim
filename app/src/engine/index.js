@@ -479,17 +479,42 @@ export function buildEngine({ STAGES, FLOW_EDGES, COMPANIES, CUSTOMERS, POLICIES
     return out;
   }
 
-  /* ---------------- history: baseline-only, at past offsets from the snapshot date ---------------- */
-  const shiftedEvents = (t) => EVENTS.map((e) => ({ ...e, daysAgo: (e.daysAgo ?? 0) + t }));
-  const chainIndexAt = (t) => toDisplayIndex(operationalIndex(operationalField(shiftedEvents(t))));
+  /* ---------------- history: baseline-only, at past offsets from the snapshot date ----------------
+     At a date t days before the snapshot, an event's age was (daysAgo − t);
+     events with a negative age had not happened yet and are excluded — an
+     event must never contribute to the index before its own date. (The
+     earlier version ADDED t, which both pre-echoed future events into the
+     past and prevented any event from ever peaking on its own date.)
+     Events whose decayed magnitude is negligible (< 1e-4, i.e. older than
+     ~160 days at the 12-day half-life) are skipped for speed — this is what
+     makes the multi-year LONG_HISTORY below tractable. */
+  const eventsAsOf = (t) => EVENTS
+    .filter((e) => (e.daysAgo ?? 0) - t >= 0 && decay((e.daysAgo ?? 0) - t, MODEL_PRIORS.halfLifeDays) > 1e-4)
+    .map((e) => ({ ...e, daysAgo: (e.daysAgo ?? 0) - t }));
+  const chainIndexAt = (t) => toDisplayIndex(operationalIndex(operationalField(eventsAsOf(t))));
   const HISTORY = Array.from({ length: 22 }, (_, i) => chainIndexAt(21 - i)); // 21 days before snapshot -> snapshot date
-  const stageScoreAt = (sid, t) => toDisplayIndex(operationalField(shiftedEvents(t))[sid] ?? 0);
+  const stageScoreAt = (sid, t) => toDisplayIndex(operationalField(eventsAsOf(t))[sid] ?? 0);
+
+  /* Long-run computed history — weekly samples back to the oldest event,
+     plus an exact sample on each event's own date so spikes are not
+     attenuated by grid placement. Baseline events only, like HISTORY. */
+  const maxDaysAgo = EVENTS.reduce((m, e) => Math.max(m, e.daysAgo ?? 0), 0);
+  const longSpanDays = Math.min(maxDaysAgo + 14, 2400); // safety cap ~6.5y
+  const longOffsets = new Set([0]);
+  for (let t = 0; t <= longSpanDays; t += 7) longOffsets.add(t);
+  EVENTS.forEach((e) => {
+    const d = e.daysAgo ?? 0;
+    if (d > 0 && d <= longSpanDays) { longOffsets.add(d); longOffsets.add(Math.max(0, d - 3)); }
+  });
+  const LONG_HISTORY = [...longOffsets].sort((a, b) => b - a)
+    .map((t) => ({ daysAgo: t, index: chainIndexAt(t) }));
   const MOVERS7D = STAGES.map((s) => { const now = stageScoreAt(s.id, 0), prev = stageScoreAt(s.id, 7); return { id: s.id, now, d: now - prev }; })
     .sort((a, b) => Math.abs(b.d) - Math.abs(a.d));
 
   // bounded-output self-check — surfaces as a diagnostic rather than silently shipping NaN/Infinity to the UI
   Object.entries(NETWORK_INFLUENCE).forEach(([id, v]) => { if (!Number.isFinite(v)) diagnostics.error('bounds', `NETWORK_INFLUENCE[${id}] is not finite.`); });
   HISTORY.forEach((v, i) => { if (!Number.isFinite(v) || v < 0 || v > 10) diagnostics.error('bounds', `HISTORY[${i}] out of [0,10] bounds: ${v}`); });
+  LONG_HISTORY.forEach((p, i) => { if (!Number.isFinite(p.index) || p.index < 0 || p.index > 10) diagnostics.error('bounds', `LONG_HISTORY[${i}] out of [0,10] bounds: ${p.index}`); });
 
   return {
     OUT, IN, STAGE_BY_ID, COMPANY_BY_ID, SUPPLIERS, COUNTRY_LINKS, TOPO, REV_TOPO,
@@ -506,6 +531,6 @@ export function buildEngine({ STAGES, FLOW_EDGES, COMPANIES, CUSTOMERS, POLICIES
     COMPANY_IMPACTS, COMPANY_CRITICALITY, COMPANY_RANK, CAP_RANK,
 
     supplierSpread, companySpread, customerSpread, countryData,
-    structuralComponents, HISTORY, stageScoreAt, MOVERS7D,
+    structuralComponents, HISTORY, LONG_HISTORY, stageScoreAt, MOVERS7D,
   };
 }
