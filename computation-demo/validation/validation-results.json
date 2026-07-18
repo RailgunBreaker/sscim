@@ -1,0 +1,91 @@
+{
+  "partC": {
+    "chainIndexBase": 6.1357234971057615,
+    "matchedEngine": true
+  },
+  "partA": {
+    "design": {
+      "stages": 24,
+      "offsets": [
+        0,
+        3,
+        6,
+        9,
+        12,
+        15
+      ],
+      "nObs": 144,
+      "sigmaTrue": 0.02,
+      "replications": 200,
+      "start": [
+        0.4,
+        0.2,
+        8
+      ]
+    },
+    "summary": [
+      {
+        "parameter": "f_down",
+        "truth": 0.55,
+        "meanEstimate": 0.551217609026534,
+        "sdEstimate": 0.018294877638382587,
+        "meanSE": 0.017347322958505957,
+        "coverage95": 0.935
+      },
+      {
+        "parameter": "f_up",
+        "truth": 0.3,
+        "meanEstimate": 0.2992715114034638,
+        "sdEstimate": 0.006290236050329591,
+        "meanSE": 0.006359773325704635,
+        "coverage95": 0.94
+      },
+      {
+        "parameter": "halfLife",
+        "truth": 12,
+        "meanEstimate": 12.015755656586318,
+        "sdEstimate": 0.19423161361016533,
+        "meanSE": 0.19901298223662717,
+        "coverage95": 0.96
+      }
+    ]
+  },
+  "partB": {
+    "draws": 400,
+    "chainIndex": {
+      "base": 6.1357234971057615,
+      "mean": 6.132413282431377,
+      "p2_5": 5.965714567245026,
+      "p97_5": 6.328151937267911
+    },
+    "tsmcTop1Rate": 1,
+    "lithoStructuralTop1Rate": 1,
+    "advfabStructuralTopRate": 0,
+    "kendallTau": {
+      "mean": 0.9582449881073731,
+      "min": 0.8943255181787293
+    },
+    "top5Modal": [
+      {
+        "top5": "tsmc|nvidia|asml|samsung|foxconn",
+        "share": 0.58
+      },
+      {
+        "top5": "tsmc|nvidia|asml|foxconn|samsung",
+        "share": 0.1975
+      },
+      {
+        "top5": "tsmc|asml|nvidia|samsung|foxconn",
+        "share": 0.175
+      }
+    ],
+    "nvidiaCrit": {
+      "p2_5": 4.870629780952729,
+      "p97_5": 5.535031494118384
+    },
+    "asmlCrit": {
+      "p2_5": 4.049610908171564,
+      "p97_5": 5.352963028326653
+    }
+  }
+}
