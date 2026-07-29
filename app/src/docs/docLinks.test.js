@@ -1,18 +1,22 @@
 import { describe, it, expect } from 'vitest';
 import { marked } from 'marked';
-import { readFileSync } from 'node:fs';
-import path from 'node:path';
 import { resolvePath, addHeadingIds, rewriteLinks, pageFor, rootPrefix } from './docLinks.js';
-import { DOCUMENT_LIBRARY } from './generated-library.js';
+import { findMarkdownDocs } from '../../scripts/lib/find-markdown.mjs';
 
 /* Every Markdown file is published as its own page at <path>.md.html, so the
    documents keep their repo-relative links and the browser resolves them.
    These tests exist because the previous behaviour rendered those links
-   verbatim and /PUBLIC_GUIDE.md was a 404 on the deployed site. */
+   verbatim and /PUBLIC_GUIDE.md was a 404 on the deployed site.
 
-const repoDir = path.resolve(__dirname, '..', '..', '..');
-const KNOWN = new Set(DOCUMENT_LIBRARY.map((d) => d.path));
-const contentOf = (p) => readFileSync(path.join(repoDir, p), 'utf8');
+   Documents are discovered from disk with the same walk the build uses, not
+   read from src/docs/generated-library.js. That file is a gitignored build
+   artifact produced by `prebuild`, and CI runs `npm test` before `npm run
+   build` — importing it made this suite fail to load on a clean checkout
+   while passing locally. Walking the sources also means these tests assert
+   against the real documents rather than a snapshot of them. */
+
+const DOCS = await findMarkdownDocs();
+const KNOWN = new Set(DOCS.map((d) => d.path));
 
 describe('resolvePath', () => {
   it('resolves a sibling link', () => {
@@ -79,9 +83,9 @@ describe('page addressing', () => {
    Markdown path, and every document-to-document link must resolve to a
    document that actually exists. */
 describe('the whole library', () => {
-  const rendered = DOCUMENT_LIBRARY.map((doc) => ({
+  const rendered = DOCS.map((doc) => ({
     ...doc,
-    html: rewriteLinks(marked.parse(contentOf(doc.path), { gfm: true }), doc.path, KNOWN),
+    html: rewriteLinks(marked.parse(doc.content, { gfm: true }), doc.path, KNOWN),
   }));
 
   it('leaves no bare .md link in any rendered document', () => {
@@ -108,7 +112,7 @@ describe('the whole library', () => {
 
   it('lands every relative link on a real generated page path', () => {
     const broken = [];
-    const pages = new Set(DOCUMENT_LIBRARY.map((d) => pageFor(d.path)));
+    const pages = new Set(DOCS.map((d) => pageFor(d.path)));
     for (const doc of rendered) {
       for (const m of doc.html.matchAll(/<a [^>]*href="([^"]*)"/g)) {
         const href = m[1];
