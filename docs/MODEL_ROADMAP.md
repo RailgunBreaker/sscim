@@ -1,121 +1,244 @@
-# MODEL_ROADMAP — Deferred data-layer work
+# SSCIM project roadmap
 
-This document describes data and modeling work SSCIM's engine would need
-before any of its outputs could be called calibrated. **It describes
-deferred work; it does not implement any of it.** See `README.md` §4 for
-what the engine currently computes, and §9 for the full "Model status and
-limitations" statement.
+This roadmap records what SSCIM has already delivered, what changed from the
+earlier release, and what the project intends to build next. It is both a
+public progress record and a planning document for contributors.
 
-Every item below is a gap between "a transparent, inspectable prior" (what
-the current model provides) and "a measured or fitted parameter" (what
-would be required to support a real forecasting or loss-estimation claim).
+SSCIM is currently an **explainable sensitivity model**, not a calibrated
+forecasting system. A planned item is not evidence that the data, model, or
+interface already supports it.
 
-## 1. Dependence-type splits currently collapsed into one proxy
+## Status labels
 
-The engine's directional dependence matrices (`README.md` §4.4) are
-equal-allocation priors derived only from graph in/out-degree and a single
-analyst-judgment substitutability score. A real model would need each of
-the following kept as **separate, explicitly labeled measures** rather
-than one blended number:
+| Label | Meaning |
+| --- | --- |
+| **Delivered** | Implemented, documented, and available in the current codebase |
+| **In progress** | Work has started, but is not yet a dependable public capability |
+| **Planned** | Agreed direction; design and implementation remain |
+| **Research prerequisite** | Requires new evidence, definitions, or validation before implementation would be defensible |
 
-- **Buyer input dependence** — how much of buyer B's *physical input* comes
-  from supplier A (a bill-of-materials fact), vs. the current proxy, which
-  only encodes "how many declared inputs does B have."
-- **Supplier revenue dependence** — how much of supplier A's *revenue*
-  comes from buyer B (closer to what `CUSTOMERS`/`U` already approximates,
-  but from disclosed sales-share data, not a modeled prior).
-- **Qualification dependence** — whether B is technically *qualified* to
-  source the same input from an alternative supplier at all, independent
-  of current volume splits (a switching-feasibility fact, not a share).
-- **Capacity / utilization** — whether a supplier has spare capacity to
-  absorb a shift in demand, or is already running near full utilization
-  (changes how a shock actually propagates, independent of its share).
-- **Inventory days** — how many days of buffer stock sit between a
-  disruption at A and a felt effect at B (changes propagation *timing*,
-  which the current model does not represent at all — everything is
-  instantaneous plus decay from the origin).
-- **Time-to-recover (TTR) / time-to-switch (TTS)** — how long a disrupted
-  node takes to resume output, and how long a buyer takes to qualify and
-  ramp an alternate source — both absent from the current model, which has
-  no duration concept beyond the origin event's own decay half-life.
-- **Alternative-supplier count** — a count-based substitutability measure,
-  distinct from the current 0–10 analyst-judgment `subst` score.
+## Release history
 
-## 2. Geography currently conflated across three distinct concepts
+### Foundation release — delivered
 
-- **Facility geography** — where a company's actual production sites are.
-  Not currently modeled at all; the engine only has (a) stage-level country
-  *shares* (aggregate production share, not tied to any specific facility)
-  and (b) company *headquarters* country. Facility geography cannot be
-  inferred from either.
-- **Headquarters geography** — currently shown, correctly labeled "HQ:" in
-  the UI, but never a substitute for facility geography.
-- **Shipping / logistics geography** — physical transit routes and
-  chokepoints (straits, ports, airfreight lanes) are not modeled; the
-  "Taiwan Strait crisis" scenario simulates a severity shock at Taiwan-
-  linked stages, not an actual shipping-route disruption.
-- **End-customer geography** — where a stage's *output* is ultimately
-  consumed (vs. where it is produced) is not modeled; country scores
-  reflect production-side participation only.
+The first release established the research model and the public exploration
+interface:
 
-## 3. Market-share denominators and units that must not be merged
+- a versioned semiconductor supply-chain snapshot with 24 production stages
+  and 34 directed dependencies;
+- a deterministic propagation engine shared by historical events,
+  hypothetical scenarios, and company-disruption analysis;
+- map, industry-flow, topology, company, country, and event views;
+- structural-vulnerability and operational-impact measures kept separate;
+- declared and inspectable propagation priors, including a 12-day half-life;
+- source notes, methodology, calculation examples, and data audits;
+- a static publication that remains readable when the author's computer and
+  local API are offline.
 
-Several stages in the current snapshot blend measures that a real model
-would need to keep as separate series with explicit units and dates:
+This release made the method reproducible, but updating evidence still
+depended heavily on manual editing and the interface did not clearly separate
+reviewed source material from generated proposals.
 
-- **DRAM / NAND / HBM** must not share one denominator — they are
-  different products with different supply/demand dynamics and different
-  leading suppliers; `hbm` is already its own stage. `memory_fab` still
-  combines DRAM and NAND into one stage/denominator, but as of this
-  snapshot each company's share is a revenue-weighted *blend* of its
-  separate DRAM and NAND shares (see `data-notes.js` `stage:memory_fab`)
-  rather than one segment's share entered directly against the combined
-  total — the earlier version mixed the two without blending, which let
-  the modeled total exceed 100% (`audit:data` caught this as a >100%
-  warning). Splitting DRAM and NAND into two genuinely separate stages
-  remains the real fix; the blend is a stopgap that keeps the combined
-  total honest in the meantime.
-- **Merchant AI accelerators vs. captive hyperscaler ASICs** are different
-  markets (one is a company selling silicon to many buyers; the other is a
-  hyperscaler designing chips for its own infrastructure) and should not
-  share one "AI accelerator market share" denominator. `logic_ai` still
-  does — its modeled shares currently sum to just over 100%
-  (`audit:data` flags this) because NVIDIA's ~78% figure is a real,
-  tier-B-sourced share of the *merchant AI-accelerator* segment
-  specifically, while the other entries (AMD, Broadcom, Marvell, Google,
-  Amazon) are broader-logic/captive-silicon figures on a different,
-  not-directly-comparable base. Unlike `memory_fab`, this one hasn't been
-  corrected: public market-research estimates for AI-accelerator-segment
-  size and total-logic-market size disagree by roughly 4x depending on
-  source, so a blended combined-market number can't currently be computed
-  to the same evidence standard — the real fix is splitting `logic_ai`
-  into separate merchant-AI-accelerator and general-logic stages once
-  each has its own reliably sourced denominator.
-- **Advanced-node foundry capacity vs. total foundry revenue** are
-  different measures (a foundry can lead one and trail the other); the
-  current `adv_fab` stage's shares are a capacity-weighted judgment, not a
-  disclosed unit-consistent metric.
-- Every named company/stage share should eventually carry an explicit
-  **estimate type** (unit shipments, revenue, capacity), **date**,
-  **source**, and **evidence tier** (see `README.md` §8) rather than a
-  single unlabeled percentage.
+### Reviewed-vault release — delivered, current as of 30 July 2026
 
-## 4. Relationship-percentage semantics
+The current release turns the earlier snapshot into a reviewed publication
+workflow while retaining the static fallback:
 
-Every named supplier→customer relationship in `CUSTOMERS` must preserve,
-explicitly, whether its percentage is a **supplier revenue share** (what
-fraction of the supplier's sales this customer represents) or a **buyer
-input share** (what fraction of the buyer's input this supplier provides)
-— these are different numbers describing the same edge, and the current
-dataset only discloses the former. See `README.md` §4.4 and §9.
+- a SQLite evidence vault and an Express API for events, companies,
+  relationships, policies, ownership, computed history, and briefings;
+- a scheduled candidate pipeline that fetches source material, drafts
+  structured proposals, checks duplicates, and sends candidates to human
+  review;
+- an administrator dashboard for reviewing, approving, rejecting, and
+  publishing candidates without exposing an administrator-login link in the
+  public navigation;
+- an audit-and-test publication gate: approved changes generate a fresh
+  snapshot and are committed only when validation succeeds;
+- a Cloudflare Tunnel path for the live API, with the latest versioned static
+  snapshot retained as the public fallback;
+- a reviewed “What changed” briefing and a briefing archive backed by the
+  vault rather than hard-coded page copy;
+- resizable map, supply-chain, and Chain Index History panels;
+- Chain Index History windows for 3 days, 7 days, 30 days, 6 months, 1 year,
+  5 years, and all available history;
+- a redesigned topology workspace with clearer guidance, selectable nodes and
+  routes, connection inspection, comparison, and reversible edge sketching;
+- a responsive documentation reader with a document tree, in-document heading
+  navigation, automatic Markdown discovery, equations, and separate public,
+  academic, developer, architecture, data, and methodology guides;
+- a modernized visual system, improved typography, a visible white logo, and
+  removal of the duplicate methodology panel from the dashboard.
 
-## 5. Calibration
+#### What changed from the foundation release
 
-The propagation priors (`downstreamTransmission`, `upstreamTransmission`,
-`halfLifeDays`, `specificityFloor`, and the noisy-OR combination itself —
-see `README.md` §4.4–§4.7) are declared, not fit. A calibration pass would
-backtest them against documented historical disruption episodes (e.g. the
-2021 ABF substrate shortage, the 2023 Ga/Ge licensing action, successive
-export-control rounds) with observed downstream effects, and report
-goodness-of-fit — not simply pick coefficients that "look directionally
-sensible," as the current priors do.
+| Area | Foundation release | Current release |
+| --- | --- | --- |
+| Publication | Manually maintained static snapshot | Reviewed vault feeds a tested, versioned snapshot |
+| Evidence intake | Direct data editing | Candidate → human decision → audit → publication |
+| Availability | Static public site | Live API when reachable, static fallback at all times |
+| Event briefing | Page-level snapshot text | Reviewed vault briefing and archive |
+| History | Fixed presentation | Resizable chart with seven time windows |
+| Topology | Dense network display | Guided, interactive analysis workspace |
+| Documentation | Separate Markdown files | Searchable document and heading navigation |
+| Administration | Script-oriented review | Dedicated operations dashboard |
+
+## Planned releases
+
+The order below expresses dependency, not a promised delivery date.
+
+### 1. Operational hardening — planned
+
+The next engineering release should make the reviewed-vault workflow easier to
+operate and diagnose:
+
+- run the local API and tunnel as managed background services with restart and
+  health checks;
+- show pipeline runs, audit results, publication commits, and useful failure
+  logs in the administrator dashboard;
+- add documented backup, restore, and database-migration procedures;
+- add a public, citation-first archive for reviewed events and source articles,
+  distinct from the existing briefing archive;
+- make publication status explicit: approved in the vault, included in a
+  snapshot, committed, deployed, or failed at a gate;
+- strengthen duplicate-event review so one disruption represented by several
+  articles is not counted several times;
+- evaluate an optional managed always-on API without removing the static
+  fallback.
+
+### 2. Historical and research access — planned
+
+- retain longer, denser Chain Index and event histories;
+- let readers move from a chart point to the events, assumptions, and sources
+  that produced it;
+- export reproducible research bundles containing the commit, snapshot date,
+  parameters, selected event or scenario, outputs, and citations;
+- publish machine-readable data dictionaries and schema versions;
+- add accessibility review, keyboard-complete network controls, and improved
+  small-screen analysis layouts.
+
+### 3. Data-layer expansion — research prerequisite
+
+The current graph is stage-level and intentionally does not pretend to contain
+facility capacity, physical trade flow, inventory, or switching constraints.
+The following data must be acquired and defined before a capacity-constrained
+or time-dependent model would be credible.
+
+#### Dependence types that must remain separate
+
+The current directional dependence matrices are equal-allocation priors
+derived from graph in/out-degree and one analyst-judgment substitutability
+score. A future data layer needs separate measures for:
+
+- **buyer input dependence** — the fraction of buyer B's physical input that
+  comes from supplier A;
+- **supplier revenue dependence** — the fraction of supplier A's revenue that
+  comes from buyer B;
+- **qualification dependence** — whether B can technically source the same
+  input from an alternative supplier;
+- **capacity and utilization** — whether another supplier can absorb shifted
+  demand;
+- **inventory days** — the buffer between a disruption and a downstream
+  production effect;
+- **time to recover and time to switch** — distinct recovery and alternate-
+  qualification clocks;
+- **alternative-supplier count** — an observed measure kept separate from the
+  current 0–10 substitutability judgment.
+
+#### Geography that must not be conflated
+
+- **Facility geography** identifies actual production sites. It cannot be
+  inferred from company headquarters or aggregate country-stage shares.
+- **Headquarters geography** is already displayed as headquarters and must not
+  stand in for production location.
+- **Shipping and logistics geography** requires physical routes, ports,
+  straits, airfreight lanes, and chokepoints. Current geopolitical scenarios
+  shock linked stages; they do not simulate transport routes.
+- **End-customer geography** describes where output is consumed. Current
+  country scores describe production-side participation.
+
+#### Market denominators and units that must not be merged
+
+- **DRAM, NAND, and HBM** need separate denominators. HBM is already a separate
+  stage; `memory_fab` still uses a documented revenue-weighted DRAM/NAND blend
+  as a stopgap.
+- **Merchant AI accelerators and captive hyperscaler ASICs** are different
+  markets. The current `logic_ai` entries do not all share a directly
+  comparable denominator and remain audit-flagged.
+- **Advanced-node capacity and total foundry revenue** are different measures.
+  The current `adv_fab` shares are capacity-weighted judgments rather than one
+  disclosed, unit-consistent series.
+- Every share should carry an estimate type, unit, date, source, denominator,
+  and evidence tier.
+
+#### Relationship-percentage semantics
+
+Each supplier-to-customer percentage must state whether it is a supplier
+revenue share or a buyer input share. These numbers describe different sides
+of the same edge and are not interchangeable. The current named relationship
+dataset discloses the former; it does not establish the latter.
+
+### 4. Time- and capacity-aware model — planned after the data layer
+
+Once the required observations exist, the project can design and test:
+
+- inventory-buffered propagation rather than instantaneous edge transmission;
+- capacity limits, utilization, and alternative-supplier ramp constraints;
+- facility-level and logistics-route disruptions;
+- explicit recovery curves and scenario durations;
+- uncertainty ranges and sensitivity results for all newly measured inputs.
+
+This would be a new model version. It must not silently change historical
+scores computed under the current stage-level method.
+
+### 5. Calibration and validation — research prerequisite
+
+The current `downstreamTransmission`, `upstreamTransmission`,
+`halfLifeDays`, `specificityFloor`, and noisy-OR combination are declared
+priors, not fitted coefficients.
+
+A defensible calibration programme would:
+
+1. define observable outcomes before fitting;
+2. assemble documented disruption episodes with dated downstream effects,
+   such as the 2021 ABF substrate shortage, the 2023 gallium/germanium
+   licensing action, and successive export-control rounds;
+3. separate training events from held-out evaluation events;
+4. compare the current method with transparent baselines;
+5. report error measures, goodness-of-fit, sensitivity, missing-data rules,
+   and failure cases;
+6. publish the dataset and procedure sufficiently for independent
+   reproduction.
+
+Until that work succeeds, SSCIM outputs remain comparative modeled
+sensitivities—not probabilities, forecasts, realized losses, or investment
+signals.
+
+## Release gates
+
+Every future public release should satisfy all applicable gates:
+
+1. **Evidence** — claims have stable sources, dates, definitions, and evidence
+   tiers.
+2. **Human review** — automated analysis may draft a candidate but cannot
+   approve it.
+3. **Model integrity** — units, denominators, graph rules, and assumptions pass
+   the data audit.
+4. **Regression safety** — computation, API, UI, and publication tests pass.
+5. **Reproducibility** — the commit, snapshot date, model version, and
+   parameters can be recovered.
+6. **Documentation** — public meaning, developer impact, migration, and known
+   limitations are updated with the code.
+7. **Resilience** — a failed live service or publication run leaves the last
+   good static release available.
+
+## How contributors should use this roadmap
+
+Open a contribution against one named roadmap item and state its status.
+Research-prerequisite items should begin with evidence and definitions, not a
+UI control or an invented coefficient. When an item is delivered, move it into
+the release history with the commit and snapshot in which it became public.
+
+For the current equations, read the [Methodology](METHODOLOGY.md). For concrete
+inputs and outputs, read [Data sources, inputs, and outputs](DATA_SOURCES_AND_OUTPUTS.md).
+For deployment and fallback behaviour, read the
+[System architecture](SYSTEM_ARCHITECTURE.md).

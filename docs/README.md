@@ -52,14 +52,31 @@ Read the explanation, source, confidence label, and assumptions before using any
 | Set up, build, or change the software | [Developer guide](DEVELOPER_GUIDE.md) |
 | Understand the deployment | [System architecture](SYSTEM_ARCHITECTURE.md) |
 | Know what enters the model | [Data sources, inputs, and outputs](DATA_SOURCES_AND_OUTPUTS.md) |
+| See what earlier releases delivered and what comes next | [Project roadmap](MODEL_ROADMAP.md) |
 | Follow evidence to publication | [Data pipeline](computation-demo/DATA_PIPELINE.md) |
 | Find any document quickly | [Documentation reference](DOCUMENTATION_REFERENCE.md) |
+
+## Project status and roadmap
+
+The foundation release established the stage graph, deterministic propagation
+engine, and public analysis views. The current reviewed-vault release adds
+human approval, audited publication, a live API with a static fallback,
+historical time windows, an interactive topology workspace, archived
+briefings, and the integrated documentation reader.
+
+Next work is split deliberately between engineering and research. Operational
+hardening, publication logs, backups, and a citation-first event archive can
+advance with the current model. Facility capacity, inventory, qualification,
+logistics, time-to-recover, and calibrated coefficients require new evidence
+before the model can use them responsibly. The [project roadmap](MODEL_ROADMAP.md)
+records these items, their status, and the release gates for calling them
+delivered.
 
 ## Data and limits
 
 The public site is built from a versioned static snapshot. Sources, classifications, and company/country data are curated; model outputs are derived; propagation coefficients and certain stage judgments are **declared priors** — chosen to produce directionally sensible, reproducible, inspectable behaviour, and fitted to nothing.
 
-The model has no facility-level capacity, inventory, bill-of-materials, qualification, or recovery-time data. A real capacity-constrained shock, such as a fab physically destroyed, would propagate differently than this model predicts. See the [Model roadmap](MODEL_ROADMAP.md) for the full list of what calibration would require, and the [validation note](computation-demo/validation/MLE_VALIDATION.md) for what has and has not been established.
+The model has no facility-level capacity, inventory, bill-of-materials, qualification, or recovery-time data. A real capacity-constrained shock, such as a fab physically destroyed, would propagate differently than this model predicts. See the [project roadmap](MODEL_ROADMAP.md) for the full list of what calibration would require, and the [validation note](computation-demo/validation/MLE_VALIDATION.md) for what has and has not been established.
 
 ## Contributing
 
