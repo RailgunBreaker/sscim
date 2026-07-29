@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>SSCIM — page not found</title>
+<style>
+  :root{--bg:#0C111C;--panel:#141B2B;--line:#243149;--copper:#C98A3F;--text:#E9E4D8;--dim:#A5AEC0}
+  body{margin:0;min-height:100vh;display:grid;place-items:center;background:var(--bg);color:var(--text);
+       font-family:'Space Grotesk',system-ui,sans-serif;padding:24px}
+  main{max-width:520px;border:1px solid var(--line);background:var(--panel);border-radius:12px;padding:28px}
+  .eyebrow{font:10px ui-monospace,monospace;letter-spacing:1.6px;color:var(--copper)}
+  h1{font-size:24px;margin:8px 0 10px}
+  p{color:var(--dim);line-height:1.6;font-size:14px;margin:0 0 14px}
+  code{font:12px ui-monospace,monospace;background:#0F1626;border:1px solid var(--line);padding:1px 5px;border-radius:3px}
+  a{color:var(--copper)}
+</style>
+</head>
+<body>
+<main>
+  <div class="eyebrow">SSCIM</div>
+  <h1 id="title">Page not found</h1>
+  <p id="body">That address does not exist on this site.</p>
+  <p><a href="/index.html">Home</a> · <a href="/docs.html">Documentation</a> · <a href="/sscim-app.html">Dashboard</a></p>
+</main>
+<script>
+/* Documentation is rendered inside docs.html from Markdown bundled at build
+   time; there are no .md files on this host. Links shared before that was
+   true — e.g. /PUBLIC_GUIDE.md — would otherwise dead-end here, so translate
+   any .md request into the reader's route for that document instead. */
+(function () {
+  var path = decodeURIComponent(location.pathname.replace(/^\/+/, ''));
+  if (!/\.md$/i.test(path)) return;
+  var target = path.indexOf('/') === -1 ? 'docs/' + path : path;
+  document.getElementById('title').textContent = 'Opening the documentation reader…';
+  document.getElementById('body').textContent = 'Documentation is rendered inside the reader rather than served as files.';
+  location.replace('/docs.html#doc=' + encodeURIComponent(target));
+})();
+</script>
+</body>
+</html>

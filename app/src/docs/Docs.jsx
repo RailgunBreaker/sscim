@@ -1,6 +1,7 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { marked } from 'marked';
 import { DOCUMENT_LIBRARY } from './generated-library.js';
+import { addHeadingIds, rewriteLinks, parseHash } from './docLinks.js';
 
 const STYLE = `
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap');
@@ -8,13 +9,47 @@ const STYLE = `
 `;
 
 const labelFor = path => path.replace(/\.md$/i, '').replaceAll('_', ' ').replaceAll('/', ' / ');
-const renderMarkdown = current => marked.parse(current.content, { gfm: true, breaks: false });
+const KNOWN = new Set(DOCUMENT_LIBRARY.map(doc => doc.path));
+const DEFAULT_DOC = DOCUMENT_LIBRARY.find(doc => doc.path === 'docs/README.md')?.path || DOCUMENT_LIBRARY[0]?.path;
+
+/* Documents are authored to read correctly on GitHub, so their links are
+   repo-relative. Resolve and rewrite them against the containing document —
+   otherwise a link like `PUBLIC_GUIDE.md` navigates off the app to a path
+   that does not exist on a static host. See docLinks.js. */
+const renderMarkdown = current =>
+  rewriteLinks(addHeadingIds(marked.parse(current.content, { gfm: true, breaks: false })), current.path, KNOWN);
 
 export default function Docs() {
   const [query, setQuery] = useState('');
-  const [selected, setSelected] = useState(DOCUMENT_LIBRARY.find(doc => doc.path === 'docs/README.md')?.path || DOCUMENT_LIBRARY[0]?.path);
+  const [selected, setSelected] = useState(() => {
+    const fromHash = parseHash(window.location.hash);
+    return fromHash && KNOWN.has(fromHash.path) ? fromHash.path : DEFAULT_DOC;
+  });
   const docs = useMemo(() => DOCUMENT_LIBRARY.filter(doc => `${doc.path} ${doc.title}`.toLowerCase().includes(query.toLowerCase())), [query]);
   const current = DOCUMENT_LIBRARY.find(doc => doc.path === selected) || docs[0];
 
-  return <><style>{STYLE}</style><header><div className="bar"><span className="brand">SSCIM</span><span className="eyebrow">DOCUMENTATION LIBRARY</span><nav className="nav"><a href="index.html">Home</a><a href="intro.html">Guide</a><a className="button fill" href="sscim-app.html">Open dashboard</a></nav></div></header><main className="shell"><aside><p className="aside-title">PROJECT DOCUMENTS · {DOCUMENT_LIBRARY.length}</p><input className="search" value={query} onChange={event => setQuery(event.target.value)} placeholder="Filter documents…" aria-label="Filter documents" />{docs.length ? docs.map(doc => <button className={`doc ${doc.path === current?.path ? 'active' : ''}`} key={doc.path} onClick={() => setSelected(doc.path)}><strong>{doc.title.replace(/^SSCIM\s*[—-]\s*/, '')}</strong><small>{labelFor(doc.path)}</small></button>) : <p className="empty">No matching document.</p>}</aside><article className="content">{current && <><div className="content-header"><span className="path">{current.path}</span><h1>{current.title}</h1><p>Rendered from the project Markdown source. New Markdown files are included automatically on the next site build.</p></div><div className="note"><b>Reading note:</b> SSCIM separates evidence, declared assumptions, and computed outputs. Consult each document’s scope and limitations before relying on a result.</div><div className="markdown" dangerouslySetInnerHTML={{ __html: renderMarkdown(current) }} /></>}</article></main></>;
+  /* The rewritten links are plain `#doc=…` anchors, so navigation between
+     documents is ordinary hash navigation: shareable, and the back button
+     works without any interception. */
+  useEffect(() => {
+    const onHash = () => {
+      const parsed = parseHash(window.location.hash);
+      if (!parsed || !KNOWN.has(parsed.path)) return;
+      setSelected(parsed.path);
+      requestAnimationFrame(() => {
+        const target = parsed.anchor && document.getElementById(parsed.anchor);
+        (target || document.body).scrollIntoView(target ? { behavior: 'smooth' } : undefined);
+      });
+    };
+    window.addEventListener('hashchange', onHash);
+    return () => window.removeEventListener('hashchange', onHash);
+  }, []);
+
+  const choose = path => {
+    setSelected(path);
+    window.history.replaceState(null, '', `#doc=${encodeURIComponent(path)}`);
+    window.scrollTo({ top: 0 });
+  };
+
+  return <><style>{STYLE}</style><header><div className="bar"><span className="brand">SSCIM</span><span className="eyebrow">DOCUMENTATION LIBRARY</span><nav className="nav"><a href="index.html">Home</a><a href="intro.html">Guide</a><a className="button fill" href="sscim-app.html">Open dashboard</a></nav></div></header><main className="shell"><aside><p className="aside-title">PROJECT DOCUMENTS · {DOCUMENT_LIBRARY.length}</p><input className="search" value={query} onChange={event => setQuery(event.target.value)} placeholder="Filter documents…" aria-label="Filter documents" />{docs.length ? docs.map(doc => <button className={`doc ${doc.path === current?.path ? 'active' : ''}`} key={doc.path} onClick={() => choose(doc.path)}><strong>{doc.title.replace(/^SSCIM\s*[—-]\s*/, '')}</strong><small>{labelFor(doc.path)}</small></button>) : <p className="empty">No matching document.</p>}</aside><article className="content">{current && <><div className="content-header"><span className="path">{current.path}</span><h1>{current.title}</h1><p>Rendered from the project Markdown source. New Markdown files are included automatically on the next site build.</p></div><div className="note"><b>Reading note:</b> SSCIM separates evidence, declared assumptions, and computed outputs. Consult each document’s scope and limitations before relying on a result.</div><div className="markdown" dangerouslySetInnerHTML={{ __html: renderMarkdown(current) }} /></>}</article></main></>;
 }
