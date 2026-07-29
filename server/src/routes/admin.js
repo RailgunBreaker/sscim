@@ -1,15 +1,18 @@
 import { Router } from 'express';
 import { db } from '../db.js';
 import { adminAuth } from '../middleware/adminAuth.js';
-import { pendingCandidates, candidateById, approveCandidate, rejectCandidate, publishReview } from '../review-queue.js';
+import { candidates, pendingCandidates, candidateById, approveCandidate, rejectCandidate, publishReview, dashboardSummary } from '../review-queue.js';
 
 export const adminRouter = Router();
 adminRouter.use(adminAuth);
 
 /* ---- review queue (human gate for pipeline candidates) ---- */
 adminRouter.get('/review/candidates', (req, res) => {
-  res.json({ candidates: pendingCandidates() });
+  const status = ['pending', 'approved', 'rejected', 'all'].includes(req.query.status) ? req.query.status : 'pending';
+  res.json({ candidates: status === 'pending' ? pendingCandidates() : candidates(status) });
 });
+
+adminRouter.get('/dashboard', (req, res) => res.json(dashboardSummary()));
 
 adminRouter.get('/review/candidates/:id', (req, res) => {
   const candidate = candidateById(req.params.id);

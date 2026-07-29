@@ -18,8 +18,25 @@ const row = (r) => ({
   proposal: r.proposed_json ? JSON.parse(r.proposed_json) : null,
 });
 
+export function candidates(status = 'pending') {
+  const where = status === 'all' ? '' : 'WHERE status = ?';
+  return db.prepare(`SELECT * FROM event_candidates ${where} ORDER BY COALESCE(reviewed_at, created_at) DESC`).all(...(where ? [status] : [])).map(row);
+}
+
 export function pendingCandidates() {
-  return db.prepare(`SELECT * FROM event_candidates WHERE status = 'pending' ORDER BY date_iso DESC`).all().map(row);
+  return candidates('pending');
+}
+
+export function dashboardSummary() {
+  const counts = Object.fromEntries(db.prepare('SELECT status, COUNT(*) AS count FROM event_candidates GROUP BY status').all().map((r) => [r.status, r.count]));
+  const meta = Object.fromEntries(db.prepare('SELECT key, value FROM meta').all().map((r) => [r.key, r.value]));
+  const recentReviews = db.prepare(`SELECT id, status, reviewed_at, reviewed_by, proposed_json FROM event_candidates
+    WHERE status != 'pending' ORDER BY reviewed_at DESC LIMIT 8`).all().map((r) => ({ ...r, proposal: r.proposed_json ? JSON.parse(r.proposed_json) : null }));
+  return {
+    counts: { pending: counts.pending || 0, approved: counts.approved || 0, rejected: counts.rejected || 0 },
+    events: db.prepare('SELECT COUNT(*) AS count FROM events').get().count,
+    meta, recentReviews,
+  };
 }
 
 export function candidateById(id) {
