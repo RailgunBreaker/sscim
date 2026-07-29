@@ -9,22 +9,7 @@ const STYLE = `
 
 const labelFor = path => path.replace(/\.md$/i, '').replaceAll('_', ' ').replaceAll('/', ' / ');
 const docId = path => `doc-${path.replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, '').toLowerCase()}`;
-const resolveDocPath = (href, sourcePath) => {
-  if (!href || !/\.md(?:#.*)?$/i.test(href)) return null;
-  const [filePath] = href.split('#');
-  return new URL(filePath, `https://sscim.local/${sourcePath.substring(0, sourcePath.lastIndexOf('/') + 1)}`).pathname.slice(1);
-};
-const renderMarkdown = current => marked.parse(current.content, {
-  gfm: true,
-  breaks: false,
-  renderer: {
-    link({ href, tokens }) {
-      const target = resolveDocPath(href, current.path);
-      if (!target || !DOCUMENT_LIBRARY.some(doc => doc.path === target)) return false;
-      return `<a href="#${docId(target)}">${this.parser.parseInline(tokens)}</a>`;
-    },
-  },
-});
+const renderMarkdown = current => marked.parse(current.content, { gfm: true, breaks: false });
 
 export default function Docs() {
   const [query, setQuery] = useState('');
