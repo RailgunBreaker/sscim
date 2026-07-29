@@ -1,4 +1,5 @@
 import { db } from './db.js';
+import { getMetaBundle } from './meta.js';
 
 /* Reads the whole vault out of SQLite in the wire format the dashboard
    consumes. Shared by the live API (routes/public.js) and the static-snapshot
@@ -81,5 +82,6 @@ export function buildBundle() {
     scenarios: getScenarios(),
     dataNotes: getDataNotes(),
     quotes: getQuotes(),
+    meta: getMetaBundle(),
   };
 }

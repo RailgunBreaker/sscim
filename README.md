@@ -401,6 +401,46 @@ Every index — chain index, movers, per-stage operational scores, the full mult
 
 **Bootstrap/reset:** a fresh empty DB is auto-seeded from `server/src/seed-data.js` + `history-events.js` (on server start or first snapshot run); `npm run seed` in `server/` is the explicit full reset. `daysAgo` for historical events is always derived from their `dateISO` against `DATASET_AS_OF` — never hand-edited.
 
+### 6.7 The automated data pipeline (your PC as the backend)
+
+GitHub Pages is a pure static frontend. One machine — yours — owns the vault database and is the **only writer**: it fetches events, drafts them with Claude, recomputes every index, verifies the result, and pushes. Pages rebuilds from the commit. Your PC never accepts an inbound connection, so there is no port forwarding, no dynamic DNS, no TLS cert, and no public service on your desktop.
+
+**If your PC is down, nothing breaks.** The persistence layer is git, not a running server, so the last pushed commit keeps serving indefinitely. The failure mode that actually matters is the inverse — a *bad* push followed by your PC going offline — which is why verification gates the commit (below).
+
+```
+node scripts/pipeline.mjs          # from server/ — or: npm run pipeline
+    ingest → analyze → re-age → quotes → export → VERIFY → commit + push
+```
+
+| Stage | What it does |
+|---|---|
+| **ingest** | Pulls candidates from two free, keyless feeds: [USGS](https://earthquake.usgs.gov/fdsnws/event/1/) (quakes ≥ M6.0 within range of a modeled fab cluster — the Kumamoto event was caught this way) and the [Federal Register API](https://www.federalregister.gov/developers/documentation/api/v1) (all BIS documents, plus keyword-matched semiconductor actions from any agency). A dead feed logs and is skipped; it never blocks the run. |
+| **analyze** | Claude (`claude-opus-5`) reads each raw record and **drafts** the event — title, summary, first/second-order effects, and a **proposed** severity, direction, channel and operational flag — into the `event_candidates` review queue. Optional: without `ANTHROPIC_API_KEY` the pipeline still runs and queues candidates undrafted. |
+| **re-age** | Advances `meta.snapshot_date` to today and re-derives every event's age, so all indices and the multi-year history recompute (§6.6). |
+| **quotes** | Refreshes price/PE. Best-effort — a failure keeps the committed quotes. |
+| **export** | Regenerates the bundled snapshot from the database. |
+| **verify** | **The gate.** Runs `audit:data` and the full test suite. On failure the pipeline exits non-zero *before committing*, leaving the last good commit deployed. |
+| **publish** | Commits the `.db`, rebases on `origin/main`, pushes. A push failure leaves the commit local and retries next run. |
+
+Flags: `--dry-run` (everything except commit/push), `--no-ai`, `--since=YYYY-MM-DD`, `--until=YYYY-MM-DD`.
+
+**The AI proposes; you decide.** §4.8 states that event semantics are hand-curated and never inferred — that property is load-bearing for the scored index, so the pipeline preserves it structurally: the model writes only to `event_candidates`, never to `events`. Severity, direction, channel, and operational inclusion become real only when a human approves them:
+
+```bash
+node scripts/review.mjs list                      # pending candidates + what the AI proposed
+node scripts/review.mjs show <id>                 # raw upstream record beside the AI draft
+node scripts/review.mjs approve <id> --sev=7 --direction=adverse --channel=both --operational=true
+node scripts/review.mjs reject  <id> --reason="routine notice, no supply-chain effect"
+```
+
+Every proposed field can be overridden at approval time, and approval prints the `event-assumptions.js` entry to paste — an unclassified id is displayed but excluded from the scored index by design. The AI's own uncertainty (what the source did *not* establish — seismic and regulatory feeds never report fab-level impact) is recorded on each candidate and shown in the review UI.
+
+**Scheduling it (Windows).** `scripts/run-pipeline.ps1` wraps the run for Task Scheduler with logging and a non-swallowed exit code; its header carries the `Register-ScheduledTask` command. Run it once by hand with `-DryRun` first — the first run is what proves your credentials and git push work, which a scheduled run can't tell you interactively. `-StartWhenAvailable` catches up a run missed while the PC was asleep.
+
+**Credentials.** Put `ANTHROPIC_API_KEY` in `server/.env` (gitignored; `.env.example` documents it) — a scheduled task inherits no interactive shell environment, so the file is what the pipeline reads. For the push, use a deploy key or a fine-grained PAT scoped to this repo alone. No secret ever enters the repo or GitHub Actions, which is a large part of why the AI step runs on your PC rather than in CI.
+
+**Freshness is visible.** Because the model is time-based, the header shows a `SNAPSHOT <date> · updated Nd ago` badge that turns amber past a week — a visitor three weeks after the last run sees that the data is three weeks old rather than being shown stale numbers as current. It reads the vault's `source`, so if a live backend is ever configured it distinguishes live data from the fallen-back snapshot with no code change.
+
 **Stock quotes (price + P/E):** each company with a public listing (92 of 109; the ticker map with per-company notes is `server/src/tickers.js`) carries a market quote — price, day change, trailing/forward P/E, market cap — in the `quotes` table, shown in the company detail view and the Companies feed. Refresh with `node scripts/fetch-quotes.mjs` (from `server/`; Yahoo Finance batch endpoint, no API key). Because GitHub Pages is static, "live" means *as of the last build*: the deploy workflow re-fetches quotes best-effort on every build **and runs on a daily schedule** (`cron: 0 6 * * *`), so the public site's quotes refresh daily without a commit; the committed DB values are the fallback when the fetch fails. Companies quoted via a listed parent (Google/Alphabet, Sony Semiconductor/Sony Group, Siemens EDA/Siemens) are labeled with the parent's ticker; loss-making listings show "P/E n/a". Quotes are display metadata only — **never an input to any risk computation**.
 
 ---

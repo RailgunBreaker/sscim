@@ -22,7 +22,15 @@ import { buildAdjacency, buildDependenceMatrices, propagateFromSource, findTopPa
 import { validateGraph, createDiagnostics } from './diagnostics.js';
 import { getEventAssumption } from './event-assumptions.js';
 
-export function buildEngine({ STAGES, FLOW_EDGES, COMPANIES, CUSTOMERS, POLICIES, EVENTS, OWNERS }) {
+export function buildEngine({ STAGES, FLOW_EDGES, COMPANIES, CUSTOMERS, POLICIES, EVENTS, OWNERS, datasetAsOf }) {
+  /* The snapshot date is data, not a constant: the pipeline advances it in the
+     vault's `meta` table and it arrives on the bundle. Only the DISPLAYED date
+     varies — every event's age is already derived against it at sync time, so
+     the coefficients the model computes with are unchanged. Falls back to the
+     priors constant when a bundle predates the meta table. */
+  const PRIORS = datasetAsOf && datasetAsOf !== MODEL_PRIORS.datasetAsOf
+    ? Object.freeze({ ...MODEL_PRIORS, datasetAsOf })
+    : MODEL_PRIORS;
   const diagnostics = createDiagnostics();
   const stageIds = STAGES.map((s) => s.id);
 
@@ -518,7 +526,7 @@ export function buildEngine({ STAGES, FLOW_EDGES, COMPANIES, CUSTOMERS, POLICIES
 
   return {
     OUT, IN, STAGE_BY_ID, COMPANY_BY_ID, SUPPLIERS, COUNTRY_LINKS, TOPO, REV_TOPO,
-    MODEL_PRIORS, SENSITIVITY_PRESETS, diagnostics, graphValid: graphCheck.valid,
+    MODEL_PRIORS: PRIORS, SENSITIVITY_PRESETS, diagnostics, graphValid: graphCheck.valid,
 
     D, U, NETWORK_INFLUENCE, NETWORK_INFLUENCE_RANK, CHOKE, GEO_CONCENTRATION, GEO, POLICY_EXPOSURE, POLICY,
     STRUCTURAL_VULNERABILITY, STRUCTURAL_WEIGHTS, ECONOMIC_WEIGHT, STAGE_COMPANIES,

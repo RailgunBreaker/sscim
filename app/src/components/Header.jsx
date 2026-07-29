@@ -2,6 +2,7 @@ import { C } from '../theme.js';
 import { t } from '../i18n/index.js';
 import { useVault } from '../data/VaultContext.jsx';
 import SearchBox from './SearchBox.jsx';
+import Freshness from './Freshness.jsx';
 
 export default function Header({
   lang, setLang, setSel, scenarioId, setScenarioId, custom,
@@ -18,6 +19,7 @@ export default function Header({
         </div>
         <div style={{ color: C.dim, fontSize: 11.5, marginTop: 2 }}>
           {lang === "en" ? "Semiconductor Supply Chain Intelligence Map" : t("fullname")} · 24 · {COMPANIES.length} · 16
+          <span style={{ marginLeft: 8 }}><Freshness /></span>
         </div>
       </div>
       <div style={{ marginLeft: "auto", display: "flex", gap: 6, alignItems: "center", flexWrap: "wrap" }}>

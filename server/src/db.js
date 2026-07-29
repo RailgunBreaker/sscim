@@ -110,6 +110,40 @@ CREATE TABLE IF NOT EXISTS data_notes (
   created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
 
+-- Key/value metadata written by the pipeline. The snapshot_date key is the
+-- authoritative dataset-as-of date every event age derives from — the pipeline
+-- advances it on each run so the frozen-snapshot date stops being a constant
+-- two files have to agree on. last_run_at / last_run_status let the UI show
+-- how fresh the deployed data actually is.
+CREATE TABLE IF NOT EXISTS meta (
+  key        TEXT PRIMARY KEY,
+  value      TEXT,
+  updated_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+-- Review queue for pipeline-ingested events. Nothing here reaches the model
+-- until a human approves it: the AI step may DRAFT prose and PROPOSE a
+-- classification, but severity/direction/operational only become real when
+-- promoted into the events table via scripts/review.mjs. This is what keeps the
+-- "hand-curated, never inferred" property in README 4.8 true.
+CREATE TABLE IF NOT EXISTS event_candidates (
+  id            TEXT PRIMARY KEY,
+  status        TEXT NOT NULL DEFAULT 'pending',  -- pending | approved | rejected
+  source_feed   TEXT NOT NULL,                    -- usgs | federal-register | manual
+  source_ref    TEXT,                             -- upstream id/URL, for dedupe
+  date_iso      TEXT NOT NULL,
+  raw_json      TEXT NOT NULL,                    -- verbatim upstream record
+  proposed_json TEXT,                             -- AI-drafted event fields (null if AI step skipped)
+  ai_model      TEXT,                             -- which model drafted it, or null
+  ai_notes      TEXT,                             -- model's own uncertainty/reasoning summary
+  reviewed_by   TEXT,
+  reviewed_at   TEXT,
+  created_at    TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+CREATE UNIQUE INDEX IF NOT EXISTS idx_event_candidates_source
+  ON event_candidates (source_feed, source_ref);
+
 -- Market quotes (price + P/E), refreshed by scripts/fetch-quotes.mjs from
 -- the curated ticker map (src/tickers.js). Display metadata only — never an
 -- input to the risk engine. Companies without a public listing have no row.

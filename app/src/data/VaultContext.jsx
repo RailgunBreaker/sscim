@@ -45,12 +45,14 @@ function buildVaultState(bundle, source) {
     OWNERS: bundle.owners,
     DATA_NOTES: bundle.dataNotes,
     QUOTES: bundle.quotes || {}, // market quotes (price/PE) — display metadata, never an engine input
+    META: bundle.meta || {},     // snapshot date + last pipeline run, for the freshness readout
 
     COMP_META,
   };
   const engine = buildEngine({
     STAGES: data.STAGES, FLOW_EDGES: data.FLOW_EDGES, COMPANIES: data.COMPANIES,
     CUSTOMERS: data.CUSTOMERS, POLICIES: data.POLICIES, EVENTS: data.EVENTS, OWNERS: data.OWNERS,
+    datasetAsOf: bundle.meta?.snapshotDate,
   });
   return { status: 'ready', data, engine, source, error: null };
 }

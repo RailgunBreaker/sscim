@@ -6,9 +6,15 @@
   "scripts": {
     "dev": "node src/index.js",
     "start": "node src/index.js",
-    "seed": "node src/seed.js"
+    "seed": "node src/seed.js",
+    "pipeline": "node scripts/pipeline.mjs",
+    "pipeline:dry": "node scripts/pipeline.mjs --dry-run",
+    "review": "node scripts/review.mjs",
+    "sync": "node scripts/sync-events.mjs",
+    "quotes": "node scripts/fetch-quotes.mjs"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.115.0",
     "better-sqlite3": "^11.3.0",
     "cors": "^2.8.5",
     "express": "^4.19.2"

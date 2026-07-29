@@ -12,8 +12,13 @@
    Run from server/:  node scripts/sync-events.mjs
    Then re-export the snapshot:  cd ../app && npm run snapshot  */
 import { db } from '../src/db.js';
-import { HISTORY_EVENTS, DATASET_AS_OF, daysAgoOf } from '../src/history-events.js';
+import { HISTORY_EVENTS, daysAgoOf } from '../src/history-events.js';
 import { EVENTS as SEED_EVENTS } from '../src/seed-data.js';
+import { getSnapshotDate } from '../src/meta.js';
+
+// The snapshot date lives in the `meta` table (the pipeline advances it),
+// falling back to the DATASET_AS_OF constant for a DB that predates it.
+const DATASET_AS_OF = getSnapshotDate();
 
 const ALL = [...SEED_EVENTS, ...HISTORY_EVENTS];
 
@@ -34,7 +39,7 @@ const upsert = db.prepare(`INSERT INTO events (id, date, days_ago, sev, type, co
 db.transaction(() => {
   for (const e of ALL) {
     upsert.run({
-      id: e.id, date: e.date, days_ago: daysAgoOf(e.dateISO), sev: e.sev, type: e.type, conf: e.conf,
+      id: e.id, date: e.date, days_ago: daysAgoOf(e.dateISO, DATASET_AS_OF), sev: e.sev, type: e.type, conf: e.conf,
       title: e.title, summary: e.summary ?? null, first: e.first ?? null, second: e.second ?? null, watch: e.watch ?? null,
       detail: e.detail ?? null, source: e.source ?? null,
       stages_json: JSON.stringify(e.stages ?? []), countries_json: JSON.stringify(e.countries ?? []),
