@@ -14,7 +14,7 @@ app/                       Vite/React static frontend and the model implementati
   scripts/
     build-vault-snapshot.mjs   SQLite vault → src/data/vault-snapshot.json
     audit-snapshot.mjs         read-only data diagnostics; the publication gate
-    build-doc-library.mjs      scans repo .md → src/docs/generated-library.js
+    build-doc-library.mjs      scans repo .md → bundled fallback + runtime manifest
   src/
     engine/                  the deterministic model (see below)
     components/              dashboard UI
@@ -136,6 +136,7 @@ docs/computation-demo/DATA_PIPELINE.md →  /docs/computation-demo/DATA_PIPELINE
 Because the output tree mirrors the source tree, documents keep ordinary repo-relative links and they resolve correctly in both places — on GitHub as Markdown, and on the site once `.html` is appended. Write `[Public guide](PUBLIC_GUIDE.md)` and it works in both.
 
 - **Adding a document:** drop a `.md` file anywhere outside the ignored dependency and build folders. Discovery is a filesystem walk (`app/scripts/lib/find-markdown.mjs`), so the next build publishes it, lists it on `/docs.html`, and indexes it at `/docs/` with nothing to register. Pushing to `main` triggers the Pages workflow, so it goes live on its own.
+- **Cache-safe discovery:** the build writes both a bundled fallback and `/docs-manifest.json`. The documentation landing page requests that manifest with cache bypass, so an older cached `docs.html` shell can still show documents from the newest deployment. If the request fails, the complete bundled list remains available.
 - **Reading order:** the first several documents are ordered by the `PRIORITY` list in `app/scripts/lib/find-markdown.mjs`; everything else is alphabetical.
 - **Link targets that are not documents** — source files, CSVs, directories — are rewritten to GitHub blob URLs rather than to paths this static host does not serve.
 - **Heading anchors** are generated from the heading text, GitHub-style, so `METHODOLOGY.md#operational-layer` works.

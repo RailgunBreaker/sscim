@@ -20,6 +20,7 @@ export const PRIORITY = [
   'docs/PUBLIC_GUIDE.md',
   'docs/METHODOLOGY.md',
   'docs/calculation.md',
+  'docs/MODEL_ROADMAP.md',
   'docs/SYSTEM_ARCHITECTURE.md',
   'docs/DATA_SOURCES_AND_OUTPUTS.md',
   'docs/DEVELOPER_GUIDE.md',

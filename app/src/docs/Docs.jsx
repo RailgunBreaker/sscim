@@ -65,6 +65,7 @@ const readHash = () => {
 export default function Docs() {
   const [query, setQuery] = useState('');
   const [active, setActive] = useState(readHash);
+  const [library, setLibrary] = useState(DOCUMENT_LIBRARY);
 
   useEffect(() => {
     const onHash = () => setActive(readHash());
@@ -72,11 +73,33 @@ export default function Docs() {
     return () => window.removeEventListener('hashchange', onHash);
   }, []);
 
+  useEffect(() => {
+    let cancelled = false;
+    const url = new URL('docs-manifest.json', document.baseURI);
+    url.searchParams.set('v', Date.now().toString());
+
+    fetch(url, { cache: 'no-store' })
+      .then((response) => {
+        if (!response.ok) throw new Error(`Documentation manifest returned ${response.status}`);
+        return response.json();
+      })
+      .then((manifest) => {
+        if (!cancelled && Array.isArray(manifest?.documents) && manifest.documents.length > 0) {
+          setLibrary(manifest.documents);
+        }
+      })
+      .catch(() => {
+        /* The generated module remains a complete offline/static fallback. */
+      });
+
+    return () => { cancelled = true; };
+  }, []);
+
   const counts = useMemo(() => {
     const c = new Map();
-    for (const doc of DOCUMENT_LIBRARY) for (const tag of doc.tags || []) c.set(tag, (c.get(tag) || 0) + 1);
+    for (const doc of library) for (const tag of doc.tags || []) c.set(tag, (c.get(tag) || 0) + 1);
     return c;
-  }, []);
+  }, [library]);
 
   const tags = useMemo(
     () => [...counts.keys()].sort((a, b) => {
@@ -95,7 +118,7 @@ export default function Docs() {
 
   const { matched, groups } = useMemo(() => {
     const q = query.trim().toLowerCase();
-    const list = DOCUMENT_LIBRARY.filter((doc) => {
+    const list = library.filter((doc) => {
       const hitsQuery = `${doc.path} ${doc.title}`.toLowerCase().includes(q);
       const hitsTag = active.length === 0 || (doc.tags || []).some((t) => active.includes(t));
       return hitsQuery && hitsTag;
@@ -107,7 +130,7 @@ export default function Docs() {
       map.get(dir).push(doc);
     }
     return { matched: list, groups: map };
-  }, [query, active]);
+  }, [query, active, library]);
 
   return <>
     <style>{STYLE}</style>
@@ -138,7 +161,7 @@ export default function Docs() {
         {active.length > 0 && <button type="button" className="clear" onClick={clear}>clear</button>}
       </div>
 
-      <p className="count">{matched.length} OF {DOCUMENT_LIBRARY.length} DOCUMENTS{active.length ? ` · ${active.map(labelFor).join(' + ')}` : ''}</p>
+      <p className="count">{matched.length} OF {library.length} DOCUMENTS{active.length ? ` · ${active.map(labelFor).join(' + ')}` : ''}</p>
       {matched.length === 0 && <p className="empty">No document matches that combination.</p>}
       {[...groups].map(([dir, list]) => <section key={dir}>
         <p className="group">{dir.toUpperCase()}</p>
