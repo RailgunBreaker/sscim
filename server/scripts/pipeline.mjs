@@ -76,7 +76,7 @@ function run(cmd, cmdArgs, cwd) {
 const nodeScript = (relPath, cwd) => run('node', [relPath], cwd);
 
 async function main() {
-  log(`Pipeline start — window ${SINCE} → ${UNTIL}${DRY_RUN ? ' (dry run)' : ''}`);
+  log(`Pipeline start - window ${SINCE} -> ${UNTIL}${DRY_RUN ? ' (dry run)' : ''}`);
 
   /* ---- 1. Ingest ------------------------------------------------------- */
   const feeds = [
@@ -95,7 +95,7 @@ async function main() {
       candidates.push(...found);
     } catch (err) {
       // A dead feed must not block the rest of the run.
-      log(`  ingest ${name}: FAILED (${err.message}) — continuing`);
+      log(`  ingest ${name}: FAILED (${err.message}) - continuing`);
     }
   }
 
@@ -140,7 +140,7 @@ async function main() {
   } else if (backend === 'none') {
     log(`  AI step skipped (${NO_AI ? '--no-ai' : 'no backend available'}); ${undrafted.length} candidate(s) queued undrafted`);
   } else if (backend === 'claude-code') {
-    log(`  analyzing ${undrafted.length} candidate(s) via Claude Code (one batched call)…`);
+    log(`  analyzing ${undrafted.length} candidate(s) via Claude Code (one batched call)...`);
     const rows = undrafted.map((r) => ({ id: r.id, sourceFeed: r.source_feed, dateISO: r.date_iso, raw: JSON.parse(r.raw_json) }));
     const results = await analyzeBatchWithClaudeCode(rows);
     for (const row of rows) {
@@ -149,7 +149,7 @@ async function main() {
       logVerdict(row.id, proposal);
     }
   } else {
-    log(`  analyzing ${undrafted.length} candidate(s) via the Anthropic API…`);
+    log(`  analyzing ${undrafted.length} candidate(s) via the Anthropic API...`);
     for (const row of undrafted) {
       const { proposal, model, notes } = await analyzeCandidate({
         sourceFeed: row.source_feed, sourceRef: row.source_ref,
@@ -171,7 +171,7 @@ async function main() {
   try {
     log(run('node', ['scripts/fetch-quotes.mjs'], SERVER_DIR).trim().split('\n')[0]);
   } catch (err) {
-    log(`  quote refresh failed (${err.message.split('\n')[0]}) — keeping committed quotes`);
+    log(`  quote refresh failed (${err.message.split('\n')[0]}) - keeping committed quotes`);
   }
 
   /* ---- 5. Export the snapshot ------------------------------------------ */
@@ -186,7 +186,7 @@ async function main() {
     setMeta('last_run_at', new Date().toISOString());
     setMeta('last_run_status', 'blocked: verification failed');
     db.pragma('wal_checkpoint(TRUNCATE)');
-    console.error('\nVERIFICATION FAILED — nothing published. The last good commit stays deployed.\n');
+    console.error('\nVERIFICATION FAILED - nothing published. The last good commit stays deployed.\n');
     console.error((err.stdout || '') + (err.stderr || err.message));
     process.exit(1);
   }
@@ -200,7 +200,7 @@ async function main() {
   if (!dirty) {
     log('  no database changes to publish');
   } else if (DRY_RUN) {
-    log('  dry run — skipping commit/push');
+    log('  dry run - skipping commit/push');
   } else {
     run('git', ['add', 'server/data/sscim.db'], REPO_DIR);
     const msg = `Data pipeline: snapshot ${UNTIL}${queued ? `, ${queued} new candidate(s)` : ''}${pending ? `, ${pending} pending review` : ''}`;
@@ -208,15 +208,15 @@ async function main() {
     try {
       run('git', ['pull', '--rebase', 'origin', 'main'], REPO_DIR);
       run('git', ['push', 'origin', 'main'], REPO_DIR);
-      log('  published — Pages will rebuild');
+      log('  published - Pages will rebuild');
     } catch (err) {
       // Committed locally but not pushed: the next run retries the push.
-      log(`  push FAILED (${err.message.split('\n')[0]}) — commit is local, will retry next run`);
+      log(`  push FAILED (${err.message.split('\n')[0]}) - commit is local, will retry next run`);
       process.exit(1);
     }
   }
 
-  if (pending) log(`\n  ${pending} candidate(s) awaiting review — run: node scripts/review.mjs list`);
+  if (pending) log(`\n  ${pending} candidate(s) awaiting review - run: node scripts/review.mjs list`);
   log('Pipeline done.');
 }
 
