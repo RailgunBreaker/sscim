@@ -14,7 +14,7 @@ export default function Header({
     <header style={{ borderBottom: `1px solid ${C.line}`, padding: "12px 16px", display: "flex", flexWrap: "wrap", gap: 10, alignItems: "center" }}>
       <div>
         <div style={{ display: "flex", alignItems: "baseline", gap: 10 }}>
-          <a href="index.html" title="Back to home" aria-label="SSCIM home" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}><img src="sscim-logo.png" alt="SSCIM" style={{ display: 'block', width: 96, height: 'auto' }} /></a>
+          <a href="index.html" title="Back to home" aria-label="SSCIM home" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}><img src="sscim-logo.png" alt="SSCIM" style={{ display: 'block', width: 96, height: 'auto', filter: 'grayscale(1) brightness(0) invert(1)' }} /></a>
           <span className="mono" style={{ color: C.copper, fontSize: 10, letterSpacing: 2 }}>v4 · OSM MAP · COMPANY SPREAD</span>
         </div>
         <div style={{ color: C.dim, fontSize: 11.5, marginTop: 2 }}>

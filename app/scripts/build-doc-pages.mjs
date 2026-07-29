@@ -48,7 +48,7 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:'Space Grotesk'
 a{color:var(--copper);text-decoration:none}a:hover{text-decoration:underline}
 header{position:sticky;top:0;z-index:5;border-bottom:1px solid var(--line);background:rgba(12,17,28,.94);backdrop-filter:blur(10px)}
 .bar{max-width:1280px;margin:auto;padding:12px 24px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-.brand{display:flex;align-items:center;color:var(--text)}.brand img{display:block;width:92px;height:auto}
+.brand{display:flex;align-items:center;color:var(--text)}.brand img{display:block;width:92px;height:auto;filter:grayscale(1) brightness(0) invert(1)}
 .eyebrow,.path{font:10px ui-monospace,'IBM Plex Mono',monospace;color:var(--copper);letter-spacing:1.4px}
 .nav{display:flex;gap:14px;margin-left:auto;font-size:13px}
 .page{max-width:1280px;margin:auto;padding:28px 24px 90px;display:grid;grid-template-columns:250px minmax(0,1fr);gap:34px}
@@ -56,6 +56,7 @@ header{position:sticky;top:0;z-index:5;border-bottom:1px solid var(--line);backg
 .tree-title{display:flex;align-items:center;justify-content:space-between;margin:0 4px 8px;color:var(--faint);font:10px ui-monospace,'IBM Plex Mono',monospace;letter-spacing:1.3px}.tree-title a{color:var(--copper)}
 .tree-list{list-style:none;margin:0;padding:0}.tree-list .tree-list{margin-left:12px;padding-left:8px;border-left:1px solid var(--line)}
 .tree-folder{display:block;margin:10px 0 3px;color:var(--dim);font:10px ui-monospace,'IBM Plex Mono',monospace;letter-spacing:.7px}.tree-file{display:block;padding:5px 7px;border-radius:4px;color:var(--dim);font-size:12px;line-height:1.35;overflow-wrap:anywhere}.tree-file:hover{background:var(--panel);color:var(--text);text-decoration:none}.tree-file.current{background:rgba(201,138,63,.16);color:var(--text);box-shadow:inset 2px 0 var(--copper)}
+.sidebar-section+.sidebar-section{border-top:1px solid var(--line);margin-top:14px;padding-top:12px}.toc-list{list-style:none;margin:0;padding:0}.toc-list li{margin:3px 0}.toc-list a{display:block;padding:3px 7px;color:var(--faint);font-size:11px;line-height:1.35;overflow-wrap:anywhere}.toc-list a:hover{color:var(--text);background:var(--panel);border-radius:4px;text-decoration:none}.toc-list .level-3{padding-left:16px}.toc-list .level-4{padding-left:25px;color:var(--faint)}
 .reader{min-width:0}.mobile-tree{display:none}.reader-main{max-width:1000px}
 .content-header{border-bottom:1px solid var(--line);padding-bottom:22px;margin-bottom:30px}
 .content-header h1{margin:8px 0 5px;font-size:clamp(26px,4vw,40px);letter-spacing:-.8px;line-height:1.15}
@@ -144,8 +145,17 @@ function makeTree(items, currentPath, fromPath) {
   return render(root);
 }
 
-function readerLayout({ content, tree, title = 'FILES', indexHref = 'docs.html' }) {
-  return `<div class="page"><aside class="doc-tree"><p class="tree-title">${title}<a href="${indexHref}">INDEX</a></p>${tree}</aside><details class="mobile-tree"><summary>Browse documentation files</summary>${tree}</details><main class="reader"><div class="reader-main">${content}</div></main></div>`;
+function makeToc(html) {
+  const items = [...html.matchAll(/<h([2-4]) id="([^"]+)">([\s\S]*?)<\/h\1>/g)]
+    .map(([, level, id, inner]) => ({ level, id, text: inner.replace(/<[^>]*>/g, '').replace(/&amp;/g, '&') }));
+  if (!items.length) return '';
+  return `<ul class="toc-list">${items.map(({ level, id, text }) => `<li><a class="level-${level}" href="#${escape(id)}">${escape(text)}</a></li>`).join('')}</ul>`;
+}
+
+function readerLayout({ content, tree, toc = '', indexHref = 'docs.html' }) {
+  const files = `<section class="sidebar-section"><p class="tree-title">FILES<a href="${indexHref}">INDEX</a></p>${tree}</section>`;
+  const headings = toc ? `<section class="sidebar-section"><p class="tree-title">ON THIS PAGE</p>${toc}</section>` : '';
+  return `<div class="page"><aside class="doc-tree">${files}${headings}</aside><details class="mobile-tree"><summary>Browse documentation</summary>${files}${headings}</details><main class="reader"><div class="reader-main">${content}</div></main></div>`;
 }
 
 let written = 0;
@@ -170,7 +180,7 @@ for (const doc of docs) {
 <a href="https://github.com/RailgunBreaker/sscim/blob/main/${doc.path}">View source on GitHub</a> ·
 <a href="${root}docs.html">All documents</a></p>`;
 
-  const body = readerLayout({ content, tree: makeTree(docs, doc.path, doc.path), indexHref: `${root}docs.html` });
+  const body = readerLayout({ content, tree: makeTree(docs, doc.path, doc.path), toc: makeToc(html), indexHref: `${root}docs.html` });
   const target = path.join(outDir, pageFor(doc.path));
   await mkdir(path.dirname(target), { recursive: true });
   await writeFile(target, shell({ title: doc.title, path: pageFor(doc.path), body, root }), 'utf8');
