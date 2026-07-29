@@ -68,7 +68,7 @@ describe('App smoke (static snapshot, Leaflet mocked)', () => {
     // The interaction lens bar and research-language footer should render
     // once the vault is ready (snapshot fallback).
     expect(text).toContain('LENS');
-    expect(text.toUpperCase()).toContain('RESEARCH PROTOTYPE');
+    expect(text.toUpperCase()).toContain('SSCIM INTELLIGENCE');
 
     await act(async () => { root.unmount(); });
     container.remove();

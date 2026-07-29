@@ -70,7 +70,7 @@ export default function Intro() {
         <div className="wrap">
           <span className="logo">SSCIM</span>
           <span className="k mono">INTRODUCTION & USER GUIDE</span>
-          <span className="badge">RESEARCH PROTOTYPE</span>
+          <span className="badge">SSCIM INTELLIGENCE</span>
           <span className="langbar mono" style={{ marginLeft: 'auto', display: 'flex', gap: 3 }}>
             {Object.entries(LANG_LABELS).map(([l, label]) => (
               <b key={l} className={lang === l ? 'on' : ''} onClick={() => setLang(l)}>{label}</b>
@@ -82,7 +82,7 @@ export default function Intro() {
 
       <div className="wrap intro-hero">
         <Html tag="h1" html={t('h1')} />
-        <p className="lede">{t('lede')}</p>
+        <p className="lede">{t('currentLede')}</p>
         <div className="signal" aria-hidden="true"><i /><i /><i /><i /><i /><i /></div>
 
         <h2>{t('h2_1')}</h2>
@@ -127,7 +127,7 @@ export default function Intro() {
 
         <h2>{t('h2_5')}</h2>
         <div className="disclaimer">
-          <Html tag="span" html={t('s5Body')} />
+          <Html tag="span" html={t('currentDisclaimer')} />
         </div>
 
         <p style={{ marginTop: 28 }}><a className="btn solid" href="sscim-app.html">{t('launchDashboardBottom')}</a></p>
@@ -135,7 +135,7 @@ export default function Intro() {
 
       <footer>
         <div className="wrap">
-          <p><strong style={{ color: 'var(--dim)' }}>SSCIM</strong> · a GP News product · map data © OpenStreetMap contributors · {t('footerText')}</p>
+          <p><strong style={{ color: 'var(--dim)' }}>SSCIM</strong> · a GP News product · map data © OpenStreetMap contributors · {t('currentFooter')}</p>
         </div>
       </footer>
     </>

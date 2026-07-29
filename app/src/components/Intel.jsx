@@ -61,7 +61,7 @@ export default function Intel({ sel, setSel, model, scenario, onResetScenario, o
           {feedTab === "capital" && (
             <>
               <div className="mono" style={{ fontSize: 9.5, color: C.faint, marginBottom: 8, lineHeight: 1.5 }}>
-                CAPITAL POWER = Σ ownership% × company systemic criticality (§10 in ⓘ Methodology). <b>Not</b> a 0–10 score — it's an unbounded ranking number, useful only to compare owners against each other. <span style={{ color: C.amber }}>Amber = state-linked capital.</span> Sample data from public filings.
+                CAPITAL POWER = Σ ownership% × company systemic criticality (§10 in ⓘ Methodology). <b>Not</b> a 0–10 score — it's an unbounded ranking number, useful only to compare owners against each other. <span style={{ color: C.amber }}>Amber = state-linked capital.</span> Data from public filings.
               </div>
               {CAP_RANK.slice(0, 14).map((r, i) => (
                 <div key={r.o} style={{ border: `1px solid ${C.line}`, background: C.panel, borderRadius: 6, padding: "7px 10px", marginBottom: 6 }}>

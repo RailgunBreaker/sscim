@@ -450,10 +450,10 @@ function DashboardBody() {
       {showBriefing && <Briefing onClose={() => setShowBriefing(false)} model={model} scenario={scenario} />}
 
       <footer className="mono" style={{ padding: "10px 16px", fontSize: 10, color: C.faint, borderTop: `1px solid ${C.line}`, lineHeight: 1.6 }}>
-        RESEARCH PROTOTYPE · A sensitivity/comparison tool over a frozen curated demonstration snapshot (as of {model.datasetAsOf}) — not a calibrated, causal, or probabilistic forecast, and not investment advice.
+        SSCIM INTELLIGENCE · Supply-chain sensitivity and comparison analysis (data as of {model.datasetAsOf}) — not a calibrated, causal, or probabilistic forecast, and not investment advice.
         Map data © OpenStreetMap contributors · model {model.modelVersion}.
         {source === 'static' && (
-          <span style={{ color: C.amber }}> · STATIC SNAPSHOT — no vault API connected, showing a build-time data snapshot instead of the live backend.</span>
+          <span style={{ color: C.amber }}> · DATA SERVICE UNAVAILABLE — showing the latest available dataset.</span>
         )}
         {!model.graphValid && (
           <span style={{ color: C.red }}> · MODEL DIAGNOSTIC: the stage graph failed validation — see ⓘ Methodology.</span>

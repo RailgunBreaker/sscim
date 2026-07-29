@@ -8,6 +8,9 @@
 export const LANG_LABELS = { en: 'EN', zh: '简', tw: '繁', ja: '日' };
 
 export const T = {
+  currentLede: { en: 'SSCIM is a supply-chain sensitivity and comparison platform for understanding how events move through the semiconductor ecosystem.' },
+  currentDisclaimer: { en: 'SSCIM provides descriptive sensitivity analysis. It is not a calibrated forecast or investment advice.' },
+  currentFooter: { en: 'Data reflects public-source research and analyst review. Not investment advice.' },
   navHome: { en: 'Home', zh: '首页', tw: '首頁', ja: 'ホーム' },
   launchDashboard: { en: 'Launch dashboard →', zh: '启动仪表盘 →', tw: '啟動儀表板 →', ja: 'ダッシュボード起動 →' },
   h1: {
@@ -17,7 +20,7 @@ export const T = {
     ja: 'チップ供給網を<em>モデル化されたシステム</em>として見る',
   },
   lede: {
-    en: 'SSCIM — the Semiconductor Supply Chain Intelligence Map — is a research prototype: a sensitivity and comparison engine over a frozen demonstration snapshot of the global chip ecosystem. This page explains what it is, how it thinks, and how to use every part of it in about five minutes.',
+    en: 'SSCIM — the Semiconductor Supply Chain Intelligence Map — is a supply-chain sensitivity and comparison platform. This page explains what it is, how it works, and how to use every part of it in about five minutes.',
     zh: 'SSCIM——半导体供应链情报图——是一个研究原型：一个基于全球芯片生态冻结演示快照的敏感性与比较引擎。本页用约五分钟解释它是什么、如何思考、以及每个部分怎么用。',
     tw: 'SSCIM——半導體供應鏈情報圖——是一個研究原型：一個基於全球晶片生態凍結示範快照的敏感度與比較引擎。本頁用約五分鐘解釋它是什麼、如何思考、以及每個部分怎麼用。',
     ja: 'SSCIM（半導体サプライチェーン・インテリジェンスマップ）はリサーチ・プロトタイプです：世界のチップ・エコシステムの凍結されたデモ用スナップショットに基づく感度分析・比較エンジン。このページでは約5分で、その概要・仕組み・使い方を説明します。',
@@ -35,7 +38,7 @@ export const T = {
     ja: '半導体は地球上で最も地政学的に集中した産業です：オランダの一社があらゆるEUV露光装置を製造し、一つの島が最先端ロジックの大半を製造し、一国がHBMメモリを支配しています。この構造を示す優れた静的地図はすでに存在します——しかし、今日何が変わったか、どのノードが新たに露出したか、衝撃がどう伝わるかは教えてくれません。',
   },
   s1p2: {
-    en: 'SSCIM fills that gap with three synchronized layers over one computational engine, run against a frozen demonstration snapshot rather than a live feed:',
+    en: 'SSCIM fills that gap with three synchronized layers over one computational engine:',
     zh: 'SSCIM 用三个同步的层来填补这一空白，它们共用一个计算引擎，运行在冻结的演示快照之上，而非实时数据源：',
     tw: 'SSCIM 用三個同步的層來填補這一空白，它們共用一個計算引擎，運行在凍結的示範快照之上，而非即時資料源：',
     ja: 'SSCIMは、ライブフィードではなく凍結されたデモ用スナップショットに対して動作する一つの計算エンジンの上に、3つの同期したレイヤーを重ねてこの隙間を埋めます：',
@@ -151,7 +154,7 @@ export const T = {
     ja: '5つの構造成分のうち3つはグラフとデータから計算され、残り2つは宣言されたアナリスト入力であり、各内訳バーにその旨が明示されます。信頼度は常にメタデータとして表示され、決して数値に掛け合わされることはありません——複数の同時ショックは、合計に対して加算のみを行い減算はしない有界なルールで合成されます。ここでの説明可能性は単なる機能ではなく、信頼モデルそのものです。',
   },
   s5Body: {
-    en: 'This is a research prototype: a frozen demonstration snapshot, not a live feed, with declared propagation priors that have not been fit to any observed disruption episode. Company market shares, customer relationships and shareholder stakes draw on public filings and market-share trackers wherever a reliable source exists, and headline corrections are logged with their citation; figures without one are still analyst judgment, not yet individually sourced. See <strong>MODEL_ROADMAP.md</strong> for what real calibration would require. Everything SSCIM produces is descriptive sensitivity analysis — <strong>never investment advice</strong>.',
+    en: 'SSCIM uses declared propagation priors that have not been fit to observed disruption episodes. Company market shares, customer relationships and shareholder stakes draw on public filings and market-share trackers wherever a reliable source exists, and headline corrections are logged with their citation; figures without one remain analyst judgment. See <strong>MODEL_ROADMAP.md</strong> for calibration requirements. Everything SSCIM produces is descriptive sensitivity analysis — <strong>never investment advice</strong>.',
     zh: '这是一个研究原型：一份冻结的演示快照，而非实时数据源，配备了尚未拟合到任何已观测中断事件的、声明的传导先验值。公司市场份额、客户关系与股东持股在存在可靠来源的情况下参考公开申报与市场份额追踪数据，重大修正会附带引用记录；没有引用的数字仍是分析师判断，尚未逐项溯源。真正的校准需要什么，请参见 <strong>MODEL_ROADMAP.md</strong>。SSCIM 产出的一切都是描述性的敏感性分析——<strong>绝不构成投资建议</strong>。',
     tw: '這是一個研究原型：一份凍結的示範快照，而非即時資料源，配備了尚未擬合到任何已觀測中斷事件的、聲明的傳導先驗值。公司市場份額、客戶關係與股東持股在存在可靠來源的情況下參考公開申報與市場份額追蹤資料，重大修正會附帶引用記錄；沒有引用的數字仍是分析師判斷，尚未逐項溯源。真正的校準需要什麼，請參見 <strong>MODEL_ROADMAP.md</strong>。SSCIM 產出的一切都是描述性的敏感度分析——<strong>絕不構成投資建議</strong>。',
     ja: 'これはリサーチ・プロトタイプです：ライブフィードではなく凍結されたデモ用スナップショットであり、観測された破綻事例に一切フィットさせていない、宣言された伝播事前値を用いています。企業の市場シェア、顧客関係、株主持分は、信頼できる情報源が存在する限り公開申告書や市場シェア調査を参照しており、主要な修正には出典が記録されています。出典のない数値は引き続きアナリスト判断であり、個別の出典確認はまだ済んでいません。本当の較正に何が必要かは <strong>MODEL_ROADMAP.md</strong> をご覧ください。SSCIMが生成するものはすべて記述的な感度分析です——<strong>投資助言では決してありません</strong>。',
@@ -159,7 +162,7 @@ export const T = {
 
   launchDashboardBottom: { en: 'Launch the dashboard →', zh: '启动仪表盘 →', tw: '啟動儀表板 →', ja: 'ダッシュボードを起動 →' },
   footerText: {
-    en: 'Figures reflect a best-effort research pass over public sources; not every figure is individually cited yet. This is a research prototype, not a live or calibrated forecasting system — nothing on this page or in the product constitutes investment advice.',
+    en: 'Figures reflect a best-effort research pass over public sources; not every figure is individually cited yet. This is not a calibrated forecasting system — nothing on this page or in the product constitutes investment advice.',
     zh: '数字反映了一轮基于公开来源的尽力而为的研究核校，尚未每项都逐一标注出处。这是一个研究原型，而非实时或经过校准的预测系统——本页或产品中的任何内容均不构成投资建议。',
     tw: '數字反映了一輪基於公開來源的盡力而為的研究核校，尚未每項都逐一標注出處。這是一個研究原型，而非即時或經過校準的預測系統——本頁或產品中的任何內容均不構成投資建議。',
     ja: '数値は公開情報源に基づくベストエフォートの調査を反映していますが、すべての数値に個別の出典があるわけではありません。これはリサーチ・プロトタイプであり、ライブまたは較正済みの予測システムではありません——本ページおよび製品のいかなる内容も投資助言を構成するものではありません。',

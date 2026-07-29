@@ -109,7 +109,7 @@ export default function Methodology({ onClose }) {
           <button onClick={onClose} style={{ background: "transparent", border: `1px solid ${C.line}`, color: C.dim, borderRadius: 4, padding: "3px 10px", cursor: "pointer", fontFamily: "inherit" }}>Close</button>
         </div>
         <div className="mono" style={{ fontSize: 10, color: C.amber, background: "#2A1E14", border: `1px solid ${C.copperDim}`, borderRadius: 5, padding: "7px 10px", marginBottom: 12, lineHeight: 1.6 }}>
-          RESEARCH PROTOTYPE — a sensitivity/comparison tool over a frozen curated demonstration snapshot (dataset as of {MODEL_PRIORS.datasetAsOf}). Not a calibrated, causal, or probabilistic forecast; not measured trade flow; not investment advice. Every coefficient below is a declared, unvalidated prior — see §10 and MODEL_ROADMAP.md.
+          SSCIM INTELLIGENCE — a sensitivity/comparison analysis tool (dataset as of {MODEL_PRIORS.datasetAsOf}). Not a calibrated, causal, or probabilistic forecast; not measured trade flow; not investment advice. Every coefficient below is a declared, unvalidated prior — see §10 and MODEL_ROADMAP.md.
           {METHODOLOGY_I18N[LANGV] && (
             <div style={{ marginTop: 5, color: C.text }}>
               {METHODOLOGY_I18N[LANGV].disc}
@@ -278,7 +278,7 @@ export default function Methodology({ onClose }) {
         </S>
 
         <S n="13" k="s13" t="MODEL STATUS & LIMITATIONS">
-          This is a static, curated demonstration snapshot with unvalidated propagation priors — not fit to any observed disruption episode. There is no facility-level, bill-of-materials, inventory-days, capacity/utilization, or time-to-recover data behind any number here. Nothing above is a causal or probabilistic forecast. Scores support comparison and sensitivity ranking within this snapshot only — company and country results are not predicted financial losses. See MODEL_ROADMAP.md for the data-layer work (facility geography, buyer-input vs. supplier-revenue dependence, DRAM/NAND/HBM and merchant/captive-accelerator denominator splits, evidence-tiered market-share estimates, and more) this model would need before any of these numbers could be calibrated.
+          The model uses curated data and unvalidated propagation priors that are not fit to observed disruption episodes. It does not contain facility-level, bill-of-materials, inventory-days, capacity/utilization, or time-to-recover data. Nothing above is a causal or probabilistic forecast, and company and country results are not predicted financial losses. See MODEL_ROADMAP.md for the data-layer work required before calibration.
         </S>
       </div>
     </div>

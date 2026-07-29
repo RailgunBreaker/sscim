@@ -165,7 +165,7 @@ export default function Detail({ sel, setSel, model, scenario, onResetScenario, 
 
         {(OWNERS[co.id] || []).length > 0 && (
           <>
-            <div className="mono" style={{ fontSize: 9, letterSpacing: 2, color: C.dim, margin: "10px 0 4px" }}>MAJOR SHAREHOLDERS (SAMPLE, PUBLIC FILINGS)</div>
+            <div className="mono" style={{ fontSize: 9, letterSpacing: 2, color: C.dim, margin: "10px 0 4px" }}>MAJOR SHAREHOLDERS (PUBLIC FILINGS)</div>
             {(OWNERS[co.id] || []).map(([o, sh]) => (
               <div key={o} style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 3 }}>
                 <span className="mono" style={{ fontSize: 10, color: /gov|SOE|METI/.test(o) ? C.amber : C.text, width: 180, flexShrink: 0 }}>{o}</span>

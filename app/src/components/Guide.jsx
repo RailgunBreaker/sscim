@@ -120,7 +120,7 @@ export default function Guide({ onClose, onHighlight }) {
           </div>
         ))}
         <div className="mono" style={{ fontSize: 9.5, color: C.faint, marginTop: 4 }}>
-          {LANGV === "en" ? "Research prototype over a frozen curated demonstration snapshot. Sensitivity/comparison tool only — not a calibrated, causal, or probabilistic forecast, and not investment advice." : t("gNote")}
+          Supply-chain sensitivity and comparison analysis. Results are not a calibrated, causal, or probabilistic forecast, and are not investment advice.
         </div>
       </div>
     </div>
