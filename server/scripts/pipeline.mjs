@@ -4,8 +4,12 @@
    Runs unattended on the machine that owns the vault database. GitHub Pages
    stays a pure static frontend; this is the only writer.
 
-     ingest   pull candidate events from USGS + Federal Register
-     analyze  draft/propose each new candidate with Claude (optional)
+     ingest   pull candidates from USGS + Federal Register + webz.io news
+     analyze  draft/propose each new candidate with Claude (optional):
+                --ai=claude-code  the VS Code extension's bundled binary
+                                  (runs on your subscription, gets WebFetch)
+                --ai=api          the Anthropic SDK (needs ANTHROPIC_API_KEY)
+                --ai=auto         claude-code if present, else api  [default]
      age      advance the snapshot date and re-derive every event age
      quotes   refresh price/PE
      export   regenerate the bundled snapshot from the database
@@ -43,7 +47,9 @@ import { db } from '../src/db.js';
 import { setMeta, setSnapshotDate, getSnapshotDate } from '../src/meta.js';
 import { fetchEarthquakeCandidates } from '../src/ingest/usgs.mjs';
 import { fetchPolicyCandidates } from '../src/ingest/federal-register.mjs';
+import { fetchNewsCandidates } from '../src/ingest/webz-news.mjs';
 import { aiAvailable, analyzeCandidate } from '../src/ai/analyze.mjs';
+import { claudeCodeAvailable, analyzeBatchWithClaudeCode } from '../src/ai/analyze-claude-code.mjs';
 
 const SERVER_DIR = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const REPO_DIR = resolve(SERVER_DIR, '..');
@@ -55,6 +61,7 @@ const opt = (name, fallback) => args.find((a) => a.startsWith(`--${name}=`))?.sp
 
 const DRY_RUN = flag('dry-run');
 const NO_AI = flag('no-ai');
+const AI_BACKEND = opt('ai', 'auto');   // auto | claude-code | api | none
 const today = new Date().toISOString().slice(0, 10);
 const SINCE = opt('since', getSnapshotDate());
 const UNTIL = opt('until', today);
@@ -75,6 +82,10 @@ async function main() {
   const feeds = [
     ['usgs', () => fetchEarthquakeCandidates({ since: SINCE, until: UNTIL })],
     ['federal-register', () => fetchPolicyCandidates({ since: SINCE, until: UNTIL })],
+    // News is where most real supply-chain events actually surface — the other
+    // two feeds report that the ground shook or a rule published, never that a
+    // fab stopped. Skipped silently when WEBZ_TOKEN is unset.
+    ['webz-news', () => fetchNewsCandidates({ since: SINCE, until: UNTIL })],
   ];
   const candidates = [];
   for (const [name, fetchFn] of feeds) {
@@ -102,23 +113,50 @@ async function main() {
   }
   log(`  ${queued} new candidate(s) queued (${candidates.length - queued} already known)`);
 
-  /* ---- 2. AI analysis (optional; proposals only) ------------------------ */
+  /* ---- 2. AI analysis (optional; proposals only) ------------------------
+     Two interchangeable backends, both writing only to the review queue:
+       claude-code  the binary bundled with the VS Code extension. Runs on the
+                    subscription instead of API credits, and gets WebFetch so
+                    it can read a thin news snippet's actual article. One
+                    batched invocation for all candidates (Claude Code carries
+                    a large system context, so per-call overhead is the cost).
+       api          the Anthropic SDK. Cheaper per record, needs ANTHROPIC_API_KEY.
+     Default: claude-code if the binary is present, else api, else skip. */
   const undrafted = db.prepare(`SELECT id, source_feed, source_ref, date_iso, raw_json
     FROM event_candidates WHERE status = 'pending' AND proposed_json IS NULL`).all();
 
-  if (NO_AI || !aiAvailable()) {
-    if (undrafted.length) log(`  AI step skipped (${NO_AI ? '--no-ai' : 'no ANTHROPIC_API_KEY'}); ${undrafted.length} candidate(s) queued undrafted`);
-  } else if (undrafted.length) {
-    log(`  analyzing ${undrafted.length} candidate(s)…`);
-    const saveDraft = db.prepare('UPDATE event_candidates SET proposed_json = ?, ai_model = ?, ai_notes = ? WHERE id = ?');
+  const backend = NO_AI ? 'none'
+    : AI_BACKEND !== 'auto' ? AI_BACKEND
+    : claudeCodeAvailable() ? 'claude-code'
+    : aiAvailable() ? 'api'
+    : 'none';
+
+  const saveDraft = db.prepare('UPDATE event_candidates SET proposed_json = ?, ai_model = ?, ai_notes = ? WHERE id = ?');
+  const logVerdict = (id, proposal) => log(`    ${id}: ${
+    !proposal ? 'undrafted' : proposal.relevant ? `sev ${proposal.proposedSev} ${proposal.proposedDirection}/${proposal.proposedChannel} ${proposal.proposedOperational ? 'scored' : 'excluded'}` : 'not relevant'}`);
+
+  if (!undrafted.length) {
+    log('  nothing to analyze');
+  } else if (backend === 'none') {
+    log(`  AI step skipped (${NO_AI ? '--no-ai' : 'no backend available'}); ${undrafted.length} candidate(s) queued undrafted`);
+  } else if (backend === 'claude-code') {
+    log(`  analyzing ${undrafted.length} candidate(s) via Claude Code (one batched call)…`);
+    const rows = undrafted.map((r) => ({ id: r.id, sourceFeed: r.source_feed, dateISO: r.date_iso, raw: JSON.parse(r.raw_json) }));
+    const results = await analyzeBatchWithClaudeCode(rows);
+    for (const row of rows) {
+      const { proposal, model, notes } = results.get(row.id) ?? { proposal: null, model: 'claude-code', notes: 'No result returned.' };
+      saveDraft.run(proposal ? JSON.stringify(proposal) : null, model, notes ?? null, row.id);
+      logVerdict(row.id, proposal);
+    }
+  } else {
+    log(`  analyzing ${undrafted.length} candidate(s) via the Anthropic API…`);
     for (const row of undrafted) {
       const { proposal, model, notes } = await analyzeCandidate({
         sourceFeed: row.source_feed, sourceRef: row.source_ref,
         dateISO: row.date_iso, raw: JSON.parse(row.raw_json),
       });
       saveDraft.run(proposal ? JSON.stringify(proposal) : null, model, notes ?? null, row.id);
-      const verdict = !proposal ? 'undrafted' : proposal.relevant ? `sev ${proposal.proposedSev} ${proposal.proposedDirection}` : 'not relevant';
-      log(`    ${row.id}: ${verdict}`);
+      logVerdict(row.id, proposal);
     }
   }
 
