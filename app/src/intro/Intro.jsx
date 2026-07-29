@@ -16,6 +16,7 @@ const STYLE = `
   .btn{display:inline-block;border-radius:5px;padding:8px 16px;font-weight:700;font-size:13.5px;border:1px solid var(--copper);transition:transform .15s ease,box-shadow .15s ease}
   .btn.solid{background:var(--copper);color:#0C111C}
   .btn:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(201,138,63,.22)}
+  .intro-hero{position:relative;overflow:hidden;padding:52px 0 34px}.intro-hero::before{content:'';position:absolute;width:340px;height:340px;right:-80px;top:-80px;border:1px solid rgba(201,138,63,.22);border-radius:50%;box-shadow:0 0 0 38px rgba(201,138,63,.035),0 0 0 76px rgba(201,138,63,.02);animation:orbit 12s linear infinite}.intro-hero>*{position:relative}.signal{display:flex;gap:7px;align-items:end;height:32px;margin:20px 0 0}.signal i{width:5px;background:var(--copper);border-radius:8px;opacity:.75;animation:signal 1.6s ease-in-out infinite}.signal i:nth-child(2){height:70%;animation-delay:.15s}.signal i:nth-child(3){height:42%;animation-delay:.3s}.signal i:nth-child(4){height:100%;animation-delay:.45s}.signal i:nth-child(5){height:56%;animation-delay:.6s}.signal i:nth-child(6){height:80%;animation-delay:.75s}@keyframes signal{0%,100%{transform:scaleY(.45);opacity:.3}50%{transform:scaleY(1);opacity:1}}@keyframes orbit{to{transform:rotate(360deg)}}@media(prefers-reduced-motion:reduce){.intro-hero::before,.signal i{animation:none}}
   h1{font-size:clamp(26px,4.5vw,38px);line-height:1.15;margin:48px 0 10px}
   h1 em{color:var(--copper);font-style:normal}
   .lede{color:var(--dim);font-size:16px;max-width:640px;margin-bottom:8px}
@@ -79,9 +80,10 @@ export default function Intro() {
         </div>
       </header>
 
-      <div className="wrap">
+      <div className="wrap intro-hero">
         <Html tag="h1" html={t('h1')} />
         <p className="lede">{t('lede')}</p>
+        <div className="signal" aria-hidden="true"><i /><i /><i /><i /><i /><i /></div>
 
         <h2>{t('h2_1')}</h2>
         <p>{t('s1p1')}</p>

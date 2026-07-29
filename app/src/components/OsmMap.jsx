@@ -53,6 +53,7 @@ export default function OsmMap({ model, hl, pb, lensOverride }) {
   const divRef = useRef(null), mapRef = useRef(null), layerRef = useRef(null), pbLayerRef = useRef(null), draftLayerRef = useRef(null);
   const coreByCountry = useRef({});
   const [tileStatus, setTileStatus] = useState('loading');
+  const [mapHeight, setMapHeight] = useState(350);
 
   // Stable handler refs so the flyTo subscription and marker callbacks always
   // see the latest select/hover/draft state without re-subscribing or forcing
@@ -263,8 +264,14 @@ export default function OsmMap({ model, hl, pb, lensOverride }) {
       <div className="mono" style={{ fontSize: 9.5, letterSpacing: 1, color: C.copper, marginBottom: 6 }}>
         {legend.title.toUpperCase()}
       </div>
+      <div style={{ display: 'flex', justifyContent: 'flex-end', margin: '-1px 0 6px' }}>
+        <label className="mono" style={{ fontSize: 9, color: C.faint, display: 'flex', alignItems: 'center', gap: 6 }}>MAP SIZE
+          <input type="range" min="260" max="620" step="20" value={mapHeight} onChange={(e) => { setMapHeight(Number(e.target.value)); setTimeout(() => mapRef.current?.invalidateSize(), 0); }} aria-label="Map height" style={{ width: 84, accentColor: C.copper }} />
+          <span style={{ color: C.dim }}>{mapHeight}px</span>
+        </label>
+      </div>
       <div style={{ position: 'relative' }}>
-        <div ref={divRef} className="sscim-map" style={{ height: 350, borderRadius: 6, border: `1px solid ${C.line}` }} />
+        <div ref={divRef} className="sscim-map" style={{ height: mapHeight, borderRadius: 8, border: `1px solid ${C.line}`, transition: 'height .2s ease' }} />
         {tileStatus === 'failed' && (
           <div className="mono" style={{ position: 'absolute', top: 8, left: 8, zIndex: 500, background: 'rgba(20,27,43,.92)', border: `1px solid ${C.amber}`, color: C.amber, borderRadius: 5, padding: '5px 9px', fontSize: 10, maxWidth: 260, lineHeight: 1.5 }}>
             Map tiles blocked in this preview. Nodes & links remain interactive — deploy the HTML to any host to see the full basemap.

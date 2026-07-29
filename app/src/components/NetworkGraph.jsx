@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { C } from '../theme.js';
 import { useVault } from '../data/VaultContext.jsx';
 import { useInteraction } from '../interaction/InteractionContext.jsx';
@@ -29,6 +29,7 @@ export default function NetworkGraph({ baseGraph, filters = {}, pb = null }) {
   const { STAGE_BY_ID } = engine;
   const { state, select, hover, clearHover, pgToggleMulti } = useInteraction();
   const { selected, hovered, playground, selectedRoute, analysisMetric } = state;
+  const [zoom, setZoom] = useState(100);
 
   // Scenario playback overlay (§28): a centre lights up when its stage is
   // reached at the current hop, in lockstep with the map + industry graph.
@@ -114,8 +115,12 @@ export default function NetworkGraph({ baseGraph, filters = {}, pb = null }) {
         FUNCTIONAL-CENTRE NETWORK · {analysis.centres.length} CENTRES · {shownEdges.length} SHOWN CONNECTIONS
         <span style={{ color: C.faint }}> · node colour: tier · node size: {sizeLabel}</span>
       </div>
-      <div style={{ overflowX: 'auto' }}>
-        <svg viewBox={`0 0 ${W} ${H}`} style={{ width: '100%', minWidth: 900, display: 'block', background: C.panel2, borderRadius: 6, border: `1px solid ${C.line}` }}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+        <span className="mono" style={{ fontSize: 9, color: C.faint }}>Click a node to inspect it. Click a connection to assess or temporarily remove it. Shift-click nodes to compare shocks.</span>
+        <label className="mono" style={{ fontSize: 9, color: C.faint, whiteSpace: 'nowrap' }}>NETWORK SIZE <input type="range" min="75" max="150" value={zoom} onChange={(e) => setZoom(Number(e.target.value))} aria-label="Network display size" style={{ width: 78, accentColor: C.copper }} /> {zoom}%</label>
+      </div>
+      <div style={{ overflow: 'auto', maxHeight: 760 }}>
+        <svg viewBox={`0 0 ${W} ${H}`} style={{ width: `${zoom}%`, minWidth: 900, display: 'block', background: C.panel2, borderRadius: 8, border: `1px solid ${C.line}`, transition: 'width .18s ease' }}
           role="img" aria-label="Functional-centre supply-chain network (modeled stage-mediated connectivity, not verified shipments)">
           <defs>
             <marker id="ng-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
@@ -141,12 +146,12 @@ export default function NetworkGraph({ baseGraph, filters = {}, pb = null }) {
             const onHover = !pbActive && hoverIncident.has(e.id);
             const emph = onHop || onRoute || onHover;
             return (
-              <path key={e.id} d={edgePath(p1, p2)} fill="none"
+              <path key={e.id} d={edgePath(p1, p2)} fill="none" onClick={() => select({ type: 'edge', id: e.id })}
                 className={emph ? 'pulse' : undefined}
                 stroke={emph ? C.copper : C.copperDim}
                 strokeWidth={onRoute ? w + 1.6 : emph ? w + 1 : w}
                 markerEnd="url(#ng-arrow)"
-                opacity={emph ? 1 : pbActive ? 0.55 : 0.5}>
+                opacity={emph ? 1 : pbActive ? 0.55 : 0.5} style={{ cursor: 'pointer' }}>
                 <title>{`${e.sourceCountry} · ${STAGE_BY_ID[e.sourceStage]?.name} → ${e.targetCountry} · ${STAGE_BY_ID[e.targetStage]?.name} · modeled weight ${e.rawDisplayWeight.toFixed(4)} (share×prior×share) — modeled stage-mediated connectivity, not a verified shipment`}</title>
               </path>
             );
