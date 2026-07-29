@@ -141,10 +141,10 @@ export const T = {
   },
   step7: { en: 'Verify anything', zh: '验证一切', tw: '驗證一切', ja: 'すべてを検証' },
   step7Body: {
-    en: 'The <strong>ⓘ Methodology</strong> button documents every formula exactly as implemented, every propagation prior, which components are computed versus declared analyst judgment, and the full model-status statement. The <strong>? Guide</strong> button inside the app repeats this walkthrough in short form.',
-    zh: '<strong>ⓘ 方法论</strong>按钮记录了每一个与代码完全一致的公式、每一个传导先验值、哪些分量是计算得出、哪些是申明的分析师判断，以及完整的模型现状声明。应用内的<strong>? 指南</strong>按钮会以简短形式重复此导览。',
-    tw: '<strong>ⓘ 方法論</strong>按鈕記錄了每一個與程式碼完全一致的公式、每一個傳導先驗值、哪些分量是計算得出、哪些是申明的分析師判斷，以及完整的模型現狀聲明。應用內的<strong>? 指南</strong>按鈕會以簡短形式重複此導覽。',
-    ja: '<strong>ⓘ 方法論</strong>ボタンは、実装どおりの各数式、各伝播事前値、どの成分が計算値でどれが宣言されたアナリスト判断か、そして完全なモデル現状声明を記載しています。アプリ内の<strong>? ガイド</strong>ボタンは、このウォークスルーを簡略形式で繰り返します。',
+    en: 'The <strong>Documentation</strong> button opens the complete reference library: methodology, implemented calculations, propagation priors, data sources, developer architecture, and the full model-status statement. The <strong>? Guide</strong> button inside the app repeats this walkthrough in short form.',
+    zh: '<strong>文档</strong>按钮会打开完整参考库，包括方法论、实现的计算公式、传导先验值、数据来源、开发者架构和完整的模型现状声明。应用内的<strong>? 指南</strong>按钮会以简短形式重复此导览。',
+    tw: '<strong>文件</strong>按鈕會開啟完整參考庫，包括方法論、實作的計算公式、傳導先驗值、資料來源、開發者架構和完整的模型現狀聲明。應用內的<strong>? 指南</strong>按鈕會以簡短形式重複此導覽。',
+    ja: '<strong>ドキュメント</strong>ボタンは、方法論、実装された計算式、伝播事前値、データソース、開発者向けアーキテクチャ、完全なモデル現状声明を含むリファレンス全体を開きます。アプリ内の<strong>? ガイド</strong>ボタンは、このウォークスルーを簡略形式で繰り返します。',
   },
 
   s4Body: {
