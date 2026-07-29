@@ -29,6 +29,8 @@ export const UNCLASSIFIED_ASSUMPTION = Object.freeze({
 });
 
 export const EVENT_ASSUMPTIONS = Object.freeze({
+  p260729_webaa64: Object.freeze({ direction: "adverse", channel: "both", operational: false, reason: "As reported by this source the event is predominantly precautionary: every named site reports no major damage, halts are inspection-driven and same-day, and the article's own assessment is minimal immediate disruption. That is a hazard signal with assessment underway rather than established capacity loss, so operational=false and severity stays low. This is deliberately lower than the severity assigned to candidate ...b1017aa1 for the same earthquake, because that source establishes confirmed physical damage and multi-day halts at Renesas and Toyota that this earlier snapshot lists only as 'assessing'. If the two are merged, the higher assessment governs." }),
+
   p260729_web1ae0: Object.freeze({ direction: "adverse", channel: "both", operational: true, reason: "Published: Review: reject cand_webz_news_10d7f9f9b2ab24f1f038d4999d984b36851ca11c" }),
 
   p260729_webfdb0: Object.freeze({ direction: "mixed", channel: "downstream", operational: false, reason: "Published: Review: approve p260729_web57b8" }),
