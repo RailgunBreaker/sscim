@@ -8,13 +8,36 @@ const STYLE = `
 `;
 
 const labelFor = path => path.replace(/\.md$/i, '').replaceAll('_', ' ').replaceAll('/', ' / ');
+const resolveDocPath = (href, sourcePath) => {
+  if (!href || !/\.md(?:#.*)?$/i.test(href)) return null;
+  const [filePath] = href.split('#');
+  return new URL(filePath, `https://sscim.local/${sourcePath.substring(0, sourcePath.lastIndexOf('/') + 1)}`).pathname.slice(1);
+};
+const renderMarkdown = current => marked.parse(current.content, {
+  gfm: true,
+  breaks: false,
+  renderer: {
+    link({ href, tokens }) {
+      const target = resolveDocPath(href, current.path);
+      if (!target || !DOCUMENT_LIBRARY.some(doc => doc.path === target)) return false;
+      return `<a href="#doc=${encodeURIComponent(target)}" data-doc-path="${target}">${this.parser.parseInline(tokens)}</a>`;
+    },
+  },
+});
 
 export default function Docs() {
   const [query, setQuery] = useState('');
-  const [selected, setSelected] = useState(DOCUMENT_LIBRARY.find(doc => doc.path === 'README.md')?.path || DOCUMENT_LIBRARY[0]?.path);
+  const [selected, setSelected] = useState(DOCUMENT_LIBRARY.find(doc => doc.path === 'docs/README.md')?.path || DOCUMENT_LIBRARY[0]?.path);
   const docs = useMemo(() => DOCUMENT_LIBRARY.filter(doc => `${doc.path} ${doc.title}`.toLowerCase().includes(query.toLowerCase())), [query]);
   const current = DOCUMENT_LIBRARY.find(doc => doc.path === selected) || docs[0];
-  const html = useMemo(() => current ? marked.parse(current.content, { gfm: true, breaks: false }) : '', [current]);
+  const html = useMemo(() => current ? renderMarkdown(current) : '', [current]);
+  const openLinkedDocument = event => {
+    const link = event.target.closest('a[data-doc-path]');
+    if (!link) return;
+    event.preventDefault();
+    setSelected(link.dataset.docPath);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
-  return <><style>{STYLE}</style><header><div className="bar"><span className="brand">SSCIM</span><span className="eyebrow">DOCUMENTATION LIBRARY</span><nav className="nav"><a href="index.html">Home</a><a href="intro.html">Guide</a><a className="button fill" href="sscim-app.html">Open dashboard</a></nav></div></header><main className="shell"><aside><p className="aside-title">PROJECT DOCUMENTS · {DOCUMENT_LIBRARY.length}</p><input className="search" value={query} onChange={event => setQuery(event.target.value)} placeholder="Filter documents…" aria-label="Filter documents" />{docs.length ? docs.map(doc => <button className={`doc ${doc.path === current?.path ? 'active' : ''}`} key={doc.path} onClick={() => setSelected(doc.path)}><strong>{doc.title.replace(/^SSCIM\s*[—-]\s*/, '')}</strong><small>{labelFor(doc.path)}</small></button>) : <p className="empty">No matching document.</p>}</aside><article className="content">{current && <><div className="content-header"><span className="path">{current.path}</span><h1>{current.title}</h1><p>Rendered from the project Markdown source. New Markdown files are included automatically on the next site build.</p></div><div className="note"><b>Reading note:</b> SSCIM separates evidence, declared assumptions, and computed outputs. Consult each document’s scope and limitations before relying on a result.</div><div className="markdown" dangerouslySetInnerHTML={{ __html: html }} /></>}</article></main></>;
+  return <><style>{STYLE}</style><header><div className="bar"><span className="brand">SSCIM</span><span className="eyebrow">DOCUMENTATION LIBRARY</span><nav className="nav"><a href="index.html">Home</a><a href="intro.html">Guide</a><a className="button fill" href="sscim-app.html">Open dashboard</a></nav></div></header><main className="shell"><aside><p className="aside-title">PROJECT DOCUMENTS · {DOCUMENT_LIBRARY.length}</p><input className="search" value={query} onChange={event => setQuery(event.target.value)} placeholder="Filter documents…" aria-label="Filter documents" />{docs.length ? docs.map(doc => <button className={`doc ${doc.path === current?.path ? 'active' : ''}`} key={doc.path} onClick={() => setSelected(doc.path)}><strong>{doc.title.replace(/^SSCIM\s*[—-]\s*/, '')}</strong><small>{labelFor(doc.path)}</small></button>) : <p className="empty">No matching document.</p>}</aside><article className="content" onClick={openLinkedDocument}>{current && <><div className="content-header"><span className="path">{current.path}</span><h1>{current.title}</h1><p>Rendered from the project Markdown source. New Markdown files are included automatically on the next site build.</p></div><div className="note"><b>Reading note:</b> SSCIM separates evidence, declared assumptions, and computed outputs. Consult each document’s scope and limitations before relying on a result.</div><div className="markdown" dangerouslySetInnerHTML={{ __html: html }} /></>}</article></main></>;
 }
