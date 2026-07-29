@@ -61,7 +61,7 @@ export default function Header({
         <a id="btn-methodology" href="docs/METHODOLOGY.md.html"
           className={tourTarget === "btn-methodology" ? "tour-target" : undefined}
           style={{ background: "transparent", color: C.copper, border: `1px dashed ${C.copperDim}`, borderRadius: 4, padding: "5px 9px", fontSize: 11.5, cursor: "pointer", fontFamily: "inherit", textDecoration: "none" }}>
-          {t("ⓘ Methodology")}
+          {t("Documentation")}
         </a>
       </div>
     </header>

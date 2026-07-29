@@ -376,9 +376,21 @@ function DashboardBody() {
     return { s, c };
   }, [sel, scenarioId, custom]);
 
-  const whatChanged = !model.scenarioActive
-    ? "Jul 03 (snapshot) — AI-chip export-control shock spread from NVIDIA / SK hynix / TSMC outward: highest company contribution now in packaging and systems tiers."
-    : `SCENARIO ACTIVE — ${scenario.name}: ${scenario.desc} Company/country/stage figures below are recomputed through the same engine and ranked by their marginal delta vs. baseline.`;
+  const whatChanged = useMemo(() => {
+    if (model.scenarioActive) {
+      return `SCENARIO ACTIVE — ${scenario.name}: ${scenario.desc} Company/country/stage figures below are recomputed through the same engine and ranked by their marginal delta vs. baseline.`;
+    }
+    if (!EVENTS.length) return 'No reviewed events are available in the current vault.';
+    const newestAge = Math.min(...EVENTS.map((event) => Number(event.daysAgo ?? Infinity)));
+    const newest = EVENTS.filter((event) => Number(event.daysAgo ?? Infinity) === newestAge);
+    const ranked = newest.map((event) => {
+      const field = engine.eventField(event).field;
+      const index = engine.toDisplayIndex(engine.operationalIndex(field));
+      return { event, index };
+    }).sort((a, b) => Math.abs(b.index - 5) - Math.abs(a.index - 5));
+    const lead = ranked[0];
+    return `${lead.event.date} (${source === 'live' ? 'live vault' : 'snapshot'}) — ${lead.event.title} — own-field index ${lead.index.toFixed(2)}.`;
+  }, [model.scenarioActive, scenario, EVENTS, engine, source]);
 
   const panes = { map: t("Map"), flow: t("Flow"), intel: t("Intel") };
 
