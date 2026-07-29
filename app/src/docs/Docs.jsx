@@ -1,55 +1,92 @@
-import { useEffect, useMemo, useState } from 'react';
-import { marked } from 'marked';
+import { useMemo, useState } from 'react';
 import { DOCUMENT_LIBRARY } from './generated-library.js';
-import { addHeadingIds, rewriteLinks, parseHash } from './docLinks.js';
+import { pageFor } from './docLinks.js';
+
+/* The searchable index over the documentation.
+
+   Each document is published as its own page by scripts/build-doc-pages.mjs
+   (docs/PUBLIC_GUIDE.md -> /docs/PUBLIC_GUIDE.md.html), so this page lists and
+   filters rather than rendering content. That split is deliberate: a document
+   gets a real, shareable, crawlable URL instead of living behind an in-page
+   route, and there is exactly one renderer to keep correct.
+
+   The list itself is generated from a filesystem walk at build time, so a new
+   Markdown file appears here and gets a page with nothing to register. */
 
 const STYLE = `
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap');
-:root{--bg:#0C111C;--panel:#141B2B;--panel2:#0F1626;--line:#243149;--copper:#C98A3F;--amber:#DFA83D;--text:#E9E4D8;--dim:#A5AEC0;--faint:#6E788B}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:'Space Grotesk',system-ui,sans-serif;line-height:1.68}a{color:var(--copper);text-decoration:none}a:hover{text-decoration:underline}header{position:sticky;top:0;z-index:5;border-bottom:1px solid var(--line);background:rgba(12,17,28,.94);backdrop-filter:blur(10px)}.bar{max-width:1400px;margin:auto;padding:14px 24px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}.brand{font-size:18px;font-weight:700;letter-spacing:1px}.eyebrow,.path{font:10px 'IBM Plex Mono',monospace;color:var(--copper);letter-spacing:1.4px}.nav{display:flex;gap:14px;margin-left:auto;font-size:13px}.button{border:1px solid var(--copper);border-radius:5px;padding:7px 12px;font-size:13px;font-weight:700}.fill{background:var(--copper);color:var(--bg)}.shell{max-width:1400px;margin:auto;display:grid;grid-template-columns:290px minmax(0,1fr);min-height:calc(100vh - 61px)}aside{border-right:1px solid var(--line);padding:24px 16px;position:sticky;top:61px;align-self:start;max-height:calc(100vh - 61px);overflow:auto}.aside-title{font:10px 'IBM Plex Mono',monospace;color:var(--faint);letter-spacing:1.6px;margin:0 8px 12px}.search{width:100%;background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:5px;padding:9px 10px;margin-bottom:12px;font:12px 'IBM Plex Mono',monospace}.search:focus{outline:1px solid var(--copper)}.doc{display:block;width:100%;border:0;border-left:2px solid transparent;background:transparent;color:var(--dim);padding:9px 8px;text-align:left;cursor:pointer;border-radius:0 4px 4px 0;font:inherit}.doc:hover,.doc.active{background:var(--panel);color:var(--text);border-left-color:var(--copper)}.doc strong{display:block;font-size:12.5px;font-weight:500}.doc small{display:block;margin-top:2px;color:var(--faint);font:9.5px 'IBM Plex Mono',monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.empty{color:var(--faint);font-size:13px;padding:10px 8px}.content{max-width:900px;padding:48px 54px 80px}.content-header{border-bottom:1px solid var(--line);padding-bottom:22px;margin-bottom:34px}.content-header h1{margin:8px 0 5px;font-size:clamp(28px,4vw,42px);letter-spacing:-.8px;line-height:1.15}.content-header p{margin:0;color:var(--dim);font-size:14px}.markdown{color:var(--dim);font-size:15px}.markdown h1,.markdown h2,.markdown h3,.markdown h4{color:var(--text);line-height:1.25;margin:42px 0 14px}.markdown h1{font-size:31px}.markdown h2{font-size:24px;border-bottom:1px solid var(--line);padding-bottom:9px}.markdown h3{font-size:18px}.markdown p{margin:0 0 15px}.markdown strong{color:var(--text)}.markdown ul,.markdown ol{padding-left:24px;margin:0 0 16px}.markdown li{padding:3px 0}.markdown code{font:12px 'IBM Plex Mono',monospace;background:var(--panel2);border:1px solid var(--line);padding:1px 4px;border-radius:3px;color:#D9C5A5}.markdown pre{background:#090E17;border:1px solid var(--line);border-radius:7px;padding:16px;overflow:auto;margin:18px 0}.markdown pre code{border:0;background:transparent;padding:0;color:#D4DCE9}.markdown blockquote{margin:18px 0;border-left:3px solid var(--amber);background:rgba(223,168,61,.06);padding:10px 14px;color:var(--dim)}.markdown table{border-collapse:collapse;width:100%;font-size:13px;margin:18px 0}.markdown th{color:var(--text);background:var(--panel)}.markdown th,.markdown td{border:1px solid var(--line);padding:9px 10px;text-align:left;vertical-align:top}.markdown hr{border:0;border-top:1px solid var(--line);margin:30px 0}.markdown img{max-width:100%}.markdown a{color:var(--copper)}.note{border:1px solid #5b4827;background:rgba(223,168,61,.06);border-radius:7px;padding:12px 14px;margin:0 0 25px;color:var(--dim);font-size:13px}.note b{color:var(--amber)}@media(max-width:850px){.shell{display:block}aside{position:relative;top:0;max-height:260px;border-right:0;border-bottom:1px solid var(--line)}.content{padding:30px 20px 60px}.nav{margin-left:0;width:100%;order:3}.bar{padding-left:18px;padding-right:18px}}
+:root{--bg:#0C111C;--panel:#141B2B;--panel2:#0F1626;--line:#243149;--copper:#C98A3F;--amber:#DFA83D;--text:#E9E4D8;--dim:#A5AEC0;--faint:#6E788B}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:'Space Grotesk',system-ui,sans-serif;line-height:1.68}
+a{color:var(--copper);text-decoration:none}a:hover{text-decoration:underline}
+header{position:sticky;top:0;z-index:5;border-bottom:1px solid var(--line);background:rgba(12,17,28,.94);backdrop-filter:blur(10px)}
+.bar{max-width:1120px;margin:auto;padding:14px 24px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.brand{font-size:18px;font-weight:700;letter-spacing:1px;color:var(--text)}
+.eyebrow{font:10px 'IBM Plex Mono',monospace;color:var(--copper);letter-spacing:1.4px}
+.nav{display:flex;gap:14px;margin-left:auto;font-size:13px}
+.button{border:1px solid var(--copper);border-radius:5px;padding:7px 12px;font-size:13px;font-weight:700}
+.fill{background:var(--copper);color:var(--bg)}
+main{max-width:1120px;margin:auto;padding:40px 24px 90px}
+h1{margin:6px 0 8px;font-size:clamp(28px,4vw,40px);letter-spacing:-.8px}
+.lede{color:var(--dim);font-size:14.5px;max-width:70ch;margin:0 0 22px}
+.search{width:100%;max-width:460px;background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:6px;padding:11px 12px;font:13px 'IBM Plex Mono',monospace}
+.search:focus{outline:1px solid var(--copper)}
+.count{color:var(--faint);font:10px 'IBM Plex Mono',monospace;letter-spacing:1.4px;margin:26px 0 10px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(272px,1fr));gap:12px}
+.card{border:1px solid var(--line);background:var(--panel);border-radius:9px;padding:15px;display:block;transition:border-color .15s ease,transform .15s ease}
+.card:hover{border-color:var(--copper);transform:translateY(-1px);text-decoration:none}
+.card strong{display:block;font-size:14.5px;color:var(--text);font-weight:600}
+.card small{display:block;margin-top:5px;color:var(--faint);font:10px 'IBM Plex Mono',monospace;word-break:break-all}
+.group{margin:32px 0 10px;font:10px 'IBM Plex Mono',monospace;letter-spacing:1.6px;color:var(--faint);border-bottom:1px solid var(--line);padding-bottom:7px}
+.empty{color:var(--faint);font-size:13px}
+.note{border:1px solid #5b4827;background:rgba(223,168,61,.06);border-radius:7px;padding:12px 14px;margin:0 0 26px;color:var(--dim);font-size:13px}
+.note b{color:var(--amber)}
+@media(max-width:700px){main{padding:26px 18px 60px}.nav{margin-left:0;width:100%;order:3}}
 `;
 
-const labelFor = path => path.replace(/\.md$/i, '').replaceAll('_', ' ').replaceAll('/', ' / ');
-const KNOWN = new Set(DOCUMENT_LIBRARY.map(doc => doc.path));
-const DEFAULT_DOC = DOCUMENT_LIBRARY.find(doc => doc.path === 'docs/README.md')?.path || DOCUMENT_LIBRARY[0]?.path;
-
-/* Documents are authored to read correctly on GitHub, so their links are
-   repo-relative. Resolve and rewrite them against the containing document —
-   otherwise a link like `PUBLIC_GUIDE.md` navigates off the app to a path
-   that does not exist on a static host. See docLinks.js. */
-const renderMarkdown = current =>
-  rewriteLinks(addHeadingIds(marked.parse(current.content, { gfm: true, breaks: false })), current.path, KNOWN);
+const dirOf = (path) => (path.includes('/') ? path.slice(0, path.lastIndexOf('/')) : '(root)');
 
 export default function Docs() {
   const [query, setQuery] = useState('');
-  const [selected, setSelected] = useState(() => {
-    const fromHash = parseHash(window.location.hash);
-    return fromHash && KNOWN.has(fromHash.path) ? fromHash.path : DEFAULT_DOC;
-  });
-  const docs = useMemo(() => DOCUMENT_LIBRARY.filter(doc => `${doc.path} ${doc.title}`.toLowerCase().includes(query.toLowerCase())), [query]);
-  const current = DOCUMENT_LIBRARY.find(doc => doc.path === selected) || docs[0];
 
-  /* The rewritten links are plain `#doc=…` anchors, so navigation between
-     documents is ordinary hash navigation: shareable, and the back button
-     works without any interception. */
-  useEffect(() => {
-    const onHash = () => {
-      const parsed = parseHash(window.location.hash);
-      if (!parsed || !KNOWN.has(parsed.path)) return;
-      setSelected(parsed.path);
-      requestAnimationFrame(() => {
-        const target = parsed.anchor && document.getElementById(parsed.anchor);
-        (target || document.body).scrollIntoView(target ? { behavior: 'smooth' } : undefined);
-      });
-    };
-    window.addEventListener('hashchange', onHash);
-    return () => window.removeEventListener('hashchange', onHash);
-  }, []);
+  const groups = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    const matched = DOCUMENT_LIBRARY.filter((doc) => `${doc.path} ${doc.title}`.toLowerCase().includes(q));
+    const map = new Map();
+    for (const doc of matched) {
+      const dir = dirOf(doc.path);
+      if (!map.has(dir)) map.set(dir, []);
+      map.get(dir).push(doc);
+    }
+    return { matched, map };
+  }, [query]);
 
-  const choose = path => {
-    setSelected(path);
-    window.history.replaceState(null, '', `#doc=${encodeURIComponent(path)}`);
-    window.scrollTo({ top: 0 });
-  };
-
-  return <><style>{STYLE}</style><header><div className="bar"><span className="brand">SSCIM</span><span className="eyebrow">DOCUMENTATION LIBRARY</span><nav className="nav"><a href="index.html">Home</a><a href="intro.html">Guide</a><a className="button fill" href="sscim-app.html">Open dashboard</a></nav></div></header><main className="shell"><aside><p className="aside-title">PROJECT DOCUMENTS · {DOCUMENT_LIBRARY.length}</p><input className="search" value={query} onChange={event => setQuery(event.target.value)} placeholder="Filter documents…" aria-label="Filter documents" />{docs.length ? docs.map(doc => <button className={`doc ${doc.path === current?.path ? 'active' : ''}`} key={doc.path} onClick={() => choose(doc.path)}><strong>{doc.title.replace(/^SSCIM\s*[—-]\s*/, '')}</strong><small>{labelFor(doc.path)}</small></button>) : <p className="empty">No matching document.</p>}</aside><article className="content">{current && <><div className="content-header"><span className="path">{current.path}</span><h1>{current.title}</h1><p>Rendered from the project Markdown source. New Markdown files are included automatically on the next site build.</p></div><div className="note"><b>Reading note:</b> SSCIM separates evidence, declared assumptions, and computed outputs. Consult each document’s scope and limitations before relying on a result.</div><div className="markdown" dangerouslySetInnerHTML={{ __html: renderMarkdown(current) }} /></>}</article></main></>;
+  return <>
+    <style>{STYLE}</style>
+    <header><div className="bar">
+      <a className="brand" href="index.html">SSCIM</a>
+      <span className="eyebrow">DOCUMENTATION LIBRARY</span>
+      <nav className="nav">
+        <a href="index.html">Home</a>
+        <a href="intro.html">Guide</a>
+        <a className="button fill" href="sscim-app.html">Open dashboard</a>
+      </nav>
+    </div></header>
+    <main>
+      <h1>Documentation</h1>
+      <p className="lede">Every Markdown document in the project, published as its own page. Links between documents, and links into the source tree, resolve to real addresses you can share.</p>
+      <div className="note"><b>Reading note:</b> SSCIM separates evidence, declared assumptions, and computed outputs. Consult each document’s scope and limitations before relying on a result.</div>
+      <input className="search" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Filter documents…" aria-label="Filter documents" />
+      <p className="count">{groups.matched.length} OF {DOCUMENT_LIBRARY.length} DOCUMENTS</p>
+      {groups.matched.length === 0 && <p className="empty">No matching document.</p>}
+      {[...groups.map].map(([dir, list]) => <section key={dir}>
+        <p className="group">{dir.toUpperCase()}</p>
+        <div className="cards">
+          {list.map((doc) => <a className="card" key={doc.path} href={pageFor(doc.path)}>
+            <strong>{doc.title.replace(/^SSCIM\s*[—-]\s*/, '')}</strong>
+            <small>{doc.path}</small>
+          </a>)}
+        </div>
+      </section>)}
+    </main>
+  </>;
 }

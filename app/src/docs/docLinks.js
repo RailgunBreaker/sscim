@@ -1,27 +1,25 @@
-/* Link rewriting for the documentation reader.
+/* Link rewriting for the generated documentation pages.
 
-   The documents are written to be read two ways: as files on GitHub, and
-   rendered inside docs.html. That means their links are repo-relative
-   (`PUBLIC_GUIDE.md`, `computation-demo/DATA_PIPELINE.md`,
-   `../app/src/engine/priors.js`) and mean different things in each context.
+   Every Markdown file becomes its own page, at the same path with `.html`
+   appended: docs/PUBLIC_GUIDE.md -> /docs/PUBLIC_GUIDE.md.html. Mirroring the
+   repository tree is what makes this simple — the documents are authored to
+   read on GitHub, so their links are already repo-relative, and once the
+   output tree has the same shape a link only needs `.html` appended for the
+   browser's own relative resolution to land it in the right place. `../` and
+   nested paths keep working with no path arithmetic.
 
-   Rendered as-is, a relative .md link becomes a real navigation to
-   /PUBLIC_GUIDE.md on the deployed site. Only dist-app/ is deployed and it
-   contains no Markdown, so every one of those links was a 404. This module
-   resolves each href against the document that contains it and rewrites it:
+   What is NOT a document still has to go somewhere real: links to source
+   files, CSVs and directories point at GitHub rather than at a path this
+   static host does not serve.
 
-     in-library document  -> #doc=<path>, so it selects that document, is
-                             shareable, and works with the back button
-     other repo file      -> an absolute GitHub blob URL, opened in a new tab
-     external / anchor    -> untouched
-
-   Heading ids are added here too: marked 18 stopped emitting them, so every
-   in-page `#section` link was also dead. */
+   Heading ids are added here too — marked 18 stopped emitting them, so
+   in-page `#section` anchors would otherwise be dead. */
 
 const REPO_BLOB = 'https://github.com/RailgunBreaker/sscim/blob/main';
 
 /* Resolve `href` relative to the directory holding `fromPath`, collapsing
-   . and .. the way a browser would. Returns a repo-relative path. */
+   . and .. the way a browser would. Used to check a link against the set of
+   known documents; the emitted href stays relative. */
 export function resolvePath(fromPath, href) {
   const base = fromPath.includes('/') ? fromPath.slice(0, fromPath.lastIndexOf('/')) : '';
   const segments = href.startsWith('/') ? href.slice(1).split('/') : `${base}/${href}`.split('/');
@@ -44,8 +42,8 @@ export function slugify(text) {
     .replace(/\s+/g, '-');
 }
 
-/* Give every heading a stable id so in-document anchors resolve. Duplicate
-   headings get a numeric suffix, matching GitHub's behaviour. */
+/* Stable ids so in-document anchors resolve. Repeats get a numeric suffix,
+   matching GitHub's behaviour. */
 export function addHeadingIds(html) {
   const seen = new Map();
   return html.replace(/<h([1-6])>(.*?)<\/h\1>/gs, (match, level, inner) => {
@@ -58,8 +56,7 @@ export function addHeadingIds(html) {
   });
 }
 
-/* Rewrite every href in the rendered HTML. `known` is the Set of document
-   paths the library actually contains. */
+/* `known` is the Set of repo-relative .md paths that have a generated page. */
 export function rewriteLinks(html, fromPath, known) {
   return html.replace(/<a href="([^"]*)"/g, (match, href) => {
     if (/^(https?:|mailto:|#)/i.test(href)) return match; // external or in-page
@@ -68,22 +65,23 @@ export function rewriteLinks(html, fromPath, known) {
     const resolved = resolvePath(fromPath, target);
 
     if (known.has(resolved)) {
-      return `<a href="#doc=${encodeURIComponent(resolved)}${hash ? `&${hash}` : ''}" data-doc="${resolved}"`;
+      return `<a href="${target}.html${hash ? `#${hash}` : ''}" data-doc="${resolved}"`;
     }
     // A directory link such as `computation-demo/` usually means its README.
     const asIndex = `${resolved.replace(/\/$/, '')}/README.md`;
     if (known.has(asIndex)) {
-      return `<a href="#doc=${encodeURIComponent(asIndex)}" data-doc="${asIndex}"`;
+      const rel = `${target.replace(/\/$/, '')}/README.md.html`;
+      return `<a href="${rel}" data-doc="${asIndex}"`;
     }
-    // Anything else is a real repository path (source files, CSVs, folders):
-    // send it to GitHub rather than to a 404 on this host.
+    // A real repository path — source file, CSV, folder. Send it to GitHub
+    // rather than to a 404 on this host.
     return `<a href="${REPO_BLOB}/${resolved}" target="_blank" rel="noreferrer"`;
   });
 }
 
-/* `#doc=<path>&<optional-heading-anchor>` */
-export function parseHash(hash) {
-  const match = /^#doc=([^&]+)(?:&(.*))?$/.exec(hash || '');
-  if (!match) return null;
-  return { path: decodeURIComponent(match[1]), anchor: match[2] || null };
-}
+/* Where a Markdown path is published. */
+export const pageFor = (path) => `${path}.html`;
+
+/* Relative prefix from a generated page back to the site root, so page chrome
+   can link to /index.html and /docs.html from any depth. */
+export const rootPrefix = (path) => '../'.repeat(path.split('/').length - 1) || './';

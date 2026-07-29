@@ -24,17 +24,17 @@
   <p><a href="/index.html">Home</a> · <a href="/docs.html">Documentation</a> · <a href="/sscim-app.html">Dashboard</a></p>
 </main>
 <script>
-/* Documentation is rendered inside docs.html from Markdown bundled at build
-   time; there are no .md files on this host. Links shared before that was
-   true — e.g. /PUBLIC_GUIDE.md — would otherwise dead-end here, so translate
-   any .md request into the reader's route for that document instead. */
+/* Each document is published as <path>.md.html. A request for the raw
+   Markdown — /PUBLIC_GUIDE.md, or a link shared before the pages existed —
+   should land on that page rather than dead-ending here. A bare filename is
+   assumed to live under docs/, which is where all but a few of them are. */
 (function () {
   var path = decodeURIComponent(location.pathname.replace(/^\/+/, ''));
   if (!/\.md$/i.test(path)) return;
   var target = path.indexOf('/') === -1 ? 'docs/' + path : path;
-  document.getElementById('title').textContent = 'Opening the documentation reader…';
-  document.getElementById('body').textContent = 'Documentation is rendered inside the reader rather than served as files.';
-  location.replace('/docs.html#doc=' + encodeURIComponent(target));
+  document.getElementById('title').textContent = 'Opening the document…';
+  document.getElementById('body').textContent = 'Documentation is published as HTML pages; redirecting to this one.';
+  location.replace('/' + target + '.html');
 })();
 </script>
 </body>

@@ -1,15 +1,18 @@
 import { describe, it, expect } from 'vitest';
 import { marked } from 'marked';
-import { resolvePath, addHeadingIds, rewriteLinks, parseHash } from './docLinks.js';
+import { readFileSync } from 'node:fs';
+import path from 'node:path';
+import { resolvePath, addHeadingIds, rewriteLinks, pageFor, rootPrefix } from './docLinks.js';
 import { DOCUMENT_LIBRARY } from './generated-library.js';
 
-/* These documents are authored to read correctly on GitHub, so every internal
-   link is repo-relative. Rendered naively that produced real navigations to
-   paths the static host does not serve — /PUBLIC_GUIDE.md was a 404. The point
-   of these tests is that no rendered link can leave the app for a path that
-   does not exist. */
+/* Every Markdown file is published as its own page at <path>.md.html, so the
+   documents keep their repo-relative links and the browser resolves them.
+   These tests exist because the previous behaviour rendered those links
+   verbatim and /PUBLIC_GUIDE.md was a 404 on the deployed site. */
 
-const KNOWN = new Set(DOCUMENT_LIBRARY.map(d => d.path));
+const repoDir = path.resolve(__dirname, '..', '..', '..');
+const KNOWN = new Set(DOCUMENT_LIBRARY.map((d) => d.path));
+const contentOf = (p) => readFileSync(path.join(repoDir, p), 'utf8');
 
 describe('resolvePath', () => {
   it('resolves a sibling link', () => {
@@ -20,10 +23,6 @@ describe('resolvePath', () => {
   });
   it('resolves a parent link', () => {
     expect(resolvePath('docs/computation-demo/COMPUTATION_DEMO.md', '../calculation/README.md')).toBe('docs/calculation/README.md');
-  });
-  it('resolves from a deeply nested document', () => {
-    expect(resolvePath('docs/calculation/06-event-decay.md', '07-calculating-the-event-half-life.md'))
-      .toBe('docs/calculation/07-calculating-the-event-half-life.md');
   });
 });
 
@@ -41,19 +40,24 @@ describe('addHeadingIds', () => {
 describe('rewriteLinks', () => {
   const rewrite = (html, from = 'docs/README.md') => rewriteLinks(html, from, KNOWN);
 
-  it('points a known document at its hash route', () => {
-    expect(rewrite('<a href="PUBLIC_GUIDE.md"')).toContain('href="#doc=docs%2FPUBLIC_GUIDE.md"');
+  it('appends .html and keeps the link relative', () => {
+    expect(rewrite('<a href="PUBLIC_GUIDE.md"')).toContain('href="PUBLIC_GUIDE.md.html"');
   });
-  it('preserves a heading anchor across documents', () => {
-    expect(rewrite('<a href="METHODOLOGY.md#operational-layer"')).toContain('&operational-layer');
+  it('keeps nested and parent paths intact', () => {
+    expect(rewrite('<a href="computation-demo/DATA_PIPELINE.md"')).toContain('href="computation-demo/DATA_PIPELINE.md.html"');
+    expect(rewrite('<a href="../calculation/README.md"', 'docs/computation-demo/X.md'))
+      .toContain('href="../calculation/README.md.html"');
+  });
+  it('preserves a heading anchor', () => {
+    expect(rewrite('<a href="METHODOLOGY.md#operational-layer"')).toContain('href="METHODOLOGY.md.html#operational-layer"');
   });
   it('sends a repository source file to GitHub rather than a 404', () => {
     const out = rewrite('<a href="../app/src/engine/priors.js"');
     expect(out).toContain('https://github.com/RailgunBreaker/sscim/blob/main/app/src/engine/priors.js');
     expect(out).toContain('target="_blank"');
   });
-  it('maps a directory link to its README', () => {
-    expect(rewrite('<a href="calculation/"')).toContain('href="#doc=docs%2Fcalculation%2FREADME.md"');
+  it('maps a directory link to its README page', () => {
+    expect(rewrite('<a href="calculation/"')).toContain('href="calculation/README.md.html"');
   });
   it('leaves external and in-page links alone', () => {
     expect(rewrite('<a href="https://example.com"')).toBe('<a href="https://example.com"');
@@ -61,41 +65,56 @@ describe('rewriteLinks', () => {
   });
 });
 
-describe('parseHash', () => {
-  it('round-trips a document path', () => {
-    expect(parseHash('#doc=docs%2FPUBLIC_GUIDE.md')).toEqual({ path: 'docs/PUBLIC_GUIDE.md', anchor: null });
+describe('page addressing', () => {
+  it('publishes each document beside its source path', () => {
+    expect(pageFor('docs/PUBLIC_GUIDE.md')).toBe('docs/PUBLIC_GUIDE.md.html');
   });
-  it('extracts an anchor', () => {
-    expect(parseHash('#doc=docs%2FMETHODOLOGY.md&operational-layer'))
-      .toEqual({ path: 'docs/METHODOLOGY.md', anchor: 'operational-layer' });
-  });
-  it('ignores a plain in-page anchor', () => {
-    expect(parseHash('#operational-layer')).toBeNull();
+  it('computes a root prefix for any depth', () => {
+    expect(rootPrefix('docs/PUBLIC_GUIDE.md')).toBe('../');
+    expect(rootPrefix('docs/calculation/06-event-decay.md')).toBe('../../');
   });
 });
 
-/* The regression that started this: render every real document and assert no
-   rendered link can still resolve to a Markdown path on this host. */
+/* The regression that started this: nothing rendered may still point at a
+   Markdown path, and every document-to-document link must resolve to a
+   document that actually exists. */
 describe('the whole library', () => {
-  it('leaves no relative .md link in any rendered document', () => {
+  const rendered = DOCUMENT_LIBRARY.map((doc) => ({
+    ...doc,
+    html: rewriteLinks(marked.parse(contentOf(doc.path), { gfm: true }), doc.path, KNOWN),
+  }));
+
+  it('leaves no bare .md link in any rendered document', () => {
     const offenders = [];
-    for (const doc of DOCUMENT_LIBRARY) {
-      const html = rewriteLinks(marked.parse(doc.content, { gfm: true }), doc.path, KNOWN);
-      for (const m of html.matchAll(/<a href="([^"]*)"/g)) {
+    for (const doc of rendered) {
+      for (const m of doc.html.matchAll(/<a [^>]*href="([^"]*)"/g)) {
         const href = m[1];
         if (/^(https?:|mailto:|#)/i.test(href)) continue;
-        offenders.push(`${doc.path} -> ${href}`);
+        if (/\.md(#|$)/i.test(href)) offenders.push(`${doc.path} -> ${href}`);
       }
     }
     expect(offenders).toEqual([]);
   });
 
-  it('resolves every in-library cross-reference to a document that exists', () => {
+  it('resolves every cross-reference to a document that exists', () => {
     const broken = [];
-    for (const doc of DOCUMENT_LIBRARY) {
-      const html = rewriteLinks(marked.parse(doc.content, { gfm: true }), doc.path, KNOWN);
-      for (const m of html.matchAll(/data-doc="([^"]*)"/g)) {
+    for (const doc of rendered) {
+      for (const m of doc.html.matchAll(/data-doc="([^"]*)"/g)) {
         if (!KNOWN.has(m[1])) broken.push(`${doc.path} -> ${m[1]}`);
+      }
+    }
+    expect(broken).toEqual([]);
+  });
+
+  it('lands every relative link on a real generated page path', () => {
+    const broken = [];
+    const pages = new Set(DOCUMENT_LIBRARY.map((d) => pageFor(d.path)));
+    for (const doc of rendered) {
+      for (const m of doc.html.matchAll(/<a [^>]*href="([^"]*)"/g)) {
+        const href = m[1];
+        if (/^(https?:|mailto:|#)/i.test(href)) continue;
+        const resolved = resolvePath(pageFor(doc.path), href.split('#')[0]);
+        if (!pages.has(resolved)) broken.push(`${doc.path} -> ${href} (=> ${resolved})`);
       }
     }
     expect(broken).toEqual([]);

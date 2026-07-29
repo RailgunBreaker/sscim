@@ -126,7 +126,28 @@ Duplicate handling is automatic at ingest. An identical restatement of a story a
 
 ## Documentation
 
-Add Markdown anywhere outside ignored dependency and build folders. `npm run docs` scans the repository and builds the documentation library automatically. Use relative `.md` links; the reader resolves them inside the page. The ordering of the first several documents is set by the `priority` list in `app/scripts/build-doc-library.mjs`.
+Every Markdown file in the repository is published as its own page, at the same path with `.html` appended:
+
+```
+docs/PUBLIC_GUIDE.md              →  /docs/PUBLIC_GUIDE.md.html
+docs/calculation/06-event-decay.md →  /docs/calculation/06-event-decay.md.html
+```
+
+Because the output tree mirrors the source tree, documents keep ordinary repo-relative links and they resolve correctly in both places — on GitHub as Markdown, and on the site once `.html` is appended. Write `[Public guide](PUBLIC_GUIDE.md)` and it works in both.
+
+- **Adding a document:** drop a `.md` file anywhere outside the ignored dependency and build folders. Discovery is a filesystem walk (`app/scripts/lib/find-markdown.mjs`), so the next build publishes it, lists it on `/docs.html`, and indexes it at `/docs/` with nothing to register. Pushing to `main` triggers the Pages workflow, so it goes live on its own.
+- **Reading order:** the first several documents are ordered by the `PRIORITY` list in `app/scripts/lib/find-markdown.mjs`; everything else is alphabetical.
+- **Link targets that are not documents** — source files, CSVs, directories — are rewritten to GitHub blob URLs rather than to paths this static host does not serve.
+- **Heading anchors** are generated from the heading text, GitHub-style, so `METHODOLOGY.md#operational-layer` works.
+
+Commands:
+
+```powershell
+npm run docs         # rebuild the index consumed by docs.html
+npm run docs:pages   # render the standalone pages into dist-app/ (runs automatically after build)
+```
+
+`docs:pages` runs as `postbuild` because Vite empties the output directory; running it earlier would have its output deleted.
 
 ## Safe publication
 

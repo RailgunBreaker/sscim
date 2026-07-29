@@ -12,7 +12,9 @@
     "build": "vite build",
     "preview": "vite preview",
     "audit:data": "node scripts/audit-snapshot.mjs",
-    "test": "vitest run"
+    "test": "vitest run",
+    "docs:pages": "node scripts/build-doc-pages.mjs",
+    "postbuild": "npm run docs:pages"
   },
   "dependencies": {
     "katex": "^0.16.9",
