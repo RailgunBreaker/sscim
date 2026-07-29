@@ -539,6 +539,6 @@ export function buildEngine({ STAGES, FLOW_EDGES, COMPANIES, CUSTOMERS, POLICIES
     COMPANY_IMPACTS, COMPANY_CRITICALITY, COMPANY_RANK, CAP_RANK,
 
     supplierSpread, companySpread, customerSpread, countryData,
-    structuralComponents, HISTORY, LONG_HISTORY, stageScoreAt, MOVERS7D,
+    structuralComponents, HISTORY, LONG_HISTORY, chainIndexAt, stageScoreAt, MOVERS7D,
   };
 }

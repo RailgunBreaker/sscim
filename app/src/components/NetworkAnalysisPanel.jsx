@@ -50,7 +50,13 @@ export default function NetworkAnalysisPanel({ baseGraph }) {
 
   return (
     <div style={{ padding: 10, borderTop: `1px solid ${C.line}` }}>
-      <div className="mono" style={{ fontSize: 9.5, letterSpacing: 2, color: C.copper, marginBottom: 6 }}>NETWORK ANALYSIS</div>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 8, marginBottom: 6 }}>
+        <div className="mono" style={{ fontSize: 9.5, letterSpacing: 2, color: C.copper }}>NETWORK ANALYSIS</div>
+        <span className="mono" style={{ fontSize: 8.5, color: C.faint }}>{analysis.centres.length} active centres</span>
+      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: 5, marginBottom: 8 }}>
+        {[['1', 'Choose a question', 'Select a metric below; node size updates in the network.'], ['2', 'Inspect a result', 'Click any ranked centre or a visible connection.'], ['3', 'Stress-test safely', 'Remove a selected item; Undo restores baseline.']].map(([n, title, body]) => <div key={n} style={{ padding: '6px 7px', border: `1px solid ${C.line}`, borderRadius: 6, background: C.panel }}><div className="mono" style={{ color: C.copper, fontSize: 8.5 }}>{n} / {title.toUpperCase()}</div><div style={{ color: C.dim, fontSize: 10, lineHeight: 1.35, marginTop: 2 }}>{body}</div></div>)}
+      </div>
 
       <div role="radiogroup" aria-label="Analysis metric" style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginBottom: 6 }}>
         {METRICS.map((m) => {
@@ -59,7 +65,7 @@ export default function NetworkAnalysisPanel({ baseGraph }) {
             <button key={m.id} type="button" role="radio" aria-checked={on}
               onClick={() => setMetric(on ? null : m.id)}
               style={{ fontSize: 9.5, padding: '3px 7px', borderRadius: 3, fontFamily: 'inherit', cursor: 'pointer', background: on ? C.copper : 'transparent', color: on ? '#0C111C' : C.dim, border: `1px solid ${on ? C.copper : C.line}`, fontWeight: on ? 700 : 400 }}>
-              {m.label}
+              {m.label.replace(' (topology)', '')}
             </button>
           );
         })}
