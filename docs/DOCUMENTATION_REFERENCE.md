@@ -5,6 +5,7 @@ Use this index when you need the right document quickly.
 | Need | Read |
 | --- | --- |
 | Understand the product | [README](README.md) and [Public guide](PUBLIC_GUIDE.md) |
+| Understand the model | [Methodology](METHODOLOGY.md) and [Calculation specification](calculation.md) |
 | Use or change the software | [Developer guide](DEVELOPER_GUIDE.md) |
 | Evaluate the model academically | [Academic guide](ACADEMIC_GUIDE.md) and [Calculation specification](calculation.md) |
 | Understand topology | [Network architecture](NETWORK_ARCHITECTURE.md) |

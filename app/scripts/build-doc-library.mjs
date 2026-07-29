@@ -19,7 +19,13 @@ async function findMarkdown(dir) {
   return results;
 }
 
-const files = (await findMarkdown(repoDir)).sort((a, b) => a.localeCompare(b));
+const priority = ['docs/README.md', 'docs/PUBLIC_GUIDE.md', 'docs/METHODOLOGY.md', 'docs/calculation.md', 'docs/DEVELOPER_GUIDE.md', 'docs/ACADEMIC_GUIDE.md'];
+const rank = (file) => {
+  const relative = path.relative(repoDir, file).replaceAll(path.sep, '/');
+  const at = priority.indexOf(relative);
+  return at < 0 ? priority.length : at;
+};
+const files = (await findMarkdown(repoDir)).sort((a, b) => rank(a) - rank(b) || a.localeCompare(b));
 const docs = await Promise.all(files.map(async (file) => {
   const content = await readFile(file, 'utf8');
   const relativePath = path.relative(repoDir, file).replaceAll(path.sep, '/');

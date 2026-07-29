@@ -1,29 +1,59 @@
 # SSCIM calculation specification
 
-This document describes the implemented sensitivity model. Code in `app/src/engine/` and priors in `priors.js` are authoritative.
+`app/src/engine/` and `app/src/engine/priors.js` are authoritative. This is the readable calculation reference.
 
 ## Inputs
 
-The snapshot supplies a directed stage graph, country shares by stage, company stakes, event classifications, and selected relationship data. Each event provides a severity, date, affected stages, direction, and channel. Dates are re-aged against the snapshot date.
+The versioned snapshot contains stage nodes, directed dependencies, country shares, company stakes, and reviewed events. An event has severity `sev`, an authoritative date, selected stages, and a versioned classification. Event age is calculated against the snapshot date—not the visitor’s clock.
 
 ## Structural vulnerability
 
-Each stage receives a 0–10 structural score from weighted components: network influence, geographic concentration, policy exposure, substitutability, and market sensitivity. The first three are derived from the graph/data; substitutability and market sensitivity are declared analyst inputs.
-
-Geographic concentration uses a Herfindahl-style sum of squared country shares, including an explicit residual for unmodeled share. Network influence is the normalized weighted reach of a unit adverse shock through the declared graph.
-
-## Event field
-
-Event strength decays with age:
+For stage `n`, structural vulnerability is a weighted sum of five bounded components:
 
 ```text
-decay(age) = 2 ^ (-age / 12 days)
+struct(n) = wNI·NI(n) + wGEO·GEO(n) + wPOL·POL(n)
+          + wSUB·SUB(n) + wMKT·MKT(n)
 ```
 
-The current default transmission priors are 0.55 downstream and 0.30 upstream. A specificity multiplier and a `1e-4` contribution tolerance shape propagation. Multiple adverse contributions are combined with a bounded noisy-OR style rule rather than simple addition.
+The weights are derived from `MODEL_PRIORS.componentWeights` after excluding the event/shock weight and renormalizing the remaining five. `NI`, `GEO`, and `POL` are derived from graph/snapshot data. `SUB` and `MKT` are declared analyst inputs.
 
-## Interpretation
+For geographic concentration, shares include the residual:
 
-Outputs are relative model sensitivities. They are not probabilities, causal effects, observed trade flows, production loss, or financial forecasts. The low/base/high controls vary priors deterministically; they are sensitivity cases, not confidence intervals.
+```text
+residual = max(0, 1 - sum(country shares))
+HHI = sum(share²) + residual²
+```
 
-See [Academic guide](ACADEMIC_GUIDE.md) and [Validation note](validation/MLE_VALIDATION.md).
+## Event magnitude and propagation
+
+Initial magnitude is bounded severity multiplied by genuine exponential half-life decay:
+
+```text
+s0 = clamp(sev / 10, 0, 1) · 2 ^ (-ageDays / halfLifeDays)
+```
+
+The current base priors are: half-life 12 days, downstream transmission 0.55, upstream transmission 0.30, specificity floor 0.25, and contribution tolerance `1e-4`. Downstream is an input-dependence proxy; upstream is a supplier-revenue echo proxy. Neither is a measured input-output coefficient.
+
+The engine follows every declared reachable path until a contribution falls below tolerance. It does not use an arbitrary fixed hop limit.
+
+## Combining events and the displayed index
+
+Same-sign contributions are bounded using:
+
+```text
+combinePositive(v1 … vk) = 1 - Π(1 - vi)
+```
+
+Positive and negative effects are combined separately into a signed stage field. The aggregate operational index is an economic-weighted mean of the stage field, clamped to `[-1, 1]`; display uses:
+
+```text
+displayIndex = 5 + 5 · operationalIndex
+```
+
+Thus 5 is neutral, above 5 is net adverse, and below 5 is net mitigating. Only reviewed events classified as operational enter this aggregate.
+
+## Sensitivity and interpretation
+
+Low/base/high presets rerun the same calculation at ±30% on transmission and half-life. They are deterministic assumption tests, not statistical intervals. Outputs are modeled sensitivities, not probabilities, trade flows, physical shipment paths, realized losses, or forecasts.
+
+Read [Methodology](METHODOLOGY.md) for interpretation and [Academic guide](ACADEMIC_GUIDE.md) for reproducibility.
