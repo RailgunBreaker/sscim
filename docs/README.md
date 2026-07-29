@@ -29,6 +29,8 @@ Read the explanation, source, confidence label, and assumptions before using any
 - [Developer guide](DEVELOPER_GUIDE.md) — local setup, code layout, tests, and publishing workflow.
 - [Academic guide](ACADEMIC_GUIDE.md) — suitable research questions, reproducibility, and limitations.
 - [Calculation specification](calculation.md) — concise algorithm and interpretation rules.
+- [System architecture](SYSTEM_ARCHITECTURE.md) — application components, deployment, and publication boundary.
+- [Data sources, inputs, and outputs](DATA_SOURCES_AND_OUTPUTS.md) — what enters the model and what each output means.
 - [Data pipeline](computation-demo/DATA_PIPELINE.md) — evidence-to-publication process.
 
 ## Data and limits

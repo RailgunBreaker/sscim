@@ -19,7 +19,7 @@ async function findMarkdown(dir) {
   return results;
 }
 
-const priority = ['docs/README.md', 'docs/PUBLIC_GUIDE.md', 'docs/METHODOLOGY.md', 'docs/calculation.md', 'docs/DEVELOPER_GUIDE.md', 'docs/ACADEMIC_GUIDE.md'];
+const priority = ['docs/README.md', 'docs/PUBLIC_GUIDE.md', 'docs/METHODOLOGY.md', 'docs/calculation.md', 'docs/SYSTEM_ARCHITECTURE.md', 'docs/DATA_SOURCES_AND_OUTPUTS.md', 'docs/DEVELOPER_GUIDE.md', 'docs/ACADEMIC_GUIDE.md'];
 const rank = (file) => {
   const relative = path.relative(repoDir, file).replaceAll(path.sep, '/');
   const at = priority.indexOf(relative);
