@@ -203,6 +203,18 @@ async function main() {
   /* ---- 5. Export the snapshot ------------------------------------------ */
   log(nodeScript('scripts/build-vault-snapshot.mjs', APP_DIR).trim().split('\n').pop());
 
+  /* ---- 5b. Archive the day's briefing ----------------------------------
+     After the export, so it describes exactly the snapshot being published,
+     and before the gate, so a run that fails verification does not leave a
+     briefing on record for data that never went out. Best-effort: the
+     briefing is a derived readout, and losing one day of it must not block
+     publishing the data itself. */
+  try {
+    log(run('node', ['scripts/archive-briefing.mjs'], SERVER_DIR).trim());
+  } catch (err) {
+    log(`  briefing archive failed (${err.message.split('\n')[0]}) - continuing`);
+  }
+
   /* ---- 6. THE GATE ------------------------------------------------------ */
   try {
     nodeScript('scripts/audit-snapshot.mjs', APP_DIR);

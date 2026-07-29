@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { buildEngine } from '../engine/index.js';
 import { makeFixtureData } from '../engine/testFixture.js';
 import { buildModel } from '../engine/buildModel.js';
-import { briefingText } from './Briefing.jsx';
+import { briefingText } from './briefingText.js';
 
 function setup(scenario) {
   const data = makeFixtureData();

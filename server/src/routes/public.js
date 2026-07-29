@@ -2,7 +2,7 @@ import { Router } from 'express';
 import {
   getStages, getFlowEdges, getTierLabels, getCountries, getCompanies,
   getCustomers, getOwners, getPolicies, getEvents, getScenarios, getDataNotes,
-  getQuotes, buildBundle,
+  getQuotes, buildBundle, getBriefingIndex, getBriefing,
 } from '../bundle.js';
 import { quotesAreStale, quotesAsOf, refreshQuotesInBackground } from '../quotes.js';
 
@@ -29,6 +29,15 @@ publicRouter.get('/quotes', (req, res) => {
   const stale = quotesAreStale();
   const refreshing = stale && req.query.refresh !== '0' ? refreshQuotesInBackground() : false;
   res.json({ quotes: getQuotes(), asOf: quotesAsOf(), stale, refreshing });
+});
+
+/* Briefing archive. The list is cheap; a body is fetched on demand, because
+   ~6KB each would make the startup bundle grow with the archive. */
+publicRouter.get('/briefings', (req, res) => res.json({ briefings: getBriefingIndex() }));
+publicRouter.get('/briefings/:date', (req, res) => {
+  const found = getBriefing(req.params.date);
+  if (!found) return res.status(404).json({ error: 'No briefing archived for that date.' });
+  res.json(found);
 });
 
 /* Single-fetch bundle — what the dashboard actually loads on startup. */

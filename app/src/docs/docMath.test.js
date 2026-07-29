@@ -53,6 +53,18 @@ describe('extractMath', () => {
     expect(count).toBe(0);
   });
 
+  it('handles CRLF sources, which git produces in a Windows working tree', () => {
+    // A carriage return is a line terminator in JavaScript, so `.` never
+    // matches it and `$` never sits before it. Unguarded, every fence in a
+    // CRLF file is skipped while inline maths keeps working — the output looks
+    // plausible rather than broken, and Linux CI renders the same source
+    // correctly, so nothing surfaces the loss.
+    const crlf = ['```math', 'E = mc^2', '```', '', `Inline ${D}x${D} too.`].join('\r\n');
+    const { html, count } = render(crlf);
+    expect(count).toBe(2);
+    expect(html).toContain('katex-display');
+  });
+
   it('shows the source instead of throwing on a malformed equation', () => {
     const { html } = render(`${D}${D}\\frac{1${D}${D}`);
     expect(html).toMatch(/math-error|katex/);

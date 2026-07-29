@@ -161,6 +161,21 @@ CREATE TABLE IF NOT EXISTS quotes (
   market_cap  REAL,
   as_of       TEXT NOT NULL    -- ISO timestamp of the fetch
 );
+
+-- Daily briefing archive. Each pipeline run stores the baseline briefing it
+-- generated, so "what the model said on this date" is a record rather than
+-- something only reconstructable by checking out an old commit. Keyed by the
+-- snapshot date the briefing describes; re-running the pipeline on the same
+-- day replaces that day's entry rather than accumulating duplicates.
+CREATE TABLE IF NOT EXISTS briefings (
+  date_iso     TEXT PRIMARY KEY,  -- the snapshot date this briefing describes
+  chain_index  REAL,              -- headline index at generation time
+  headline     TEXT,              -- one-line summary for the archive list
+  event_count  INTEGER,
+  body         TEXT NOT NULL,     -- the full generated briefing
+  model_version TEXT,
+  created_at   TEXT NOT NULL DEFAULT (datetime('now'))
+);
 `);
 
 /* Additive column migrations. SQLite has no "ADD COLUMN IF NOT EXISTS", and an

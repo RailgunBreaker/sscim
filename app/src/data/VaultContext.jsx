@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { buildEngine } from '../engine/index.js';
-import { COMP_META } from './compMeta.js';
+import { buildVaultData } from './buildVaultData.js';
 import snapshot from './vault-snapshot.json';
 
 /* ====================================================================
@@ -24,31 +24,7 @@ const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8787';
 const VaultCtx = createContext(null);
 
 function buildVaultState(bundle, source) {
-  const COUNTRY_NAMES = Object.fromEntries(bundle.countries.map((c) => [c.id, c.name]));
-  const COUNTRY_POS = Object.fromEntries(bundle.countries.map((c) => [c.id, [c.lat, c.lng]]));
-  const COMPANY_BY_ID = Object.fromEntries(bundle.companies.map((c) => [c.id, c]));
-  const DOMAINS = Object.fromEntries(bundle.companies.filter((c) => c.domain).map((c) => [c.id, c.domain]));
-  const SUPPLIERS = {};
-  Object.entries(bundle.customers).forEach(([supId, list]) => {
-    list.forEach(([custId, sh]) => (SUPPLIERS[custId] ||= []).push([supId, sh]));
-  });
-  const data = {
-    STAGES: bundle.stages,
-    FLOW_EDGES: bundle.flowEdges,
-    TIER_LABELS: bundle.tierLabels,
-    COUNTRY_NAMES, COUNTRY_POS,
-    COMPANIES: bundle.companies, COMPANY_BY_ID, DOMAINS,
-    CUSTOMERS: bundle.customers, SUPPLIERS,
-    POLICIES: bundle.policies,
-    EVENTS: bundle.events,
-    SCENARIOS: bundle.scenarios,
-    OWNERS: bundle.owners,
-    DATA_NOTES: bundle.dataNotes,
-    QUOTES: bundle.quotes || {}, // market quotes (price/PE) — display metadata, never an engine input
-    META: bundle.meta || {},     // snapshot date + last pipeline run, for the freshness readout
-
-    COMP_META,
-  };
+  const data = buildVaultData(bundle);
   const engine = buildEngine({
     STAGES: data.STAGES, FLOW_EDGES: data.FLOW_EDGES, COMPANIES: data.COMPANIES,
     CUSTOMERS: data.CUSTOMERS, POLICIES: data.POLICIES, EVENTS: data.EVENTS, OWNERS: data.OWNERS,

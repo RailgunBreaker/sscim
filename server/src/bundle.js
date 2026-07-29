@@ -68,6 +68,47 @@ export function getQuotes() {
   return out;
 }
 
+/* The archive list, without the bodies. A briefing body is ~6KB, so shipping
+   every one of them in the startup bundle would grow it without bound as the
+   archive fills. The list carries what the picker needs; the body is fetched
+   when a reader opens a specific day. The newest is included in full, since
+   that is the one the dashboard shows by default and it should render with no
+   second request and no backend at all. */
+export function getBriefingIndex(limit = 120) {
+  return db.prepare(`SELECT date_iso, chain_index, headline, event_count, model_version, created_at
+    FROM briefings ORDER BY date_iso DESC LIMIT ?`).all(limit)
+    .map((r) => ({
+      dateISO: r.date_iso, chainIndex: r.chain_index, headline: r.headline,
+      eventCount: r.event_count, modelVersion: r.model_version, createdAt: r.created_at,
+    }));
+}
+
+export function getBriefing(dateISO) {
+  const row = dateISO
+    ? db.prepare('SELECT * FROM briefings WHERE date_iso = ?').get(dateISO)
+    : db.prepare('SELECT * FROM briefings ORDER BY date_iso DESC LIMIT 1').get();
+  if (!row) return null;
+  return {
+    dateISO: row.date_iso, chainIndex: row.chain_index, headline: row.headline,
+    eventCount: row.event_count, modelVersion: row.model_version, createdAt: row.created_at,
+    body: row.body,
+  };
+}
+
+/* Bodies for the most recent days, so the static deploy — which has no
+   backend to ask — can still open recent history offline. Capped rather than
+   complete: a body is ~6KB, so a year of daily runs would put 2MB into the
+   startup bundle. Older entries stay listed and are fetched from the API when
+   one is reachable, which is what the PC backend is for. */
+export const BUNDLED_BRIEFING_BODIES = 14;
+
+export function getBriefingBodies(limit = BUNDLED_BRIEFING_BODIES) {
+  return Object.fromEntries(
+    db.prepare('SELECT date_iso, body FROM briefings ORDER BY date_iso DESC LIMIT ?').all(limit)
+      .map((r) => [r.date_iso, r.body]),
+  );
+}
+
 export function buildBundle() {
   return {
     stages: getStages(),
@@ -82,6 +123,8 @@ export function buildBundle() {
     scenarios: getScenarios(),
     dataNotes: getDataNotes(),
     quotes: getQuotes(),
+    briefings: getBriefingIndex(),
+    briefingBodies: getBriefingBodies(),
     meta: getMetaBundle(),
   };
 }

@@ -47,7 +47,15 @@ export function extractMath(markdown) {
     return PLACEHOLDER(found.length - 1);
   };
 
-  const lines = markdown.split('\n');
+  /* Split on either line ending and normalise. Git's autocrlf rewrites these
+     files to CRLF in a Windows working tree, and a trailing \r defeats the
+     fence match completely: \r is a line terminator in JavaScript, so `.`
+     never matches it and `$` never sits before it. Every ```math fence was
+     silently skipped — 342 of them in the calculation specification — while
+     inline $…$ still worked, so the output looked plausible rather than
+     broken. Linux CI produced correct pages from the same source, which is
+     what made it insidious. */
+  const lines = markdown.split(/\r?\n/);
   const out = [];
   let inFence = false;
   let fenceInfo = '';

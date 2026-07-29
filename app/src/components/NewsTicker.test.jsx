@@ -54,6 +54,31 @@ describe('NewsTicker', () => {
     expect(marks.every((m) => ['▲', '▼', '–'].includes(m))).toBe(true);
   });
 
+
+  it('cannot force the page wider than the viewport on a phone', () => {
+    const host = mount(<NewsTicker />);
+    const css = host.querySelector('style').textContent;
+    // A flex item defaults to min-width:auto and refuses to shrink below its
+    // content; the rail is thousands of pixels wide, so without this the strip
+    // pushes the whole page sideways on a narrow screen.
+    expect(css).toMatch(/\.nt-track\{[^}]*min-width:0/);
+    expect(css).toMatch(/\.nt\{[^}]*overflow:hidden/);
+  });
+
+  it('keeps the rail copies from being squeezed instead of scrolling', () => {
+    const host = mount(<NewsTicker />);
+    const css = host.querySelector('style').textContent;
+    expect(css).toMatch(/\.nt-copy\{[^}]*flex:none/);
+    expect(css).toMatch(/\.nt-item\{[^}]*flex:none/);
+    expect(css).toMatch(/\.nt-rail\{[^}]*width:max-content/);
+  });
+
+  it('stacks the label above the headlines on a narrow screen', () => {
+    const host = mount(<NewsTicker />);
+    const css = host.querySelector('style').textContent;
+    expect(css).toContain('@media(max-width:640px)');
+  });
+
   it('prefers live API events over the bundled snapshot when reachable', async () => {
     const live = [{ id: 'live_1', date: 'Aug 01, 2026', daysAgo: 0, title: 'Live headline from the API' }];
     vi.stubGlobal('fetch', vi.fn(() => Promise.resolve({ ok: true, json: () => Promise.resolve(live) })));
