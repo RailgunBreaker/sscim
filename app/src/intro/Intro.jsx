@@ -10,7 +10,8 @@ const STYLE = `
   .wrap{max-width:820px;margin:0 auto;padding:0 20px}
   a{color:var(--copper);text-decoration:none}
   header{border-bottom:1px solid var(--line);padding:14px 0;position:sticky;top:0;background:rgba(12,17,28,.92);backdrop-filter:blur(6px);z-index:10}
-  header .wrap{display:flex;align-items:center;gap:12px;flex-wrap:wrap;max-width:980px}
+  header .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;max-width:980px}
+  .header-brand,.header-actions{display:flex;align-items:center;gap:10px;min-width:0}.header-actions{margin-left:auto;flex-wrap:wrap;justify-content:flex-end}
   .logo{font-weight:700;font-size:19px;letter-spacing:1px}
   .badge{font-size:9px;letter-spacing:1.5px;color:var(--amber);border:1px solid var(--amber);border-radius:3px;padding:2px 7px;font-family:'IBM Plex Mono',monospace;white-space:nowrap}
   .btn{display:inline-block;border-radius:5px;padding:8px 16px;font-weight:700;font-size:13.5px;border:1px solid var(--copper);transition:transform .15s ease,box-shadow .15s ease}
@@ -40,7 +41,7 @@ const STYLE = `
   .langbar b.on{background:var(--copper);color:#0C111C;border-color:var(--copper)}
   .disclaimer{border:1px solid var(--copperDim);background:rgba(223,168,61,.06);border-radius:6px;padding:12px 14px;color:var(--amber);font-size:11.5px;line-height:1.7;margin:14px 0}
   footer{margin-top:56px;padding:24px 0;border-top:1px solid var(--line);font-size:10.5px;color:var(--faint);line-height:1.7}
-  @media (max-width:640px){ header .wrap{gap:8px} .badge{display:none} }
+  @media (max-width:700px){header .wrap{gap:8px}.header-actions{width:100%;margin-left:0}.badge{display:none}}@media (max-width:440px){.header-actions{gap:7px}.header-actions a{font-size:12px}.header-actions .btn{padding:7px 10px}.langbar b{padding:2px 5px}}
 `;
 
 const Html = ({ tag: Tag = 'span', html, ...rest }) => <Tag {...rest} dangerouslySetInnerHTML={{ __html: html }} />;
@@ -68,21 +69,27 @@ export default function Intro() {
 
       <header>
         <div className="wrap">
-          <span className="logo">SSCIM</span>
-          <span className="k mono">INTRODUCTION & USER GUIDE</span>
-          <span className="badge">RESEARCH PROTOTYPE</span>
-          <span className="langbar mono" style={{ marginLeft: 'auto', display: 'flex', gap: 3 }}>
-            {Object.entries(LANG_LABELS).map(([l, label]) => (
-              <b key={l} className={lang === l ? 'on' : ''} onClick={() => setLang(l)}>{label}</b>
-            ))}
-          </span>
-          <span><a href="index.html">{t('navHome')}</a> &nbsp;·&nbsp; <a className="btn solid" href="sscim-app.html">{t('launchDashboard')}</a></span>
+          <div className="header-brand">
+            <span className="logo">SSCIM</span>
+            <span className="k mono">INTRODUCTION & USER GUIDE</span>
+            <span className="badge">SSCIM INTELLIGENCE</span>
+          </div>
+          <div className="header-actions">
+            <span className="langbar mono" style={{ display: 'flex', gap: 3 }}>
+              {Object.entries(LANG_LABELS).map(([l, label]) => (
+                <b key={l} className={lang === l ? 'on' : ''} onClick={() => setLang(l)}>{label}</b>
+              ))}
+            </span>
+            <a href="index.html">{t('navHome')}</a>
+            <a href="docs.html">Docs</a>
+            <a className="btn solid" href="sscim-app.html">{t('launchDashboard')}</a>
+          </div>
         </div>
       </header>
 
       <div className="wrap intro-hero">
         <Html tag="h1" html={t('h1')} />
-        <p className="lede">{t('lede')}</p>
+        <p className="lede">{t('currentLede')}</p>
         <div className="signal" aria-hidden="true"><i /><i /><i /><i /><i /><i /></div>
 
         <h2>{t('h2_1')}</h2>
@@ -127,7 +134,7 @@ export default function Intro() {
 
         <h2>{t('h2_5')}</h2>
         <div className="disclaimer">
-          <Html tag="span" html={t('s5Body')} />
+          <Html tag="span" html={t('currentDisclaimer')} />
         </div>
 
         <p style={{ marginTop: 28 }}><a className="btn solid" href="sscim-app.html">{t('launchDashboardBottom')}</a></p>
@@ -135,7 +142,7 @@ export default function Intro() {
 
       <footer>
         <div className="wrap">
-          <p><strong style={{ color: 'var(--dim)' }}>SSCIM</strong> · a GP News product · map data © OpenStreetMap contributors · {t('footerText')}</p>
+          <p><strong style={{ color: 'var(--dim)' }}>SSCIM</strong> · a GP News product · map data © OpenStreetMap contributors · {t('currentFooter')}</p>
         </div>
       </footer>
     </>

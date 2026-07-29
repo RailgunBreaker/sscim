@@ -58,18 +58,19 @@ export default function Landing() {
         <div className="wrap">
           <span className="logo">SSCIM</span>
           <span className="tag mono">SEMICONDUCTOR SUPPLY CHAIN INTELLIGENCE MAP</span>
-          <span className="badge">{t('badge')}</span>
+          <span className="badge">SSCIM INTELLIGENCE</span>
           <span className="langbar mono" style={{ marginLeft: 'auto', display: 'flex', gap: 3 }}>
             {Object.entries(LANG_LABELS).map(([l, label]) => (
               <b key={l} className={lang === l ? 'on' : ''} onClick={() => setLang(l)}>{label}</b>
             ))}
           </span>
           <a href="intro.html" style={{ fontSize: 13 }}>{t('navIntro')}</a>
+          <a href="docs.html" style={{ fontSize: 13 }}>Documentation</a>
           <a className="btn solid" href="sscim-app.html">{t('launchDemo')}</a>
         </div>
       </header>
 
-      <div className="ticker mono">{t('ticker')}</div>
+      <div className="ticker mono">SSCIM INTELLIGENCE · Supply-chain analysis, event monitoring, and scenario comparison · Not investment advice</div>
 
       <div className="hero">
         <div className="wrap">
@@ -121,7 +122,7 @@ export default function Landing() {
         <div className="wrap">
           <h2>{t('h2DataSource')}</h2>
           <div className="grid">
-            <div className="card"><h3>{t('card4H')}</h3><p>{t('card4P')}</p></div>
+            <div className="card"><h3>{t('currentCard4H')}</h3><p>{t('currentCard4P')}</p></div>
             <div className="card"><h3>{t('card5H')}</h3><p>{t('card5P')}</p></div>
             <div className="card"><h3>{t('card6H')}</h3><p>{t('card6P')}</p></div>
           </div>
@@ -131,7 +132,7 @@ export default function Landing() {
       <footer>
         <div className="wrap">
           <p style={{ marginBottom: 10 }}><strong style={{ color: 'var(--dim)' }}>SSCIM</strong> · a GP News product · map data © OpenStreetMap contributors</p>
-          <div className="disclaimer">{t('footerText')}</div>
+          <div className="disclaimer">{t('currentFooter')}</div>
         </div>
       </footer>
     </>

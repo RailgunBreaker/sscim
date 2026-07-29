@@ -1,9 +1,46 @@
 import { Router } from 'express';
 import { db } from '../db.js';
 import { adminAuth } from '../middleware/adminAuth.js';
+import { candidates, pendingCandidates, candidateById, approveCandidate, rejectCandidate, publishReview, dashboardSummary } from '../review-queue.js';
 
 export const adminRouter = Router();
 adminRouter.use(adminAuth);
+
+/* ---- review queue (human gate for pipeline candidates) ---- */
+adminRouter.get('/review/candidates', (req, res) => {
+  const status = ['pending', 'approved', 'rejected', 'all'].includes(req.query.status) ? req.query.status : 'pending';
+  res.json({ candidates: status === 'pending' ? pendingCandidates() : candidates(status) });
+});
+
+adminRouter.get('/dashboard', (req, res) => res.json(dashboardSummary()));
+
+adminRouter.get('/review/candidates/:id', (req, res) => {
+  const candidate = candidateById(req.params.id);
+  if (!candidate) return res.status(404).json({ error: 'Candidate not found.' });
+  res.json({ candidate });
+});
+
+adminRouter.post('/review/candidates/:id/approve', (req, res) => {
+  try {
+    const reviewedBy = req.get('x-reviewer') || 'admin-ui';
+    const approved = approveCandidate(req.params.id, req.body || {}, reviewedBy);
+    const publication = publishReview({ action: 'approve', ...approved });
+    res.status(publication.published ? 201 : 202).json({ ...approved, ...publication });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+adminRouter.post('/review/candidates/:id/reject', (req, res) => {
+  try {
+    const reviewedBy = req.get('x-reviewer') || 'admin-ui';
+    const rejected = rejectCandidate(req.params.id, req.body?.reason, reviewedBy);
+    const publication = publishReview({ action: 'reject', ...rejected });
+    res.status(publication.published ? 200 : 202).json({ ...rejected, ...publication });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
 
 /* ---- companies (identity + production footprint) ---- */
 adminRouter.put('/companies/:id', (req, res) => {

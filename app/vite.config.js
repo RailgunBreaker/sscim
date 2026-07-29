@@ -22,6 +22,8 @@ export default defineConfig({
         main: resolve(__dirname, 'index.html'),
         intro: resolve(__dirname, 'intro.html'),
         dashboard: resolve(__dirname, 'sscim-app.html'),
+        admin: resolve(__dirname, 'admin.html'),
+        docs: resolve(__dirname, 'docs.html'),
       },
     },
   },

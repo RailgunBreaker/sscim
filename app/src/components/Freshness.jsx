@@ -39,9 +39,9 @@ export default function Freshness() {
     <span className="mono" style={{ fontSize: 9.5, color, letterSpacing: 0.5, whiteSpace: 'nowrap' }}
       title={live
         ? `Live from the vault API. Snapshot date ${meta.snapshotDate ?? 'unknown'}.`
-        : `Static build. Data as of the last pipeline run${stamp ? ` (${new Date(stamp).toLocaleString()})` : ''}; snapshot date ${meta.snapshotDate ?? 'unknown'}. The backend is not queried on this deploy.`}>
+        : `Latest available dataset. Data as of the last pipeline run${stamp ? ` (${new Date(stamp).toLocaleString()})` : ''}; dataset date ${meta.snapshotDate ?? 'unknown'}.`}>
       <span style={{ color: live ? C.green : color }}>●</span>{' '}
-      {live ? 'LIVE' : 'SNAPSHOT'}
+      {live ? 'LIVE' : 'DATASET'}
       {meta.snapshotDate ? ` ${meta.snapshotDate}` : ''}
       {age && !live ? ` · updated ${age}` : ''}
     </span>

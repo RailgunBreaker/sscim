@@ -6,12 +6,15 @@
 export const LANG_LABELS = { en: 'EN', zh: '简', tw: '繁', ja: '日' };
 
 export const T = {
+  currentCard4H: { en: 'Transparent methodology and data scope' },
+  currentCard4P: { en: 'Companies, stages, the customer graph, and shareholder table are curated from the SSCIM vault. The methodology explains every declared coefficient and its limitations.' },
+  currentFooter: { en: 'SSCIM provides descriptive supply-chain sensitivity analysis. It is not investment advice.' },
   badge: { en: 'RESEARCH PROTOTYPE', zh: '研究原型', tw: '研究原型', ja: 'リサーチ・プロトタイプ' },
   navIntro: { en: 'Guide & methodology', zh: '指南与方法论', tw: '指南與方法論', ja: 'ガイドと方法論' },
   launchDemo: { en: 'Open the dashboard →', zh: '打开仪表盘 →', tw: '開啟儀表板 →', ja: 'ダッシュボードを開く →' },
 
   ticker: {
-    en: 'RESEARCH PROTOTYPE · frozen demonstration snapshot, dataset as of 2026-07-29 · a sensitivity & comparison engine over a curated sample — not a live feed, not a calibrated forecast, not investment advice',
+    en: 'SSCIM INTELLIGENCE · dataset as of 2026-07-29 · supply-chain sensitivity and comparison analysis — not a calibrated forecast and not investment advice',
     zh: '研究原型 · 冻结的演示快照，数据截至 2026-07-29 · 一个基于精选样本的敏感性与比较引擎——不是实时数据，不是经过校准的预测，也不构成投资建议',
     tw: '研究原型 · 凍結的示範快照，資料截至 2026-07-29 · 一個基於精選樣本的敏感度與比較引擎——不是即時數據，不是經過校準的預測，也不構成投資建議',
     ja: 'リサーチ・プロトタイプ · 凍結されたデモンストレーション用スナップショット（データ基準日 2026-07-29） · 精選サンプルに基づく感度分析・比較エンジンです——ライブフィードでも、較正済みの予測でも、投資助言でもありません',
@@ -24,7 +27,7 @@ export const T = {
     ja: '静的な地図はチップ供給網が<em>どこにあるか</em>を示す。<br>SSCIMは衝撃がそこを<em>どう伝わるか</em>を示す。',
   },
   heroP: {
-    en: 'A transparent sensitivity-ranking engine over a curated demonstration snapshot: 24 stages, 109 companies with production shares and customer links, 16 countries. Every score separates into structural vulnerability, operational impact, and scenario delta — with the full propagation math shown, never hidden behind one index.',
+    en: 'A transparent sensitivity-ranking engine across 24 stages, 109 companies with production shares and customer links, and 16 countries. Every score separates into structural vulnerability, operational impact, and scenario delta — with the full propagation math shown, never hidden behind one index.',
     zh: '一个基于精选演示快照的透明敏感性排序引擎：24 个环节、109 家公司（含生产份额与客户关系）、16 个国家。每个分数都拆分为结构性脆弱度、运营影响与情景增量——完整的传导算式全部公开，绝不藏在单一指数背后。',
     tw: '一個基於精選示範快照的透明敏感度排序引擎：24 個環節、109 家公司（含生產份額與客戶關係）、16 個國家。每個分數都拆分為結構性脆弱度、營運影響與情境增量——完整的傳導算式全部公開，絕不藏在單一指數背後。',
     ja: '精選されたデモンストレーション用スナップショットに基づく、透明性の高い感度ランキング・エンジンです：24工程、109社（生産シェアと顧客関係付き）、16か国。すべてのスコアは構造的脆弱性・運用インパクト・シナリオ差分に分解され、伝播の計算式はすべて公開——単一の指数の裏に隠すことはありません。',
@@ -125,12 +128,12 @@ export const T = {
   },
 
   h2DataSource: { en: 'Model status, plainly stated', zh: '模型现状，如实说明', tw: '模型現狀，如實說明', ja: 'モデルの現状を率直に' },
-  card4H: { en: 'A frozen demonstration snapshot, not a live feed', zh: '一份冻结的演示快照，而非实时数据', tw: '一份凍結的示範快照，而非即時資料', ja: 'ライブフィードではなく、凍結されたデモ用スナップショット' },
+  card4H: { en: 'Transparent methodology and data scope', zh: '一份冻结的演示快照，而非实时数据', tw: '一份凍結的示範快照，而非即時資料', ja: 'ライブフィードではなく、凍結されたデモ用スナップショット' },
   card4P: {
-    en: 'Companies, stages, the customer graph, and shareholder table are a static, curated sample bundled at build time — not fetched live, not continuously updated. Every propagation coefficient is a declared prior, not a fitted parameter; the in-app Methodology overlay shows the exact formulas, and docs/MODEL_ROADMAP.md states what real calibration would still require.',
-    zh: '公司、环节、客户关系图与股东表都是构建时打包的静态精选样本——不是实时抓取，也不会持续更新。每个传导系数都是声明的先验值，而非拟合参数；应用内的"方法论"面板展示了精确公式，docs/MODEL_ROADMAP.md 说明了实现真正校准仍需具备哪些条件。',
-    tw: '公司、環節、客戶關係圖與股東表都是建置時打包的靜態精選樣本——不是即時擷取，也不會持續更新。每個傳導係數都是聲明的先驗值，而非擬合參數；應用內的「方法論」面板展示了精確公式，docs/MODEL_ROADMAP.md 說明了實現真正校準仍需具備哪些條件。',
-    ja: '企業・工程・顧客関係グラフ・株主テーブルは、ビルド時に組み込まれた静的な精選サンプルであり、ライブで取得されるものでも継続的に更新されるものでもありません。すべての伝播係数はフィットさせたパラメータではなく、宣言された事前値です。アプリ内の「方法論」パネルに正確な数式を、docs/MODEL_ROADMAP.md に本当の較正に必要な条件を記載しています。',
+    en: 'Companies, stages, the customer graph, and shareholder table are curated from the SSCIM vault. Every propagation coefficient is a declared prior, not a fitted parameter; the in-app Methodology overlay shows the exact formulas, and MODEL_ROADMAP.md states what real calibration would still require.',
+    zh: '公司、环节、客户关系图与股东表都是构建时打包的静态精选样本——不是实时抓取，也不会持续更新。每个传导系数都是声明的先验值，而非拟合参数；应用内的"方法论"面板展示了精确公式，MODEL_ROADMAP.md 说明了实现真正校准仍需具备哪些条件。',
+    tw: '公司、環節、客戶關係圖與股東表都是建置時打包的靜態精選樣本——不是即時擷取，也不會持續更新。每個傳導係數都是聲明的先驗值，而非擬合參數；應用內的「方法論」面板展示了精確公式，MODEL_ROADMAP.md 說明了實現真正校準仍需具備哪些條件。',
+    ja: '企業・工程・顧客関係グラフ・株主テーブルは、ビルド時に組み込まれた静的な精選サンプルであり、ライブで取得されるものでも継続的に更新されるものでもありません。すべての伝播係数はフィットさせたパラメータではなく、宣言された事前値です。アプリ内の「方法論」パネルに正確な数式を、MODEL_ROADMAP.md に本当の較正に必要な条件を記載しています。',
   },
   card5H: { en: 'Evidence-tiered, not uniformly sourced', zh: '按证据分级，而非统一溯源', tw: '按證據分級，而非統一溯源', ja: 'エビデンスに階層あり、一律に出典があるわけではない' },
   card5P: {
@@ -148,7 +151,7 @@ export const T = {
   },
 
   footerText: {
-    en: 'This is a research prototype: a frozen demonstration snapshot with declared, unvalidated propagation priors, not a calibrated or live forecasting system. All output is descriptive sensitivity analysis. Nothing on this site or in the product constitutes investment advice or a recommendation to buy or sell any security.',
+    en: 'SSCIM uses declared, unvalidated propagation priors and is not a calibrated forecasting system. All output is descriptive sensitivity analysis. Nothing on this site or in the product constitutes investment advice or a recommendation to buy or sell any security.',
     zh: '这是一个研究原型：一份冻结的演示快照，配备声明的、未经验证的传导先验值，而非经过校准或实时运行的预测系统。所有输出均为描述性的敏感性分析。本网站及产品中的任何内容均不构成投资建议或买卖任何证券的推荐。',
     tw: '這是一個研究原型：一份凍結的示範快照，配備聲明的、未經驗證的傳導先驗值，而非經過校準或即時運行的預測系統。所有輸出均為描述性的敏感度分析。本網站及產品中的任何內容均不構成投資建議或買賣任何證券的推薦。',
     ja: 'これはリサーチ・プロトタイプです：凍結されたデモンストレーション用スナップショットに、宣言された未検証の伝播事前値を組み合わせたものであり、較正済みまたはライブで動作する予測システムではありません。すべての出力は記述的な感度分析です。本サイトおよび本製品のいかなる内容も、投資助言や証券の売買推奨を構成するものではありません。',

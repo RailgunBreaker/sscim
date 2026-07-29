@@ -4,25 +4,27 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "predev": "npm run snapshot",
+    "predev": "npm run snapshot && npm run docs",
     "dev": "vite",
     "snapshot": "node scripts/build-vault-snapshot.mjs",
-    "prebuild": "npm run snapshot",
+    "docs": "node scripts/build-doc-library.mjs",
+    "prebuild": "npm run snapshot && npm run docs",
     "build": "vite build",
     "preview": "vite preview",
     "audit:data": "node scripts/audit-snapshot.mjs",
     "test": "vitest run"
   },
   "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "katex": "^0.16.9",
     "leaflet": "^1.9.4",
-    "katex": "^0.16.9"
+    "marked": "^18.0.7",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.1",
+    "jsdom": "^25.0.1",
     "vite": "^5.4.0",
-    "vitest": "^2.1.9",
-    "jsdom": "^25.0.1"
+    "vitest": "^2.1.9"
   }
 }
