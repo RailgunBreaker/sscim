@@ -26,7 +26,7 @@ describe('resolvePath', () => {
     expect(resolvePath('docs/README.md', 'computation-demo/DATA_PIPELINE.md')).toBe('docs/computation-demo/DATA_PIPELINE.md');
   });
   it('resolves a parent link', () => {
-    expect(resolvePath('docs/computation-demo/COMPUTATION_DEMO.md', '../calculation/README.md')).toBe('docs/calculation/README.md');
+    expect(resolvePath('docs/computation-demo/COMPUTATION_DEMO.md', '../calculation.md')).toBe('docs/calculation.md');
   });
 });
 
@@ -49,8 +49,8 @@ describe('rewriteLinks', () => {
   });
   it('keeps nested and parent paths intact', () => {
     expect(rewrite('<a href="computation-demo/DATA_PIPELINE.md"')).toContain('href="computation-demo/DATA_PIPELINE.md.html"');
-    expect(rewrite('<a href="../calculation/README.md"', 'docs/computation-demo/X.md'))
-      .toContain('href="../calculation/README.md.html"');
+    expect(rewrite('<a href="../calculation.md"', 'docs/computation-demo/X.md'))
+      .toContain('href="../calculation.md.html"');
   });
   it('preserves a heading anchor', () => {
     expect(rewrite('<a href="METHODOLOGY.md#operational-layer"')).toContain('href="METHODOLOGY.md.html#operational-layer"');
@@ -60,8 +60,17 @@ describe('rewriteLinks', () => {
     expect(out).toContain('https://github.com/RailgunBreaker/sscim/blob/main/app/src/engine/priors.js');
     expect(out).toContain('target="_blank"');
   });
-  it('maps a directory link to its README page', () => {
-    expect(rewrite('<a href="calculation/"')).toContain('href="calculation/README.md.html"');
+  it('maps a directory link to its README page when the folder has one', () => {
+    // Stated against an explicit fixture rather than the live corpus: the
+    // behaviour should hold for any folder with a README, not only for
+    // whichever folders happen to have one today.
+    const withReadme = new Set(['docs/guides/README.md']);
+    expect(rewriteLinks('<a href="guides/"', 'docs/README.md', withReadme))
+      .toContain('href="guides/README.md.html"');
+  });
+  it('sends a directory with no README to GitHub', () => {
+    expect(rewrite('<a href="computation-demo/"'))
+      .toContain('https://github.com/RailgunBreaker/sscim/blob/main/docs/computation-demo');
   });
   it('leaves external and in-page links alone', () => {
     expect(rewrite('<a href="https://example.com"')).toBe('<a href="https://example.com"');
@@ -75,7 +84,7 @@ describe('page addressing', () => {
   });
   it('computes a root prefix for any depth', () => {
     expect(rootPrefix('docs/PUBLIC_GUIDE.md')).toBe('../');
-    expect(rootPrefix('docs/calculation/06-event-decay.md')).toBe('../../');
+    expect(rootPrefix('docs/computation-demo/DATA_PIPELINE.md')).toBe('../../');
   });
 });
 

@@ -1,17 +1,23 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { DOCUMENT_LIBRARY } from './generated-library.js';
 import { pageFor } from './docLinks.js';
+import { TAG_ORDER, labelFor } from './docTags.js';
 
-/* The searchable index over the documentation.
+/* The searchable, filterable index over the documentation.
 
    Each document is published as its own page by scripts/build-doc-pages.mjs
    (docs/PUBLIC_GUIDE.md -> /docs/PUBLIC_GUIDE.md.html), so this page lists and
-   filters rather than rendering content. That split is deliberate: a document
+   narrows rather than rendering content. That split is deliberate: a document
    gets a real, shareable, crawlable URL instead of living behind an in-page
    route, and there is exactly one renderer to keep correct.
 
-   The list itself is generated from a filesystem walk at build time, so a new
-   Markdown file appears here and gets a page with nothing to register. */
+   Tags exist because roughly sixty documents is more than anyone wants to scan
+   to find the three that match why they came. Selecting tags is additive
+   (union, not intersection): picking "Mathematics" and "Data" widens the list
+   rather than narrowing it to their overlap, which is what a reader browsing
+   by interest actually wants. The selection lives in the URL hash so a
+   filtered view can be shared, and so the tag chips on each document page can
+   link back here pre-filtered. */
 
 const STYLE = `
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap');
@@ -30,13 +36,21 @@ h1{margin:6px 0 8px;font-size:clamp(28px,4vw,40px);letter-spacing:-.8px}
 .lede{color:var(--dim);font-size:14.5px;max-width:70ch;margin:0 0 22px}
 .search{width:100%;max-width:460px;background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:6px;padding:11px 12px;font:13px 'IBM Plex Mono',monospace}
 .search:focus{outline:1px solid var(--copper)}
-.count{color:var(--faint);font:10px 'IBM Plex Mono',monospace;letter-spacing:1.4px;margin:26px 0 10px}
+.filters{display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin:16px 0 4px}
+.chip{border:1px solid var(--line);background:var(--panel2);color:var(--dim);border-radius:20px;padding:6px 13px;font:11px 'IBM Plex Mono',monospace;letter-spacing:.5px;cursor:pointer}
+.chip:hover{border-color:var(--copper);color:var(--text)}
+.chip.on{background:var(--copper);border-color:var(--copper);color:var(--bg);font-weight:700}
+.chip .n{opacity:.65;margin-left:5px}
+.clear{background:none;border:0;color:var(--faint);font:11px 'IBM Plex Mono',monospace;cursor:pointer;text-decoration:underline;padding:6px 4px}
+.count{color:var(--faint);font:10px 'IBM Plex Mono',monospace;letter-spacing:1.4px;margin:22px 0 10px}
 .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(272px,1fr));gap:12px}
 .card{border:1px solid var(--line);background:var(--panel);border-radius:9px;padding:15px;display:block;transition:border-color .15s ease,transform .15s ease}
 .card:hover{border-color:var(--copper);transform:translateY(-1px);text-decoration:none}
 .card strong{display:block;font-size:14.5px;color:var(--text);font-weight:600}
 .card small{display:block;margin-top:5px;color:var(--faint);font:10px 'IBM Plex Mono',monospace;word-break:break-all}
-.group{margin:32px 0 10px;font:10px 'IBM Plex Mono',monospace;letter-spacing:1.6px;color:var(--faint);border-bottom:1px solid var(--line);padding-bottom:7px}
+.card .tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:9px}
+.card .tag{border:1px solid var(--line);color:var(--dim);border-radius:20px;padding:2px 8px;font:9.5px 'IBM Plex Mono',monospace}
+.group{margin:30px 0 10px;font:10px 'IBM Plex Mono',monospace;letter-spacing:1.6px;color:var(--faint);border-bottom:1px solid var(--line);padding-bottom:7px}
 .empty{color:var(--faint);font-size:13px}
 .note{border:1px solid #5b4827;background:rgba(223,168,61,.06);border-radius:7px;padding:12px 14px;margin:0 0 26px;color:var(--dim);font-size:13px}
 .note b{color:var(--amber)}
@@ -44,21 +58,57 @@ h1{margin:6px 0 8px;font-size:clamp(28px,4vw,40px);letter-spacing:-.8px}
 `;
 
 const dirOf = (path) => (path.includes('/') ? path.slice(0, path.lastIndexOf('/')) : '(root)');
+const readHash = () => {
+  const m = /[#&]tag=([^&]+)/.exec(window.location.hash || '');
+  return m ? decodeURIComponent(m[1]).split(',').filter(Boolean) : [];
+};
 
 export default function Docs() {
   const [query, setQuery] = useState('');
+  const [active, setActive] = useState(readHash);
 
-  const groups = useMemo(() => {
+  useEffect(() => {
+    const onHash = () => setActive(readHash());
+    window.addEventListener('hashchange', onHash);
+    return () => window.removeEventListener('hashchange', onHash);
+  }, []);
+
+  const counts = useMemo(() => {
+    const c = new Map();
+    for (const doc of DOCUMENT_LIBRARY) for (const tag of doc.tags || []) c.set(tag, (c.get(tag) || 0) + 1);
+    return c;
+  }, []);
+
+  const tags = useMemo(
+    () => [...counts.keys()].sort((a, b) => {
+      const ai = TAG_ORDER.indexOf(a); const bi = TAG_ORDER.indexOf(b);
+      return (ai < 0 ? TAG_ORDER.length : ai) - (bi < 0 ? TAG_ORDER.length : bi) || a.localeCompare(b);
+    }),
+    [counts],
+  );
+
+  const toggle = (tag) => {
+    const next = active.includes(tag) ? active.filter((t) => t !== tag) : [...active, tag];
+    setActive(next);
+    window.history.replaceState(null, '', next.length ? `#tag=${encodeURIComponent(next.join(','))}` : ' ');
+  };
+  const clear = () => { setActive([]); window.history.replaceState(null, '', ' '); };
+
+  const { matched, groups } = useMemo(() => {
     const q = query.trim().toLowerCase();
-    const matched = DOCUMENT_LIBRARY.filter((doc) => `${doc.path} ${doc.title}`.toLowerCase().includes(q));
+    const list = DOCUMENT_LIBRARY.filter((doc) => {
+      const hitsQuery = `${doc.path} ${doc.title}`.toLowerCase().includes(q);
+      const hitsTag = active.length === 0 || (doc.tags || []).some((t) => active.includes(t));
+      return hitsQuery && hitsTag;
+    });
     const map = new Map();
-    for (const doc of matched) {
+    for (const doc of list) {
       const dir = dirOf(doc.path);
       if (!map.has(dir)) map.set(dir, []);
       map.get(dir).push(doc);
     }
-    return { matched, map };
-  }, [query]);
+    return { matched: list, groups: map };
+  }, [query, active]);
 
   return <>
     <style>{STYLE}</style>
@@ -73,17 +123,31 @@ export default function Docs() {
     </div></header>
     <main>
       <h1>Documentation</h1>
-      <p className="lede">Every Markdown document in the project, published as its own page. Links between documents, and links into the source tree, resolve to real addresses you can share.</p>
+      <p className="lede">Every Markdown document in the project, published as its own page with equations rendered. Filter by what you came for, or search by name.</p>
       <div className="note"><b>Reading note:</b> SSCIM separates evidence, declared assumptions, and computed outputs. Consult each document’s scope and limitations before relying on a result.</div>
-      <input className="search" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Filter documents…" aria-label="Filter documents" />
-      <p className="count">{groups.matched.length} OF {DOCUMENT_LIBRARY.length} DOCUMENTS</p>
-      {groups.matched.length === 0 && <p className="empty">No matching document.</p>}
-      {[...groups.map].map(([dir, list]) => <section key={dir}>
+
+      <input className="search" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Filter documents…" aria-label="Filter documents by name" />
+
+      <div className="filters" role="group" aria-label="Filter documents by tag">
+        {tags.map((tag) => <button
+          key={tag}
+          type="button"
+          className={`chip ${active.includes(tag) ? 'on' : ''}`}
+          aria-pressed={active.includes(tag)}
+          onClick={() => toggle(tag)}
+        >{labelFor(tag)}<span className="n">{counts.get(tag)}</span></button>)}
+        {active.length > 0 && <button type="button" className="clear" onClick={clear}>clear</button>}
+      </div>
+
+      <p className="count">{matched.length} OF {DOCUMENT_LIBRARY.length} DOCUMENTS{active.length ? ` · ${active.map(labelFor).join(' + ')}` : ''}</p>
+      {matched.length === 0 && <p className="empty">No document matches that combination.</p>}
+      {[...groups].map(([dir, list]) => <section key={dir}>
         <p className="group">{dir.toUpperCase()}</p>
         <div className="cards">
           {list.map((doc) => <a className="card" key={doc.path} href={pageFor(doc.path)}>
             <strong>{doc.title.replace(/^SSCIM\s*[—-]\s*/, '')}</strong>
             <small>{doc.path}</small>
+            <span className="tags">{(doc.tags || []).map((t) => <span className="tag" key={t}>{labelFor(t)}</span>)}</span>
           </a>)}
         </div>
       </section>)}

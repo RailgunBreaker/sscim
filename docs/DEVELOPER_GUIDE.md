@@ -130,7 +130,7 @@ Every Markdown file in the repository is published as its own page, at the same 
 
 ```
 docs/PUBLIC_GUIDE.md              →  /docs/PUBLIC_GUIDE.md.html
-docs/calculation/06-event-decay.md →  /docs/calculation/06-event-decay.md.html
+docs/computation-demo/DATA_PIPELINE.md →  /docs/computation-demo/DATA_PIPELINE.md.html
 ```
 
 Because the output tree mirrors the source tree, documents keep ordinary repo-relative links and they resolve correctly in both places — on GitHub as Markdown, and on the site once `.html` is appended. Write `[Public guide](PUBLIC_GUIDE.md)` and it works in both.
@@ -139,6 +139,30 @@ Because the output tree mirrors the source tree, documents keep ordinary repo-re
 - **Reading order:** the first several documents are ordered by the `PRIORITY` list in `app/scripts/lib/find-markdown.mjs`; everything else is alphabetical.
 - **Link targets that are not documents** — source files, CSVs, directories — are rewritten to GitHub blob URLs rather than to paths this static host does not serve.
 - **Heading anchors** are generated from the heading text, GitHub-style, so `METHODOLOGY.md#operational-layer` works.
+
+### Mathematics
+
+Equations are rendered with KaTeX at build time, in both notations GitHub accepts:
+
+````markdown
+```math
+S_{i,e,t} = S_{i,e,0}e^{-kt}
+```
+````
+
+and `$$…$$` for display, `$…$` for inline. Both render identically on GitHub and on the site.
+
+Extraction runs on the Markdown *before* marked and substitutes the rendered HTML back afterwards, so KaTeX's markup is never re-parsed. Fenced and inline code are skipped — `echo $PATH` in a shell snippet is not an equation — as is currency in prose. A malformed equation renders as its own source with a warning colour rather than failing the build. KaTeX's stylesheet and `.woff2` fonts are copied to `/vendor/katex/`.
+
+### Tags
+
+Each document carries tags that drive the filter on `/docs.html`. Declare them with an HTML comment anywhere in the file:
+
+```markdown
+<!-- tags: methodology, math -->
+```
+
+An HTML comment is invisible wherever Markdown renders, including on GitHub, so tagging costs the document nothing — YAML front matter would have appeared there as a stray table. Untagged documents fall back to a path rule in `app/src/docs/docTags.js`, so the filter is complete from the first build rather than covering only what someone remembered to annotate. Selecting several tags widens the result (union), which is what browsing by interest wants.
 
 Commands:
 

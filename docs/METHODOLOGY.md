@@ -2,7 +2,7 @@
 
 This document describes exactly what `app/src/engine/{priors,math,graph,index}.js` computes. No formula here is aspirational or simplified for exposition. Where this document and the code could drift apart, every numerical coefficient lives in one place — `MODEL_PRIORS` in `app/src/engine/priors.js` — and the in-app methodology overlay reads the same object.
 
-For each equation derived step by step with real numbers, see the [Calculation specification](calculation/README.md). For what the model would need before any of it could be called calibrated, see the [Model roadmap](MODEL_ROADMAP.md).
+For each equation derived step by step with real numbers, see the [Calculation specification](calculation.md). For what the model would need before any of it could be called calibrated, see the [Model roadmap](MODEL_ROADMAP.md).
 
 ## Purpose and model boundary
 
@@ -138,7 +138,7 @@ The graph, snapshot, assumptions, and priors are all versioned. When comparing r
 
 SSCIM has no facility-level capacity, inventory, bill-of-materials, qualification, or recovery-time data, and has not been fit to any outcome dataset. Every propagation coefficient is a declared, unvalidated prior chosen to produce directionally sensible, reproducible, inspectable behaviour.
 
-See the [Calculation specification](calculation/README.md), the [Validation note](computation-demo/validation/MLE_VALIDATION.md), and the [Model roadmap](MODEL_ROADMAP.md).
+See the [Calculation specification](calculation.md), the [Validation note](computation-demo/validation/MLE_VALIDATION.md), and the [Model roadmap](MODEL_ROADMAP.md).
 
 ## Parameter reference
 

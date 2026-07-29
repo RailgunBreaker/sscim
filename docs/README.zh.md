@@ -53,7 +53,7 @@ SSCIM 的数值是基于公开快照和明确前提计算出的敏感度，不�
 | --- | --- |
 | 无技术背景地读懂仪表盘 | [公众指南](PUBLIC_GUIDE.md) |
 | 理解公式 | [方法论](METHODOLOGY.md) |
-| 用真实数字逐步走完全部公式 | [计算规范](calculation/README.md) |
+| 用真实数字逐步走完全部公式 | [计算规范](calculation.md) |
 | 作为研究工具进行评估 | [学术指南](ACADEMIC_GUIDE.md) |
 | 搭建、构建或修改软件 | [开发者指南](DEVELOPER_GUIDE.md) |
 | 了解部署结构 | [系统架构](SYSTEM_ARCHITECTURE.md) |

@@ -65,7 +65,7 @@ The architecture borrows framing from established work; the specific formulas ar
 - Separating structural sensitivity from realized impact — Gao et al. (2019).
 - The risk of over-aggregating supply-network data into a single score — Diem et al. (2022), which motivates this model's refusal to collapse hazard, mixed, and strategic events into one signed number.
 
-Full citations in Chicago author-date form are in the [repository README](README.md) and the [calculation specification](calculation/README.md).
+Full citations in Chicago author-date form are in the [repository README](README.md) and the [calculation specification](calculation.md).
 
 ## Citation suggestion
 
@@ -76,7 +76,7 @@ Describe SSCIM by repository commit and snapshot date. Cite the specific documen
 ## Further reading
 
 - [Methodology](METHODOLOGY.md) — every equation the engine implements.
-- [Calculation specification](calculation/README.md) — the same, derived at length with worked numbers.
+- [Calculation specification](calculation.md) — the same, derived at length with worked numbers.
 - [Validation note](computation-demo/validation/MLE_VALIDATION.md) — what was and was not established.
 - [Model roadmap](MODEL_ROADMAP.md) — the data layer required before calibration is meaningful.
 - [Data sources, inputs, and outputs](DATA_SOURCES_AND_OUTPUTS.md) — provenance of every input.

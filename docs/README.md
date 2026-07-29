@@ -47,7 +47,7 @@ Read the explanation, source, confidence label, and assumptions before using any
 | --- | --- |
 | Use the dashboard without technical background | [Public guide](PUBLIC_GUIDE.md) |
 | Understand the equations | [Methodology](METHODOLOGY.md) |
-| See every formula derived with real numbers | [Calculation specification](calculation/README.md) |
+| See every formula derived with real numbers | [Calculation specification](calculation.md) |
 | Evaluate it for research | [Academic guide](ACADEMIC_GUIDE.md) |
 | Set up, build, or change the software | [Developer guide](DEVELOPER_GUIDE.md) |
 | Understand the deployment | [System architecture](SYSTEM_ARCHITECTURE.md) |

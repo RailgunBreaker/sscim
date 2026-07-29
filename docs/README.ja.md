@@ -53,7 +53,7 @@ SSCIM の数値は、公開スナップショットと明示された前提か�
 | --- | --- |
 | 専門知識なしでダッシュボードを読む | [一般向けガイド](PUBLIC_GUIDE.md) |
 | 数式を理解する | [メソドロジー](METHODOLOGY.md) |
-| 全数式を実数で追う | [計算仕様](calculation/README.md) |
+| 全数式を実数で追う | [計算仕様](calculation.md) |
 | 研究用途として評価する | [学術利用ガイド](ACADEMIC_GUIDE.md) |
 | セットアップ・ビルド・改修 | [開発者ガイド](DEVELOPER_GUIDE.md) |
 | デプロイ構成を知る | [システムアーキテクチャ](SYSTEM_ARCHITECTURE.md) |

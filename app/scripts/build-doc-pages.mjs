@@ -2,7 +2,7 @@
    page, mirroring the repository tree:
 
      docs/PUBLIC_GUIDE.md            ->  dist-app/docs/PUBLIC_GUIDE.md.html
-     docs/calculation/06-....md      ->  dist-app/docs/calculation/06-....md.html
+     docs/computation-demo/X.md         ->  dist-app/docs/computation-demo/X.md.html
 
    Why a page per document rather than one reader that swaps content: a real
    URL is shareable, linkable from outside, survives being pasted into a chat,
@@ -13,13 +13,31 @@
    Runs after `vite build` (as npm `postbuild`), because Vite empties the
    output directory. Discovery is a filesystem walk, so a new .md file is
    published by the next build with nothing to register. */
-import { mkdir, writeFile } from 'node:fs/promises';
+import { mkdir, writeFile, copyFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
 import { marked } from 'marked';
-import { findMarkdownDocs, repoDir } from './lib/find-markdown.mjs';
+import { findMarkdownDocs, repoDir, appDir } from './lib/find-markdown.mjs';
 import { addHeadingIds, rewriteLinks, pageFor, rootPrefix } from '../src/docs/docLinks.js';
+import { extractMath, restoreMath } from '../src/docs/docMath.js';
+import { labelFor } from '../src/docs/docTags.js';
 
 const outDir = path.join(repoDir, 'dist-app');
+
+/* KaTeX ships its own stylesheet and fonts. Copy them once into vendor/ and
+   link from each page, rather than inlining ~23KB of CSS into all of them.
+   Only .woff2 is copied — every browser that can run this site supports it,
+   and the .ttf/.woff duplicates are 900KB of the 1.2MB font directory. */
+async function copyKatexAssets() {
+  const from = path.join(appDir, 'node_modules', 'katex', 'dist');
+  const to = path.join(outDir, 'vendor', 'katex');
+  await mkdir(path.join(to, 'fonts'), { recursive: true });
+  await copyFile(path.join(from, 'katex.min.css'), path.join(to, 'katex.min.css'));
+  const fonts = (await readdir(path.join(from, 'fonts'))).filter((f) => f.endsWith('.woff2'));
+  for (const font of fonts) {
+    await copyFile(path.join(from, 'fonts', font), path.join(to, 'fonts', font));
+  }
+  return fonts.length;
+}
 
 const escape = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
@@ -53,6 +71,12 @@ main{max-width:1000px;margin:auto;padding:44px 24px 90px}
 .markdown hr{border:0;border-top:1px solid var(--line);margin:30px 0}
 .markdown img{max-width:100%}
 .foot{margin-top:50px;padding-top:20px;border-top:1px solid var(--line);color:var(--faint);font-size:12.5px}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+.tag{border:1px solid var(--line);background:var(--panel2);color:var(--dim);border-radius:20px;padding:3px 10px;font:10px ui-monospace,monospace;letter-spacing:.6px}
+.tag:hover{border-color:var(--copper);color:var(--copper);text-decoration:none}
+.katex{font-size:1.04em}
+.katex-display{overflow-x:auto;overflow-y:hidden;padding:4px 0;margin:18px 0}
+.math-error{color:var(--amber);border-color:var(--amber)}
 .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin:22px 0}
 .card{border:1px solid var(--line);background:var(--panel);border-radius:9px;padding:14px}
 .card strong{display:block;font-size:14px;color:var(--text)}
@@ -69,6 +93,7 @@ const shell = ({ title, path: docPath, body, root }) => `<!doctype html>
 <title>${escape(title)} — SSCIM</title>
 <meta name="description" content="${escape(title)} — SSCIM project documentation." />
 <link rel="canonical" href="https://sscim.railgunbreaker.icu/${docPath}" />
+<link rel="stylesheet" href="${root}vendor/katex/katex.min.css" />
 <style>${STYLE}</style>
 </head>
 <body>
@@ -92,12 +117,20 @@ const docs = await findMarkdownDocs();
 const known = new Set(docs.map((d) => d.path));
 
 let written = 0;
+let equationCount = 0;
+const fontCount = await copyKatexAssets();
 for (const doc of docs) {
-  const html = rewriteLinks(addHeadingIds(marked.parse(doc.content, { gfm: true, breaks: false })), doc.path, known);
+  const { markdown, math } = extractMath(doc.content);
+  const html = restoreMath(
+    rewriteLinks(addHeadingIds(marked.parse(markdown, { gfm: true, breaks: false })), doc.path, known),
+    math,
+  );
+  equationCount += math.length;
   const root = rootPrefix(doc.path);
   const body = `<div class="content-header">
   <span class="path">${escape(doc.path)}</span>
   <h1>${escape(doc.title)}</h1>
+  <div class="tags">${doc.tags.map((t) => `<a class="tag" href="${root}docs.html#tag=${encodeURIComponent(t)}">${escape(labelFor(t))}</a>`).join('')}</div>
 </div>
 <div class="note"><b>Reading note:</b> SSCIM separates evidence, declared assumptions, and computed outputs. Consult each document's scope and limitations before relying on a result.</div>
 <div class="markdown">${html}</div>
@@ -123,8 +156,8 @@ const indexBody = `<div class="content-header">
   <h1>SSCIM documentation</h1>
 </div>
 ${[...groups].map(([dir, list]) => `<p class="group">${escape(dir.toUpperCase())}</p>
-<div class="cards">${list.map((d) => `<a class="card" href="../${pageFor(d.path)}"><strong>${escape(d.title)}</strong><small>${escape(d.path)}</small></a>`).join('')}</div>`).join('\n')}`;
+<div class="cards">${list.map((d) => `<a class="card" href="../${pageFor(d.path)}"><strong>${escape(d.title)}</strong><small>${escape(d.path)}</small><span class="tags">${d.tags.map((t) => `<span class="tag">${escape(labelFor(t))}</span>`).join('')}</span></a>`).join('')}</div>`).join('\n')}`;
 await mkdir(path.join(outDir, 'docs'), { recursive: true });
 await writeFile(path.join(outDir, 'docs', 'index.html'), shell({ title: 'Documentation', path: 'docs/', body: indexBody, root: '../' }), 'utf8');
 
-console.log(`Published ${written} documentation page(s) + /docs/ index.`);
+console.log(`Published ${written} documentation page(s) + /docs/ index · ${equationCount} equation(s) rendered · KaTeX css + ${fontCount} font(s).`);

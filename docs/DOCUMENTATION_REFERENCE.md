@@ -5,11 +5,11 @@ Use this index when you need the right document quickly.
 | Need | Read |
 | --- | --- |
 | Understand the product | [README](README.md) and [Public guide](PUBLIC_GUIDE.md) |
-| Understand the model | [Methodology](METHODOLOGY.md) and [Calculation specification](calculation/README.md) |
+| Understand the model | [Methodology](METHODOLOGY.md) and [Calculation specification](calculation.md) |
 | Understand the application | [System architecture](SYSTEM_ARCHITECTURE.md) |
 | Understand data flow | [Data sources, inputs, and outputs](DATA_SOURCES_AND_OUTPUTS.md) |
 | Use or change the software | [Developer guide](DEVELOPER_GUIDE.md) |
-| Evaluate the model academically | [Academic guide](ACADEMIC_GUIDE.md) and [Calculation specification](calculation/README.md) |
+| Evaluate the model academically | [Academic guide](ACADEMIC_GUIDE.md) and [Calculation specification](calculation.md) |
 | Understand topology | [Network architecture](NETWORK_ARCHITECTURE.md) |
 | Add or review events | [Data pipeline](computation-demo/DATA_PIPELINE.md) |
 | See an example calculation | [Computation demo](computation-demo/COMPUTATION_DEMO.md) |

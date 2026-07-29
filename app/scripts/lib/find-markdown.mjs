@@ -1,6 +1,7 @@
 import { readdir, readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { tagsFor } from '../../src/docs/docTags.js';
 
 /* Single discovery path for every Markdown file in the repository, shared by
    the documentation library and the static page generator. Adding a .md file
@@ -18,7 +19,7 @@ export const PRIORITY = [
   'docs/README.md',
   'docs/PUBLIC_GUIDE.md',
   'docs/METHODOLOGY.md',
-  'docs/calculation/README.md',
+  'docs/calculation.md',
   'docs/SYSTEM_ARCHITECTURE.md',
   'docs/DATA_SOURCES_AND_OUTPUTS.md',
   'docs/DEVELOPER_GUIDE.md',
@@ -48,7 +49,7 @@ export async function findMarkdownDocs() {
     const content = await readFile(file, 'utf8');
     const relative = path.relative(repoDir, file).replaceAll(path.sep, '/');
     const title = content.match(/^#\s+(.+)$/m)?.[1]?.trim() || path.basename(file, '.md');
-    return { path: relative, title, content };
+    return { path: relative, title, content, tags: tagsFor(relative, content) };
   }));
   return docs.sort((a, b) => rank(a.path) - rank(b.path) || a.path.localeCompare(b.path));
 }
