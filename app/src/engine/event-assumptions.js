@@ -29,6 +29,8 @@ export const UNCLASSIFIED_ASSUMPTION = Object.freeze({
 });
 
 export const EVENT_ASSUMPTIONS = Object.freeze({
+  p260729_web807f: Object.freeze({ direction: "mitigating", channel: "upstream", operational: false, reason: "Published: Review: reject cand_webz_news_dea3c680f9e6c867539a5c67799ad690aba2b414" }),
+
   p260729_web2ef3: Object.freeze({ direction: "mitigating", channel: "downstream", operational: false, reason: "Published: Review: approve p260728_usgtgb9" }),
 
   p260728_usgtgb9: Object.freeze({ direction: "adverse", channel: "both", operational: true, reason: "Realized multi-site production halt with confirmed physical damage at one operator (Renesas) plus regional power and rail outages. This matches the existing M7.1 Kumamoto anchor at 7: several named fabs down with confirmed damage, but concentrated in one prefecture and with the largest local fab (JASM) undamaged and already restoring, so it does not approach the sector-wide breadth of the 9 anchor." }),
