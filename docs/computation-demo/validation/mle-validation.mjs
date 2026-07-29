@@ -26,14 +26,14 @@
      10, litho structural 8.004899). A mismatch fails the run.
 
    What this does NOT do: calibrate against real-world disruption
-   episodes (no such outcome dataset exists yet — MODEL_ROADMAP.md).
+   episodes (no such outcome dataset exists yet — docs/MODEL_ROADMAP.md).
    ==================================================================== */
 import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 const ROOT = 'c:/Users/Guohua/Documents/sscim-1';
-const OUT = path.join(ROOT, 'computation-demo', 'validation');
+const OUT = path.join(ROOT, 'docs', 'computation-demo', 'validation');
 fs.mkdirSync(OUT, { recursive: true });
 
 const eng_ = await import(pathToFileURL(path.join(ROOT, 'app/src/engine/index.js')));

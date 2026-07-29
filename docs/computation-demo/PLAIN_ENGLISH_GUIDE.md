@@ -9,7 +9,7 @@ This document explains how the whole thing works **from scratch**, then answers 
 The assessment in the team chat is correct, with one correction:
 
 - ✅ Correct: **almost all data in the app is hand-typed demo data** (`server/src/seed-data.js` → frozen into `vault-snapshot.json`). It was improved with a research pass (some figures have citations), but it is not live.
-- ✅ Correct: **there is no automated processing pipeline.** The two fetch scripts in `computation-demo/` are one-off demonstrations, not scheduled jobs. Nothing they fetch flows into the app automatically. The missing machinery (scheduler → staging → validation → human review → write to database → recompute) is designed in [DATA_PIPELINE.md](DATA_PIPELINE.md) §2 but **not built**.
+- ✅ Correct: **there is no automated processing pipeline.** The two fetch scripts in `docs/computation-demo/` are one-off demonstrations, not scheduled jobs. Nothing they fetch flows into the app automatically. The missing machinery (scheduler → staging → validation → human review → write to database → recompute) is designed in [DATA_PIPELINE.md](DATA_PIPELINE.md) §2 but **not built**.
 - ⚠️ Small correction: what gets fetched dynamically is company **revenue** (营收, from annual reports via the SEC's free API), not market cap (市值). Market cap is not used anywhere in the model.
 - ⚠️ Clarification on "Federal Register 是写死的 URL": the demo actually calls the Federal Register's **search API** with query parameters (agency = BIS, keyword = semiconductor, newest first), so it finds *new* documents too — but it only runs when someone runs it by hand. What's missing is scheduling + processing, not the URL.
 

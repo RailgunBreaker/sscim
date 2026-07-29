@@ -85,7 +85,7 @@ export function briefingText(model, scenario, data, engine) {
   L.push("Operational impact = signed event propagation over ALL reachable graph paths (directional input-dependence / supplier-revenue-dependence proxies), decay(age,H)=2^(-age/H) with H=12 days from the frozen snapshot date, combined across simultaneous shocks via bounded noisy-OR (never Math.max, never unbounded sum).");
   L.push("Confidence (High/Medium/Low/Simulated) is evidence-quality metadata only — it is never multiplied into the impact magnitude.");
   L.push("Company vulnerability (share-independent) and contribution (share-weighted) are reported separately — market share does not cancel out of contribution.");
-  L.push("This is a sensitivity/comparison tool over a curated demonstration snapshot — not a calibrated, causal, or probabilistic forecast, and not investment advice. See MODEL_ROADMAP.md.");
+  L.push("This is a sensitivity/comparison tool over a curated demonstration snapshot — not a calibrated, causal, or probabilistic forecast, and not investment advice. See docs/MODEL_ROADMAP.md.");
   return L.join("\n");
 }
 

@@ -4,7 +4,7 @@
    named statistical/graph construct (HHI, topological sort) or (b) an
    explicitly-labeled pragmatic aggregation prior (noisy-OR combination).
    None of it is presented as a result drawn from the cited literature —
-   see README §12 and MODEL_ROADMAP.md.
+   see README §12 and docs/MODEL_ROADMAP.md.
    ==================================================================== */
 
 export const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));

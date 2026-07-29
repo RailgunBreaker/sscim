@@ -63,7 +63,7 @@ The dataset is a **frozen, curated demonstration snapshot**, not a live feed:
 
 #### How these parameters were decided — and what kind of numbers they are
 
-Every value in the table above lives in one frozen object, `MODEL_PRIORS` (`app/src/engine/priors.js`, version-tagged `sscim-model-v6-client-sensitivity`). **None of them is measured, fetched, or fitted to historical data.** Each is a hand-chosen **declared sensitivity prior**: the model author picked a defensible number, wrote the reasoning next to it in the source file, and exposed it so the choice can be inspected — and eventually calibrated against documented episodes (2021 ABF substrate shortage, 2023 Ga/Ge licensing — see `MODEL_ROADMAP.md`). The individual rationales:
+Every value in the table above lives in one frozen object, `MODEL_PRIORS` (`app/src/engine/priors.js`, version-tagged `sscim-model-v6-client-sensitivity`). **None of them is measured, fetched, or fitted to historical data.** Each is a hand-chosen **declared sensitivity prior**: the model author picked a defensible number, wrote the reasoning next to it in the source file, and exposed it so the choice can be inspected — and eventually calibrated against documented episodes (2021 ABF substrate shortage, 2023 Ga/Ge licensing — see `docs/MODEL_ROADMAP.md`). The individual rationales:
 
 - **`halfLifeDays = 12`** — encodes "an operational headline loses half its bite every ~12 days." Chosen so a fresh severity-8 event still dominates after a week (≈66% strength), is minor after a month (≈18%), and is effectively gone after two months (<3%). A pure news-cycle/logistics-absorption judgment, not an estimate.
 - **`downstreamTransmission = 0.55`** — a supplier failure hits its buyers hard but not one-for-one (inventories, buffers, partial second sources). Set **above 0.5** so supply shocks matter strongly at the first hop, and **below 1.0** so effects always attenuate with distance instead of amplifying.
@@ -475,7 +475,7 @@ server/src/seed-data.js            hand-curated tables (the manual research pass
   └─ app/scripts/build-vault-snapshot.mjs
        └─ app/src/data/vault-snapshot.json     frozen input snapshot (asOf 2026-07-29)
             └─ buildEngine(snapshot)           executed for this demonstration
-                 └─ computation-demo/csv/*.csv
+                 └─ docs/computation-demo/csv/*.csv
 ```
 
 By file group:

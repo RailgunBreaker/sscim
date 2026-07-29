@@ -1,7 +1,7 @@
 /* Builds the scenario-aware model: baseline (real snapshot events only),
    active (baseline + the currently-selected scenario, if any), their
    signed per-stage/per-country deltas, and a deterministic sensitivity
-   envelope. Nothing here is a forecast — see MODEL_ROADMAP.md and the
+   envelope. Nothing here is a forecast — see docs/MODEL_ROADMAP.md and the
    Methodology overlay for what each number does and doesn't mean.
 
    Pure and dependency-free (no React/Leaflet) so it can be unit-tested

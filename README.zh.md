@@ -143,7 +143,7 @@ SSCIM构建为**基于同一计算引擎的三个同步图层**。在任一图�
 
 ## 4. 风险与影响算法
 
-> **翻译说明:** 本节(§4)描述的是旧版本模型，与当前实现的引擎代码(`app/src/engine/`)已不一致。最新且与代码完全对应的方法论说明,请参见英文版 `README.md` 的 §4「Model Methodology」和 §9「Model Status, Limitations & Known Issues」。本节的完整重新翻译在本次工作范围内暂缓(另见 `MODEL_ROADMAP.md`)。产品内的 ⓘ 方法论浮层现已提供中文摘要，并在每条公式下方给出逐参数说明表。
+> **翻译说明:** 本节(§4)描述的是旧版本模型，与当前实现的引擎代码(`app/src/engine/`)已不一致。最新且与代码完全对应的方法论说明,请参见英文版 `README.md` 的 §4「Model Methodology」和 §9「Model Status, Limitations & Known Issues」。本节的完整重新翻译在本次工作范围内暂缓(另见 `docs/MODEL_ROADMAP.md`)。产品内的 ⓘ 方法论浮层现已提供中文摘要，并在每条公式下方给出逐参数说明表。
 
 #### 4.0 参数一览——全部符号、取值与数据获取方式（最新，与代码一致）
 
@@ -171,7 +171,7 @@ SSCIM构建为**基于同一计算引擎的三个同步图层**。在任一图�
 
 #### 计算演示（配套文档，英文）
 
-[`computation-demo/`](computation-demo/) 下四份文档用真实数字逐步走完同一模型：[COMPUTATION_DEMO.md](computation-demo/COMPUTATION_DEMO.md)（逐数字完整演算，附CSV）· [PLAIN_ENGLISH_GUIDE.md](computation-demo/PLAIN_ENGLISH_GUIDE.md)（零数学门槛的通俗讲解）· [REAL_DATA_EXAMPLE.md](computation-demo/REAL_DATA_EXAMPLE.md)（用 SEC EDGAR / Federal Register 实取数据端到端运行）· [DATA_PIPELINE.md](computation-demo/DATA_PIPELINE.md)（生产数据管线设计与自动化上限）。
+[`docs/computation-demo/`](docs/computation-demo/) 下四份文档用真实数字逐步走完同一模型：[COMPUTATION_DEMO.md](docs/computation-demo/COMPUTATION_DEMO.md)（逐数字完整演算，附CSV）· [PLAIN_ENGLISH_GUIDE.md](docs/computation-demo/PLAIN_ENGLISH_GUIDE.md)（零数学门槛的通俗讲解）· [REAL_DATA_EXAMPLE.md](docs/computation-demo/REAL_DATA_EXAMPLE.md)（用 SEC EDGAR / Federal Register 实取数据端到端运行）· [DATA_PIPELINE.md](docs/computation-demo/DATA_PIPELINE.md)（生产数据管线设计与自动化上限）。
 
 ### 4.1 节点风险分数
 
@@ -414,6 +414,10 @@ $$\text{ChainIndex}(t) = \frac{\sum_n \text{total}(\text{stage}_n, \text{shock}_
 ```
 /
 ├── README.md / README.ja.md / README.zh.md   本文档（英语/日语/简体中文）
+├── docs/                 全部方法论与计算文档
+│   ├── calculation/        完整计算规范——按章节拆分为 49 个可直接链接的文件（从 calculation/README.md 开始）
+│   ├── MODEL_ROADMAP.md    推迟的数据层工作（设施地理、依赖类型拆分、证据层级等）——只做描述，不含实现
+│   └── computation-demo/   四份计算演示文档（§4.14）及其 CSV 输入、验证脚本与真实数据取数示例
 ├── app/                  站点本体——Vite + React 源代码，三个入口
 │   ├── index.html          Vite 入口 → 落地页（构建输出：index.html）
 │   ├── intro.html          Vite 入口 → 指南页（构建输出：intro.html）

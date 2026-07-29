@@ -156,7 +156,7 @@ For ~25 major companies, a list of `[ownerName, ownershipShare]` pairs sourced f
 
 ## 4. Model Methodology
 
-> **This section was rewritten to describe exactly what `app/src/engine/{priors,math,graph,index}.js` computes** — no formula below is aspirational or simplified for exposition. See `MODEL_ROADMAP.md` for the data-layer work this model would need before any of it could be called calibrated, and §9 for the full "Model status and limitations" statement. Every numerical coefficient lives in one place, `app/src/engine/priors.js` (`MODEL_PRIORS`), so this document, the in-app Methodology overlay, and the code cannot silently drift apart.
+> **This section was rewritten to describe exactly what `app/src/engine/{priors,math,graph,index}.js` computes** — no formula below is aspirational or simplified for exposition. See `docs/MODEL_ROADMAP.md` for the data-layer work this model would need before any of it could be called calibrated, and §9 for the full "Model status and limitations" statement. Every numerical coefficient lives in one place, `app/src/engine/priors.js` (`MODEL_PRIORS`), so this document, the in-app Methodology overlay, and the code cannot silently drift apart.
 
 ### 4.1 Structural vulnerability (per stage — time-invariant)
 
@@ -239,7 +239,7 @@ For each owner $o$, sum their ownership share in each company weighted by that c
 
 ### 4.11 Countries and the map layer
 
-Country structural/operational scores are share-weighted aggregates of the stage-level numbers above (§4.1, §4.6) — **production geography**, not company headquarters. Company headquarters is shown separately and labeled "HQ:" throughout; it is never substituted for facility-level production exposure, which this dataset does not yet contain (see `MODEL_ROADMAP.md`). Map links aggregate the sample's supplier-revenue relationships between company *headquarters* countries, labeled "modeled supplier-revenue relationship weight" — never "trade intensity," since the underlying number measures neither bilateral trade nor buyer input dependence.
+Country structural/operational scores are share-weighted aggregates of the stage-level numbers above (§4.1, §4.6) — **production geography**, not company headquarters. Company headquarters is shown separately and labeled "HQ:" throughout; it is never substituted for facility-level production exposure, which this dataset does not yet contain (see `docs/MODEL_ROADMAP.md`). Map links aggregate the sample's supplier-revenue relationships between company *headquarters* countries, labeled "modeled supplier-revenue relationship weight" — never "trade intensity," since the underlying number measures neither bilateral trade nor buyer input dependence.
 
 ### 4.12 Computed history
 
@@ -278,12 +278,12 @@ The same information ships inside the product (ⓘ Methodology, which renders a 
 
 ### 4.14 Worked computation demos (companion documents)
 
-Four companion documents under [`computation-demo/`](computation-demo/) walk the exact same model with real numbers — read them in this order if you want to verify any figure by hand:
+Four companion documents under [`docs/computation-demo/`](docs/computation-demo/) walk the exact same model with real numbers — read them in this order if you want to verify any figure by hand:
 
-- **[COMPUTATION_DEMO.md](computation-demo/COMPUTATION_DEMO.md)** — the full step-by-step numeric demonstration: every input table (exact values, exported as CSVs under [`computation-demo/csv/`](computation-demo/csv/)), every intermediate result, every formula from §4 executed number-by-number.
-- **[PLAIN_ENGLISH_GUIDE.md](computation-demo/PLAIN_ENGLISH_GUIDE.md)** — the same system explained from zero with no math background assumed, including where things honestly stand.
-- **[REAL_DATA_EXAMPLE.md](computation-demo/REAL_DATA_EXAMPLE.md)** — an end-to-end run on genuinely fetched data (SEC EDGAR XBRL, Federal Register API) with no seed/dummy values, showing which kinds of data can be pulled live and which must be manually extracted with citations.
-- **[DATA_PIPELINE.md](computation-demo/DATA_PIPELINE.md)** — the production data-pipeline design: every input table, its candidate feed, and its automation ceiling (free/keyless vs licensed vs never-automatable).
+- **[COMPUTATION_DEMO.md](docs/computation-demo/COMPUTATION_DEMO.md)** — the full step-by-step numeric demonstration: every input table (exact values, exported as CSVs under [`docs/computation-demo/csv/`](docs/computation-demo/csv/)), every intermediate result, every formula from §4 executed number-by-number.
+- **[PLAIN_ENGLISH_GUIDE.md](docs/computation-demo/PLAIN_ENGLISH_GUIDE.md)** — the same system explained from zero with no math background assumed, including where things honestly stand.
+- **[REAL_DATA_EXAMPLE.md](docs/computation-demo/REAL_DATA_EXAMPLE.md)** — an end-to-end run on genuinely fetched data (SEC EDGAR XBRL, Federal Register API) with no seed/dummy values, showing which kinds of data can be pulled live and which must be manually extracted with citations.
+- **[DATA_PIPELINE.md](docs/computation-demo/DATA_PIPELINE.md)** — the production data-pipeline design: every input table, its candidate feed, and its automation ceiling (free/keyless vs licensed vs never-automatable).
 
 ---
 
@@ -478,7 +478,7 @@ This framework directly implements the data-integrity rules from the original pr
 
 **This is a research prototype and sensitivity-ranking tool, not a calibrated forecasting system.** SSCIM's public dashboard runs entirely client-side against a static, curated, frozen demonstration snapshot (`app/src/data/vault-snapshot.json`, built from `server/src/seed-data.js` — see §6.2) — not a live feed, not real-time data, and not a database of verified current trade flows. Every propagation coefficient in §4 (`MODEL_PRIORS` in `app/src/engine/priors.js`) is a **declared, unvalidated sensitivity prior**: chosen to produce directionally sensible, reproducible, inspectable behavior, not fit to any observed disruption episode. Nothing in this system is a causal or probabilistic forecast. Scores support **comparison and sensitivity ranking within this snapshot only** — a company's or country's number here is not a predicted financial loss, and should never be represented as one.
 
-**No facility-level, bill-of-materials, inventory, capacity, or time-to-recover data exists in this dataset.** The directional dependence matrices in §4.4 are transparent equal-allocation priors built from graph structure (in/out-degree) and one analyst-judgment input (stage substitutability) — not a measured input–output coefficient, not a bill of materials, and not a capacity-constrained flow model. A real capacity-constrained shock (e.g., a fab physically destroyed) would propagate differently than this model predicts. See `MODEL_ROADMAP.md` for the full list of data-layer work (facility geography, buyer-input vs. supplier-revenue dependence, capacity/utilization, inventory days, time-to-recover/time-to-switch, alternative-supplier counts, and more) this model would need before any of it could be calibrated.
+**No facility-level, bill-of-materials, inventory, capacity, or time-to-recover data exists in this dataset.** The directional dependence matrices in §4.4 are transparent equal-allocation priors built from graph structure (in/out-degree) and one analyst-judgment input (stage substitutability) — not a measured input–output coefficient, not a bill of materials, and not a capacity-constrained flow model. A real capacity-constrained shock (e.g., a fab physically destroyed) would propagate differently than this model predicts. See `docs/MODEL_ROADMAP.md` for the full list of data-layer work (facility geography, buyer-input vs. supplier-revenue dependence, capacity/utilization, inventory days, time-to-recover/time-to-switch, alternative-supplier counts, and more) this model would need before any of it could be calibrated.
 
 **Real-data pass applied to company/market-share figures, not full Phase-1 sourcing.** A best-effort research pass replaced the original illustrative sample with current, cited figures wherever a reliable public source exists — company 10-K/20-F/Annual Report filings, TrendForce/TechInsights/Gartner market-share tracking, and named trade press. Headline corrections (e.g., the U.S. government's 9.9% Intel stake, Nvidia overtaking Apple as TSMC's top customer, corrected HBM shares) are logged with their source in `server/src/data-notes.js` and surfaced by `npm run audit:data` (§10). Figures **without** a data-note entry are still carried-over analyst judgment (Tier D per §8), not individually verified — `npm run audit:data` currently reports 20/24 stages and 105/109 companies with no evidence note. This dataset is a meaningfully-improved snapshot, not a fully sourced production database, and should not be represented as such.
 
@@ -499,7 +499,10 @@ All three public pages — the landing page, the guide, and the dashboard — ar
 ```
 /
 ├── README.md / README.ja.md / README.zh.md   This document, in English/Japanese/Simplified Chinese
-├── MODEL_ROADMAP.md      Deferred data-layer work (facility geography, dependence-type splits, evidence tiers, …) — describes, does not implement
+├── docs/                 All methodology and calculation documentation
+│   ├── calculation/        Complete calculation specification — 49 linkable per-section files (start at calculation/README.md)
+│   ├── MODEL_ROADMAP.md    Deferred data-layer work (facility geography, dependence-type splits, evidence tiers, …) — describes, does not implement
+│   └── computation-demo/   The four worked-demo documents (§4.14) plus their CSV inputs, validation scripts, and fetched-data examples
 ├── app/NETWORK_ARCHITECTURE.md   Multilayer functional-centre network playground — technology decision, graph architecture, weight formula, analysis/pathfinding methods (§2.1)
 ├── app/                  The site — Vite + React source, three entry points
 │   ├── index.html          Vite entry → landing page (built output: index.html)
@@ -548,7 +551,7 @@ All three public pages — the landing page, the guide, and the dashboard — ar
 
 ## 11. Roadmap
 
-**Model/data-layer roadmap:** see `MODEL_ROADMAP.md` for the specific deferred data work this model needs before it could be calibrated — facility geography, buyer-input vs. supplier-revenue vs. qualification dependence, capacity/utilization, inventory days, time-to-recover/time-to-switch, alternative-supplier counts, evidence-tiered market-share estimates and denominators (DRAM/NAND/HBM kept separate, merchant vs. captive AI accelerators kept separate, advanced-node vs. total foundry capacity kept separate), and backtesting the propagation priors against documented historical episodes. That document describes deferred work; it does not implement any of it.
+**Model/data-layer roadmap:** see `docs/MODEL_ROADMAP.md` for the specific deferred data work this model needs before it could be calibrated — facility geography, buyer-input vs. supplier-revenue vs. qualification dependence, capacity/utilization, inventory days, time-to-recover/time-to-switch, alternative-supplier counts, evidence-tiered market-share estimates and denominators (DRAM/NAND/HBM kept separate, merchant vs. captive AI accelerators kept separate, advanced-node vs. total foundry capacity kept separate), and backtesting the propagation priors against documented historical episodes. That document describes deferred work; it does not implement any of it.
 
 **Product/business roadmap:**
 
@@ -616,7 +619,7 @@ The propagation/scoring model in §4 is original engineering, but its **architec
 >
 > Additional company 10-K/20-F/annual-report disclosures; SEMI capacity statistics; TrendForce, TechInsights, and Gartner market-share estimates, cited inline in the data files where a specific figure is drawn from them.
 
-These citations are provided for methodological transparency and academic attribution — see §9 and `MODEL_ROADMAP.md` for what would actually be required before any coefficient here could be called calibrated.
+These citations are provided for methodological transparency and academic attribution — see §9 and `docs/MODEL_ROADMAP.md` for what would actually be required before any coefficient here could be called calibrated.
 
 ---
 

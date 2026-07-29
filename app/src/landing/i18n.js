@@ -127,10 +127,10 @@ export const T = {
   h2DataSource: { en: 'Model status, plainly stated', zh: '模型现状，如实说明', tw: '模型現狀，如實說明', ja: 'モデルの現状を率直に' },
   card4H: { en: 'A frozen demonstration snapshot, not a live feed', zh: '一份冻结的演示快照，而非实时数据', tw: '一份凍結的示範快照，而非即時資料', ja: 'ライブフィードではなく、凍結されたデモ用スナップショット' },
   card4P: {
-    en: 'Companies, stages, the customer graph, and shareholder table are a static, curated sample bundled at build time — not fetched live, not continuously updated. Every propagation coefficient is a declared prior, not a fitted parameter; the in-app Methodology overlay shows the exact formulas, and MODEL_ROADMAP.md states what real calibration would still require.',
-    zh: '公司、环节、客户关系图与股东表都是构建时打包的静态精选样本——不是实时抓取，也不会持续更新。每个传导系数都是声明的先验值，而非拟合参数；应用内的"方法论"面板展示了精确公式，MODEL_ROADMAP.md 说明了实现真正校准仍需具备哪些条件。',
-    tw: '公司、環節、客戶關係圖與股東表都是建置時打包的靜態精選樣本——不是即時擷取，也不會持續更新。每個傳導係數都是聲明的先驗值，而非擬合參數；應用內的「方法論」面板展示了精確公式，MODEL_ROADMAP.md 說明了實現真正校準仍需具備哪些條件。',
-    ja: '企業・工程・顧客関係グラフ・株主テーブルは、ビルド時に組み込まれた静的な精選サンプルであり、ライブで取得されるものでも継続的に更新されるものでもありません。すべての伝播係数はフィットさせたパラメータではなく、宣言された事前値です。アプリ内の「方法論」パネルに正確な数式を、MODEL_ROADMAP.md に本当の較正に必要な条件を記載しています。',
+    en: 'Companies, stages, the customer graph, and shareholder table are a static, curated sample bundled at build time — not fetched live, not continuously updated. Every propagation coefficient is a declared prior, not a fitted parameter; the in-app Methodology overlay shows the exact formulas, and docs/MODEL_ROADMAP.md states what real calibration would still require.',
+    zh: '公司、环节、客户关系图与股东表都是构建时打包的静态精选样本——不是实时抓取，也不会持续更新。每个传导系数都是声明的先验值，而非拟合参数；应用内的"方法论"面板展示了精确公式，docs/MODEL_ROADMAP.md 说明了实现真正校准仍需具备哪些条件。',
+    tw: '公司、環節、客戶關係圖與股東表都是建置時打包的靜態精選樣本——不是即時擷取，也不會持續更新。每個傳導係數都是聲明的先驗值，而非擬合參數；應用內的「方法論」面板展示了精確公式，docs/MODEL_ROADMAP.md 說明了實現真正校準仍需具備哪些條件。',
+    ja: '企業・工程・顧客関係グラフ・株主テーブルは、ビルド時に組み込まれた静的な精選サンプルであり、ライブで取得されるものでも継続的に更新されるものでもありません。すべての伝播係数はフィットさせたパラメータではなく、宣言された事前値です。アプリ内の「方法論」パネルに正確な数式を、docs/MODEL_ROADMAP.md に本当の較正に必要な条件を記載しています。',
   },
   card5H: { en: 'Evidence-tiered, not uniformly sourced', zh: '按证据分级，而非统一溯源', tw: '按證據分級，而非統一溯源', ja: 'エビデンスに階層あり、一律に出典があるわけではない' },
   card5P: {

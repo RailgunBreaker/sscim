@@ -95,7 +95,7 @@ const ReadingTable = () => (
 /* Every formula below is transcribed directly from app/src/engine/{priors,
    math,graph,index}.js and app/src/engine/event-assumptions.js — this
    overlay exists so nothing is described differently here than what the
-   code actually computes. See MODEL_ROADMAP.md for the data-layer work
+   code actually computes. See docs/MODEL_ROADMAP.md for the data-layer work
    this model still needs before any of these numbers could be calibrated. */
 export default function Methodology({ onClose }) {
   const { engine } = useVault();
@@ -109,7 +109,7 @@ export default function Methodology({ onClose }) {
           <button onClick={onClose} style={{ background: "transparent", border: `1px solid ${C.line}`, color: C.dim, borderRadius: 4, padding: "3px 10px", cursor: "pointer", fontFamily: "inherit" }}>Close</button>
         </div>
         <div className="mono" style={{ fontSize: 10, color: C.amber, background: "#2A1E14", border: `1px solid ${C.copperDim}`, borderRadius: 5, padding: "7px 10px", marginBottom: 12, lineHeight: 1.6 }}>
-          RESEARCH PROTOTYPE — a sensitivity/comparison tool over a frozen curated demonstration snapshot (dataset as of {MODEL_PRIORS.datasetAsOf}). Not a calibrated, causal, or probabilistic forecast; not measured trade flow; not investment advice. Every coefficient below is a declared, unvalidated prior — see §10 and MODEL_ROADMAP.md.
+          RESEARCH PROTOTYPE — a sensitivity/comparison tool over a frozen curated demonstration snapshot (dataset as of {MODEL_PRIORS.datasetAsOf}). Not a calibrated, causal, or probabilistic forecast; not measured trade flow; not investment advice. Every coefficient below is a declared, unvalidated prior — see §10 and docs/MODEL_ROADMAP.md.
           {METHODOLOGY_I18N[LANGV] && (
             <div style={{ marginTop: 5, color: C.text }}>
               {METHODOLOGY_I18N[LANGV].disc}
@@ -163,7 +163,7 @@ export default function Methodology({ onClose }) {
             ["\\phi", "specificity floor: even a fully substitutable input transmits this residual fraction", String(MODEL_PRIORS.specificityFloor), "declared prior [D]"],
             ["\\mathrm{spec}(a)", "supplier a's input specificity, its substitutability rescaled to 0–1", "0–1", "derived from stages.subst — analyst judgment [D] (§0)"],
           ]} />
-          <b>D[b][a]</b> is a downstream <i>input-dependence</i> proxy: how much buyer stage b's output depends on supplier stage a, given b's in-degree (an equal-allocation prior across b's declared inputs) and a's substitutability-derived specificity. <b>U[a][b]</b> is an upstream <i>supplier-revenue-dependence</i> proxy: the demand-side echo felt by supplier a when buyer b is disrupted. Neither is a measured input–output coefficient or bilateral trade value — no facility/BOM/inventory data exists yet to build one (see MODEL_ROADMAP.md).
+          <b>D[b][a]</b> is a downstream <i>input-dependence</i> proxy: how much buyer stage b's output depends on supplier stage a, given b's in-degree (an equal-allocation prior across b's declared inputs) and a's substitutability-derived specificity. <b>U[a][b]</b> is an upstream <i>supplier-revenue-dependence</i> proxy: the demand-side echo felt by supplier a when buyer b is disrupted. Neither is a measured input–output coefficient or bilateral trade value — no facility/BOM/inventory data exists yet to build one (see docs/MODEL_ROADMAP.md).
         </S>
 
         <S n="3" k="s3" t="ALL-REACHABLE-PATHS PROPAGATION">
@@ -278,7 +278,7 @@ export default function Methodology({ onClose }) {
         </S>
 
         <S n="13" k="s13" t="MODEL STATUS & LIMITATIONS">
-          This is a static, curated demonstration snapshot with unvalidated propagation priors — not fit to any observed disruption episode. There is no facility-level, bill-of-materials, inventory-days, capacity/utilization, or time-to-recover data behind any number here. Nothing above is a causal or probabilistic forecast. Scores support comparison and sensitivity ranking within this snapshot only — company and country results are not predicted financial losses. See MODEL_ROADMAP.md for the data-layer work (facility geography, buyer-input vs. supplier-revenue dependence, DRAM/NAND/HBM and merchant/captive-accelerator denominator splits, evidence-tiered market-share estimates, and more) this model would need before any of these numbers could be calibrated.
+          This is a static, curated demonstration snapshot with unvalidated propagation priors — not fit to any observed disruption episode. There is no facility-level, bill-of-materials, inventory-days, capacity/utilization, or time-to-recover data behind any number here. Nothing above is a causal or probabilistic forecast. Scores support comparison and sensitivity ranking within this snapshot only — company and country results are not predicted financial losses. See docs/MODEL_ROADMAP.md for the data-layer work (facility geography, buyer-input vs. supplier-revenue dependence, DRAM/NAND/HBM and merchant/captive-accelerator denominator splits, evidence-tiered market-share estimates, and more) this model would need before any of these numbers could be calibrated.
         </S>
       </div>
     </div>

@@ -1,8 +1,8 @@
 # MLE confidence-interval test & validation of the SSCIM algorithm
 
-**Generated 2026-07-12** by [`mle-validation.mjs`](mle-validation.mjs) running against the real engine (`app/src/engine`) and the real snapshot. Raw outputs: [`validation-results.json`](validation-results.json), [`mle_replications.csv`](mle_replications.csv), [`mc_robustness_draws.csv`](mc_robustness_draws.csv). Re-run with `node computation-demo/validation/mle-validation.mjs`.
+**Generated 2026-07-12** by [`mle-validation.mjs`](mle-validation.mjs) running against the real engine (`app/src/engine`) and the real snapshot. Raw outputs: [`validation-results.json`](validation-results.json), [`mle_replications.csv`](mle_replications.csv), [`mc_robustness_draws.csv`](mc_robustness_draws.csv). Re-run with `node docs/computation-demo/validation/mle-validation.mjs`.
 
-**Honest framing first.** The model's three transmission parameters — `f_down = 0.55`, `f_up = 0.30`, `halfLife H = 12` — are declared priors; there is **no real-world outcome dataset** to fit them to yet (that is the calibration step in `MODEL_ROADMAP.md`). So a "true" MLE against reality is impossible today. What *can* be tested rigorously, and is tested here:
+**Honest framing first.** The model's three transmission parameters — `f_down = 0.55`, `f_up = 0.30`, `halfLife H = 12` — are declared priors; there is **no real-world outcome dataset** to fit them to yet (that is the calibration step in `docs/MODEL_ROADMAP.md`). So a "true" MLE against reality is impossible today. What *can* be tested rigorously, and is tested here:
 
 | Part | Question | Method | Verdict |
 |---|---|---|---|

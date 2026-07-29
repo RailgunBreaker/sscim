@@ -7,7 +7,7 @@
 
    This is a sensitivity/comparison tool over a frozen demonstration
    snapshot — not a calibrated, causal, or probabilistic forecasting
-   model. See MODEL_ROADMAP.md and README "Model status and limitations".
+   model. See docs/MODEL_ROADMAP.md and README "Model status and limitations".
 
    buildEngine()'s input signature is intentionally unchanged (locked by
    VaultContext.jsx, which is out of scope for this pass): it still

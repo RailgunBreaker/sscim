@@ -3,7 +3,7 @@
    Free, keyless, and authoritative for U.S. export-control and trade actions
    (BIS rules, entity-list additions) — the highest-signal automatable feed for
    this model, and the one already demonstrated in
-   computation-demo/REAL_DATA_EXAMPLE.md. Everything it yields is a PROPOSAL
+   docs/computation-demo/REAL_DATA_EXAMPLE.md. Everything it yields is a PROPOSAL
    pending review; a published rule is a fact, but its severity and which
    stages it touches are judgments.
 

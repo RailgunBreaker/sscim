@@ -19,7 +19,7 @@
    Neither matrix is a measured trade/input coefficient — both are
    declared, transparent priors built only from graph structure (in/out
    degree) and the one analyst-judgment input the dataset already has
-   (stage substitutability). See MODEL_ROADMAP.md for what real data
+   (stage substitutability). See docs/MODEL_ROADMAP.md for what real data
    would need to replace these.
    ==================================================================== */
 import { clamp, combineSigned, topologicalSort } from './math.js';

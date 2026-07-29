@@ -6,7 +6,7 @@
    parameters. Nothing here has been fit to observed disruption episodes.
    They exist so the model's behavior is reproducible and inspectable,
    not because the specific numbers are known to be correct. See
-   MODEL_ROADMAP.md and README §8/§9 for what would be required to
+   docs/MODEL_ROADMAP.md and README §8/§9 for what would be required to
    calibrate them, and the "Model status and limitations" section for
    the plain-language version of this disclaimer.
    ==================================================================== */
