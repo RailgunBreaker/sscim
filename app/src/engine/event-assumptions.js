@@ -29,6 +29,8 @@ export const UNCLASSIFIED_ASSUMPTION = Object.freeze({
 });
 
 export const EVENT_ASSUMPTIONS = Object.freeze({
+  p260729_web2ef3: Object.freeze({ direction: "mitigating", channel: "downstream", operational: false, reason: "Published: Review: approve p260728_usgtgb9" }),
+
   p260728_usgtgb9: Object.freeze({ direction: "adverse", channel: "both", operational: true, reason: "Realized multi-site production halt with confirmed physical damage at one operator (Renesas) plus regional power and rail outages. This matches the existing M7.1 Kumamoto anchor at 7: several named fabs down with confirmed damage, but concentrated in one prefecture and with the largest local fab (JASM) undamaged and already restoring, so it does not approach the sector-wide breadth of the 9 anchor." }),
 
   p260729_webaa64: Object.freeze({ direction: "adverse", channel: "both", operational: false, reason: "As reported by this source the event is predominantly precautionary: every named site reports no major damage, halts are inspection-driven and same-day, and the article's own assessment is minimal immediate disruption. That is a hazard signal with assessment underway rather than established capacity loss, so operational=false and severity stays low. This is deliberately lower than the severity assigned to candidate ...b1017aa1 for the same earthquake, because that source establishes confirmed physical damage and multi-day halts at Renesas and Toyota that this earlier snapshot lists only as 'assessing'. If the two are merged, the higher assessment governs." }),
