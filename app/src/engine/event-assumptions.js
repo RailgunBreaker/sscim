@@ -29,6 +29,8 @@ export const UNCLASSIFIED_ASSUMPTION = Object.freeze({
 });
 
 export const EVENT_ASSUMPTIONS = Object.freeze({
+  p260729_web3084: Object.freeze({ direction: "adverse", channel: "both", operational: true, reason: "Production was actually stopped, not merely threatened: several named fabs and vehicle plants suspended output and at least one operator (Renesas) reported confirmed physical damage. This matches the dataset's severity-7 anchor for the M7.1 Kumamoto quake halting several named fabs with confirmed damage — multi-site, multi-company, but with halts so far measured in days rather than weeks and partial resumption already underway, so it does not exceed that anchor. Channel is both because upstream wafer/sensor/MCU output and downstream vehicle assembly were hit simultaneously." }),
+
   // U.S. expands AI-chip export-control rules — policy/export-control channel,
   // affects both the exporting equipment/materials side (upstream echo) and
   // the restricted downstream logic/HBM/packaging demand side.
