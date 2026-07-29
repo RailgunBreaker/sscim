@@ -1,6 +1,6 @@
 {
   "partC": {
-    "chainIndexBase": 6.1357234971057615,
+    "chainIndexBase": 6.27939444567629,
     "matchedEngine": true
   },
   "partA": {
@@ -27,55 +27,55 @@
       {
         "parameter": "f_down",
         "truth": 0.55,
-        "meanEstimate": 0.551217609026534,
-        "sdEstimate": 0.018294877638382587,
-        "meanSE": 0.017347322958505957,
-        "coverage95": 0.935
+        "meanEstimate": 0.5507592968971625,
+        "sdEstimate": 0.026183530476792023,
+        "meanSE": 0.025350596701076263,
+        "coverage95": 0.95
       },
       {
         "parameter": "f_up",
         "truth": 0.3,
-        "meanEstimate": 0.2992715114034638,
-        "sdEstimate": 0.006290236050329591,
-        "meanSE": 0.006359773325704635,
-        "coverage95": 0.94
+        "meanEstimate": 0.29972255765058525,
+        "sdEstimate": 0.009234793466046758,
+        "meanSE": 0.00889792064131014,
+        "coverage95": 0.945
       },
       {
         "parameter": "halfLife",
         "truth": 12,
-        "meanEstimate": 12.015755656586318,
-        "sdEstimate": 0.19423161361016533,
-        "meanSE": 0.19901298223662717,
-        "coverage95": 0.96
+        "meanEstimate": 12.004954516558255,
+        "sdEstimate": 0.15286115336345052,
+        "meanSE": 0.1528085698817365,
+        "coverage95": 0.965
       }
     ]
   },
   "partB": {
     "draws": 400,
     "chainIndex": {
-      "base": 6.1357234971057615,
-      "mean": 6.132413282431377,
-      "p2_5": 5.965714567245026,
-      "p97_5": 6.328151937267911
+      "base": 6.27939444567629,
+      "mean": 6.275645661909579,
+      "p2_5": 6.056025140793354,
+      "p97_5": 6.529929298783047
     },
     "tsmcTop1Rate": 1,
     "lithoStructuralTop1Rate": 1,
     "advfabStructuralTopRate": 0,
     "kendallTau": {
-      "mean": 0.9582449881073731,
-      "min": 0.8943255181787293
+      "mean": 0.9600985389058788,
+      "min": 0.9007815154604146
     },
     "top5Modal": [
       {
+        "top5": "tsmc|nvidia|asml|samsung|skhynix",
+        "share": 0.64
+      },
+      {
         "top5": "tsmc|nvidia|asml|samsung|foxconn",
-        "share": 0.58
+        "share": 0.185
       },
       {
-        "top5": "tsmc|nvidia|asml|foxconn|samsung",
-        "share": 0.1975
-      },
-      {
-        "top5": "tsmc|asml|nvidia|samsung|foxconn",
+        "top5": "tsmc|asml|nvidia|samsung|skhynix",
         "share": 0.175
       }
     ],

@@ -17,7 +17,7 @@
 The validation script re-builds the scoring pipeline from the engine's primitive functions (`buildDependenceMatrices`, `propagateFromSource`, `combineSigned`, …) with the parameters exposed as free variables, then asserts equality with `buildEngine()`'s published outputs at the base parameters:
 
 ```
-✔ chain index        6.135723 == engine 6.135723
+✔ chain index        6.279394 == engine 6.279394
 ✔ litho structural   8.004899 == engine 8.004899
 ✔ adv_fab NI         7.730715 == engine 7.730715
 ✔ TSMC criticality  10.000000 == engine 10.000000
@@ -50,14 +50,14 @@ With Gaussian noise the log-likelihood is `ℓ(θ, σ) = −N/2·ln(2πσ²) −
 
 | Parameter | Truth | Mean θ̂ | Empirical SD of θ̂ | Mean SE | **Empirical 95% coverage** |
 |---|---|---|---|---|---|
-| f_down | 0.55 | 0.5512 | 0.0183 | 0.0173 | **93.5%** |
-| f_up | 0.30 | 0.2993 | 0.0063 | 0.0064 | **94.0%** |
-| halfLife | 12 | 12.016 | 0.194 | 0.199 | **96.0%** |
+| f_down | 0.55 | 0.5508 | 0.0262 | 0.0254 | **95.0%** |
+| f_up | 0.30 | 0.2997 | 0.0092 | 0.0089 | **94.5%** |
+| halfLife | 12 | 12.005 | 0.153 | 0.153 | **96.5%** |
 
 Interpretation:
 
 - **All three parameters are identifiable** from this observation design — estimates are essentially unbiased (mean θ̂ ≈ truth) and tight. The multi-day panel is what identifies `H` (decay needs time variation); the cross-stage pattern identifies `f_down`/`f_up` separately (the snapshot's `e1` propagates both directions, separating the two coefficients).
-- **The CIs are honest:** empirical coverage of 93.5–96.0% against the 95% target is within Monte-Carlo noise (with R = 200, the binomial standard error is ±1.5pp). Equivalently, the SEs the Wald formula reports (0.0173 / 0.0064 / 0.199) match the actually-observed estimator scatter (0.0183 / 0.0063 / 0.194).
+- **The CIs are honest:** empirical coverage of 94.5–96.5% against the 95% target is within Monte-Carlo noise (with R = 200, the binomial standard error is ±1.5pp). Equivalently, the SEs the Wald formula reports (0.0254 / 0.0089 / 0.153) match the actually-observed estimator scatter (0.0262 / 0.0092 / 0.153).
 - **Practical meaning for the MVP:** once even a modest real dataset exists (order of ~150 stage-day impact observations around documented episodes), this exact machinery can replace the hand-set priors with fitted values *and defensible confidence intervals*. The estimation pipeline is already proven correct on synthetic ground truth.
 
 ## Part B — Monte-Carlo robustness of the algorithm's results
@@ -66,12 +66,12 @@ Interpretation:
 
 | Output | Base value | Across 400 draws |
 |---|---|---|
-| Chain index | 6.136 | mean 6.132, 95% interval **[5.966, 6.328]** — never crosses neutral 5 |
+| Chain index | 6.279 | mean 6.276, 95% interval **[6.056, 6.530]** — never crosses neutral 5 |
 | "TSMC is the #1 critical company" | rank 1 | holds in **100.0%** of draws |
 | "Lithography is the most structurally vulnerable stage" | rank 1 | holds in **100.0%** of draws |
-| Full 109-company ranking vs base (Kendall τ) | 1.0 | mean **0.958**, worst draw **0.894** |
-| NVIDIA criticality | 5.17 | 95% interval [4.73, 6.05] |
-| ASML criticality | 4.68 | 95% interval [3.67, 6.18] |
+| Full 109-company ranking vs base (Kendall τ) | 1.0 | mean **0.960**, worst draw **0.901** |
+| NVIDIA criticality | 5.17 | 95% interval [4.87, 5.54] |
+| ASML criticality | 4.68 | 95% interval [4.05, 5.35] |
 
 Interpretation: the product's headline *claims* — net-adverse news environment, TSMC most critical, lithography most fragile, and the broad shape of the company ranking — are **not artifacts of the specific prior values**; they survive everywhere in the declared uncertainty band. Individual mid-table criticality *values* wobble by roughly ±1 point, which is exactly why the UI reports ranks and labeled intervals rather than pretending point precision.
 

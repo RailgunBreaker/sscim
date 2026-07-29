@@ -3135,7 +3135,7 @@ The roadmap proposes episodes such as the 2021 ABF substrate shortage, the 2023 
 | $\tau$ | $10^{-4}$ | Numerical pruning choice | Convergence-error and runtime benchmark |
 | Component weights | 0.25/0.20/0.20/0.15/0.10/0.10 | Analyst priority judgment | Constrained regression or documented expert elicitation |
 | Sensitivity band | ±30% | Deterministic robustness scenario | Empirical covariance and confidence intervals |
-| `datasetAsOf` | 2026-07-06 | Snapshot freeze date | Direct metadata; not estimated |
+| `datasetAsOf` | 2026-07-29 | Snapshot freeze date | Direct metadata; not estimated |
 
 The scientifically correct statement is:
 
@@ -3341,7 +3341,7 @@ Possible historical cases include:
 ```json
 {
   "company_id": "NVIDIA",
-  "as_of": "2026-07-06",
+  "as_of": "2026-07-29",
   "risk_score": 64.52,
   "structural_score": 70.41,
   "current_shock": 10.20,
