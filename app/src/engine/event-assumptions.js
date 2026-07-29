@@ -29,6 +29,8 @@ export const UNCLASSIFIED_ASSUMPTION = Object.freeze({
 });
 
 export const EVENT_ASSUMPTIONS = Object.freeze({
+  p260729_web57b8: Object.freeze({ direction: "adverse", channel: "downstream", operational: true, reason: "Production at a single named fab genuinely stopped, so this is operational rather than a hazard signal — but the realized scale is small: one site, no structural damage found, and resumption already under way at the time of reporting. That sits well below the 6 anchor for a multi-week single-site outage and near the 4 anchor for one company losing one supply line. Direction is adverse because the underlying operational change is a production pause; the resumption framing is why severity stays low rather than making the record mitigating. Channel is downstream because the disruption originates at a foundry and propagates to its customers." }),
+
   p260729_web3084: Object.freeze({ direction: "adverse", channel: "both", operational: true, reason: "Production was actually stopped, not merely threatened: several named fabs and vehicle plants suspended output and at least one operator (Renesas) reported confirmed physical damage. This matches the dataset's severity-7 anchor for the M7.1 Kumamoto quake halting several named fabs with confirmed damage — multi-site, multi-company, but with halts so far measured in days rather than weeks and partial resumption already underway, so it does not exceed that anchor. Channel is both because upstream wafer/sensor/MCU output and downstream vehicle assembly were hit simultaneously." }),
 
   // U.S. expands AI-chip export-control rules — policy/export-control channel,
