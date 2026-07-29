@@ -76,7 +76,7 @@ export default function Intro() {
               <b key={l} className={lang === l ? 'on' : ''} onClick={() => setLang(l)}>{label}</b>
             ))}
           </span>
-          <span><a href="index.html">{t('navHome')}</a> &nbsp;·&nbsp; <a className="btn solid" href="sscim-app.html">{t('launchDashboard')}</a></span>
+          <span><a href="index.html">{t('navHome')}</a> &nbsp;·&nbsp; <a href="docs.html">Documentation</a> &nbsp;·&nbsp; <a className="btn solid" href="sscim-app.html">{t('launchDashboard')}</a></span>
         </div>
       </header>
 

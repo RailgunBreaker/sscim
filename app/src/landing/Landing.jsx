@@ -65,6 +65,7 @@ export default function Landing() {
             ))}
           </span>
           <a href="intro.html" style={{ fontSize: 13 }}>{t('navIntro')}</a>
+          <a href="docs.html" style={{ fontSize: 13 }}>Documentation</a>
           <a className="btn solid" href="sscim-app.html">{t('launchDemo')}</a>
         </div>
       </header>
