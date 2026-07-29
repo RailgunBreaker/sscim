@@ -26,7 +26,6 @@ import NetworkAnalysisPanel from './components/NetworkAnalysisPanel.jsx';
 import NetworkComparePanel from './components/NetworkComparePanel.jsx';
 import { buildBaseGraph } from './engine/network.js';
 import Intel from './components/Intel.jsx';
-import Methodology from './components/Methodology.jsx';
 import Guide from './components/Guide.jsx';
 import Briefing from './components/Briefing.jsx';
 import ScenarioBuilder from './components/ScenarioBuilder.jsx';
@@ -139,7 +138,6 @@ function DashboardBody() {
   const [tab, setTab] = useState("flow");
   const [feedTab, setFeedTab] = useState("events");
   const [wide, setWide] = useState(true);
-  const [showMethod, setShowMethod] = useState(false);
   const [showBriefing, setShowBriefing] = useState(false);
   const [showGuide, setShowGuide] = useState(false);
   const [custom, setCustom] = useState(null);
@@ -403,7 +401,7 @@ function DashboardBody() {
         lang={lang} setLang={setLang} setSel={setSel}
         scenarioId={scenarioId} setScenarioId={setScenarioId} custom={custom}
         setShowBuilder={setShowBuilder} setShowGuide={openGuide}
-        setShowBriefing={setShowBriefing} setShowMethod={setShowMethod}
+        setShowBriefing={setShowBriefing}
         tourTarget={tourTarget}
       />
 
@@ -439,7 +437,6 @@ function DashboardBody() {
         </>
       )}
 
-      {showMethod && <Methodology onClose={() => setShowMethod(false)} />}
       {showGuide && (
         <Guide
           key={guideKey}
@@ -456,7 +453,7 @@ function DashboardBody() {
           <span style={{ color: C.amber }}> · DATA SERVICE UNAVAILABLE — showing the latest available dataset.</span>
         )}
         {!model.graphValid && (
-          <span style={{ color: C.red }}> · MODEL DIAGNOSTIC: the stage graph failed validation — see ⓘ Methodology.</span>
+          <span style={{ color: C.red }}> · MODEL DIAGNOSTIC: the stage graph failed validation — see <a href="docs/METHODOLOGY.md.html" style={{ color: C.copper }}>Methodology</a>.</span>
         )}
       </footer>
     </div>

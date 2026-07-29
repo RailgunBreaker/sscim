@@ -101,7 +101,7 @@ Nothing skips the gate. If the audit or tests fail, nothing is committed and the
 
 Keep data, assumptions, and formulas separate:
 
-- **Numerical priors** belong in `app/src/engine/priors.js`. Nowhere else should contain a magic coefficient — the methodology document, the in-app overlay, and the code all read that one object, which is what stops them from drifting apart.
+- **Numerical priors** belong in `app/src/engine/priors.js`. Nowhere else should contain a magic coefficient — the methodology document and the code use that one object, which is what stops them from drifting apart.
 - **Event classifications** belong in `app/src/engine/event-assumptions.js`. They are hand-curated and must never be inferred at runtime from event text.
 - **Data changes** flow through the vault and the snapshot scripts, never by hand-editing `vault-snapshot.json` — it is a generated artifact and is gitignored.
 

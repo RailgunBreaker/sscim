@@ -5,7 +5,7 @@ Every number in this document is the engine's real output (or a hand-recomputati
 
 **All data referenced here is exported as CSV in [`csv/`](csv/)** — see §6 for the file index. Machine-readable worked-example values are in [`worked-example.json`](worked-example.json).
 
-**To reproduce:** the same numbers appear in the running app (dashboard → Methodology overlay shows the same formulas); the CSVs were produced by loading `buildEngine(vault-snapshot)` in Node and dumping every input/intermediate/output table.
+**To reproduce:** the running dashboard links to the same [Methodology](../METHODOLOGY.md) used here; the CSVs were produced by loading `buildEngine(vault-snapshot)` in Node and dumping every input/intermediate/output table.
 
 ---
 

@@ -6,7 +6,7 @@ import Freshness from './Freshness.jsx';
 
 export default function Header({
   lang, setLang, setSel, scenarioId, setScenarioId, custom,
-  setShowBuilder, setShowGuide, setShowBriefing, setShowMethod, tourTarget,
+  setShowBuilder, setShowGuide, setShowBriefing, tourTarget,
 }) {
   const { data } = useVault();
   const { COMPANIES, SCENARIOS } = data;
@@ -58,11 +58,11 @@ export default function Header({
           style={{ background: C.copper, color: "#0C111C", border: `1px solid ${C.copper}`, borderRadius: 4, padding: "5px 9px", fontSize: 11.5, cursor: "pointer", fontFamily: "inherit", fontWeight: 700 }}>
           {t("⚡ GP Briefing")}
         </button>
-        <button id="btn-methodology" onClick={() => setShowMethod(true)}
+        <a id="btn-methodology" href="docs/METHODOLOGY.md.html"
           className={tourTarget === "btn-methodology" ? "tour-target" : undefined}
-          style={{ background: "transparent", color: C.copper, border: `1px dashed ${C.copperDim}`, borderRadius: 4, padding: "5px 9px", fontSize: 11.5, cursor: "pointer", fontFamily: "inherit" }}>
+          style={{ background: "transparent", color: C.copper, border: `1px dashed ${C.copperDim}`, borderRadius: 4, padding: "5px 9px", fontSize: 11.5, cursor: "pointer", fontFamily: "inherit", textDecoration: "none" }}>
           {t("ⓘ Methodology")}
-        </button>
+        </a>
       </div>
     </header>
   );

@@ -73,7 +73,7 @@ export function briefingText(model, scenario, data, engine) {
   L.push("WATCH NEXT");
   evRows.slice(0, 3).forEach(({ e }) => L.push(`• ${e.watch}`));
   L.push("");
-  L.push("METHOD (matches the ⓘ Methodology overlay exactly):");
+  L.push("METHOD (matches the published ⓘ Methodology documentation):");
   L.push("Structural vulnerability = weighted blend of network influence, geographic concentration (HHI+residual), policy exposure, substitutability, market sensitivity — time-invariant.");
   L.push("Operational impact = signed event propagation over ALL reachable graph paths (directional input-dependence / supplier-revenue-dependence proxies), decay(age,H)=2^(-age/H) with H=12 days from the frozen snapshot date, combined across simultaneous shocks via bounded noisy-OR (never Math.max, never unbounded sum).");
   L.push("Confidence (High/Medium/Low/Simulated) is evidence-quality metadata only — it is never multiplied into the impact magnitude.");

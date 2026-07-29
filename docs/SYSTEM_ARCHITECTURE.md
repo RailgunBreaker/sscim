@@ -40,7 +40,7 @@ The consequence worth internalising: **if the writer machine is off, the site ke
 | --- | --- |
 | `index.html` | public landing page |
 | `intro.html` | introduction and user guide |
-| `sscim-app.html` | the dashboard — map, flow graph, topology, events, scenarios, methodology overlay |
+| `sscim-app.html` | the dashboard — map, flow graph, topology, events, scenarios, and a link to the canonical methodology document |
 | `docs.html` | generated Markdown documentation reader |
 | `admin.html` | authenticated operations console; deliberately not linked from public navigation |
 

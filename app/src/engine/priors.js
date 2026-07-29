@@ -41,7 +41,7 @@ export const MODEL_PRIORS = Object.freeze({
 
   // Composite node-risk-score weights (structural vulnerability index).
   // Four components are graph/data-derived; two ("subst", "market") are
-  // declared analyst judgments — see Methodology.jsx and README §8.
+  // declared analyst judgments — see docs/METHODOLOGY.md and README §8.
   componentWeights: Object.freeze({
     choke: 0.25, geo: 0.20, policy: 0.20, subst: 0.15, shock: 0.10, market: 0.10,
   }),

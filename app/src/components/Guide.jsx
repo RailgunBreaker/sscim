@@ -40,7 +40,7 @@ const EN_BODY = {
   4: 'COMPANIES ranks by systemic criticality. CAPITAL ranks shareholders by ownership % × company systemic criticality — state-linked capital in amber.',
   5: 'Header buttons inject preset hypothetical events through the identical propagation engine. ✦ Build scenario: pick stages, set severity, run it. Copper deltas show the scenario\'s marginal change vs. the untouched baseline — history is never rewritten.',
   6: '⚡ GP Briefing composes a briefing from the current state — ranked by scenario delta when a scenario is active, by baseline operational impact otherwise. Copy or download.',
-  7: 'ⓘ Methodology documents every formula exactly as implemented, every propagation prior, and the full model-status statement — no black boxes.',
+  7: 'ⓘ Methodology opens the published documentation for every implemented formula, propagation prior, and model-status statement — no black boxes.',
 };
 
 /* ================= In-app quick guide =================
