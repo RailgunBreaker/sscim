@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { db } from '../db.js';
 import { adminAuth } from '../middleware/adminAuth.js';
-import { candidates, pendingCandidates, candidateById, approveCandidate, rejectCandidate, publishReview, dashboardSummary } from '../review-queue.js';
+import { candidates, pendingCandidates, candidateById, approveCandidate, rejectCandidate, publishPendingReviews, unpublishedReviews, dashboardSummary } from '../review-queue.js';
 
 export const adminRouter = Router();
 adminRouter.use(adminAuth);
@@ -20,12 +20,14 @@ adminRouter.get('/review/candidates/:id', (req, res) => {
   res.json({ candidate });
 });
 
+/* Approve/reject record the decision and return immediately. Publication is a
+   separate, explicit step (POST /review/publish) so a review session produces
+   one commit instead of one per click — see review-queue.js. */
 adminRouter.post('/review/candidates/:id/approve', (req, res) => {
   try {
     const reviewedBy = req.get('x-reviewer') || 'admin-ui';
     const approved = approveCandidate(req.params.id, req.body || {}, reviewedBy);
-    const publication = publishReview({ action: 'approve', ...approved });
-    res.status(publication.published ? 201 : 202).json({ ...approved, ...publication });
+    res.status(201).json({ ...approved, unpublished: unpublishedReviews().length });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -35,11 +37,15 @@ adminRouter.post('/review/candidates/:id/reject', (req, res) => {
   try {
     const reviewedBy = req.get('x-reviewer') || 'admin-ui';
     const rejected = rejectCandidate(req.params.id, req.body?.reason, reviewedBy);
-    const publication = publishReview({ action: 'reject', ...rejected });
-    res.status(publication.published ? 200 : 202).json({ ...rejected, ...publication });
+    res.status(200).json({ ...rejected, unpublished: unpublishedReviews().length });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
+});
+
+adminRouter.post('/review/publish', (req, res) => {
+  const result = publishPendingReviews();
+  res.status(result.published ? 200 : 202).json(result);
 });
 
 /* ---- companies (identity + production footprint) ---- */

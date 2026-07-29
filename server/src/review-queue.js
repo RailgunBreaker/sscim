@@ -3,7 +3,7 @@ import path from 'node:path';
 import { execFileSync, spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { db } from './db.js';
-import { getSnapshotDate } from './meta.js';
+import { getSnapshotDate, getMeta, setMeta } from './meta.js';
 import { daysAgoOf } from './history-events.js';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
@@ -35,6 +35,7 @@ export function dashboardSummary() {
   return {
     counts: { pending: counts.pending || 0, approved: counts.approved || 0, rejected: counts.rejected || 0 },
     events: db.prepare('SELECT COUNT(*) AS count FROM events').get().count,
+    unpublished: unpublishedReviews().length,
     meta, recentReviews,
   };
 }
@@ -114,23 +115,58 @@ export function rejectCandidate(candidateId, reason, reviewer) {
 
 function run(file, args, cwd) { return execFileSync(file, args, { cwd, encoding: 'utf8', stdio: 'pipe' }); }
 
-export function publishReview({ action, candidateId, eventId }) {
+/* Publishing is deliberately NOT part of approve/reject. A reviewer works
+   through a queue in one sitting, and committing per decision produced one
+   binary-database commit per click ("Review: approve …", "Review: reject …")
+   — dozens of commits that each rewrite the whole .db blob and say nothing a
+   single batched commit would not. Decisions are recorded in the database
+   immediately and published together, either from here or by the next
+   scheduled pipeline run. Nothing is lost by waiting: the database IS the
+   record, the commit is only its distribution. */
+
+const PUBLISH_MARK = 'last_review_publish_at';
+
+export function unpublishedReviews() {
+  let since = getMeta(PUBLISH_MARK, null);
+  if (since == null) {
+    /* First run after this change: every decision already in the database was
+       published by the old commit-per-review path, so seed the marker at now
+       rather than reporting the whole review history as a pending backlog. */
+    since = new Date().toISOString();
+    setMeta(PUBLISH_MARK, since);
+  }
+  return db.prepare(`SELECT id, status, reviewed_at, reviewed_by, proposed_json FROM event_candidates
+    WHERE status != 'pending' AND reviewed_at IS NOT NULL AND reviewed_at > ?
+    ORDER BY reviewed_at`).all(since)
+    .map((r) => ({ ...r, proposal: r.proposed_json ? JSON.parse(r.proposed_json) : null }));
+}
+
+export function publishPendingReviews() {
+  const queued = unpublishedReviews();
+  const approved = queued.filter((r) => r.status === 'approved').length;
+  const rejected = queued.filter((r) => r.status === 'rejected').length;
   try {
-    if (action === 'approve') {
+    if (approved) {
       run('node', ['scripts/build-vault-snapshot.mjs'], appDir);
       run('node', ['scripts/audit-snapshot.mjs'], appDir);
     }
     run('git', ['add', 'server/data/sscim.db', 'app/src/engine/event-assumptions.js'], repoDir);
     const staged = spawnSync('git', ['diff', '--cached', '--quiet'], { cwd: repoDir }).status === 1;
-    if (!staged) return { published: true, message: 'No publishable changes.' };
-    const subject = action === 'approve' ? `Review: approve ${eventId}` : `Review: reject ${candidateId}`;
-    run('git', ['commit', '-m', subject], repoDir);
+    if (!staged) {
+      setMeta(PUBLISH_MARK, new Date().toISOString());
+      return { published: true, count: 0, message: 'Nothing to publish — the working tree already matches the database.' };
+    }
+    const parts = [approved && `${approved} approved`, rejected && `${rejected} rejected`].filter(Boolean);
+    const subject = `Review: publish ${parts.join(', ') || 'queue decisions'}`;
+    const body = queued.map((r) => `${r.status === 'approved' ? 'approve' : 'reject'} ${r.id}`).join('\n');
+    run('git', ['commit', '-m', subject, ...(body ? ['-m', body] : [])], repoDir);
     run('git', ['pull', '--rebase', 'origin', 'main'], repoDir);
     run('git', ['push', 'origin', 'main'], repoDir);
-    return { published: true, message: subject };
+    setMeta(PUBLISH_MARK, new Date().toISOString());
+    return { published: true, count: queued.length, message: subject };
   } catch (error) {
-    // The approval/rejection remains safely recorded locally. The scheduled
-    // pipeline will retry publication; return this explicitly to the reviewer.
-    return { published: false, error: String(error.stderr || error.message).slice(0, 800) };
+    // Decisions stay safely recorded in the database; the scheduled pipeline
+    // retries publication. Surface the failure to the reviewer explicitly.
+    return { published: false, count: queued.length, error: String(error.stderr || error.message).slice(0, 800) };
   }
 }

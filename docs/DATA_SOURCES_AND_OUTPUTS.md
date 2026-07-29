@@ -1,37 +1,76 @@
 # SSCIM data sources, inputs, and outputs
 
+What enters the model, where it came from, how it is processed, and what each output does and does not mean.
+
+## Provenance rule
+
+Every meaningful statement is traceable to exactly one of three things: **a source**, **an explicit assumption**, or **an implemented calculation**. If it is none of these, it does not belong in the model. The evidence tiers below are used consistently in the codebase, the interface, and every document here.
+
+| Tier | Meaning |
+| --- | --- |
+| **A** | Peer-reviewed academic foundations |
+| **B** | Institutional and industry reports |
+| **C** | Official primary sources — rule texts, filings |
+| **D** | Declared analyst judgment; not fitted to anything |
+| **GRAPH** | Computed from the above; no independent input |
+
 ## Inputs
 
-| Input group | Examples | Status and interpretation |
-| --- | --- | --- |
-| Supply-chain structure | 24 stages and directed stage dependencies | Curated model structure; changed by review, not automatic scraping. |
-| Production geography | Country shares by stage | Curated snapshot input; incomplete coverage is represented as residual share where applicable. |
-| Company footprint | Company home country and stage stakes | Curated, source-informed input; not facility-level capacity data. |
-| Relationship data | Selected supplier/customer and ownership relationships | Partial sample; revenue relationship is not buyer input-dependence. |
-| Historical events | Dated sources, severity, stages, confidence, and classification | Human-reviewed before model publication. |
-| Candidate feeds | USGS, Federal Register, configured news feed | Discovery only; a candidate is not a published event. |
-| Model priors | Transmission, half-life, component weights, specificity floor | Explicit assumptions in `app/src/engine/priors.js`, not fitted parameters. |
+| Input group | Size | Tier | Status and interpretation |
+| --- | --- | --- | --- |
+| Stage graph | 24 stages, 34 directed edges | B | Curated from published process-flow descriptions; validated acyclic. Changed by review, never by scraping. |
+| Production geography | Country shares per stage, 16 countries | B | Capacity and market estimates. Undisclosed remainder is kept as an **explicit residual**, not silently dropped — see the HHI treatment in the methodology. |
+| Company footprint | 109 companies, within-stage stakes | B / C | Source-informed share estimates and filings. **Not** facility-level capacity data; no fab locations, no utilization. |
+| Customer relationships | 243 supplier→customer edges | C + B | Disclosed customer concentration plus trade-press estimates, top customers only. This is *supplier-revenue share*, which is **not** buyer input-dependence — the two directions are different quantities and are modeled separately. |
+| Ownership | 75 shareholder rows | C | 13F filings, annual reports, exchange disclosures. Ages quickly; the most compliance-sensitive dataset here. |
+| Policy instruments | 7 | C + D | Rule texts are Tier C; the severity score and the 0.4 additional-instrument discount are Tier D judgments. |
+| Historical events | 44 (6 illustrative, 38 sourced) | B / C | Dated, cited, human-reviewed before publication. Ages derive from an authoritative `dateISO`, never hand-maintained. |
+| Event classifications | one per event id | D | Direction, channel, and whether it counts toward the score. Hand-curated in `event-assumptions.js`; **never inferred from headline text at runtime**. |
+| Stage judgments | substitutability, market sensitivity | D | Analyst scores 0–10 against a written rubric. |
+| Model priors | transmission, half-life, weights, specificity floor, tolerance | D | Explicit assumptions in `app/src/engine/priors.js`. Not fitted parameters. |
+| Candidate feeds | USGS, Federal Register, news | — | **Discovery only.** A candidate is not an event and never reaches the model unreviewed. |
+| Market quotes | 92 of 109 listed companies | — | Yahoo Finance. **Display metadata only — never an engine input.** |
+
+### What is deliberately absent
+
+No facility geography, no bill of materials, no inventory days, no capacity or utilization, no time-to-recover, no qualification relationships, no alternative-supplier counts. The dependence matrices are equal-allocation priors derived from graph degree precisely *because* none of that data exists here. See the [Model roadmap](MODEL_ROADMAP.md) for what acquiring it would involve.
 
 ## Processing
 
-1. Ingest feeds into a candidate queue without publishing them.
-2. Optionally create an AI draft classification; drafts remain proposals.
-3. A human checks source quality, duplication, scope, stages, severity, and uncertainty.
-4. Approval updates the SQLite vault and recorded event assumption.
-5. Snapshot generation rebuilds derived model data for the frontend.
-6. Audit and tests act as a publication gate.
+1. **Ingest** feeds into a candidate queue. Nothing is published by this step.
+2. **Deduplicate** at ingest. An identical restatement of a story already seen is collapsed automatically; a near-duplicate is left pending but flagged, because a one-token difference can be two genuinely different rules. Duplicates are marked, not deleted, so the record of what arrived stays intact.
+3. **Draft** an optional AI classification. Drafts are proposals with no authority — an unreviewed candidate cannot affect any score.
+4. **Review.** A human checks source quality, duplication, scope, affected stages, severity, and uncertainty, and may override every proposed field.
+5. **Approve**, which writes the event into the vault and records its classification.
+6. **Publish**, as a separate explicit step: regenerate the snapshot, run the audit and tests, then commit and push once for the whole review session.
+7. **Gate.** Audit and tests must pass or nothing is published and the previous deployment stays live.
 
 ## Outputs
 
 | Output | Meaning | Do not interpret as |
 | --- | --- | --- |
-| Structural vulnerability | Stable modeled sensitivity of a stage/country/company footprint | Probability or realized risk. |
-| Operational index | Event-driven signed sensitivity, displayed around neutral value 5 | Forecast, loss estimate, or market signal. |
-| Index history | Replayed operational model state over the snapshot’s event history | A live market or macro time series. |
-| Topology routes/metrics | Graph-derived pathways and counterfactual sensitivity | Trade volumes, logistics routes, or contracts. |
-| Briefing | A textual summary built from current model state | Independent reporting or investment research. |
-| Static snapshot | Versioned dataset deployed to the public site | A continuously live database. |
+| Structural vulnerability | Stable modeled sensitivity of a stage, country, or company footprint | A probability, or realized risk |
+| Operational index | Event-driven signed sensitivity, displayed around neutral 5 | A forecast, loss estimate, or market signal |
+| Network influence | Normalized reach of a unit shock through the graph | A validated centrality metric, or economic loss |
+| Company vulnerability | Average adverse impact across occupied stages, size-independent | A company-level risk rating |
+| Company contribution | Share-weighted share of an aggregate modeled effect | A financial-loss estimate |
+| Company criticality | Effect of fully disrupting that company, normalized against the observed maximum | An investment view of any kind |
+| Capital power | Ownership stake weighted by company criticality | Influence, control, or intent |
+| Index history | The operational model replayed over the snapshot's event record | A live market or macro time series |
+| Topology routes and metrics | Graph-derived pathways and counterfactual sensitivity | Trade volumes, logistics routes, or contracts |
+| Sensitivity envelope (low/base/high) | The same computation at ±30% on transmission and half-life | A confidence interval — it is not one |
+| Briefing | A textual summary generated from current model state | Independent reporting or investment research |
+| Static snapshot | A versioned dataset deployed to the public site | A continuously live database |
 
-## Provenance rule
+## Data quality, stated plainly
 
-Every meaningful statement should be traceable to either a source, an explicit assumption, or an implemented calculation. If it is none of these, it does not belong in the model.
+`npm run audit:data` reports which inputs carry an evidence note and which are carried-over judgment. At the current snapshot most stages and most companies have **no** individual evidence note, meaning they are Tier-D analyst judgment rather than individually verified figures.
+
+This is a meaningfully improved snapshot, not a fully sourced production database, and it should not be represented as one. Any write-up using these figures should say which of them carry evidence notes.
+
+## Further reading
+
+- [Methodology](METHODOLOGY.md) — how these inputs become those outputs.
+- [Data pipeline](computation-demo/DATA_PIPELINE.md) — each input's candidate feed and its automation ceiling.
+- [Real-data example](computation-demo/REAL_DATA_EXAMPLE.md) — an end-to-end run on genuinely fetched data.
+- [Model roadmap](MODEL_ROADMAP.md) — the missing data layer.

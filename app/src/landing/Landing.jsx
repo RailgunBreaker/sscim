@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { T, LANG_LABELS } from './i18n.js';
 import Tex from '../components/Tex.jsx';
+import NewsTicker from '../components/NewsTicker.jsx';
 
 const STYLE = `
   :root{--bg:#0C111C;--panel:#141B2B;--panel2:#0F1626;--line:#243149;--copper:#C98A3F;--copperDim:#8A6230;--red:#E25C4A;--amber:#DFA83D;--green:#4FA97F;--text:#E9E4D8;--dim:#8C96A8;--faint:#5A6478}
@@ -70,7 +71,7 @@ export default function Landing() {
         </div>
       </header>
 
-      <div className="ticker mono">SSCIM INTELLIGENCE · Supply-chain analysis, event monitoring, and scenario comparison · Not investment advice</div>
+      <NewsTicker />
 
       <div className="hero">
         <div className="wrap">

@@ -144,6 +144,9 @@ CREATE TABLE IF NOT EXISTS event_candidates (
 CREATE UNIQUE INDEX IF NOT EXISTS idx_event_candidates_source
   ON event_candidates (source_feed, source_ref);
 
+CREATE INDEX IF NOT EXISTS idx_event_candidates_dedupe
+  ON event_candidates (date_iso);
+
 -- Market quotes (price + P/E), refreshed by scripts/fetch-quotes.mjs from
 -- the curated ticker map (src/tickers.js). Display metadata only — never an
 -- input to the risk engine. Companies without a public listing have no row.
@@ -159,3 +162,13 @@ CREATE TABLE IF NOT EXISTS quotes (
   as_of       TEXT NOT NULL    -- ISO timestamp of the fetch
 );
 `);
+
+/* Additive column migrations. SQLite has no "ADD COLUMN IF NOT EXISTS", and an
+   existing committed database predates these, so check before altering. */
+for (const [table, column, ddl] of [
+  ['event_candidates', 'dedupe_key', "ALTER TABLE event_candidates ADD COLUMN dedupe_key TEXT"],
+  ['event_candidates', 'duplicate_of', "ALTER TABLE event_candidates ADD COLUMN duplicate_of TEXT"],
+]) {
+  const has = db.prepare(`PRAGMA table_info(${table})`).all().some((c) => c.name === column);
+  if (!has) db.exec(ddl);
+}

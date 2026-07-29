@@ -48,6 +48,7 @@ import { setMeta, setSnapshotDate, getSnapshotDate } from '../src/meta.js';
 import { fetchEarthquakeCandidates } from '../src/ingest/usgs.mjs';
 import { fetchPolicyCandidates } from '../src/ingest/federal-register.mjs';
 import { fetchNewsCandidates } from '../src/ingest/webz-news.mjs';
+import { findDuplicate, storyKey, WINDOW_DAYS } from '../src/ingest/dedupe.js';
 import { aiAvailable, analyzeCandidate } from '../src/ai/analyze.mjs';
 import { claudeCodeAvailable, analyzeBatchWithClaudeCode } from '../src/ai/analyze-claude-code.mjs';
 
@@ -99,19 +100,44 @@ async function main() {
     }
   }
 
-  const insert = db.prepare(`INSERT INTO event_candidates (id, status, source_feed, source_ref, date_iso, raw_json)
-    VALUES (@id, 'pending', @source_feed, @source_ref, @date_iso, @raw_json)
+  const insert = db.prepare(`INSERT INTO event_candidates (id, status, source_feed, source_ref, date_iso, raw_json, dedupe_key, duplicate_of)
+    VALUES (@id, 'pending', @source_feed, @source_ref, @date_iso, @raw_json, @dedupe_key, NULL)
     ON CONFLICT(source_feed, source_ref) DO NOTHING`);
+  const collapse = db.prepare("UPDATE event_candidates SET status = 'rejected', duplicate_of = ?, ai_notes = ? WHERE id = ?");
+  const flagNear = db.prepare('UPDATE event_candidates SET duplicate_of = ?, ai_notes = ? WHERE id = ?');
+
+  /* Story-level dedupe (src/ingest/dedupe.js): the unique index only catches
+     the same upstream record, so a wire story syndicated across sites arrives
+     as N distinct candidates. Compare against everything recent regardless of
+     status — a story already rejected must not return under a new url. */
+  const recent = () => db.prepare(`SELECT id, date_iso, dedupe_key, json_extract(raw_json, '$.title') AS title
+    FROM event_candidates WHERE date_iso >= date(?, '-${WINDOW_DAYS} days')`).all(UNTIL);
+
   let queued = 0;
+  let collapsed = 0;
+  let flagged = 0;
   for (const c of candidates) {
+    const id = `cand_${c.sourceFeed}_${c.sourceRef}`.replace(/[^\w]/g, '_');
     const info = insert.run({
-      id: `cand_${c.sourceFeed}_${c.sourceRef}`.replace(/[^\w]/g, '_'),
-      source_feed: c.sourceFeed, source_ref: c.sourceRef,
+      id, source_feed: c.sourceFeed, source_ref: c.sourceRef,
       date_iso: c.dateISO, raw_json: JSON.stringify(c.raw),
+      dedupe_key: storyKey(c.raw?.title) || null,
     });
-    if (info.changes > 0) queued++;
+    if (info.changes === 0) continue;
+    const hit = findDuplicate(c, recent().filter((r) => r.id !== id));
+    if (hit?.exact) {
+      // Recorded, not deleted: the reviewer can still see what arrived and why
+      // it was collapsed, and the AI step below skips anything not pending.
+      collapse.run(hit.id, `Auto-collapsed: identical story to ${hit.id}.`, id);
+      collapsed++;
+    } else if (hit) {
+      flagNear.run(hit.id, `Possible duplicate of ${hit.id} - confirm before approving.`, id);
+      flagged++; queued++;
+    } else {
+      queued++;
+    }
   }
-  log(`  ${queued} new candidate(s) queued (${candidates.length - queued} already known)`);
+  log(`  ${queued} new candidate(s) queued (${candidates.length - queued - collapsed} already known, ${collapsed} duplicate(s) collapsed, ${flagged} flagged as possible duplicates)`);
 
   /* ---- 2. AI analysis (optional; proposals only) ------------------------
      Two interchangeable backends, both writing only to the review queue:

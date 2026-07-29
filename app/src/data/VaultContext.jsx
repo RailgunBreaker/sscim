@@ -57,6 +57,13 @@ function buildVaultState(bundle, source) {
   return { status: 'ready', data, engine, source, error: null };
 }
 
+/* Only quotes are polled. Everything else in the vault changes when a human or
+   the pipeline changes it, so re-fetching it on a timer would be churn; market
+   prices move on their own. Quotes are display metadata and never an engine
+   input, so refreshing them cannot alter a score — the engine is deliberately
+   left untouched here rather than rebuilt. */
+const QUOTE_POLL_MS = 60_000;
+
 export function VaultProvider({ children }) {
   const [state, setState] = useState({ status: 'loading', data: null, source: null, error: null });
 
@@ -78,6 +85,25 @@ export function VaultProvider({ children }) {
       });
     return () => { cancelled = true; };
   }, []);
+
+  useEffect(() => {
+    if (state.source !== 'live') return undefined; // static deploy: quotes are as of the last build
+    let cancelled = false;
+    const poll = () => {
+      fetch(`${API_BASE}/api/quotes`)
+        .then((r) => (r.ok ? r.json() : Promise.reject(new Error(`quotes ${r.status}`))))
+        .then((payload) => {
+          if (cancelled || !payload?.quotes) return;
+          setState((prev) => (prev.data
+            ? { ...prev, data: { ...prev.data, QUOTES: payload.quotes, QUOTES_AS_OF: payload.asOf, QUOTES_STALE: payload.stale } }
+            : prev));
+        })
+        .catch(() => { /* keep the quotes already on screen */ });
+    };
+    const timer = setInterval(poll, QUOTE_POLL_MS);
+    poll();
+    return () => { cancelled = true; clearInterval(timer); };
+  }, [state.source]);
 
   const value = useMemo(() => state, [state]);
   return <VaultCtx.Provider value={value}>{children}</VaultCtx.Provider>;

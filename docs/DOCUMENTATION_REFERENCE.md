@@ -14,7 +14,7 @@ Use this index when you need the right document quickly.
 | Add or review events | [Data pipeline](computation-demo/DATA_PIPELINE.md) |
 | See an example calculation | [Computation demo](computation-demo/COMPUTATION_DEMO.md) |
 | See known model gaps | [Model roadmap](MODEL_ROADMAP.md) |
-| Read the validation boundary | [Validation note](validation/MLE_VALIDATION.md) |
+| Read the validation boundary | [Validation note](computation-demo/validation/MLE_VALIDATION.md) |
 
 ## Terms used consistently
 
