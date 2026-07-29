@@ -29,6 +29,8 @@ export const UNCLASSIFIED_ASSUMPTION = Object.freeze({
 });
 
 export const EVENT_ASSUMPTIONS = Object.freeze({
+  p260714_fed4132: Object.freeze({ direction: "mitigating", channel: "downstream", operational: false, reason: "Published: Review: reject cand_webz_news_04f59e01b8bab71dc7c23814c78ec641915d994f" }),
+
   p260728_webef0b: Object.freeze({ direction: "mixed", channel: "upstream", operational: false, reason: "Published: Review: approve p260728_web4420" }),
 
   p260728_web4420: Object.freeze({ direction: "adverse", channel: "downstream", operational: false, reason: "Published: Review: reject cand_webz_news_4ba0c3389095b2f227635e770868fafa9168c58b" }),
