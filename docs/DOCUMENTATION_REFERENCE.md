@@ -1,39 +1,25 @@
 # SSCIM documentation reference
 
-This short reference complements the project README and calculation notes. It is for readers interpreting results, contributors adding evidence, and maintainers publishing updates.
+Use this index when you need the right document quickly.
 
-## Reading a result
-
-Start with the question being asked. A stage, company, or country may be prominent for different reasons:
-
-- **Structural vulnerability** is time-invariant sensitivity in the current model snapshot.
-- **Operational impact** is the modeled effect of a selected event or scenario.
-- **Contribution** is how much a country or company accounts for in an aggregate model effect.
-- **Topology metrics** describe graph position or hypothetical removal sensitivity. They are not automatically risk scores.
-
-Use the explanation, assumptions, confidence label, and source alongside every number. A high value is a prompt for research, not a prediction of a commercial outcome.
-
-## Glossary
-
-| Term | Meaning in SSCIM |
+| Need | Read |
 | --- | --- |
-| Stage | One modeled semiconductor production or end-market function. |
-| Functional centre | A derived `country × stage` entity with a positive country share in the snapshot. |
-| Event | A dated, source-backed disruption record with a human-reviewed classification. |
-| Scenario | A user-created hypothetical input, clearly marked simulated. |
-| Propagation | The model's downstream transmission of a shock through declared stage dependencies. |
-| Prior | A declared parameter or assumption, not a parameter fitted to observed outcomes. |
-| Snapshot | The versioned data export used by the public static site. |
+| Understand the product | [README](README.md) and [Public guide](PUBLIC_GUIDE.md) |
+| Use or change the software | [Developer guide](DEVELOPER_GUIDE.md) |
+| Evaluate the model academically | [Academic guide](ACADEMIC_GUIDE.md) and [Calculation specification](calculation.md) |
+| Understand topology | [Network architecture](NETWORK_ARCHITECTURE.md) |
+| Add or review events | [Data pipeline](computation-demo/DATA_PIPELINE.md) |
+| See an example calculation | [Computation demo](computation-demo/COMPUTATION_DEMO.md) |
+| See known model gaps | [Model roadmap](MODEL_ROADMAP.md) |
+| Read the validation boundary | [Validation note](validation/MLE_VALIDATION.md) |
 
-## Evidence and publishing checklist
+## Terms used consistently
 
-Prefer primary sources: company disclosures, government notices, official incident statements, and original research. Retain the original URL, publication date, and the exact claim the source supports. Record uncertainty instead of filling gaps with inference.
+- **Evidence:** a source-backed statement kept with a URL/date or primary record.
+- **Assumption / prior:** an explicit model choice not fitted to outcome data.
+- **Derived value:** a computation from the snapshot and priors.
+- **Event:** a dated, human-reviewed disruption record.
+- **Scenario:** a hypothetical input, always labeled simulated.
+- **Functional centre:** a derived `country × stage` node in the topology view.
 
-1. Check whether the underlying disruption is already represented in event history.
-2. Confirm the source, date, affected stages, and classification rationale.
-3. Build the static snapshot and run data audits and tests.
-4. Publish only a passing snapshot; keep the last known-good static site available if an audit fails.
-
-## Static availability and live operations
-
-The public dashboard is a static Pages deployment and remains viewable when the maintainer's computer is offline. The review workflow and live administrative API depend on the maintainer's local backend and are intentionally unavailable when that backend is offline.
+When documents disagree, code and `app/src/engine/priors.js` are authoritative for implemented behavior. The static snapshot is authoritative for what the public site currently displays.
