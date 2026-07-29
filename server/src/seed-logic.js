@@ -50,9 +50,11 @@ export const seedAll = db.transaction(() => {
 
   const insEvent = db.prepare(`INSERT INTO events (id, date, days_ago, sev, type, conf, title, summary, first, second, watch, detail, source, stages_json, countries_json, timeline_json)
     VALUES (@id, @date, @days_ago, @sev, @type, @conf, @title, @summary, @first, @second, @watch, @detail, @source, @stages_json, @countries_json, @timeline_json)`);
-  // Historical backfill events (2021–2026) carry an authoritative dateISO;
-  // days_ago is derived from it here, never hand-maintained.
-  const allEvents = [...EVENTS, ...HISTORY_EVENTS.map((e) => ({ ...e, daysAgo: daysAgoOf(e.dateISO) }))];
+  // Every event — sample and historical alike — carries an authoritative
+  // dateISO; days_ago is derived from it here against DATASET_AS_OF, never
+  // hand-maintained. (scripts/sync-events.mjs re-derives it in place for an
+  // already-populated vault, e.g. after advancing the snapshot date.)
+  const allEvents = [...EVENTS, ...HISTORY_EVENTS].map((e) => ({ ...e, daysAgo: daysAgoOf(e.dateISO) }));
   for (const e of allEvents) {
     insEvent.run({
       id: e.id, date: e.date, days_ago: e.daysAgo, sev: e.sev, type: e.type, conf: e.conf,

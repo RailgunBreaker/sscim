@@ -143,8 +143,10 @@ Events carry severity, confidence (High/Medium/Low), age in days, affected stage
 
 The event table has two provenance tiers:
 
-- **6 current-window sample events** (`e1`–`e6`, `server/src/seed-data.js`) — illustrative, dated around the frozen snapshot date; these drive the *current* chain index.
-- **36 historical backfill events** (`h2102_uri` … `h2606_mpban`, `server/src/history-events.js`) — real, sourced events from Feb 2021 to Jun 2026 (Winter Storm Uri, the Renesas fire, the Oct 7 2022 BIS controls, China's Ga/Ge and rare-earth controls, the Nexperia crisis, the 2025–26 memory shortage, …). Each carries an authoritative `dateISO` from which `days_ago` is *derived* at seed/backfill time, a source citation, and a hand-curated semantic classification in `app/src/engine/event-assumptions.js`. Because the engine's 12-day half-life decays them to ~0 by the snapshot date, they contribute nothing to the *current* index — they exist to make the computed multi-year history (§4.12) real.
+- **6 illustrative sample events** (`e1`–`e6`, `server/src/seed-data.js`) — dated late Jun / early Jul 2026.
+- **38 real, sourced events** (`h2102_uri` … `h2607_kumamoto`, `server/src/history-events.js`) — Feb 2021 through Jul 2026 (Winter Storm Uri, the Renesas Naka fire, the Oct 7 2022 BIS controls, China's Ga/Ge and rare-earth regimes, the Nexperia crisis, the 2025–26 memory shortage, the Jul 2026 M7.1 Kumamoto earthquake, …). Each carries a source citation and a hand-curated semantic classification in `app/src/engine/event-assumptions.js`.
+
+**Every event is date-authoritative.** Both tiers carry an ISO `dateISO`, and `days_ago` is *derived* from it against `MODEL_PRIORS.datasetAsOf` — never hand-maintained. Advancing the snapshot date therefore re-ages the entire table and recomputes every index and the whole index history in one step (§6.6). Because of the 12-day half-life, only events within roughly the last two months move the *current* index; older ones shape the multi-year history (§4.12).
 
 ### 3.7 Shareholder table (sample)
 
@@ -257,7 +259,7 @@ The same information ships inside the product (ⓘ Methodology, which renders a 
 | $\phi$ (`specificityFloor`) | residual transmission of a fully substitutable input | 0.25 | declared prior [D] |
 | $\tau$ (`contributionTolerance`) | propagation truncation threshold (replaces a hop cutoff) | $10^{-4}$ | declared prior [D] |
 | $w_{\text{ni}},w_{\text{geo}},w_{\text{pol}},w_{\text{subst}},w_{\text{shock}},w_{\text{mkt}}$ | structural-vulnerability component weights | .25/.20/.20/.15/.10/.10 | declared prior [D]; renormalized after excluding the event term |
-| `datasetAsOf` | the frozen snapshot date all event ages are measured against | 2026-07-06 | declared — a snapshot, never the visitor's clock |
+| `datasetAsOf` | the frozen snapshot date all event ages are measured against | 2026-07-29 | declared — a snapshot, never the visitor's clock |
 | $\text{sev}$ (per event) | realized-scale magnitude judgment, 1–10 | per event | hand-curated against each event's cited sources [B/C] (`events.source`) |
 | sign / channel / operational (per event) | adverse vs mitigating; downstream/upstream/both; counts toward the scored index | per event id | hand-curated lookup [D] in `app/src/engine/event-assumptions.js` — never inferred from prose |
 | $\text{age}$ (per event) | days before `datasetAsOf`; historical events derive it from authoritative `dateISO` | per event | `events.days_ago`, computed at seed/backfill time |
@@ -384,7 +386,16 @@ edit sscim.db  →  npm run snapshot (app/)  →  commit .db  →  push  →  Pa
 
 2. **Direct SQL** for bulk edits: `sqlite3 server/data/sscim.db` (schema in `server/src/db.js`; nested per-entity attributes live in `*_json` columns, true many-to-many edges in real tables).
 
-3. **The curated history dataset.** Real 2021–2026 events live as *code* in `server/src/history-events.js`; after editing it run `node scripts/backfill-history.mjs` (from `server/`) to upsert them into the live DB without touching other rows. New event ids must also be classified in `app/src/engine/event-assumptions.js` — an unclassified id is displayed but excluded from the scored index by design.
+3. **The curated event dataset.** Real 2021–2026 events live as *code* in `server/src/history-events.js` (the illustrative samples in `server/src/seed-data.js`); after editing either, run `node scripts/sync-events.mjs` (from `server/`) to upsert them into the live DB — it re-derives every `days_ago` from `dateISO` and never touches rows that aren't defined in code. New event ids must also be classified in `app/src/engine/event-assumptions.js` — an unclassified id is displayed but excluded from the scored index by design.
+
+**Rolling the snapshot forward (re-dating the whole model).** The dataset is a frozen snapshot, so "updating to today" is an explicit, reproducible step rather than a live clock:
+
+1. add any new events to `server/src/history-events.js` with their real `dateISO` + sources, and classify each new id in `event-assumptions.js`;
+2. set the new date in **both** `server/src/history-events.js` (`DATASET_AS_OF`) and `app/src/engine/priors.js` (`datasetAsOf`) — they must match;
+3. `cd server && node scripts/sync-events.mjs` (re-ages every event) `&& node scripts/fetch-quotes.mjs` (refresh prices/PE);
+4. `cd ../app && npm run snapshot && npm run audit:data && npm test`.
+
+Every index — chain index, movers, per-stage operational scores, the full multi-year history — recomputes from the re-aged table automatically; no scores are stored, so nothing has to be migrated. Also update the dataset date shown on the landing page (`app/src/landing/i18n.js`, all four languages).
 
 **Then publish:** run `npm run snapshot` in `app/` — it regenerates `app/src/data/vault-snapshot.json` from the DB (via the same `server/src/bundle.js` the live API uses, so shapes are byte-identical) *and* checkpoints the SQLite WAL so the `.db` file on disk is complete. Commit `server/data/sscim.db` (plus `history-events.js` / `event-assumptions.js` if you touched them) and push; the Pages workflow (`.github/workflows/static.yml`) installs server deps, re-runs the export from your committed DB, audits it (`npm run audit:data` — fails the build on dangling stage/country references, non-finite values, out-of-range shares), tests, builds, and deploys.
 
@@ -482,7 +493,8 @@ All three public pages — the landing page, the guide, and the dashboard — ar
     │   ├── routes/public.js  GET endpoints (including GET /api/bundle)
     │   ├── routes/admin.js   bearer-token-authenticated writes (PUT/POST/DELETE)
     │   └── index.js          Express app
-    ├── scripts/backfill-history.mjs   upserts history-events.js into an already-populated DB
+    ├── scripts/sync-events.mjs        upserts all code-defined events, re-deriving each age from dateISO
+    ├── scripts/fetch-quotes.mjs       refreshes the quotes table (price / P/E) from Yahoo Finance
     └── package.json
 ```
 

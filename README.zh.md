@@ -124,14 +124,16 @@ SSCIM构建为**基于同一计算引擎的三个同步图层**。在任一图�
 
 每项政策都带有一个严重度（0–10）及受影响阶段列表，例如`{ id: "bis", sev: 9, stages: ["logic_ai","hbm","adv_fab","litho","depo","etch","metro"] }`。每个阶段的政策风险敞口均由该表计算得出，而非人工设定。
 
-### 3.6 事件（42个：6个当前窗口示例 + 36个带来源的真实历史事件）与情景（3个预设+无限自定义）
+### 3.6 事件（44个：6个示例事件 + 38个带来源的真实事件）与情景（3个预设+无限自定义）
 
 事件带有严重度、置信度（高/中/低）、事件天数、受影响的阶段/国家、一阶/二阶影响文本、背景段落、来源引用，以及带日期的时间线。情景则向同一引擎注入一个模拟事件（严重度、阶段、`conf: "Simulated"`、`daysAgo: 0`）——包括用户通过应用内情景构建器自建的自定义情景。
 
 事件表按数据出处分为两层：
 
-- **6个当前窗口示例事件**（`e1`–`e6`，`server/src/seed-data.js`）——围绕冻结快照日期的示意性事件，驱动*当前*链指数。
-- **36个真实历史事件**（`h2102_uri` … `h2606_mpban`，`server/src/history-events.js`）——2021年2月至2026年6月的真实事件（得州冬季风暴、瑞萨火灾、2022年10月7日BIS出口管制、中国镓/锗与稀土管制、Nexperia危机、2025–26内存紧缺等）。每个事件带有权威的 `dateISO`（`days_ago` 在播种/回填时由其*推导*，从不手工维护）、来源引用，以及 `app/src/engine/event-assumptions.js` 中人工标注的语义分类。由于引擎的12天半衰期，它们到快照日期时衰减至约0——对*当前*指数没有贡献，其存在是为了让多年计算历史（英文版 §4.12）建立在真实数据之上。
+- **6个示例事件**（`e1`–`e6`，`server/src/seed-data.js`）——日期在2026年6月末至7月初。
+- **38个带来源的真实事件**（`h2102_uri` … `h2607_kumamoto`，`server/src/history-events.js`）——2021年2月至2026年7月的真实事件（得州冬季风暴、瑞萨那珂火灾、2022年10月7日BIS出口管制、中国镓/锗与稀土管制、Nexperia危机、2025–26内存紧缺、2026年7月熊本M7.1地震等）。每个事件带有来源引用，以及 `app/src/engine/event-assumptions.js` 中人工标注的语义分类。
+
+**所有事件均以日期为准。** 两层事件都带有 ISO 格式的 `dateISO`，`days_ago` 由其相对 `MODEL_PRIORS.datasetAsOf` *推导*得出——从不手工维护。因此只要推进快照日期，整张表即自动重新计龄，所有指数与多年指数历史随之一次性重算（§6.6）。由于12天半衰期，能影响*当前*指数的基本只有最近约两个月内的事件，更早的事件则塑造多年历史曲线。
 
 ### 3.7 股东表（示例）
 
@@ -154,7 +156,7 @@ SSCIM构建为**基于同一计算引擎的三个同步图层**。在任一图�
 | $\phi$（`specificityFloor`） | 完全可替代投入仍保留的传导下限 | 0.25 | 申明先验 [D] |
 | $\tau$ | 传播截断阈值（取代固定跳数） | $10^{-4}$ | 申明先验 [D] |
 | 结构脆弱度权重 | choke/geo/policy/subst/shock/market | .25/.20/.20/.15/.10/.10 | 申明先验 [D] |
-| `datasetAsOf` | 所有事件年龄的冻结基准日期 | 2026-07-06 | 申明——从不使用访问者时钟 |
+| `datasetAsOf` | 所有事件年龄的冻结基准日期 | 2026-07-29 | 申明——从不使用访问者时钟 |
 | $\text{sev}$（每事件） | 已实现规模的量级判断，1–10 | 每事件 | 对照各事件引用来源 [B/C] 人工设定 |
 | 方向/通道/operational | 不利或缓解、传播方向、是否计入综合分 | 按 id | `event-assumptions.js` 人工对照表 [D]——绝不由文本推断 |
 | $v_n$（`stages.value`） | 环节年度经济价值（US$B） | 每环节 | 细分市场规模估计 [B: SIA/WSTS、SEMI、Gartner级] |
@@ -335,7 +337,16 @@ $$\text{ChainIndex}(t) = \frac{\sum_n \text{total}(\text{stage}_n, \text{shock}_
 
 1. **管理 API（零散修改推荐）。** 本地启动后端（`cd server && cp .env.example .env`（设置真实 `ADMIN_TOKEN`）`&& npm ci && npm run dev` → `http://localhost:8787`），用 Bearer 令牌鉴权写入。完整接口（`server/src/routes/admin.js`）：`PUT/DELETE /api/admin/companies/:id`、`PUT /api/admin/stages/:id`（仅更新——环节是 DAG 的结构节点）、`PUT/DELETE /api/admin/customers/:supplierId/:customerId`、`PUT/DELETE /api/admin/owners/:companyId/:ownerName`、`POST/PUT/DELETE /api/admin/events[/:id]`、`POST /api/admin/data-notes`。读取端点与各表一一对应，另有 `GET /api/bundle` 一次取全。
 2. **直接 SQL**（批量修改）：`sqlite3 server/data/sscim.db`（模式见 `server/src/db.js`）。
-3. **精编历史数据集。** 2021–2026 真实事件以代码形式存于 `server/src/history-events.js`；编辑后在 `server/` 下运行 `node scripts/backfill-history.mjs` upsert 到现有数据库。新事件 id 还须在 `app/src/engine/event-assumptions.js` 登记分类——未分类 id 只展示、不计分（设计如此）。
+3. **精编事件数据集。** 2021–2026 真实事件以代码形式存于 `server/src/history-events.js`（示例事件在 `server/src/seed-data.js`）；编辑后在 `server/` 下运行 `node scripts/sync-events.mjs` upsert 到现有数据库——它会依据 `dateISO` 重新推导每个 `days_ago`，且不触碰代码未定义的行。新事件 id 还须在 `app/src/engine/event-assumptions.js` 登记分类——未分类 id 只展示、不计分（设计如此）。
+
+**推进快照日期（对整个模型重新计龄）。** 数据集是冻结快照，因此"更新到今天"是一个明确、可复现的步骤，而非依赖实时时钟：
+
+1. 将新事件连同真实 `dateISO` 与来源加入 `server/src/history-events.js`，并在 `event-assumptions.js` 中为新 id 登记分类；
+2. 在 `server/src/history-events.js`（`DATASET_AS_OF`）与 `app/src/engine/priors.js`（`datasetAsOf`）**两处**设置新日期（必须一致）；
+3. `cd server && node scripts/sync-events.mjs`（重新计龄全部事件）`&& node scripts/fetch-quotes.mjs`（刷新股价与 P/E）；
+4. `cd ../app && npm run snapshot && npm run audit:data && npm test`。
+
+链指数、7日变动、各环节运营分数、多年历史在内的所有指数，都会基于重新计龄后的事件表自动重算。系统不存储任何分数，因此无需迁移。此外还需更新落地页显示的数据基准日（`app/src/landing/i18n.js`，四种语言）。
 
 **发布：** 在 `app/` 运行 `npm run snapshot`——从数据库重新生成 `vault-snapshot.json`（经由与线上 API 相同的 `server/src/bundle.js`，数据形状逐字节一致），并对 SQLite WAL 做检查点使 `.db` 文件完整。提交 `server/data/sscim.db`（及改动过的文件）并 push；Pages 工作流（`.github/workflows/static.yml`）会安装服务端依赖、从提交的数据库重新导出、审计（`npm run audit:data`——悬空引用/非有限值/越界份额会使构建失败）、测试、构建并部署。
 

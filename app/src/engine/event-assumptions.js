@@ -101,6 +101,8 @@ export const EVENT_ASSUMPTIONS = Object.freeze({
   h2604_match:     Object.freeze({ direction: 'adverse', channel: 'downstream', operational: false, reason: 'Introduced bill — no realized supply change unless enacted.' }),
   h2606_subs:      Object.freeze({ direction: 'adverse', channel: 'downstream', operational: true,  reason: 'Realized closure of the offshore-subsidiary accelerator channel.' }),
   h2606_mpban:     Object.freeze({ direction: 'adverse', channel: 'downstream', operational: true,  reason: 'Realized blacklist cutting Chinese inputs to U.S. REE producers.' }),
+  h2607_tsmcq2:    Object.freeze({ direction: 'mixed', channel: 'downstream', operational: false, reason: 'Demand-strength/earnings signal, not a change in physical supply; market reaction was mixed.' }),
+  h2607_kumamoto:  Object.freeze({ direction: 'adverse', channel: 'both', operational: true,  reason: 'Realized multi-site production halt (Sony CIS, Renesas MCU, JASM) with damage confirmed — an operational loss, not a hazard signal; upstream channel included because Toyota\'s assembly suspension cuts demand back through the auto chip chain.' }),
 
   // Bundled scenario presets (see server seed-data SCENARIOS) and the
   // in-app custom scenario builder, which — absent an explicit direction

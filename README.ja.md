@@ -124,14 +124,16 @@ SSCIMは**一つの計算エンジンの上に構築された三つの同期レ�
 
 各政策は深刻度(0〜10)と影響を受けるステージのリストを持つ。例: `{ id: "bis", sev: 9, stages: ["logic_ai","hbm","adv_fab","litho","depo","etch","metro"] }`。ステージごとの政策エクスポージャーはこのテーブルから計算され、手動設定されない。
 
-### 3.6 イベント(42件: 現在ウィンドウのサンプル6件 + 出典付き実在イベント36件)とシナリオ(プリセット3件+カスタム無制限)
+### 3.6 イベント(44件: 例示用サンプル6件 + 出典付き実在イベント38件)とシナリオ(プリセット3件+カスタム無制限)
 
 イベントは、深刻度、確信度(高/中/低)、経過日数、影響を受けるステージ/国、一次/二次効果のテキスト、背景段落、出典、日付付きタイムラインを持つ。シナリオは、シミュレートされたイベント(深刻度、ステージ、`conf: "Simulated"`、`daysAgo: 0`)を同一のエンジンに注入する——アプリ内シナリオビルダーによるユーザー作成のカスタムシナリオも含む。
 
 イベントテーブルは出所の異なる二層で構成される:
 
-- **現在ウィンドウのサンプル6件** (`e1`–`e6`、`server/src/seed-data.js`) — 凍結スナップショット日付前後に配置された例示用イベント。*現在の*チェーン指数を駆動する。
-- **実在の歴史イベント36件** (`h2102_uri` … `h2606_mpban`、`server/src/history-events.js`) — 2021年2月〜2026年6月の実際の出来事(ウィンターストーム・ウリ、ルネサス火災、2022年10月7日のBIS輸出規制、中国のGa/Ge・レアアース規制、Nexperia危機、2025–26年メモリ逼迫など)。各イベントは正準の `dateISO`(そこから `days_ago` をシード/バックフィル時に*導出*)、出典引用、および `app/src/engine/event-assumptions.js` の人手による意味分類を持つ。エンジンの12日半減期によりスナップショット日付までに〜0へ減衰するため、*現在の*指数には寄与しない——複数年の計算履歴(英語版 §4.12)を実データにするために存在する。
+- **例示用サンプル6件** (`e1`–`e6`、`server/src/seed-data.js`) — 2026年6月末〜7月初の日付。
+- **出典付き実在イベント38件** (`h2102_uri` … `h2607_kumamoto`、`server/src/history-events.js`) — 2021年2月〜2026年7月の実際の出来事(ウィンターストーム・ウリ、ルネサス那珂火災、2022年10月7日のBIS輸出規制、中国のGa/Ge・レアアース規制、Nexperia危機、2025–26年メモリ逼迫、2026年7月のM7.1熊本地震など)。各イベントは出典引用と `app/src/engine/event-assumptions.js` の人手による意味分類を持つ。
+
+**全イベントが日付起点。** 両層とも ISO の `dateISO` を持ち、`days_ago` は `MODEL_PRIORS.datasetAsOf` に対してそこから*導出*される——手動管理はしない。したがってスナップショット日付を進めるだけでテーブル全体が再計齢され、全指数と複数年の指数履歴が一括で再計算される(§6.6)。12日半減期のため、*現在の*指数を動かすのは概ね直近2か月以内のイベントのみで、それ以前は複数年履歴を形づくる。
 
 ### 3.7 株主テーブル(サンプル)
 
@@ -154,7 +156,7 @@ SSCIMは**一つの計算エンジンの上に構築された三つの同期レ�
 | $\phi$ (`specificityFloor`) | 完全代替可能な投入でも残る伝達下限 | 0.25 | 宣言事前値 [D] |
 | $\tau$ | 伝播打ち切り閾値(固定ホップ数の代替) | $10^{-4}$ | 宣言事前値 [D] |
 | 構造脆弱性ウェイト | choke/geo/policy/subst/shock/market | .25/.20/.20/.15/.10/.10 | 宣言事前値 [D] |
-| `datasetAsOf` | 全イベント年齢の基準となる凍結日付 | 2026-07-06 | 宣言 — 訪問者の時計は不使用 |
+| `datasetAsOf` | 全イベント年齢の基準となる凍結日付 | 2026-07-29 | 宣言 — 訪問者の時計は不使用 |
 | $\text{sev}$ (イベント別) | 実現規模の判断、1–10 | イベント別 | 各イベントの引用出典 [B/C] に照らして人手設定 |
 | 方向/チャネル/operational | 有害か緩和か、伝播方向、総合スコア算入可否 | id 別 | `event-assumptions.js` の人手対照表 [D] — 文章から推測しない |
 | $v_n$ (`stages.value`) | ステージの年間経済価値(US$B) | ステージ別 | セグメント規模推計 [B: SIA/WSTS、SEMI、Gartner級] |
@@ -335,7 +337,16 @@ sscim.db を編集 → npm run snapshot (app/) → .db をコミット → push 
 
 1. **管理 API(単発の編集に推奨)。** ローカルでバックエンドを起動(`cd server && cp .env.example .env`(実際の `ADMIN_TOKEN` を設定)`&& npm ci && npm run dev` → `http://localhost:8787`)し、Bearer トークン認証付きで書き込む。全エンドポイント(`server/src/routes/admin.js`): `PUT/DELETE /api/admin/companies/:id`、`PUT /api/admin/stages/:id`(更新のみ — ステージは DAG の構造ノード)、`PUT/DELETE /api/admin/customers/:supplierId/:customerId`、`PUT/DELETE /api/admin/owners/:companyId/:ownerName`、`POST/PUT/DELETE /api/admin/events[/:id]`、`POST /api/admin/data-notes`。読み取りは各テーブルのミラー + `GET /api/bundle`。
 2. **SQL 直接編集**(一括変更): `sqlite3 server/data/sscim.db`(スキーマは `server/src/db.js`)。
-3. **キュレーション済み歴史データセット。** 2021–2026年の実在イベントは `server/src/history-events.js` にコードとして存在。編集後は `server/` から `node scripts/backfill-history.mjs` で既存 DB に upsert する。新しいイベント id は `app/src/engine/event-assumptions.js` にも分類を登録すること——未分類 id は表示のみでスコア除外(仕様)。
+3. **キュレーション済みイベントデータセット。** 2021–2026年の実在イベントは `server/src/history-events.js` に(例示用サンプルは `server/src/seed-data.js` に)コードとして存在。編集後は `server/` から `node scripts/sync-events.mjs` で既存 DB に upsert する——各 `days_ago` を `dateISO` から再導出し、コード定義外の行には触れない。新しいイベント id は `app/src/engine/event-assumptions.js` にも分類を登録すること——未分類 id は表示のみでスコア除外(仕様)。
+
+**スナップショットを進める(モデル全体の再計齢)。** データセットは凍結スナップショットのため、「今日時点への更新」はライブ時計ではなく明示的で再現可能な手順として行う:
+
+1. 新しいイベントを実際の `dateISO` と出典付きで `server/src/history-events.js` に追加し、新 id を `event-assumptions.js` に分類登録する;
+2. `server/src/history-events.js` の `DATASET_AS_OF` と `app/src/engine/priors.js` の `datasetAsOf` の**両方**に新しい日付を設定する(必ず一致させる);
+3. `cd server && node scripts/sync-events.mjs`(全イベント再計齢)`&& node scripts/fetch-quotes.mjs`(株価・P/E更新);
+4. `cd ../app && npm run snapshot && npm run audit:data && npm test`。
+
+チェーン指数・ムーバー・ステージ別運用スコア・複数年履歴を含むすべての指数が、再計齢されたテーブルから自動的に再計算される。スコアは保存されないため移行作業は不要。ランディングページに表示されるデータ基準日(`app/src/landing/i18n.js`、4言語すべて)も更新すること。
 
 **公開:** `app/` で `npm run snapshot` を実行 — DB から `vault-snapshot.json` を再生成(ライブ API と同じ `server/src/bundle.js` 経由なのでデータ形状はバイト単位で一致)し、SQLite WAL をチェックポイントして `.db` ファイルを完全な状態にする。`server/data/sscim.db`(+触ったファイル)をコミットして push すると、Pages ワークフロー(`.github/workflows/static.yml`)がサーバー依存をインストールし、コミット済み DB から再書き出し、監査(`npm run audit:data` — 参照切れ・非有限値・範囲外シェアでビルド失敗)、テスト、ビルド、デプロイを行う。
 

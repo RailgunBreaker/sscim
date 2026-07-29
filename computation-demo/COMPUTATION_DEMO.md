@@ -1,6 +1,6 @@
 # SSCIM — Step-by-Step Computation Demonstration
 
-**Generated:** 2026-07-12, by running the actual engine (`app/src/engine/`) against the actual frozen snapshot (`app/src/data/vault-snapshot.json`, dataset as-of **2026-07-06**).
+**Generated:** 2026-07-12, by running the actual engine (`app/src/engine/`) against the actual frozen snapshot (`app/src/data/vault-snapshot.json`, dataset as-of **2026-07-29**).
 Every number in this document is the engine's real output (or a hand-recomputation of it shown digit-for-digit) — nothing is illustrative or rounded away from what the code produces.
 
 **All data referenced here is exported as CSV in [`csv/`](csv/)** — see §6 for the file index. Machine-readable worked-example values are in [`worked-example.json`](worked-example.json).
@@ -57,7 +57,7 @@ The dataset is a **frozen, curated demonstration snapshot**, not a live feed:
 | `upstreamTransmission` (f↑) | **0.30** | Buyer→supplier revenue-echo coefficient in matrix U. Declared prior. |
 | `specificityFloor` (φ) | **0.25** | Floor of the specificity multiplier — a fully substitutable input still transmits 25% of the base effect. Declared prior. |
 | `contributionTolerance` (τ) | **1e-4** | Propagation truncates once a contribution's magnitude falls below τ (instead of a fixed hop count). |
-| `datasetAsOf` | **2026-07-06** | Frozen snapshot date; every event `daysAgo` is relative to this, never the visitor's clock. |
+| `datasetAsOf` | **2026-07-29** | Frozen snapshot date; every event `daysAgo` is relative to this, never the visitor's clock. |
 | `componentWeights` | choke 0.25, geo 0.20, policy 0.20, subst 0.15, shock 0.10, market 0.10 | Raw structural-score weights. `shock` is dropped (event-driven, not structural) and the rest renormalized — see Step 6. |
 | Sensitivity presets | low = base × 0.7, high = base × 1.3 | Applied to f↓, f↑, H only — a deterministic sensitivity envelope, **not** a confidence interval. |
 
@@ -70,7 +70,7 @@ Every value in the table above lives in one frozen object, `MODEL_PRIORS` (`app/
 - **`upstreamTransmission = 0.30`** — the demand echo (buyer disrupted → supplier loses orders) is set at roughly half the downstream strength, encoding the judgment that a supplier can redirect output more easily than a buyer can re-qualify a missing input.
 - **`specificityFloor = 0.25`** — even a "fully substitutable" input transmits 25% of the base effect, because switching suppliers is never free or instant. Also a safety property: it prevents `subst = 0` from silently severing an edge.
 - **`contributionTolerance = 1e-4`** — purely numerical, not a modeling claim: once a propagated contribution falls below 0.01% of a unit shock it cannot visibly move any 0–10 score, so propagation stops there instead of chasing infinite tails.
-- **`datasetAsOf = 2026-07-06`** — an editorial choice: the date the curated snapshot was frozen. All decay arithmetic keys off it (never the visitor's clock) so every result is reproducible.
+- **`datasetAsOf = 2026-07-29`** — an editorial choice: the date the curated snapshot was frozen. All decay arithmetic keys off it (never the visitor's clock) so every result is reproducible.
 - **`componentWeights`** — a **rank-ordering judgment** about what drives structural fragility: network position (0.25) first; geographic concentration and policy exposure tied next (0.20 each); substitutability (0.15); market sensitivity and the event term last (0.10 each). The *ordering* is the substantive claim — the exact values are round numbers. The event term (`shock`) is then dropped from the structural score entirely (events belong to the operational layer) and the rest renormalized (Step 7).
 - **Sensitivity presets (±30%)** — a symmetric, admittedly arbitrary band applied to the three most influential priors (f↓, f↑, H). It exists *because* the above are uncalibrated: the envelope shows how far the headline number moves if the guesses are 30% off in either direction.
 
@@ -125,7 +125,7 @@ Each policy = `{severity 0–10, affected stages}`; collected from official rule
 
 ### 2.4 Events — 6 in the snapshot (CSV: `06_events.csv`)
 
-Each event carries severity (0–10), `daysAgo` (relative to 2026-07-06), confidence (metadata only — **never** multiplied into magnitude), affected stages, and a **hand-curated semantic assumption** (`event-assumptions.js`): direction (adverse/mitigating/mixed), channel (downstream/upstream/both), and whether it counts toward the scored operational aggregate.
+Each event carries severity (0–10), `daysAgo` (relative to 2026-07-29), confidence (metadata only — **never** multiplied into magnitude), affected stages, and a **hand-curated semantic assumption** (`event-assumptions.js`): direction (adverse/mitigating/mixed), channel (downstream/upstream/both), and whether it counts toward the scored operational aggregate.
 
 | id | Title | sev | daysAgo | Stages | Direction | Channel | Operational? |
 |---|---|---|---|---|---|---|---|
@@ -473,7 +473,7 @@ server/src/seed-data.js            hand-curated tables (the manual research pass
   │                                SIA/BCG/CSET — citations for headline figures in
   │                                server/src/data-notes.js; the rest Tier-D analyst judgment)
   └─ app/scripts/build-vault-snapshot.mjs
-       └─ app/src/data/vault-snapshot.json     frozen input snapshot (asOf 2026-07-06)
+       └─ app/src/data/vault-snapshot.json     frozen input snapshot (asOf 2026-07-29)
             └─ buildEngine(snapshot)           executed for this demonstration
                  └─ computation-demo/csv/*.csv
 ```

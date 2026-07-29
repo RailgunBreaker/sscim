@@ -270,7 +270,7 @@ export default function Methodology({ onClose }) {
             [<code>customers</code>, "supplier→customer revenue-share relationships", "243 rows", "company filings & disclosed customer concentration [C], supplemented by trade-press estimates [B] — top customers only, sums <100% by design"],
             [<code>owners</code>, "major-shareholder stakes", "75 rows", "public filings [C: 13F, annual reports, exchange disclosures]"],
             [<code>policies</code>, "policy instruments with severity and touched stages", "7 rows", "official rule texts [C: BIS, METI, MOFCOM, EU]; severity is analyst judgment [D]"],
-            [<code>events</code>, "6 current-window sample events + 36 real 2021–2026 historical events (sev, stages, countries, sources, timeline)", "42 rows", "historical set: real, dated, per-event source citations [B/C] (server/src/history-events.js); current-window set: illustrative sample"],
+            [<code>events</code>, "6 illustrative samples + 38 real 2021–2026 events (sev, stages, countries, sources, timeline). Every row is date-authoritative: ages derive from dateISO against the snapshot date", "44 rows", "real set: dated, per-event source citations [B/C] (server/src/history-events.js); severity is a curated judgment [D]"],
             [<code>data_notes</code>, "the per-datum citation trail behind headline figures", "grows over time", "each note names its scope (company:tsmc, stage:litho), evidence tier, and source"],
             [<code>quotes</code>, "market price, day change, trailing/forward P/E per listed company", "92 rows", "Yahoo Finance batch quotes via a curated ticker map (server/src/tickers.js), refreshed each build + daily — display metadata ONLY, never a model input"],
           ]} />

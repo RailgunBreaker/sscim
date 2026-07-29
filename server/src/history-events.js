@@ -16,7 +16,10 @@
    - stages/countries must reference existing vault ids (audit-enforced).
    ==================================================================== */
 
-export const DATASET_AS_OF = '2026-07-06';
+/* The frozen snapshot date. Advancing it re-ages EVERY event automatically
+   (all ages derive from dateISO), so the whole index history recomputes —
+   keep it in sync with app/src/engine/priors.js `datasetAsOf`. */
+export const DATASET_AS_OF = '2026-07-29';
 
 export function daysAgoOf(dateISO, asOf = DATASET_AS_OF) {
   return Math.round((Date.parse(asOf) - Date.parse(dateISO)) / 86400000);
@@ -413,6 +416,28 @@ export const HISTORY_EVENTS = [
     detail: 'The June 1, 2026 clarification states license requirements follow Chinese ownership rather than shipment geography — targeting rerouted accelerator deployments through third-country subsidiaries.',
     source: 'Commerce notice + Al Jazeera (Jun 1, 2026)',
     timeline: [['Jun 1, 2026', 'Clarification issued']] },
+
+  { id: 'h2607_tsmcq2', dateISO: '2026-07-16', date: 'Jul 16, 2026', sev: 4, type: 'Company Guidance', conf: 'High',
+    title: 'TSMC Q2 beats as H1 revenue rises 35.6%',
+    summary: 'Q2 revenue tops the high end of guidance ($40.2B); June sales up 67.9% YoY, H1 2026 revenue NT$2.4T (~$75B).',
+    stages: ['adv_fab', 'adv_pkg', 'logic_ai', 'm_ai'], countries: ['tw'],
+    first: 'Leading-edge and advanced-packaging utilization stay effectively sold out; no supply relief signal.',
+    second: 'Confirms AI demand is pulling, not pushing — capacity remains the binding constraint into 2027; broad chip equities fell on the print despite the beat.',
+    watch: 'CoWoS capacity adds · N2 ramp commentary · 2027 capex guidance',
+    detail: 'Reported July 16, 2026. The beat is a demand-strength signal rather than an operational supply change: it tightens the interpretation of existing advanced-node and packaging constraints without altering physical capacity in the current period. Market reaction was mixed (chip stocks fell on the report), which is why this is displayed but excluded from the scored operational aggregate.',
+    source: 'TSMC investor disclosures + CNBC/Forbes coverage (Jul 13 & 16, 2026)',
+    timeline: [['Jul 13, 2026', 'June revenue +67.9% YoY reported'], ['Jul 16, 2026', 'Q2 results exceed high-end guidance']] },
+
+  { id: 'h2607_kumamoto', dateISO: '2026-07-28', date: 'Jul 28, 2026', sev: 7, type: 'Natural Disaster', conf: 'High',
+    title: 'M7.1 Kumamoto earthquake halts Japan chip-hub fabs',
+    summary: 'Maximum-intensity-7 quake in Kyushu stops Sony image-sensor, Renesas MCU and TSMC/JASM production; Toyota suspends most Japanese assembly plants.',
+    stages: ['mature_fab', 'analog', 'm_auto', 'm_consumer'], countries: ['jp'],
+    first: 'Sony Semiconductor Kumamoto (a principal global CMOS image-sensor site) remains shut with damage under assessment and no restart date; two Renesas Kumamoto plants suspended after cracks, water leaks and fallen ceiling panels; JASM evacuated and is resuming after passing structural inspection.',
+    second: 'Image-sensor and automotive-MCU allocations tighten into Q3; Toyota\'s nationwide assembly suspension propagates to the auto chip demand side; renewed scrutiny of the Kyushu ("Silicon Island") concentration that Japan\'s fab build-out has deliberately deepened.',
+    watch: 'Sony restart timeline & damage assessment · Renesas equipment qualification · JASM utilization recovery · aftershock activity · Toyota plant restarts',
+    detail: 'The quake struck at 16:27 JST on July 28, 2026, registering the maximum 7 on Japan\'s seismic intensity scale in Uki City and Hikawa Town, with at least 13 deaths and a partially collapsed shopping mall. Fab outcomes diverge sharply by site and are the reason this scores as a realized operational shock rather than a hazard signal: TSMC\'s JASM (intensity 5+ at Kikuyo) confirmed structural integrity and is gradually resuming, with construction on the second fab paused for aftershock safety; Sony\'s Kumamoto Technology Center is still down with building and production-line damage being evaluated and no resumption timeline (its Nagasaki, Oita and Kagoshima sites are undamaged); Renesas suspended two Kumamoto plants pending equipment inspection. Magnitude here reflects a partial, days-to-weeks outage at a concentrated cluster, not a total loss — it should be revised as restart dates firm up.',
+    source: 'Sony Semiconductor Solutions official status notice (Jul 29, 2026) + TSMC statements + Nikkei Asia / Japan Times / CNN / DigiTimes reporting',
+    timeline: [['Jul 28, 2026 16:27 JST', 'M7.1 strikes Kumamoto; JASM, Sony, Renesas evacuate and halt'], ['Jul 28, 2026', 'Toyota suspends most Japanese assembly plants'], ['Jul 29, 2026', 'JASM confirms structural integrity, gradually resumes; Sony Kumamoto remains shut, damage under assessment'], ['Pending', 'Sony/Renesas restart timelines — event severity to be revised as they firm up']] },
 
   { id: 'h2606_mpban', dateISO: '2026-06-22', date: 'Jun 22, 2026', sev: 5, type: 'Critical Material Risk', conf: 'High',
     title: 'China blacklists U.S. rare-earth champions',

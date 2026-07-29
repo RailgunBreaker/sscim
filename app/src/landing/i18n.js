@@ -11,10 +11,10 @@ export const T = {
   launchDemo: { en: 'Open the dashboard →', zh: '打开仪表盘 →', tw: '開啟儀表板 →', ja: 'ダッシュボードを開く →' },
 
   ticker: {
-    en: 'RESEARCH PROTOTYPE · frozen demonstration snapshot, dataset as of 2026-07-06 · a sensitivity & comparison engine over a curated sample — not a live feed, not a calibrated forecast, not investment advice',
-    zh: '研究原型 · 冻结的演示快照，数据截至 2026-07-06 · 一个基于精选样本的敏感性与比较引擎——不是实时数据，不是经过校准的预测，也不构成投资建议',
-    tw: '研究原型 · 凍結的示範快照，資料截至 2026-07-06 · 一個基於精選樣本的敏感度與比較引擎——不是即時數據，不是經過校準的預測，也不構成投資建議',
-    ja: 'リサーチ・プロトタイプ · 凍結されたデモンストレーション用スナップショット（データ基準日 2026-07-06） · 精選サンプルに基づく感度分析・比較エンジンです——ライブフィードでも、較正済みの予測でも、投資助言でもありません',
+    en: 'RESEARCH PROTOTYPE · frozen demonstration snapshot, dataset as of 2026-07-29 · a sensitivity & comparison engine over a curated sample — not a live feed, not a calibrated forecast, not investment advice',
+    zh: '研究原型 · 冻结的演示快照，数据截至 2026-07-29 · 一个基于精选样本的敏感性与比较引擎——不是实时数据，不是经过校准的预测，也不构成投资建议',
+    tw: '研究原型 · 凍結的示範快照，資料截至 2026-07-29 · 一個基於精選樣本的敏感度與比較引擎——不是即時數據，不是經過校準的預測，也不構成投資建議',
+    ja: 'リサーチ・プロトタイプ · 凍結されたデモンストレーション用スナップショット（データ基準日 2026-07-29） · 精選サンプルに基づく感度分析・比較エンジンです——ライブフィードでも、較正済みの予測でも、投資助言でもありません',
   },
 
   heroH1: {

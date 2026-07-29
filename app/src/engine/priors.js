@@ -33,7 +33,11 @@ export const MODEL_PRIORS = Object.freeze({
   // `daysAgo` values are relative to this date, not to the visitor's
   // clock — see math.js decay(). Keeping this static is deliberate: this
   // is a snapshot, not a live feed (see VaultContext.jsx / vault-snapshot.json).
-  datasetAsOf: '2026-07-06',
+  // Keep in sync with server/src/history-events.js DATASET_AS_OF — every
+  // event's age derives from its dateISO against that date, so advancing
+  // both (then running server/scripts/sync-events.mjs) re-ages the whole
+  // table and recomputes every index and the full index history.
+  datasetAsOf: '2026-07-29',
 
   // Composite node-risk-score weights (structural vulnerability index).
   // Four components are graph/data-derived; two ("subst", "market") are
