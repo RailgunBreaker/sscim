@@ -26,7 +26,7 @@ const STYLE = `
 a{color:var(--copper);text-decoration:none}a:hover{text-decoration:underline}
 header{position:sticky;top:0;z-index:5;border-bottom:1px solid var(--line);background:rgba(12,17,28,.94);backdrop-filter:blur(10px)}
 .bar{max-width:1120px;margin:auto;padding:14px 24px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-.brand{font-size:18px;font-weight:700;letter-spacing:1px;color:var(--text)}
+.brand{display:flex;align-items:center}.brand img{display:block;width:94px;height:auto}
 .eyebrow{font:10px 'IBM Plex Mono',monospace;color:var(--copper);letter-spacing:1.4px}
 .nav{display:flex;gap:14px;margin-left:auto;font-size:13px}
 .button{border:1px solid var(--copper);border-radius:5px;padding:7px 12px;font-size:13px;font-weight:700}
@@ -113,7 +113,7 @@ export default function Docs() {
   return <>
     <style>{STYLE}</style>
     <header><div className="bar">
-      <a className="brand" href="index.html">SSCIM</a>
+      <a className="brand" href="index.html" aria-label="SSCIM home"><img src="sscim-logo.png" alt="SSCIM" /></a>
       <span className="eyebrow">DOCUMENTATION LIBRARY</span>
       <nav className="nav">
         <a href="index.html">Home</a>

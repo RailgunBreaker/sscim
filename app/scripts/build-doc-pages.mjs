@@ -47,11 +47,16 @@ const STYLE = `
 body{margin:0;background:var(--bg);color:var(--text);font-family:'Space Grotesk',system-ui,sans-serif;line-height:1.68}
 a{color:var(--copper);text-decoration:none}a:hover{text-decoration:underline}
 header{position:sticky;top:0;z-index:5;border-bottom:1px solid var(--line);background:rgba(12,17,28,.94);backdrop-filter:blur(10px)}
-.bar{max-width:1000px;margin:auto;padding:14px 24px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-.brand{font-size:18px;font-weight:700;letter-spacing:1px;color:var(--text)}
+.bar{max-width:1280px;margin:auto;padding:12px 24px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;color:var(--text)}.brand img{display:block;width:92px;height:auto}
 .eyebrow,.path{font:10px ui-monospace,'IBM Plex Mono',monospace;color:var(--copper);letter-spacing:1.4px}
 .nav{display:flex;gap:14px;margin-left:auto;font-size:13px}
-main{max-width:1000px;margin:auto;padding:44px 24px 90px}
+.page{max-width:1280px;margin:auto;padding:28px 24px 90px;display:grid;grid-template-columns:250px minmax(0,1fr);gap:34px}
+.doc-tree{position:sticky;top:78px;align-self:start;max-height:calc(100vh - 96px);overflow:auto;border:1px solid var(--line);border-radius:8px;background:var(--panel2);padding:13px 10px}
+.tree-title{display:flex;align-items:center;justify-content:space-between;margin:0 4px 8px;color:var(--faint);font:10px ui-monospace,'IBM Plex Mono',monospace;letter-spacing:1.3px}.tree-title a{color:var(--copper)}
+.tree-list{list-style:none;margin:0;padding:0}.tree-list .tree-list{margin-left:12px;padding-left:8px;border-left:1px solid var(--line)}
+.tree-folder{display:block;margin:10px 0 3px;color:var(--dim);font:10px ui-monospace,'IBM Plex Mono',monospace;letter-spacing:.7px}.tree-file{display:block;padding:5px 7px;border-radius:4px;color:var(--dim);font-size:12px;line-height:1.35;overflow-wrap:anywhere}.tree-file:hover{background:var(--panel);color:var(--text);text-decoration:none}.tree-file.current{background:rgba(201,138,63,.16);color:var(--text);box-shadow:inset 2px 0 var(--copper)}
+.reader{min-width:0}.mobile-tree{display:none}.reader-main{max-width:1000px}
 .content-header{border-bottom:1px solid var(--line);padding-bottom:22px;margin-bottom:30px}
 .content-header h1{margin:8px 0 5px;font-size:clamp(26px,4vw,40px);letter-spacing:-.8px;line-height:1.15}
 .note{border:1px solid #5b4827;background:rgba(223,168,61,.06);border-radius:7px;padding:12px 14px;margin:0 0 28px;color:var(--dim);font-size:13px}
@@ -82,7 +87,7 @@ main{max-width:1000px;margin:auto;padding:44px 24px 90px}
 .card strong{display:block;font-size:14px;color:var(--text)}
 .card small{display:block;margin-top:4px;color:var(--faint);font:10px ui-monospace,monospace;word-break:break-all}
 .group{margin:34px 0 8px;font:10px ui-monospace,monospace;letter-spacing:1.6px;color:var(--faint)}
-@media(max-width:700px){main{padding:28px 18px 60px}}
+@media(max-width:850px){.page{display:block;padding:20px 18px 60px}.doc-tree{display:none}.mobile-tree{display:block;margin:0 0 20px}.mobile-tree summary{cursor:pointer;border:1px solid var(--line);border-radius:6px;background:var(--panel2);padding:10px 12px;color:var(--dim);font:11px ui-monospace,monospace;letter-spacing:.5px}.mobile-tree .tree-list{margin-top:8px;border:1px solid var(--line);border-radius:6px;padding:8px;background:var(--panel2)}}
 `;
 
 const shell = ({ title, path: docPath, body, root }) => `<!doctype html>
@@ -98,7 +103,7 @@ const shell = ({ title, path: docPath, body, root }) => `<!doctype html>
 </head>
 <body>
 <header><div class="bar">
-  <a class="brand" href="${root}index.html">SSCIM</a>
+  <a class="brand" href="${root}index.html" aria-label="SSCIM home"><img src="${root}sscim-logo.png" alt="SSCIM" /></a>
   <span class="eyebrow">DOCUMENTATION</span>
   <nav class="nav">
     <a href="${root}docs.html">All documents</a>
@@ -106,15 +111,42 @@ const shell = ({ title, path: docPath, body, root }) => `<!doctype html>
     <a href="${root}sscim-app.html">Dashboard</a>
   </nav>
 </div></header>
-<main>
 ${body}
-</main>
 </body>
 </html>
 `;
 
 const docs = await findMarkdownDocs();
 const known = new Set(docs.map((d) => d.path));
+
+function relativePage(fromPath, toPath) {
+  const fromDir = path.posix.dirname(fromPath);
+  const href = path.posix.relative(fromDir === '.' ? '' : fromDir, pageFor(toPath));
+  return href || path.posix.basename(pageFor(toPath));
+}
+
+function makeTree(items, currentPath, fromPath) {
+  const root = new Map();
+  for (const doc of items) {
+    const parts = doc.path.split('/');
+    let branch = root;
+    for (const part of parts.slice(0, -1)) {
+      if (!branch.has(part)) branch.set(part, new Map());
+      branch = branch.get(part);
+    }
+    branch.set(parts.at(-1), doc);
+  }
+  const render = (branch) => `<ul class="tree-list">${[...branch].map(([name, value]) => {
+    if (value instanceof Map) return `<li><span class="tree-folder">${escape(name)}/</span>${render(value)}</li>`;
+    const selected = value.path === currentPath ? ' current' : '';
+    return `<li><a class="tree-file${selected}" href="${escape(relativePage(fromPath, value.path))}" title="${escape(value.path)}">${escape(name)}</a></li>`;
+  }).join('')}</ul>`;
+  return render(root);
+}
+
+function readerLayout({ content, tree, title = 'FILES', indexHref = 'docs.html' }) {
+  return `<div class="page"><aside class="doc-tree"><p class="tree-title">${title}<a href="${indexHref}">INDEX</a></p>${tree}</aside><details class="mobile-tree"><summary>Browse documentation files</summary>${tree}</details><main class="reader"><div class="reader-main">${content}</div></main></div>`;
+}
 
 let written = 0;
 let equationCount = 0;
@@ -127,7 +159,7 @@ for (const doc of docs) {
   );
   equationCount += math.length;
   const root = rootPrefix(doc.path);
-  const body = `<div class="content-header">
+  const content = `<div class="content-header">
   <span class="path">${escape(doc.path)}</span>
   <h1>${escape(doc.title)}</h1>
   <div class="tags">${doc.tags.map((t) => `<a class="tag" href="${root}docs.html#tag=${encodeURIComponent(t)}">${escape(labelFor(t))}</a>`).join('')}</div>
@@ -138,6 +170,7 @@ for (const doc of docs) {
 <a href="https://github.com/RailgunBreaker/sscim/blob/main/${doc.path}">View source on GitHub</a> ·
 <a href="${root}docs.html">All documents</a></p>`;
 
+  const body = readerLayout({ content, tree: makeTree(docs, doc.path, doc.path), indexHref: `${root}docs.html` });
   const target = path.join(outDir, pageFor(doc.path));
   await mkdir(path.dirname(target), { recursive: true });
   await writeFile(target, shell({ title: doc.title, path: pageFor(doc.path), body, root }), 'utf8');
@@ -151,12 +184,13 @@ for (const doc of docs) {
   if (!groups.has(dir)) groups.set(dir, []);
   groups.get(dir).push(doc);
 }
-const indexBody = `<div class="content-header">
+const indexContent = `<div class="content-header">
   <span class="path">${docs.length} documents</span>
   <h1>SSCIM documentation</h1>
 </div>
 ${[...groups].map(([dir, list]) => `<p class="group">${escape(dir.toUpperCase())}</p>
 <div class="cards">${list.map((d) => `<a class="card" href="../${pageFor(d.path)}"><strong>${escape(d.title)}</strong><small>${escape(d.path)}</small><span class="tags">${d.tags.map((t) => `<span class="tag">${escape(labelFor(t))}</span>`).join('')}</span></a>`).join('')}</div>`).join('\n')}`;
+const indexBody = readerLayout({ content: indexContent, tree: makeTree(docs, '', 'docs/INDEX.md'), indexHref: '../docs.html' });
 await mkdir(path.join(outDir, 'docs'), { recursive: true });
 await writeFile(path.join(outDir, 'docs', 'index.html'), shell({ title: 'Documentation', path: 'docs/', body: indexBody, root: '../' }), 'utf8');
 

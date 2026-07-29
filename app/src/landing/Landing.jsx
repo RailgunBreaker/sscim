@@ -13,7 +13,7 @@ const STYLE = `
   a{color:var(--copper);text-decoration:none}
   header{border-bottom:1px solid var(--line);padding:16px 0;position:sticky;top:0;background:rgba(12,17,28,.92);backdrop-filter:blur(6px);z-index:10}
   header .wrap{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-  .logo{font-weight:700;font-size:20px;letter-spacing:1px}
+  .logo{display:flex;align-items:center}.logo img{display:block;width:108px;height:auto}
   .tag{font-size:10px;letter-spacing:2px;color:var(--copper)}
   .badge{font-size:9px;letter-spacing:1.5px;color:var(--amber);border:1px solid var(--amber);border-radius:3px;padding:2px 7px;font-family:'IBM Plex Mono',monospace;white-space:nowrap}
   .btn{display:inline-block;border-radius:5px;padding:9px 18px;font-weight:700;font-size:14px;cursor:pointer;border:1px solid var(--copper);transition:transform .15s ease,box-shadow .15s ease}
@@ -57,7 +57,7 @@ export default function Landing() {
 
       <header>
         <div className="wrap">
-          <span className="logo">SSCIM</span>
+          <a className="logo" href="index.html" aria-label="SSCIM home"><img src="sscim-logo.png" alt="SSCIM" /></a>
           <span className="tag mono">SEMICONDUCTOR SUPPLY CHAIN INTELLIGENCE MAP</span>
           <span className="badge">SSCIM INTELLIGENCE</span>
           <span className="langbar mono" style={{ marginLeft: 'auto', display: 'flex', gap: 3 }}>
