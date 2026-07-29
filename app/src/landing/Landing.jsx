@@ -6,16 +6,15 @@ import NewsTicker from '../components/NewsTicker.jsx';
 const STYLE = `
   :root{--bg:#0C111C;--panel:#141B2B;--panel2:#0F1626;--line:#243149;--copper:#C98A3F;--copperDim:#8A6230;--red:#E25C4A;--amber:#DFA83D;--green:#4FA97F;--text:#E9E4D8;--dim:#8C96A8;--faint:#5A6478}
   *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',system-ui,sans-serif;line-height:1.6}
-  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
-  .mono{font-family:'IBM Plex Mono',ui-monospace,monospace}
+  body{background:var(--bg);color:var(--text);font-family:Inter,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .mono{font-family:inherit;font-variant-numeric:tabular-nums}
   .wrap{max-width:980px;margin:0 auto;padding:0 20px}
   a{color:var(--copper);text-decoration:none}
   header{border-bottom:1px solid var(--line);padding:16px 0;position:sticky;top:0;background:rgba(12,17,28,.92);backdrop-filter:blur(6px);z-index:10}
   header .wrap{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
   .logo{display:flex;align-items:center}.logo img{display:block;width:108px;height:auto;filter:grayscale(1) brightness(0) invert(1)}
   .tag{font-size:10px;letter-spacing:2px;color:var(--copper)}
-  .badge{font-size:9px;letter-spacing:1.5px;color:var(--amber);border:1px solid var(--amber);border-radius:3px;padding:2px 7px;font-family:'IBM Plex Mono',monospace;white-space:nowrap}
+  .badge{font-size:10px;letter-spacing:1.2px;color:var(--amber);border:1px solid var(--amber);border-radius:3px;padding:2px 7px;font-family:inherit;font-weight:600;white-space:nowrap}
   .btn{display:inline-block;border-radius:5px;padding:9px 18px;font-weight:700;font-size:14px;cursor:pointer;border:1px solid var(--copper);transition:transform .15s ease,box-shadow .15s ease}
   .btn.solid{background:var(--copper);color:#0C111C}
   .btn:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(201,138,63,.22)}

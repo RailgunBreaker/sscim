@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 
 const API = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8787';
 const C = { bg: '#0C111C', panel: '#141B2B', panel2: '#0F1626', line: '#243149', copper: '#C98A3F', text: '#E9E4D8', dim: '#8C96A8', faint: '#5A6478', red: '#E25C4A', green: '#4FA97F', amber: '#DFA83D' };
-const styles = `*{box-sizing:border-box}body{margin:0;background:${C.bg};color:${C.text};font-family:Inter,system-ui,sans-serif}button,input,textarea{font:inherit}button:focus-visible{outline:2px solid ${C.copper};outline-offset:2px}`;
+const styles = `*{box-sizing:border-box}body{margin:0;background:${C.bg};color:${C.text};font-family:Inter,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}button,input,textarea{font:inherit}button:focus-visible{outline:2px solid ${C.copper};outline-offset:2px}`;
 const button = (primary = false, danger = false) => ({ border: `1px solid ${danger ? C.red : primary ? C.copper : C.line}`, background: primary ? C.copper : 'transparent', color: danger ? C.red : primary ? C.bg : C.dim, borderRadius: 6, padding: '8px 11px', fontWeight: 650, fontSize: 12, cursor: 'pointer' });
 
 async function api(path, token, options = {}) {

@@ -31,7 +31,6 @@ import Briefing from './components/Briefing.jsx';
 import ScenarioBuilder from './components/ScenarioBuilder.jsx';
 
 const GLOBAL_STYLE = `
-  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
   * { box-sizing: border-box; }
   ::-webkit-scrollbar { width: 6px; height: 6px; }
   ::-webkit-scrollbar-thumb { background: ${C.line}; border-radius: 3px; }
@@ -42,19 +41,19 @@ const GLOBAL_STYLE = `
   .pulse { animation: pulse 1.4s ease-in-out infinite; }
   @media (prefers-reduced-motion: reduce) { .pulse { animation: none !important; } }
   @keyframes pulse { 0%,100% { opacity:.4 } 50% { opacity:1 } }
-  .mono { font-family: 'IBM Plex Mono', ui-monospace, monospace; }
+  .mono { font-family: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-variant-numeric: tabular-nums; }
   .sscim-map { background: ${C.panel2}; }
   .sscim-map .osm-soft { filter: brightness(.75) invert(1) contrast(1.1) hue-rotate(200deg) saturate(.3); }
   .sscim-map .leaflet-control-attribution { background: rgba(12,17,28,.8); color: ${C.faint}; font-size: 9px; }
   .sscim-map .leaflet-control-attribution a { color: ${C.copperDim}; }
-  .sscim-tip { background: ${C.panel} !important; color: ${C.text} !important; border: 1px solid ${C.line} !important; border-radius: 4px; font-family: 'IBM Plex Mono', monospace; font-size: 10px; padding: 2px 6px; box-shadow: none !important; }
+  .sscim-tip { background: ${C.panel} !important; color: ${C.text} !important; border: 1px solid ${C.line} !important; border-radius: 4px; font-family: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 11px; padding: 3px 7px; box-shadow: none !important; }
   .sscim-tip::before { display: none; }
   .sscim-tip.leaflet-popup .leaflet-popup-content-wrapper { background: ${C.panel}; color: ${C.text}; border: 1px solid ${C.copperDim}; border-radius: 6px; box-shadow: 0 6px 20px rgba(0,0,0,.4); }
-  .sscim-tip.leaflet-popup .leaflet-popup-content { margin: 10px 12px; font-family: 'Space Grotesk', sans-serif; }
+  .sscim-tip.leaflet-popup .leaflet-popup-content { margin: 10px 12px; font-family: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
   .sscim-tip.leaflet-popup .leaflet-popup-tip { background: ${C.panel}; box-shadow: none; }
   .sscim-tip.leaflet-popup .leaflet-popup-close-button { color: ${C.faint} !important; }
   .sscim-tip.leaflet-popup .leaflet-popup-close-button:hover { color: ${C.copper} !important; }
-  .sscim-label { background: transparent !important; border: none !important; box-shadow: none !important; color: ${C.text}; font-family: 'Space Grotesk', sans-serif; font-size: 10.5px; font-weight: 600; text-shadow: 0 0 4px #000; white-space: nowrap; }
+  .sscim-label { background: transparent !important; border: none !important; box-shadow: none !important; color: ${C.text}; font-family: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 11px; font-weight: 600; text-shadow: 0 0 4px #000; white-space: nowrap; }
   /* Deliberately a LOW z-index — just enough to lift the glow above its
      own siblings (e.g. the map/flow grid cells) without it ever
      out-stacking the floating tour card (zIndex 1400) or any modal
@@ -94,7 +93,7 @@ function VaultGate() {
   const { status, error } = useVault();
   if (status === 'error') {
     return (
-      <div style={{ minHeight: "100vh", background: C.bg, color: C.text, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Space Grotesk', system-ui, sans-serif", padding: 24, textAlign: "center" }}>
+      <div style={{ minHeight: "100vh", background: C.bg, color: C.text, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: 'Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif', padding: 24, textAlign: "center" }}>
         <style>{GLOBAL_STYLE}</style>
         <div>
           <div style={{ fontSize: 18, fontWeight: 700, marginBottom: 8 }}>Can't load the SSCIM vault</div>
@@ -105,7 +104,7 @@ function VaultGate() {
   }
   if (status !== 'ready') {
     return (
-      <div style={{ minHeight: "100vh", background: C.bg, color: C.dim, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
+      <div style={{ minHeight: "100vh", background: C.bg, color: C.dim, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: 'Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif' }}>
         <style>{GLOBAL_STYLE}</style>
         <div className="mono">Loading SSCIM vault…</div>
       </div>
@@ -406,7 +405,7 @@ function DashboardBody() {
       : 'LAYER 1 · WORLD MAP · OPENSTREETMAP';
 
   return (
-    <div style={{ minHeight: "100vh", background: C.bg, color: C.text, fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
+    <div style={{ minHeight: "100vh", background: C.bg, color: C.text, fontFamily: 'Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif' }}>
       <style>{GLOBAL_STYLE}</style>
 
       <Header
