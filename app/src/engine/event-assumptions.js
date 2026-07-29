@@ -29,6 +29,8 @@ export const UNCLASSIFIED_ASSUMPTION = Object.freeze({
 });
 
 export const EVENT_ASSUMPTIONS = Object.freeze({
+  p260729_web1ae0: Object.freeze({ direction: "adverse", channel: "both", operational: true, reason: "Published: Review: reject cand_webz_news_10d7f9f9b2ab24f1f038d4999d984b36851ca11c" }),
+
   p260729_webfdb0: Object.freeze({ direction: "mixed", channel: "downstream", operational: false, reason: "Published: Review: approve p260729_web57b8" }),
 
   p260729_web57b8: Object.freeze({ direction: "adverse", channel: "downstream", operational: true, reason: "Production at a single named fab genuinely stopped, so this is operational rather than a hazard signal — but the realized scale is small: one site, no structural damage found, and resumption already under way at the time of reporting. That sits well below the 6 anchor for a multi-week single-site outage and near the 4 anchor for one company losing one supply line. Direction is adverse because the underlying operational change is a production pause; the resumption framing is why severity stays low rather than making the record mitigating. Channel is downstream because the disruption originates at a foundry and propagates to its customers." }),
