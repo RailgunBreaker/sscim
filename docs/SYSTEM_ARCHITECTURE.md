@@ -80,7 +80,9 @@ The public frontend is static. It does not write data and does not require the b
 
 A reviewed change becomes public only after **all** of: vault update → snapshot generation → audit → tests → commit → push → Pages build. If the audit or the test suite fails, nothing is committed and the previous deployment stays live. A failed run cannot corrupt the published site; it can only fail to improve it.
 
-Review decisions are recorded in the vault the moment they are made, but publication is a separate explicit step. A reviewer works through a queue and publishes once, rather than generating one commit — and one rewrite of a binary database — per click.
+Review decisions are recorded in the vault the moment they are made, but publication is a separate step. It is also automatic: each decision arms an idle timer, and the batch commits and pushes once the reviewer stops deciding or the queue empties. So a review session still produces one commit — not one per click, and one rewrite of a binary database per click — but nobody has to remember to trigger it. The explicit *Publish* action remains as the "now" override, and `REVIEW_AUTOPUBLISH=off` restores manual-only behaviour.
+
+The failure mode this replaced is worth naming, because it is silent: publication used to run a plain `git pull --rebase`, which aborts if the vault clone has any unrelated working-tree drift. The commit succeeded, the push did not, the task exited non-zero, and the deployed site simply stopped getting fresher while every individual decision looked fine in the database. Both publication paths now rebase with `--autostash`.
 
 ## Key design constraints
 

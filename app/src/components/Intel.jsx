@@ -8,6 +8,7 @@ import { STAGE_INTRO, introForCompany } from '../data/glossary.js';
 import Logo from './Logo.jsx';
 import Detail from './Detail.jsx';
 import IndexHistory from './IndexHistory.jsx';
+import DecadeHistory from './DecadeHistory.jsx';
 import Quote from './Quote.jsx';
 
 /* ================= Intelligence Panel ================= */
@@ -22,7 +23,7 @@ export default function Intel({ sel, setSel, model, scenario, onResetScenario, o
       </div>
       <div>
         <div style={{ display: "flex", gap: 0, borderBottom: `1px solid ${C.line}` }}>
-          {[["events", "EVENTS"], ["companies", "COMPANIES"], ["movers", "MOVERS 7D"], ["capital", "CAPITAL"]].map(([k, v]) => [k, t(v)]).map(([k, v]) => (
+          {[["events", "EVENTS"], ["history", "HISTORY"], ["companies", "COMPANIES"], ["movers", "MOVERS 7D"], ["capital", "CAPITAL"]].map(([k, v]) => [k, t(v)]).map(([k, v]) => (
             <button key={k} onClick={() => setFeedTab(k)} className="mono"
               style={{ flex: 1, padding: "8px 0", background: "transparent", border: "none", borderBottom: feedTab === k ? `2px solid ${C.copper}` : "2px solid transparent", color: feedTab === k ? C.copper : C.dim, fontSize: 9.5, letterSpacing: 1.5, cursor: "pointer", fontFamily: "inherit" }}>
               {v}
@@ -58,6 +59,7 @@ export default function Intel({ sel, setSel, model, scenario, onResetScenario, o
               })}
             </>
           )}
+          {feedTab === "history" && <DecadeHistory onSelectEvent={(id) => setSel({ type: "event", id })} />}
           {feedTab === "capital" && (
             <>
               <div className="mono" style={{ fontSize: 9.5, color: C.faint, marginBottom: 8, lineHeight: 1.5 }}>

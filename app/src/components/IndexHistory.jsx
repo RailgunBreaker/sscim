@@ -4,7 +4,7 @@ import { t } from '../i18n/index.js';
 import { getEventAssumption } from '../engine/event-assumptions.js';
 
 const W = 560, PL = 30, PR = 10, PT = 10, PB = 22, DAY = 86400000;
-const RANGES = [['3D', 3], ['7D', 7], ['30D', 30], ['6M', 183], ['1Y', 365], ['5Y', 1826], ['ALL', Infinity]];
+const RANGES = [['3D', 3], ['7D', 7], ['30D', 30], ['6M', 183], ['1Y', 365], ['5Y', 1826], ['10Y', 3652], ['ALL', Infinity]];
 
 export default function IndexHistory({ engine, events, onSelectEvent }) {
   const { LONG_HISTORY, MODEL_PRIORS } = engine;
@@ -14,14 +14,21 @@ export default function IndexHistory({ engine, events, onSelectEvent }) {
   const asOf = Date.parse(MODEL_PRIORS.datasetAsOf);
   const rangeDays = RANGES.find(([id]) => id === range)?.[1] ?? Infinity;
 
-  const chart = useMemo(() => {
+  /* The replay is memoized separately from the geometry. Over the ten-year
+     ALL range this is ~3,600 chainIndexAt calls; folding it into the geometry
+     memo would re-run all of them on every step of the height slider. */
+  const raw = useMemo(() => {
     const maxT = Math.max(1, Math.min(rangeDays, LONG_HISTORY[0]?.daysAgo ?? 1));
     // Every displayed point comes from the same baseline replay used by the
     // engine. There is no chart interpolation or separate scoring path.
-    const raw = Array.from({ length: maxT + 1 }, (_, i) => {
+    return Array.from({ length: maxT + 1 }, (_, i) => {
       const daysAgo = maxT - i;
       return { daysAgo, index: engine.chainIndexAt(daysAgo), date: new Date(asOf - daysAgo * DAY) };
     });
+  }, [LONG_HISTORY, rangeDays, asOf, engine]);
+
+  const chart = useMemo(() => {
+    const maxT = raw[0].daysAgo;
     const yMin = Math.min(4.85, ...raw.map((p) => p.index));
     const yMax = Math.max(5.15, ...raw.map((p) => p.index)) + 0.05;
     const x = (d) => PL + (1 - d / maxT) * (W - PL - PR);
@@ -39,7 +46,7 @@ export default function IndexHistory({ engine, events, onSelectEvent }) {
       return { daysAgo, px: x(daysAgo), label: new Date(asOf - daysAgo * DAY).toLocaleDateString('en-US', maxT > 365 ? { year: 'numeric', month: 'short' } : { month: 'short', day: 'numeric' }) };
     });
     return { maxT, y, yMin, yMax, pts, markers, ticks };
-  }, [LONG_HISTORY, rangeDays, height, asOf, events, engine]);
+  }, [raw, height, asOf, events, engine]);
 
   const color = (m) => !m.a.operational ? C.faint : m.a.direction === 'mitigating' ? C.green : C.red;
   const line = chart.pts.map((p) => `${p.px.toFixed(1)},${p.py.toFixed(1)}`).join(' ');

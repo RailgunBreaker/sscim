@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { db } from '../db.js';
 import { adminAuth } from '../middleware/adminAuth.js';
-import { candidates, pendingCandidates, candidateById, approveCandidate, rejectCandidate, publishPendingReviews, unpublishedReviews, dashboardSummary } from '../review-queue.js';
+import { candidates, pendingCandidates, candidateById, approveCandidate, rejectCandidate, publishPendingReviews, unpublishedReviews, dashboardSummary, scheduleAutoPublish, autoPublishStatus, cancelAutoPublish } from '../review-queue.js';
 
 export const adminRouter = Router();
 adminRouter.use(adminAuth);
@@ -20,14 +20,21 @@ adminRouter.get('/review/candidates/:id', (req, res) => {
   res.json({ candidate });
 });
 
-/* Approve/reject record the decision and return immediately. Publication is a
-   separate, explicit step (POST /review/publish) so a review session produces
-   one commit instead of one per click — see review-queue.js. */
+/* Approve/reject record the decision and return immediately, then arm the idle
+   auto-publish so the batch goes out on its own once the reviewer stops (or
+   the queue empties). Publication stays available as an explicit step
+   (POST /review/publish) and the response reports when the automatic one is
+   due, so the reviewer is never guessing — see review-queue.js. */
+function decided(res, payload, status) {
+  const pending = pendingCandidates().length;
+  const autoPublish = scheduleAutoPublish({ queueEmpty: pending === 0 });
+  res.status(status).json({ ...payload, pending, unpublished: unpublishedReviews().length, autoPublish });
+}
+
 adminRouter.post('/review/candidates/:id/approve', (req, res) => {
   try {
     const reviewedBy = req.get('x-reviewer') || 'admin-ui';
-    const approved = approveCandidate(req.params.id, req.body || {}, reviewedBy);
-    res.status(201).json({ ...approved, unpublished: unpublishedReviews().length });
+    decided(res, approveCandidate(req.params.id, req.body || {}, reviewedBy), 201);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -36,17 +43,21 @@ adminRouter.post('/review/candidates/:id/approve', (req, res) => {
 adminRouter.post('/review/candidates/:id/reject', (req, res) => {
   try {
     const reviewedBy = req.get('x-reviewer') || 'admin-ui';
-    const rejected = rejectCandidate(req.params.id, req.body?.reason, reviewedBy);
-    res.status(200).json({ ...rejected, unpublished: unpublishedReviews().length });
+    decided(res, rejectCandidate(req.params.id, req.body?.reason, reviewedBy), 200);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 });
 
+/* Explicit publish. Cancels any armed auto-publish first so the two cannot
+   both fire and race for the same commit. */
 adminRouter.post('/review/publish', (req, res) => {
+  cancelAutoPublish();
   const result = publishPendingReviews();
-  res.status(result.published ? 200 : 202).json(result);
+  res.status(result.published ? 200 : 202).json({ ...result, autoPublish: autoPublishStatus() });
 });
+
+adminRouter.get('/review/autopublish', (req, res) => res.json(autoPublishStatus()));
 
 /* ---- companies (identity + production footprint) ---- */
 adminRouter.put('/companies/:id', (req, res) => {

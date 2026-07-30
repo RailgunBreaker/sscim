@@ -25,13 +25,16 @@ server/                    Express API, SQLite vault, ingestion, review, publica
   src/
     routes/public.js         read routes consumed by the frontend
     routes/admin.js          token-protected write + review routes
-    review-queue.js          approve / reject / batched publish
+    review-queue.js          approve / reject / batched publish / idle auto-publish
+    history-events.js        curated 2021→2026 events
+    decade-events.js         the 2016→2025 backfill that completes the ten-year window
     ingest/                  usgs, federal-register, webz-news, dedupe
     ai/                      candidate drafting (proposals only, never authoritative)
     quotes.js                market-quote refresh, shared by script and API
   scripts/
     pipeline.mjs             the whole fetch → draft → verify → publish run
     review.mjs               review queue CLI
+    sync-events.mjs          code-defined events → vault, ages re-derived
     fetch-quotes.mjs         batch quote refresh
 docs/                      Markdown rendered by docs.html
 ```
@@ -46,8 +49,11 @@ docs/                      Markdown rendered by docs.html
 | `math.js` | decay, clamping, noisy-OR combination, HHI, topological sort |
 | `graph.js` | adjacency, the `D`/`U` dependence matrices, propagation, pathfinding |
 | `event-assumptions.js` | the hand-curated per-event classification table |
+| `timeseries.js` | analysis of the whole index history — peaks, runs, per-event attribution |
 | `index.js` | assembles everything into the engine the UI consumes |
 | `diagnostics.js` | graph validation — runs before anything else |
+
+`timeseries.js` never re-derives the index: every figure it reports comes from the engine's own `chainIndexAt` / `indexOf`, so the analysis and the history chart cannot disagree. Its per-event attribution is **marginal** — the index on the event's own date minus the same date with that event removed — because propagation combines through a saturating noisy-OR, so standalone magnitudes do not sum. Both numbers are reported; the gap between them is the overlap with everything else active at the time.
 
 ## Local development
 
@@ -105,7 +111,22 @@ Keep data, assumptions, and formulas separate:
 - **Event classifications** belong in `app/src/engine/event-assumptions.js`. They are hand-curated and must never be inferred at runtime from event text.
 - **Data changes** flow through the vault and the snapshot scripts, never by hand-editing `vault-snapshot.json` — it is a generated artifact and is gitignored.
 
-Update tests whenever behaviour changes. The suite covers the engine's mathematics, propagation, company metrics, and a full dashboard mount.
+Update tests whenever behaviour changes. The suite covers the engine's mathematics, propagation, company metrics, the index time-series analysis, and a full dashboard mount.
+
+### Adding historical events
+
+Code-defined events live in three files, all with the same contract: `seed-data.js` (the sample set), `history-events.js` (curated 2021→2026), and `decade-events.js` (the 2016→2025 backfill). `dateISO` is authoritative — `daysAgo` is always derived from it against the vault's snapshot date, never hand-maintained.
+
+```powershell
+cd server
+node scripts/sync-events.mjs      # upsert every code-defined event, re-derive ages
+cd ../app
+npm run snapshot && npm run audit:data && npm test
+```
+
+`sync-events.mjs` refuses to run if any code-defined event has no entry in `event-assumptions.js`. That is not pedantry: an unclassified id falls back to `operational: false` and is displayed while being **silently** excluded from the scored index, which is very hard to notice afterwards. The same script also rejects duplicate ids across the three sets.
+
+Because the backfilled events are years old and the half-life is 12 days, adding them does not move the current index at all — they exist for the historical series. The dashboard's Layer 3 **HISTORY** tab (`components/DecadeHistory.jsx`) is where that series is read: the decade replay, per-event marginal attribution, and per-year and per-type breakdowns.
 
 ## Reviewing candidates
 
@@ -116,11 +137,20 @@ Candidates arrive from the ingest feeds and wait for a human. Either interface w
 .\review.ps1 show <id>                # proposal + raw upstream record
 .\review.ps1 approve <id> --sev=7 --direction=adverse --channel=both
 .\review.ps1 reject  <id> --reason="routine notice, no supply-chain effect"
+.\review.ps1 publish                  # commit + push the batch now
 ```
 
-or `admin.html` against a running API.
+or `admin.html` against a running API. Both front ends call the same `src/review-queue.js`, so an approval records the event **and** its classification either way.
 
-**Decisions do not publish.** They are recorded in the vault immediately, and publishing is a separate explicit step — the *Publish* button in the admin console, or the next scheduled pipeline run. This is deliberate: publishing per decision produced one binary-database commit per click. Work the whole queue, then publish once.
+### Publication after review
+
+A decision is written to the vault the instant it is made. Turning that into a commit is separate, and it happens on its own:
+
+- **Admin API / console.** Each decision arms an idle timer. When you stop deciding for `REVIEW_AUTOPUBLISH_IDLE_MS` (default 90s), or as soon as the queue empties, the batch is committed and pushed once. The response and the *Operations* tab both show when the next automatic publish is due. A failure retries with a doubling delay, three attempts, then leaves the decisions for the next pipeline run.
+- **CLI.** A command exits before any timer could fire, so it publishes synchronously once the queue is empty instead. `--no-publish` holds it back; `publish` sends it later.
+- **Either way, one commit per review session.** Publishing per decision produced one binary-database commit per click, which is what this replaced. Set `REVIEW_AUTOPUBLISH=off` to require the button.
+
+Publishing runs `git pull --rebase --autostash` before pushing. The `--autostash` matters more than it looks: without it, any unrelated working-tree drift in the vault clone aborts the rebase, the push fails, and reviewed data sits committed-but-unpushed while the reviewer sees only "publish failed" — the deployed site silently stops updating. The database is committed before the pull, so it is never what gets stashed.
 
 Duplicate handling is automatic at ingest. An identical restatement of a story already in the queue is collapsed and marked; a near-duplicate is left pending but flagged `possible duplicate of <id>`, because a one-token difference can be two genuinely different export-control rules.
 

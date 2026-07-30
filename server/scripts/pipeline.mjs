@@ -63,7 +63,20 @@ const opt = (name, fallback) => args.find((a) => a.startsWith(`--${name}=`))?.sp
 const DRY_RUN = flag('dry-run');
 const NO_AI = flag('no-ai');
 const AI_BACKEND = opt('ai', 'auto');   // auto | claude-code | api | none
-const today = new Date().toISOString().slice(0, 10);
+
+/* The snapshot date is a CALENDAR date in the operator's timezone, not a UTC
+   instant. toISOString() would give the UTC date, which is the previous day
+   for any run before 09:00 in JST (and before 05:00 in CET, and so on) — so a
+   task scheduled at 06:30 local stamped every snapshot with yesterday's date,
+   pinned the ingest window to a day that had already been processed, and
+   re-derived every event age one day stale. */
+const localDate = (d = new Date()) => [
+  d.getFullYear(),
+  String(d.getMonth() + 1).padStart(2, '0'),
+  String(d.getDate()).padStart(2, '0'),
+].join('-');
+
+const today = localDate();
 const SINCE = opt('since', getSnapshotDate());
 const UNTIL = opt('until', today);
 
@@ -244,7 +257,13 @@ async function main() {
     const msg = `Data pipeline: snapshot ${UNTIL}${queued ? `, ${queued} new candidate(s)` : ''}${pending ? `, ${pending} pending review` : ''}`;
     run('git', ['commit', '-m', msg], REPO_DIR);
     try {
-      run('git', ['pull', '--rebase', 'origin', 'main'], REPO_DIR);
+      /* --autostash so unrelated working-tree drift in the vault clone cannot
+         abort the rebase ("cannot pull with rebase: you have unstaged
+         changes"). Without it the pipeline commits locally, fails the push,
+         exits 1, and repeats that every day while the deployed site quietly
+         stops being updated. The database is already committed above, so it is
+         never the thing being stashed. */
+      run('git', ['pull', '--rebase', '--autostash', 'origin', 'main'], REPO_DIR);
       run('git', ['push', 'origin', 'main'], REPO_DIR);
       log('  published - Pages will rebuild');
     } catch (err) {

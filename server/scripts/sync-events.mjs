@@ -4,27 +4,50 @@
    only the ids defined in code and never touches other rows (e.g. events
    added through the admin API).
 
-   Run it after editing server/src/history-events.js or server/src/
-   seed-data.js EVENTS, and — importantly — after advancing DATASET_AS_OF,
-   which re-ages the entire table and therefore recomputes every index and
-   the whole multi-year index history.
+   Run it after editing server/src/history-events.js, server/src/
+   decade-events.js or server/src/seed-data.js EVENTS, and — importantly —
+   after advancing DATASET_AS_OF, which re-ages the entire table and
+   therefore recomputes every index and the whole multi-year index history.
 
    Run from server/:  node scripts/sync-events.mjs
    Then re-export the snapshot:  cd ../app && npm run snapshot  */
 import { db } from '../src/db.js';
 import { HISTORY_EVENTS, daysAgoOf } from '../src/history-events.js';
+import { DECADE_EVENTS } from '../src/decade-events.js';
 import { EVENTS as SEED_EVENTS } from '../src/seed-data.js';
 import { getSnapshotDate } from '../src/meta.js';
+import { getEventAssumption, UNCLASSIFIED_ASSUMPTION } from '../../app/src/engine/event-assumptions.js';
 
 // The snapshot date lives in the `meta` table (the pipeline advances it),
 // falling back to the DATASET_AS_OF constant for a DB that predates it.
 const DATASET_AS_OF = getSnapshotDate();
 
-const ALL = [...SEED_EVENTS, ...HISTORY_EVENTS];
+const ALL = [...SEED_EVENTS, ...HISTORY_EVENTS, ...DECADE_EVENTS];
 
 const missingDate = ALL.filter((e) => !e.dateISO);
 if (missingDate.length) {
   console.error(`Refusing to sync: these events have no authoritative dateISO — ${missingDate.map((e) => e.id).join(', ')}`);
+  process.exit(1);
+}
+
+const duplicateIds = Object.entries(ALL.reduce((acc, e) => ({ ...acc, [e.id]: (acc[e.id] ?? 0) + 1 }), {}))
+  .filter(([, n]) => n > 1).map(([id]) => id);
+if (duplicateIds.length) {
+  console.error(`Refusing to sync: duplicate event id(s) across the code-defined sets — ${duplicateIds.join(', ')}`);
+  process.exit(1);
+}
+
+/* An id with no entry in event-assumptions.js is silently excluded from the
+   scored index (getEventAssumption falls back to UNCLASSIFIED_ASSUMPTION with
+   operational: false). That is the right default for an event that arrives
+   through the review queue unclassified, but for a hand-curated code-defined
+   event it is always a mistake — the record was written to be scored and would
+   quietly not be. Catch it here rather than in a puzzling flat index later. */
+const unclassified = ALL.filter((e) => getEventAssumption(e.id) === UNCLASSIFIED_ASSUMPTION);
+if (unclassified.length) {
+  console.error(`Refusing to sync: ${unclassified.length} code-defined event(s) have no entry in app/src/engine/event-assumptions.js,`);
+  console.error('so they would be displayed but silently excluded from the scored index:');
+  unclassified.forEach((e) => console.error(`  ${e.id}  ${e.title}`));
   process.exit(1);
 }
 
@@ -51,5 +74,5 @@ db.transaction(() => {
 db.pragma('wal_checkpoint(TRUNCATE)');
 const total = db.prepare('SELECT COUNT(*) c FROM events').get().c;
 const newest = db.prepare('SELECT id, date, days_ago FROM events ORDER BY days_ago ASC LIMIT 1').get();
-console.log(`Synced ${ALL.length} code-defined events (${SEED_EVENTS.length} sample + ${HISTORY_EVENTS.length} historical); vault holds ${total}.`);
+console.log(`Synced ${ALL.length} code-defined events (${SEED_EVENTS.length} sample + ${HISTORY_EVENTS.length} historical + ${DECADE_EVENTS.length} decade backfill); vault holds ${total}.`);
 console.log(`Ages re-derived against DATASET_AS_OF=${DATASET_AS_OF}. Newest: ${newest.id} (${newest.date}, ${newest.days_ago}d ago).`);

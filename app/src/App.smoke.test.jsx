@@ -74,6 +74,33 @@ describe('App smoke (static snapshot, Leaflet mocked)', () => {
     container.remove();
   });
 
+  it('renders the decade history panel with per-event index attribution', async () => {
+    const container = document.createElement('div');
+    document.body.appendChild(container);
+    const root = createRoot(container);
+    await act(async () => { root.render(<App />); });
+    await flush(0);
+    await flush(0);
+
+    // Switch the Layer-3 feed to the HISTORY tab. It replays a decade of the
+    // index and attributes every event, so a mount-time crash or a divide-by-
+    // zero in the analysis would only ever show up here.
+    const historyTab = [...container.querySelectorAll('button')].find((b) => (b.textContent || '').trim() === 'HISTORY');
+    expect(historyTab).toBeTruthy();
+    await act(async () => { historyTab.click(); });
+    await flush(0);
+
+    const text = container.textContent || '';
+    expect(text).toContain('DECADE REPLAY');
+    expect(text).toContain('EVENTS BY IMPACT');
+    // The year table should cover more than a single year of history.
+    expect(text).toContain('BY YEAR');
+    expect(text).toMatch(/20(1[6-9]|2[0-6])/);
+
+    await act(async () => { root.unmount(); });
+    container.remove();
+  });
+
   it('restores topology view from the URL hash and mounts the functional-centre network', async () => {
     window.location.hash = '#view=topology';
     const container = document.createElement('div');

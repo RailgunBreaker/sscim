@@ -36,6 +36,7 @@ export function dashboardSummary() {
     counts: { pending: counts.pending || 0, approved: counts.approved || 0, rejected: counts.rejected || 0 },
     events: db.prepare('SELECT COUNT(*) AS count FROM events').get().count,
     unpublished: unpublishedReviews().length,
+    autoPublish: autoPublishStatus(),
     meta, recentReviews,
   };
 }
@@ -120,9 +121,10 @@ function run(file, args, cwd) { return execFileSync(file, args, { cwd, encoding:
    binary-database commit per click ("Review: approve …", "Review: reject …")
    — dozens of commits that each rewrite the whole .db blob and say nothing a
    single batched commit would not. Decisions are recorded in the database
-   immediately and published together, either from here or by the next
-   scheduled pipeline run. Nothing is lost by waiting: the database IS the
-   record, the commit is only its distribution. */
+   immediately and published together, either by the idle auto-publish below,
+   by an explicit publish, or by the next scheduled pipeline run. Nothing is
+   lost by waiting: the database IS the record, the commit is only its
+   distribution. */
 
 const PUBLISH_MARK = 'last_review_publish_at';
 
@@ -160,13 +162,93 @@ export function publishPendingReviews() {
     const subject = `Review: publish ${parts.join(', ') || 'queue decisions'}`;
     const body = queued.map((r) => `${r.status === 'approved' ? 'approve' : 'reject'} ${r.id}`).join('\n');
     run('git', ['commit', '-m', subject, ...(body ? ['-m', body] : [])], repoDir);
-    run('git', ['pull', '--rebase', 'origin', 'main'], repoDir);
+    /* --autostash: the vault clone routinely carries unrelated working-tree
+       drift (a stray build output, a file copied in by hand). Without it a
+       plain `pull --rebase` aborts with "cannot pull with rebase: you have
+       unstaged changes" and the whole publish fails — which is how a week of
+       reviewed data can sit committed-but-unpushed while the reviewer sees
+       only "Publish failed". The database itself is already committed on the
+       line above, so it is never what gets stashed. */
+    run('git', ['pull', '--rebase', '--autostash', 'origin', 'main'], repoDir);
     run('git', ['push', 'origin', 'main'], repoDir);
     setMeta(PUBLISH_MARK, new Date().toISOString());
     return { published: true, count: queued.length, message: subject };
   } catch (error) {
-    // Decisions stay safely recorded in the database; the scheduled pipeline
-    // retries publication. Surface the failure to the reviewer explicitly.
+    // Decisions stay safely recorded in the database; auto-publish retries and
+    // so does the scheduled pipeline. Surface the failure to the reviewer.
     return { published: false, count: queued.length, error: String(error.stderr || error.message).slice(0, 800) };
   }
+}
+
+/* ---------------- idle auto-publish ----------------------------------------
+   "Publish after human review" without going back to one commit per click.
+
+   Every decision (re)starts an idle timer. When the reviewer stops deciding
+   for AUTOPUBLISH_IDLE_MS, or when the queue empties — whichever comes first —
+   the batch is published once. So a review session still produces exactly one
+   commit, but nobody has to remember to press publish.
+
+   Failures retry with a doubling delay rather than being dropped, because the
+   common failure is transient (no network, a concurrent push). After the last
+   attempt the decisions simply wait for the next pipeline run, exactly as
+   before — the database is the record either way. */
+
+const AUTOPUBLISH_ON = (process.env.REVIEW_AUTOPUBLISH ?? 'on').toLowerCase() !== 'off';
+const AUTOPUBLISH_IDLE_MS = Math.max(5_000, Number(process.env.REVIEW_AUTOPUBLISH_IDLE_MS) || 90_000);
+const AUTOPUBLISH_MAX_ATTEMPTS = 3;
+
+let autoTimer = null;
+let autoAttempt = 0;
+let autoState = { enabled: AUTOPUBLISH_ON, idleMs: AUTOPUBLISH_IDLE_MS, scheduledFor: null, lastStatus: null, lastAt: null, lastError: null };
+
+export function autoPublishStatus() {
+  return { ...autoState, pendingUnpublished: unpublishedReviews().length };
+}
+
+export function cancelAutoPublish() {
+  if (autoTimer) clearTimeout(autoTimer);
+  autoTimer = null;
+  autoState = { ...autoState, scheduledFor: null };
+}
+
+function armAutoPublish(delayMs) {
+  if (autoTimer) clearTimeout(autoTimer);
+  autoState = { ...autoState, scheduledFor: new Date(Date.now() + delayMs).toISOString() };
+  autoTimer = setTimeout(runAutoPublish, delayMs);
+  // Never hold the process open just to publish; a shutdown loses at most the
+  // commit, and the next pipeline run picks the decisions up.
+  autoTimer.unref?.();
+}
+
+function runAutoPublish() {
+  autoTimer = null;
+  autoState = { ...autoState, scheduledFor: null };
+  if (!unpublishedReviews().length) {
+    autoAttempt = 0;
+    return;
+  }
+  const result = publishPendingReviews();
+  const at = new Date().toISOString();
+  if (result.published) {
+    autoAttempt = 0;
+    autoState = { ...autoState, lastStatus: 'published', lastAt: at, lastError: null };
+    setMeta('last_autopublish_at', at);
+    setMeta('last_autopublish_status', `published ${result.count} decision(s)`);
+    return;
+  }
+  autoAttempt++;
+  autoState = { ...autoState, lastStatus: autoAttempt >= AUTOPUBLISH_MAX_ATTEMPTS ? 'failed' : 'retrying', lastAt: at, lastError: result.error };
+  setMeta('last_autopublish_at', at);
+  setMeta('last_autopublish_status', `${autoState.lastStatus}: ${String(result.error).split('\n')[0].slice(0, 200)}`);
+  if (autoAttempt < AUTOPUBLISH_MAX_ATTEMPTS) armAutoPublish(AUTOPUBLISH_IDLE_MS * 2 ** autoAttempt);
+}
+
+/* Called after each recorded decision. `queueEmpty` publishes on a short delay
+   instead of the full idle window: the reviewer has finished the queue, so
+   there is nothing left to batch and no reason to make them wait. */
+export function scheduleAutoPublish({ queueEmpty = false } = {}) {
+  if (!AUTOPUBLISH_ON) return autoPublishStatus();
+  autoAttempt = 0;
+  armAutoPublish(queueEmpty ? Math.min(5_000, AUTOPUBLISH_IDLE_MS) : AUTOPUBLISH_IDLE_MS);
+  return autoPublishStatus();
 }

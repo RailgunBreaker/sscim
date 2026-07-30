@@ -505,9 +505,17 @@ export function buildEngine({ STAGES, FLOW_EDGES, COMPANIES, CUSTOMERS, POLICIES
 
   /* Long-run computed history — weekly samples back to the oldest event,
      plus an exact sample on each event's own date so spikes are not
-     attenuated by grid placement. Baseline events only, like HISTORY. */
+     attenuated by grid placement. Baseline events only, like HISTORY.
+
+     The span cap exists so a single mis-dated event cannot make the engine
+     replay an unbounded history at construction time. It is set past a full
+     decade because the event table now reaches back to 2016
+     (server/src/decade-events.js); a shorter cap silently truncated the
+     oldest years out of the chart. Cost is bounded and small: one
+     chainIndexAt call is ~0.1ms, and eventsAsOf drops everything outside
+     the ~160-day decay horizon before any propagation runs. */
   const maxDaysAgo = EVENTS.reduce((m, e) => Math.max(m, e.daysAgo ?? 0), 0);
-  const longSpanDays = Math.min(maxDaysAgo + 14, 2400); // safety cap ~6.5y
+  const longSpanDays = Math.min(maxDaysAgo + 14, 4200); // safety cap ~11.5y
   const longOffsets = new Set([0]);
   for (let t = 0; t <= longSpanDays; t += 7) longOffsets.add(t);
   EVENTS.forEach((e) => {
@@ -540,5 +548,16 @@ export function buildEngine({ STAGES, FLOW_EDGES, COMPANIES, CUSTOMERS, POLICIES
 
     supplierSpread, companySpread, customerSpread, countryData,
     structuralComponents, HISTORY, LONG_HISTORY, chainIndexAt, stageScoreAt, MOVERS7D,
+
+    /* Exposed for the historical time-series layer (engine/timeseries.js),
+       which replays the index over arbitrary event subsets to attribute each
+       event's marginal contribution. EVENTS is the exact table the history
+       above was computed from; eventsAsOf is the engine's own back-dating
+       rule, shared so an analysis can never drift from the chart. */
+    EVENTS, eventsAsOf, longSpanDays,
+    indexOf: (eventList, t = 0) => toDisplayIndex(operationalIndex(operationalField(
+      (eventList || []).filter((e) => (e.daysAgo ?? 0) - t >= 0 && decay((e.daysAgo ?? 0) - t, MODEL_PRIORS.halfLifeDays) > 1e-4)
+        .map((e) => ({ ...e, daysAgo: (e.daysAgo ?? 0) - t })),
+    ))),
   };
 }
