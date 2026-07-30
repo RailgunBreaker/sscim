@@ -51,10 +51,10 @@ if (unclassified.length) {
   process.exit(1);
 }
 
-const upsert = db.prepare(`INSERT INTO events (id, date, days_ago, sev, type, conf, title, summary, first, second, watch, detail, source, stages_json, countries_json, timeline_json)
-  VALUES (@id, @date, @days_ago, @sev, @type, @conf, @title, @summary, @first, @second, @watch, @detail, @source, @stages_json, @countries_json, @timeline_json)
+const upsert = db.prepare(`INSERT INTO events (id, date, date_iso, days_ago, sev, type, conf, title, summary, first, second, watch, detail, source, stages_json, countries_json, timeline_json)
+  VALUES (@id, @date, @date_iso, @days_ago, @sev, @type, @conf, @title, @summary, @first, @second, @watch, @detail, @source, @stages_json, @countries_json, @timeline_json)
   ON CONFLICT(id) DO UPDATE SET
-    date=excluded.date, days_ago=excluded.days_ago, sev=excluded.sev, type=excluded.type, conf=excluded.conf,
+    date=excluded.date, date_iso=excluded.date_iso, days_ago=excluded.days_ago, sev=excluded.sev, type=excluded.type, conf=excluded.conf,
     title=excluded.title, summary=excluded.summary, first=excluded.first, second=excluded.second, watch=excluded.watch,
     detail=excluded.detail, source=excluded.source, stages_json=excluded.stages_json,
     countries_json=excluded.countries_json, timeline_json=excluded.timeline_json, updated_at=datetime('now')`);
@@ -62,7 +62,7 @@ const upsert = db.prepare(`INSERT INTO events (id, date, days_ago, sev, type, co
 db.transaction(() => {
   for (const e of ALL) {
     upsert.run({
-      id: e.id, date: e.date, days_ago: daysAgoOf(e.dateISO, DATASET_AS_OF), sev: e.sev, type: e.type, conf: e.conf,
+      id: e.id, date: e.date, date_iso: e.dateISO, days_ago: daysAgoOf(e.dateISO, DATASET_AS_OF), sev: e.sev, type: e.type, conf: e.conf,
       title: e.title, summary: e.summary ?? null, first: e.first ?? null, second: e.second ?? null, watch: e.watch ?? null,
       detail: e.detail ?? null, source: e.source ?? null,
       stages_json: JSON.stringify(e.stages ?? []), countries_json: JSON.stringify(e.countries ?? []),
@@ -71,8 +71,27 @@ db.transaction(() => {
   }
 })();
 
+/* Re-age EVERY row that has an authoritative date, not just the code-defined
+   ones above. Events added through the review queue or the admin API are
+   otherwise stuck at the age they had on the day they were recorded, so
+   advancing the snapshot date aged the curated history while the live feed
+   stayed permanently fresh — and never decayed out of the index. */
+const reaged = db.transaction(() => {
+  const rows = db.prepare('SELECT id, date_iso, days_ago FROM events WHERE date_iso IS NOT NULL').all();
+  const update = db.prepare("UPDATE events SET days_ago = ?, updated_at = datetime('now') WHERE id = ?");
+  let changed = 0;
+  for (const row of rows) {
+    const age = daysAgoOf(row.date_iso, DATASET_AS_OF);
+    if (age !== row.days_ago) { update.run(age, row.id); changed++; }
+  }
+  return changed;
+})();
+
+const undated = db.prepare('SELECT COUNT(*) c FROM events WHERE date_iso IS NULL').get().c;
+
 db.pragma('wal_checkpoint(TRUNCATE)');
 const total = db.prepare('SELECT COUNT(*) c FROM events').get().c;
 const newest = db.prepare('SELECT id, date, days_ago FROM events ORDER BY days_ago ASC LIMIT 1').get();
 console.log(`Synced ${ALL.length} code-defined events (${SEED_EVENTS.length} sample + ${HISTORY_EVENTS.length} historical + ${DECADE_EVENTS.length} decade backfill); vault holds ${total}.`);
-console.log(`Ages re-derived against DATASET_AS_OF=${DATASET_AS_OF}. Newest: ${newest.id} (${newest.date}, ${newest.days_ago}d ago).`);
+console.log(`Ages re-derived against DATASET_AS_OF=${DATASET_AS_OF} for every dated row (${reaged} age${reaged === 1 ? '' : 's'} changed). Newest: ${newest.id} (${newest.date}, ${newest.days_ago}d ago).`);
+if (undated) console.warn(`WARNING: ${undated} event(s) have no date_iso and cannot be re-aged — they will not decay as the snapshot date advances.`);

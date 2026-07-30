@@ -5,6 +5,7 @@ import {
 } from './seed-data.js';
 import { DATA_NOTES } from './data-notes.js';
 import { HISTORY_EVENTS, daysAgoOf } from './history-events.js';
+import { DECADE_EVENTS } from './decade-events.js';
 
 const TABLES = ['countries', 'stages', 'flow_edges', 'tier_labels', 'companies', 'customers', 'owners', 'policies', 'events', 'scenarios', 'data_notes'];
 
@@ -48,16 +49,16 @@ export const seedAll = db.transaction(() => {
   const insPolicy = db.prepare('INSERT INTO policies (id, name, sev, stages_json) VALUES (@id, @name, @sev, @stages_json)');
   for (const p of POLICIES) insPolicy.run({ id: p.id, name: p.name, sev: p.sev, stages_json: JSON.stringify(p.stages) });
 
-  const insEvent = db.prepare(`INSERT INTO events (id, date, days_ago, sev, type, conf, title, summary, first, second, watch, detail, source, stages_json, countries_json, timeline_json)
-    VALUES (@id, @date, @days_ago, @sev, @type, @conf, @title, @summary, @first, @second, @watch, @detail, @source, @stages_json, @countries_json, @timeline_json)`);
-  // Every event — sample and historical alike — carries an authoritative
-  // dateISO; days_ago is derived from it here against DATASET_AS_OF, never
-  // hand-maintained. (scripts/sync-events.mjs re-derives it in place for an
-  // already-populated vault, e.g. after advancing the snapshot date.)
-  const allEvents = [...EVENTS, ...HISTORY_EVENTS].map((e) => ({ ...e, daysAgo: daysAgoOf(e.dateISO) }));
+  const insEvent = db.prepare(`INSERT INTO events (id, date, date_iso, days_ago, sev, type, conf, title, summary, first, second, watch, detail, source, stages_json, countries_json, timeline_json)
+    VALUES (@id, @date, @date_iso, @days_ago, @sev, @type, @conf, @title, @summary, @first, @second, @watch, @detail, @source, @stages_json, @countries_json, @timeline_json)`);
+  // Every event — sample, historical and decade backfill alike — carries an
+  // authoritative dateISO. It is STORED as well as used, because days_ago is
+  // derived from it and has to be re-derivable later: advancing the snapshot
+  // date re-ages the whole table from date_iso (scripts/sync-events.mjs).
+  const allEvents = [...EVENTS, ...HISTORY_EVENTS, ...DECADE_EVENTS].map((e) => ({ ...e, daysAgo: daysAgoOf(e.dateISO) }));
   for (const e of allEvents) {
     insEvent.run({
-      id: e.id, date: e.date, days_ago: e.daysAgo, sev: e.sev, type: e.type, conf: e.conf,
+      id: e.id, date: e.date, date_iso: e.dateISO, days_ago: e.daysAgo, sev: e.sev, type: e.type, conf: e.conf,
       title: e.title, summary: e.summary, first: e.first, second: e.second, watch: e.watch,
       detail: e.detail || null, source: e.source || null,
       stages_json: JSON.stringify(e.stages), countries_json: JSON.stringify(e.countries), timeline_json: JSON.stringify(e.timeline || []),

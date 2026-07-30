@@ -86,9 +86,12 @@ export function approveCandidate(candidateId, input, reviewer) {
   const reason = input.reason || p.classificationReason || 'Human-reviewed candidate classification.';
   const date = new Date(`${candidate.date_iso}T00:00:00Z`).toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric', timeZone: 'UTC' });
   db.transaction(() => {
-    db.prepare(`INSERT INTO events (id, date, days_ago, sev, type, conf, title, summary, first, second, watch, detail, source, stages_json, countries_json, timeline_json)
-      VALUES (@id, @date, @days_ago, @sev, @type, @conf, @title, @summary, @first, @second, @watch, @detail, @source, @stages_json, @countries_json, @timeline_json)`).run({
-      id: fields.eventId, date, days_ago: daysAgoOf(candidate.date_iso, getSnapshotDate()), sev: fields.sev,
+    /* date_iso is stored, not just days_ago: it is what lets sync-events.mjs
+       re-age this row when the snapshot date advances. Without it the event
+       would sit at today's age forever and never decay out of the index. */
+    db.prepare(`INSERT INTO events (id, date, date_iso, days_ago, sev, type, conf, title, summary, first, second, watch, detail, source, stages_json, countries_json, timeline_json)
+      VALUES (@id, @date, @date_iso, @days_ago, @sev, @type, @conf, @title, @summary, @first, @second, @watch, @detail, @source, @stages_json, @countries_json, @timeline_json)`).run({
+      id: fields.eventId, date, date_iso: candidate.date_iso, days_ago: daysAgoOf(candidate.date_iso, getSnapshotDate()), sev: fields.sev,
       type: p.eventType, conf: p.confidence, title: input.title || p.title, summary: input.summary || p.summary,
       first: p.first, second: p.second, watch: p.watch,
       detail: `${p.detail}\n\nReviewer note: ${reason}`,

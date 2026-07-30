@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import { db } from '../db.js';
 import { adminAuth } from '../middleware/adminAuth.js';
+import { getSnapshotDate } from '../meta.js';
+import { daysAgoOf } from '../history-events.js';
 import { candidates, pendingCandidates, candidateById, approveCandidate, rejectCandidate, publishPendingReviews, unpublishedReviews, dashboardSummary, scheduleAutoPublish, autoPublishStatus, cancelAutoPublish } from '../review-queue.js';
 
 export const adminRouter = Router();
@@ -127,13 +129,18 @@ adminRouter.delete('/owners/:companyId/:ownerName', (req, res) => {
 });
 
 /* ---- events (the live intelligence feed) ---- */
+/* dateISO is what makes an event re-ageable when the snapshot date advances
+   (see db.js events.date_iso). Accept it, and derive days_ago from it when
+   given so the two cannot disagree. */
 adminRouter.post('/events', (req, res) => {
   const e = req.body || {};
   if (!e.id || !e.title) return res.status(400).json({ error: 'id and title are required' });
-  db.prepare(`INSERT INTO events (id, date, days_ago, sev, type, conf, title, summary, first, second, watch, detail, source, stages_json, countries_json, timeline_json)
-    VALUES (@id, @date, @days_ago, @sev, @type, @conf, @title, @summary, @first, @second, @watch, @detail, @source, @stages_json, @countries_json, @timeline_json)`)
+  if (e.dateISO && !/^\d{4}-\d{2}-\d{2}$/.test(e.dateISO)) return res.status(400).json({ error: 'dateISO must be YYYY-MM-DD' });
+  const daysAgo = e.dateISO ? daysAgoOf(e.dateISO, getSnapshotDate()) : (e.daysAgo ?? 0);
+  db.prepare(`INSERT INTO events (id, date, date_iso, days_ago, sev, type, conf, title, summary, first, second, watch, detail, source, stages_json, countries_json, timeline_json)
+    VALUES (@id, @date, @date_iso, @days_ago, @sev, @type, @conf, @title, @summary, @first, @second, @watch, @detail, @source, @stages_json, @countries_json, @timeline_json)`)
     .run({
-      id: e.id, date: e.date ?? null, days_ago: e.daysAgo ?? 0, sev: e.sev ?? 5, type: e.type ?? null, conf: e.conf ?? 'Medium',
+      id: e.id, date: e.date ?? null, date_iso: e.dateISO ?? null, days_ago: daysAgo, sev: e.sev ?? 5, type: e.type ?? null, conf: e.conf ?? 'Medium',
       title: e.title, summary: e.summary ?? null, first: e.first ?? null, second: e.second ?? null, watch: e.watch ?? null,
       detail: e.detail ?? null, source: e.source ?? null,
       stages_json: JSON.stringify(e.stages ?? []), countries_json: JSON.stringify(e.countries ?? []), timeline_json: JSON.stringify(e.timeline ?? []),
@@ -146,12 +153,13 @@ adminRouter.put('/events/:id', (req, res) => {
   const e = req.body || {};
   const existing = db.prepare('SELECT id FROM events WHERE id = ?').get(id);
   if (!existing) return res.status(404).json({ error: 'Event not found' });
-  db.prepare(`UPDATE events SET date=COALESCE(?,date), days_ago=COALESCE(?,days_ago), sev=COALESCE(?,sev), type=COALESCE(?,type),
+  if (e.dateISO && !/^\d{4}-\d{2}-\d{2}$/.test(e.dateISO)) return res.status(400).json({ error: 'dateISO must be YYYY-MM-DD' });
+  db.prepare(`UPDATE events SET date=COALESCE(?,date), date_iso=COALESCE(?,date_iso), days_ago=COALESCE(?,days_ago), sev=COALESCE(?,sev), type=COALESCE(?,type),
     conf=COALESCE(?,conf), title=COALESCE(?,title), summary=COALESCE(?,summary), first=COALESCE(?,first), second=COALESCE(?,second),
     watch=COALESCE(?,watch), detail=COALESCE(?,detail), source=COALESCE(?,source),
     stages_json=COALESCE(?,stages_json), countries_json=COALESCE(?,countries_json), timeline_json=COALESCE(?,timeline_json),
     updated_at=datetime('now') WHERE id=?`)
-    .run(e.date ?? null, e.daysAgo ?? null, e.sev ?? null, e.type ?? null, e.conf ?? null, e.title ?? null, e.summary ?? null,
+    .run(e.date ?? null, e.dateISO ?? null, e.dateISO ? daysAgoOf(e.dateISO, getSnapshotDate()) : (e.daysAgo ?? null), e.sev ?? null, e.type ?? null, e.conf ?? null, e.title ?? null, e.summary ?? null,
       e.first ?? null, e.second ?? null, e.watch ?? null, e.detail ?? null, e.source ?? null,
       e.stages ? JSON.stringify(e.stages) : null, e.countries ? JSON.stringify(e.countries) : null, e.timeline ? JSON.stringify(e.timeline) : null,
       id);

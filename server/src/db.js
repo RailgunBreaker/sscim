@@ -183,7 +183,37 @@ CREATE TABLE IF NOT EXISTS briefings (
 for (const [table, column, ddl] of [
   ['event_candidates', 'dedupe_key', "ALTER TABLE event_candidates ADD COLUMN dedupe_key TEXT"],
   ['event_candidates', 'duplicate_of', "ALTER TABLE event_candidates ADD COLUMN duplicate_of TEXT"],
+  /* events.date_iso is the authoritative date every age derives from. Without
+     it, `days_ago` was the only date the table stored for events added through
+     the review queue, so advancing the snapshot date could not re-age them:
+     scripts/sync-events.mjs only knows the dates of *code-defined* events, and
+     reviewed ones stayed frozen at the age they had on the day they were
+     approved. Since the review queue is the live feed, those events never
+     decayed and held the index near its peak indefinitely. */
+  ['events', 'date_iso', 'ALTER TABLE events ADD COLUMN date_iso TEXT'],
 ]) {
   const has = db.prepare(`PRAGMA table_info(${table})`).all().some((c) => c.name === column);
   if (!has) db.exec(ddl);
+}
+
+/* One-time backfill of events.date_iso for rows that predate the column. The
+   display `date` ("Jul 29, 2026") is the only date those rows carry, so parse
+   it as UTC — the same calendar day it was formatted from. Idempotent: only
+   NULL rows are touched, so this is a no-op on every subsequent open. */
+{
+  const undated = db.prepare('SELECT id, date FROM events WHERE date_iso IS NULL AND date IS NOT NULL').all();
+  if (undated.length) {
+    const setIso = db.prepare('UPDATE events SET date_iso = ? WHERE id = ?');
+    const unparsed = [];
+    db.transaction(() => {
+      for (const row of undated) {
+        const ms = Date.parse(`${row.date} UTC`);
+        if (Number.isNaN(ms)) { unparsed.push(row.id); continue; }
+        setIso.run(new Date(ms).toISOString().slice(0, 10), row.id);
+      }
+    })();
+    if (unparsed.length) {
+      console.warn(`[db] could not derive date_iso for ${unparsed.length} event(s): ${unparsed.join(', ')}. They will not be re-aged when the snapshot date advances.`);
+    }
+  }
 }
