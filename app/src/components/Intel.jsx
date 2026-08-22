@@ -34,7 +34,7 @@ export default function Intel({ sel, setSel, model, scenario, onResetScenario, o
         </div>
         <div style={{ overflowY: "auto", padding: "8px 12px 12px", maxHeight: horizontal ? 420 : 440 }}>
           {feedTab === "watch" && <Watchlist model={model} setSel={setSel} />}
-          {feedTab === "explore" && <FacilityExplorer setSel={setSel} />}
+          {feedTab === "explore" && <FacilityExplorer setSel={setSel} model={model} />}
           {feedTab === "events" && (
             <>
               <IndexHistory engine={engine} events={EVENTS} onSelectEvent={(id) => setSel({ type: "event", id })} />

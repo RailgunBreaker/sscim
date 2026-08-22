@@ -76,9 +76,14 @@ export function buildFacilityNetwork({
   layer,
   CUSTOMERS = {},
   dependence = () => 0,
+  stageIds = [],
   maxLinks = DEFAULT_MAX_LINKS,
   maxLinksPerPair = MAX_LINKS_PER_COMPANY_PAIR,
 } = {}) {
+  /* Candidate meeting points for the co-input case below. Passing the stage
+     list is optional: without it the third case simply never fires and the
+     network behaves exactly as it did before. */
+  const meetingStages = Array.isArray(stageIds) ? stageIds : [];
   const byCompany = layer?.FACILITIES_BY_COMPANY || {};
   const links = [];
   let considered = 0;
@@ -122,6 +127,30 @@ export function buildFacilityNetwork({
               (c.stages || []).forEach((cStage) => {
                 const back = dependence(cStage, sStage) || 0;
                 if (back > best) { best = back; bestPair = [sStage, cStage]; flow = 'service'; }
+              });
+            });
+          }
+          /* Third case: CO-INPUT. Neither stage reaches the other, but both
+             feed a common one downstream — they are siblings in the DAG.
+
+             This is not an edge case. Unimicron and Ibiden make the ABF
+             substrates that NVIDIA's packages are built on; substrates and
+             logic_ai both feed advanced packaging and neither reaches the
+             other, so a forward-or-backward rule scored one of the most
+             watched constraints in the industry at zero. Twelve real company
+             relationships were being dropped this way, all of them substrate
+             or memory suppliers into fabless designers.
+
+             Strength is the MIN of the two paths to the meeting stage: the
+             coupling is only as strong as the weaker leg, because that is
+             what limits how much of one flows into the other's product. */
+          if (!best && meetingStages.length) {
+            (s.stages || []).forEach((sStage) => {
+              (c.stages || []).forEach((cStage) => {
+                meetingStages.forEach((m) => {
+                  const coupled = Math.min(dependence(sStage, m) || 0, dependence(cStage, m) || 0);
+                  if (coupled > best) { best = coupled; bestPair = [sStage, cStage]; flow = 'co-input'; }
+                });
               });
             });
           }

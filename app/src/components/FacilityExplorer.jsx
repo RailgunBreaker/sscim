@@ -9,6 +9,7 @@ import { flagEmoji } from '../data/glossary.js';
 import { pct } from '../interaction/lensEncoding.js';
 import Logo from './Logo.jsx';
 import TrackButton from './TrackButton.jsx';
+import FacilityGraph from './FacilityGraph.jsx';
 
 /* ====================================================================
    FacilityExplorer — pick one plant, walk its connections.
@@ -33,7 +34,7 @@ import TrackButton from './TrackButton.jsx';
 
 const MAX_ROWS = 40;
 
-export default function FacilityExplorer({ setSel }) {
+export default function FacilityExplorer({ setSel, model }) {
   const { data, engine } = useVault();
   const { FACILITY_LAYER, FACILITY_NETWORK, COMPANY_BY_ID, COUNTRY_NAMES } = data;
   const { STAGE_BY_ID } = engine;
@@ -190,6 +191,14 @@ export default function FacilityExplorer({ setSel }) {
           </button>
         </div>
       </div>
+
+      {/* The graph first: shape reads faster than a list, and the list below
+          is the complete version of the same thing. */}
+      {conn.degree > 0 && (
+        <div style={{ marginBottom: 10 }}>
+          <FacilityGraph focusId={focus.id} model={model} onFocus={goTo} onSelect={setSel} />
+        </div>
+      )}
 
       {conn.degree === 0 ? (
         <div className="mono" style={{ fontSize: 10, color: C.faint, lineHeight: 1.7 }}>

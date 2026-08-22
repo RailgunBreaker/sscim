@@ -212,7 +212,7 @@ load, and each has exactly one implementation.
 | Structural vulnerability | `engine/index.js` | Not a probability |
 | Operational impact / chain index | `engine/index.js` | Not a forecast |
 | Company criticality / vulnerability / contribution | `engine/index.js` | Three separate numbers, never blended |
-| Site-to-site network (~850 links) | `engine/facilityNetwork.js` | **Not a shipment route** — no dataset here records which plant ships to which plant |
+| Site-to-site network (~890 links) | `engine/facilityNetwork.js` | **Not a shipment route** — no dataset here records which plant ships to which plant |
 | Facility profiles | `engine/facilityProfile.js` | Generated from fields, not written per site |
 | Hazard footprints | `engine/facilities.js` | A screening circle; models no shaking intensity, building standards or fab hardening |
 | Index history | `engine/timeseries.js` | Replayed from the same events; attribution is **marginal**, not standalone |

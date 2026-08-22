@@ -56,6 +56,7 @@ function buildVaultState(rawBundle, source) {
   data.FACILITY_NETWORK = buildFacilityNetwork({
     layer: data.FACILITY_LAYER,
     CUSTOMERS: data.CUSTOMERS,
+    stageIds: data.STAGES.map((s) => s.id),
     dependence: (supplierStage, customerStage) => {
       const field = (reachCache[supplierStage] ||= engine.propagateTrace(supplierStage, 1, 'downstream').field);
       return field[customerStage] ?? 0;

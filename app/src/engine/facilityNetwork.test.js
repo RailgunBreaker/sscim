@@ -77,6 +77,62 @@ describe('buildFacilityNetwork', () => {
     expect(noEdge.links).toEqual([]);
   });
 
+  /* The third relationship class, and it is not an edge case. Unimicron and
+     Ibiden make the ABF substrates NVIDIA's packages are built on. Substrates
+     and logic_ai are SIBLINGS — both feed advanced packaging, neither reaches
+     the other — so a forward-or-backward rule scored one of the most watched
+     constraints in the industry at zero, and dropped 12 real company
+     relationships with it. */
+  it('links siblings that feed a common downstream stage, marked co-input', () => {
+    const sibling = buildFacilityLayer([
+      site('substrate_plant', { company: 'ibiden_co', stages: ['substrates'] }),
+      site('design_campus', { company: 'fabless_co', stages: ['logic_ai'], country: 'us' }),
+    ]);
+    /* substrates and logic_ai each reach adv_pkg; neither reaches the other. */
+    const reach = (a, b) => (b === 'adv_pkg' && (a === 'substrates' || a === 'logic_ai') ? 0.15 : 0);
+
+    const withoutStages = buildFacilityNetwork({
+      layer: sibling, CUSTOMERS: { ibiden_co: [['fabless_co', 0.2]] }, dependence: reach,
+    });
+    expect(withoutStages.links).toEqual([]); // the old behaviour, unchanged when stageIds is omitted
+
+    const withStages = buildFacilityNetwork({
+      layer: sibling, CUSTOMERS: { ibiden_co: [['fabless_co', 0.2]] }, dependence: reach,
+      stageIds: ['substrates', 'logic_ai', 'adv_pkg', 'systems'],
+    });
+    expect(withStages.links).toHaveLength(1);
+    expect(withStages.links[0].flow).toBe('co-input');
+    expect(withStages.links[0].from).toBe('substrate_plant');
+  });
+
+  /* Only as strong as the weaker leg: that is what limits how much of one
+     supplier's output can flow into the other's product. */
+  it('scores a co-input link by the weaker of the two paths to the meeting stage', () => {
+    const sibling = buildFacilityLayer([
+      site('weak_leg', { company: 'sup', stages: ['substrates'] }),
+      site('strong_leg', { company: 'cust', stages: ['logic_ai'], country: 'us' }),
+    ]);
+    const reach = (a, b) => (b !== 'adv_pkg' ? 0 : a === 'substrates' ? 0.1 : 0.9);
+    const n = buildFacilityNetwork({
+      layer: sibling, CUSTOMERS: { sup: [['cust', 1]] }, dependence: reach,
+      stageIds: ['substrates', 'logic_ai', 'adv_pkg'],
+    });
+    expect(n.links[0].dependence).toBeCloseTo(0.1, 9); // the min, not the max or the mean
+  });
+
+  it('prefers a real forward path over a co-input one when both exist', () => {
+    const both = buildFacilityLayer([
+      site('s', { company: 'sup', stages: ['wafers'] }),
+      site('c', { company: 'cust', stages: ['adv_fab'], country: 'tw' }),
+    ]);
+    const n = buildFacilityNetwork({
+      layer: both, CUSTOMERS: { sup: [['cust', 0.5]] },
+      dependence: (a, b) => (a === 'wafers' && b === 'adv_fab' ? 0.5 : b === 'systems' ? 0.9 : 0),
+      stageIds: ['wafers', 'adv_fab', 'systems'],
+    });
+    expect(n.links[0].flow).toBe('forward');
+  });
+
   it('excludes sites with no exposure weight — a fab under construction ships nothing', () => {
     const withFuture = buildFacilityLayer([
       site('sup_future', { company: 'sup', stages: ['wafers'], status: 'construction' }),

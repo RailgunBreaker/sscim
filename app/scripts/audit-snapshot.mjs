@@ -252,6 +252,7 @@ function main() {
     network = buildFacilityNetwork({
       layer: buildFacilityLayer(facilities),
       CUSTOMERS: bundle.customers,
+      stageIds: [...stageIds],
       dependence: (supplierStage, customerStage) => {
         const field = (reachCache[supplierStage] ||= engine.propagateTrace(supplierStage, 1, 'downstream').field);
         return field[customerStage] ?? 0;
