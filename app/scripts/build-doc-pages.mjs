@@ -20,6 +20,7 @@ import { findMarkdownDocs, repoDir, appDir } from './lib/find-markdown.mjs';
 import { addHeadingIds, rewriteLinks, pageFor, rootPrefix } from '../src/docs/docLinks.js';
 import { extractMath, restoreMath } from '../src/docs/docMath.js';
 import { labelFor } from '../src/docs/docTags.js';
+import { SITE_SECTIONS, SITE_MAP_FOOTNOTE } from '../src/components/siteMapLinks.js';
 
 const outDir = path.join(repoDir, 'dist-app');
 
@@ -77,6 +78,15 @@ header{position:sticky;top:0;z-index:5;border-bottom:1px solid var(--line);backg
 .markdown hr{border:0;border-top:1px solid var(--line);margin:30px 0}
 .markdown img{max-width:100%}
 .foot{margin-top:50px;padding-top:20px;border-top:1px solid var(--line);color:var(--faint);font-size:12.5px}
+.sitemap{border-top:1px solid var(--line);background:var(--panel2);padding:26px 24px 22px;margin-top:40px}
+.sitemap-inner{max-width:1280px;margin:auto}
+.sitemap-title{font-size:9px;letter-spacing:2px;color:var(--copper);margin:0 0 14px}
+.sitemap-cols{display:grid;gap:22px;grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+.sitemap h2{font-size:9.5px;letter-spacing:1.4px;color:var(--dim);margin:0 0 8px;font-weight:700}
+.sitemap ul{list-style:none;margin:0;padding:0;display:grid;gap:7px}
+.sitemap a{display:block;font-size:12.5px;line-height:1.35}
+.sitemap small{display:block;font-size:10.5px;color:var(--faint);line-height:1.45}
+.sitemap-foot{margin-top:20px;padding-top:14px;border-top:1px solid var(--line);font-size:10px;color:var(--faint);line-height:1.7}
 .tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
 .tag{border:1px solid var(--line);background:var(--panel2);color:var(--dim);border-radius:20px;padding:3px 10px;font-size:11px;letter-spacing:.2px}
 .tag:hover{border-color:var(--copper);color:var(--copper);text-decoration:none}
@@ -109,13 +119,36 @@ const shell = ({ title, path: docPath, body, root }) => `<!doctype html>
   <nav class="nav">
     <a href="${root}docs.html">All documents</a>
     <a href="${root}intro.html">Guide</a>
+    <a href="${root}updates.html">Updates</a>
     <a href="${root}sscim-app.html">Dashboard</a>
   </nav>
 </div></header>
 ${body}
+${siteMap(root)}
 </body>
 </html>
 `;
+
+/* The same site map the React pages render (src/components/SiteMap.jsx),
+   emitted as static HTML from the SAME link list — so a page added to one
+   renderer cannot go missing from the other. Document pages need it most:
+   without it, a reader who arrives on METHODOLOGY.md.html from a search
+   result can reach the document tree and nothing else. */
+function siteMap(root) {
+  const cols = SITE_SECTIONS.map((section) => `<div>
+    <h2>${escape(section.heading)}</h2>
+    <ul>${section.links.map((link) => {
+      const href = link.external ? link.href : `${root}${link.href}`;
+      const attrs = link.external ? ' target="_blank" rel="noopener noreferrer"' : '';
+      return `<li><a href="${escape(href)}"${attrs}>${escape(link.label)}</a><small>${escape(link.note)}</small></li>`;
+    }).join('')}</ul>
+  </div>`).join('');
+  return `<nav class="sitemap" aria-label="Site map"><div class="sitemap-inner">
+  <p class="sitemap-title">SITE MAP</p>
+  <div class="sitemap-cols">${cols}</div>
+  <p class="sitemap-foot">${escape(SITE_MAP_FOOTNOTE)}</p>
+</div></nav>`;
+}
 
 const docs = await findMarkdownDocs();
 const known = new Set(docs.map((d) => d.path));

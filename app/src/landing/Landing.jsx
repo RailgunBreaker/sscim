@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { T, LANG_LABELS } from './i18n.js';
 import Tex from '../components/Tex.jsx';
 import NewsTicker from '../components/NewsTicker.jsx';
+import SiteMap from '../components/SiteMap.jsx';
 
 const STYLE = `
   :root{--bg:#0C111C;--panel:#141B2B;--panel2:#0F1626;--line:#243149;--copper:#C98A3F;--copperDim:#8A6230;--red:#E25C4A;--amber:#DFA83D;--green:#4FA97F;--text:#E9E4D8;--dim:#8C96A8;--faint:#5A6478}
@@ -65,6 +66,7 @@ export default function Landing() {
             ))}
           </span>
           <a href="intro.html" style={{ fontSize: 13 }}>{t('navIntro')}</a>
+          <a href="updates.html" style={{ fontSize: 13 }}>{t('navUpdates')}</a>
           <a href="docs.html" style={{ fontSize: 13 }}>Documentation</a>
           <a className="btn solid" href="sscim-app.html">{t('launchDemo')}</a>
         </div>
@@ -131,10 +133,11 @@ export default function Landing() {
 
       <footer>
         <div className="wrap">
-          <p style={{ marginBottom: 10 }}><strong style={{ color: 'var(--dim)' }}>SSCIM</strong> · a GP News product · map data © OpenStreetMap contributors</p>
           <div className="disclaimer">{t('currentFooter')}</div>
         </div>
       </footer>
+
+      <SiteMap current="home" />
     </>
   );
 }

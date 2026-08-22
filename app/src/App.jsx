@@ -26,6 +26,7 @@ import { buildBaseGraph } from './engine/network.js';
 import Intel from './components/Intel.jsx';
 import Guide from './components/Guide.jsx';
 import Briefing from './components/Briefing.jsx';
+import SiteMap from './components/SiteMap.jsx';
 
 const GLOBAL_STYLE = `
   * { box-sizing: border-box; }
@@ -440,6 +441,8 @@ function DashboardBody() {
           <span style={{ color: C.red }}> · MODEL DIAGNOSTIC: the stage graph failed validation — see <a href="docs/METHODOLOGY.md.html" style={{ color: C.copper }}>Methodology</a>.</span>
         )}
       </footer>
+
+      <SiteMap current="dashboard" />
     </div>
   );
 }

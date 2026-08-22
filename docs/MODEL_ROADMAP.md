@@ -19,6 +19,55 @@ interface already supports it.
 
 ## Release history
 
+A dated, public version of this history — with the limits of each capability
+stated alongside it — is published at [updates.html](../updates.html). Both are
+generated from the same entries in `app/src/data/releases.js`, so the page and
+this document cannot drift apart.
+
+### Live-first release — delivered, current as of 22 August 2026
+
+The dashboard stopped offering ways to invent events and started offering the
+two things the record can actually support: what the chain looked like in the
+past, and what an individual reader needs to watch.
+
+- **scenario authoring removed** — the four preset crises, the draft composer,
+  the scenario builder and the propagation playback controls. A tool whose
+  claim is that its events are dated, sourced and human-reviewed should not
+  spend its main interface on invented ones;
+- **history review** — a slider that re-derives the entire model, not just the
+  chart, as it stood on any past date, using the engine's own back-dating rule;
+- an event timeline where each marker is sized by that event's **marginal**
+  contribution to the index on its own day, since propagation saturates and
+  standalone magnitudes do not add up;
+- a **watchlist** for specific companies, products (chain stages), plants, or a
+  route through the chain, stored in the reader's browser and deliberately
+  never written into a shared link;
+- plant markers that carry function in their **shape** and live effect in their
+  **colour**, so the map reads as geography at rest and stays legible without
+  colour vision;
+- one remaining hypothesis — the hazard overlay — shown in amber, labelled, and
+  cleared in one click.
+
+### Site-layer release — delivered 22 August 2026
+
+A country marker cannot answer the question an earthquake asks, because a
+hazard happens at a point.
+
+- 244 named production and R&D sites covering all 109 modeled companies across
+  the 16 modeled countries, with operator, coordinates, output, stage mapping
+  and operating status;
+- a hazard footprint tool reporting the plants inside a radius and the share of
+  each stage's modeled sites they carry;
+- a standardized, generated profile for every site, so two profiles differ only
+  where the sites differ;
+- a derived site-to-site network composed from the company customer table and
+  the stage flow graph;
+- audit checks that hard-fail a dangling site or a stub profile.
+
+The site layer knows where plants are and what they make; it does not know how
+much they make. Significance is a 1–5 analyst ordinal, so every share it
+reports is a share of the modeled sample and never of world capacity.
+
 ### Foundation release — delivered
 
 The first release established the research model and the public exploration
@@ -39,9 +88,9 @@ This release made the method reproducible, but updating evidence still
 depended heavily on manual editing and the interface did not clearly separate
 reviewed source material from generated proposals.
 
-### Reviewed-vault release — delivered, current as of 30 July 2026
+### Reviewed-vault release — delivered 30 July 2026
 
-The current release turns the earlier snapshot into a reviewed publication
+This release turned the earlier snapshot into a reviewed publication
 workflow while retaining the static fallback:
 
 - a SQLite evidence vault and an Express API for events, companies,

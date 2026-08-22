@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { DOCUMENT_LIBRARY } from './generated-library.js';
 import { pageFor } from './docLinks.js';
 import { TAG_ORDER, labelFor } from './docTags.js';
+import SiteMap from '../components/SiteMap.jsx';
 
 /* The searchable, filterable index over the documentation.
 
@@ -174,5 +175,9 @@ export default function Docs() {
         </div>
       </section>)}
     </main>
+
+    {/* The library lists documents; the site map lists the rest of the
+        project, which is otherwise reachable only from the landing page. */}
+    <SiteMap current="docs" />
   </>;
 }

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { T, LANG_LABELS } from './i18n.js';
 import Tex from '../components/Tex.jsx';
 import NewsTicker from '../components/NewsTicker.jsx';
+import SiteMap from '../components/SiteMap.jsx';
 
 const STYLE = `
   :root{--bg:#0C111C;--panel:#141B2B;--panel2:#0F1626;--line:#243149;--copper:#C98A3F;--copperDim:#8A6230;--red:#E25C4A;--amber:#DFA83D;--green:#4FA97F;--text:#E9E4D8;--dim:#8C96A8;--faint:#5A6478}
@@ -124,8 +125,9 @@ export default function Intro() {
         <Step n="3" titleKey="step3" tipKey="tip3" bodyKey="step3Body" t={t} />
         <Step n="4" titleKey="step4" bodyKey="step4Body" t={t} />
         <Step n="5" titleKey="step5" bodyKey="step5Body" t={t} />
-        <Step n="6" titleKey="step6" bodyKey="step6Body" t={t} />
-        <Step n="7" titleKey="step7" bodyKey="step7Body" t={t} />
+        <Step n="6" titleKey="step5b" bodyKey="step5bBody" t={t} />
+        <Step n="7" titleKey="step6" bodyKey="step6Body" t={t} />
+        <Step n="8" titleKey="step7" bodyKey="step7Body" t={t} />
 
         <h2>{t('h2_4')}</h2>
         <div className="formula mono">
@@ -145,9 +147,11 @@ export default function Intro() {
 
       <footer>
         <div className="wrap">
-          <p><strong style={{ color: 'var(--dim)' }}>SSCIM</strong> · a GP News product · map data © OpenStreetMap contributors · {t('currentFooter')}</p>
+          <p>{t('currentFooter')}</p>
         </div>
       </footer>
+
+      <SiteMap current="intro" />
     </>
   );
 }

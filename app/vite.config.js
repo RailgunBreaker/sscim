@@ -6,8 +6,10 @@ import { dirname, resolve } from 'node:path';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // SSCIM build config — multi-page: landing (index.html), guide (intro.html),
-// and the dashboard (sscim-app.html) are three separate React entry points
-// built from this one project, sharing theme/i18n-pattern/components (Tex, etc).
+// updates (updates.html), the dashboard (sscim-app.html), the documentation
+// reader (docs.html) and the operations dashboard (admin.html) are separate
+// React entry points built from this one project, sharing theme, i18n pattern
+// and components (Tex, SiteMap, NewsTicker, …).
 // base: './' keeps all built asset paths relative, so the bundle works whether
 // served from a domain root or a GitHub Pages project subpath.
 export default defineConfig({
@@ -21,6 +23,7 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, 'index.html'),
         intro: resolve(__dirname, 'intro.html'),
+        updates: resolve(__dirname, 'updates.html'),
         dashboard: resolve(__dirname, 'sscim-app.html'),
         admin: resolve(__dirname, 'admin.html'),
         docs: resolve(__dirname, 'docs.html'),

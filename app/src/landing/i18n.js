@@ -11,13 +11,18 @@ export const T = {
   currentFooter: { en: 'SSCIM provides descriptive supply-chain sensitivity analysis. It is not investment advice.' },
   badge: { en: 'RESEARCH PROTOTYPE', zh: '研究原型', tw: '研究原型', ja: 'リサーチ・プロトタイプ' },
   navIntro: { en: 'Guide & methodology', zh: '指南与方法论', tw: '指南與方法論', ja: 'ガイドと方法論' },
+  navUpdates: { en: 'Updates', zh: '更新', tw: '更新', ja: 'アップデート' },
   launchDemo: { en: 'Open the dashboard →', zh: '打开仪表盘 →', tw: '開啟儀表板 →', ja: 'ダッシュボードを開く →' },
 
+  /* Fallback ticker copy, shown only when the reviewed vault is unreachable.
+     Deliberately carries NO dataset date: the previous version hard-coded one,
+     which then sat three weeks stale on the front page while the pipeline
+     published daily. The live readout gets its date from the vault. */
   ticker: {
-    en: 'SSCIM INTELLIGENCE · dataset as of 2026-07-29 · supply-chain sensitivity and comparison analysis — not a calibrated forecast and not investment advice',
-    zh: '研究原型 · 冻结的演示快照，数据截至 2026-07-29 · 一个基于精选样本的敏感性与比较引擎——不是实时数据，不是经过校准的预测，也不构成投资建议',
-    tw: '研究原型 · 凍結的示範快照，資料截至 2026-07-29 · 一個基於精選樣本的敏感度與比較引擎——不是即時數據，不是經過校準的預測，也不構成投資建議',
-    ja: 'リサーチ・プロトタイプ · 凍結されたデモンストレーション用スナップショット（データ基準日 2026-07-29） · 精選サンプルに基づく感度分析・比較エンジンです——ライブフィードでも、較正済みの予測でも、投資助言でもありません',
+    en: 'SSCIM INTELLIGENCE · supply-chain sensitivity and comparison analysis — not a calibrated forecast and not investment advice',
+    zh: '研究原型 · 基于精选样本的敏感性与比较引擎——不是经过校准的预测，也不构成投资建议',
+    tw: '研究原型 · 基於精選樣本的敏感度與比較引擎——不是經過校準的預測，也不構成投資建議',
+    ja: 'リサーチ・プロトタイプ · 精選サンプルに基づく感度分析・比較エンジンです——較正済みの予測でも、投資助言でもありません',
   },
 
   heroH1: {
@@ -96,13 +101,13 @@ export const T = {
     tw: '地圖圍繞「國家×環節」的功能中心及連接它們的環節邊組織——126 個功能中心、1030 條建模的環節中介連接——因此單一國家會顯示它承擔的多項半導體功能，而非一個圓點。',
     ja: '地図は「国 × 工程」の機能センターと、それらをつなぐ工程エッジを軸に構成されます——126センター、1030のモデル化された工程媒介の接続——ひとつの国が担う複数の半導体機能が示され、単なる点にはなりません。',
   },
-  cardN2K: { en: 'TRACE & PLAY', zh: '追踪与演示', tw: '追蹤與演示', ja: '追跡と再生' },
-  cardN2H: { en: 'Trace a route, play the shock', zh: '追踪路线，演示冲击', tw: '追蹤路線，演示衝擊', ja: '経路を追跡し、衝撃を再生' },
+  cardN2K: { en: 'PLANTS & HAZARDS', zh: '工厂与灾害', tw: '工廠與災害', ja: '工場とハザード' },
+  cardN2H: { en: 'Down to the individual plant', zh: '细化到单座工厂', tw: '細化到單座工廠', ja: '個々の工場まで' },
   cardN2P: {
-    en: 'Pick an origin and destination and trace the strongest modeled route across several centres; apply a shock to any centres and watch it propagate hop-by-hop across the map and the topology view together.',
-    zh: '选择起点与终点，追踪跨越多个功能中心的最强建模路径；对任意功能中心施加冲击，并在地图与拓扑视图中同步逐跳观看其传导。',
-    tw: '選擇起點與終點，追蹤跨越多個功能中心的最強建模路徑；對任意功能中心施加衝擊，並在地圖與拓撲視圖中同步逐跳觀看其傳導。',
-    ja: '起点と終点を選び、複数のセンターにまたがる最も強いモデル化された経路を追跡。任意のセンターに衝撃を与え、地図とトポロジー表示の両方でホップごとに伝播する様子を確認できます。',
+    en: '244 named sites across all 109 modeled companies — what each plant makes and which chain steps it feeds. Drop a hazard radius anywhere and the readout names the plants inside it and the share of each step they carry. Significance is an analyst ordinal, not capacity, and every share is a share of the modeled sample.',
+    zh: '涵盖全部 109 家建模公司的 244 座具名厂址——每座工厂生产什么、供应链条上的哪些环节。在任意位置画出灾害半径，读数即列出圈内的工厂名称，以及它们在各环节中所占的份额。重要度是分析师给出的序数，并非产能；所有份额均为建模样本内的份额。',
+    tw: '涵蓋全部 109 家建模公司的 244 座具名廠址——每座工廠生產什麼、供應鏈上的哪些環節。在任意位置畫出災害半徑，讀數即列出圈內的工廠名稱，以及它們在各環節中所佔的份額。重要度是分析師給出的序數，並非產能；所有份額均為建模樣本內的份額。',
+    ja: 'モデル化した109社すべてを網羅する244の実名拠点——各工場が何を作り、チェーンのどの工程を支えているか。任意の地点にハザード半径を描くと、その円内の工場名と各工程に占める比率が一覧表示されます。重要度は生産能力ではなくアナリストの順序尺度であり、比率はすべてモデル化サンプル内の比率です。',
   },
   cardN3K: { en: 'NETWORK ANALYSIS', zh: '网络分析', tw: '網路分析', ja: 'ネットワーク分析' },
   cardN3H: { en: 'Inspect, remove, compare', zh: '检视、移除、比较', tw: '檢視、移除、比較', ja: '検査・除去・比較' },
