@@ -82,6 +82,40 @@ is deliberately smaller than the standalone figure whenever events overlap.
 | Cluster radius | 34 screen pixels (~38 km at country zoom) | Overlap is a screen-space problem, so the rule is in screen space |
 | Site link floor | 1e-9 | Numerical dust only — a floor near the real values deleted the entire back end of the chain |
 
+## Where the methods come from
+
+Every technique the engine runs is somebody else's, and each is cited in
+[Source register §3](SOURCE-REGISTER.md#3-methods-and-the-literature-behind-them)
+with the file that implements it:
+
+| Method | Implemented in | Cited to |
+| --- | --- | --- |
+| Herfindahl–Hirschman concentration | `engine/math.js` `hhiWithResidual()` | Hirschman 1945; DOJ/FTC *Merger Guidelines* 2023 for the thresholds |
+| Noisy-OR combination | `engine/math.js` `combineSigned()` | Pearl 1988; Oniśko, Druzdzel and Wasyluk 2001 |
+| Exponential salience decay | `engine/math.js` `decay()` | Wu and Huberman 2007 |
+| Betweenness centrality | `engine/networkAnalysis.js` `betweenness()` | Freeman 1977; Brandes 2001 |
+| Topological ordering | `engine/math.js` `topologicalSort()` | Kahn 1962 |
+| Widest-path / bottleneck routing | `engine/networkPaths.js` | Hu 1961 |
+| Node-removal sensitivity | `engine/networkAnalysis.js` | Albert, Jeong and Barabási 2000 |
+| One-at-a-time sensitivity bands | `engine/priors.js` | Saltelli and Annoni 2010 |
+| Shock propagation in production networks | `engine/index.js`, `engine/facilityNetwork.js` | Acemoglu et al. 2012; Barrot and Sauvagnat 2016; Carvalho et al. 2021; Inoue and Todo 2019 |
+| Disruption severity | `engine/index.js` | Craighead et al. 2007 |
+| Input-output structure | `engine/graph.js` | Miller and Blair 2009 |
+
+**The priors above are not cited, and that is deliberate.** The 12-day
+half-life, the transmission coefficients and the stage weights are ours (Tier
+D). A reference attached to one of them would launder an assumption into a
+finding. What the literature supports is the *form* of each calculation; the
+*values* fed into it are declared judgement, and the distinction is the whole
+point of this document.
+
+Two of these are cited against themselves rather than in support. Saltelli and
+Annoni is the standard critique of one-at-a-time sensitivity analysis, which is
+exactly what `priors.js` does — it is listed so the limitation is visible, not
+because it endorses the approach. Miller and Blair is cited to be explicit that
+the dependence matrices are equal-allocation priors, **not** measured technical
+coefficients.
+
 ## The academic boundary
 
 SSCIM is a **deterministic sensitivity model** over a versioned snapshot. It

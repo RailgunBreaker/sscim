@@ -16,12 +16,12 @@ it does **not** know.
 
 | Document | Covers | Last updated |
 | --- | --- | --- |
-| [Algorithm and priors](ALGORITHM-AND-PRIORS.md) | Every declared coefficient, what is computed rather than collected, and why none of it is fitted | 2026-08-22 |
+| [Algorithm and priors](ALGORITHM-AND-PRIORS.md) | Every declared coefficient, what is computed rather than collected, why none of it is fitted, and the literature each method comes from | 2026-08-23 |
 | [Companies and ownership](COMPANIES-AND-OWNERSHIP.md) | The 109 modeled companies, their stage stakes, and the 75 shareholder rows | 2026-08-22 |
 | [Events](EVENTS.md) | The 163 dated events, both curation routes, and the review gate between a candidate and an event | 2026-08-22 |
 | [Facilities](FACILITIES.md) | The 275 named plants, what is sourced inside a record and what is judgement | 2026-08-22 |
 | [Market and display data](MARKET-AND-DISPLAY-DATA.md) | Quotes, basemap tiles and logos — everything that is shown but never computed with | 2026-08-22 |
-| [Source register](SOURCE-REGISTER.md) | **Every source cited, in Chicago bibliography style, alphabetised within issuing body** — generated from the vault | 2026-08-22 |
+| [Source register](SOURCE-REGISTER.md) | **Every source cited, in Chicago bibliography style, alphabetised within issuing body** — generated from the vault, including the literature behind every method the engine runs | 2026-08-23 |
 | [Supply-chain structure](SUPPLY-CHAIN-STRUCTURE.md) | The 24 stages, 34 flow edges, 243 customer relationships and the derived site network | 2026-08-22 |
 
 ## On citation completeness
@@ -51,6 +51,7 @@ authoritative register:
 | --- | --- | --- |
 | `server/scripts/resolve-citations.mjs` | *Federal Register* | "BIS interim final rule (May 15, 2020)" → the rule, its title, agency, locator and URL |
 | `server/scripts/resolve-sec-citations.mjs` | SEC EDGAR | "Qualcomm / NXP joint announcement" → the 8-K that carries the release |
+| `server/scripts/resolve-method-citations.mjs` | Crossref, Open Library | a technique the engine runs → the paper or book it comes from, with its DOI |
 
 Neither will write a citation unless an **exact identifier** ties the two
 together: a register citation, an executive order number, an SEC accession

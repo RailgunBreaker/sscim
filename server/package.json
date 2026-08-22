@@ -17,7 +17,9 @@
     "api:restart": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/restart-api.ps1",
     "sources": "node scripts/build-source-register.mjs",
     "sources:resolve": "node scripts/resolve-citations.mjs",
-    "sources:propose": "node scripts/resolve-citations.mjs --propose"
+    "sources:propose": "node scripts/resolve-citations.mjs --propose",
+    "sources:sec": "node scripts/resolve-sec-citations.mjs",
+    "sources:methods": "node scripts/resolve-method-citations.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.115.0",

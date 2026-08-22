@@ -76,6 +76,15 @@ const RESOLVED = readIf(resolve(HERE, '..', 'src', 'resolved-citations.json'));
    only on a confirmed accession number. */
 const RESOLVED_SEC = readIf(resolve(HERE, '..', 'src', 'resolved-citations-sec.json'));
 
+/* The literature behind the mathematics, verified by
+   scripts/resolve-method-citations.mjs against Crossref, Open Library or the
+   issuing body. A list rather than a map keyed by event: a method is not
+   attached to one dated thing, it underlies every number the engine emits. */
+const METHOD_CITATIONS = (() => {
+  const p = resolve(HERE, '..', 'src', 'citations-methods.json');
+  return existsSync(p) ? JSON.parse(readFileSync(p, 'utf8')) : [];
+})();
+
 /* Registrant names as EDGAR stores them are shouted and suffixed for its own
    indexes — "QUALCOMM INC/DE", "NVIDIA CORP". Rendered literally they read as
    a database dump. Unknown names pass through untouched rather than being
@@ -372,13 +381,61 @@ for (const fam of famOrder) {
   push('');
 }
 
-/* --- 3. institutional publishers ----------------------------------------- */
+/* --- 3. methods ----------------------------------------------------------
+   The literature behind the mathematics. Kept next to the event sources
+   rather than in an appendix: where a number came from and how it was
+   combined are the same kind of question. */
 push('---');
 push('');
-push('## 3. Institutional publishers cited');
+push('## 3. Methods and the literature behind them');
+push('');
+push('Every technique the engine actually runs, tied to the file that runs it.');
+push('Verified against Crossref, Open Library or the issuing body — no DOI here');
+push('was written from memory.');
+push('');
+push('**The declared priors are deliberately absent from this section.** The');
+push('12-day half-life, the transmission coefficients and the stage weights are');
+push('analyst judgement (Tier D). Attaching a reference to one of them would');
+push('launder an assumption into a finding, which is the opposite of what this');
+push('register is for. What is cited is the *form* of each calculation, never the');
+push('*values* fed into it.');
+push('');
+for (const m of [...new Set(METHOD_CITATIONS.map((c) => c.method))].sort()) {
+  const group = METHOD_CITATIONS.filter((c) => c.method === m);
+  push(`### ${m}`);
+  push('');
+  push(`Implemented in \`${group[0].implementedIn}\`.`);
+  push('');
+  for (const c of group.sort((a, b) => String(a.author).localeCompare(String(b.author)))) {
+    push(`- ${chicago({
+      author: c.author,
+      /* Crossref preserves a journal's own footnote marks in the title —
+         Brandes 2001 comes back as "…betweenness centrality*". They are
+         typography from the page, not part of the title. */
+      title: String(c.title || '').replace(/[*†‡]+\s*$/, '').trim(),
+      standalone: c.standalone || c.type === 'book' || c.type === 'report',
+      container: c.container,
+      volume: c.volume,
+      issue: c.issue,
+      pages: c.pages,
+      date: c.year ? String(c.year) : null,
+      publisher: c.publisher,
+      doi: c.doi,
+      url: c.doi ? null : c.url,
+    })}`);
+    push(`  *Why cited:* ${c.role}`);
+    push(`  *Verified against:* ${c.verifiedAgainst}.${c.verificationNote ? ` ${c.verificationNote}` : ''}`);
+  }
+  push('');
+}
+
+/* --- 4. institutional publishers ----------------------------------------- */
+push('---');
+push('');
+push('## 4. Institutional publishers cited');
 push('');
 push('The bodies the register rests on, as organisational authors. Individual');
-push('documents appear in section 2; this is the set of institutions.');
+push('documents appear in sections 2 and 3; this is the set of institutions.');
 push('');
 const byKind = {};
 for (const [key, p] of Object.entries(PUBLISHERS)) (byKind[p.kind] ||= []).push({ key, ...p });
@@ -389,10 +446,10 @@ for (const kind of Object.keys(byKind).sort()) {
   push('');
 }
 
-/* --- 4. facilities -------------------------------------------------------- */
+/* --- 5. facilities -------------------------------------------------------- */
 push('---');
 push('');
-push('## 4. Facility sources');
+push('## 5. Facility sources');
 push('');
 push('Site identity, location and output come from publicly available company');
 push('facility listings and programme announcements — corporate self-published');
@@ -407,10 +464,10 @@ for (const p of [...facilityByPublisher.values()].sort((a, b) => a.publisher.loc
 }
 push('');
 
-/* --- 5. evidence notes ---------------------------------------------------- */
+/* --- 6. evidence notes ---------------------------------------------------- */
 push('---');
 push('');
-push('## 5. Evidence-note sources');
+push('## 6. Evidence-note sources');
 push('');
 push('Attached to specific figures — a stage share, a company share, an ownership');
 push('row, a customer relationship. These are the most fully-formed citations in');

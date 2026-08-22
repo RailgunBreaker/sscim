@@ -38,15 +38,33 @@ export function chicago(c) {
     parts.push(`${c.description}.`);
   }
 
-  if (c.container) parts.push(`*${c.container}*,`);
+  /* Journal articles take Chicago's volume/issue/year/page form:
+       *Journal* 25, no. 2 (2001): 163–177.
+     This is one unit, not four independent fields, so it is assembled here
+     rather than by stringing commas together at each call site. */
+  if (c.container && c.volume) {
+    const issue = c.issue ? `, no. ${c.issue}` : '';
+    const year = c.date ? ` (${c.date})` : '';
+    const pages = c.pages ? `: ${String(c.pages).replace(/-/g, '–')}` : '';
+    parts.push(`*${c.container}* ${c.volume}${issue}${year}${pages}.`);
+  } else if (c.container) {
+    parts.push(`*${c.container}*,`);
+  }
   if (c.edition) parts.push(`${c.edition},`);
+
+  /* Book publisher, in Chicago's "Place: Publisher" slot. Place is omitted
+     rather than guessed — Open Library does not reliably carry it, and an
+     invented city is exactly the kind of plausible detail this file exists to
+     keep out. */
+  if (c.publisher && !c.container) parts.push(`${c.publisher},`);
 
   /* Federal Register and similar legal locators. Comma only when a date
      follows; otherwise the locator closes the entry, and a trailing comma
      before a bracket reads as a citation that was cut off. */
   if (c.register) parts.push(c.date ? `${c.register},` : `${c.register}.`);
 
-  if (c.date) parts.push(`${c.date}.`);
+  /* Date, unless the journal form above already carried it. */
+  if (c.date && !(c.container && c.volume)) parts.push(`${c.date}.`);
   if (c.doi) parts.push(`https://doi.org/${c.doi}.`);
   else if (c.url) parts.push(`${c.url}.`);
   if (c.accessed) parts.push(`Accessed ${c.accessed}.`);

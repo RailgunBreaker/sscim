@@ -257,10 +257,131 @@ alphabetised. The bracketed date is the event the source supports.
 
 ---
 
-## 3. Institutional publishers cited
+## 3. Methods and the literature behind them
+
+Every technique the engine actually runs, tied to the file that runs it.
+Verified against Crossref, Open Library or the issuing body — no DOI here
+was written from memory.
+
+**The declared priors are deliberately absent from this section.** The
+12-day half-life, the transmission coefficients and the stage weights are
+analyst judgement (Tier D). Attaching a reference to one of them would
+launder an assumption into a finding, which is the opposite of what this
+register is for. What is cited is the *form* of each calculation, never the
+*values* fed into it.
+
+### Betweenness centrality
+
+Implemented in `app/src/engine/networkAnalysis.js — betweenness()`.
+
+- Brandes, Ulrik. "A faster algorithm for betweenness centrality." *The Journal of Mathematical Sociology* 25, no. 2 (2001): 163–177. https://doi.org/10.1080/0022250x.2001.9990249.
+  *Why cited:* The algorithm implemented, and the normalisation used.
+  *Verified against:* Crossref.
+- Freeman, Linton C. "A Set of Measures of Centrality Based on Betweenness." *Sociometry* 40, no. 1 (1977): 35. https://doi.org/10.2307/3033543.
+  *Why cited:* The definition of the measure the algorithm computes.
+  *Verified against:* Crossref.
+
+### Disruption severity in supply chains
+
+Implemented in `app/src/engine/index.js — severity and structural vulnerability`.
+
+- Craighead, Christopher W., et al. "The Severity of Supply Chain Disruptions: Design Characteristics and Mitigation Capabilities." *Decision Sciences* 38, no. 1 (2007): 131–156. https://doi.org/10.1111/j.1540-5915.2007.00151.x.
+  *Why cited:* The design factors that determine how severe a supply-chain disruption becomes — density, complexity, node criticality.
+  *Verified against:* Crossref.
+
+### Exponential decay of event salience
+
+Implemented in `app/src/engine/math.js — decay(); priors.js — halfLifeDays`.
+
+- Wu, Fang, and Bernardo A. Huberman. "Novelty and collective attention." *Proceedings of the National Academy of Sciences* 104, no. 45 (2007): 17599–17601. https://doi.org/10.1073/pnas.0704916104.
+  *Why cited:* Empirical basis for treating attention to an event as decaying rather than persisting. The 12-day half-life itself is a declared prior, not a fitted value.
+  *Verified against:* Crossref.
+
+### Herfindahl–Hirschman concentration index
+
+Implemented in `app/src/engine/math.js — hhiWithResidual()`.
+
+- Hirschman, Albert Otto. *National Power and the Structure of Foreign Trade*. University of California Press, 1945. https://openlibrary.org/works/OL2745858W.
+  *Why cited:* Where the concentration index originates. Hirschman introduced it here; Herfindahl arrived at it independently in 1950, and the joint name is later usage.
+  *Verified against:* Open Library.
+- U.S. Department of Justice and Federal Trade Commission. *Merger Guidelines*. 2023. https://www.ftc.gov/system/files/ftc_gov/pdf/2023_merger_guidelines_final_12.18.2023.pdf.
+  *Why cited:* The concentration thresholds the screening rules are set against. Cited for the thresholds only: this model measures share of a modeled sample, not a legally defined market.
+  *Verified against:* Publisher website. Document identity confirmed at the issuing agency; PDF body text not parsed.
+
+### Input-output structure
+
+Implemented in `app/src/engine/graph.js — stage dependence matrices`.
+
+- Miller, Ronald E., and Peter D. Blair. "Input-Output Analysis." Cambridge University Press, 2009. https://doi.org/10.1017/cbo9780511626982.
+  *Why cited:* The input-output framework the stage graph approximates. Cited to be explicit that the dependence matrices are equal-allocation priors, not measured technical coefficients.
+  *Verified against:* Crossref.
+
+### Node-removal sensitivity
+
+Implemented in `app/src/engine/networkAnalysis.js — removal_impact metric`.
+
+- Albert, Réka, Hawoong Jeong, and Albert-László Barabási. "Error and attack tolerance of complex networks." *Nature* 406, no. 6794 (2000): 378–382. https://doi.org/10.1038/35019019.
+  *Why cited:* The attack-tolerance framing: how much connectivity a network loses when a node is removed.
+  *Verified against:* Crossref.
+
+### Noisy-OR combination
+
+Implemented in `app/src/engine/math.js — combineSigned()`.
+
+- Oniśko, Agnieszka, Marek J. Druzdzel, and Hanna Wasyluk. "Learning Bayesian network parameters from small data sets: application of Noisy-OR gates." *International Journal of Approximate Reasoning* 27, no. 2 (2001): 165–182. https://doi.org/10.1016/s0888-613x(01)00039-1.
+  *Why cited:* The noisy-OR gate as a parameter-reduction device, and its behaviour on small samples.
+  *Verified against:* Crossref.
+- Pearl, Judea. *Probabilistic Reasoning in Intelligent Systems*. Morgan Kaufmann Publishers, 1988. https://openlibrary.org/works/OL4624598W.
+  *Why cited:* Origin of the noisy-OR gate: combining independent causes of an effect without letting the combination exceed its bound.
+  *Verified against:* Open Library.
+
+### One-at-a-time sensitivity bands
+
+Implemented in `app/src/engine/priors.js — low/high prior bands`.
+
+- Saltelli, Andrea, and Paola Annoni. "How to avoid a perfunctory sensitivity analysis." *Environmental Modelling &amp; Software* 25, no. 12 (2010): 1508–1517. https://doi.org/10.1016/j.envsoft.2010.04.012.
+  *Why cited:* Global sensitivity analysis reference, and the standard critique of the one-at-a-time approach this model uses. Cited as a stated limitation, not as endorsement.
+  *Verified against:* Crossref.
+
+### Shock propagation in production networks
+
+Implemented in `app/src/engine/index.js — operational impact propagation`.
+
+- Barrot, Jean-Noël, and Julien Sauvagnat. "Input Specificity and the Propagation of Idiosyncratic Shocks in Production Networks." *The Quarterly Journal of Economics* 131, no. 3 (2016): 1543–1592. https://doi.org/10.1093/qje/qjw018.
+  *Why cited:* Evidence that input specificity — the absence of substitutes — governs propagation strength. The dependence matrices encode this idea as a prior.
+  *Verified against:* Crossref.
+- Carvalho, Vasco M, et al. "Supply Chain Disruptions: Evidence from the Great East Japan Earthquake." *The Quarterly Journal of Economics* 136, no. 2 (2020): 1255–1321. https://doi.org/10.1093/qje/qjaa044.
+  *Why cited:* Firm-level evidence from a natural disaster that upstream and downstream propagation both occur — the empirical case for a site-level layer.
+  *Verified against:* Crossref.
+- Inoue, Hiroyasu, and Yasuyuki Todo. "Firm-level propagation of shocks through supply-chain networks." *Nature Sustainability* 2, no. 9 (2019): 841–847. https://doi.org/10.1038/s41893-019-0351-x.
+  *Why cited:* Simulation evidence on how far firm-level supply-chain shocks travel, supporting a bounded propagation horizon.
+  *Verified against:* Crossref.
+- "The Network Origins of Aggregate Fluctuations." *Econometrica* 80, no. 5 (2012): 1977–2016. https://doi.org/10.3982/ecta9623.
+  *Why cited:* Why disaggregated network structure, rather than aggregate shares, governs how a local shock spreads.
+  *Verified against:* Crossref.
+
+### Topological ordering of a DAG
+
+Implemented in `app/src/engine/math.js — topologicalSort()`.
+
+- Kahn, A. B. "Topological sorting of large networks." *Communications of the ACM* 5, no. 11 (1962): 558–562. https://doi.org/10.1145/368996.369025.
+  *Why cited:* The ordering algorithm used to evaluate stages in dependency order.
+  *Verified against:* Crossref.
+
+### Widest-path / bottleneck routing
+
+Implemented in `app/src/engine/networkPaths.js — bottleneck objective`.
+
+- Hu, T. C. "Letter to the Editor—The Maximum Capacity Route Problem." *Operations Research* 9, no. 6 (1961): 898–900. https://doi.org/10.1287/opre.9.6.898.
+  *Why cited:* The maximum-capacity route problem, which the bottleneck ranking solves.
+  *Verified against:* Crossref.
+
+---
+
+## 4. Institutional publishers cited
 
 The bodies the register rests on, as organisational authors. Individual
-documents appear in section 2; this is the set of institutions.
+documents appear in sections 2 and 3; this is the set of institutions.
 
 **Filings**
 
@@ -303,7 +424,7 @@ documents appear in section 2; this is the set of institutions.
 
 ---
 
-## 4. Facility sources
+## 5. Facility sources
 
 Site identity, location and output come from publicly available company
 facility listings and programme announcements — corporate self-published
@@ -438,7 +559,7 @@ judgement, and each record says so in its own source string.
 
 ---
 
-## 5. Evidence-note sources
+## 6. Evidence-note sources
 
 Attached to specific figures — a stage share, a company share, an ownership
 row, a customer relationship. These are the most fully-formed citations in
