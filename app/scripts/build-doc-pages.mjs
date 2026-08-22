@@ -170,7 +170,16 @@ function makeTree(items, currentPath, fromPath) {
     }
     branch.set(parts.at(-1), doc);
   }
-  const render = (branch) => `<ul class="tree-list">${[...branch].map(([name, value]) => {
+  /* Folders first, then files, each alphabetically. The tree used to render in
+     filesystem-walk order, so a document's position in the sidebar encoded
+     nothing a reader could predict. */
+  const ordered = (branch) => [...branch].sort(([an, av], [bn, bv]) => {
+    const aDir = av instanceof Map;
+    const bDir = bv instanceof Map;
+    if (aDir !== bDir) return aDir ? -1 : 1;
+    return an.localeCompare(bn, undefined, { sensitivity: 'base' });
+  });
+  const render = (branch) => `<ul class="tree-list">${ordered(branch).map(([name, value]) => {
     if (value instanceof Map) return `<li><span class="tree-folder">${escape(name)}/</span>${render(value)}</li>`;
     const selected = value.path === currentPath ? ' current' : '';
     return `<li><a class="tree-file${selected}" href="${escape(relativePage(fromPath, value.path))}" title="${escape(value.path)}">${escape(name)}</a></li>`;
@@ -220,18 +229,23 @@ for (const doc of docs) {
   written++;
 }
 
-/* A directory index at /docs/, so the folder itself is browsable. */
+/* A directory index at /docs/, so the folder itself is browsable. Grouped by
+   folder and alphabetical within each, matching the sidebar tree and the
+   searchable library — three renderings of one list should not disagree about
+   its order. */
 const groups = new Map();
-for (const doc of docs) {
+const byTitle = (a, b) => a.title.localeCompare(b.title, undefined, { sensitivity: 'base' });
+for (const doc of [...docs].sort(byTitle)) {
   const dir = doc.path.includes('/') ? doc.path.slice(0, doc.path.lastIndexOf('/')) : '(root)';
   if (!groups.has(dir)) groups.set(dir, []);
   groups.get(dir).push(doc);
 }
+const orderedGroups = [...groups].sort(([a], [b]) => a.localeCompare(b));
 const indexContent = `<div class="content-header">
   <span class="path">${docs.length} documents</span>
   <h1>SSCIM documentation</h1>
 </div>
-${[...groups].map(([dir, list]) => `<p class="group">${escape(dir.toUpperCase())}</p>
+${orderedGroups.map(([dir, list]) => `<p class="group">${escape(dir.toUpperCase())}</p>
 <div class="cards">${list.map((d) => `<a class="card" href="../${pageFor(d.path)}"><strong>${escape(d.title)}</strong><small>${escape(d.path)}</small><span class="tags">${d.tags.map((t) => `<span class="tag">${escape(labelFor(t))}</span>`).join('')}</span></a>`).join('')}</div>`).join('\n')}`;
 const indexBody = readerLayout({ content: indexContent, tree: makeTree(docs, '', 'docs/INDEX.md'), indexHref: '../docs.html' });
 await mkdir(path.join(outDir, 'docs'), { recursive: true });

@@ -2,7 +2,7 @@
 
 This document describes exactly what `app/src/engine/{priors,math,graph,index}.js` computes. No formula here is aspirational or simplified for exposition. Where this document and the code could drift apart, every numerical coefficient lives in one place — `MODEL_PRIORS` in `app/src/engine/priors.js` — and the in-app methodology overlay reads the same object.
 
-For where each input came from, see [References](REFERENCES.md). For each equation derived step by step with real numbers, see the [Calculation specification](calculation.md). For what the model would need before any of it could be called calibrated, see the [Model roadmap](MODEL_ROADMAP.md).
+For where each input came from, see the [reference library](reference/README.md). For each equation derived step by step with real numbers, see the [Calculation specification](calculation.md). For what the model would need before any of it could be called calibrated, see the [Model roadmap](MODEL_ROADMAP.md).
 
 ## Purpose and model boundary
 

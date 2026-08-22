@@ -2,7 +2,7 @@
 
 What enters the model, where it came from, how it is processed, and what each output does and does not mean.
 
-For a per-field account of where every figure originates -- every feed endpoint, every event source, every facility citation, and every analyst judgement listed separately -- see [References](REFERENCES.md).
+For a per-field account of where every figure originates -- every feed endpoint, every event source, every facility citation, and every analyst judgement listed separately -- see the [reference library](reference/README.md), and every source cited in the [source register](reference/SOURCE-REGISTER.md).
 
 ## Provenance rule
 

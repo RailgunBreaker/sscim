@@ -124,8 +124,18 @@ export default function Docs() {
       const hitsTag = active.length === 0 || (doc.tags || []).some((t) => active.includes(t));
       return hitsQuery && hitsTag;
     });
+    /* Alphabetical, by folder and then by title. The library used to render in
+       filesystem-walk order, which is stable but arbitrary — a reader looking
+       for a document by name had to scan the whole list because its position
+       encoded nothing they could predict. Sorting by title makes the position
+       guessable, which is the only thing an index of thirty documents has to
+       get right. localeCompare so accented titles land where a reader expects
+       rather than after Z. */
+    const byTitle = (a, b) => a.title.localeCompare(b.title, undefined, { sensitivity: 'base' });
+    list.sort(byTitle);
+
     const map = new Map();
-    for (const doc of list) {
+    for (const doc of [...list].sort((a, b) => dirOf(a.path).localeCompare(dirOf(b.path)) || byTitle(a, b))) {
       const dir = dirOf(doc.path);
       if (!map.has(dir)) map.set(dir, []);
       map.get(dir).push(doc);

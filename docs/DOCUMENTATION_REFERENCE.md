@@ -8,7 +8,7 @@ Use this index when you need the right document quickly.
 | Understand the model | [Methodology](METHODOLOGY.md) and [Calculation specification](calculation.md) |
 | Understand the application | [System architecture](SYSTEM_ARCHITECTURE.md) |
 | Understand data flow | [Data sources, inputs, and outputs](DATA_SOURCES_AND_OUTPUTS.md) |
-| Check where a specific figure came from | [References](REFERENCES.md) |
+| Check where a specific figure came from | [Reference library](reference/README.md) |
 | Use or change the software | [Developer guide](DEVELOPER_GUIDE.md) |
 | Evaluate the model academically | [Academic guide](ACADEMIC_GUIDE.md) and [Calculation specification](calculation.md) |
 | Understand topology | [Network architecture](NETWORK_ARCHITECTURE.md) |
