@@ -21,8 +21,26 @@ it does **not** know.
 | [Events](EVENTS.md) | The 163 dated events, both curation routes, and the review gate between a candidate and an event | 2026-08-22 |
 | [Facilities](FACILITIES.md) | The 275 named plants, what is sourced inside a record and what is judgement | 2026-08-22 |
 | [Market and display data](MARKET-AND-DISPLAY-DATA.md) | Quotes, basemap tiles and logos — everything that is shown but never computed with | 2026-08-22 |
-| [Source register](SOURCE-REGISTER.md) | **Every distinct source cited, alphabetised within issuing body** — generated from the vault | 2026-08-22 |
+| [Source register](SOURCE-REGISTER.md) | **Every source cited, in Chicago bibliography style, alphabetised within issuing body** — generated from the vault | 2026-08-22 |
 | [Supply-chain structure](SUPPLY-CHAIN-STRUCTURE.md) | The 24 stages, 34 flow edges, 243 customer relationships and the derived site network | 2026-08-22 |
+
+## On citation completeness
+
+The [source register](SOURCE-REGISTER.md) renders every source in Chicago
+bibliography style, and reports how complete each entry actually is rather than
+presenting them as uniform. Three classes, counted:
+
+- **Full** — title, publisher, date and URL, captured automatically at review.
+- **Legal** — issuing body and an exact *Federal Register* volume and page,
+  which resolves without a title.
+- **Short** — issuing body, document type and date only. These are the
+  hand-curated historical records, entered before URLs were captured.
+
+**No entry is padded out.** A short entry stays short rather than acquiring an
+invented title or page number to look like the others. Inventing bibliographic
+detail to complete the shape of a citation would defeat the point of keeping
+one. Closing the gap is data entry — recording the URL at review time — and the
+full class grows with every reviewed event.
 
 ## The one rule
 

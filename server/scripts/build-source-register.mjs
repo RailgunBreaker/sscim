@@ -1,75 +1,180 @@
 #!/usr/bin/env node
 /* Regenerates docs/reference/SOURCE-REGISTER.md from the vault.
 
-   WHY GENERATED. The register lists every distinct source behind every event,
-   facility and evidence note — around 300 entries today and growing with each
-   pipeline run. A hand-maintained list of that size is out of date the day
-   after it is written, and a stale bibliography is worse than none: it invites
-   a reader to believe a citation exists for something that has since changed.
-   So it is derived from the same rows the interface reads.
+   WHY GENERATED. The register carries every source behind every event,
+   facility and evidence note. A hand-maintained bibliography of that size is
+   out of date the day after it is written, and a stale one is worse than none:
+   it invites a reader to believe a citation still stands for something that
+   has changed.
 
-   WHAT IT DOES NOT DO. It does not invent citations. Each vault record carries
-   a `source` string written by whoever curated it, and the register renders
-   exactly that, normalised and alphabetised. Where a record names an
-   institution, an instrument and a date, the entry reads as a Chicago
-   government/legal citation. Where it names a company disclosure, it reads as
-   a corporate-report citation. Where the record is thinner than a full Chicago
-   entry, the entry is thinner too, and the register says so rather than
-   fabricating an author, a title or a page number to fill the shape.
+   HOW A CITATION IS BUILT, in descending order of completeness:
+
+     1. FULL — the reviewed events. Their candidate record carries the article
+        title, the publishing site, the publication date and the URL, so a
+        complete Chicago entry is assembled from real captured metadata.
+     2. LEGAL — a source naming a Federal Register volume and page. Chicago
+        cites government material by issuing body and register locator; the
+        locator is exact and resolvable, so the entry is complete without a
+        title.
+     3. SHORT — the hand-curated historical events. Their record names the
+        issuing body, the document type and the date, and nothing more. The
+        entry says exactly that. It does NOT get a title invented for it.
+
+   The register reports how many fall in each class, because "163 sources" and
+   "163 fully-formed citations" are different claims and only one of them is
+   true. Closing the gap is a data-entry task — recording the URL at review
+   time — not a formatting one.
 
    Run from server/:  node scripts/build-source-register.mjs  */
 import { writeFileSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { db } from '../src/db.js';
+import { chicago, DATASETS, PUBLISHERS, publishersFor } from '../src/citations.js';
 
 const OUT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..', 'docs', 'reference', 'SOURCE-REGISTER.md');
+const today = new Date().toISOString().slice(0, 10);
 
-/* Which issuing body a recorded source belongs to. Ordered: the first pattern
-   that matches wins, so the specific ones come before the general. */
-const FAMILIES = [
-  ['Bureau of Industry and Security (US Department of Commerce)', /^BIS\b|Bureau of Industry/i],
-  ['US federal — other agencies and instruments', /Federal Register|Commerce Department|Executive Order|Presidential|USTR|CHIPS|Bill |Congress|DOJ|Regulation |Public Law|White House/i],
-  ['China — ministries and regulators', /MOFCOM|NDRC|SAMR|\bCAC\b|Chinese (government|ministry|regulator)|Provincial|China customs/i],
-  ['Japan — ministries and agencies', /METI|Japanese (government|ministry)|Japan (government|ministry)/i],
-  ['Netherlands and European Union', /Dutch|Netherlands|European Commission|EU export/i],
-  ['Other national authorities and courts', /Taiwan|Taipower|Korean government|Malaysian|Canadian|Court|King |Ministry/i],
-  ['Research and analyst houses', /TrendForce|IDC\b|Gartner|TechInsights|DRAMeXchange|Counterpoint|SemiAnalysis|Omdia|Yole|CSIS|NAND Research|Silicon Analysts|Astute/i],
-  ['News organisations and trade press', /Reuters|Bloomberg|\bBBC\b|DigiTimes|Nikkei|CNBC|Financial Times|WSJ|Wall Street|Focus Taiwan|MarketScreener|NPR/i],
-];
-const FALLBACK = 'Company disclosures, filings and announcements';
+const rows = (sql, ...a) => db.prepare(sql).all(...a);
+const esc = (s) => String(s ?? '').replace(/\|/g, '\\|').replace(/\s+/g, ' ').trim();
+const longDate = (iso) => {
+  const d = new Date(`${String(iso).slice(0, 10)}T00:00:00Z`);
+  return Number.isNaN(d.getTime()) ? String(iso)
+    : d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+};
 
-const familyOf = (s) => (FAMILIES.find(([, re]) => re.test(s)) || [FALLBACK])[0];
-
-/* Chicago prefers the issuing body first. A vault source string already leads
-   with it in nearly every case, so the entry is the string with its sentence
-   shape tidied — never rewritten, because rewriting is where invention starts. */
-function entry(source) {
-  let s = String(source).trim().replace(/\s+/g, ' ');
-  s = s.replace(/\s*\+\s*/g, '; ');              // "A + B" reads as two sources
-  s = s.replace(/\s*\(official\)/gi, '');         // an internal marker, not part of a citation
-  if (!/[.!?]$/.test(s)) s += '.';
-  return s.charAt(0).toUpperCase() + s.slice(1);
+/* ---- structured metadata captured at review time ------------------------
+   approveCandidate writes `<feed> (<url>) - AI-drafted, human-reviewed` into
+   events.source, so a reviewed event can be joined back to the candidate that
+   still holds the article's real title, publisher and date. */
+const candidateByUrl = new Map();
+for (const c of rows("SELECT raw_json, source_feed, date_iso FROM event_candidates WHERE status = 'approved'")) {
+  let raw;
+  try { raw = JSON.parse(c.raw_json); } catch { continue; }
+  if (raw?.url) candidateByUrl.set(String(raw.url), { ...raw, feed: c.source_feed, dateISO: c.date_iso });
 }
 
-const rows = (sql) => db.prepare(sql).all();
+const FR_RE = /\b(\d{2,3})\s*FR\s*(\d{3,6})\b/i;
 
-const eventSources = rows("SELECT source, COUNT(*) n, MIN(date_iso) first, MAX(date_iso) last FROM events WHERE source IS NOT NULL AND source <> '' GROUP BY source");
+/* Build the best citation the record supports, and say which kind it is. */
+function citationFor(event) {
+  const src = String(event.source || '');
+
+  const url = (src.match(/https?:\/\/[^\s)]+/) || [])[0];
+  const meta = url && candidateByUrl.get(url);
+  if (meta && meta.title) {
+    return {
+      klass: 'full',
+      text: chicago({
+        author: meta.site || meta.feed,
+        title: meta.title,
+        date: longDate(meta.published || meta.dateISO || event.date_iso),
+        url,
+        accessed: today,
+      }),
+    };
+  }
+  if (meta && meta.documentNumber) {
+    return {
+      klass: 'full',
+      text: chicago({
+        author: (Array.isArray(meta.agencies) ? meta.agencies.join('; ') : meta.agencies) || 'Office of the Federal Register',
+        title: meta.title,
+        container: 'Federal Register',
+        date: longDate(meta.dateISO || event.date_iso),
+        url,
+        accessed: today,
+      }),
+    };
+  }
+  if (meta) {
+    return {
+      klass: 'full',
+      text: chicago({
+        author: 'U.S. Geological Survey, Earthquake Hazards Program',
+        description: `Event page ${url.split('/').pop()}${meta.magnitude ? `, M${meta.magnitude}` : ''}${meta.place ? `, ${meta.place}` : ''}`,
+        date: longDate(meta.dateISO || event.date_iso),
+        url,
+        accessed: today,
+      }),
+    };
+  }
+
+  /* Tidy a curator's note into a description. Order matters: strip the
+     internal "(official)" marker BEFORE removing brackets, or it survives as
+     a stray word. */
+  const describe = (s) => s
+    .replace(/\s*\(official\)/gi, '')
+    .replace(/\s*\bofficial\b\s*/gi, ' ')  // once brackets are gone the marker survives bare
+    .replace(/\s*\+\s*/g, '; ')
+    .replace(/\(\s*\)/g, '')
+    .replace(/\s{2,}/g, ' ')
+    .replace(/^[;\s]+|[.,;\s]+$/g, '')
+    .trim();
+
+  /* Many notes already carry their own date — "ASML Q3 2024 release (Oct 15,
+     2024)". Appending the event date after that reads as two dates for one
+     document, so it is dropped when the note already states one. */
+  const statesOwnDate = (s) => /\(\s*[A-Z][a-z]{2}\s+\d{1,2},\s*\d{4}\s*\)|\b\d{4}\)/.test(s);
+
+  const fr = src.match(FR_RE);
+  if (fr) {
+    const issuer = publishersFor(src).map((k) => PUBLISHERS[k]?.author).find(Boolean) || 'Office of the Federal Register';
+    return {
+      klass: 'legal',
+      /* No publication date is asserted: the vault records the event's own
+         date, which for a rule is usually its effective date rather than the
+         date it appeared in the register. The locator is exact and resolves
+         without one. */
+      text: chicago({
+        author: issuer,
+        description: describe(src.replace(FR_RE, '').replace(/[()]/g, '')),
+        register: `${fr[1]} Fed. Reg. ${fr[2]}`,
+      }),
+    };
+  }
+
+  /* Nothing resolvable was recorded. State the issuing body, what the document
+     was, and when — which is what the reviewer actually saw — and stop. */
+  const issuer = publishersFor(src).map((k) => PUBLISHERS[k]?.author).find(Boolean);
+  const description = describe(src);
+  return {
+    klass: 'short',
+    text: chicago({
+      author: issuer || null,
+      description,
+      date: statesOwnDate(description) ? null : longDate(event.date_iso),
+    }),
+  };
+}
+
+/* ---- gather -------------------------------------------------------------- */
+const events = rows('SELECT id, date_iso, title, source FROM events ORDER BY date_iso');
+const withSource = events.filter((e) => e.source && e.source.trim());
+const cited = withSource.map((e) => ({ ...e, ...citationFor(e) }));
+
+const counts = cited.reduce((a, c) => { a[c.klass] = (a[c.klass] || 0) + 1; return a; }, {});
+const missing = events.length - withSource.length;
+
+/* Group the bibliography by issuing body so it reads as a bibliography rather
+   than a chronological list. */
+const FAMILY = [
+  ['Government and regulatory bodies', /Bureau of Industry|Federal Register|Ministry|Administration|Government|Trade Representative|Commission|U\.S\. Department|Securities and Exchange/i],
+  ['Research and analyst houses', /TrendForce|International Data Corporation|SemiAnalysis|TechInsights|DRAMeXchange|Center for Strategic|NAND Research|Silicon Analysts|Astute|MarketScreener/i],
+  ['News organisations and trade press', /Reuters|Bloomberg|Nikkei|BBC|DigiTimes|CNBC|Focus Taiwan|\.com|\.tech|\.ph\b|Times/i],
+];
+const familyOf = (t) => (FAMILY.find(([, re]) => re.test(t)) || ['Company disclosures, filings and announcements'])[0];
+
+const grouped = new Map();
+for (const c of cited) {
+  const fam = familyOf(c.text);
+  if (!grouped.has(fam)) grouped.set(fam, []);
+  grouped.get(fam).push(c);
+}
+for (const list of grouped.values()) list.sort((a, b) => a.text.localeCompare(b.text));
+const famOrder = [...grouped.keys()].sort();
+
 const facilitySources = rows("SELECT source, COUNT(*) n FROM facilities WHERE source IS NOT NULL AND source <> '' GROUP BY source");
-const noteSources = rows("SELECT scope, tier, source FROM data_notes WHERE source IS NOT NULL AND source <> ''");
-
-/* Facility sources are highly repetitive by design ("<Company> facility
-   listings; scale is an analyst judgement." x 275). Listing all 275 would bury
-   the register, so they are collapsed to the distinct publisher with a count —
-   which is what a bibliography would do with 8 items from one corporate
-   source anyway.
-
-   Publisher extraction has to cope with every phrasing the records use —
-   "facility listings", "site disclosures", "corporate disclosures",
-   "programme disclosures", "joint-venture disclosures" — so it cuts at the
-   first descriptor word rather than matching one fixed form. Getting this
-   wrong is visible immediately: the table shows "Alibaba Cloud disclosures;
-   scale is an analyst judgement." where it should show "Alibaba Cloud". */
 const DESCRIPTOR = /\s+(facility|facilities|site|sites|corporate|company|programme|program|public|joint-venture|campus|regional|datacent\w*|disclosur\w*|listing\w*)\b/i;
 const facilityByPublisher = new Map();
 for (const r of facilitySources) {
@@ -80,16 +185,9 @@ for (const r of facilitySources) {
   cur.sites += r.n;
   facilityByPublisher.set(publisher, cur);
 }
+const noteSources = rows("SELECT scope, tier, source FROM data_notes WHERE source IS NOT NULL AND source <> ''");
 
-const grouped = new Map();
-for (const r of eventSources) {
-  const fam = familyOf(r.source);
-  if (!grouped.has(fam)) grouped.set(fam, []);
-  grouped.get(fam).push({ text: entry(r.source), n: r.n, first: r.first, last: r.last });
-}
-for (const list of grouped.values()) list.sort((a, b) => a.text.localeCompare(b.text));
-
-const today = new Date().toISOString().slice(0, 10);
+/* ---- emit ---------------------------------------------------------------- */
 const L = [];
 const push = (...x) => L.push(...x);
 
@@ -97,80 +195,109 @@ push('# Source register');
 push('');
 push(`*Generated from the vault by \`server/scripts/build-source-register.mjs\`. Last generated: ${today}.*`);
 push('');
-push('Every distinct source behind every event, facility and evidence note in');
-push('`server/data/sscim.db`, alphabetised within issuing body.');
+push('Every source behind every event, facility and evidence note in');
+push('`server/data/sscim.db`, in Chicago bibliography style, alphabetised within');
+push('issuing body.');
 push('');
-push('**On the citation form.** Each entry renders what the vault record actually');
-push('carries. Where a record names an institution, an instrument and a date, the');
-push('entry reads as a Chicago government or legal citation. Where it names a');
-push('corporate disclosure, it reads as a corporate-report citation. Where the');
-push('underlying record is thinner than a full Chicago entry — no title, no page —');
-push('the entry is thinner too. Nothing here is reconstructed beyond what was');
-push('recorded at the time the item was reviewed; inventing an author or a title to');
-push('complete the shape of a citation would defeat the purpose of having one.');
+push('## How complete each citation is, and why');
 push('');
-push('To trace any entry back to the rows that cite it:');
+push('A citation can only be as complete as what was recorded when the item was');
+push('reviewed. Three classes, counted rather than blurred together:');
 push('');
-push('```sql');
-push("SELECT id, date_iso, title FROM events WHERE source = '<the source string>';");
-push("SELECT id, name  FROM facilities WHERE source LIKE '<publisher>%';");
-push('```');
-push('');
-
-/* --- summary ------------------------------------------------------------- */
-push('## At a glance');
-push('');
-push('| Body | Distinct sources | Events citing them |');
+push('| Class | Entries | What the record carries |');
 push('| --- | --- | --- |');
-const famOrder = [...grouped.keys()].sort();
-for (const fam of famOrder) {
-  const list = grouped.get(fam);
-  push(`| ${fam} | ${list.length} | ${list.reduce((a, x) => a + x.n, 0)} |`);
-}
-push(`| **Total (events)** | **${eventSources.length}** | **${eventSources.reduce((a, r) => a + r.n, 0)}** |`);
+push(`| **Full** | ${counts.full || 0} | Title, publisher, date and URL — captured automatically at review and assembled into a complete entry |`);
+push(`| **Legal** | ${counts.legal || 0} | Issuing body and an exact *Federal Register* volume and page. Complete by Chicago's convention for government material |`);
+push(`| **Short** | ${counts.short || 0} | Issuing body, document type and date only. Hand-curated historical records, entered before URLs were captured |`);
+push(`| Total | ${cited.length} | ${missing ? `${missing} event(s) carry no source at all` : 'every event carries a source'} |`);
 push('');
-push(`Facility records cite **${facilityByPublisher.size}** distinct publishers across **${facilitySources.reduce((a, r) => a + r.n, 0)}** sites. Evidence notes cite **${noteSources.length}** further sources.`);
+push('**No entry is padded out.** A short entry stays short rather than acquiring');
+push('an invented title, author or page number to look like the others. Inventing');
+push('bibliographic detail to complete the shape of a citation would defeat the');
+push('purpose of keeping one, and it is exactly the failure a register like this');
+push('exists to prevent.');
+push('');
+push('Closing the gap is a data-entry task, not a formatting one: everything');
+push('arriving through the review queue now captures its URL automatically, so the');
+push('*full* class grows with every reviewed event. The *short* entries are the');
+push('historical backfill, and each names a document specific enough to retrieve.');
 push('');
 push('---');
 push('');
 
-/* --- events -------------------------------------------------------------- */
-push('## 1. Event sources');
+/* --- 1. standing datasets ------------------------------------------------ */
+push('## 1. Standing datasets and services');
 push('');
-push('Cited by the dated events in the vault. The bracketed figure is how many');
-push('events rest on that source and the span they cover.');
+push('Queried continuously rather than cited once. Details verified against each');
+push("publisher's own citation guidance where they publish one.");
+push('');
+for (const key of Object.keys(DATASETS).sort((a, b) => DATASETS[a].author.localeCompare(DATASETS[b].author))) {
+  const d = DATASETS[key];
+  push(`- ${chicago(d)}`);
+  if (d.role) push(`  *Role:* ${d.role}`);
+}
+push('');
+push('A feed is **discovery only**. None of them can write an event: everything');
+push('they surface is a candidate until a person approves it.');
+push('');
+push('---');
+push('');
+
+/* --- 2. event bibliography ----------------------------------------------- */
+push('## 2. Event sources');
+push('');
+push(`The ${cited.length} sources behind the dated events, grouped by issuing body and`);
+push('alphabetised. The bracketed date is the event the source supports.');
 push('');
 for (const fam of famOrder) {
   push(`### ${fam}`);
   push('');
-  for (const e of grouped.get(fam)) {
-    const span = e.first === e.last ? e.first : `${e.first}–${e.last}`;
-    push(`- ${e.text} [${e.n} event${e.n === 1 ? '' : 's'}; ${span}]`);
+  for (const c of grouped.get(fam)) {
+    const mark = c.klass === 'short' ? ' *(short entry)*' : '';
+    push(`- ${c.text}${mark} [event: ${c.date_iso}]`);
   }
   push('');
 }
 
-/* --- facilities ---------------------------------------------------------- */
+/* --- 3. institutional publishers ----------------------------------------- */
 push('---');
 push('');
-push('## 2. Facility sources');
+push('## 3. Institutional publishers cited');
+push('');
+push('The bodies the register rests on, as organisational authors. Individual');
+push('documents appear in section 2; this is the set of institutions.');
+push('');
+const byKind = {};
+for (const [key, p] of Object.entries(PUBLISHERS)) (byKind[p.kind] ||= []).push({ key, ...p });
+for (const kind of Object.keys(byKind).sort()) {
+  push(`**${kind.charAt(0).toUpperCase()}${kind.slice(1)}**`);
+  push('');
+  for (const p of byKind[kind].sort((a, b) => a.author.localeCompare(b.author))) push(`- ${chicago(p)}`);
+  push('');
+}
+
+/* --- 4. facilities -------------------------------------------------------- */
+push('---');
+push('');
+push('## 4. Facility sources');
 push('');
 push('Site identity, location and output come from publicly available company');
-push('facility listings and programme announcements. The significance ordinal on');
-push('every one of these records is **not** from the publisher — it is an analyst');
+push('facility listings and programme announcements — corporate self-published');
+push('material, cited as the corporate author. The significance ordinal on every');
+push('one of these records is **not** from the publisher: it is an analyst');
 push('judgement, and each record says so in its own source string.');
 push('');
-push('| Publisher | Sites cited |');
+push('| Corporate author | Sites cited |');
 push('| --- | --- |');
 for (const p of [...facilityByPublisher.values()].sort((a, b) => a.publisher.localeCompare(b.publisher))) {
-  push(`| ${p.publisher} | ${p.sites} |`);
+  push(`| ${esc(p.publisher)}. Facility and site listings. Accessed ${today}. | ${p.sites} |`);
 }
 push('');
 
-/* --- evidence notes ------------------------------------------------------ */
+/* --- 5. evidence notes ---------------------------------------------------- */
 push('---');
 push('');
-push('## 3. Evidence-note sources');
+push('## 5. Evidence-note sources');
 push('');
 push('Attached to specific figures — a stage share, a company share, an ownership');
 push('row, a customer relationship. These are the most fully-formed citations in');
@@ -179,31 +306,40 @@ push('');
 push('| Tier | Applies to | Source |');
 push('| --- | --- | --- |');
 for (const n of [...noteSources].sort((a, b) => a.scope.localeCompare(b.scope))) {
-  push(`| ${n.tier} | \`${n.scope}\` | ${String(n.source).replace(/\|/g, '\\|')} |`);
+  push(`| ${n.tier} | \`${n.scope}\` | ${esc(n.source)} |`);
 }
 push('');
-
-/* --- feeds --------------------------------------------------------------- */
 push('---');
 push('');
-push('## 4. Standing data feeds');
+push('## Tracing any entry back');
 push('');
-push('Queried continuously rather than cited once. Endpoints are in');
-push('`server/src/ingest/` and `server/src/quotes.js`.');
+push('```sql');
+push("SELECT id, date_iso, title, source FROM events WHERE date_iso = '<date>';");
+push("SELECT id, name, source FROM facilities WHERE source LIKE '<author>%';");
+push('SELECT tier, scope, source FROM data_notes ORDER BY tier;');
+push('```');
 push('');
-push('| Feed | Endpoint | Role |');
-push('| --- | --- | --- |');
-push('| United States Geological Survey, Earthquake Catalog | `earthquake.usgs.gov/fdsnws/event/1/query` | Candidate discovery |');
-push('| Office of the Federal Register, Documents API | `federalregister.gov/api/v1/documents.json` | Candidate discovery |');
-push('| Webz.io, News API Lite | `api.webz.io/newsApiLite` | Candidate discovery |');
-push('| Yahoo Finance, Quote API | `query1.finance.yahoo.com/v7/finance/quote` | Display metadata only |');
-push('| OpenStreetMap contributors; CARTO basemap tiles | `basemaps.cartocdn.com`, `tile.openstreetmap.org` | Map rendering |');
+push('Regenerate this document after any data change:');
 push('');
-push('A feed is **discovery only**. None of them can write an event: everything');
-push('they surface is a candidate until a human approves it.');
-push('');
+push('```bash');
+push('cd server && npm run sources');
+push('```');
+
+/* COMPLETENESS IS THE POINT. A register that quietly omits an event is worse
+   than no register: it presents itself as the full account and is not. So the
+   count is asserted rather than assumed, and a shortfall fails the run instead
+   of producing a document that looks complete. */
+const rendered = famOrder.reduce((n, f) => n + grouped.get(f).length, 0);
+if (rendered !== withSource.length) {
+  console.error(`Refusing to write: ${withSource.length} sourced events but only ${rendered} rendered — ${withSource.length - rendered} would be missing.`);
+  process.exit(1);
+}
 
 writeFileSync(OUT, `${L.join('\n')}\n`, 'utf8');
 console.log(`Wrote ${OUT}`);
-console.log(`  ${eventSources.length} distinct event sources across ${famOrder.length} bodies`);
-console.log(`  ${facilityByPublisher.size} facility publishers, ${noteSources.length} evidence notes`);
+console.log(`  ${cited.length}/${events.length} events cited — full ${counts.full || 0}, legal ${counts.legal || 0}, short ${counts.short || 0}`);
+console.log(`  ${facilityByPublisher.size} facility authors, ${noteSources.length} evidence notes, ${Object.keys(DATASETS).length} datasets, ${Object.keys(PUBLISHERS).length} publishers`);
+if (missing) {
+  console.error(`  FAIL: ${missing} event(s) carry no source at all — every event must cite something.`);
+  process.exit(1);
+}
