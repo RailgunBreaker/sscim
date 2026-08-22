@@ -16,12 +16,19 @@ import Legend from './Legend.jsx';
 import CountryList from './CountryList.jsx';
 import HazardPanel, { facilityImpactLine } from './HazardPanel.jsx';
 
-/* Below this zoom the site layer stays hidden: 244 plant markers at world
-   zoom is a smear, not information. The country markers ARE the world-zoom
-   view; sites are what you get when you go looking at a region. A placed
-   hazard overrides this — if you have drawn a radius, you want to see what
-   is in it regardless of how far out you are. */
-const SITE_ZOOM = 4;
+/* Sites are drawn at EVERY zoom. They used to be hidden below zoom 4, on the
+   theory that a few hundred plant markers at world zoom would be a smear —
+   which was wrong twice over. It made the layer invisible on load, so the
+   honest reading of the map was "there are no facilities"; and it made the
+   one question the site layer exists to answer — where in the WORLD is this
+   industry — the one question you could not ask, because you can only see a
+   region at a time from zoom 4.
+
+   What actually needed solving was legibility, not visibility: markers shrink
+   with the zoom so the world view reads as a distribution and the regional
+   view reads as individual plants. The SITES toggle turns the layer off for
+   anyone who wants the country markers alone. */
+const siteZoomScale = (zoom) => Math.max(0.45, Math.min(1, (Number(zoom ?? 2) - 1) / 4));
 
 /* ================= OpenStreetMap layer =================
    Country markers are encoded by the ACTIVE LENS (structural / operational
@@ -86,7 +93,7 @@ export default function OsmMap({ model, hl, lensOverride, onApplyHazard }) {
     () => new Set((footprint?.hits || []).map((h) => h.facility.id)),
     [footprint],
   );
-  const sitesVisible = sitesOn && (zoom >= SITE_ZOOM || Boolean(hazard));
+  const sitesVisible = sitesOn;
 
   // Stable handler refs so the flyTo subscription and marker callbacks always
   // see the latest select/hover/watchlist state without re-subscribing or
@@ -125,7 +132,7 @@ export default function OsmMap({ model, hl, lensOverride, onApplyHazard }) {
     siteLayerRef.current = L.layerGroup().addTo(map);
     hazardLayerRef.current = L.layerGroup().addTo(map);
 
-    // Zoom drives whether the site layer is drawn at all (SITE_ZOOM).
+    // Zoom drives how large the plant markers are drawn (siteZoomScale).
     setZoom(map.getZoom());
     map.on('zoomend', () => setZoom(map.getZoom()));
 
@@ -271,7 +278,7 @@ export default function OsmMap({ model, hl, lensOverride, onApplyHazard }) {
 
   /* ---- site layer -------------------------------------------------------
      One marker per modeled plant, on its OWN overlay group so panning past
-     SITE_ZOOM or moving the hazard never rebuilds the country markers above.
+     zooming or moving the hazard never rebuilds the country markers above.
      Colour is the current operational field at the stages the site feeds —
      the same signed field the country markers use — so a recovery event reads
      green here exactly as it does there. Size is the site's ordinal scale;
@@ -291,11 +298,12 @@ export default function OsmMap({ model, hl, lensOverride, onApplyHazard }) {
       const inside = insideIds.has(f.id);
       const pinned = sel.type === 'facility' && sel.id === f.id;
       const tracked = watchedSites.has(f.id);
-      /* Size still carries significance, but gently: the ordinal is a
-         judgement, and a 5 that is three times the area of a 2 would read as
-         a measurement. Shape carries function, colour carries state — see
-         utils/facilityIcon.js for why those two were split apart. */
-      const size = 11 + 1.8 * (f.scale ?? 1);
+      /* Size carries significance gently — the ordinal is a judgement, and a
+         5 at three times the area of a 2 would read as a measurement — and is
+         then scaled by zoom so the same layer works as a world distribution
+         and as a regional plant map. Shape carries function, colour carries
+         state; see utils/facilityIcon.js for why those two were split. */
+      const size = Math.round((11 + 1.8 * (f.scale ?? 1)) * siteZoomScale(zoom));
 
       const marker = L.marker([f.lat, f.lng], {
         icon: L.divIcon({
@@ -347,7 +355,7 @@ export default function OsmMap({ model, hl, lensOverride, onApplyHazard }) {
         marker.openPopup();
       });
     });
-  }, [sitesVisible, model.activeField, insideIds, sel.type, sel.id, watched, FACILITY_LAYER, FACILITY_NETWORK, STAGE_BY_ID, COMPANY_BY_ID]);
+  }, [sitesVisible, zoom, model.activeField, insideIds, sel.type, sel.id, watched, FACILITY_LAYER, FACILITY_NETWORK, STAGE_BY_ID, COMPANY_BY_ID]);
 
   /* ---- site-to-site network --------------------------------------------
      Modeled links, not shipment routes (engine/facilityNetwork.js). Drawn on
@@ -430,7 +438,7 @@ export default function OsmMap({ model, hl, lensOverride, onApplyHazard }) {
       </div>
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', margin: '-1px 0 6px' }}>
         <button type="button" onClick={() => setSitesOn((v) => !v)} aria-pressed={sitesOn}
-          title={`Show the ${FACILITY_LAYER.FACILITIES.length} modeled plants. Markers appear from zoom ${SITE_ZOOM}.`}
+          title={`Show the ${FACILITY_LAYER.FACILITIES.length} modeled plants. Drawn at every zoom; markers grow as you zoom in.`}
           style={{ fontSize: 10, padding: '3px 9px', borderRadius: 4, fontFamily: 'inherit', cursor: 'pointer',
             background: sitesOn ? C.copper : 'transparent', color: sitesOn ? '#0C111C' : C.dim,
             border: `1px solid ${sitesOn ? C.copper : C.line}`, fontWeight: sitesOn ? 700 : 400 }}>
@@ -452,7 +460,6 @@ export default function OsmMap({ model, hl, lensOverride, onApplyHazard }) {
         </button>
         <span className="mono" style={{ fontSize: 9, color: C.faint }}>
           {hazardMode ? 'click the map to drop an epicentre'
-            : sitesOn && !sitesVisible ? `zoom to ${SITE_ZOOM}+ for plant markers`
             : sitesVisible ? `${FACILITY_LAYER.FACILITIES.length} plants${linksOn
               ? sel.type === 'facility'
                 ? ' · showing every link of the pinned plant'

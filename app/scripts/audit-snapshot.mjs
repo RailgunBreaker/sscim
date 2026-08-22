@@ -124,6 +124,19 @@ function main() {
      absent coverage is a warning: it is a curated sample by design, and the
      UI says so, but a stage with no modeled site anywhere can never appear
      in a hazard footprint and that is worth knowing. */
+  /* Modeled vs host countries. A host carries no stage share, so it scores
+     nothing and only exists to put real plants on the map. Reported because
+     the difference is invisible in the interface — a reader looking at a
+     plant in Italy should not have to guess whether Italy is in the index —
+     and because a host that quietly gained a share, or a modeled country
+     that lost one, is a change nobody would otherwise notice. */
+  const hostCountries = bundle.countries
+    .filter((c) => !bundle.stages.some((s) => (s.shares || {})[c.id] !== undefined))
+    .map((c) => c.id);
+  if (hostCountries.length) {
+    warn(`${hostCountries.length}/${bundle.countries.length} countr(ies) are host-only — no stage share, so they contribute nothing to any score and exist to host facilities: ${hostCountries.join(', ')}`);
+  }
+
   const facilities = bundle.facilities || [];
   const FACILITY_KINDS = new Set(['fab', 'assembly', 'materials', 'equipment', 'rnd', 'datacenter']);
   const FACILITY_STATUSES = new Set(['operating', 'ramping', 'construction', 'idle']);

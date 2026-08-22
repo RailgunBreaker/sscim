@@ -12,6 +12,10 @@ globalThis.IS_REACT_ACT_ENVIRONMENT = true;
    exercise. Not a visual test; it asserts the tree renders and the lens
    control is present. */
 
+/* Records what the map was asked to draw. vi.hoisted because vi.mock is
+   hoisted above the imports, so a plain const would not exist yet. */
+const calls = vi.hoisted(() => ({ divIcon: [], marker: [] }));
+
 // Minimal chainable Leaflet stub — every method used by OsmMap is a no-op.
 vi.mock('leaflet', () => {
   const chain = () => layer;
@@ -30,9 +34,14 @@ vi.mock('leaflet', () => {
     layerGroup: () => layer,
     circleMarker: () => layer,
     circle: () => layer,
+    /* divIcon was missing here for as long as the site layer existed, and the
+       suite stayed green: markers were gated behind zoom 4, the mocked map
+       reports zoom 2, so the facility-marker path never ran in a test. The
+       gate is gone and this mount now genuinely exercises it. */
+    divIcon: (opts) => { calls.divIcon.push(opts); return {}; },
     polyline: () => layer,
     tooltip: () => layer,
-    marker: () => layer,
+    marker: (...a) => { calls.marker.push(a); return layer; },
     control: { zoom: () => ({ addTo: () => {} }) },
   };
   return { default: L, ...L };
@@ -40,11 +49,16 @@ vi.mock('leaflet', () => {
 vi.mock('leaflet/dist/leaflet.css', () => ({}));
 
 import App from './App.jsx';
+import snapshotBundle from './data/vault-snapshot.json';
+
+const snapshot = { FACILITIES: snapshotBundle.facilities || [] };
 
 beforeEach(() => {
   // Force the VaultProvider fetch to fail so it falls back to the bundled
   // static snapshot (the GitHub Pages path).
   global.fetch = vi.fn(() => Promise.reject(new Error('offline')));
+  calls.divIcon.length = 0;
+  calls.marker.length = 0;
   // jsdom lacks matchMedia (used by the responsive layout effect).
   if (!window.matchMedia) {
     window.matchMedia = (q) => ({ matches: true, media: q, addEventListener: () => {}, removeEventListener: () => {}, addListener: () => {}, removeListener: () => {} });
@@ -70,6 +84,36 @@ describe('App smoke (static snapshot, Leaflet mocked)', () => {
     // once the vault is ready (snapshot fallback).
     expect(text).toContain('LENS');
     expect(text.toUpperCase()).toContain('SSCIM INTELLIGENCE');
+
+    await act(async () => { root.unmount(); });
+    container.remove();
+  });
+
+  /* The site layer was invisible on load for its whole first life: markers
+     were gated behind zoom 4 and the map opens at zoom 2, so the honest
+     reading of the default view was "this project models no facilities". The
+     mocked map still reports zoom 2 — so if this assertion ever fails, the
+     gate is back. */
+  it('draws a marker for every modeled facility at the default world zoom', async () => {
+    const container = document.createElement('div');
+    document.body.appendChild(container);
+    const root = createRoot(container);
+    await act(async () => { root.render(<App />); });
+    await flush(0);
+    await flush(0);
+
+    const { FACILITIES } = snapshot;
+    expect(FACILITIES.length).toBeGreaterThan(200);
+    expect(calls.marker.length).toBe(FACILITIES.length);
+    expect(calls.divIcon.length).toBe(FACILITIES.length);
+
+    // Every icon carries real geometry, and shrinks at world zoom rather than
+    // being hidden — the fix that replaced the gate.
+    calls.divIcon.forEach((opts) => {
+      expect(opts.html).toContain('<svg');
+      expect(opts.iconSize[0]).toBeGreaterThan(3);
+      expect(opts.iconSize[0]).toBeLessThan(14);
+    });
 
     await act(async () => { root.unmount(); });
     container.remove();

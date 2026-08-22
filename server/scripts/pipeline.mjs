@@ -212,6 +212,7 @@ async function main() {
      instead of needing a remembered manual step. It refuses to write a
      dangling record, so a bad edit fails here rather than shipping a plant
      that renders but points at nothing. */
+  log(run('node', ['scripts/sync-countries.mjs'], SERVER_DIR).trim().split('\n')[0]);
   log(run('node', ['scripts/sync-facilities.mjs'], SERVER_DIR).trim().split('\n')[0]);
 
   /* ---- 4. Quotes (best-effort — never blocks) --------------------------- */

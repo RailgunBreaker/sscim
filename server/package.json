@@ -12,7 +12,8 @@
     "review": "node scripts/review.mjs",
     "sync": "node scripts/sync-events.mjs",
     "sync:facilities": "node scripts/sync-facilities.mjs",
-    "quotes": "node scripts/fetch-quotes.mjs"
+    "quotes": "node scripts/fetch-quotes.mjs",
+    "sync:countries": "node scripts/sync-countries.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.115.0",

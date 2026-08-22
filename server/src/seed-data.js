@@ -15,15 +15,37 @@
    replaces them individually.
    ==================================================================== */
 
+/* Two groups, and the distinction is load-bearing.
+
+   MODELED countries carry stage shares: they participate in the production
+   geography the index is computed from, and they get a country marker whose
+   size and colour mean something.
+
+   HOST countries carry no stage share. They exist so that real plants can be
+   put on the map at all. Until they were added, the facility layer could only
+   show a site if the model already had a share for its country — which is why
+   Infineon Villach, ST Catania, onsemi Roznov, Micron Sanand and every Indian
+   design centre were simply absent, and the map quietly implied the industry
+   stops at 16 borders. A host country contributes nothing to any score
+   (countryData skips a country with no share), so adding one cannot move the
+   index; it only stops the map from lying by omission.
+
+   Promoting a host country to a modeled one means writing real stage shares
+   for it, which is a research task and not a data-entry one. */
 export const COUNTRY_NAMES = {
   us: "United States", cn: "China", tw: "Taiwan", kr: "South Korea", jp: "Japan",
   nl: "Netherlands", de: "Germany", fr: "France", uk: "United Kingdom", be: "Belgium",
   ie: "Ireland", il: "Israel", sg: "Singapore", my: "Malaysia", vn: "Vietnam", ph: "Philippines",
+  // host-only — no stage share, present so their plants can be mapped
+  at: "Austria", it: "Italy", cz: "Czechia", in: "India", th: "Thailand",
+  ca: "Canada", ch: "Switzerland", pl: "Poland",
 };
 export const COUNTRY_POS = {
   us: [39, -98], cn: [35, 104], tw: [23.7, 121], kr: [36.5, 127.8], jp: [36.2, 138.2],
   nl: [52.5, 5.3], de: [50.5, 10.4], fr: [46.5, 2.5], uk: [54.5, -2], be: [50.6, 4.5],
   ie: [53.2, -8], il: [31.5, 35], sg: [1.35, 103.8], my: [4.2, 102], vn: [16, 106], ph: [13, 122],
+  at: [47.5, 14.6], it: [42.8, 12.8], cz: [49.8, 15.5], in: [20.6, 79.0], th: [15.9, 101.0],
+  ca: [56.1, -106.3], ch: [46.8, 8.2], pl: [51.9, 19.1],
 };
 
 export const STAGES = [
