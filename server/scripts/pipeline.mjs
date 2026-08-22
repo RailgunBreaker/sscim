@@ -206,6 +206,14 @@ async function main() {
   log(`  snapshot date set to ${UNTIL}`);
   log(run('node', ['scripts/sync-events.mjs'], SERVER_DIR).trim());
 
+  /* ---- 3b. Site layer ---------------------------------------------------
+     Idempotent upsert of the code-defined facility table, so editing
+     src/facilities-data.js reaches the deployed map through the normal run
+     instead of needing a remembered manual step. It refuses to write a
+     dangling record, so a bad edit fails here rather than shipping a plant
+     that renders but points at nothing. */
+  log(run('node', ['scripts/sync-facilities.mjs'], SERVER_DIR).trim().split('\n')[0]);
+
   /* ---- 4. Quotes (best-effort — never blocks) --------------------------- */
   try {
     log(run('node', ['scripts/fetch-quotes.mjs'], SERVER_DIR).trim().split('\n')[0]);

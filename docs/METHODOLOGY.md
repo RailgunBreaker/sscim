@@ -122,7 +122,11 @@ $$\text{criticality}_c = 10\cdot\frac{\text{raw}_c}{\max_k \text{raw}_k}, \qquad
 
 ## Aggregation and scenarios
 
-Country results are share-weighted stage aggregates: **production geography**, not headquarters. Headquarters is displayed separately and labeled "HQ:", never substituted for the facility-level exposure this dataset does not contain.
+Country results are share-weighted stage aggregates: **production geography**, not headquarters. Headquarters is displayed separately and labeled "HQ:", never substituted for production exposure.
+
+Below the country layer sits a **site layer** of 244 named plants covering every modeled company (`server/src/facilities-data.js`). It carries location and output, not capacity: a site's weight is a 1–5 analyst ordinal discounted by operating status, so every share it produces is a share of the *modeled site sample*, never of world capacity. Its purpose is to resolve a hazard at a coordinate into named plants and the stages they feed — the step a country marker cannot perform, because a hazard happens at a point. Stages holding under 5% of their modeled site weight inside a radius are reported as touched but are not shocked. The resulting shock is handed to the ordinary scenario path and propagates through the identical engine; nothing in the site layer alters the propagation mathematics above.
+
+Sites are connected to each other by a **derived** network (`app/src/engine/facilityNetwork.js`), composed from the company-level `customers` edges and the stage flow graph. A link's weight is $\text{companyShare} \times \text{siteShare}_{\text{supplier}} \times \text{siteShare}_{\text{customer}} \times \text{reach}$, where reach is this engine's own downstream propagation from a unit shock — so the network introduces no coefficient that is not already declared above. Links whose commercial direction opposes the physical one (an OSAT invoicing a fabless designer whose die flows *toward* it) are retained and marked as service relationships. This is a modeled link set, not a shipment route: no dataset here records which plant ships to which plant, and it is never an engine input.
 
 A scenario runs the same engine as an event, seeded with an explicitly simulated input. It is shown as **active vs. baseline** with a signed delta, and never rewrites the historical series — a hypothetical cannot change the past.
 

@@ -13,6 +13,8 @@ import Chip from './Chip.jsx';
 import SpreadTree from './SpreadTree.jsx';
 import UpstreamTree from './UpstreamTree.jsx';
 import CustomerSpreadTree from './CustomerSpreadTree.jsx';
+import EventSites from './EventSites.jsx';
+import FacilityDetail from './FacilityDetail.jsx';
 
 const Field = ({ k, v, copper }) => (
   <div style={{ marginBottom: 6 }}>
@@ -43,6 +45,11 @@ export default function Detail({ sel, setSel, model, scenario, onResetScenario, 
   /* ---- FUNCTIONAL CENTRE: country × stage node detail (§11) ---- */
   if (sel.type === "centre" && baseGraph) {
     return <CentreDetail centreId={sel.id} baseGraph={baseGraph} model={model} setSel={setSel} />;
+  }
+
+  /* ---- FACILITY: one plant's standardized profile + its network links ---- */
+  if (sel.type === "facility") {
+    return <FacilityDetail facilityId={sel.id} setSel={setSel} model={model} />;
   }
 
   /* ---- EVENT: summary + engine math + company-to-company spread ---- */
@@ -88,6 +95,7 @@ export default function Detail({ sel, setSel, model, scenario, onResetScenario, 
             </div>
           ))}</>); })()}
         <SpreadTree sourceStages={e.stages} field={field} setSel={setSel} />
+        <EventSites event={e} setSel={setSel} />
         <div style={{ marginTop: 10 }}>
           <Field k="FIRST-ORDER" v={e.first} />
           <Field k="SECOND-ORDER" v={e.second} />

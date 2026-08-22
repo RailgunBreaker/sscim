@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { buildEngine } from '../engine/index.js';
 import { buildVaultData } from './buildVaultData.js';
+import { buildFacilityNetwork } from '../engine/facilityNetwork.js';
 import snapshot from './vault-snapshot.json';
 
 /* ====================================================================
@@ -29,6 +30,20 @@ function buildVaultState(bundle, source) {
     STAGES: data.STAGES, FLOW_EDGES: data.FLOW_EDGES, COMPANIES: data.COMPANIES,
     CUSTOMERS: data.CUSTOMERS, POLICIES: data.POLICIES, EVENTS: data.EVENTS, OWNERS: data.OWNERS,
     datasetAsOf: bundle.meta?.snapshotDate,
+  });
+  /* The site-to-site network is composed here rather than inside buildEngine
+     because it needs both halves: the facility layer (data) and the engine's
+     own propagation. buildEngine's input signature stays unchanged, and the
+     network remains a derived view over the two — never an engine input.
+     Memoized per supplier stage: ~24 propagations, not one per site pair. */
+  const reachCache = {};
+  data.FACILITY_NETWORK = buildFacilityNetwork({
+    layer: data.FACILITY_LAYER,
+    CUSTOMERS: data.CUSTOMERS,
+    dependence: (supplierStage, customerStage) => {
+      const field = (reachCache[supplierStage] ||= engine.propagateTrace(supplierStage, 1, 'downstream').field);
+      return field[customerStage] ?? 0;
+    },
   });
   return { status: 'ready', data, engine, source, error: null };
 }

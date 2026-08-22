@@ -29,6 +29,13 @@ export const UNCLASSIFIED_ASSUMPTION = Object.freeze({
 });
 
 export const EVENT_ASSUMPTIONS = Object.freeze({
+
+  p260819_man0819: Object.freeze({ direction: "mixed", channel: "downstream", operational: false, reason: "A pricing action, not a production event: no wafer capacity was lost or gained, so rule 3 applies — reallocative, with the foundries as winners and fabless customers as payers. It is worth recording because a second-source foundry gaining pricing power is the clearest market evidence that leading-edge capacity is the binding constraint, which is a structural signal the model already represents. Severity 3 and operational=false keep it out of the scored index while leaving it visible." }),
+
+  p260807_man0807: Object.freeze({ direction: "adverse", channel: "downstream", operational: true, reason: "This is a realized capacity-allocation event, not a market reaction: the price is the visible symptom of memory-fab wafer starts being moved off commodity DRAM onto HBM, and the effect on downstream PC, handset and embedded builders is current rather than forecast. Severity 4 rather than higher because no capacity was destroyed and every affected buyer can still buy — at a price. Scored as operational because the constraint is on physical allocation, but it sits at the boundary: the same event is a windfall for the memory makers, which is why direction is recorded as adverse only from the consuming side." }),
+
+  p260804_man0804: Object.freeze({ direction: "mitigating", channel: "downstream", operational: true, reason: "This is the resolution half of the M7.1 Kumamoto event already in the dataset at severity 7, and it is realized rather than announced: named plants restarted on named dates. Severity 3 reflects that recovery was staged over roughly three weeks with residual capacity loss at Kawashiri through late August, not that the disruption was small — the original event carries that weight. Direction is mitigating because it releases capacity the earlier events removed." }),
+
   p260729_webbe69: Object.freeze({ direction: "mitigating", channel: "downstream", operational: false, reason: "Recorded. 1 decision(s) awaiting publication." }),
 
   p260714_fed4132: Object.freeze({ direction: "mitigating", channel: "downstream", operational: false, reason: "Published: Review: reject cand_webz_news_04f59e01b8bab71dc7c23814c78ec641915d994f" }),

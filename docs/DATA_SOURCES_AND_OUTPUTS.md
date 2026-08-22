@@ -20,7 +20,9 @@ Every meaningful statement is traceable to exactly one of three things: **a sour
 | --- | --- | --- | --- |
 | Stage graph | 24 stages, 34 directed edges | B | Curated from published process-flow descriptions; validated acyclic. Changed by review, never by scraping. |
 | Production geography | Country shares per stage, 16 countries | B | Capacity and market estimates. Undisclosed remainder is kept as an **explicit residual**, not silently dropped — see the HHI treatment in the methodology. |
-| Company footprint | 109 companies, within-stage stakes | B / C | Source-informed share estimates and filings. **Not** facility-level capacity data; no fab locations, no utilization. |
+| Company footprint | 109 companies, within-stage stakes | B / C | Source-informed share estimates and filings. **Not** capacity data; no utilization. |
+| Facility geography | 244 sites, 16 countries, all 109 companies | C + D | Named plants with operator, coordinates, what they make, and the stages they feed. Site identity and rough location are Tier C (public company site listings); the `scale` 1–5 significance ordinal is Tier D and is **the only field the impact math uses**. Coordinates are site/city approximations good to a few km. Coverage is a **curated sample, not a census** — an empty hazard radius means no site *in this sample*. |
+| Site-to-site network | ~825 modeled links | — | **Derived, not input.** Composed from the company `customers` edges and the stage flow graph — see below. No dataset here records which plant ships to which plant. |
 | Customer relationships | 243 supplier→customer edges | C + B | Disclosed customer concentration plus trade-press estimates, top customers only. This is *supplier-revenue share*, which is **not** buyer input-dependence — the two directions are different quantities and are modeled separately. |
 | Ownership | 75 shareholder rows | C | 13F filings, annual reports, exchange disclosures. Ages quickly; the most compliance-sensitive dataset here. |
 | Policy instruments | 7 | C + D | Rule texts are Tier C; the severity score and the 0.4 additional-instrument discount are Tier D judgments. |
@@ -33,7 +35,38 @@ Every meaningful statement is traceable to exactly one of three things: **a sour
 
 ### What is deliberately absent
 
-No facility geography, no bill of materials, no inventory days, no capacity or utilization, no time-to-recover, no qualification relationships, no alternative-supplier counts. The dependence matrices are equal-allocation priors derived from graph degree precisely *because* none of that data exists here. See the [Model roadmap](MODEL_ROADMAP.md) for what acquiring it would involve.
+No bill of materials, no inventory days, no capacity or utilization figures, no time-to-recover, no qualification relationships, no alternative-supplier counts. The dependence matrices are equal-allocation priors derived from graph degree precisely *because* none of that data exists here. See the [Model roadmap](MODEL_ROADMAP.md) for what acquiring it would involve.
+
+Facility geography is the one item that has since been added, and it is worth being precise about what was and was not acquired. The site layer knows **where plants are and what they make**. It does not know **how much they make**: `scale` is a 1–5 analyst ordinal, not wafer starts. Every share the site layer produces is therefore a share of the *modeled site sample*, never of world capacity, and is labelled that way in the interface. Mixing a published wafer-start figure for the handful of fabs that report one with a guess for the rest would produce a number that reads as measured and is not — so the model uses the ordinal alone.
+
+### What the site layer is for
+
+A country marker cannot answer the question an earthquake asks, because a hazard happens at a point, not in a country. The M7.1 Kumamoto event hit Kyushu; Kyushu is JASM, Sony CIS and Renesas Kawashiri, and it is not Naka or Yokkaichi. The site layer exists to make that distinction available:
+
+- **A hazard radius resolves to named plants.** Drop an epicentre on the map, set a radius, and the readout lists the modeled sites inside it with operator, distance, status and output.
+- **Exposure is reported per stage**, as the share of that stage's modeled site weight sitting inside the radius. A 150 km circle over Pyeongtaek/Icheon contains 94% of the modeled HBM sites; the same circle over a mature-node region contains almost none of it. That contrast is the point.
+- **Stages below a 5% exposure threshold are listed as *touched*, not shocked.** A radius clipping one small plant at the edge of a cluster must not shock that plant's entire stage.
+- **Nothing here models damage.** The radius is a screening circle — the same judgement the USGS ingest filter makes upstream when it decides a quake is worth a human's attention. Shaking intensity, building standards and fab hardening are all outside the model.
+
+A hazard footprint hands its material stages to the same scenario composer every preset uses, so the resulting Δ is computed by the identical propagation engine. Severity stays the operator's input: the site layer says what is exposed, not how hard it was hit.
+
+### Every site has a standardized profile
+
+All 244 profiles are **generated from the same fields by the same code** (`app/src/engine/facilityProfile.js`), not written per site. Hand-writing 244 introductions would drift: the tenth would mention capacity and the fiftieth would not, one plant would be "critical" and an identical one "significant", and a reader comparing two sites would be comparing two authors as much as two facilities. Generating them means two profiles differ only where the sites differ. The only free prose in a profile is the record's own one-line `output`.
+
+Each profile carries the same sections — headline, introduction, a fixed nine-row fact table (an em dash where a value is unknown, never a missing row), the stages it feeds with its share of each, and the caveats that apply to that record. The generator states plainly what a reader would otherwise infer wrongly: a design campus "produces no physical output", a datacentre "is a demand site, not a production site", and a fab under construction "has no output to lose yet". The audit fails the build if any site produces a stub profile.
+
+### The site-to-site network is derived, and is not a shipment route
+
+The vault knows separately that company A supplies company B, and that stage X feeds stage Y. Neither fact is geographic. `app/src/engine/facilityNetwork.js` composes them into site-to-site links: a link exists when the two operators have a `customers` edge, one site's stage reaches the other's in the flow graph, and both sites carry exposure weight. Its weight is `companyShare × siteShare(supplier) × siteShare(customer) × reach`, where `reach` is the engine's own downstream propagation — no new coefficient is introduced.
+
+Three properties are worth stating because each was a bug first:
+
+- **Reachability, not adjacency.** JSR sells photoresist to TSMC, but the graph routes resist → litho → adv_fab. A direct-edge test silently dropped 130 of 243 company edges — most of the upstream half of the chain.
+- **Commercial direction ≠ physical direction.** ASE "supplies" NVIDIA, but packaging sits downstream of design: the die moves from the fab to the packager and back while the invoice goes the other way. Those links are kept and marked `service`, drawn dashed, rather than being quietly relabelled or dropped.
+- **The cap applies to drawing, not to knowing.** The map draws the strongest few hundred links; every built link stays in the per-site index, so a plant's own profile lists all of its connections. Both numbers are shown.
+
+What the network is not: a shipment route, a logistics lane, or an observed trade flow. Two sites of the same company pair receive links in proportion to their significance ordinals, which is an allocation assumption and exactly as strong as the ordinals themselves. The label used throughout the interface is "modeled site-to-site link".
 
 ### The event-density caveat
 

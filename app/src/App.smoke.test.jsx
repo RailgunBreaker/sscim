@@ -29,6 +29,7 @@ vi.mock('leaflet', () => {
     tileLayer: () => layer,
     layerGroup: () => layer,
     circleMarker: () => layer,
+    circle: () => layer,
     polyline: () => layer,
     tooltip: () => layer,
     marker: () => layer,

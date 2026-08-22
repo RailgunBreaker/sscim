@@ -6,8 +6,9 @@ import {
 import { DATA_NOTES } from './data-notes.js';
 import { HISTORY_EVENTS, daysAgoOf } from './history-events.js';
 import { DECADE_EVENTS } from './decade-events.js';
+import { FACILITIES } from './facilities-data.js';
 
-const TABLES = ['countries', 'stages', 'flow_edges', 'tier_labels', 'companies', 'customers', 'owners', 'policies', 'events', 'scenarios', 'data_notes'];
+const TABLES = ['countries', 'stages', 'flow_edges', 'tier_labels', 'companies', 'facilities', 'customers', 'owners', 'policies', 'events', 'scenarios', 'data_notes'];
 
 export const truncateAll = db.transaction(() => {
   for (const t of TABLES) db.prepare(`DELETE FROM ${t}`).run();
@@ -34,6 +35,21 @@ export const seedAll = db.transaction(() => {
   const insCompany = db.prepare('INSERT INTO companies (id, name, country, domain, stakes_json) VALUES (@id, @name, @country, @domain, @stakes_json)');
   for (const c of COMPANIES) {
     insCompany.run({ id: c.id, name: c.name, country: c.country, domain: DOMAINS[c.id] || null, stakes_json: JSON.stringify(c.stakes) });
+  }
+
+  /* Facilities are seeded here as well as synced by scripts/sync-facilities.mjs
+     so a fresh clone gets the site layer with everything else — otherwise the
+     map bootstraps with country markers and an empty hazard tool until someone
+     remembers to run the sync. */
+  const insFacility = db.prepare(`INSERT INTO facilities (id, name, company_id, country, lat, lng, kind, stages_json, scale, output, node, wafer_size, status, since, source)
+    VALUES (@id, @name, @company_id, @country, @lat, @lng, @kind, @stages_json, @scale, @output, @node, @wafer_size, @status, @since, @source)`);
+  for (const f of FACILITIES) {
+    insFacility.run({
+      id: f.id, name: f.name, company_id: f.company, country: f.country, lat: f.lat, lng: f.lng,
+      kind: f.kind, stages_json: JSON.stringify(f.stages), scale: f.scale,
+      output: f.output ?? null, node: f.node ?? null, wafer_size: f.waferSize ?? null,
+      status: f.status, since: f.since ?? null, source: f.source ?? null,
+    });
   }
 
   const insCustomer = db.prepare('INSERT INTO customers (supplier_id, customer_id, share) VALUES (?, ?, ?)');

@@ -21,6 +21,17 @@ export function getTierLabels() {
 export function getCountries() {
   return db.prepare('SELECT * FROM countries').all();
 }
+/* Site-level geography. Shipped with the bundle rather than fetched on demand
+   because the map needs every site the moment a hazard radius is drawn, and the
+   whole table is ~20KB of JSON — smaller than one briefing body. */
+export function getFacilities() {
+  return db.prepare('SELECT * FROM facilities ORDER BY id').all().map((f) => ({
+    id: f.id, name: f.name, company: f.company_id, country: f.country,
+    lat: f.lat, lng: f.lng, kind: f.kind, stages: JSON.parse(f.stages_json), scale: f.scale,
+    output: f.output, node: f.node, waferSize: f.wafer_size,
+    status: f.status, since: f.since, source: f.source,
+  }));
+}
 export function getCompanies() {
   return db.prepare('SELECT * FROM companies').all().map((c) => ({
     id: c.id, name: c.name, country: c.country, domain: c.domain, stakes: JSON.parse(c.stakes_json),
@@ -115,6 +126,7 @@ export function buildBundle() {
     flowEdges: getFlowEdges(),
     tierLabels: getTierLabels(),
     countries: getCountries(),
+    facilities: getFacilities(),
     companies: getCompanies(),
     customers: getCustomers(),
     owners: getOwners(),

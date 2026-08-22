@@ -1,4 +1,5 @@
 import { COMP_META } from './compMeta.js';
+import { buildFacilityLayer } from '../engine/facilities.js';
 
 /* Shapes a raw vault bundle into the object the engine and the UI consume.
 
@@ -16,11 +17,18 @@ export function buildVaultData(bundle) {
   Object.entries(bundle.customers).forEach(([supId, list]) => {
     list.forEach(([custId, sh]) => (SUPPLIERS[custId] ||= []).push([supId, sh]));
   });
+  /* Site-level geography (engine/facilities.js). A bundle exported before the
+     facilities table existed simply has none — the layer degrades to empty
+     indices and every consumer renders the country view it always did. */
+  const FACILITY_LAYER = buildFacilityLayer(bundle.facilities || []);
+
   const data = {
     STAGES: bundle.stages,
     FLOW_EDGES: bundle.flowEdges,
     TIER_LABELS: bundle.tierLabels,
     COUNTRY_NAMES, COUNTRY_POS,
+    FACILITIES: FACILITY_LAYER.FACILITIES,
+    FACILITY_LAYER,
     COMPANIES: bundle.companies, COMPANY_BY_ID, DOMAINS,
     CUSTOMERS: bundle.customers, SUPPLIERS,
     POLICIES: bundle.policies,

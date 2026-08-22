@@ -76,6 +76,32 @@ CREATE TABLE IF NOT EXISTS owners (
   PRIMARY KEY (company_id, owner_name)
 );
 
+-- Physical sites: the geography under the country markers. A country marker
+-- cannot answer the question an earthquake asks, because a quake happens at a
+-- point — so a hazard radius has to resolve to named plants, what they make,
+-- and the stages they feed. "scale" (1-5) is an analyst ordinal, NOT capacity;
+-- see src/facilities-data.js for exactly what is sourced and what is judged.
+CREATE TABLE IF NOT EXISTS facilities (
+  id          TEXT PRIMARY KEY,
+  name        TEXT NOT NULL,
+  company_id  TEXT REFERENCES companies(id),
+  country     TEXT REFERENCES countries(id),
+  lat         REAL NOT NULL,
+  lng         REAL NOT NULL,
+  kind        TEXT NOT NULL,                  -- fab | assembly | materials | equipment | rnd
+  stages_json TEXT NOT NULL DEFAULT '[]',     -- model stages this site feeds
+  scale       REAL NOT NULL,                  -- 1-5 relative significance (judgement, not capacity)
+  output      TEXT,                           -- what it makes, in plain language (display only)
+  node        TEXT,
+  wafer_size  TEXT,
+  status      TEXT NOT NULL DEFAULT 'operating', -- operating | ramping | construction | idle
+  since       INTEGER,
+  source      TEXT,
+  updated_at  TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+CREATE INDEX IF NOT EXISTS idx_facilities_country ON facilities (country);
+
 CREATE TABLE IF NOT EXISTS policies (
   id          TEXT PRIMARY KEY,
   name        TEXT NOT NULL,

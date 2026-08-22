@@ -3570,7 +3570,7 @@ The MVP does not need every possible variable. The minimum useful dataset is:
 3. historical recovery curves
 4. source confidence
 5. shareholder data
-6. facility-level geolocation
+6. ~~facility-level geolocation~~ — added: 244 named sites covering all 109 modeled companies, with coordinates, operator, output and stage mapping, plus a derived site-to-site link set. Location and identity only; capacity is still absent, and the site weight used for hazard exposure is a 1–5 analyst ordinal.
 7. actual shipment and revenue impacts
 
 <sub>[↑ Contents](#contents)</sub>

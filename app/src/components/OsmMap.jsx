@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { C } from '../theme.js';
@@ -6,10 +6,25 @@ import { useVault } from '../data/VaultContext.jsx';
 import { useInteraction } from '../interaction/InteractionContext.jsx';
 import { mapEncoding, fmtSigned, pct } from '../interaction/lensEncoding.js';
 import { riskLabel } from '../utils/colors.js';
-import { buildTooltipEl, buildCountryPopupEl } from '../utils/tooltip.js';
+import { buildTooltipEl, buildCountryPopupEl, buildFacilityPopupEl } from '../utils/tooltip.js';
 import { introForCountry, flagEmoji } from '../data/glossary.js';
+import { hazardFootprint, facilityImpact, siteWeight } from '../engine/facilities.js';
+import { facilityConnectivity } from '../engine/facilityNetwork.js';
 import Legend from './Legend.jsx';
 import CountryList from './CountryList.jsx';
+import HazardPanel, { facilityImpactLine } from './HazardPanel.jsx';
+
+/* Below this zoom the site layer stays hidden: 126 plant markers at world
+   zoom is a smear, not information. The country markers ARE the world-zoom
+   view; sites are what you get when you go looking at a region. A placed
+   hazard overrides this — if you have drawn a radius, you want to see what
+   is in it regardless of how far out you are. */
+const SITE_ZOOM = 4;
+
+const KIND_LABEL = {
+  fab: 'Wafer fab', assembly: 'Assembly & test', materials: 'Materials',
+  equipment: 'Equipment', rnd: 'R&D / design',
+};
 
 /* ================= OpenStreetMap layer =================
    Country markers are encoded by the ACTIVE LENS (structural / operational
@@ -42,7 +57,7 @@ function legendFor(lens, legend) {
 
 export default function OsmMap({ model, hl, pb, lensOverride }) {
   const { data, engine } = useVault();
-  const { COUNTRY_NAMES, COUNTRY_POS, COMPANIES } = data;
+  const { COUNTRY_NAMES, COUNTRY_POS, COMPANIES, COMPANY_BY_ID, FACILITY_LAYER, FACILITY_NETWORK } = data;
   const { COUNTRY_LINKS, STAGE_BY_ID } = engine;
   const { state, select, hover, clearHover, subscribeFlyTo, draftToggleSource } = useInteraction();
   const { selected, scenarioActive, draft } = state;
@@ -51,9 +66,29 @@ export default function OsmMap({ model, hl, pb, lensOverride }) {
   const sel = selected || { type: null, id: null };
 
   const divRef = useRef(null), mapRef = useRef(null), layerRef = useRef(null), pbLayerRef = useRef(null), draftLayerRef = useRef(null);
+  const siteLayerRef = useRef(null), siteNetLayerRef = useRef(null), hazardLayerRef = useRef(null);
   const coreByCountry = useRef({});
   const [tileStatus, setTileStatus] = useState('loading');
   const [mapHeight, setMapHeight] = useState(350);
+
+  /* ---- site layer + hazard tool (§ facility scale) ---------------------- */
+  const [zoom, setZoom] = useState(2);
+  const [sitesOn, setSitesOn] = useState(true);
+  const [linksOn, setLinksOn] = useState(false);
+  const [hazardMode, setHazardMode] = useState(false);
+  const [hazard, setHazard] = useState(null);        // { lat, lng } epicentre
+  const [radiusKm, setRadiusKm] = useState(200);
+  const hazardModeRef = useRef(hazardMode); hazardModeRef.current = hazardMode;
+
+  const footprint = useMemo(
+    () => (hazard ? hazardFootprint({ ...hazard, radiusKm }, FACILITY_LAYER) : null),
+    [hazard, radiusKm, FACILITY_LAYER],
+  );
+  const insideIds = useMemo(
+    () => new Set((footprint?.hits || []).map((h) => h.facility.id)),
+    [footprint],
+  );
+  const sitesVisible = sitesOn && (zoom >= SITE_ZOOM || Boolean(hazard));
 
   // Stable handler refs so the flyTo subscription and marker callbacks always
   // see the latest select/hover/draft state without re-subscribing or forcing
@@ -92,9 +127,35 @@ export default function OsmMap({ model, hl, pb, lensOverride }) {
     // §7: incremental Leaflet updates).
     pbLayerRef.current = L.layerGroup().addTo(map);
     draftLayerRef.current = L.layerGroup().addTo(map);
+    // Added after the country group, so plant markers draw above it: once you
+    // are zoomed in far enough to see sites, a click near a country centroid
+    // means the plant, not the country.
+    siteNetLayerRef.current = L.layerGroup().addTo(map);
+    siteLayerRef.current = L.layerGroup().addTo(map);
+    hazardLayerRef.current = L.layerGroup().addTo(map);
+
+    // Zoom drives whether the site layer is drawn at all (SITE_ZOOM).
+    setZoom(map.getZoom());
+    map.on('zoomend', () => setZoom(map.getZoom()));
+
+    // In hazard mode a click on the basemap places the epicentre. Read the
+    // mode from a ref so this handler is bound once and never restaged.
+    map.on('click', (ev) => {
+      if (!hazardModeRef.current) return;
+      setHazard({ lat: ev.latlng.lat, lng: ev.latlng.lng });
+      setHazardMode(false);
+    });
+
     mapRef.current = map;
     return () => { map.remove(); mapRef.current = null; };
   }, []);
+
+  // The crosshair cursor is the only signal that the next click means
+  // something different, so keep it tied to the mode rather than to a button.
+  useEffect(() => {
+    const el = divRef.current;
+    if (el) el.style.cursor = hazardMode ? 'crosshair' : '';
+  }, [hazardMode]);
 
   // Cross-panel selection → fly the map to the country and open its popup (§5).
   useEffect(() => {
@@ -220,6 +281,149 @@ export default function OsmMap({ model, hl, pb, lensOverride }) {
     });
   }, [model, lens, sel.type, sel.id, hl, scenarioActive]);
 
+  /* ---- site layer -------------------------------------------------------
+     One marker per modeled plant, on its OWN overlay group so panning past
+     SITE_ZOOM or moving the hazard never rebuilds the country markers above.
+     Colour is the current operational field at the stages the site feeds —
+     the same signed field the country markers use — so a recovery event reads
+     green here exactly as it does there. Size is the site's ordinal scale;
+     a construction site is drawn hollow because it has no output to lose. */
+  useEffect(() => {
+    const g = siteLayerRef.current;
+    if (!g) return;
+    g.clearLayers();
+    if (!sitesVisible) return;
+
+    const field = model.activeField || {};
+    FACILITY_LAYER.FACILITIES.forEach((f) => {
+      const impact = facilityImpact(f, field);
+      const live = siteWeight(f) > 0;
+      const col = !live ? C.faint
+        : impact > 0.02 ? C.red
+        : impact < -0.02 ? C.green
+        : C.copperDim;
+      const inside = insideIds.has(f.id);
+      const pinned = sel.type === 'facility' && sel.id === f.id;
+      const r = 2.6 + 0.85 * (f.scale ?? 1);
+
+      const marker = L.circleMarker([f.lat, f.lng], {
+        radius: pinned ? r + 3 : r,
+        color: pinned ? C.text : inside ? C.amber : col,
+        weight: pinned ? 2.4 : inside ? 2 : 1,
+        fillColor: col,
+        fillOpacity: live ? 0.85 : 0,
+      }).addTo(g);
+
+      const stageNames = (f.stages || []).map((sid) => STAGE_BY_ID[sid]?.name || sid);
+      marker.bindTooltip(
+        () => buildTooltipEl([
+          { text: f.name, bold: true },
+          { text: `${KIND_LABEL[f.kind] || f.kind} · ${COMPANY_BY_ID[f.company]?.name || f.company}`, color: C.copper, size: '10px' },
+          { text: f.output || '', color: C.dim, size: '9.5px' },
+          { text: stageNames.join(' · '), color: C.faint, size: '9px' },
+        ]),
+        { className: 'sscim-tip', direction: 'top', offset: [0, -r - 2] },
+      );
+
+      const conn = facilityConnectivity(FACILITY_NETWORK, f.id);
+      marker.bindPopup(() => buildFacilityPopupEl({
+        facility: f,
+        operatorName: COMPANY_BY_ID[f.company]?.name || f.company,
+        stageNames,
+        impactLine: facilityImpactLine(impact),
+        shareLines: [
+          ...(f.stages || []).map((sid) => {
+            const share = FACILITY_LAYER.shareOfStage(f, sid);
+            return `${Math.round(share * 100)}% of modeled ${STAGE_BY_ID[sid]?.name || sid} sites`;
+          }),
+          conn.degree ? `${conn.degree} modeled site-to-site link${conn.degree === 1 ? '' : 's'}` : null,
+        ].filter(Boolean),
+        colors: C,
+        onSelectCompany: (cid) => selectRef.current({ type: 'company', id: cid }),
+        onOpenProfile: (site) => selectRef.current({ type: 'facility', id: site.id }, { fly: false }),
+        onShock: (site) => (site.stages || []).forEach((sid) => draftToggleRef.current({ type: 'stage', id: sid })),
+      }), { className: 'sscim-tip', maxWidth: 300 });
+
+      // Clicking a plant pins it everywhere, which is what opens its profile
+      // panel; the popup stays as the on-map summary.
+      marker.on('click', () => {
+        selectRef.current({ type: 'facility', id: f.id }, { fly: false });
+        marker.openPopup();
+      });
+    });
+  }, [sitesVisible, model.activeField, insideIds, sel.type, sel.id, FACILITY_LAYER, FACILITY_NETWORK, STAGE_BY_ID, COMPANY_BY_ID]);
+
+  /* ---- site-to-site network --------------------------------------------
+     Modeled links, not shipment routes (engine/facilityNetwork.js). Drawn on
+     their own group beneath the markers, and only when the site layer is
+     showing — links between markers you cannot see are noise. When a site is
+     pinned, only its own links are drawn, which is the difference between a
+     hairball and an answer. */
+  useEffect(() => {
+    const g = siteNetLayerRef.current;
+    if (!g) return;
+    g.clearLayers();
+    if (!linksOn || !sitesVisible || !FACILITY_NETWORK) return;
+
+    const pinned = sel.type === 'facility' ? sel.id : null;
+    // Pinned: every link that touches this site. Unpinned: the capped set,
+    // because 800 lines over a world map is a texture, not a network.
+    const links = pinned
+      ? [...(FACILITY_NETWORK.linksByFacility[pinned]?.outbound || []),
+         ...(FACILITY_NETWORK.linksByFacility[pinned]?.inbound || [])]
+      : FACILITY_NETWORK.displayLinks;
+    const maxW = links.reduce((m, l) => Math.max(m, l.weight), 1e-9);
+
+    links.forEach((l) => {
+      const a = FACILITY_LAYER.FACILITY_BY_ID[l.from];
+      const b = FACILITY_LAYER.FACILITY_BY_ID[l.to];
+      if (!a || !b) return;
+      const rel = l.weight / maxW;
+      const line = L.polyline([[a.lat, a.lng], [b.lat, b.lng]], {
+        color: pinned ? C.copper : C.copperDim,
+        weight: 0.4 + 2.2 * rel,
+        opacity: pinned ? 0.85 : 0.16 + 0.5 * rel,
+        // A service relationship (the invoice and the die move opposite ways,
+        // as with an OSAT packaging a fabless firm's silicon) is dashed, so
+        // the two kinds of link are never read as the same thing.
+        dashArray: l.flow === 'service' ? '3 5' : null,
+        interactive: true,
+      }).addTo(g);
+      line.bindTooltip(
+        () => buildTooltipEl([
+          { text: `${a.name} → ${b.name}`, bold: true },
+          { text: l.flow === 'service'
+            ? `${STAGE_BY_ID[l.toStage]?.name || l.toStage} → ${STAGE_BY_ID[l.fromStage]?.name || l.fromStage} (service relationship: the die flows toward the supplier and back)`
+            : `${STAGE_BY_ID[l.fromStage]?.name || l.fromStage} → ${STAGE_BY_ID[l.toStage]?.name || l.toStage}`, color: C.copper, size: '10px' },
+          { text: `${COMPANY_BY_ID[l.fromCompany]?.name || l.fromCompany} → ${COMPANY_BY_ID[l.toCompany]?.name || l.toCompany} · supplier-revenue share ${Math.round(l.companyShare * 100)}%`, color: C.dim, size: '9.5px' },
+          { text: `modeled link weight ${l.weight.toFixed(4)}`, color: C.faint, size: '9px' },
+          { text: 'modeled site-to-site link — company revenue share × site shares × input-dependence prior. Not a shipment route.', color: C.faint, size: '8.5px' },
+        ]),
+        { className: 'sscim-tip', sticky: true },
+      );
+    });
+  }, [linksOn, sitesVisible, FACILITY_NETWORK, FACILITY_LAYER, sel.type, sel.id, STAGE_BY_ID, COMPANY_BY_ID]);
+
+  /* ---- hazard ring ------------------------------------------------------
+     The radius is a SCREENING circle, not a damage model: it says which
+     modeled plants are close enough that a human should look, which is
+     exactly what the USGS ingest filter does upstream (server/src/ingest/
+     usgs.mjs FAB_CLUSTERS). Nothing here models shaking intensity. */
+  useEffect(() => {
+    const g = hazardLayerRef.current;
+    if (!g) return;
+    g.clearLayers();
+    if (!hazard) return;
+    L.circle([hazard.lat, hazard.lng], {
+      radius: radiusKm * 1000,
+      color: C.amber, weight: 1.6, dashArray: '5 6', fillColor: C.amber, fillOpacity: 0.06,
+      interactive: false,
+    }).addTo(g);
+    L.circleMarker([hazard.lat, hazard.lng], {
+      radius: 4, color: C.amber, weight: 2, fillColor: C.amber, fillOpacity: 0.9, interactive: false,
+    }).addTo(g);
+  }, [hazard, radiusKm]);
+
   // Playback overlay — copper rings on the countries the shock has reached
   // by the current hop, with a pulsing ring on those reached THIS hop. Keyed
   // only on `pb`, so it never rebuilds the main markers/links above; the
@@ -264,8 +468,38 @@ export default function OsmMap({ model, hl, pb, lensOverride }) {
       <div className="mono" style={{ fontSize: 9.5, letterSpacing: 1, color: C.copper, marginBottom: 6 }}>
         {legend.title.toUpperCase()}
       </div>
-      <div style={{ display: 'flex', justifyContent: 'flex-end', margin: '-1px 0 6px' }}>
-        <label className="mono" style={{ fontSize: 9, color: C.faint, display: 'flex', alignItems: 'center', gap: 6 }}>MAP SIZE
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', margin: '-1px 0 6px' }}>
+        <button type="button" onClick={() => setSitesOn((v) => !v)} aria-pressed={sitesOn}
+          title={`Show the ${FACILITY_LAYER.FACILITIES.length} modeled plants. Markers appear from zoom ${SITE_ZOOM}.`}
+          style={{ fontSize: 10, padding: '3px 9px', borderRadius: 4, fontFamily: 'inherit', cursor: 'pointer',
+            background: sitesOn ? C.copper : 'transparent', color: sitesOn ? '#0C111C' : C.dim,
+            border: `1px solid ${sitesOn ? C.copper : C.line}`, fontWeight: sitesOn ? 700 : 400 }}>
+          ▦ SITES
+        </button>
+        <button type="button" onClick={() => setLinksOn((v) => !v)} aria-pressed={linksOn}
+          title="Draw the modeled site-to-site links. Pin a plant to see only its own links."
+          style={{ fontSize: 10, padding: '3px 9px', borderRadius: 4, fontFamily: 'inherit', cursor: 'pointer',
+            background: linksOn ? C.copperDim : 'transparent', color: linksOn ? '#0C111C' : C.dim,
+            border: `1px solid ${linksOn ? C.copperDim : C.line}`, fontWeight: linksOn ? 700 : 400 }}>
+          ⇄ LINKS
+        </button>
+        <button type="button" onClick={() => { setHazardMode((v) => !v); }} aria-pressed={hazardMode}
+          title="Click the map to place a hazard epicentre and see which plants fall inside the radius"
+          style={{ fontSize: 10, padding: '3px 9px', borderRadius: 4, fontFamily: 'inherit', cursor: 'pointer',
+            background: hazardMode ? C.amber : 'transparent', color: hazardMode ? '#0C111C' : C.dim,
+            border: `1px solid ${hazardMode ? C.amber : C.line}`, fontWeight: hazardMode ? 700 : 400 }}>
+          ⌖ HAZARD
+        </button>
+        <span className="mono" style={{ fontSize: 9, color: C.faint }}>
+          {hazardMode ? 'click the map to drop an epicentre'
+            : sitesOn && !sitesVisible ? `zoom to ${SITE_ZOOM}+ for plant markers`
+            : sitesVisible ? `${FACILITY_LAYER.FACILITIES.length} plants${linksOn
+              ? sel.type === 'facility'
+                ? ' · showing every link of the pinned plant'
+                : ` · drawing the strongest ${FACILITY_NETWORK?.stats.shown ?? 0} of ${FACILITY_NETWORK?.stats.built ?? 0} modeled links — pin a plant for all of its own`
+              : ''}` : ''}
+        </span>
+        <label className="mono" style={{ fontSize: 9, color: C.faint, display: 'flex', alignItems: 'center', gap: 6, marginLeft: 'auto' }}>MAP SIZE
           <input type="range" min="260" max="620" step="20" value={mapHeight} onChange={(e) => { setMapHeight(Number(e.target.value)); setTimeout(() => mapRef.current?.invalidateSize(), 0); }} aria-label="Map height" style={{ width: 84, accentColor: C.copper }} />
           <span style={{ color: C.dim }}>{mapHeight}px</span>
         </label>
@@ -279,6 +513,10 @@ export default function OsmMap({ model, hl, pb, lensOverride }) {
         )}
       </div>
       <Legend items={lg.items} note={lg.note} />
+      {footprint && (
+        <HazardPanel footprint={footprint} radiusKm={radiusKm}
+          onRadiusChange={setRadiusKm} onClear={() => { setHazard(null); setHazardMode(false); }} />
+      )}
       <CountryList model={model} />
     </div>
   );
