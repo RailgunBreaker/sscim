@@ -11,6 +11,7 @@ import IndexHistory from './IndexHistory.jsx';
 import DecadeHistory from './DecadeHistory.jsx';
 import Quote from './Quote.jsx';
 import Watchlist from './Watchlist.jsx';
+import FacilityExplorer from './FacilityExplorer.jsx';
 
 /* ================= Intelligence Panel ================= */
 export default function Intel({ sel, setSel, model, scenario, onResetScenario, onPlayScenario, scenarioActive, horizontal, feedTab, setFeedTab, baseGraph }) {
@@ -24,7 +25,7 @@ export default function Intel({ sel, setSel, model, scenario, onResetScenario, o
       </div>
       <div>
         <div style={{ display: "flex", gap: 0, borderBottom: `1px solid ${C.line}` }}>
-          {[["watch", "★ WATCH"], ["events", "EVENTS"], ["history", "HISTORY"], ["companies", "COMPANIES"], ["movers", "MOVERS 7D"], ["capital", "CAPITAL"]].map(([k, v]) => [k, t(v)]).map(([k, v]) => (
+          {[["watch", "★ WATCH"], ["explore", "⇄ EXPLORE"], ["events", "EVENTS"], ["history", "HISTORY"], ["companies", "COMPANIES"], ["movers", "MOVERS 7D"], ["capital", "CAPITAL"]].map(([k, v]) => [k, t(v)]).map(([k, v]) => (
             <button key={k} onClick={() => setFeedTab(k)} className="mono"
               style={{ flex: 1, padding: "8px 0", background: "transparent", border: "none", borderBottom: feedTab === k ? `2px solid ${C.copper}` : "2px solid transparent", color: feedTab === k ? C.copper : C.dim, fontSize: 9.5, letterSpacing: 1.5, cursor: "pointer", fontFamily: "inherit" }}>
               {v}
@@ -33,6 +34,7 @@ export default function Intel({ sel, setSel, model, scenario, onResetScenario, o
         </div>
         <div style={{ overflowY: "auto", padding: "8px 12px 12px", maxHeight: horizontal ? 420 : 440 }}>
           {feedTab === "watch" && <Watchlist model={model} setSel={setSel} />}
+          {feedTab === "explore" && <FacilityExplorer setSel={setSel} />}
           {feedTab === "events" && (
             <>
               <IndexHistory engine={engine} events={EVENTS} onSelectEvent={(id) => setSel({ type: "event", id })} />

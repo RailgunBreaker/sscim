@@ -122,6 +122,35 @@ export function facilityIconHtml({ kind, impact = 0, live = true, size = 16, sel
   </svg>`;
 }
 
+/* A group of plants that overlap at this zoom, drawn as a count rather than a
+   pile. Deliberately a ROUNDED SQUARE, not any of the function shapes: a
+   cluster usually mixes fabs, packaging and materials, and borrowing one of
+   their glyphs would claim a homogeneity it does not have. The number is the
+   information; the shape only has to say "this is a group, open it". */
+export function clusterIconHtml({ count, impact = 0, size = 22, selected = false, inHazard = false }) {
+  const mag = Math.abs(impact);
+  const accent = mag < QUIET_BAND ? IDLE_COLOR
+    : impact < 0 ? C.green
+    : mag >= STRONG_BAND ? C.red
+    : C.amber;
+  const stroke = selected ? C.text : inHazard ? C.amber : accent;
+  /* Digits only, by construction. This is the one icon that renders text, so
+     the value is coerced and stripped rather than trusted — nothing that ever
+     reaches it should be able to carry markup. */
+  const n = Math.max(0, Math.floor(Number(count) || 0));
+  const label = n > 99 ? '99+' : String(n).replace(/[^\d]/g, '');
+  const fontSize = Math.max(8, Math.round(size * (label.length > 2 ? 0.34 : 0.42)));
+
+  return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg"
+    style="overflow:visible;display:block">
+    <rect x="1" y="1" width="${size - 2}" height="${size - 2}" rx="${size * 0.3}"
+      fill="${C.panel}" fill-opacity="0.94" stroke="${stroke}" stroke-width="${selected || inHazard ? 2 : 1.4}"/>
+    <text x="50%" y="50%" text-anchor="middle" dominant-baseline="central"
+      font-family="Inter, Segoe UI, Roboto, Helvetica, Arial, sans-serif"
+      font-size="${fontSize}" font-weight="700" fill="${accent}">${label}</text>
+  </svg>`;
+}
+
 /* Legend rows for the map key: every shape, drawn the same way the markers
    are, so the key cannot drift from the map it describes. */
 export function facilityLegendItems(size = 13) {

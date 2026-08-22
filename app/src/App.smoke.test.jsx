@@ -92,9 +92,14 @@ describe('App smoke (static snapshot, Leaflet mocked)', () => {
   /* The site layer was invisible on load for its whole first life: markers
      were gated behind zoom 4 and the map opens at zoom 2, so the honest
      reading of the default view was "this project models no facilities". The
-     mocked map still reports zoom 2 — so if this assertion ever fails, the
-     gate is back. */
-  it('draws a marker for every modeled facility at the default world zoom', async () => {
+     mocked map still reports zoom 2 — so if this ever draws nothing, the gate
+     is back.
+
+     Deliberately NOT one marker per facility any more: overlapping plants are
+     grouped into count markers at low zoom (engine/facilityCluster.js), and
+     the guarantee that grouping loses nothing is asserted there, against the
+     clustering itself, rather than inferred from a render count here. */
+  it('draws the site layer at the default world zoom, grouped rather than hidden', async () => {
     const container = document.createElement('div');
     document.body.appendChild(container);
     const root = createRoot(container);
@@ -104,16 +109,21 @@ describe('App smoke (static snapshot, Leaflet mocked)', () => {
 
     const { FACILITIES } = snapshot;
     expect(FACILITIES.length).toBeGreaterThan(200);
-    expect(calls.marker.length).toBe(FACILITIES.length);
-    expect(calls.divIcon.length).toBe(FACILITIES.length);
 
-    // Every icon carries real geometry, and shrinks at world zoom rather than
-    // being hidden — the fix that replaced the gate.
+    // Something is drawn...
+    expect(calls.marker.length).toBeGreaterThan(0);
+    expect(calls.divIcon.length).toBe(calls.marker.length);
+    // ...and at world zoom it is grouped, not one glyph per plant.
+    expect(calls.marker.length).toBeLessThan(FACILITIES.length);
+
+    // Every icon carries real geometry rather than being an empty box.
     calls.divIcon.forEach((opts) => {
       expect(opts.html).toContain('<svg');
       expect(opts.iconSize[0]).toBeGreaterThan(3);
-      expect(opts.iconSize[0]).toBeLessThan(14);
     });
+
+    // At least one is a count marker standing in for a group.
+    expect(calls.divIcon.some((o) => o.className.includes('sscim-cluster'))).toBe(true);
 
     await act(async () => { root.unmount(); });
     container.remove();

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { facilityIconHtml, facilityLegendItems, FACILITY_KIND_LABEL, IDLE_COLOR, QUIET_BAND, STRONG_BAND } from './facilityIcon.js';
+import { facilityIconHtml, clusterIconHtml, facilityLegendItems, FACILITY_KIND_LABEL, IDLE_COLOR, QUIET_BAND, STRONG_BAND } from './facilityIcon.js';
 import { C } from '../theme.js';
 
 const KINDS = Object.keys(FACILITY_KIND_LABEL);
@@ -95,5 +95,47 @@ describe('facility icons — shape carries function, colour carries state', () =
       expect(it.label).toBe(FACILITY_KIND_LABEL[it.kind]);
       expect(it.html).toBe(facilityIconHtml({ kind: it.kind, impact: 0, live: true, size: 13 }));
     });
+  });
+});
+
+describe('cluster glyph — a count you can open, not a pile you cannot', () => {
+  it('shows the member count', () => {
+    expect(clusterIconHtml({ count: 8 })).toContain('>8<');
+    expect(clusterIconHtml({ count: 1 })).toContain('>1<');
+  });
+
+  it('caps an absurd count rather than overflowing the badge', () => {
+    expect(clusterIconHtml({ count: 4210 })).toContain('>99+<');
+  });
+
+  /* This is the only icon that renders text, so the value is coerced and
+     stripped rather than trusted. Nothing that reaches it should be able to
+     carry markup even if a caller passes something strange. */
+  it('emits digits only, whatever it is handed', () => {
+    ['<script>x</script>', { a: 1 }, NaN, -5, null, undefined].forEach((bad) => {
+      const html = clusterIconHtml({ count: bad });
+      expect(html).not.toMatch(/<script|onerror|javascript:/i);
+      const label = html.match(/font-weight="700" fill="[^"]*">([^<]*)</)[1];
+      expect(label).toMatch(/^(\d+|99\+)$/);
+    });
+  });
+
+  /* A group holding one stopped fab is not quiet because the rest are — the
+     colour comes from the worst member, which clusterFacilities computes. */
+  it('takes the same four-way colour vocabulary as a single site', () => {
+    expect(clusterIconHtml({ count: 5, impact: 0 })).toContain(IDLE_COLOR);
+    expect(clusterIconHtml({ count: 5, impact: 0.2 })).toContain(C.amber);
+    expect(clusterIconHtml({ count: 5, impact: 0.9 })).toContain(C.red);
+    expect(clusterIconHtml({ count: 5, impact: -0.9 })).toContain(C.green);
+  });
+
+  /* Deliberately not one of the function shapes: a group usually mixes fabs,
+     packaging and materials, and borrowing a glyph would claim a homogeneity
+     it does not have. */
+  it('is a rounded square, never a function shape', () => {
+    const html = clusterIconHtml({ count: 3 });
+    expect(html).toContain('<rect');
+    expect(html).not.toContain('<polygon');
+    expect(html).not.toContain('<circle');
   });
 });

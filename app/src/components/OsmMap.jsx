@@ -10,7 +10,8 @@ import { buildTooltipEl, buildCountryPopupEl, buildFacilityPopupEl } from '../ut
 import { introForCountry, flagEmoji } from '../data/glossary.js';
 import { hazardFootprint, facilityImpact, siteWeight } from '../engine/facilities.js';
 import { facilityConnectivity } from '../engine/facilityNetwork.js';
-import { facilityIconHtml, facilityLegendItems, IDLE_COLOR, FACILITY_KIND_LABEL as KIND_LABEL } from '../utils/facilityIcon.js';
+import { facilityIconHtml, clusterIconHtml, facilityLegendItems, IDLE_COLOR, FACILITY_KIND_LABEL as KIND_LABEL } from '../utils/facilityIcon.js';
+ import { clusterFacilities, clusterLabel, clusterRadiusKm } from '../engine/facilityCluster.js';
 import { useWatchlist } from '../interaction/WatchlistContext.jsx';
 import Legend from './Legend.jsx';
 import CountryList from './CountryList.jsx';
@@ -95,6 +96,19 @@ export default function OsmMap({ model, hl, lensOverride, onApplyHazard }) {
   );
   const sitesVisible = sitesOn;
 
+  /* Group plants that overlap at this zoom. Recomputed on zoom because the
+     grouping is a screen-space question — see engine/facilityCluster.js. */
+  const clusters = useMemo(
+    () => (sitesVisible
+      ? clusterFacilities(FACILITY_LAYER.FACILITIES, {
+        zoom,
+        stateOf: (f) => facilityImpact(f, model.activeField || {}),
+      })
+      : []),
+    [sitesVisible, zoom, FACILITY_LAYER, model.activeField],
+  );
+  const groupedCount = clusters.filter((c) => c.kind === 'cluster').length;
+
   // Stable handler refs so the flyTo subscription and marker callbacks always
   // see the latest select/hover/watchlist state without re-subscribing or
   // forcing the heavy marker effect to rebuild on every change.
@@ -105,20 +119,25 @@ export default function OsmMap({ model, hl, lensOverride, onApplyHazard }) {
 
   useEffect(() => {
     if (!divRef.current || mapRef.current) return;
+    /* maxZoom was 7, which is roughly "a country fills the panel" — far too
+       coarse for a site layer. Eight plants inside the Hsinchu Science Park
+       are a few kilometres apart, so at zoom 7 they are one pile of glyphs
+       and no amount of panning separates them. Both basemaps serve tiles to
+       z18+, so the ceiling was ours, not theirs. */
     const map = L.map(divRef.current, {
-      center: [32, 70], zoom: 2, minZoom: 1, maxZoom: 7,
+      center: [32, 70], zoom: 2, minZoom: 1, maxZoom: 18,
       worldCopyJump: true, zoomControl: false, attributionControl: true,
     });
     let fellBack = false, loaded = false;
     const carto = L.tileLayer('https://basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-      attribution: '© OpenStreetMap contributors © CARTO', subdomains: 'abcd',
+      attribution: '© OpenStreetMap contributors © CARTO', subdomains: 'abcd', maxZoom: 20,
     }).addTo(map);
     carto.on('tileload', () => { loaded = true; setTileStatus('ok'); });
     carto.on('tileerror', () => {
       if (fellBack) return; fellBack = true;
       map.removeLayer(carto);
       const osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors', className: 'osm-soft',
+        attribution: '© OpenStreetMap contributors', className: 'osm-soft', maxZoom: 19,
       }).addTo(map);
       osm.on('tileload', () => { loaded = true; setTileStatus('ok'); });
     });
@@ -277,12 +296,17 @@ export default function OsmMap({ model, hl, lensOverride, onApplyHazard }) {
   }, [model, lens, sel.type, sel.id, hl, scenarioActive]);
 
   /* ---- site layer -------------------------------------------------------
-     One marker per modeled plant, on its OWN overlay group so panning past
-     zooming or moving the hazard never rebuilds the country markers above.
-     Colour is the current operational field at the stages the site feeds —
-     the same signed field the country markers use — so a recovery event reads
-     green here exactly as it does there. Size is the site's ordinal scale;
-     a construction site is drawn hollow because it has no output to lose. */
+     One marker per modeled plant — or, where plants overlap at this zoom, one
+     COUNT marker standing for the group (engine/facilityCluster.js). Real
+     semiconductor geography is extremely clustered: eight sites inside the
+     Hsinchu Science Park land on the same pixels at country zoom, and a pile
+     of overlapping glyphs hides seven of them while looking like one. A count
+     you can click open is the honest version of that.
+
+     On its OWN overlay group so zooming or moving the hazard never rebuilds
+     the country markers above. Colour is the current operational field at the
+     stages the site feeds — the same signed field the country markers use —
+     so a recovery reads green here exactly as it does there. */
   useEffect(() => {
     const g = siteLayerRef.current;
     if (!g) return;
@@ -292,7 +316,59 @@ export default function OsmMap({ model, hl, lensOverride, onApplyHazard }) {
     const field = model.activeField || {};
     const watchedSites = new Set(watched.filter((w) => w.type === 'facility').map((w) => w.id));
 
-    FACILITY_LAYER.FACILITIES.forEach((f) => {
+    /* Draw the groups first, then fall through to the per-plant renderer for
+       anything that stayed a singleton. */
+    clusters.filter((c) => c.kind === 'cluster').forEach((c) => {
+      const size = Math.round(19 + Math.min(9, Math.log2(c.count) * 3));
+      const anyInside = c.members.some((m) => insideIds.has(m.id));
+      const anyPinned = sel.type === 'facility' && c.members.some((m) => m.id === sel.id);
+
+      const marker = L.marker([c.lat, c.lng], {
+        icon: L.divIcon({
+          className: 'sscim-site sscim-cluster',
+          html: clusterIconHtml({ count: c.count, impact: c.state, size, selected: anyPinned, inHazard: anyInside }),
+          iconSize: [size, size],
+          iconAnchor: [size / 2, size / 2],
+        }),
+        keyboard: false,
+        zIndexOffset: 300,
+      }).addTo(g);
+
+      const byKind = c.members.reduce((acc, m) => { acc[m.kind] = (acc[m.kind] || 0) + 1; return acc; }, {});
+      marker.bindTooltip(
+        () => buildTooltipEl([
+          { text: clusterLabel(c, { COMPANY_BY_ID }), bold: true },
+          { text: Object.entries(byKind).map(([k, n]) => `${n} ${KIND_LABEL[k] || k}`).join(' · '), color: C.copper, size: '10px' },
+          { text: c.members.slice(0, 4).map((m) => m.name).join(' · ') + (c.count > 4 ? ` · +${c.count - 4} more` : ''), color: C.dim, size: '9.5px' },
+          { text: `grouped because they are within ${Math.round(clusterRadiusKm(c.lat, zoom))} km at this zoom — click to open`, color: C.faint, size: '8.5px' },
+        ]),
+        { className: 'sscim-tip', direction: 'top', offset: [0, -size / 2 - 2] },
+      );
+
+      /* Clicking opens the group rather than selecting it: zoom to the bounds
+         that contain every member, which is the only action that can actually
+         reveal what the count is standing in for. */
+      marker.on('click', () => {
+        const map = mapRef.current;
+        if (!map) return;
+        const [[lat0, lng0], [lat1, lng1]] = c.bounds;
+        const centre = [(lat0 + lat1) / 2, (lng0 + lng1) / 2];
+
+        /* Every click must make progress. fitBounds alone does not: a group
+           whose members already fit the current viewport resolves to the zoom
+           you are on, so the map does not move and the marker looks broken —
+           which is exactly what "click one to open it" promises it will not
+           do. Take the tighter of "what the bounds need" and "two levels in",
+           and never less than one level. */
+        const fitZoom = (lat0 === lat1 && lng0 === lng1)
+          ? map.getMaxZoom()
+          : map.getBoundsZoom(c.bounds, false, [40, 40]);
+        const target = Math.min(map.getMaxZoom(), Math.max(map.getZoom() + 2, fitZoom));
+        map.setView(centre, target, { animate: true });
+      });
+    });
+
+    clusters.filter((c) => c.kind === 'site').map((c) => c.facility).forEach((f) => {
       const impact = facilityImpact(f, field);
       const live = siteWeight(f) > 0;
       const inside = insideIds.has(f.id);
@@ -355,7 +431,7 @@ export default function OsmMap({ model, hl, lensOverride, onApplyHazard }) {
         marker.openPopup();
       });
     });
-  }, [sitesVisible, zoom, model.activeField, insideIds, sel.type, sel.id, watched, FACILITY_LAYER, FACILITY_NETWORK, STAGE_BY_ID, COMPANY_BY_ID]);
+  }, [clusters, sitesVisible, zoom, model.activeField, insideIds, sel.type, sel.id, watched, FACILITY_LAYER, FACILITY_NETWORK, STAGE_BY_ID, COMPANY_BY_ID]);
 
   /* ---- site-to-site network --------------------------------------------
      Modeled links, not shipment routes (engine/facilityNetwork.js). Drawn on
@@ -460,7 +536,9 @@ export default function OsmMap({ model, hl, lensOverride, onApplyHazard }) {
         </button>
         <span className="mono" style={{ fontSize: 9, color: C.faint }}>
           {hazardMode ? 'click the map to drop an epicentre'
-            : sitesVisible ? `${FACILITY_LAYER.FACILITIES.length} plants${linksOn
+            : sitesVisible ? `${FACILITY_LAYER.FACILITIES.length} plants${
+              groupedCount ? ` · ${groupedCount} group${groupedCount === 1 ? '' : 's'} within ~${Math.round(clusterRadiusKm(24, zoom))} km — click one to open it` : ''
+            }${linksOn
               ? sel.type === 'facility'
                 ? ' · showing every link of the pinned plant'
                 : ` · drawing the strongest ${FACILITY_NETWORK?.stats.shown ?? 0} of ${FACILITY_NETWORK?.stats.built ?? 0} modeled links — pin a plant for all of its own`
