@@ -15,3 +15,6 @@ app/public/docs-manifest.json
 .env
 .env.local
 .claude/
+
+# API process logs written by scripts/restart-api.ps1
+server/logs/
