@@ -44,6 +44,22 @@ export const FACILITY_KIND_LABEL = Object.freeze({
 /* Neutral resting colour: present, legible, not alarming. */
 export const IDLE_COLOR = '#7C8AA5';
 
+/* Where the colour bands sit, and why they are not near zero.
+
+   The first version treated anything past |0.02| as adverse and painted it
+   red. That looked principled and was useless in practice: a single large
+   event propagates across the whole graph, so on a normal day the median
+   site sits around |0.20| and 267 of 275 plants came out red. A map where
+   everything is an alarm carries exactly as much information as a map where
+   nothing is.
+
+   So the bands are graded, and they use the same four-way vocabulary the
+   country markers and the legend already use — adverse / moderate /
+   mitigating / ~neutral — rather than inventing a second scale for the same
+   underlying field. */
+export const QUIET_BAND = 0.10;   // below this the site is drawn as geography
+export const STRONG_BAND = 0.35;  // above this an adverse effect reads as red
+
 /* One path per kind, drawn inside a 16×16 box centred on (8,8). Kept as
    geometry rather than glyph characters so it renders identically without
    depending on a font that may not be installed. */
@@ -79,12 +95,15 @@ function shape(kind, size) {
    `live` is false for a site with no output to lose (construction / idle),
    which is drawn hollow so it is never counted by eye as running capacity. */
 export function facilityIconHtml({ kind, impact = 0, live = true, size = 16, selected = false, inHazard = false }) {
+  const mag = Math.abs(impact);
   const state = !live ? 'idle'
-    : impact > 0.02 ? 'adverse'
-    : impact < -0.02 ? 'mitigating'
-    : 'quiet';
+    : mag < QUIET_BAND ? 'quiet'
+    : impact < 0 ? 'mitigating'
+    : mag >= STRONG_BAND ? 'adverse'
+    : 'moderate';
 
   const fill = state === 'adverse' ? C.red
+    : state === 'moderate' ? C.amber
     : state === 'mitigating' ? C.green
     : state === 'idle' ? 'none'
     : IDLE_COLOR;

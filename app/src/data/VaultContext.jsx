@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { buildEngine } from '../engine/index.js';
 import { buildVaultData } from './buildVaultData.js';
+import { reconcileBundle, staleLiveMessage } from './reconcileBundle.js';
 import { buildFacilityNetwork } from '../engine/facilityNetwork.js';
 import snapshot from './vault-snapshot.json';
 
@@ -24,8 +25,23 @@ const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8787';
 
 const VaultCtx = createContext(null);
 
-function buildVaultState(bundle, source) {
+function buildVaultState(rawBundle, source) {
+  /* A live API can be older than the build talking to it — it answers 200
+     with valid JSON that simply has no `facilities` key, because the running
+     process still holds the previous bundle.js. Fill only the sections it
+     omits entirely, from the snapshot this build shipped with, and keep a
+     record so the interface can say so instead of rendering an empty map.
+     See reconcileBundle.js for why a smaller-but-present section is left
+     alone. */
+  const { bundle, filled, dropped, stale } = source === 'live'
+    ? reconcileBundle(rawBundle, snapshot)
+    : { bundle: rawBundle, filled: [], dropped: 0, stale: false };
+
   const data = buildVaultData(bundle);
+  data.LIVE_GAPS = { filled, dropped, stale, message: staleLiveMessage({ filled, dropped }) };
+  if (stale) {
+    console.warn(`SSCIM: ${staleLiveMessage({ filled, dropped })}`);
+  }
   const engine = buildEngine({
     STAGES: data.STAGES, FLOW_EDGES: data.FLOW_EDGES, COMPANIES: data.COMPANIES,
     CUSTOMERS: data.CUSTOMERS, POLICIES: data.POLICIES, EVENTS: data.EVENTS, OWNERS: data.OWNERS,

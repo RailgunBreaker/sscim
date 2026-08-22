@@ -437,6 +437,12 @@ function DashboardBody() {
         {source === 'static' && (
           <span style={{ color: C.amber }}> · DATA SERVICE UNAVAILABLE — showing the latest available dataset.</span>
         )}
+        {/* A live vault older than this build answers 200 with a section
+            simply missing, which is how the map once drew 0 of 275 plants
+            with nothing on screen to say why. Never silent again. */}
+        {data.LIVE_GAPS?.stale && (
+          <span style={{ color: C.amber }}> · STALE VAULT API — {data.LIVE_GAPS.message}</span>
+        )}
         {!model.graphValid && (
           <span style={{ color: C.red }}> · MODEL DIAGNOSTIC: the stage graph failed validation — see <a href="docs/METHODOLOGY.md.html" style={{ color: C.copper }}>Methodology</a>.</span>
         )}

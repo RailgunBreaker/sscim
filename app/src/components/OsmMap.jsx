@@ -10,7 +10,7 @@ import { buildTooltipEl, buildCountryPopupEl, buildFacilityPopupEl } from '../ut
 import { introForCountry, flagEmoji } from '../data/glossary.js';
 import { hazardFootprint, facilityImpact, siteWeight } from '../engine/facilities.js';
 import { facilityConnectivity } from '../engine/facilityNetwork.js';
-import { facilityIconHtml, facilityLegendItems, FACILITY_KIND_LABEL as KIND_LABEL } from '../utils/facilityIcon.js';
+import { facilityIconHtml, facilityLegendItems, IDLE_COLOR, FACILITY_KIND_LABEL as KIND_LABEL } from '../utils/facilityIcon.js';
 import { useWatchlist } from '../interaction/WatchlistContext.jsx';
 import Legend from './Legend.jsx';
 import CountryList from './CountryList.jsx';
@@ -495,8 +495,12 @@ export default function OsmMap({ model, hl, lensOverride, onApplyHazard }) {
                 {it.label}
               </span>
             ))}
-            <span className="mono" style={{ fontSize: 9, color: C.faint }}>
-              · hollow = no output to lose (under construction or idle) · amber ring = inside the hazard radius
+            <span className="mono" style={{ fontSize: 9, color: C.faint, display: 'inline-flex', gap: 8, flexWrap: 'wrap' }}>
+              <span style={{ color: IDLE_COLOR }}>● quiet</span>
+              <span style={{ color: C.amber }}>● moderate</span>
+              <span style={{ color: C.red }}>● adverse</span>
+              <span style={{ color: C.green }}>● mitigating</span>
+              <span>· hollow = no output to lose (construction or idle) · white ring = pinned · amber ring = in the hazard radius</span>
             </span>
           </div>
         </div>

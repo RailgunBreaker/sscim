@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { facilityIconHtml, facilityLegendItems, FACILITY_KIND_LABEL, IDLE_COLOR } from './facilityIcon.js';
+import { facilityIconHtml, facilityLegendItems, FACILITY_KIND_LABEL, IDLE_COLOR, QUIET_BAND, STRONG_BAND } from './facilityIcon.js';
 import { C } from '../theme.js';
 
 const KINDS = Object.keys(FACILITY_KIND_LABEL);
@@ -29,6 +29,25 @@ describe('facility icons — shape carries function, colour carries state', () =
   it('treats a negligible field as quiet rather than as an alarm', () => {
     expect(facilityIconHtml({ kind: 'fab', impact: 0.01 })).toContain(IDLE_COLOR);
     expect(facilityIconHtml({ kind: 'fab', impact: -0.01 })).toContain(IDLE_COLOR);
+  });
+
+  /* A single large event propagates across the whole graph, so on a normal
+     day the median site sits well above zero. A flat low threshold made 267
+     of 275 plants red, and a map where everything is an alarm carries as
+     much information as one where nothing is. */
+  it('grades the adverse side instead of painting everything red', () => {
+    expect(facilityIconHtml({ kind: 'fab', impact: QUIET_BAND - 0.01 })).toContain(IDLE_COLOR);
+    expect(facilityIconHtml({ kind: 'fab', impact: QUIET_BAND + 0.01 })).toContain(C.amber);
+    expect(facilityIconHtml({ kind: 'fab', impact: STRONG_BAND - 0.01 })).toContain(C.amber);
+    expect(facilityIconHtml({ kind: 'fab', impact: STRONG_BAND + 0.01 })).toContain(C.red);
+  });
+
+  it('uses the same four-way vocabulary as the country legend', () => {
+    const colours = [0, 0.2, 0.9, -0.9].map((impact) => {
+      const html = facilityIconHtml({ kind: 'fab', impact });
+      return [IDLE_COLOR, C.amber, C.red, C.green].find((c) => html.includes(c));
+    });
+    expect(colours).toEqual([IDLE_COLOR, C.amber, C.red, C.green]);
   });
 
   /* A site with nothing to lose must never read as running capacity. */
