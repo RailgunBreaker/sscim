@@ -28,19 +28,40 @@ it does **not** know.
 
 The [source register](SOURCE-REGISTER.md) renders every source in Chicago
 bibliography style, and reports how complete each entry actually is rather than
-presenting them as uniform. Three classes, counted:
+presenting them as uniform. Four classes, counted:
 
+- **Resolved** — looked up against the *Federal Register* and tied to the
+  actual document: real title, agency, register locator, publication date and
+  permanent URL.
 - **Full** — title, publisher, date and URL, captured automatically at review.
 - **Legal** — issuing body and an exact *Federal Register* volume and page,
   which resolves without a title.
 - **Short** — issuing body, document type and date only. These are the
-  hand-curated historical records, entered before URLs were captured.
+  hand-curated historical records for which no published document was found.
 
 **No entry is padded out.** A short entry stays short rather than acquiring an
 invented title or page number to look like the others. Inventing bibliographic
 detail to complete the shape of a citation would defeat the point of keeping
-one. Closing the gap is data entry — recording the URL at review time — and the
-full class grows with every reviewed event.
+one.
+
+That rule is what makes the *resolved* class worth trusting.
+`server/scripts/resolve-citations.mjs` turns curator shorthand — "BIS interim
+final rule (May 15, 2020)" — into the document it refers to, but it will only
+write a citation when an **exact identifier** ties the two together: a register
+citation, an executive order number, or a document number a person confirmed
+after reading the abstract. Similarity search exists in that script purely as a
+search aid for a human, and cannot write anything.
+
+The distinction is not academic. Verifying the August 2022 rule against its own
+text showed it controls **gallium oxide** and diamond substrates, not silicon
+carbide as the event record had claimed; the event was corrected against the
+document. A fuzzy match would have attached a citation and left the error in
+place, which is precisely the failure a register exists to catch.
+
+Eight events remain short by design. Presidential CFIUS orders, licence
+revocations and settlement announcements are real actions that were never
+published as *Federal Register* documents, and no amount of searching produces
+a citation that does not exist.
 
 ## The one rule
 

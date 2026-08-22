@@ -9,30 +9,36 @@
 
    HOW A CITATION IS BUILT, in descending order of completeness:
 
-     1. FULL — the reviewed events. Their candidate record carries the article
+     1. RESOLVED — a curator's shorthand looked up against the Federal Register
+        and tied to the actual document by an exact identifier. Carries the
+        real title, agency, register locator, publication date and permanent
+        URL. See scripts/resolve-citations.mjs for how, and for why nothing is
+        ever matched on a similarity score.
+     2. FULL — the reviewed events. Their candidate record carries the article
         title, the publishing site, the publication date and the URL, so a
         complete Chicago entry is assembled from real captured metadata.
-     2. LEGAL — a source naming a Federal Register volume and page. Chicago
+     3. LEGAL — a source naming a Federal Register volume and page. Chicago
         cites government material by issuing body and register locator; the
         locator is exact and resolvable, so the entry is complete without a
         title.
-     3. SHORT — the hand-curated historical events. Their record names the
+     4. SHORT — the hand-curated historical events. Their record names the
         issuing body, the document type and the date, and nothing more. The
         entry says exactly that. It does NOT get a title invented for it.
 
    The register reports how many fall in each class, because "163 sources" and
    "163 fully-formed citations" are different claims and only one of them is
    true. Closing the gap is a data-entry task — recording the URL at review
-   time — not a formatting one.
+   time, or resolving the document — not a formatting one.
 
    Run from server/:  node scripts/build-source-register.mjs  */
-import { writeFileSync } from 'node:fs';
+import { writeFileSync, readFileSync, existsSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { db } from '../src/db.js';
-import { chicago, DATASETS, PUBLISHERS, publishersFor } from '../src/citations.js';
+import { chicago, agencyAuthor, DATASETS, PUBLISHERS, publishersFor } from '../src/citations.js';
 
-const OUT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..', 'docs', 'reference', 'SOURCE-REGISTER.md');
+const HERE = dirname(fileURLToPath(import.meta.url));
+const OUT = resolve(HERE, '..', '..', 'docs', 'reference', 'SOURCE-REGISTER.md');
 const today = new Date().toISOString().slice(0, 10);
 
 const rows = (sql, ...a) => db.prepare(sql).all(...a);
@@ -56,7 +62,44 @@ for (const c of rows("SELECT raw_json, source_feed, date_iso FROM event_candidat
 
 const FR_RE = /\b(\d{2,3})\s*FR\s*(\d{3,6})\b/i;
 
-/* Build the best citation the record supports, and say which kind it is. */
+/* ---- citations resolved against the Federal Register --------------------
+   scripts/resolve-citations.mjs turns a curator's shorthand into the actual
+   document, but only ever through an exact identifier — a Federal Register
+   citation, an executive order number, or a document number a person
+   confirmed after reading the abstract. Nothing there was matched on a
+   similarity score, so what lands here is publisher-verified and can be
+   rendered as a complete entry. */
+const resolvedPath = resolve(HERE, '..', 'src', 'resolved-citations.json');
+const RESOLVED = existsSync(resolvedPath) ? JSON.parse(readFileSync(resolvedPath, 'utf8')) : {};
+
+function resolvedEntries(event) {
+  const hit = RESOLVED[event.id];
+  if (!hit) return null;
+  return [].concat(hit).map((d) => ({
+    klass: 'resolved',
+    text: chicago({
+      author: agencyAuthor(d.agencies) || 'Office of the Federal Register',
+      /* Chicago cites an executive order by its number and title together;
+         the number is the part a reader actually looks it up by. */
+      title: d.executiveOrder ? `Executive Order ${d.executiveOrder}: ${d.title}` : d.title,
+      container: 'Federal Register',
+      register: d.citation ? d.citation.replace(/\bFR\b/, 'Fed. Reg.') : null,
+      date: longDate(d.publicationDate),
+      url: d.url,
+      accessed: today,
+    }),
+  }));
+}
+
+/* Build the best citation(s) the record supports, and say which kind each is.
+   Returns an array: an event can rest on more than one document, and citing
+   one of a pair of concurrent rules would misdescribe what happened. */
+function citationsFor(event) {
+  const resolvedHit = resolvedEntries(event);
+  if (resolvedHit) return resolvedHit;
+  return [citationFor(event)];
+}
+
 function citationFor(event) {
   const src = String(event.source || '');
 
@@ -151,9 +194,12 @@ function citationFor(event) {
 /* ---- gather -------------------------------------------------------------- */
 const events = rows('SELECT id, date_iso, title, source FROM events ORDER BY date_iso');
 const withSource = events.filter((e) => e.source && e.source.trim());
-const cited = withSource.map((e) => ({ ...e, ...citationFor(e) }));
+const cited = withSource.flatMap((e) => citationsFor(e).map((c) => ({ ...e, ...c })));
 
 const counts = cited.reduce((a, c) => { a[c.klass] = (a[c.klass] || 0) + 1; return a; }, {});
+/* Entries outnumber events wherever one event rests on several documents, so
+   the two are counted separately rather than one standing in for the other. */
+const citedEvents = new Set(cited.map((c) => c.id)).size;
 const missing = events.length - withSource.length;
 
 /* Group the bibliography by issuing body so it reads as a bibliography rather
@@ -202,14 +248,15 @@ push('');
 push('## How complete each citation is, and why');
 push('');
 push('A citation can only be as complete as what was recorded when the item was');
-push('reviewed. Three classes, counted rather than blurred together:');
+push('reviewed. Four classes, counted rather than blurred together:');
 push('');
 push('| Class | Entries | What the record carries |');
 push('| --- | --- | --- |');
+push(`| **Resolved** | ${counts.resolved || 0} | Looked up against the *Federal Register* and tied to the document by an exact identifier: real title, agency, register locator, publication date and permanent URL |`);
 push(`| **Full** | ${counts.full || 0} | Title, publisher, date and URL — captured automatically at review and assembled into a complete entry |`);
 push(`| **Legal** | ${counts.legal || 0} | Issuing body and an exact *Federal Register* volume and page. Complete by Chicago's convention for government material |`);
-push(`| **Short** | ${counts.short || 0} | Issuing body, document type and date only. Hand-curated historical records, entered before URLs were captured |`);
-push(`| Total | ${cited.length} | ${missing ? `${missing} event(s) carry no source at all` : 'every event carries a source'} |`);
+push(`| **Short** | ${counts.short || 0} | Issuing body, document type and date only. Hand-curated historical records for which no published document was found |`);
+push(`| Total | ${cited.length} | across ${citedEvents} event(s); ${missing ? `${missing} event(s) carry no source at all` : 'every event carries a source'} |`);
 push('');
 push('**No entry is padded out.** A short entry stays short rather than acquiring');
 push('an invented title, author or page number to look like the others. Inventing');
@@ -217,10 +264,18 @@ push('bibliographic detail to complete the shape of a citation would defeat the'
 push('purpose of keeping one, and it is exactly the failure a register like this');
 push('exists to prevent.');
 push('');
-push('Closing the gap is a data-entry task, not a formatting one: everything');
+push('That constraint is what makes the *resolved* class trustworthy. Every entry');
+push('in it was matched to its document by an exact identifier — a register');
+push('citation, an executive order number, or a document number confirmed by');
+push('reading the abstract — and never by a similarity score. Where the search');
+push('found nothing, the entry stayed short. Eight of them did: presidential CFIUS');
+push('orders, licence revocations and settlement announcements are real actions');
+push('that were simply never published as *Federal Register* documents, and no');
+push('amount of searching will produce a citation that does not exist.');
+push('');
+push('The remaining gap is a data-entry task, not a formatting one: everything');
 push('arriving through the review queue now captures its URL automatically, so the');
-push('*full* class grows with every reviewed event. The *short* entries are the');
-push('historical backfill, and each names a document specific enough to retrieve.');
+push('*full* class grows with every reviewed event.');
 push('');
 push('---');
 push('');
@@ -329,15 +384,22 @@ push('```');
    than no register: it presents itself as the full account and is not. So the
    count is asserted rather than assumed, and a shortfall fails the run instead
    of producing a document that looks complete. */
-const rendered = famOrder.reduce((n, f) => n + grouped.get(f).length, 0);
-if (rendered !== withSource.length) {
-  console.error(`Refusing to write: ${withSource.length} sourced events but only ${rendered} rendered — ${withSource.length - rendered} would be missing.`);
+/* Assert on EVENTS represented, not on lines emitted. An event resting on two
+   concurrent rules renders two entries, so line count and event count are no
+   longer the same number and comparing them would either fail spuriously or,
+   worse, let a genuinely missing event hide behind a duplicated one. */
+const renderedEvents = new Set();
+for (const f of famOrder) for (const c of grouped.get(f)) renderedEvents.add(c.id);
+const absent = withSource.filter((e) => !renderedEvents.has(e.id));
+if (absent.length) {
+  console.error(`Refusing to write: ${absent.length} sourced event(s) would be missing from the register:`);
+  absent.slice(0, 10).forEach((e) => console.error(`  ${e.date_iso}  ${e.id}`));
   process.exit(1);
 }
 
 writeFileSync(OUT, `${L.join('\n')}\n`, 'utf8');
 console.log(`Wrote ${OUT}`);
-console.log(`  ${cited.length}/${events.length} events cited — full ${counts.full || 0}, legal ${counts.legal || 0}, short ${counts.short || 0}`);
+console.log(`  ${citedEvents}/${events.length} events cited in ${cited.length} entries — resolved ${counts.resolved || 0}, full ${counts.full || 0}, legal ${counts.legal || 0}, short ${counts.short || 0}`);
 console.log(`  ${facilityByPublisher.size} facility authors, ${noteSources.length} evidence notes, ${Object.keys(DATASETS).length} datasets, ${Object.keys(PUBLISHERS).length} publishers`);
 if (missing) {
   console.error(`  FAIL: ${missing} event(s) carry no source at all — every event must cite something.`);

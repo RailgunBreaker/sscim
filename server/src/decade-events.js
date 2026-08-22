@@ -720,8 +720,10 @@ export const DECADE_EVENTS = [
     timeline: [['Q3 2022', 'Prices fall sharply'], ['Q4 2023', 'Cycle troughs']] },
 
   { id: 'x2208_eda', dateISO: '2022-08-12', date: 'Aug 12, 2022', sev: 5, type: 'Export Control', conf: 'High',
-    title: 'BIS controls GAAFET EDA plus SiC and diamond substrates',
-    summary: 'Design software for gate-all-around transistors and wide-bandgap substrates move to licensing for China.',
+    /* Substrates corrected from "SiC" against the rule text (87 FR 49979),
+       which controls gallium oxide and diamond. Silicon carbide is not in it. */
+    title: 'BIS controls GAAFET EDA plus gallium oxide and diamond substrates',
+    summary: 'Design software for gate-all-around transistors and ultra-wide-bandgap substrates move to licensing for China.',
     stages: ['eda', 'design', 'adv_fab'], countries: ['us', 'cn'],
     first: 'Chinese design houses lose access to the toolchain for next-generation transistor architectures, effective immediately.',
     second: 'First control aimed at design capability rather than manufacturing capability — the approach escalated in 2025.',

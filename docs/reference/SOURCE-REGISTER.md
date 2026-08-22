@@ -9,14 +9,15 @@ issuing body.
 ## How complete each citation is, and why
 
 A citation can only be as complete as what was recorded when the item was
-reviewed. Three classes, counted rather than blurred together:
+reviewed. Four classes, counted rather than blurred together:
 
 | Class | Entries | What the record carries |
 | --- | --- | --- |
+| **Resolved** | 29 | Looked up against the *Federal Register* and tied to the document by an exact identifier: real title, agency, register locator, publication date and permanent URL |
 | **Full** | 16 | Title, publisher, date and URL — captured automatically at review and assembled into a complete entry |
-| **Legal** | 2 | Issuing body and an exact *Federal Register* volume and page. Complete by Chicago's convention for government material |
-| **Short** | 145 | Issuing body, document type and date only. Hand-curated historical records, entered before URLs were captured |
-| Total | 163 | every event carries a source |
+| **Legal** | 0 | Issuing body and an exact *Federal Register* volume and page. Complete by Chicago's convention for government material |
+| **Short** | 121 | Issuing body, document type and date only. Hand-curated historical records for which no published document was found |
+| Total | 166 | across 163 event(s); every event carries a source |
 
 **No entry is padded out.** A short entry stays short rather than acquiring
 an invented title, author or page number to look like the others. Inventing
@@ -24,10 +25,18 @@ bibliographic detail to complete the shape of a citation would defeat the
 purpose of keeping one, and it is exactly the failure a register like this
 exists to prevent.
 
-Closing the gap is a data-entry task, not a formatting one: everything
+That constraint is what makes the *resolved* class trustworthy. Every entry
+in it was matched to its document by an exact identifier — a register
+citation, an executive order number, or a document number confirmed by
+reading the abstract — and never by a similarity score. Where the search
+found nothing, the entry stayed short. Eight of them did: presidential CFIUS
+orders, licence revocations and settlement announcements are real actions
+that were simply never published as *Federal Register* documents, and no
+amount of searching will produce a citation that does not exist.
+
+The remaining gap is a data-entry task, not a formatting one: everything
 arriving through the review queue now captures its URL automatically, so the
-*full* class grows with every reviewed event. The *short* entries are the
-historical backfill, and each names a document specific enough to retrieve.
+*full* class grows with every reviewed event.
 
 ---
 
@@ -56,7 +65,7 @@ they surface is a candidate until a person approves it.
 
 ## 2. Event sources
 
-The 163 sources behind the dated events, grouped by issuing body and
+The 166 sources behind the dated events, grouped by issuing body and
 alphabetised. The bracketed date is the event the source supports.
 
 ### Company disclosures, filings and announcements
@@ -73,9 +82,7 @@ alphabetised. The bracketed date is the event the source supports.
 - Commerce authorisations reported Oct 2022. October 10, 2022. *(short entry)* [event: 2022-10-10]
 - Commerce Department settlement announcement. July 13, 2018. *(short entry)* [event: 2018-07-13]
 - Commerce letter reported Sep 26, 2020; SMIC filings. September 26, 2020. *(short entry)* [event: 2020-09-26]
-- Commerce notice (Aug 29, 2025); company statements. *(short entry)* [event: 2025-08-29]
 - Commerce notice; Al Jazeera (Jun 1, 2026). *(short entry)* [event: 2026-06-01]
-- Commerce proposed rule (Mar 21, 2023). *(short entry)* [event: 2023-03-21]
 - Company confirmations (Jul 2-3, 2025). *(short entry)* [event: 2025-07-03]
 - Company disclosures; BIS letters (late May 2025). *(short entry)* [event: 2025-05-28]
 - Company disclosures; national COVID policy record; trade press. August 23, 2021. *(short entry)* [event: 2021-08-23]
@@ -90,8 +97,6 @@ alphabetised. The bracketed date is the event the source supports.
 - Court filings; Taiwan prosecutorial statements. December 5, 2017. *(short entry)* [event: 2017-12-05]
 - DOJ indictment (Nov 1, 2018). *(short entry)* [event: 2018-11-01]
 - Executive Office of the President, PCAST (Jan 2017). *(short entry)* [event: 2017-01-06]
-- Executive Order 14017 (Feb 24, 2021). *(short entry)* [event: 2021-02-24]
-- Executive Order 14105 (Aug 9, 2023). *(short entry)* [event: 2023-08-09]
 - GlobalFoundries announcement; AMD foundry transition disclosures. August 27, 2018. *(short entry)* [event: 2018-08-27]
 - Intel announcement (Jan 21, 2022). *(short entry)* [event: 2022-01-21]
 - Intel announcement (Mar 23, 2021). *(short entry)* [event: 2021-03-23]
@@ -144,6 +149,9 @@ alphabetised. The bracketed date is the event the source supports.
 - Chinese transport ministry notice (Oct 2025). *(short entry)* [event: 2025-10-14]
 - Company confirmations; administration statements (Aug 2025). *(short entry)* [event: 2025-08-11]
 - Cyberspace Administration of China. CAC announcement (May 21, 2023); Micron disclosures. *(short entry)* [event: 2023-05-21]
+- Executive Office of the President. "Executive Order 14017: America's Supply Chains." *Federal Register*, 86 Fed. Reg. 11849, March 1, 2021. https://www.federalregister.gov/documents/2021/03/01/2021-04280/americas-supply-chains. Accessed 2026-08-22. [event: 2021-02-24]
+- Executive Office of the President. "Executive Order 14105: Addressing United States Investments in Certain National Security Technologies and Products in Countries of Concern." *Federal Register*, 88 Fed. Reg. 54867, August 11, 2023. https://www.federalregister.gov/documents/2023/08/11/2023-17449/addressing-united-states-investments-in-certain-national-security-technologies-and-products-in. Accessed 2026-08-22. [event: 2023-08-09]
+- Executive Office of the President. "Executive Order 14257: Regulating Imports With a Reciprocal Tariff To Rectify Trade Practices That Contribute to Large and Persistent Annual United States Goods Trade Deficits." *Federal Register*, 90 Fed. Reg. 15041, April 7, 2025. https://www.federalregister.gov/documents/2025/04/07/2025-06063/regulating-imports-with-a-reciprocal-tariff-to-rectify-trade-practices-that-contribute-to-large-and. Accessed 2026-08-22. [event: 2025-04-02]
 - federal-register. "Enhanced Favorable Treatment for the United Arab Emirates Under the Export Administration Regulations." July 14, 2026. https://www.federalregister.gov/documents/2026/07/14/2026-14132/enhanced-favorable-treatment-for-the-united-arab-emirates-under-the-export-administration. Accessed 2026-08-22. [event: 2026-07-14]
 - Government of the Netherlands. ASML statement (Jan 1, 2024); Dutch government confirmation. *(short entry)* [event: 2024-01-01]
 - Government of the Netherlands. Dutch government gazette; ASML investor disclosures. September 1, 2023. *(short entry)* [event: 2023-09-01]
@@ -154,10 +162,8 @@ alphabetised. The bracketed date is the event the source supports.
 - Japan, Ministry of Economy, Trade and Industry (METI). Rapidus founding announcement; METI. November 11, 2022. *(short entry)* [event: 2022-11-11]
 - Japan, Ministry of Economy, Trade and Industry (METI). TSMC / Sony announcement (Oct 2021); METI subsidy record. *(short entry)* [event: 2021-10-14]
 - Malaysian trade ministry notice (Jul 14, 2025). *(short entry)* [event: 2025-07-14]
-- Office of the Federal Register. Commerce Federal Register notice (Apr 14, 2025). *(short entry)* [event: 2025-04-14]
 - Office of the Federal Register. Federal Register · BIS interim final rule; two trade-press confirmations. July 3, 2026. *(short entry)* [event: 2026-07-03]
-- Office of the United States Trade Representative. Executive order; USTR annex (Apr 2, 2025). *(short entry)* [event: 2025-04-02]
-- Office of the United States Trade Representative. USTR Section 301 four-year review (May 14, 2024). *(short entry)* [event: 2024-05-14]
+- Office of the United States Trade Representative. "Request for Comments on Proposed Modifications and Machinery Exclusion Process in Four-Year Review of Actions Taken in the Section 301 Investigation: China's Acts, Policies, and Practices Related to Technology Transfer, Intellectual Property, and Innovation." *Federal Register*, 89 Fed. Reg. 46252, May 28, 2024. https://www.federalregister.gov/documents/2024/05/28/2024-11634/request-for-comments-on-proposed-modifications-and-machinery-exclusion-process-in-four-year-review. Accessed 2026-08-22. [event: 2024-05-14]
 - People's Republic of China, Ministry of Commerce (MOFCOM). MOFCOM announcement (Feb 4, 2025). *(short entry)* [event: 2025-02-04]
 - People's Republic of China, Ministry of Commerce (MOFCOM). MOFCOM Announcement No. 23; customs statistics. July 3, 2023. *(short entry)* [event: 2023-07-03]
 - People's Republic of China, Ministry of Commerce (MOFCOM). MOFCOM announcement; automaker disclosures. April 4, 2025. *(short entry)* [event: 2025-04-04]
@@ -168,26 +174,32 @@ alphabetised. The bracketed date is the event the source supports.
 - People's Republic of China, National Development and Reform Commission. NDRC statements; Chinese press reporting. December 22, 2017. *(short entry)* [event: 2017-12-22]
 - State Administration for Market Regulation (China). Qualcomm 8-K; SAMR review record. July 26, 2018. *(short entry)* [event: 2018-07-26]
 - State Administration for Market Regulation (China). SAMR announcement (Dec 9, 2024). *(short entry)* [event: 2024-12-09]
-- U.S. Department of Commerce, Bureau of Industry and Security. BIS advance notice of proposed rulemaking. November 19, 2018. *(short entry)* [event: 2018-11-19]
-- U.S. Department of Commerce, Bureau of Industry and Security. BIS denial order; ZTE exchange filings. April 16, 2018. *(short entry)* [event: 2018-04-16]
-- U.S. Department of Commerce, Bureau of Industry and Security. BIS Entity List addition (Dec 18, 2020). *(short entry)* [event: 2020-12-18]
-- U.S. Department of Commerce, Bureau of Industry and Security. BIS Entity List addition; company reporting. October 29, 2018. *(short entry)* [event: 2018-10-29]
-- U.S. Department of Commerce, Bureau of Industry and Security. BIS Entity List addition. 84 Fed. Reg. 22961. [event: 2019-05-16]
-- U.S. Department of Commerce, Bureau of Industry and Security. BIS Entity List additions (Dec 15, 2022). *(short entry)* [event: 2022-12-15]
-- U.S. Department of Commerce, Bureau of Industry and Security. BIS Entity List additions (Oct 17, 2023). *(short entry)* [event: 2023-10-17]
-- U.S. Department of Commerce, Bureau of Industry and Security. BIS Entity List amendments (Aug 19, 2019). *(short entry)* [event: 2019-08-19]
-- U.S. Department of Commerce, Bureau of Industry and Security. BIS final rule; Congress.gov CRS R48642. January 15, 2026. *(short entry)* [event: 2026-01-15]
-- U.S. Department of Commerce, Bureau of Industry and Security. BIS final rules 88 FR; NVIDIA 8-K disclosures. October 17, 2023. *(short entry)* [event: 2023-10-17]
-- U.S. Department of Commerce, Bureau of Industry and Security. BIS interim final rule (Aug 12, 2022). *(short entry)* [event: 2022-08-12]
-- U.S. Department of Commerce, Bureau of Industry and Security. BIS interim final rule (May 15, 2020); TSMC reporting. *(short entry)* [event: 2020-05-15]
-- U.S. Department of Commerce, Bureau of Industry and Security. BIS interim final rule (Sep 29, 2025). *(short entry)* [event: 2025-09-29]
-- U.S. Department of Commerce, Bureau of Industry and Security. BIS interim final rule (Sep 5, 2024). *(short entry)* [event: 2024-09-05]
-- U.S. Department of Commerce, Bureau of Industry and Security. BIS interim final rule; CSIS analysis. 87 Fed. Reg. 62186. [event: 2022-10-07]
-- U.S. Department of Commerce, Bureau of Industry and Security. BIS interim final rule; rescission notice. January 13, 2025. *(short entry)* [event: 2025-01-13]
+- U.S. Department of Commerce, Bureau of Industry and Security. "Addition of an Entity to the Entity List." *Federal Register*, 83 Fed. Reg. 54519, October 30, 2018. https://www.federalregister.gov/documents/2018/10/30/2018-23693/addition-of-an-entity-to-the-entity-list. Accessed 2026-08-22. [event: 2018-10-29]
+- U.S. Department of Commerce, Bureau of Industry and Security. "Addition of Certain Entities to the Entity List and Revision of Entries on the Entity List." *Federal Register*, 84 Fed. Reg. 43493, August 21, 2019. https://www.federalregister.gov/documents/2019/08/21/2019-17921/addition-of-certain-entities-to-the-entity-list-and-revision-of-entries-on-the-entity-list. Accessed 2026-08-22. [event: 2019-08-19]
+- U.S. Department of Commerce, Bureau of Industry and Security. "Addition of Entities to the Entity List, Revision of Entry on the Entity List, and Removal of Entities From the Entity List." *Federal Register*, 85 Fed. Reg. 83416, December 22, 2020. https://www.federalregister.gov/documents/2020/12/22/2020-28031/addition-of-entities-to-the-entity-list-revision-of-entry-on-the-entity-list-and-removal-of-entities. Accessed 2026-08-22. [event: 2020-12-18]
+- U.S. Department of Commerce, Bureau of Industry and Security. "Addition of Entities to the Entity List." *Federal Register*, 84 Fed. Reg. 22961, May 21, 2019. https://www.federalregister.gov/documents/2019/05/21/2019-10616/addition-of-entities-to-the-entity-list. Accessed 2026-08-22. [event: 2019-05-16]
+- U.S. Department of Commerce, Bureau of Industry and Security. "Addition of Huawei Non-U.S. Affiliates to the Entity List, the Removal of Temporary General License, and Amendments to General Prohibition Three (Foreign-Produced Direct Product Rule)." *Federal Register*, 85 Fed. Reg. 51596, August 20, 2020. https://www.federalregister.gov/documents/2020/08/20/2020-18213/addition-of-huawei-non-us-affiliates-to-the-entity-list-the-removal-of-temporary-general-license-and. Accessed 2026-08-22. [event: 2020-08-17]
+- U.S. Department of Commerce, Bureau of Industry and Security. "Additions and Modifications to the Entity List; Removals From the Validated End-User (VEU) Program." *Federal Register*, 89 Fed. Reg. 96830, December 5, 2024. https://www.federalregister.gov/documents/2024/12/05/2024-28267/additions-and-modifications-to-the-entity-list-removals-from-the-validated-end-user-veu-program. Accessed 2026-08-22. [event: 2024-12-02]
+- U.S. Department of Commerce, Bureau of Industry and Security. "Additions and Revisions to the Entity List and Conforming Removal From the Unverified List." *Federal Register*, 87 Fed. Reg. 77505, December 19, 2022. https://www.federalregister.gov/documents/2022/12/19/2022-27151/additions-and-revisions-to-the-entity-list-and-conforming-removal-from-the-unverified-list. Accessed 2026-08-22. [event: 2022-12-15]
+- U.S. Department of Commerce, Bureau of Industry and Security. "Additions to the Entity List." *Federal Register*, 90 Fed. Reg. 4621, January 16, 2025. https://www.federalregister.gov/documents/2025/01/16/2025-00480/additions-to-the-entity-list. Accessed 2026-08-22. [event: 2025-01-15]
+- U.S. Department of Commerce, Bureau of Industry and Security. "Commerce Control List Additions and Revisions; Implementation of Controls on Advanced Technologies Consistent With Controls Implemented by International Partners." *Federal Register*, 89 Fed. Reg. 72926, September 6, 2024. https://www.federalregister.gov/documents/2024/09/06/2024-19633/commerce-control-list-additions-and-revisions-implementation-of-controls-on-advanced-technologies. Accessed 2026-08-22. [event: 2024-09-05]
+- U.S. Department of Commerce, Bureau of Industry and Security. "Entity List Additions." *Federal Register*, 88 Fed. Reg. 71991, October 19, 2023. https://www.federalregister.gov/documents/2023/10/19/2023-23048/entity-list-additions. Accessed 2026-08-22. [event: 2023-10-17]
+- U.S. Department of Commerce, Bureau of Industry and Security. "Expansion of End-User Controls To Cover Affiliates of Certain Listed Entities." *Federal Register*, 90 Fed. Reg. 47201, September 30, 2025. https://www.federalregister.gov/documents/2025/09/30/2025-19001/expansion-of-end-user-controls-to-cover-affiliates-of-certain-listed-entities. Accessed 2026-08-22. [event: 2025-09-29]
+- U.S. Department of Commerce, Bureau of Industry and Security. "Export Administration Regulations: Amendments to General Prohibition Three (Foreign-Produced Direct Product Rule) and the Entity List." *Federal Register*, 85 Fed. Reg. 29849, May 19, 2020. https://www.federalregister.gov/documents/2020/05/19/2020-10856/export-administration-regulations-amendments-to-general-prohibition-three-foreign-produced-direct. Accessed 2026-08-22. [event: 2020-05-15]
+- U.S. Department of Commerce, Bureau of Industry and Security. "Foreign-Produced Direct Product Rule Additions, and Refinements to Controls for Advanced Computing and Semiconductor Manufacturing Items." *Federal Register*, 89 Fed. Reg. 96790, December 5, 2024. https://www.federalregister.gov/documents/2024/12/05/2024-28270/foreign-produced-direct-product-rule-additions-and-refinements-to-controls-for-advanced-computing. Accessed 2026-08-22. [event: 2024-12-02]
+- U.S. Department of Commerce, Bureau of Industry and Security. "Framework for Artificial Intelligence Diffusion." *Federal Register*, 90 Fed. Reg. 4544, January 15, 2025. https://www.federalregister.gov/documents/2025/01/15/2025-00636/framework-for-artificial-intelligence-diffusion. Accessed 2026-08-22. [event: 2025-01-13]
+- U.S. Department of Commerce, Bureau of Industry and Security. "Implementation of Additional Due Diligence Measures for Advanced Computing Integrated Circuits; Amendments and Clarifications; and Extension of Comment Period." *Federal Register*, 90 Fed. Reg. 5298, January 16, 2025. https://www.federalregister.gov/documents/2025/01/16/2025-00711/implementation-of-additional-due-diligence-measures-for-advanced-computing-integrated-circuits. Accessed 2026-08-22. [event: 2025-01-15]
+- U.S. Department of Commerce, Bureau of Industry and Security. "Implementation of Additional Export Controls: Certain Advanced Computing and Semiconductor Manufacturing Items; Supercomputer and Semiconductor End Use; Entity List Modification." *Federal Register*, 87 Fed. Reg. 62186, October 13, 2022. https://www.federalregister.gov/documents/2022/10/13/2022-21658/implementation-of-additional-export-controls-certain-advanced-computing-and-semiconductor. Accessed 2026-08-22. [event: 2022-10-07]
+- U.S. Department of Commerce, Bureau of Industry and Security. "Implementation of Additional Export Controls: Certain Advanced Computing Items; Supercomputer and Semiconductor End Use; Updates and Corrections." *Federal Register*, 88 Fed. Reg. 73458, October 25, 2023. https://www.federalregister.gov/documents/2023/10/25/2023-23055/implementation-of-additional-export-controls-certain-advanced-computing-items-supercomputer-and. Accessed 2026-08-22. [event: 2023-10-17]
+- U.S. Department of Commerce, Bureau of Industry and Security. "Implementation of Certain 2021 Wassenaar Arrangement Decisions on Four Section 1758 Technologies." *Federal Register*, 87 Fed. Reg. 49979, August 15, 2022. https://www.federalregister.gov/documents/2022/08/15/2022-17125/implementation-of-certain-2021-wassenaar-arrangement-decisions-on-four-section-1758-technologies. Accessed 2026-08-22. [event: 2022-08-12]
+- U.S. Department of Commerce, Bureau of Industry and Security. "In the Matter of: Zhongxing Telecommunications Equipment Corporation ZTE Plaza, Keji Road South Hi-Tech Industrial Park Nanshan District, Shenzhen China; ZTE Kangxun Telecommunications Ltd. 2/3 Floor, Suite A, Zte Communication Mansion Keji (S) Road Hi-New Shenzhen, 518057 China Respondent'; Order Activating Suspended Denial Order Relating to Zhongxing Telecommunications Equipment Corporation and Zte Kangxun Telecommunications Ltd.." *Federal Register*, 83 Fed. Reg. 17644, April 23, 2018. https://www.federalregister.gov/documents/2018/04/23/2018-08354/in-the-matter-of-zhongxing-telecommunications-equipment-corporation-zte-plaza-keji-road-south. Accessed 2026-08-22. [event: 2018-04-16]
+- U.S. Department of Commerce, Bureau of Industry and Security. "Notice of Request for Public Comments on Section 232 National Security Investigation of Imports of Semiconductors and Semiconductor Manufacturing Equipment." *Federal Register*, 90 Fed. Reg. 15950, April 16, 2025. https://www.federalregister.gov/documents/2025/04/16/2025-06591/notice-of-request-for-public-comments-on-section-232-national-security-investigation-of-imports-of. Accessed 2026-08-22. [event: 2025-04-14]
+- U.S. Department of Commerce, Bureau of Industry and Security. "Review of Controls for Certain Emerging Technologies." *Federal Register*, 83 Fed. Reg. 58201, November 19, 2018. https://www.federalregister.gov/documents/2018/11/19/2018-25221/review-of-controls-for-certain-emerging-technologies. Accessed 2026-08-22. [event: 2018-11-19]
+- U.S. Department of Commerce, Bureau of Industry and Security. "Revision to License Review Policy for Advanced Computing Commodities." *Federal Register*, 91 Fed. Reg. 1684, January 15, 2026. https://www.federalregister.gov/documents/2026/01/15/2026-00789/revision-to-license-review-policy-for-advanced-computing-commodities. Accessed 2026-08-22. [event: 2026-01-15]
+- U.S. Department of Commerce, Bureau of Industry and Security. "Revocation of Validated End-User Authorizations in the People's Republic of China." *Federal Register*, 90 Fed. Reg. 42321, September 2, 2025. https://www.federalregister.gov/documents/2025/09/02/2025-16735/revocation-of-validated-end-user-authorizations-in-the-peoples-republic-of-china. Accessed 2026-08-22. [event: 2025-08-29]
+- U.S. Department of Commerce, Bureau of Industry and Security. "Temporary General License: Extension of Validity, Clarifications to Authorized Transactions, and Changes to Certification Statement Requirements." *Federal Register*, 84 Fed. Reg. 43487, August 21, 2019. https://www.federalregister.gov/documents/2019/08/21/2019-17920/temporary-general-license-extension-of-validity-clarifications-to-authorized-transactions-and. Accessed 2026-08-22. [event: 2019-08-19]
 - U.S. Department of Commerce, Bureau of Industry and Security. BIS rescission notice. May 13, 2025. *(short entry)* [event: 2025-05-13]
-- U.S. Department of Commerce, Bureau of Industry and Security. BIS rule (Aug 17, 2020). *(short entry)* [event: 2020-08-17]
-- U.S. Department of Commerce, Bureau of Industry and Security. BIS rule (Jan 15, 2025). *(short entry)* [event: 2025-01-15]
-- U.S. Department of Commerce, Bureau of Industry and Security. BIS rules 89 FR; CSIS/analyst summaries. December 2, 2024. *(short entry)* [event: 2024-12-02]
+- U.S. Department of Commerce, National Institute of Standards and Technology. "Preventing the Improper Use of CHIPS Act Funding." *Federal Register*, 88 Fed. Reg. 17439, March 23, 2023. https://www.federalregister.gov/documents/2023/03/23/2023-05869/preventing-the-improper-use-of-chips-act-funding. Accessed 2026-08-22. [event: 2023-03-21]
 - U.S. Securities and Exchange Commission. Commerce Department confirmation; company 8-K disclosures. May 7, 2024. *(short entry)* [event: 2024-05-07]
 - U.S. Securities and Exchange Commission. NVIDIA and AMD 8-K filings (Aug 26-31, 2022). *(short entry)* [event: 2022-08-31]
 - U.S. Securities and Exchange Commission. NVIDIA/AMD 8-K filings; Commerce statements. April 9, 2025. *(short entry)* [event: 2025-04-09]

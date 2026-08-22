@@ -1,0 +1,468 @@
+{
+  "x1804_zte": {
+    "title": "In the Matter of: Zhongxing Telecommunications Equipment Corporation ZTE Plaza, Keji Road South Hi-Tech Industrial Park Nanshan District, Shenzhen China; ZTE Kangxun Telecommunications Ltd. 2/3 Floor, Suite A, Zte Communication Mansion Keji (S) Road Hi-New Shenzhen, 518057 China Respondent'; Order Activating Suspended Denial Order Relating to Zhongxing Telecommunications Equipment Corporation and Zte Kangxun Telecommunications Ltd.",
+    "documentNumber": "2018-08354",
+    "url": "https://www.federalregister.gov/documents/2018/04/23/2018-08354/in-the-matter-of-zhongxing-telecommunications-equipment-corporation-zte-plaza-keji-road-south",
+    "publicationDate": "2018-04-23",
+    "citation": "83 FR 17644",
+    "type": "Notice",
+    "executiveOrder": null,
+    "agencies": [
+      "Commerce Department",
+      "Industry and Security Bureau"
+    ],
+    "matchedBy": "confirmed document 2018-08354",
+    "resolvedFrom": "BIS denial order + ZTE exchange filings",
+    "resolvedAt": "2026-08-22"
+  },
+  "x1810_jinhua": {
+    "title": "Addition of an Entity to the Entity List",
+    "documentNumber": "2018-23693",
+    "url": "https://www.federalregister.gov/documents/2018/10/30/2018-23693/addition-of-an-entity-to-the-entity-list",
+    "publicationDate": "2018-10-30",
+    "citation": "83 FR 54519",
+    "type": "Rule",
+    "executiveOrder": null,
+    "agencies": [
+      "Commerce Department",
+      "Industry and Security Bureau"
+    ],
+    "matchedBy": "confirmed document 2018-23693",
+    "resolvedFrom": "BIS Entity List addition + company reporting",
+    "resolvedAt": "2026-08-22"
+  },
+  "x1811_anprm": {
+    "title": "Review of Controls for Certain Emerging Technologies",
+    "documentNumber": "2018-25221",
+    "url": "https://www.federalregister.gov/documents/2018/11/19/2018-25221/review-of-controls-for-certain-emerging-technologies",
+    "publicationDate": "2018-11-19",
+    "citation": "83 FR 58201",
+    "type": "Proposed Rule",
+    "executiveOrder": null,
+    "agencies": [
+      "Commerce Department",
+      "Industry and Security Bureau"
+    ],
+    "matchedBy": "confirmed document 2018-25221",
+    "resolvedFrom": "BIS advance notice of proposed rulemaking",
+    "resolvedAt": "2026-08-22"
+  },
+  "x1905_huawei_el": {
+    "title": "Addition of Entities to the Entity List",
+    "documentNumber": "2019-10616",
+    "url": "https://www.federalregister.gov/documents/2019/05/21/2019-10616/addition-of-entities-to-the-entity-list",
+    "publicationDate": "2019-05-21",
+    "citation": "84 FR 22961",
+    "type": "Rule",
+    "executiveOrder": null,
+    "agencies": [
+      "Commerce Department",
+      "Industry and Security Bureau"
+    ],
+    "matchedBy": "Federal Register citation 84 FR 22961",
+    "resolvedFrom": "BIS Entity List addition (84 FR 22961)",
+    "resolvedAt": "2026-08-22"
+  },
+  "x1908_huaweitgl": [
+    {
+      "title": "Addition of Certain Entities to the Entity List and Revision of Entries on the Entity List",
+      "documentNumber": "2019-17921",
+      "url": "https://www.federalregister.gov/documents/2019/08/21/2019-17921/addition-of-certain-entities-to-the-entity-list-and-revision-of-entries-on-the-entity-list",
+      "publicationDate": "2019-08-21",
+      "citation": "84 FR 43493",
+      "type": "Rule",
+      "executiveOrder": null,
+      "agencies": [
+        "Commerce Department",
+        "Industry and Security Bureau"
+      ],
+      "matchedBy": "confirmed document 2019-17921",
+      "resolvedFrom": "BIS Entity List amendments (Aug 19, 2019)",
+      "resolvedAt": "2026-08-22"
+    },
+    {
+      "title": "Temporary General License: Extension of Validity, Clarifications to Authorized Transactions, and Changes to Certification Statement Requirements",
+      "documentNumber": "2019-17920",
+      "url": "https://www.federalregister.gov/documents/2019/08/21/2019-17920/temporary-general-license-extension-of-validity-clarifications-to-authorized-transactions-and",
+      "publicationDate": "2019-08-21",
+      "citation": "84 FR 43487",
+      "type": "Rule",
+      "executiveOrder": null,
+      "agencies": [
+        "Commerce Department",
+        "Industry and Security Bureau"
+      ],
+      "matchedBy": "confirmed document 2019-17920",
+      "resolvedFrom": "BIS Entity List amendments (Aug 19, 2019)",
+      "resolvedAt": "2026-08-22"
+    }
+  ],
+  "x2005_fdpr": {
+    "title": "Export Administration Regulations: Amendments to General Prohibition Three (Foreign-Produced Direct Product Rule) and the Entity List",
+    "documentNumber": "2020-10856",
+    "url": "https://www.federalregister.gov/documents/2020/05/19/2020-10856/export-administration-regulations-amendments-to-general-prohibition-three-foreign-produced-direct",
+    "publicationDate": "2020-05-19",
+    "citation": "85 FR 29849",
+    "type": "Rule",
+    "executiveOrder": null,
+    "agencies": [
+      "Commerce Department",
+      "Industry and Security Bureau"
+    ],
+    "matchedBy": "confirmed document 2020-10856",
+    "resolvedFrom": "BIS interim final rule (May 15, 2020) + TSMC reporting",
+    "resolvedAt": "2026-08-22"
+  },
+  "x2008_fdpr2": {
+    "title": "Addition of Huawei Non-U.S. Affiliates to the Entity List, the Removal of Temporary General License, and Amendments to General Prohibition Three (Foreign-Produced Direct Product Rule)",
+    "documentNumber": "2020-18213",
+    "url": "https://www.federalregister.gov/documents/2020/08/20/2020-18213/addition-of-huawei-non-us-affiliates-to-the-entity-list-the-removal-of-temporary-general-license-and",
+    "publicationDate": "2020-08-20",
+    "citation": "85 FR 51596",
+    "type": "Rule",
+    "executiveOrder": null,
+    "agencies": [
+      "Commerce Department",
+      "Industry and Security Bureau"
+    ],
+    "matchedBy": "confirmed document 2020-18213",
+    "resolvedFrom": "BIS rule (Aug 17, 2020)",
+    "resolvedAt": "2026-08-22"
+  },
+  "x2012_smicel": {
+    "title": "Addition of Entities to the Entity List, Revision of Entry on the Entity List, and Removal of Entities From the Entity List",
+    "documentNumber": "2020-28031",
+    "url": "https://www.federalregister.gov/documents/2020/12/22/2020-28031/addition-of-entities-to-the-entity-list-revision-of-entry-on-the-entity-list-and-removal-of-entities",
+    "publicationDate": "2020-12-22",
+    "citation": "85 FR 83416",
+    "type": "Rule",
+    "executiveOrder": null,
+    "agencies": [
+      "Commerce Department",
+      "Industry and Security Bureau"
+    ],
+    "matchedBy": "confirmed document 2020-28031",
+    "resolvedFrom": "BIS Entity List addition (Dec 18, 2020)",
+    "resolvedAt": "2026-08-22"
+  },
+  "x2102_eo14017": {
+    "title": "America's Supply Chains",
+    "documentNumber": "2021-04280",
+    "url": "https://www.federalregister.gov/documents/2021/03/01/2021-04280/americas-supply-chains",
+    "publicationDate": "2021-03-01",
+    "citation": "86 FR 11849",
+    "type": "Presidential Document",
+    "executiveOrder": "14017",
+    "agencies": [
+      "Executive Office of the President"
+    ],
+    "matchedBy": "Executive Order 14017",
+    "resolvedFrom": "Executive Order 14017 (Feb 24, 2021)",
+    "resolvedAt": "2026-08-22"
+  },
+  "x2208_eda": {
+    "title": "Implementation of Certain 2021 Wassenaar Arrangement Decisions on Four Section 1758 Technologies",
+    "documentNumber": "2022-17125",
+    "url": "https://www.federalregister.gov/documents/2022/08/15/2022-17125/implementation-of-certain-2021-wassenaar-arrangement-decisions-on-four-section-1758-technologies",
+    "publicationDate": "2022-08-15",
+    "citation": "87 FR 49979",
+    "type": "Rule",
+    "executiveOrder": null,
+    "agencies": [
+      "Commerce Department",
+      "Industry and Security Bureau"
+    ],
+    "matchedBy": "confirmed document 2022-17125",
+    "resolvedFrom": "BIS interim final rule (Aug 12, 2022)",
+    "resolvedAt": "2026-08-22"
+  },
+  "h2210_bis": {
+    "title": "Implementation of Additional Export Controls: Certain Advanced Computing and Semiconductor Manufacturing Items; Supercomputer and Semiconductor End Use; Entity List Modification",
+    "documentNumber": "2022-21658",
+    "url": "https://www.federalregister.gov/documents/2022/10/13/2022-21658/implementation-of-additional-export-controls-certain-advanced-computing-and-semiconductor",
+    "publicationDate": "2022-10-13",
+    "citation": "87 FR 62186",
+    "type": "Rule",
+    "executiveOrder": null,
+    "agencies": [
+      "Commerce Department",
+      "Industry and Security Bureau"
+    ],
+    "matchedBy": "Federal Register citation 87 FR 62186",
+    "resolvedFrom": "BIS interim final rule 87 FR 62186 (official) + CSIS analysis",
+    "resolvedAt": "2026-08-22"
+  },
+  "x2212_ymtc": {
+    "title": "Additions and Revisions to the Entity List and Conforming Removal From the Unverified List",
+    "documentNumber": "2022-27151",
+    "url": "https://www.federalregister.gov/documents/2022/12/19/2022-27151/additions-and-revisions-to-the-entity-list-and-conforming-removal-from-the-unverified-list",
+    "publicationDate": "2022-12-19",
+    "citation": "87 FR 77505",
+    "type": "Rule",
+    "executiveOrder": null,
+    "agencies": [
+      "Commerce Department",
+      "Industry and Security Bureau"
+    ],
+    "matchedBy": "confirmed document 2022-27151",
+    "resolvedFrom": "BIS Entity List additions (Dec 15, 2022)",
+    "resolvedAt": "2026-08-22"
+  },
+  "x2302_chipsguardrails": {
+    "title": "Preventing the Improper Use of CHIPS Act Funding",
+    "documentNumber": "2023-05869",
+    "url": "https://www.federalregister.gov/documents/2023/03/23/2023-05869/preventing-the-improper-use-of-chips-act-funding",
+    "publicationDate": "2023-03-23",
+    "citation": "88 FR 17439",
+    "type": "Proposed Rule",
+    "executiveOrder": null,
+    "agencies": [
+      "Commerce Department",
+      "National Institute of Standards and Technology"
+    ],
+    "matchedBy": "confirmed document 2023-05869",
+    "resolvedFrom": "Commerce proposed rule (Mar 21, 2023)",
+    "resolvedAt": "2026-08-22"
+  },
+  "x2308_outbound": {
+    "title": "Addressing United States Investments in Certain National Security Technologies and Products in Countries of Concern",
+    "documentNumber": "2023-17449",
+    "url": "https://www.federalregister.gov/documents/2023/08/11/2023-17449/addressing-united-states-investments-in-certain-national-security-technologies-and-products-in",
+    "publicationDate": "2023-08-11",
+    "citation": "88 FR 54867",
+    "type": "Presidential Document",
+    "executiveOrder": "14105",
+    "agencies": [
+      "Executive Office of the President"
+    ],
+    "matchedBy": "Executive Order 14105",
+    "resolvedFrom": "Executive Order 14105 (Aug 9, 2023)",
+    "resolvedAt": "2026-08-22"
+  },
+  "h2310_bisupdate": {
+    "title": "Implementation of Additional Export Controls: Certain Advanced Computing Items; Supercomputer and Semiconductor End Use; Updates and Corrections",
+    "documentNumber": "2023-23055",
+    "url": "https://www.federalregister.gov/documents/2023/10/25/2023-23055/implementation-of-additional-export-controls-certain-advanced-computing-items-supercomputer-and",
+    "publicationDate": "2023-10-25",
+    "citation": "88 FR 73458",
+    "type": "Rule",
+    "executiveOrder": null,
+    "agencies": [
+      "Commerce Department",
+      "Industry and Security Bureau"
+    ],
+    "matchedBy": "confirmed document 2023-23055",
+    "resolvedFrom": "BIS final rules 88 FR (official) + NVIDIA 8-K disclosures",
+    "resolvedAt": "2026-08-22"
+  },
+  "x2310_biren": {
+    "title": "Entity List Additions",
+    "documentNumber": "2023-23048",
+    "url": "https://www.federalregister.gov/documents/2023/10/19/2023-23048/entity-list-additions",
+    "publicationDate": "2023-10-19",
+    "citation": "88 FR 71991",
+    "type": "Rule",
+    "executiveOrder": null,
+    "agencies": [
+      "Commerce Department",
+      "Industry and Security Bureau"
+    ],
+    "matchedBy": "confirmed document 2023-23048",
+    "resolvedFrom": "BIS Entity List additions (Oct 17, 2023)",
+    "resolvedAt": "2026-08-22"
+  },
+  "x2405_301": {
+    "title": "Request for Comments on Proposed Modifications and Machinery Exclusion Process in Four-Year Review of Actions Taken in the Section 301 Investigation: China's Acts, Policies, and Practices Related to Technology Transfer, Intellectual Property, and Innovation",
+    "documentNumber": "2024-11634",
+    "url": "https://www.federalregister.gov/documents/2024/05/28/2024-11634/request-for-comments-on-proposed-modifications-and-machinery-exclusion-process-in-four-year-review",
+    "publicationDate": "2024-05-28",
+    "citation": "89 FR 46252",
+    "type": "Notice",
+    "executiveOrder": null,
+    "agencies": [
+      "Trade Representative, Office of United States"
+    ],
+    "matchedBy": "confirmed document 2024-11634",
+    "resolvedFrom": "USTR Section 301 four-year review (May 14, 2024)",
+    "resolvedAt": "2026-08-22"
+  },
+  "x2409_gaafet": {
+    "title": "Commerce Control List Additions and Revisions; Implementation of Controls on Advanced Technologies Consistent With Controls Implemented by International Partners",
+    "documentNumber": "2024-19633",
+    "url": "https://www.federalregister.gov/documents/2024/09/06/2024-19633/commerce-control-list-additions-and-revisions-implementation-of-controls-on-advanced-technologies",
+    "publicationDate": "2024-09-06",
+    "citation": "89 FR 72926",
+    "type": "Rule",
+    "executiveOrder": null,
+    "agencies": [
+      "Commerce Department",
+      "Industry and Security Bureau"
+    ],
+    "matchedBy": "confirmed document 2024-19633",
+    "resolvedFrom": "BIS interim final rule (Sep 5, 2024)",
+    "resolvedAt": "2026-08-22"
+  },
+  "h2412_bis3": [
+    {
+      "title": "Foreign-Produced Direct Product Rule Additions, and Refinements to Controls for Advanced Computing and Semiconductor Manufacturing Items",
+      "documentNumber": "2024-28270",
+      "url": "https://www.federalregister.gov/documents/2024/12/05/2024-28270/foreign-produced-direct-product-rule-additions-and-refinements-to-controls-for-advanced-computing",
+      "publicationDate": "2024-12-05",
+      "citation": "89 FR 96790",
+      "type": "Rule",
+      "executiveOrder": null,
+      "agencies": [
+        "Commerce Department",
+        "Industry and Security Bureau"
+      ],
+      "matchedBy": "confirmed document 2024-28270",
+      "resolvedFrom": "BIS rules 89 FR (official) + CSIS/analyst summaries",
+      "resolvedAt": "2026-08-22"
+    },
+    {
+      "title": "Additions and Modifications to the Entity List; Removals From the Validated End-User (VEU) Program",
+      "documentNumber": "2024-28267",
+      "url": "https://www.federalregister.gov/documents/2024/12/05/2024-28267/additions-and-modifications-to-the-entity-list-removals-from-the-validated-end-user-veu-program",
+      "publicationDate": "2024-12-05",
+      "citation": "89 FR 96830",
+      "type": "Rule",
+      "executiveOrder": null,
+      "agencies": [
+        "Commerce Department",
+        "Industry and Security Bureau"
+      ],
+      "matchedBy": "confirmed document 2024-28267",
+      "resolvedFrom": "BIS rules 89 FR (official) + CSIS/analyst summaries",
+      "resolvedAt": "2026-08-22"
+    }
+  ],
+  "h2501_diffusion": {
+    "title": "Framework for Artificial Intelligence Diffusion",
+    "documentNumber": "2025-00636",
+    "url": "https://www.federalregister.gov/documents/2025/01/15/2025-00636/framework-for-artificial-intelligence-diffusion",
+    "publicationDate": "2025-01-15",
+    "citation": "90 FR 4544",
+    "type": "Rule",
+    "executiveOrder": null,
+    "agencies": [
+      "Commerce Department",
+      "Industry and Security Bureau"
+    ],
+    "matchedBy": "confirmed document 2025-00636",
+    "resolvedFrom": "BIS interim final rule (official) + rescission notice",
+    "resolvedAt": "2026-08-22"
+  },
+  "x2501_foundryrule": [
+    {
+      "title": "Implementation of Additional Due Diligence Measures for Advanced Computing Integrated Circuits; Amendments and Clarifications; and Extension of Comment Period",
+      "documentNumber": "2025-00711",
+      "url": "https://www.federalregister.gov/documents/2025/01/16/2025-00711/implementation-of-additional-due-diligence-measures-for-advanced-computing-integrated-circuits",
+      "publicationDate": "2025-01-16",
+      "citation": "90 FR 5298",
+      "type": "Rule",
+      "executiveOrder": null,
+      "agencies": [
+        "Commerce Department",
+        "Industry and Security Bureau"
+      ],
+      "matchedBy": "confirmed document 2025-00711",
+      "resolvedFrom": "BIS rule (Jan 15, 2025)",
+      "resolvedAt": "2026-08-22"
+    },
+    {
+      "title": "Additions to the Entity List",
+      "documentNumber": "2025-00480",
+      "url": "https://www.federalregister.gov/documents/2025/01/16/2025-00480/additions-to-the-entity-list",
+      "publicationDate": "2025-01-16",
+      "citation": "90 FR 4621",
+      "type": "Rule",
+      "executiveOrder": null,
+      "agencies": [
+        "Commerce Department",
+        "Industry and Security Bureau"
+      ],
+      "matchedBy": "confirmed document 2025-00480",
+      "resolvedFrom": "BIS rule (Jan 15, 2025)",
+      "resolvedAt": "2026-08-22"
+    }
+  ],
+  "x2504_tariffs": {
+    "title": "Regulating Imports With a Reciprocal Tariff To Rectify Trade Practices That Contribute to Large and Persistent Annual United States Goods Trade Deficits",
+    "documentNumber": "2025-06063",
+    "url": "https://www.federalregister.gov/documents/2025/04/07/2025-06063/regulating-imports-with-a-reciprocal-tariff-to-rectify-trade-practices-that-contribute-to-large-and",
+    "publicationDate": "2025-04-07",
+    "citation": "90 FR 15041",
+    "type": "Presidential Document",
+    "executiveOrder": "14257",
+    "agencies": [
+      "Executive Office of the President"
+    ],
+    "matchedBy": "confirmed document 2025-06063",
+    "resolvedFrom": "Executive order + USTR annex (Apr 2, 2025)",
+    "resolvedAt": "2026-08-22"
+  },
+  "x2504_232": {
+    "title": "Notice of Request for Public Comments on Section 232 National Security Investigation of Imports of Semiconductors and Semiconductor Manufacturing Equipment",
+    "documentNumber": "2025-06591",
+    "url": "https://www.federalregister.gov/documents/2025/04/16/2025-06591/notice-of-request-for-public-comments-on-section-232-national-security-investigation-of-imports-of",
+    "publicationDate": "2025-04-16",
+    "citation": "90 FR 15950",
+    "type": "Notice",
+    "executiveOrder": null,
+    "agencies": [
+      "Commerce Department",
+      "Industry and Security Bureau"
+    ],
+    "matchedBy": "confirmed document 2025-06591",
+    "resolvedFrom": "Commerce Federal Register notice (Apr 14, 2025)",
+    "resolvedAt": "2026-08-22"
+  },
+  "x2508_veurevoke": {
+    "title": "Revocation of Validated End-User Authorizations in the People's Republic of China",
+    "documentNumber": "2025-16735",
+    "url": "https://www.federalregister.gov/documents/2025/09/02/2025-16735/revocation-of-validated-end-user-authorizations-in-the-peoples-republic-of-china",
+    "publicationDate": "2025-09-02",
+    "citation": "90 FR 42321",
+    "type": "Rule",
+    "executiveOrder": null,
+    "agencies": [
+      "Commerce Department",
+      "Industry and Security Bureau"
+    ],
+    "matchedBy": "confirmed document 2025-16735",
+    "resolvedFrom": "Commerce notice (Aug 29, 2025) + company statements",
+    "resolvedAt": "2026-08-22"
+  },
+  "x2509_affiliates": {
+    "title": "Expansion of End-User Controls To Cover Affiliates of Certain Listed Entities",
+    "documentNumber": "2025-19001",
+    "url": "https://www.federalregister.gov/documents/2025/09/30/2025-19001/expansion-of-end-user-controls-to-cover-affiliates-of-certain-listed-entities",
+    "publicationDate": "2025-09-30",
+    "citation": "90 FR 47201",
+    "type": "Rule",
+    "executiveOrder": null,
+    "agencies": [
+      "Commerce Department",
+      "Industry and Security Bureau"
+    ],
+    "matchedBy": "confirmed document 2025-19001",
+    "resolvedFrom": "BIS interim final rule (Sep 29, 2025)",
+    "resolvedAt": "2026-08-22"
+  },
+  "h2601_ease": {
+    "title": "Revision to License Review Policy for Advanced Computing Commodities",
+    "documentNumber": "2026-00789",
+    "url": "https://www.federalregister.gov/documents/2026/01/15/2026-00789/revision-to-license-review-policy-for-advanced-computing-commodities",
+    "publicationDate": "2026-01-15",
+    "citation": "91 FR 1684",
+    "type": "Rule",
+    "executiveOrder": null,
+    "agencies": [
+      "Commerce Department",
+      "Industry and Security Bureau"
+    ],
+    "matchedBy": "confirmed document 2026-00789",
+    "resolvedFrom": "BIS final rule (official) + Congress.gov CRS R48642",
+    "resolvedAt": "2026-08-22"
+  }
+}

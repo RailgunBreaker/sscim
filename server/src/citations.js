@@ -193,6 +193,32 @@ export const PUBLISHERS = {
   },
 };
 
+/* --- Federal Register agency names as Chicago wants them -----------------
+   The Register lists agencies inverted and abbreviated for its own indexes:
+   "Commerce Department", "Industry and Security Bureau", "Trade
+   Representative, Office of United States". Reproduced literally these read
+   as a database dump rather than a bibliography, so each is mapped to the
+   body's own formal name and parent-to-child order.
+
+   Anything unrecognised passes through unchanged. A name this file has not
+   seen is still the publisher's own name, and silently rewriting it by rule
+   would be a guess. */
+const AGENCY_NAMES = {
+  'Commerce Department': 'U.S. Department of Commerce',
+  'Industry and Security Bureau': 'Bureau of Industry and Security',
+  'National Institute of Standards and Technology': 'National Institute of Standards and Technology',
+  'Trade Representative, Office of United States': 'Office of the United States Trade Representative',
+  'Executive Office of the President': 'Executive Office of the President',
+  'Treasury Department': 'U.S. Department of the Treasury',
+  'State Department': 'U.S. Department of State',
+  'Defense Department': 'U.S. Department of Defense',
+};
+
+export function agencyAuthor(names) {
+  const list = (Array.isArray(names) ? names : [names]).filter(Boolean).map((n) => AGENCY_NAMES[n] || n);
+  return list.length ? list.join(', ') : null;
+}
+
 /* Map a recorded source string onto a publisher key, so the register can show
    which institution stands behind a curator's note. Ordered: first match wins,
    specific before general. */
