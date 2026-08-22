@@ -13,10 +13,10 @@ reviewed. Four classes, counted rather than blurred together:
 
 | Class | Entries | What the record carries |
 | --- | --- | --- |
-| **Resolved** | 29 | Looked up against the *Federal Register* and tied to the document by an exact identifier: real title, agency, register locator, publication date and permanent URL |
+| **Resolved** | 43 | Looked up against the *Federal Register* or SEC EDGAR and tied to the document by an exact identifier: real title, issuer, locator, date and permanent URL |
 | **Full** | 16 | Title, publisher, date and URL — captured automatically at review and assembled into a complete entry |
 | **Legal** | 0 | Issuing body and an exact *Federal Register* volume and page. Complete by Chicago's convention for government material |
-| **Short** | 121 | Issuing body, document type and date only. Hand-curated historical records for which no published document was found |
+| **Short** | 107 | Issuing body, document type and date only. Hand-curated historical records for which no published document was found |
 | Total | 166 | across 163 event(s); every event carries a source |
 
 **No entry is padded out.** A short entry stays short rather than acquiring
@@ -27,14 +27,23 @@ exists to prevent.
 
 That constraint is what makes the *resolved* class trustworthy. Every entry
 in it was matched to its document by an exact identifier — a register
-citation, an executive order number, or a document number confirmed by
-reading the abstract — and never by a similarity score. Where the search
-found nothing, the entry stayed short. Eight of them did: presidential CFIUS
-orders, licence revocations and settlement announcements are real actions
-that were simply never published as *Federal Register* documents, and no
-amount of searching will produce a citation that does not exist.
+citation, an executive order number, an SEC accession number — and never by
+a similarity score. Two registers were searched exhaustively: the *Federal
+Register* for regulatory action, and SEC EDGAR for company announcements,
+which a US registrant furnishes as a filing even when it reads as a press
+release.
 
-The remaining gap is a data-entry task, not a formatting one: everything
+Where neither register held the document, the entry stayed short, and that
+is a finding rather than a gap. Presidential CFIUS orders, export-licence
+revocations and settlement announcements were never published as *Federal
+Register* documents. Samsung, SK hynix, Toshiba, SoftBank, Kioxia, Taipower
+and the Chinese, Japanese and Dutch ministries are not SEC registrants, so
+their announcements are real and simply not in either register. Several
+filings were left alone for a subtler reason: where a company furnished
+half a dozen reports in the same week and none could be tied to the event by
+its own text, no citation is better than a plausible one.
+
+The remainder is a data-entry task, not a formatting one: everything
 arriving through the review queue now captures its URL automatically, so the
 *full* class grows with every reviewed event.
 
@@ -70,10 +79,6 @@ alphabetised. The bracketed date is the event the source supports.
 
 ### Company disclosures, filings and announcements
 
-- AMD / Xilinx joint announcement. October 27, 2020. *(short entry)* [event: 2020-10-27]
-- Apple investor letter (Jan 2, 2019). *(short entry)* [event: 2019-01-02]
-- ASML investor disclosures. October 18, 2017. *(short entry)* [event: 2017-10-18]
-- ASML Q3 2024 release (Oct 15, 2024). *(short entry)* [event: 2024-10-15]
 - ASML statement (Jan 3, 2022); Q4 2021 disclosure. *(short entry)* [event: 2022-01-03]
 - Bill text via Congress.gov; Semiconductors Insight analysis. April 2, 2026. *(short entry)* [event: 2026-04-02]
 - Canadian court record; U.S. extradition request. December 1, 2018. *(short entry)* [event: 2018-12-01]
@@ -99,15 +104,12 @@ alphabetised. The bracketed date is the event the source supports.
 - Executive Office of the President, PCAST (Jan 2017). *(short entry)* [event: 2017-01-06]
 - GlobalFoundries announcement; AMD foundry transition disclosures. August 27, 2018. *(short entry)* [event: 2018-08-27]
 - Intel announcement (Jan 21, 2022). *(short entry)* [event: 2022-01-21]
-- Intel announcement (Mar 23, 2021). *(short entry)* [event: 2021-03-23]
 - Japanese cabinet order (Aug 2, 2019). *(short entry)* [event: 2019-08-02]
 - JASM opening ceremony; TSMC disclosures. February 24, 2024. *(short entry)* [event: 2024-02-24]
 - Joint statements; automaker confirmations (Jun 2025). *(short entry)* [event: 2025-06-27]
 - King Yuan exchange filings; Taiwan CDC record. June 13, 2021. *(short entry)* [event: 2021-06-13]
 - Market data; DeepSeek technical report. January 27, 2025. *(short entry)* [event: 2025-01-27]
 - Murata / TDK / Taiyo Yuden guidance; distributor data. June 1, 2018. *(short entry)* [event: 2018-06-01]
-- NVIDIA / SoftBank announcement. September 13, 2020. *(short entry)* [event: 2020-09-13]
-- NVIDIA / SoftBank termination announcement. February 8, 2022. *(short entry)* [event: 2022-02-08]
 - OEM production announcements (Jan 2021). *(short entry)* [event: 2021-01-08]
 - OEM production announcements (Mar 2020); foundry allocation commentary. *(short entry)* [event: 2020-03-18]
 - Presidential order (Dec 2, 2016); CFIUS public record. *(short entry)* [event: 2016-12-02]
@@ -132,10 +134,6 @@ alphabetised. The bracketed date is the event the source supports.
 - tech-insider.org. "DDR4 spot price hits record $42.45 as memory capacity shifts to HBM." August 7, 2026. https://tech-insider.org/dram-ram-price-crisis-2026/. Accessed 2026-08-22. [event: 2026-08-07]
 - Toshiba board disclosures; consortium statements. September 20, 2017. *(short entry)* [event: 2017-09-20]
 - Toyota production announcement (Aug 19, 2021). *(short entry)* [event: 2021-08-19]
-- TSMC / White House announcement (Mar 3, 2025). *(short entry)* [event: 2025-03-03]
-- TSMC announcement (Dec 6, 2022). *(short entry)* [event: 2022-12-06]
-- TSMC announcement (May 15, 2020). *(short entry)* [event: 2020-05-15]
-- TSMC Q2 2023 earnings call. July 20, 2023. *(short entry)* [event: 2023-07-20]
 - TSMC statements (Aug 3-6, 2018); quarterly disclosure. *(short entry)* [event: 2018-08-03]
 - TSMC/UMC/Micron statements; earnings disclosures. April 3, 2024. *(short entry)* [event: 2024-04-03]
 - U.S. Geological Survey, Earthquake Hazards Program. Event page us6000tgb9, M6.8, 2026 Uto, Japan Earthquake . July 28, 2026. https://earthquake.usgs.gov/earthquakes/eventpage/us6000tgb9. Accessed 2026-08-22. [event: 2026-07-28]
@@ -146,9 +144,12 @@ alphabetised. The bracketed date is the event the source supports.
 
 ### Government and regulatory bodies
 
+- Advanced Micro Devices, Inc. "Current Report on Form 8-K." *U.S. Securities and Exchange Commission, EDGAR*, accession no. 0001193125-20-277468, October 27, 2020. https://www.sec.gov/Archives/edgar/data/2488/000119312520277468/d67182d8k.htm. Accessed 2026-08-22. [event: 2020-10-27]
+- Apple Inc. "Current Report on Form 8-K." *U.S. Securities and Exchange Commission, EDGAR*, accession no. 0000320193-19-000002, January 2, 2019. https://www.sec.gov/Archives/edgar/data/320193/000032019319000002/a8-kjanuary2019122019.htm. Accessed 2026-08-22. [event: 2019-01-02]
+- ASML Holding N.V. "Report of Foreign Private Issuer on Form 6-K." *U.S. Securities and Exchange Commission, EDGAR*, accession no. 0000937966-17-000017, October 18, 2017. https://www.sec.gov/Archives/edgar/data/937966/000093796617000017/form6kq3resultsoctober1820.htm. Accessed 2026-08-22. [event: 2017-10-18]
+- ASML Holding N.V. "Report of Foreign Private Issuer on Form 6-K." *U.S. Securities and Exchange Commission, EDGAR*, accession no. 0000937966-24-000022, October 15, 2024. https://www.sec.gov/Archives/edgar/data/937966/000093796624000022/form6-kquarterlyfilings.htm. Accessed 2026-08-22. [event: 2024-10-15]
 - Chinese transport ministry notice (Oct 2025). *(short entry)* [event: 2025-10-14]
 - Company confirmations; administration statements (Aug 2025). *(short entry)* [event: 2025-08-11]
-- Cyberspace Administration of China. CAC announcement (May 21, 2023); Micron disclosures. *(short entry)* [event: 2023-05-21]
 - Executive Office of the President. "Executive Order 14017: America's Supply Chains." *Federal Register*, 86 Fed. Reg. 11849, March 1, 2021. https://www.federalregister.gov/documents/2021/03/01/2021-04280/americas-supply-chains. Accessed 2026-08-22. [event: 2021-02-24]
 - Executive Office of the President. "Executive Order 14105: Addressing United States Investments in Certain National Security Technologies and Products in Countries of Concern." *Federal Register*, 88 Fed. Reg. 54867, August 11, 2023. https://www.federalregister.gov/documents/2023/08/11/2023-17449/addressing-united-states-investments-in-certain-national-security-technologies-and-products-in. Accessed 2026-08-22. [event: 2023-08-09]
 - Executive Office of the President. "Executive Order 14257: Regulating Imports With a Reciprocal Tariff To Rectify Trade Practices That Contribute to Large and Persistent Annual United States Goods Trade Deficits." *Federal Register*, 90 Fed. Reg. 15041, April 7, 2025. https://www.federalregister.gov/documents/2025/04/07/2025-06063/regulating-imports-with-a-reciprocal-tariff-to-rectify-trade-practices-that-contribute-to-large-and. Accessed 2026-08-22. [event: 2025-04-02]
@@ -156,12 +157,17 @@ alphabetised. The bracketed date is the event the source supports.
 - Government of the Netherlands. ASML statement (Jan 1, 2024); Dutch government confirmation. *(short entry)* [event: 2024-01-01]
 - Government of the Netherlands. Dutch government gazette; ASML investor disclosures. September 1, 2023. *(short entry)* [event: 2023-09-01]
 - Government of the Netherlands. Dutch ministry statements; CNBC/Reuters; Honda disclosures. September 30, 2025. *(short entry)* [event: 2025-09-30]
+- Intel Corporation. "Current Report on Form 8-K." *U.S. Securities and Exchange Commission, EDGAR*, accession no. 0001193125-21-091374, March 23, 2021. https://www.sec.gov/Archives/edgar/data/50863/000119312521091374/d153275d8k.htm. Accessed 2026-08-22. [event: 2021-03-23]
 - Japan, Ministry of Economy, Trade and Industry (METI). METI announcement (Jul 1, 2019); Korean government response. *(short entry)* [event: 2019-07-01]
 - Japan, Ministry of Economy, Trade and Industry (METI). METI budget announcement; Rapidus press release. June 24, 2026. *(short entry)* [event: 2026-06-24]
 - Japan, Ministry of Economy, Trade and Industry (METI). METI ordinance; company disclosures. July 23, 2023. *(short entry)* [event: 2023-07-23]
 - Japan, Ministry of Economy, Trade and Industry (METI). Rapidus founding announcement; METI. November 11, 2022. *(short entry)* [event: 2022-11-11]
 - Japan, Ministry of Economy, Trade and Industry (METI). TSMC / Sony announcement (Oct 2021); METI subsidy record. *(short entry)* [event: 2021-10-14]
 - Malaysian trade ministry notice (Jul 14, 2025). *(short entry)* [event: 2025-07-14]
+- Micron Technology, Inc. "Current Report on Form 8-K." *U.S. Securities and Exchange Commission, EDGAR*, accession no. 0000723125-23-000028, May 22, 2023. https://www.sec.gov/Archives/edgar/data/723125/000072312523000028/mu-20230522.htm. Accessed 2026-08-22. [event: 2023-05-21]
+- NVIDIA Corporation. "Current Report on Form 8-K." *U.S. Securities and Exchange Commission, EDGAR*, accession no. 0001045810-22-000005, February 8, 2022. https://www.sec.gov/Archives/edgar/data/1045810/000104581022000005/nvda-20220208.htm. Accessed 2026-08-22. [event: 2022-02-08]
+- NVIDIA Corporation. "Current Report on Form 8-K." *U.S. Securities and Exchange Commission, EDGAR*, accession no. 0001045810-22-000146, August 31, 2022. https://www.sec.gov/Archives/edgar/data/1045810/000104581022000146/nvda-20220826.htm. Accessed 2026-08-22. [event: 2022-08-31]
+- NVIDIA Corporation. "Current Report on Form 8-K." *U.S. Securities and Exchange Commission, EDGAR*, accession no. 0001193125-20-244601, September 14, 2020. https://www.sec.gov/Archives/edgar/data/1045810/000119312520244601/d13958d8k.htm. Accessed 2026-08-22. [event: 2020-09-13]
 - Office of the Federal Register. Federal Register · BIS interim final rule; two trade-press confirmations. July 3, 2026. *(short entry)* [event: 2026-07-03]
 - Office of the United States Trade Representative. "Request for Comments on Proposed Modifications and Machinery Exclusion Process in Four-Year Review of Actions Taken in the Section 301 Investigation: China's Acts, Policies, and Practices Related to Technology Transfer, Intellectual Property, and Innovation." *Federal Register*, 89 Fed. Reg. 46252, May 28, 2024. https://www.federalregister.gov/documents/2024/05/28/2024-11634/request-for-comments-on-proposed-modifications-and-machinery-exclusion-process-in-four-year-review. Accessed 2026-08-22. [event: 2024-05-14]
 - People's Republic of China, Ministry of Commerce (MOFCOM). MOFCOM announcement (Feb 4, 2025). *(short entry)* [event: 2025-02-04]
@@ -172,8 +178,12 @@ alphabetised. The bracketed date is the event the source supports.
 - People's Republic of China, Ministry of Commerce (MOFCOM). MOFCOM listing; FDD analysis (Jun 24, 2026). *(short entry)* [event: 2026-06-22]
 - People's Republic of China, Ministry of Commerce (MOFCOM). MOFCOM notices; importer surveys; customs statistics. June 27, 2026. *(short entry)* [event: 2026-06-27]
 - People's Republic of China, National Development and Reform Commission. NDRC statements; Chinese press reporting. December 22, 2017. *(short entry)* [event: 2017-12-22]
-- State Administration for Market Regulation (China). Qualcomm 8-K; SAMR review record. July 26, 2018. *(short entry)* [event: 2018-07-26]
+- Qualcomm Incorporated. "Current Report on Form 8-K." *U.S. Securities and Exchange Commission, EDGAR*, accession no. 0001104659-18-047166, July 26, 2018. https://www.sec.gov/Archives/edgar/data/804328/000110465918047166/a18-7900_238k.htm. Accessed 2026-08-22. [event: 2018-07-26]
 - State Administration for Market Regulation (China). SAMR announcement (Dec 9, 2024). *(short entry)* [event: 2024-12-09]
+- Taiwan Semiconductor Manufacturing Company Limited. "Report of Foreign Private Issuer on Form 6-K." *U.S. Securities and Exchange Commission, EDGAR*, accession no. 0001046179-25-000024, March 3, 2025. https://www.sec.gov/Archives/edgar/data/1046179/000104617925000024/tsmcexpandinvestmentintheu.htm. Accessed 2026-08-22. [event: 2025-03-03]
+- Taiwan Semiconductor Manufacturing Company Limited. "Report of Foreign Private Issuer on Form 6-K." *U.S. Securities and Exchange Commission, EDGAR*, accession no. 0001564590-20-025607, May 15, 2020. https://www.sec.gov/Archives/edgar/data/1046179/000156459020025607/tsm-6k_20200514.htm. Accessed 2026-08-22. [event: 2020-05-15]
+- Taiwan Semiconductor Manufacturing Company Limited. "Report of Foreign Private Issuer on Form 6-K." *U.S. Securities and Exchange Commission, EDGAR*, accession no. 0001564590-22-039051, December 6, 2022. https://www.sec.gov/Archives/edgar/data/1046179/000156459022039051/tsm-6k_20221206.htm. Accessed 2026-08-22. [event: 2022-12-06]
+- Taiwan Semiconductor Manufacturing Company Limited. "Report of Foreign Private Issuer on Form 6-K." *U.S. Securities and Exchange Commission, EDGAR*, accession no. 0001628280-23-025146, July 20, 2023. https://www.sec.gov/Archives/edgar/data/1046179/000162828023025146/tsm-20230720x6k.htm. Accessed 2026-08-22. [event: 2023-07-20]
 - U.S. Department of Commerce, Bureau of Industry and Security. "Addition of an Entity to the Entity List." *Federal Register*, 83 Fed. Reg. 54519, October 30, 2018. https://www.federalregister.gov/documents/2018/10/30/2018-23693/addition-of-an-entity-to-the-entity-list. Accessed 2026-08-22. [event: 2018-10-29]
 - U.S. Department of Commerce, Bureau of Industry and Security. "Addition of Certain Entities to the Entity List and Revision of Entries on the Entity List." *Federal Register*, 84 Fed. Reg. 43493, August 21, 2019. https://www.federalregister.gov/documents/2019/08/21/2019-17921/addition-of-certain-entities-to-the-entity-list-and-revision-of-entries-on-the-entity-list. Accessed 2026-08-22. [event: 2019-08-19]
 - U.S. Department of Commerce, Bureau of Industry and Security. "Addition of Entities to the Entity List, Revision of Entry on the Entity List, and Removal of Entities From the Entity List." *Federal Register*, 85 Fed. Reg. 83416, December 22, 2020. https://www.federalregister.gov/documents/2020/12/22/2020-28031/addition-of-entities-to-the-entity-list-revision-of-entry-on-the-entity-list-and-removal-of-entities. Accessed 2026-08-22. [event: 2020-12-18]
@@ -201,7 +211,6 @@ alphabetised. The bracketed date is the event the source supports.
 - U.S. Department of Commerce, Bureau of Industry and Security. BIS rescission notice. May 13, 2025. *(short entry)* [event: 2025-05-13]
 - U.S. Department of Commerce, National Institute of Standards and Technology. "Preventing the Improper Use of CHIPS Act Funding." *Federal Register*, 88 Fed. Reg. 17439, March 23, 2023. https://www.federalregister.gov/documents/2023/03/23/2023-05869/preventing-the-improper-use-of-chips-act-funding. Accessed 2026-08-22. [event: 2023-03-21]
 - U.S. Securities and Exchange Commission. Commerce Department confirmation; company 8-K disclosures. May 7, 2024. *(short entry)* [event: 2024-05-07]
-- U.S. Securities and Exchange Commission. NVIDIA and AMD 8-K filings (Aug 26-31, 2022). *(short entry)* [event: 2022-08-31]
 - U.S. Securities and Exchange Commission. NVIDIA/AMD 8-K filings; Commerce statements. April 9, 2025. *(short entry)* [event: 2025-04-09]
 
 ### News organisations and trade press

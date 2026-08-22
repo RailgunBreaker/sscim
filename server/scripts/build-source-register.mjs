@@ -69,8 +69,57 @@ const FR_RE = /\b(\d{2,3})\s*FR\s*(\d{3,6})\b/i;
    confirmed after reading the abstract. Nothing there was matched on a
    similarity score, so what lands here is publisher-verified and can be
    rendered as a complete entry. */
-const resolvedPath = resolve(HERE, '..', 'src', 'resolved-citations.json');
-const RESOLVED = existsSync(resolvedPath) ? JSON.parse(readFileSync(resolvedPath, 'utf8')) : {};
+const readIf = (p) => (existsSync(p) ? JSON.parse(readFileSync(p, 'utf8')) : {});
+const RESOLVED = readIf(resolve(HERE, '..', 'src', 'resolved-citations.json'));
+/* Same discipline, different register: scripts/resolve-sec-citations.mjs
+   resolves company announcements to the SEC filing that carries them, again
+   only on a confirmed accession number. */
+const RESOLVED_SEC = readIf(resolve(HERE, '..', 'src', 'resolved-citations-sec.json'));
+
+/* Registrant names as EDGAR stores them are shouted and suffixed for its own
+   indexes — "QUALCOMM INC/DE", "NVIDIA CORP". Rendered literally they read as
+   a database dump. Unknown names pass through untouched rather than being
+   rewritten by rule. */
+const REGISTRANT_NAMES = {
+  'QUALCOMM INC/DE': 'Qualcomm Incorporated',
+  'NVIDIA CORP': 'NVIDIA Corporation',
+  'ADVANCED MICRO DEVICES INC': 'Advanced Micro Devices, Inc.',
+  'INTEL CORP': 'Intel Corporation',
+  'MICRON TECHNOLOGY INC': 'Micron Technology, Inc.',
+  'ASML HOLDING NV': 'ASML Holding N.V.',
+  'TAIWAN SEMICONDUCTOR MANUFACTURING CO LTD': 'Taiwan Semiconductor Manufacturing Company Limited',
+  'WESTERN DIGITAL CORP': 'Western Digital Corporation',
+  'XILINX INC': 'Xilinx, Inc.',
+};
+
+/* What the SEC calls each form, so the entry describes a document rather than
+   reciting a form number at a reader who may not know it. */
+const FORM_TITLES = {
+  '8-K': 'Current Report on Form 8-K',
+  '6-K': 'Report of Foreign Private Issuer on Form 6-K',
+  '10-K': 'Annual Report on Form 10-K',
+  '10-Q': 'Quarterly Report on Form 10-Q',
+  '20-F': 'Annual Report on Form 20-F',
+};
+
+function secEntries(event) {
+  const hit = RESOLVED_SEC[event.id];
+  if (!hit) return null;
+  return [].concat(hit).map((d) => ({
+    klass: 'resolved',
+    text: chicago({
+      author: REGISTRANT_NAMES[d.registrant] || d.registrant,
+      title: FORM_TITLES[d.form] || `Filing on Form ${d.form}`,
+      container: 'U.S. Securities and Exchange Commission, EDGAR',
+      /* The accession number is the filing's permanent identifier, and the
+         part a reader searches on. It belongs where a locator belongs. */
+      register: `accession no. ${d.accession}`,
+      date: longDate(d.filingDate),
+      url: d.url,
+      accessed: today,
+    }),
+  }));
+}
 
 function resolvedEntries(event) {
   const hit = RESOLVED[event.id];
@@ -95,7 +144,7 @@ function resolvedEntries(event) {
    Returns an array: an event can rest on more than one document, and citing
    one of a pair of concurrent rules would misdescribe what happened. */
 function citationsFor(event) {
-  const resolvedHit = resolvedEntries(event);
+  const resolvedHit = resolvedEntries(event) || secEntries(event);
   if (resolvedHit) return resolvedHit;
   return [citationFor(event)];
 }
@@ -252,7 +301,7 @@ push('reviewed. Four classes, counted rather than blurred together:');
 push('');
 push('| Class | Entries | What the record carries |');
 push('| --- | --- | --- |');
-push(`| **Resolved** | ${counts.resolved || 0} | Looked up against the *Federal Register* and tied to the document by an exact identifier: real title, agency, register locator, publication date and permanent URL |`);
+push(`| **Resolved** | ${counts.resolved || 0} | Looked up against the *Federal Register* or SEC EDGAR and tied to the document by an exact identifier: real title, issuer, locator, date and permanent URL |`);
 push(`| **Full** | ${counts.full || 0} | Title, publisher, date and URL — captured automatically at review and assembled into a complete entry |`);
 push(`| **Legal** | ${counts.legal || 0} | Issuing body and an exact *Federal Register* volume and page. Complete by Chicago's convention for government material |`);
 push(`| **Short** | ${counts.short || 0} | Issuing body, document type and date only. Hand-curated historical records for which no published document was found |`);
@@ -266,14 +315,23 @@ push('exists to prevent.');
 push('');
 push('That constraint is what makes the *resolved* class trustworthy. Every entry');
 push('in it was matched to its document by an exact identifier — a register');
-push('citation, an executive order number, or a document number confirmed by');
-push('reading the abstract — and never by a similarity score. Where the search');
-push('found nothing, the entry stayed short. Eight of them did: presidential CFIUS');
-push('orders, licence revocations and settlement announcements are real actions');
-push('that were simply never published as *Federal Register* documents, and no');
-push('amount of searching will produce a citation that does not exist.');
+push('citation, an executive order number, an SEC accession number — and never by');
+push('a similarity score. Two registers were searched exhaustively: the *Federal');
+push('Register* for regulatory action, and SEC EDGAR for company announcements,');
+push('which a US registrant furnishes as a filing even when it reads as a press');
+push('release.');
 push('');
-push('The remaining gap is a data-entry task, not a formatting one: everything');
+push('Where neither register held the document, the entry stayed short, and that');
+push('is a finding rather than a gap. Presidential CFIUS orders, export-licence');
+push('revocations and settlement announcements were never published as *Federal');
+push('Register* documents. Samsung, SK hynix, Toshiba, SoftBank, Kioxia, Taipower');
+push('and the Chinese, Japanese and Dutch ministries are not SEC registrants, so');
+push('their announcements are real and simply not in either register. Several');
+push('filings were left alone for a subtler reason: where a company furnished');
+push('half a dozen reports in the same week and none could be tied to the event by');
+push('its own text, no citation is better than a plausible one.');
+push('');
+push('The remainder is a data-entry task, not a formatting one: everything');
 push('arriving through the review queue now captures its URL automatically, so the');
 push('*full* class grows with every reviewed event.');
 push('');
