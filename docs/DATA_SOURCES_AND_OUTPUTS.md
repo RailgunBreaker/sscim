@@ -2,6 +2,8 @@
 
 What enters the model, where it came from, how it is processed, and what each output does and does not mean.
 
+For a per-field account of where every figure originates -- every feed endpoint, every event source, every facility citation, and every analyst judgement listed separately -- see [References](REFERENCES.md).
+
 ## Provenance rule
 
 Every meaningful statement is traceable to exactly one of three things: **a source**, **an explicit assumption**, or **an implemented calculation**. If it is none of these, it does not belong in the model. The evidence tiers below are used consistently in the codebase, the interface, and every document here.

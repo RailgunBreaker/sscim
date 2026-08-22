@@ -35,9 +35,9 @@ export const SITE_SECTIONS = [
   {
     heading: 'Data & limits',
     links: [
+      { href: 'docs/REFERENCES.md.html', label: 'References', note: 'Where every figure came from' },
       { href: 'docs/DATA_SOURCES_AND_OUTPUTS.md.html', label: 'Data sources and outputs', note: 'What is sourced, what is judged' },
       { href: 'docs/ACADEMIC_GUIDE.md.html', label: 'Academic guide', note: 'How to cite it, and what not to claim' },
-      { href: 'docs/NETWORK_ARCHITECTURE.md.html', label: 'Network architecture', note: 'The multi-layer graph' },
       { href: 'docs.html', id: 'docs', label: 'Full document library →', note: 'Every document, searchable' },
     ],
   },
@@ -46,7 +46,7 @@ export const SITE_SECTIONS = [
     links: [
       { href: 'docs/SYSTEM_ARCHITECTURE.md.html', label: 'System architecture', note: 'How the pieces fit together' },
       { href: 'docs/DEVELOPER_GUIDE.md.html', label: 'Developer guide', note: 'Running and extending it' },
-      { href: 'docs/DOCUMENTATION_REFERENCE.md.html', label: 'Documentation reference', note: 'Which document answers what' },
+      { href: 'docs/NETWORK_ARCHITECTURE.md.html', label: 'Network architecture', note: 'The multi-layer graph' },
       { href: 'https://github.com/RailgunBreaker/sscim', label: 'Source repository ↗', note: 'Every figure is checkable', external: true },
     ],
   },
