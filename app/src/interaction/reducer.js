@@ -24,7 +24,7 @@ export const LENSES = ['structural', 'operational', 'delta', 'share'];
 export const LENS_LABELS = {
   structural: 'Structural',
   operational: 'Operational',
-  delta: 'Scenario Δ',
+  delta: 'Hazard Δ',
   share: 'Selected share',
 };
 

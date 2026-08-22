@@ -27,9 +27,8 @@ function entityLabel(sel, { COUNTRY_NAMES, STAGE_BY_ID, COMPANY_BY_ID, EVENTS },
 
 export default function LensBar({ scenarioName }) {
   const { data, engine } = useVault();
-  const { state, setLens, clear, back, lensAvailable, draftSet, setViewMode } = useInteraction();
-  const { lens, selected, history, scenarioActive, draft, viewMode } = state;
-  const composing = draft.builderMode || draft.sources.length > 0;
+  const { state, setLens, clear, back, lensAvailable, setViewMode } = useInteraction();
+  const { lens, selected, history, scenarioActive, viewMode } = state;
   const names = { COUNTRY_NAMES: data.COUNTRY_NAMES, STAGE_BY_ID: engine.STAGE_BY_ID, COMPANY_BY_ID: data.COMPANY_BY_ID, EVENTS: data.EVENTS };
   const label = entityLabel(selected, names, scenarioName);
 
@@ -59,7 +58,7 @@ export default function LensBar({ scenarioName }) {
           return (
             <button key={l} type="button" role="radio" aria-checked={on} disabled={!avail}
               onClick={() => setLens(l)}
-              title={!avail ? 'Scenario Δ is available only while a scenario is active' : `Show ${LENS_LABELS[l]}`}
+              title={!avail ? 'Hazard Δ is available only while a hazard is applied on the map' : `Show ${LENS_LABELS[l]}`}
               style={{
                 fontSize: 11, padding: '4px 10px', borderRadius: 4, fontFamily: 'inherit', cursor: avail ? 'pointer' : 'not-allowed',
                 background: on ? C.copper : 'transparent', color: on ? '#0C111C' : avail ? C.dim : C.faint,
@@ -73,8 +72,8 @@ export default function LensBar({ scenarioName }) {
 
       <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
         {scenarioActive && (
-          <span className="mono" style={{ fontSize: 9, letterSpacing: 1, color: '#0C111C', background: C.copper, borderRadius: 3, padding: '2px 7px', fontWeight: 700 }}>
-            SCENARIO ACTIVE
+          <span className="mono" style={{ fontSize: 9, letterSpacing: 1, color: '#0C111C', background: C.amber, borderRadius: 3, padding: '2px 7px', fontWeight: 700 }}>
+            HAZARD APPLIED
           </span>
         )}
         {label ? (
@@ -85,13 +84,6 @@ export default function LensBar({ scenarioName }) {
         ) : (
           <span className="mono" style={{ fontSize: 10.5, color: C.faint }}>Nothing pinned</span>
         )}
-        <button type="button" onClick={() => draftSet({ builderMode: !draft.builderMode })}
-          aria-pressed={composing} title="Compose a scenario by marking shock sources on the map/graph (shift-click)"
-          style={{ fontSize: 10.5, padding: '3px 9px', borderRadius: 4, fontFamily: 'inherit', cursor: 'pointer',
-            background: composing ? 'rgba(201,138,63,.16)' : 'transparent', color: composing ? C.copper : C.dim,
-            border: `1px solid ${composing ? C.copper : C.line}`, fontWeight: composing ? 700 : 400 }}>
-          ＋ Compose{draft.sources.length ? ` (${draft.sources.length})` : ''}
-        </button>
         <button type="button" onClick={back} disabled={!history.length} aria-label="Back to previous selection"
           style={{ fontSize: 10.5, padding: '3px 9px', borderRadius: 4, fontFamily: 'inherit', background: 'transparent', color: history.length ? C.dim : C.faint, border: `1px solid ${C.line}`, cursor: history.length ? 'pointer' : 'not-allowed', opacity: history.length ? 1 : 0.5 }}>
           ← Back

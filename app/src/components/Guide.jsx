@@ -19,7 +19,7 @@ const STEP_TARGET = {
   2: { id: 'pane-flow' },
   3: { id: 'pane-intel', feedTab: 'companies', selectTopCompany: true },
   4: { id: 'pane-intel', feedTab: 'companies' },
-  5: { id: 'header-scenarios' },
+  5: { id: 'pane-map' },
   6: { id: 'btn-briefing' },
   7: { id: 'btn-methodology' },
 };
@@ -29,17 +29,17 @@ const EN_TITLE = {
   2: 'Explore the flow graph',
   3: 'Drill into a company',
   4: 'Company rank & capital board',
-  5: 'Run a scenario — or build your own',
+  5: 'Review the past, or test a hazard',
   6: 'Generate the briefing',
   7: 'Verify anything',
 };
 const EN_BODY = {
   1: 'Tap any event card. Affected countries light up on the map, affected stages in the flow, and the detail view shows the engine formula, first/second-order effects, and the hop-by-hop company spread tree. Events tagged hazard-signal-only, mixed, or long-term strategic are shown but excluded from the scored operational impact — the card says why.',
-  2: 'Tap a stage (e.g. Deposition) to open its subsection: major companies, market shares, and modeled contribution. Node color/size = structural vulnerability; edge width = a modeled input-dependence prior (not a measured value flow); a copper +Δ badge shows the current operational scenario delta separately.',
+  2: 'Tap a stage (e.g. Deposition) to open its subsection: major companies, market shares, and modeled contribution. Node color/size = structural vulnerability; edge width = a modeled input-dependence prior (not a measured value flow); a copper +Δ badge shows any applied hazard delta separately.',
   3: 'Three separate numbers, never blended: systemic criticality (simulated disruption originating at that company), vulnerability (share-independent average exposure), and contribution (share-weighted, so market share never cancels out). Plus HQ, customers/suppliers with sales shares, and two-layer upstream origins.',
   4: 'COMPANIES ranks by systemic criticality. CAPITAL ranks shareholders by ownership % × company systemic criticality — state-linked capital in amber.',
-  5: 'Header buttons inject preset hypothetical events through the identical propagation engine. ✦ Build scenario: pick stages, set severity, run it. Copper deltas show the scenario\'s marginal change vs. the untouched baseline — history is never rewritten.',
-  6: '⚡ GP Briefing composes a briefing from the current state — ranked by scenario delta when a scenario is active, by baseline operational impact otherwise. Copy or download.',
+  5: 'The dashboard reads live. Drag the history slider — or click an event marker — to re-derive the whole model as it stood on a past date: a real past state of the record, not a hypothesis. For a hypothesis, use ⌖ HAZARD on the map: drop an epicentre, set a radius, and the readout names the plants inside it and the share of each stage they carry. Applying it runs one bounded shock through the identical propagation engine, and the amber banner plus a one-click Clear keep it from being mistaken for an observation.',
+  6: '⚡ GP Briefing composes a briefing from the current state — ranked by hazard delta when a hazard overlay is applied, by operational impact otherwise. Copy or download.',
   7: 'Documentation opens the full reference library, including every implemented formula, propagation prior, data source, and model-status statement — no black boxes.',
 };
 

@@ -8,10 +8,12 @@ Chips are made through a long chain: research and design, then raw materials, th
 
 ## A simple way to use it
 
-1. **Pick a reported event or build a scenario.** The event feed lists dated, sourced events; the scenario builder lets you invent one.
+1. **Start with a reported event.** The event feed lists dated, sourced events. Everything the dashboard shows by default is a live read of that record — there is no scenario library to invent one from, because the number that matters is the one the record actually supports.
 2. **Read the source, date, confidence, and stated affected stages** before you read any score. Every score is downstream of those choices.
 3. **Follow the selection across all three views.** Selecting anything in one view highlights the corresponding elements in the other two.
 4. **Treat a high score as a question to investigate, not an answer.** It tells you where the model thinks you should look.
+5. **Track what you actually care about.** The ★ WATCH tab lets you follow specific companies, products (chain stages), plants, or a route through the chain, so your daily view is your own supply base rather than the whole world. The list is kept in your browser and is never put into a shared link.
+6. **Review the past when a number surprises you.** The history slider re-derives the entire model as it stood on any past date, and each event marker is sized by what that event actually contributed to the index on its own day.
 
 ## The three views
 
@@ -29,7 +31,7 @@ Every number sits on a 0–10 scale, but they answer different questions.
 
 **Structural vulnerability** — a relatively stable property of a stage: how geographically concentrated it is, how central in the network, how exposed to policy, how substitutable, how market-sensitive. This barely changes week to week. A high number means "if something goes wrong here, the structure will carry it."
 
-**Operational impact** — the model's response to whatever event or scenario you have selected. It is displayed around a neutral value of **5**: above 5 is adverse pressure, below 5 is mitigating. It moves as you change the selection, and decays as events age, halving roughly every 12 days.
+**Operational impact** — the model's response to whatever event you have selected. It is displayed around a neutral value of **5**: above 5 is adverse pressure, below 5 is mitigating. It moves as you change the selection, and decays as events age, halving roughly every 12 days.
 
 **Contribution** — a company's share of an aggregate modeled effect, weighted by how much of a stage that company holds. It is **not** an estimate of that company's financial loss.
 
@@ -47,7 +49,7 @@ The interface labels the provenance of what it shows, and those labels are the m
 - **`[ANALYST]`** — a human judgment call, written down deliberately rather than hidden.
 - **Confidence (High / Medium / Low / Simulated)** — how good the *evidence* is. It is deliberately **not** folded into the size of the effect, so a low-confidence large event and a high-confidence small one never look alike.
 - **Excluded from score** — the event is displayed and explained but deliberately left out of the aggregate index, because forcing it into one signed number would misrepresent it. A hazard warning where nothing was actually disrupted is the clearest example.
-- **Baseline vs. active** — history is always baseline, real events only. A scenario you build is shown as a comparison point and never rewrites the past.
+- **Live, reviewed, or hypothetical** — three states the interface keeps visually distinct, because the worst failure of a dashboard like this is a reader quoting a hypothetical figure as an observed one. *Live* is the current reading. *History review* re-derives the whole model as it stood on a past date — a real past state of the record. *Hazard applied* is the single hypothesis the dashboard will state: a screening shock you place on the map yourself, shown in amber with a one-click exit. History is always baseline: neither a review nor a hazard rewrites the past.
 
 ## Common misreadings to avoid
 

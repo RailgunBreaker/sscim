@@ -27,7 +27,7 @@ export function buildTooltipEl(lines) {
    marks the site's stages as scenario shock sources. */
 export function buildFacilityPopupEl({
   facility, operatorName, stageNames, impactLine, shareLines, colors,
-  onSelectCompany, onShock, onOpenProfile,
+  onSelectCompany, onOpenProfile, onToggleTrack, tracked = false,
 }) {
   const root = document.createElement('div');
   root.style.minWidth = '220px';
@@ -88,7 +88,7 @@ export function buildFacilityPopupEl({
   };
   if (onOpenProfile) button('Full profile', () => onOpenProfile(facility));
   if (onSelectCompany) button(`Operator: ${operatorName}`, () => onSelectCompany(facility.company));
-  if (onShock) button('Shock this site', () => onShock(facility));
+  if (onToggleTrack) button(tracked ? '★ Tracking' : '☆ Track this site', () => onToggleTrack(facility));
   if (actions.childElementCount) root.appendChild(actions);
 
   if (facility.source) {

@@ -15,6 +15,7 @@ import UpstreamTree from './UpstreamTree.jsx';
 import CustomerSpreadTree from './CustomerSpreadTree.jsx';
 import EventSites from './EventSites.jsx';
 import FacilityDetail from './FacilityDetail.jsx';
+import TrackButton from './TrackButton.jsx';
 
 const Field = ({ k, v, copper }) => (
   <div style={{ marginBottom: 6 }}>
@@ -122,6 +123,7 @@ export default function Detail({ sel, setSel, model, scenario, onResetScenario, 
           <Logo cid={co.id} size={26} />
           <h3 style={{ margin: 0, fontSize: 16 }}>{co.name}</h3>
           <span className="mono" style={{ fontSize: 10, color: C.dim }}>HQ: {COUNTRY_NAMES[co.country]}</span>
+          <TrackButton type="company" id={co.id} />
           <span className="mono" style={{ fontSize: 10, color: C.copper, marginLeft: "auto" }}>criticality rank #{rank} of {COMPANIES.length}</span>
         </div>
         <div style={{ margin: "5px 0 0" }}><Quote quote={(QUOTES || {})[co.id]} /></div>
@@ -211,6 +213,7 @@ export default function Detail({ sel, setSel, model, scenario, onResetScenario, 
         <h3 style={{ margin: 0, fontSize: 16 }}>{name}</h3>
         <span className="mono" style={{ fontSize: 16, fontWeight: 600, color: riskColor(structural) }}>{structural?.toFixed(2)}</span>
         <span className="mono" style={{ fontSize: 10, color: riskColor(structural), border: `1px solid ${riskColor(structural)}`, borderRadius: 3, padding: "1px 6px" }}>{riskLabel(structural)}<MetricTag kind="structural" /></span>
+        {isStage && <TrackButton type="stage" id={sel.id} />}
         {scenarioActive && Math.abs(delta) > 0.01 && (
           <span className="mono" style={{ fontSize: 11, color: delta >= 0 ? C.red : C.green }}>{delta >= 0 ? "▲" : "▼"} operational Δ {delta >= 0 ? "+" : ""}{delta.toFixed(3)}<MetricTag kind="scenario" /></span>
         )}

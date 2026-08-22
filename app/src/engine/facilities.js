@@ -159,12 +159,44 @@ export function hazardFootprint({ lat, lng, radiusKm }, layer) {
   };
 }
 
-/* Turn a footprint into draft-scenario sources the composer already knows how
-   to run (see interaction/scenarioDraft.js). Only material stages become
-   sources; the rest stay visible in the readout as "touched, not shocked",
+/* The material stages of a footprint, as shock sources. Only material stages
+   qualify; the rest stay visible in the readout as "touched, not shocked",
    which is a real distinction and worth showing rather than rounding away. */
 export function footprintToDraftSources(footprint) {
   return (footprint?.materialStages || []).map((s) => ({ type: 'stage', id: s.stageId }));
+}
+
+/* The hazard as something the engine can actually score.
+
+   This is the ONLY hypothesis the dashboard now constructs. The what-if
+   authoring tools are gone: the map is a live read of the record, and the
+   one counterfactual left is the honest, bounded one — "a hazard of this
+   size, here, today". It runs through the identical propagation path every
+   real event uses, so its Δ is comparable with the index it modifies.
+
+   Severity is the operator's input, not the footprint's: the geometry says
+   what is exposed, never how hard it was hit. */
+export function footprintToHazardScenario(footprint, { severity = 6 } = {}) {
+  const stages = (footprint?.materialStages || []).map((s) => s.stageId);
+  if (!stages.length) return null;
+  const sev = Math.max(1, Math.min(10, Math.round(severity)));
+  const sites = footprint.hits.length;
+  return {
+    id: 'hazard',
+    name: `Hazard at ${footprint.center.lat.toFixed(1)}°, ${footprint.center.lng.toFixed(1)}°`,
+    desc: `Simulated severity-${sev} hazard within ${footprint.radiusKm} km of ${footprint.center.lat.toFixed(2)}°, ${footprint.center.lng.toFixed(2)}°, `
+      + `covering ${sites} modeled site${sites === 1 ? '' : 's'} and shocking ${stages.length} stage${stages.length === 1 ? '' : 's'} `
+      + `whose modeled-site exposure inside the radius exceeds ${Math.round(MIN_STAGE_EXPOSURE * 100)}%. `
+      + 'A screening hypothesis run through the same propagation engine as every recorded event — not a damage estimate.',
+    event: {
+      sev,
+      daysAgo: 0,
+      conf: 'Simulated',
+      stages,
+      countries: footprint.countries || [],
+      assumption: { direction: 'adverse', channel: 'both', operational: true },
+    },
+  };
 }
 
 /* One site's current operational reading: the strongest signed effect across

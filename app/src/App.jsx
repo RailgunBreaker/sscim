@@ -2,19 +2,17 @@ import { useState, useEffect, useMemo, useRef } from 'react';
 import { C } from './theme.js';
 import { t, setLangV } from './i18n/index.js';
 import { VaultProvider, useVault } from './data/VaultContext.jsx';
-import { buildModel } from './engine/buildModel.js';
+import { WatchlistProvider } from './interaction/WatchlistContext.jsx';
+import { buildModel, reviewDateISO } from './engine/buildModel.js';
 import { InteractionProvider, useInteraction } from './interaction/InteractionContext.jsx';
-import { frameFromTrace } from './interaction/playback.js';
 import { encodeInteractionState, decodeInteractionState, encodeNetworkState, decodeNetworkState } from './interaction/urlState.js';
-import { draftToScenario } from './interaction/scenarioDraft.js';
 import { deriveAnalysisGraph } from './engine/networkOps.js';
 import { findCentreRoutes } from './engine/networkPaths.js';
 
 import Header from './components/Header.jsx';
-import ScenarioBar from './components/ScenarioBar.jsx';
+import LiveBar from './components/LiveBar.jsx';
+import TimeMachine from './components/TimeMachine.jsx';
 import LensBar from './components/LensBar.jsx';
-import PlaybackBar from './components/PlaybackBar.jsx';
-import ScenarioComposer from './components/ScenarioComposer.jsx';
 import TabBar from './components/TabBar.jsx';
 import Pane from './components/Pane.jsx';
 import OsmMap from './components/OsmMap.jsx';
@@ -28,7 +26,6 @@ import { buildBaseGraph } from './engine/network.js';
 import Intel from './components/Intel.jsx';
 import Guide from './components/Guide.jsx';
 import Briefing from './components/Briefing.jsx';
-import ScenarioBuilder from './components/ScenarioBuilder.jsx';
 
 const GLOBAL_STYLE = `
   * { box-sizing: border-box; }
@@ -54,6 +51,11 @@ const GLOBAL_STYLE = `
   .sscim-tip.leaflet-popup .leaflet-popup-close-button { color: ${C.faint} !important; }
   .sscim-tip.leaflet-popup .leaflet-popup-close-button:hover { color: ${C.copper} !important; }
   .sscim-label { background: transparent !important; border: none !important; box-shadow: none !important; color: ${C.text}; font-family: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 11px; font-weight: 600; text-shadow: 0 0 4px #000; white-space: nowrap; }
+  /* Facility markers are divIcons carrying an SVG glyph (utils/facilityIcon.js).
+     Leaflet's default .leaflet-div-icon paints a white box behind them, which
+     would put a paper square under every one of the 244 plants. */
+  .sscim-site { background: transparent !important; border: none !important; }
+  .sscim-site-tracked svg { filter: drop-shadow(0 0 3px rgba(223,168,61,.95)); }
   /* Deliberately a LOW z-index — just enough to lift the glow above its
      own siblings (e.g. the map/flow grid cells) without it ever
      out-stacking the floating tour card (zIndex 1400) or any modal
@@ -120,31 +122,43 @@ function Dashboard() {
   const { data } = useVault();
   return (
     <InteractionProvider defaultSelected={{ type: 'event', id: data.EVENTS[0]?.id }}>
-      <DashboardBody />
+      <WatchlistProvider>
+        <DashboardBody />
+      </WatchlistProvider>
     </InteractionProvider>
   );
 }
 
 function DashboardBody() {
   const { data, engine, source } = useVault();
-  const { EVENTS, SCENARIOS, COMPANY_BY_ID } = data;
+  const { EVENTS, COMPANY_BY_ID } = data;
   const { STAGE_BY_ID, OUT, COMPANY_CRITICALITY, COMPANY_RANK } = engine;
 
-  const { state, setSel, clear, setScenarioActive, playback, setLens, setFocusedPath, draftSet, setViewMode, setMetric, setRoute, pgSet } = useInteraction();
+  const { state, setSel, clear, setScenarioActive, setLens, setFocusedPath, setViewMode, setMetric, setRoute, pgSet } = useInteraction();
   const sel = state.selected || { type: 'event', id: EVENTS[0]?.id };
 
-  const [scenarioId, setScenarioId] = useState("none");
   const [tab, setTab] = useState("flow");
   const [feedTab, setFeedTab] = useState("events");
   const [wide, setWide] = useState(true);
   const [showBriefing, setShowBriefing] = useState(false);
   const [showGuide, setShowGuide] = useState(false);
-  const [custom, setCustom] = useState(null);
-  const [showBuilder, setShowBuilder] = useState(false);
   const [lang, setLang] = useState("en");
   const [tourTarget, setTourTarget] = useState(null);
   const [guideKey, setGuideKey] = useState(0);
   setLangV(lang);
+
+  /* THE TWO WAYS THE VIEW LEAVES "LIVE", and they are different in kind.
+
+     asOfDaysAgo  history review — the chain as it actually stood on a past
+                  date. A fact about the record.
+     hazard       the one remaining hypothesis: a screening shock drawn on
+                  the map. Everything else that used to author what-ifs
+                  (preset scenarios, the draft composer, the builder modal,
+                  propagation playback) is gone. The dashboard is a live
+                  read of the vault; the only counterfactual it will state
+                  is a bounded one you place yourself. */
+  const [asOfDaysAgo, setAsOfDaysAgo] = useState(0);
+  const [hazard, setHazard] = useState(null);
 
   /* The header's "? Guide" button must always land back on the full
      step list — including while the guide is already open in its small
@@ -199,10 +213,17 @@ function DashboardBody() {
     return () => { cancelAnimationFrame(raf1); if (raf2) cancelAnimationFrame(raf2); };
   }, [tourTarget, wide]);
 
-  const scenario = scenarioId === "custom" ? custom : SCENARIOS.find((s) => s.id === scenarioId);
+  const scenario = hazard;
   const scenarioActive = Boolean(scenario?.event);
 
-  const model = useMemo(() => buildModel({ data, engine, scenario }), [scenarioId, custom]);
+  /* One model for the whole dashboard, derived from the reviewed date and
+     the hazard overlay together. Reviewing a past date with a hazard applied
+     answers "what would this have done, then" — and the baseline in that
+     case is the reviewed date, so the Δ stays meaningful. */
+  const model = useMemo(
+    () => buildModel({ data, engine, scenario, asOfDaysAgo }),
+    [data, engine, scenario, asOfDaysAgo],
+  );
 
   // Immutable frontend-derived multilayer graph (functional centres +
   // stage-mediated connections). Built once per vault; the topology view and
@@ -210,96 +231,43 @@ function DashboardBody() {
   const baseGraph = useMemo(() => buildBaseGraph({ data, engine }), [data, engine]);
   const viewMode = state.viewMode;
 
-  /* Hop-by-hop propagation trace for the active scenario shock — the
-     playback source of truth (see engine.eventTrace / playback.js). Its
-     final field is the scenario shock's own propagated field; the engine's
-     baseline/active fields are never touched, so enabling playback cannot
-     change any model result. Recomputed only when the scenario changes. */
-  const trace = useMemo(
-    () => (scenarioActive && scenario?.event ? engine.eventTrace(scenario.event) : null),
-    [scenarioId, custom] // eslint-disable-line react-hooks/exhaustive-deps
-  );
-  const frame = useMemo(
-    () => frameFromTrace(trace, state.playback.step, STAGE_BY_ID),
-    [trace, state.playback.step, STAGE_BY_ID]
-  );
-  // Overlay the map/graph with the playback frame only once the user has
-  // engaged playback (play or manual step); at rest the panels keep showing
-  // the normal lens so the scenario Δ heatmap stays available.
-  const playbackEngaged = Boolean(trace) && (state.playback.status === 'playing' || state.playback.status === 'paused');
-  const pb = playbackEngaged ? frame : null;
+  const displayModel = model;
 
-  /* Baseline / Scenario / Difference comparison (§12). An opt-in overlay on
-     the world map + industry graph only: 'lens' (default) follows the global
-     lens; 'baseline' shows the pre-scenario field; 'scenario' the active
-     field; 'difference' the signed Δ. Decoupled from the global lens so the
-     structural/share lenses stay usable. */
-  const [compare, setCompare] = useState('lens');
-  useEffect(() => { setCompare('lens'); }, [scenarioId, custom]);
-  const compareLens = compare === 'difference' ? 'delta' : (compare === 'baseline' || compare === 'scenario') ? 'operational' : undefined;
-  const displayModel = useMemo(
-    () => (compare === 'baseline' ? { ...model, activeField: model.baselineField, countriesActive: model.countriesBase } : model),
-    [model, compare]
-  );
-
-  const resetScenario = () => { setScenarioId("none"); setCustom(null); };
-  const playScenario = () => playback({ status: 'playing', step: 0 });
-
-  /* Build a scenario composed directly on the map/graph (§10): run it
-     through the same custom-scenario path every other scenario uses. If the
-     user asked to Play, the scenario-sync effect below starts playback once
-     the new trace exists. */
-  const playAfterBuildRef = useRef(false);
-  const buildFromDraft = (scenarioObj, { play } = {}) => {
-    playAfterBuildRef.current = Boolean(play);
-    setCustom(scenarioObj);
-    setScenarioId("custom");
-  };
+  const resetScenario = () => setHazard(null);
 
   // URL state (§12): a lens the URL asked for can only be applied AFTER the
-  // scenario-sync effect below has run (activating a scenario forces the Δ
-  // lens); this ref carries it across to that effect. urlRestoredRef gates
-  // the write-back effect so we never clobber the incoming hash before it is
+  // hazard-sync effect below has run (an active hazard forces the Δ lens);
+  // this ref carries it across to that effect. urlRestoredRef gates the
+  // write-back effect so we never clobber the incoming hash before it is
   // restored.
   const pendingLensRef = useRef(null);
   const urlRestoredRef = useRef(false);
 
-  /* Keep the interaction controller in sync with the active scenario:
-     activating a scenario flips the lens to Scenario Δ and opens the
-     synthetic { type:'scenario' } entity in Layer 3 (so the old event
-     explanation no longer masquerades as the scenario's — §9);
-     deactivating clears that synthetic selection if it is still showing.
-     Also (re)arms the playback clock to the new trace length at step 0 —
-     or starts it playing when a Build & Play was just requested. */
+  /* Keep the interaction controller in sync with the hazard overlay:
+     applying one flips the lens to Δ and opens the synthetic
+     { type:'scenario' } entity in Layer 3 (so the previously-pinned event's
+     explanation cannot masquerade as the hazard's); clearing it drops that
+     synthetic selection if it is still showing. */
   useEffect(() => {
     setScenarioActive(scenarioActive);
-    const startPlaying = playAfterBuildRef.current && (trace?.trace.length || 0) > 0;
-    playback({ length: trace?.trace.length || 0, step: 0, status: startPlaying ? 'playing' : 'idle' });
-    playAfterBuildRef.current = false;
     if (scenarioActive) setSel({ type: 'scenario', id: 'active' });
     else if (state.selected?.type === 'scenario') clear();
-    // Apply a lens the restored URL asked for, now that scenario activation
+    // Apply a lens the restored URL asked for, now that hazard activation
     // (which forces Δ) has been reconciled. setLens itself refuses an
-    // unavailable lens, so a stale delta with no scenario is a safe no-op.
+    // unavailable lens, so a stale delta with no hazard is a safe no-op.
     if (pendingLensRef.current) { setLens(pendingLensRef.current); pendingLensRef.current = null; }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [scenarioId, custom]);
+  }, [scenario]);
 
-  /* Restore shareable state from the URL hash once, on mount (§12). Order:
-     set the scenario first (so the sync effect above re-runs and reconciles
-     the lens), stash the requested lens for it to apply, then restore the
-     pinned entity, playback hop, and explained path. */
+  /* Restore shareable state from the URL hash once, on mount (§12).
+
+     A scenario id is no longer restored: the preset and custom scenarios it
+     referred to are gone, and a hazard is a transient screening overlay
+     rather than a view worth sharing. An old link carrying one simply opens
+     on the live view, which is the correct fallback — it never silently
+     shows a hypothesis the reader did not ask for. */
   useEffect(() => {
     const decoded = decodeInteractionState(window.location.hash);
-    if (decoded.scenarioId && decoded.scenarioId !== 'none') {
-      if (decoded.scenarioId === 'custom' && decoded.draft?.sources?.length) {
-        draftSet({ sources: decoded.draft.sources, severity: decoded.draft.severity, direction: decoded.draft.direction });
-        const built = draftToScenario(decoded.draft, { stageById: STAGE_BY_ID });
-        if (built) { setCustom(built); setScenarioId('custom'); }
-      } else if (SCENARIOS.some((s) => s.id === decoded.scenarioId)) {
-        setScenarioId(decoded.scenarioId);
-      }
-    }
     if (decoded.viewMode) setViewMode(decoded.viewMode);
     if (decoded.lens) pendingLensRef.current = decoded.lens;
     if (decoded.selected) setSel(decoded.selected);
@@ -307,7 +275,7 @@ function DashboardBody() {
       const paths = engine.topPaths(decoded.focusedPath.sourceId, decoded.focusedPath.targetId, { k: 1 });
       if (paths[0]) setFocusedPath({ sourceId: decoded.focusedPath.sourceId, targetId: decoded.focusedPath.targetId, path: paths[0] });
     }
-    if (decoded.playbackStep) setTimeout(() => playback({ step: decoded.playbackStep }), 0);
+    if (Number.isFinite(decoded.asOfDaysAgo)) setAsOfDaysAgo(Math.max(0, decoded.asOfDaysAgo));
 
     // Network-playground state (§33): metric, temporary removals, pinned route.
     const net = decodeNetworkState(window.location.hash);
@@ -332,8 +300,8 @@ function DashboardBody() {
   useEffect(() => {
     if (!urlRestoredRef.current) return;
     const core = encodeInteractionState({
-      lens: state.lens, viewMode: state.viewMode, selected: state.selected, scenarioId,
-      draft: state.draft, playbackStep: state.playback.step, focusedPath: state.focusedPath,
+      lens: state.lens, viewMode: state.viewMode, selected: state.selected,
+      focusedPath: state.focusedPath, asOfDaysAgo,
     });
     const sr = state.selectedRoute;
     const net = encodeNetworkState({
@@ -348,7 +316,7 @@ function DashboardBody() {
       window.history.replaceState(null, '', qs ? `#${qs}` : window.location.pathname + window.location.search);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.lens, state.viewMode, state.selected, scenarioId, custom, state.playback.step, state.focusedPath, state.draft, state.analysisMetric, state.playground.removedNodeIds, state.playground.removedEdgeIds, state.selectedRoute]);
+  }, [state.lens, state.viewMode, state.selected, asOfDaysAgo, state.focusedPath, state.analysisMetric, state.playground.removedNodeIds, state.playground.removedEdgeIds, state.selectedRoute]);
 
   const hl = useMemo(() => {
     const s = new Set(), c = new Set();
@@ -367,36 +335,47 @@ function DashboardBody() {
       c.add(co.country);
       Object.entries(COMPANY_CRITICALITY[sel.id].field).forEach(([sid, v]) => Math.abs(v) > 0.15 && s.add(sid));
     } else if (sel.type === "scenario" && scenario?.event) {
-      // Make the active scenario visually obvious on both maps by lighting
-      // its declared source stages/countries (§16 acceptance criterion).
+      // Make the applied hazard visually obvious on both maps by lighting the
+      // stages and countries it shocks (§16 acceptance criterion).
       (scenario.event.stages || []).forEach((x) => { s.add(x); (OUT[x] || []).forEach((d) => s.add(d)); });
       (scenario.event.countries || []).forEach((x) => c.add(x));
     }
     return { s, c };
-  }, [sel, scenarioId, custom]);
+  }, [sel, scenario]);
 
+  /* The one-line "what am I looking at" for the status bar. Three states, in
+     priority order: an applied hazard (a hypothesis), a reviewed past date (a
+     fact about the record), or live (the newest reviewed event). */
   const whatChanged = useMemo(() => {
-    if (model.scenarioActive) {
-      return `SCENARIO ACTIVE — ${scenario.name}: ${scenario.desc} Company/country/stage figures below are recomputed through the same engine and ranked by their marginal delta vs. baseline.`;
+    const events = model.reviewing ? engine.eventsAsOf(asOfDaysAgo) : EVENTS;
+    if (model.scenarioActive && scenario) {
+      return `HAZARD APPLIED — ${scenario.desc} Figures below are recomputed through the same engine and ranked by their marginal delta against ${model.reviewing ? reviewDateISO(engine, asOfDaysAgo) : 'the live reading'}.`;
     }
-    if (!EVENTS.length) return 'No reviewed events are available in the current vault.';
-    const newestAge = Math.min(...EVENTS.map((event) => Number(event.daysAgo ?? Infinity)));
-    const newest = EVENTS.filter((event) => Number(event.daysAgo ?? Infinity) === newestAge);
+    if (!events.length) {
+      return model.reviewing
+        ? `Nothing was inside the decay window on ${reviewDateISO(engine, asOfDaysAgo)} — the index sits at neutral for that date.`
+        : 'No reviewed events are available in the current vault.';
+    }
+    const newestAge = Math.min(...events.map((event) => Number(event.daysAgo ?? Infinity)));
+    const newest = events.filter((event) => Number(event.daysAgo ?? Infinity) === newestAge);
     const ranked = newest.map((event) => {
       const field = engine.eventField(event).field;
       const index = engine.toDisplayIndex(engine.operationalIndex(field));
       return { event, index };
     }).sort((a, b) => Math.abs(b.index - 5) - Math.abs(a.index - 5));
     const lead = ranked[0];
-    return `${lead.event.date} (${source === 'live' ? 'live vault' : 'snapshot'}) — ${lead.event.title} — own-field index ${lead.index.toFixed(2)}.`;
-  }, [model.scenarioActive, scenario, EVENTS, engine, source]);
+    const prefix = model.reviewing
+      ? `AS OF ${reviewDateISO(engine, asOfDaysAgo)} — newest then:`
+      : `${source === 'live' ? 'live vault' : 'snapshot'} —`;
+    return `${prefix} ${lead.event.title} (${lead.event.date}) — own-field index ${lead.index.toFixed(2)}.`;
+  }, [model.scenarioActive, model.reviewing, asOfDaysAgo, scenario, EVENTS, engine, source]);
 
   const panes = { map: t("Map"), flow: t("Flow"), intel: t("Intel") };
 
   // Layer-1 content follows the view mode (§9): world map, functional-centre
   // topology network, or both stacked.
-  const mapPane = <OsmMap model={displayModel} hl={hl} pb={pb} lensOverride={compareLens} />;
-  const networkPane = <><NetworkGraph baseGraph={baseGraph} pb={pb} /><NetworkRoutePanel baseGraph={baseGraph} /><NetworkAnalysisPanel baseGraph={baseGraph} /><NetworkComparePanel baseGraph={baseGraph} /></>;
+  const mapPane = <OsmMap model={displayModel} hl={hl} onApplyHazard={setHazard} />;
+  const networkPane = <><NetworkGraph baseGraph={baseGraph} /><NetworkRoutePanel baseGraph={baseGraph} /><NetworkAnalysisPanel baseGraph={baseGraph} /><NetworkComparePanel baseGraph={baseGraph} /></>;
   const layer1 = viewMode === 'topology' ? networkPane
     : viewMode === 'split' ? (<>{mapPane}{networkPane}</>)
       : mapPane;
@@ -410,21 +389,15 @@ function DashboardBody() {
 
       <Header
         lang={lang} setLang={setLang} setSel={setSel}
-        scenarioId={scenarioId} setScenarioId={setScenarioId} custom={custom}
-        setShowBuilder={setShowBuilder} setShowGuide={openGuide}
-        setShowBriefing={setShowBriefing}
+        setShowGuide={openGuide} setShowBriefing={setShowBriefing}
         tourTarget={tourTarget}
       />
 
-      <ScenarioBar model={model} whatChanged={whatChanged} compare={compare} setCompare={setCompare} scenarioActive={scenarioActive} />
+      <LiveBar model={model} whatChanged={whatChanged} hazard={scenario} onClearHazard={resetScenario} />
+      <TimeMachine asOfDaysAgo={asOfDaysAgo} setAsOfDaysAgo={setAsOfDaysAgo} setSel={setSel}
+        selectedId={sel.type === 'event' ? sel.id : null} />
       <LensBar scenarioName={scenario?.name} />
-      {(state.draft.builderMode || state.draft.sources.length > 0) && (
-        <ScenarioComposer onBuild={buildFromDraft} onReset={resetScenario} activeIsCustom={scenarioId === 'custom'} />
-      )}
-      {scenarioActive && <PlaybackBar frame={frame} scenarioName={scenario?.name} />}
       {viewMode !== 'geographic' && <NetworkToolbar />}
-
-      {showBuilder && <ScenarioBuilder onClose={() => setShowBuilder(false)} onRun={(sc) => { setCustom(sc); setScenarioId("custom"); setShowBuilder(false); }} />}
 
       {!wide && <TabBar panes={panes} tab={tab} setTab={setTab} />}
 
@@ -432,19 +405,19 @@ function DashboardBody() {
         <>
           <div style={{ display: "grid", gridTemplateColumns: viewMode === 'geographic' ? "1fr 1.9fr" : "1.9fr 1fr", gap: 1, background: C.line }}>
             <Pane id="pane-map" highlight={tourTarget === "pane-map"} title={layer1Title}>{layer1}</Pane>
-            <Pane id="pane-flow" highlight={tourTarget === "pane-flow"} title="LAYER 2 · INDUSTRY FLOW · TAP A STAGE FOR ITS SUBSECTION"><FlowGraph sel={sel} setSel={setSel} hl={hl} model={displayModel} scenarioActive={model.scenarioActive} pb={pb} lensOverride={compareLens} /></Pane>
+            <Pane id="pane-flow" highlight={tourTarget === "pane-flow"} title="LAYER 2 · INDUSTRY FLOW · TAP A STAGE FOR ITS SUBSECTION"><FlowGraph sel={sel} setSel={setSel} hl={hl} model={displayModel} scenarioActive={model.scenarioActive} /></Pane>
           </div>
           <div style={{ borderTop: `1px solid ${C.line}` }}>
             <Pane id="pane-intel" highlight={tourTarget === "pane-intel"} title="LAYER 3 · INTELLIGENCE PANEL">
-              <Intel sel={sel} setSel={setSel} model={model} scenario={scenario} onResetScenario={resetScenario} onPlayScenario={playScenario} scenarioActive={model.scenarioActive} feedTab={feedTab} setFeedTab={setFeedTab} baseGraph={baseGraph} horizontal />
+              <Intel sel={sel} setSel={setSel} model={model} scenario={scenario} onResetScenario={resetScenario} scenarioActive={model.scenarioActive} feedTab={feedTab} setFeedTab={setFeedTab} baseGraph={baseGraph} horizontal />
             </Pane>
           </div>
         </>
       ) : (
         <>
           {tab === "map" && <Pane id="pane-map" highlight={tourTarget === "pane-map"} title={layer1Title}>{layer1}</Pane>}
-          {tab === "flow" && <Pane id="pane-flow" highlight={tourTarget === "pane-flow"} title="LAYER 2 · INDUSTRY FLOW"><FlowGraph sel={sel} setSel={setSel} hl={hl} model={displayModel} scenarioActive={model.scenarioActive} pb={pb} lensOverride={compareLens} /></Pane>}
-          {tab === "intel" && <Pane id="pane-intel" highlight={tourTarget === "pane-intel"} title="LAYER 3 · INTELLIGENCE PANEL"><Intel sel={sel} setSel={setSel} model={model} scenario={scenario} onResetScenario={resetScenario} onPlayScenario={playScenario} scenarioActive={model.scenarioActive} feedTab={feedTab} setFeedTab={setFeedTab} baseGraph={baseGraph} /></Pane>}
+          {tab === "flow" && <Pane id="pane-flow" highlight={tourTarget === "pane-flow"} title="LAYER 2 · INDUSTRY FLOW"><FlowGraph sel={sel} setSel={setSel} hl={hl} model={displayModel} scenarioActive={model.scenarioActive} /></Pane>}
+          {tab === "intel" && <Pane id="pane-intel" highlight={tourTarget === "pane-intel"} title="LAYER 3 · INTELLIGENCE PANEL"><Intel sel={sel} setSel={setSel} model={model} scenario={scenario} onResetScenario={resetScenario} scenarioActive={model.scenarioActive} feedTab={feedTab} setFeedTab={setFeedTab} baseGraph={baseGraph} /></Pane>}
         </>
       )}
 

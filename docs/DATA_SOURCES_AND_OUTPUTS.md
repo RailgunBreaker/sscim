@@ -48,7 +48,9 @@ A country marker cannot answer the question an earthquake asks, because a hazard
 - **Stages below a 5% exposure threshold are listed as *touched*, not shocked.** A radius clipping one small plant at the edge of a cluster must not shock that plant's entire stage.
 - **Nothing here models damage.** The radius is a screening circle — the same judgement the USGS ingest filter makes upstream when it decides a quake is worth a human's attention. Shaking intensity, building standards and fab hardening are all outside the model.
 
-A hazard footprint hands its material stages to the same scenario composer every preset uses, so the resulting Δ is computed by the identical propagation engine. Severity stays the operator's input: the site layer says what is exposed, not how hard it was hit.
+A hazard footprint runs through the identical propagation engine every recorded event uses, so its Δ is comparable with the index it modifies. Severity stays the operator's input: the site layer says what is exposed, not how hard it was hit.
+
+**The hazard overlay is now the only hypothesis the dashboard states.** The preset scenario library, the draft composer, the scenario builder modal and the propagation playback controls have been removed. What replaced them is not another way to invent an event but the question the data can actually answer: *history review*, which re-derives the whole model — map, stage fields, country readings, index — as it stood on any past date, using the engine's own back-dating rule. A reviewed date is a real past state of the record; a hazard is a bounded screening hypothesis you place yourself. The interface keeps the three states (live, reviewed, hazard) visually distinct because the worst failure mode of a model like this is a reader quoting a hypothetical number as an observed one.
 
 ### Every site has a standardized profile
 

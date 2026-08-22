@@ -3,7 +3,7 @@ import { encodeInteractionState, decodeInteractionState, encodeNetworkState, dec
 
 describe('urlState encode/decode', () => {
   it('omits defaults and encodes only meaningful state', () => {
-    expect(encodeInteractionState({ lens: 'structural', scenarioId: 'none', playbackStep: 0 })).toBe('');
+    expect(encodeInteractionState({ lens: 'structural', asOfDaysAgo: 0 })).toBe('');
   });
 
   it('round-trips view mode and a functional-centre selection', () => {
@@ -13,24 +13,30 @@ describe('urlState encode/decode', () => {
     expect(decoded.selected).toEqual({ type: 'centre', id: 'tw::adv_fab' });
   });
 
-  it('round-trips a preset-scenario view', () => {
-    const s = { lens: 'delta', selected: { type: 'stage', id: 'litho' }, scenarioId: 'strait', playbackStep: 3, focusedPath: { sourceId: 'litho', targetId: 'fab' } };
+  it('round-trips a history-review view', () => {
+    const s = { lens: 'operational', selected: { type: 'stage', id: 'litho' }, asOfDaysAgo: 240, focusedPath: { sourceId: 'litho', targetId: 'fab' } };
     const decoded = decodeInteractionState(encodeInteractionState(s));
-    expect(decoded.lens).toBe('delta');
+    expect(decoded.lens).toBe('operational');
     expect(decoded.selected).toEqual({ type: 'stage', id: 'litho' });
-    expect(decoded.scenarioId).toBe('strait');
-    expect(decoded.playbackStep).toBe(3);
+    expect(decoded.asOfDaysAgo).toBe(240);
     expect(decoded.focusedPath).toEqual({ sourceId: 'litho', targetId: 'fab' });
   });
 
-  it('round-trips a custom scenario with its draft sources', () => {
-    const draft = { sources: [{ type: 'stage', id: 'fab' }, { type: 'country', id: 'tw' }], severity: 9, direction: 'mitigating' };
-    const encoded = encodeInteractionState({ scenarioId: 'custom', draft });
-    const decoded = decodeInteractionState(encoded);
-    expect(decoded.scenarioId).toBe('custom');
-    expect(decoded.draft.sources).toEqual(draft.sources);
-    expect(decoded.draft.severity).toBe(9);
-    expect(decoded.draft.direction).toBe('mitigating');
+  it('round-trips a pinned facility', () => {
+    const decoded = decodeInteractionState(encodeInteractionState({ selected: { type: 'facility', id: 'tsmc_fab18' } }));
+    expect(decoded.selected).toEqual({ type: 'facility', id: 'tsmc_fab18' });
+  });
+
+  /* Scenario authoring is gone, and a hazard is a transient screening
+     hypothesis. A stale link carrying the old keys must open on the LIVE
+     view — never silently restore a what-if that a reader would then quote
+     as an observation. */
+  it('ignores the retired scenario keys from an old link', () => {
+    const decoded = decodeInteractionState('#scn=custom&src=stage:fab&sev=9&dir=mitigating&step=3&lens=operational');
+    expect(decoded.scenarioId).toBeUndefined();
+    expect(decoded.draft).toBeUndefined();
+    expect(decoded.playbackStep).toBeUndefined();
+    expect(decoded.lens).toBe('operational'); // the rest of the link still works
   });
 
   it('tolerates a leading # or ? and ignores junk keys', () => {
@@ -39,16 +45,16 @@ describe('urlState encode/decode', () => {
     expect(decoded.selected).toEqual({ type: 'country', id: 'tw' });
   });
 
-  it('rejects invalid lens, entity type, direction, and severity', () => {
-    const decoded = decodeInteractionState('lens=bogus&sel=planet:mars&scn=custom&dir=chaos&sev=999');
+  it('rejects an invalid lens and entity type', () => {
+    const decoded = decodeInteractionState('lens=bogus&sel=planet:mars');
     expect(decoded.lens).toBeUndefined();
     expect(decoded.selected).toBeUndefined();
-    expect(decoded.draft.direction).toBe('adverse'); // fell back
-    expect(decoded.draft.severity).toBe(10); // clamped
   });
 
-  it('clamps a negative playback step out of the encoding', () => {
-    expect(encodeInteractionState({ playbackStep: -4 })).toBe('');
+  it('keeps a negative or fractional review offset out of the encoding', () => {
+    expect(encodeInteractionState({ asOfDaysAgo: -4 })).toBe('');
+    expect(encodeInteractionState({ asOfDaysAgo: 12.7 })).toBe('asof=12');
+    expect(decodeInteractionState('asof=-9').asOfDaysAgo).toBeUndefined();
   });
 });
 

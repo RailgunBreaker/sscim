@@ -10,21 +10,18 @@ import { buildTooltipEl, buildCountryPopupEl, buildFacilityPopupEl } from '../ut
 import { introForCountry, flagEmoji } from '../data/glossary.js';
 import { hazardFootprint, facilityImpact, siteWeight } from '../engine/facilities.js';
 import { facilityConnectivity } from '../engine/facilityNetwork.js';
+import { facilityIconHtml, facilityLegendItems, FACILITY_KIND_LABEL as KIND_LABEL } from '../utils/facilityIcon.js';
+import { useWatchlist } from '../interaction/WatchlistContext.jsx';
 import Legend from './Legend.jsx';
 import CountryList from './CountryList.jsx';
 import HazardPanel, { facilityImpactLine } from './HazardPanel.jsx';
 
-/* Below this zoom the site layer stays hidden: 126 plant markers at world
+/* Below this zoom the site layer stays hidden: 244 plant markers at world
    zoom is a smear, not information. The country markers ARE the world-zoom
    view; sites are what you get when you go looking at a region. A placed
    hazard overrides this — if you have drawn a radius, you want to see what
    is in it regardless of how far out you are. */
 const SITE_ZOOM = 4;
-
-const KIND_LABEL = {
-  fab: 'Wafer fab', assembly: 'Assembly & test', materials: 'Materials',
-  equipment: 'Equipment', rnd: 'R&D / design',
-};
 
 /* ================= OpenStreetMap layer =================
    Country markers are encoded by the ACTIVE LENS (structural / operational
@@ -55,17 +52,18 @@ function legendFor(lens, legend) {
   };
 }
 
-export default function OsmMap({ model, hl, pb, lensOverride }) {
+export default function OsmMap({ model, hl, lensOverride, onApplyHazard }) {
   const { data, engine } = useVault();
   const { COUNTRY_NAMES, COUNTRY_POS, COMPANIES, COMPANY_BY_ID, FACILITY_LAYER, FACILITY_NETWORK } = data;
   const { COUNTRY_LINKS, STAGE_BY_ID } = engine;
-  const { state, select, hover, clearHover, subscribeFlyTo, draftToggleSource } = useInteraction();
-  const { selected, scenarioActive, draft } = state;
+  const { state, select, hover, clearHover, subscribeFlyTo } = useInteraction();
+  const { selected, scenarioActive } = state;
+  const { items: watched, toggle: toggleWatch } = useWatchlist();
   // The comparison toggle (§12) can override the global lens for this panel.
   const lens = lensOverride ?? state.lens;
   const sel = selected || { type: null, id: null };
 
-  const divRef = useRef(null), mapRef = useRef(null), layerRef = useRef(null), pbLayerRef = useRef(null), draftLayerRef = useRef(null);
+  const divRef = useRef(null), mapRef = useRef(null), layerRef = useRef(null);
   const siteLayerRef = useRef(null), siteNetLayerRef = useRef(null), hazardLayerRef = useRef(null);
   const coreByCountry = useRef({});
   const [tileStatus, setTileStatus] = useState('loading');
@@ -91,13 +89,12 @@ export default function OsmMap({ model, hl, pb, lensOverride }) {
   const sitesVisible = sitesOn && (zoom >= SITE_ZOOM || Boolean(hazard));
 
   // Stable handler refs so the flyTo subscription and marker callbacks always
-  // see the latest select/hover/draft state without re-subscribing or forcing
-  // the heavy marker effect to rebuild on every draft change.
+  // see the latest select/hover/watchlist state without re-subscribing or
+  // forcing the heavy marker effect to rebuild on every change.
   const selectRef = useRef(select); selectRef.current = select;
   const hoverRef = useRef(hover); hoverRef.current = hover;
   const clearHoverRef = useRef(clearHover); clearHoverRef.current = clearHover;
-  const draftToggleRef = useRef(draftToggleSource); draftToggleRef.current = draftToggleSource;
-  const builderModeRef = useRef(draft.builderMode); builderModeRef.current = draft.builderMode;
+  const toggleWatchRef = useRef(toggleWatch); toggleWatchRef.current = toggleWatch;
 
   useEffect(() => {
     if (!divRef.current || mapRef.current) return;
@@ -121,12 +118,6 @@ export default function OsmMap({ model, hl, pb, lensOverride }) {
     setTimeout(() => { if (!loaded) setTileStatus('failed'); }, 6000);
     L.control.zoom({ position: 'bottomright' }).addTo(map);
     layerRef.current = L.layerGroup().addTo(map);
-    // Playback rings and draft-source rings each live on their OWN overlay
-    // group so a hop change or a draft edit updates only its small layer and
-    // never tears down the main marker/tooltip/popup/link group below (task
-    // §7: incremental Leaflet updates).
-    pbLayerRef.current = L.layerGroup().addTo(map);
-    draftLayerRef.current = L.layerGroup().addTo(map);
     // Added after the country group, so plant markers draw above it: once you
     // are zoomed in far enough to see sites, a click near a country centroid
     // means the plant, not the country.
@@ -262,13 +253,10 @@ export default function OsmMap({ model, hl, pb, lensOverride }) {
         onSelectCompany: (cid) => selectRef.current({ type: 'company', id: cid }),
       }), { className: 'sscim-tip', maxWidth: 280 });
 
-      // Shift-click (or Compose builder mode) marks the country as a scenario
-      // shock source (§10); a plain click inspects it and opens its popup.
-      const go = (ev) => {
-        if (ev?.originalEvent?.shiftKey || builderModeRef.current) {
-          draftToggleRef.current({ type: 'country', id });
-          return;
-        }
+      // A click inspects the country and opens its popup. (Shift-click used to
+      // mark a scenario shock source; scenario authoring is gone — the map is
+      // a live read, and hypotheses come from the hazard tool alone.)
+      const go = () => {
         selectRef.current({ type: 'country', id }, { fly: false });
         core.openPopup();
       };
@@ -295,23 +283,29 @@ export default function OsmMap({ model, hl, pb, lensOverride }) {
     if (!sitesVisible) return;
 
     const field = model.activeField || {};
+    const watchedSites = new Set(watched.filter((w) => w.type === 'facility').map((w) => w.id));
+
     FACILITY_LAYER.FACILITIES.forEach((f) => {
       const impact = facilityImpact(f, field);
       const live = siteWeight(f) > 0;
-      const col = !live ? C.faint
-        : impact > 0.02 ? C.red
-        : impact < -0.02 ? C.green
-        : C.copperDim;
       const inside = insideIds.has(f.id);
       const pinned = sel.type === 'facility' && sel.id === f.id;
-      const r = 2.6 + 0.85 * (f.scale ?? 1);
+      const tracked = watchedSites.has(f.id);
+      /* Size still carries significance, but gently: the ordinal is a
+         judgement, and a 5 that is three times the area of a 2 would read as
+         a measurement. Shape carries function, colour carries state — see
+         utils/facilityIcon.js for why those two were split apart. */
+      const size = 11 + 1.8 * (f.scale ?? 1);
 
-      const marker = L.circleMarker([f.lat, f.lng], {
-        radius: pinned ? r + 3 : r,
-        color: pinned ? C.text : inside ? C.amber : col,
-        weight: pinned ? 2.4 : inside ? 2 : 1,
-        fillColor: col,
-        fillOpacity: live ? 0.85 : 0,
+      const marker = L.marker([f.lat, f.lng], {
+        icon: L.divIcon({
+          className: tracked ? 'sscim-site sscim-site-tracked' : 'sscim-site',
+          html: facilityIconHtml({ kind: f.kind, impact, live, size, selected: pinned, inHazard: inside }),
+          iconSize: [size, size],
+          iconAnchor: [size / 2, size / 2],
+        }),
+        keyboard: false,
+        zIndexOffset: pinned ? 600 : inside ? 400 : tracked ? 200 : 0,
       }).addTo(g);
 
       const stageNames = (f.stages || []).map((sid) => STAGE_BY_ID[sid]?.name || sid);
@@ -321,8 +315,9 @@ export default function OsmMap({ model, hl, pb, lensOverride }) {
           { text: `${KIND_LABEL[f.kind] || f.kind} · ${COMPANY_BY_ID[f.company]?.name || f.company}`, color: C.copper, size: '10px' },
           { text: f.output || '', color: C.dim, size: '9.5px' },
           { text: stageNames.join(' · '), color: C.faint, size: '9px' },
-        ]),
-        { className: 'sscim-tip', direction: 'top', offset: [0, -r - 2] },
+          tracked ? { text: '★ on your watchlist', color: C.amber, size: '9px' } : null,
+        ].filter(Boolean)),
+        { className: 'sscim-tip', direction: 'top', offset: [0, -size / 2 - 2] },
       );
 
       const conn = facilityConnectivity(FACILITY_NETWORK, f.id);
@@ -339,9 +334,10 @@ export default function OsmMap({ model, hl, pb, lensOverride }) {
           conn.degree ? `${conn.degree} modeled site-to-site link${conn.degree === 1 ? '' : 's'}` : null,
         ].filter(Boolean),
         colors: C,
+        tracked,
         onSelectCompany: (cid) => selectRef.current({ type: 'company', id: cid }),
         onOpenProfile: (site) => selectRef.current({ type: 'facility', id: site.id }, { fly: false }),
-        onShock: (site) => (site.stages || []).forEach((sid) => draftToggleRef.current({ type: 'stage', id: sid })),
+        onToggleTrack: (site) => toggleWatchRef.current({ type: 'facility', id: site.id }),
       }), { className: 'sscim-tip', maxWidth: 300 });
 
       // Clicking a plant pins it everywhere, which is what opens its profile
@@ -351,7 +347,7 @@ export default function OsmMap({ model, hl, pb, lensOverride }) {
         marker.openPopup();
       });
     });
-  }, [sitesVisible, model.activeField, insideIds, sel.type, sel.id, FACILITY_LAYER, FACILITY_NETWORK, STAGE_BY_ID, COMPANY_BY_ID]);
+  }, [sitesVisible, model.activeField, insideIds, sel.type, sel.id, watched, FACILITY_LAYER, FACILITY_NETWORK, STAGE_BY_ID, COMPANY_BY_ID]);
 
   /* ---- site-to-site network --------------------------------------------
      Modeled links, not shipment routes (engine/facilityNetwork.js). Drawn on
@@ -424,42 +420,6 @@ export default function OsmMap({ model, hl, pb, lensOverride }) {
     }).addTo(g);
   }, [hazard, radiusKm]);
 
-  // Playback overlay — copper rings on the countries the shock has reached
-  // by the current hop, with a pulsing ring on those reached THIS hop. Keyed
-  // only on `pb`, so it never rebuilds the main markers/links above; the
-  // small overlay group is the only thing recreated per frame.
-  useEffect(() => {
-    const g = pbLayerRef.current;
-    if (!g) return;
-    g.clearLayers();
-    if (!pb) return;
-    pb.reachedCountries.forEach((cid) => {
-      const pos = COUNTRY_POS[cid];
-      if (!pos) return;
-      const isNew = pb.newCountries.has(cid);
-      L.circleMarker(pos, {
-        radius: isNew ? 20 : 14,
-        color: C.copper, weight: isNew ? 2.6 : 1.4, fill: false,
-        opacity: isNew ? 1 : 0.65, dashArray: isNew ? null : '2 5',
-        className: isNew ? 'pulse' : undefined,
-      }).addTo(g);
-    });
-  }, [pb, COUNTRY_POS]);
-
-  // Draft-scenario source rings — amber dashed rings on the countries marked
-  // as shock sources. Own overlay layer, keyed only on the draft sources, so
-  // editing a draft never rebuilds the main markers.
-  useEffect(() => {
-    const g = draftLayerRef.current;
-    if (!g) return;
-    g.clearLayers();
-    draft.sources.filter((s) => s.type === 'country').forEach((s) => {
-      const pos = COUNTRY_POS[s.id];
-      if (!pos) return;
-      L.circleMarker(pos, { radius: 17, color: C.amber, weight: 2, fill: false, dashArray: '4 3', opacity: 0.95 }).addTo(g);
-    });
-  }, [draft.sources, COUNTRY_POS]);
-
   const { legend } = mapEncoding({ lens, model, engine, data, selected: sel });
   const lg = legendFor(lens, legend);
 
@@ -513,9 +473,31 @@ export default function OsmMap({ model, hl, pb, lensOverride }) {
         )}
       </div>
       <Legend items={lg.items} note={lg.note} />
+
+      {/* Shape key. Drawn with the same generator as the markers, so the key
+          cannot drift from the map it explains. Only shown when sites are. */}
+      {sitesVisible && (
+        <div style={{ marginTop: 6 }}>
+          <div className="mono" style={{ fontSize: 8.5, letterSpacing: 1.2, color: C.faint, marginBottom: 3 }}>
+            PLANT SHAPE = FUNCTION IN THE CHAIN · COLOUR = LIVE EFFECT
+          </div>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, alignItems: 'center' }}>
+            {facilityLegendItems(12).map((it) => (
+              <span key={it.kind} className="mono" style={{ display: 'inline-flex', alignItems: 'center', gap: 4, fontSize: 9.5, color: C.dim }}>
+                <span aria-hidden style={{ display: 'inline-flex' }} dangerouslySetInnerHTML={{ __html: it.html }} />
+                {it.label}
+              </span>
+            ))}
+            <span className="mono" style={{ fontSize: 9, color: C.faint }}>
+              · hollow = no output to lose (under construction or idle) · amber ring = inside the hazard radius
+            </span>
+          </div>
+        </div>
+      )}
+
       {footprint && (
-        <HazardPanel footprint={footprint} radiusKm={radiusKm}
-          onRadiusChange={setRadiusKm} onClear={() => { setHazard(null); setHazardMode(false); }} />
+        <HazardPanel footprint={footprint} radiusKm={radiusKm} onApplyHazard={onApplyHazard}
+          onRadiusChange={setRadiusKm} onClear={() => { setHazard(null); setHazardMode(false); onApplyHazard?.(null); }} />
       )}
       <CountryList model={model} />
     </div>

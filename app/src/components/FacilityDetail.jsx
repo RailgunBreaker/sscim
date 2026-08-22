@@ -8,6 +8,7 @@ import { fmtSigned, pct } from '../interaction/lensEncoding.js';
 import { flagEmoji } from '../data/glossary.js';
 import Logo from './Logo.jsx';
 import Chip from './Chip.jsx';
+import TrackButton from './TrackButton.jsx';
 
 /* ====================================================================
    FacilityDetail — the profile panel for one plant.
@@ -79,7 +80,8 @@ export default function FacilityDetail({ facilityId, setSel, model }) {
     <div>
       <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, flexWrap: 'wrap' }}>
         <span aria-hidden style={{ fontSize: 15 }}>{flagEmoji(facility.country)}</span>
-        <h3 style={{ margin: 0, fontSize: 15, lineHeight: 1.3 }}>{facility.name}</h3>
+        <h3 style={{ margin: 0, fontSize: 15, lineHeight: 1.3, flex: 1 }}>{facility.name}</h3>
+        <TrackButton type="facility" id={facility.id} />
       </div>
       <div className="mono" style={{ fontSize: 9.5, letterSpacing: 1, color: C.copper, margin: '4px 0 8px' }}>
         {profile.headline.toUpperCase()}

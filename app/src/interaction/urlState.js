@@ -1,25 +1,28 @@
 /* ====================================================================
    interaction/urlState.js — serialize the shareable slice of interaction
    state into a compact URL hash and back (task §12), so a specific view
-   (lens, pinned entity, active scenario, playback hop, explained path) can
-   be linked and restored. Pure and dependency-free so it can be
-   unit-tested and reused without touching the DOM.
+   (lens, pinned entity, reviewed date, explained path) can be linked and
+   restored. Pure and dependency-free so it can be unit-tested and reused
+   without touching the DOM.
 
    Encoded keys (all optional; omitted when at their default):
      lens  = analytical lens (omitted when 'structural')
      sel   = "<type>:<id>" pinned entity
-     scn   = active scenario id (omitted when 'none')
-     src   = "<type>:<id>,…" custom-scenario draft sources (scn=custom only)
-     sev   = custom-scenario severity      (scn=custom only)
-     dir   = custom-scenario direction     (scn=custom only)
-     step  = playback hop index (omitted when 0)
+     asof  = history-review offset in days before the snapshot date
+             (omitted when 0, i.e. live)
      path  = "<sourceId>>" + "<targetId>"  explained route endpoints
+
+   NOT encoded, deliberately:
+     · the hazard overlay — a transient screening hypothesis, and a link
+       that silently opened on someone else's what-if would be read as an
+       observation. Scenario authoring is gone; nothing else creates one.
+     · the watchlist — a standing personal preference kept in localStorage,
+       never in a shareable URL (see WatchlistContext.jsx).
    ==================================================================== */
 
-import { LENSES, DRAFT_DIRECTIONS, VIEW_MODES } from './reducer.js';
+import { LENSES, VIEW_MODES } from './reducer.js';
 
-const SEL_TYPES = ['country', 'stage', 'company', 'event', 'scenario', 'centre'];
-const SRC_TYPES = ['stage', 'country'];
+const SEL_TYPES = ['country', 'stage', 'company', 'event', 'scenario', 'centre', 'facility'];
 
 function parseEntity(str, allowed) {
   if (!str) return null;
@@ -31,26 +34,14 @@ function parseEntity(str, allowed) {
   return { type, id };
 }
 
-export function encodeInteractionState({ lens, viewMode, selected, scenarioId, draft, playbackStep, focusedPath } = {}) {
+export function encodeInteractionState({ lens, viewMode, selected, asOfDaysAgo, focusedPath } = {}) {
   const p = new URLSearchParams();
 
   if (viewMode && viewMode !== 'geographic' && VIEW_MODES.includes(viewMode)) p.set('view', viewMode);
   if (lens && lens !== 'structural' && LENSES.includes(lens)) p.set('lens', lens);
   if (selected && SEL_TYPES.includes(selected.type) && selected.id) p.set('sel', `${selected.type}:${selected.id}`);
 
-  if (scenarioId && scenarioId !== 'none') {
-    p.set('scn', scenarioId);
-    if (scenarioId === 'custom' && draft) {
-      const src = (draft.sources || [])
-        .filter((s) => SRC_TYPES.includes(s.type) && s.id)
-        .map((s) => `${s.type}:${s.id}`);
-      if (src.length) p.set('src', src.join(','));
-      if (typeof draft.severity === 'number') p.set('sev', String(draft.severity));
-      if (draft.direction) p.set('dir', draft.direction);
-    }
-  }
-
-  if (playbackStep && playbackStep > 0) p.set('step', String(playbackStep));
+  if (Number.isFinite(asOfDaysAgo) && asOfDaysAgo > 0) p.set('asof', String(Math.floor(asOfDaysAgo)));
   if (focusedPath?.sourceId && focusedPath?.targetId) p.set('path', `${focusedPath.sourceId}>${focusedPath.targetId}`);
 
   return p.toString();
@@ -100,26 +91,8 @@ export function decodeInteractionState(str) {
   const sel = parseEntity(p.get('sel'), SEL_TYPES);
   if (sel) out.selected = sel;
 
-  const scn = p.get('scn');
-  if (scn) {
-    out.scenarioId = scn;
-    if (scn === 'custom') {
-      const sources = (p.get('src') || '')
-        .split(',')
-        .map((s) => parseEntity(s, SRC_TYPES))
-        .filter(Boolean);
-      const sevRaw = Number(p.get('sev'));
-      const dir = p.get('dir');
-      out.draft = {
-        sources,
-        severity: Number.isFinite(sevRaw) ? Math.max(1, Math.min(10, sevRaw)) : 6,
-        direction: DRAFT_DIRECTIONS.includes(dir) ? dir : 'adverse',
-      };
-    }
-  }
-
-  const stepRaw = Number(p.get('step'));
-  if (Number.isFinite(stepRaw) && stepRaw > 0) out.playbackStep = Math.floor(stepRaw);
+  const asofRaw = Number(p.get('asof'));
+  if (Number.isFinite(asofRaw) && asofRaw > 0) out.asOfDaysAgo = Math.floor(asofRaw);
 
   const path = p.get('path');
   if (path && path.includes('>')) {

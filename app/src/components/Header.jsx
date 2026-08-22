@@ -5,11 +5,10 @@ import SearchBox from './SearchBox.jsx';
 import Freshness from './Freshness.jsx';
 
 export default function Header({
-  lang, setLang, setSel, scenarioId, setScenarioId, custom,
-  setShowBuilder, setShowGuide, setShowBriefing, tourTarget,
+  lang, setLang, setSel, setShowGuide, setShowBriefing, tourTarget,
 }) {
   const { data } = useVault();
-  const { COMPANIES, SCENARIOS } = data;
+  const { COMPANIES } = data;
   return (
     <header style={{ borderBottom: `1px solid ${C.line}`, padding: "12px 16px", display: "flex", flexWrap: "wrap", gap: 10, alignItems: "center" }}>
       <div>
@@ -32,23 +31,10 @@ export default function Header({
           ))}
         </span>
         <SearchBox setSel={setSel} />
-        <span id="header-scenarios" className={tourTarget === "header-scenarios" ? "tour-target" : undefined} style={{ display: "flex", gap: 6, flexWrap: "wrap", borderRadius: 6 }}>
-          {SCENARIOS.map((sc) => (
-            <button key={sc.id} onClick={() => setScenarioId(sc.id)}
-              style={{ background: scenarioId === sc.id ? C.copper : "transparent", color: scenarioId === sc.id ? "#0C111C" : C.dim,
-                border: `1px solid ${scenarioId === sc.id ? C.copper : C.line}`, borderRadius: 4, padding: "5px 9px",
-                fontSize: 11.5, cursor: "pointer", fontFamily: "inherit", fontWeight: scenarioId === sc.id ? 700 : 400 }}>
-              {lang === "en" ? sc.name : t("scn_" + sc.id)}
-            </button>
-          ))}
-          <button onClick={() => (scenarioId === "custom" && custom ? setScenarioId("custom") : setShowBuilder(true))}
-            onDoubleClick={() => setShowBuilder(true)}
-            style={{ background: scenarioId === "custom" ? C.copper : "transparent", color: scenarioId === "custom" ? "#0C111C" : C.dim,
-              border: `1px dashed ${scenarioId === "custom" ? C.copper : C.copperDim}`, borderRadius: 4, padding: "5px 9px",
-              fontSize: 11.5, cursor: "pointer", fontFamily: "inherit", fontWeight: scenarioId === "custom" ? 700 : 400 }}>
-            {custom ? "✦ " + custom.name : t("✦ Build scenario")}
-          </button>
-        </span>
+        {/* The scenario picker and the "Build scenario" button used to sit
+            here. Both are gone: the dashboard reads live, reviews the past,
+            and states exactly one hypothesis — a hazard placed on the map,
+            which lives with the map rather than in the chrome. */}
         <button onClick={() => setShowGuide(true)}
           style={{ background: "transparent", color: C.dim, border: `1px solid ${C.line}`, borderRadius: 4, padding: "5px 9px", fontSize: 11.5, cursor: "pointer", fontFamily: "inherit" }}>
           {t("? Guide")}

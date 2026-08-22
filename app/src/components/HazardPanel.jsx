@@ -1,8 +1,8 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { C } from '../theme.js';
 import { useVault } from '../data/VaultContext.jsx';
 import { useInteraction } from '../interaction/InteractionContext.jsx';
-import { footprintToDraftSources, MIN_STAGE_EXPOSURE, siteWeight } from '../engine/facilities.js';
+import { footprintToDraftSources, footprintToHazardScenario, MIN_STAGE_EXPOSURE, siteWeight } from '../engine/facilities.js';
 import { linksSeveredBy } from '../engine/facilityNetwork.js';
 import { flagEmoji } from '../data/glossary.js';
 import { pct, fmtSigned } from '../interaction/lensEncoding.js';
@@ -29,11 +29,12 @@ import { pct, fmtSigned } from '../interaction/lensEncoding.js';
    edge of a cluster should not hit that plant's whole stage.
    ==================================================================== */
 
-export default function HazardPanel({ footprint, radiusKm, onRadiusChange, onClear }) {
+export default function HazardPanel({ footprint, radiusKm, onRadiusChange, onClear, onApplyHazard }) {
   const { data, engine } = useVault();
   const { COMPANY_BY_ID, COUNTRY_NAMES, FACILITY_LAYER, FACILITY_NETWORK } = data;
   const { STAGE_BY_ID } = engine;
-  const { draftSet, setSel } = useInteraction();
+  const { setSel } = useInteraction();
+  const [severity, setSeverity] = useState(6);
 
   const sources = useMemo(() => footprintToDraftSources(footprint), [footprint]);
   const hits = footprint?.hits || [];
@@ -59,9 +60,9 @@ export default function HazardPanel({ footprint, radiusKm, onRadiusChange, onCle
       .sort((a, b) => b.weight - a.weight);
   }, [severed, hits, FACILITY_LAYER]);
 
-  const sendToComposer = () => {
-    if (!sources.length) return;
-    draftSet({ sources, direction: 'adverse' });
+  const applyHazard = () => {
+    if (!sources.length || !onApplyHazard) return;
+    onApplyHazard(footprintToHazardScenario(footprint, { severity }));
   };
 
   const stageRow = (s, material) => (
@@ -177,18 +178,23 @@ export default function HazardPanel({ footprint, radiusKm, onRadiusChange, onCle
           )}
 
           {/* --- hand off to the engine --- */}
-          <div style={{ display: 'flex', gap: 6, alignItems: 'center', marginTop: 9, flexWrap: 'wrap' }}>
-            <button type="button" onClick={sendToComposer} disabled={!sources.length}
-              title={sources.length ? 'Load these stages into the scenario composer' : 'No stage is exposed enough to shock'}
+          <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginTop: 9, flexWrap: 'wrap' }}>
+            <label className="mono" style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 10, color: C.dim }}>
+              SEVERITY <b style={{ color: C.amber, fontSize: 12 }}>{severity}</b>
+              <input type="range" min="1" max="10" value={severity} onChange={(e) => setSeverity(Number(e.target.value))}
+                aria-label="Hazard severity" style={{ width: 90, accentColor: C.amber }} />
+            </label>
+            <button type="button" onClick={applyHazard} disabled={!sources.length || !onApplyHazard}
+              title={sources.length ? 'Run this hazard through the propagation engine and show its Δ on the index' : 'No stage is exposed enough to shock'}
               style={{ fontSize: 11, padding: '5px 12px', borderRadius: 4, fontFamily: 'inherit',
                 cursor: sources.length ? 'pointer' : 'not-allowed', fontWeight: 700,
                 background: sources.length ? C.amber : 'transparent', color: sources.length ? '#0C111C' : C.faint,
                 border: `1px solid ${sources.length ? C.amber : C.line}`, opacity: sources.length ? 1 : 0.5 }}>
-              Load {sources.length} stage{sources.length === 1 ? '' : 's'} into the composer
+              Apply hazard impact ({sources.length} stage{sources.length === 1 ? '' : 's'})
             </button>
-            <span className="mono" style={{ fontSize: 9, color: C.faint, flex: '1 1 220px', lineHeight: 1.6 }}>
-              Then set severity and press Preview Δ — the shock runs through the same propagation engine every preset uses.
-              Severity is yours to set: this panel says what is exposed, not how hard it was hit.
+            <span className="mono" style={{ fontSize: 9, color: C.faint, flex: '1 1 200px', lineHeight: 1.6 }}>
+              Runs through the same propagation engine as every recorded event. Severity is yours to set: this panel
+              says what is exposed, never how hard it was hit.
             </span>
           </div>
         </>
