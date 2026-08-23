@@ -51,6 +51,7 @@ import { fetchNewsCandidates } from '../src/ingest/webz-news.mjs';
 import { findDuplicate, storyKey, WINDOW_DAYS } from '../src/ingest/dedupe.js';
 import { aiAvailable, analyzeCandidate } from '../src/ai/analyze.mjs';
 import { claudeCodeAvailable, analyzeBatchWithClaudeCode } from '../src/ai/analyze-claude-code.mjs';
+import { triagePreview, applyTriage } from '../src/review-queue.js';
 
 const SERVER_DIR = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const REPO_DIR = resolve(SERVER_DIR, '..');
@@ -63,6 +64,7 @@ const opt = (name, fallback) => args.find((a) => a.startsWith(`--${name}=`))?.sp
 const DRY_RUN = flag('dry-run');
 const NO_AI = flag('no-ai');
 const AI_BACKEND = opt('ai', 'auto');   // auto | claude-code | api | none
+const NO_TRIAGE = flag('no-triage');
 
 /* The snapshot date is a CALENDAR date in the operator's timezone, not a UTC
    instant. toISOString() would give the UTC date, which is the previous day
@@ -196,6 +198,32 @@ async function main() {
       });
       saveDraft.run(proposal ? JSON.stringify(proposal) : null, model, notes ?? null, row.id);
       logVerdict(row.id, proposal);
+    }
+  }
+
+  /* ---- 2b. Automatic triage --------------------------------------------
+     Drafting says what each record is; triage acts on the clear-cut ones so
+     the queue a human opens holds only what is genuinely undecided. Without
+     this the reviewer still opens every record — most of them stock
+     commentary — to say "not an event" by hand, which is the cost the queue
+     was supposed to remove.
+
+     Auto-approval writes events unattended. That is bounded (High confidence,
+     no duplicate flag, drafted) and reversible (reviewed_by='auto-triage',
+     event_id recorded), and either half can be switched off with
+     SSCIM_TRIAGE_AUTO_APPROVE=off / SSCIM_TRIAGE_AUTO_REJECT=off. See
+     src/triage.js. --no-triage skips the step entirely for one run. */
+  if (NO_TRIAGE) {
+    log('  triage skipped (--no-triage)');
+  } else {
+    const plan = triagePreview();
+    if (!plan.counts.autoApprove && !plan.counts.autoReject) {
+      log(`  triage: nothing automatic to do (${plan.counts.review} for review)`);
+    } else {
+      log(`  triage: ${plan.counts.autoReject} auto-reject, ${plan.counts.autoApprove} auto-approve, ${plan.counts.review} left for review`);
+      const applied = applyTriage();
+      log(`    rejected ${applied.rejected.succeeded}/${applied.rejected.attempted}, approved ${applied.approved.succeeded}/${applied.approved.attempted}, ${applied.remaining} pending`);
+      for (const f of [...applied.rejected.failed, ...applied.approved.failed]) log(`    FAILED ${f.id}: ${f.error}`);
     }
   }
 

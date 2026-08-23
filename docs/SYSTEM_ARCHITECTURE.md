@@ -15,7 +15,10 @@ The consequence worth internalising: **if the writer machine is off, the site ke
           candidate queue  ──►  AI draft (proposal only)
                     │
                     ▼
-             human review  ─── approve / reject
+                 triage  ─── auto-reject noise / auto-approve the confident
+                    │
+                    ▼
+             human review  ─── approve / reject what is left
                     │
                     ▼
      SQLite vault (server/data/sscim.db)   ◄── the single source of truth

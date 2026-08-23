@@ -105,68 +105,122 @@ function extractJson(text) {
   try { return JSON.parse(body.slice(start, end + 1)); } catch { return null; }
 }
 
-/* Analyzes every candidate in ONE invocation.
-   Returns Map<candidateId, {proposal, model, notes}>. Never throws — a failed
-   analysis must degrade to "queued undrafted for manual review". */
-export async function analyzeBatchWithClaudeCode(candidates, { timeoutMs = 15 * 60 * 1000 } = {}) {
-  const results = new Map();
+/* One invocation of the binary. Returns the parsed envelope, or throws an
+   Error whose message is SHORT and about the failure.
+
+   THE PROMPT GOES ON STDIN, NOT IN ARGV. It used to be an `-p <prompt>`
+   argument, which had two consequences. The soft one: Windows caps a command
+   line at 32767 characters, so a large enough batch would fail to spawn at
+   all. The loud one: execFileSync builds err.message by concatenating the
+   whole command line, so a failed run stored a 17KB "Claude Code analysis
+   failed: Command failed: ...claude.exe -p <the entire prompt>" string as the
+   candidate's ai_notes — every pending record in the review UI rendered as a
+   wall of the prompt that was supposed to analyze it, with the actual reason
+   for the failure truncated off the end. */
+function invoke(prompt, timeoutMs) {
   const bin = findClaudeBinary();
-  if (!bin || !candidates.length) return results;
-
-  const payload = candidates.map((c) => ({
-    candidateId: c.id, feed: c.sourceFeed, date: c.dateISO, record: c.raw,
-  }));
-
-  let envelope;
+  let stdout;
   try {
-    const stdout = execFileSync(bin, [
-      '-p', buildPrompt(payload, vaultIds()),
+    stdout = execFileSync(bin, [
+      '-p',
       '--output-format', 'json',
       // Only web tools. No Read/Write/Bash/Edit — the agent cannot reach the
       // database, the repo, or git.
       '--allowed-tools', 'WebFetch', 'WebSearch',
     ], {
+      input: prompt,
       encoding: 'utf8',
       timeout: timeoutMs,
       maxBuffer: 32 * 1024 * 1024,
       // Run outside the repo so no stray file can be picked up as context.
       cwd: tmpdir(),
-      stdio: ['ignore', 'pipe', 'pipe'],
+      stdio: ['pipe', 'pipe', 'pipe'],
     });
-    envelope = JSON.parse(stdout);
   } catch (err) {
-    const why = err.stdout ? `${err.message} :: ${String(err.stdout).slice(0, 300)}` : err.message;
-    for (const c of candidates) {
-      results.set(c.id, { proposal: null, model: 'claude-code', notes: `Claude Code analysis failed: ${why}` });
-    }
-    return results;
+    /* Deliberately NOT err.message — that is the "Command failed: <argv>"
+       string. The reason lives in the envelope on stdout, or in stderr when
+       the binary died before emitting one. */
+    const envelope = safeParse(err.stdout);
+    const reason = envelope?.result || String(err.stderr || '').trim()
+      || (err.signal === 'SIGTERM' ? `timed out after ${Math.round(timeoutMs / 1000)}s` : `exited with code ${err.status}`);
+    throw new Error(clip(reason));
   }
 
-  if (envelope.is_error) {
-    for (const c of candidates) {
-      results.set(c.id, { proposal: null, model: 'claude-code', notes: `Claude Code returned an error: ${String(envelope.result).slice(0, 300)}` });
-    }
-    return results;
-  }
+  const envelope = safeParse(stdout);
+  if (!envelope) throw new Error(clip(`unparseable output: ${String(stdout).slice(0, 200)}`));
+  if (envelope.is_error) throw new Error(clip(String(envelope.result ?? 'the binary reported is_error with no result')));
+  return envelope;
+}
 
-  const parsed = extractJson(envelope.result);
-  const list = Array.isArray(parsed) ? parsed : parsed ? [parsed] : [];
-  const byId = new Map(list.filter((p) => p?.candidateId).map((p) => [p.candidateId, p]));
+function safeParse(text) {
+  try { return JSON.parse(text); } catch { return null; }
+}
 
-  const model = envelope.modelUsage ? Object.keys(envelope.modelUsage)[0] : 'claude-code';
-  const costNote = envelope.total_cost_usd != null ? ` (batch cost ~$${Number(envelope.total_cost_usd).toFixed(3)})` : '';
+/* ai_notes is rendered verbatim in the review UI, so it has to stay a
+   sentence, not a transcript. */
+function clip(text, max = 300) {
+  const one = String(text).replace(/\s+/g, ' ').trim();
+  return one.length > max ? `${one.slice(0, max)}...` : one;
+}
 
-  for (const c of candidates) {
-    const p = byId.get(c.id);
-    if (!p) {
-      results.set(c.id, { proposal: null, model, notes: `No proposal returned for this record${costNote}.` });
+/* Analyzes candidates in batches.
+   Returns Map<candidateId, {proposal, model, notes}>. Never throws — a failed
+   analysis must degrade to "queued undrafted for manual review".
+
+   WHY BATCHES AND NOT ONE CALL. Each invocation carries Claude Code's full
+   system context (~$0.07 even for a trivial prompt), so one call per candidate
+   is the wrong shape. But one call for ALL of them is all-or-nothing: a single
+   failure — a timeout, a transient error — left every pending candidate
+   undrafted, which is exactly what happened. Chunking costs one system context
+   per chunk and buys partial progress: a chunk that fails takes only its own
+   records down with it, and the rest still get drafted. */
+export async function analyzeBatchWithClaudeCode(candidates, {
+  timeoutMs = 15 * 60 * 1000,
+  chunkSize = Number(process.env.SSCIM_AI_CHUNK) || 8,
+  onProgress = () => {},
+} = {}) {
+  const results = new Map();
+  if (!claudeCodeAvailable() || !candidates.length) return results;
+
+  const ids = vaultIds();
+  const chunks = [];
+  for (let i = 0; i < candidates.length; i += chunkSize) chunks.push(candidates.slice(i, i + chunkSize));
+
+  for (const [index, chunk] of chunks.entries()) {
+    const payload = chunk.map((c) => ({
+      candidateId: c.id, feed: c.sourceFeed, date: c.dateISO, record: c.raw,
+    }));
+
+    let envelope;
+    try {
+      envelope = invoke(buildPrompt(payload, ids), timeoutMs);
+    } catch (err) {
+      onProgress({ chunk: index + 1, of: chunks.length, ok: false, error: err.message });
+      for (const c of chunk) {
+        results.set(c.id, { proposal: null, model: 'claude-code', notes: `Claude Code analysis failed: ${err.message}` });
+      }
       continue;
     }
-    results.set(c.id, {
-      proposal: p,
-      model,
-      notes: p.relevant ? p.uncertainty : `Judged not relevant: ${p.irrelevantReason}`,
+
+    const parsed = extractJson(envelope.result);
+    const list = Array.isArray(parsed) ? parsed : parsed ? [parsed] : [];
+    const byId = new Map(list.filter((p) => p?.candidateId).map((p) => [p.candidateId, p]));
+
+    const model = envelope.modelUsage ? Object.keys(envelope.modelUsage)[0] : 'claude-code';
+    const costNote = envelope.total_cost_usd != null ? ` (batch cost ~$${Number(envelope.total_cost_usd).toFixed(3)})` : '';
+    const chunkResults = chunk.map((c) => {
+      const p = byId.get(c.id);
+      return p
+        ? { id: c.id, proposal: p, model, notes: p.relevant ? p.uncertainty : `Judged not relevant: ${p.irrelevantReason}` }
+        : { id: c.id, proposal: null, model, notes: `No proposal returned for this record${costNote}.` };
     });
+    for (const r of chunkResults) results.set(r.id, { proposal: r.proposal, model: r.model, notes: r.notes });
+
+    /* Results are handed over per chunk, not just returned at the end. A caller
+       that persists them here keeps the work a completed chunk already paid
+       for; without it, chunking still loses everything if the run is
+       interrupted on the last one, which defeats the point of chunking. */
+    onProgress({ chunk: index + 1, of: chunks.length, ok: true, drafted: byId.size, of_chunk: chunk.length, cost: envelope.total_cost_usd, results: chunkResults });
   }
   return results;
 }

@@ -173,6 +173,31 @@ CREATE UNIQUE INDEX IF NOT EXISTS idx_event_candidates_source
 CREATE INDEX IF NOT EXISTS idx_event_candidates_dedupe
   ON event_candidates (date_iso);
 
+-- Administrative overrides on the event table.
+--
+-- WHY THIS EXISTS. Most events in the vault are code-defined: they live in
+-- history-events.js, decade-events.js or seed-data.js, and scripts/
+-- sync-events.mjs upserts every one of them on every pipeline run. So an
+-- admin who deleted a bad event straight out of the events table would watch
+-- it come back the next morning, and an edited severity would silently revert
+-- value in the source file. Nothing would report the loss.
+--
+-- This table is the record of what a human decided about an event, kept
+-- separately from where the event was defined. sync-events.mjs consults it:
+-- a tombstoned id is never re-inserted, and a patched one is re-patched after
+-- the upsert. The source files stay the definition; this stays the decision.
+--
+-- Deleting a row here restores the event to whatever the code says (or, for
+-- an event that only ever existed in the vault, to gone).
+CREATE TABLE IF NOT EXISTS event_overrides (
+  event_id   TEXT PRIMARY KEY,
+  deleted    INTEGER NOT NULL DEFAULT 0,   -- 1 = tombstoned, never re-synced
+  patch_json TEXT,                         -- edited columns only, null when none
+  reason     TEXT,                         -- why a human did this
+  actor      TEXT,
+  updated_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
 -- Market quotes (price + P/E), refreshed by scripts/fetch-quotes.mjs from
 -- the curated ticker map (src/tickers.js). Display metadata only — never an
 -- input to the risk engine. Companies without a public listing have no row.
@@ -209,6 +234,13 @@ CREATE TABLE IF NOT EXISTS briefings (
 for (const [table, column, ddl] of [
   ['event_candidates', 'dedupe_key', "ALTER TABLE event_candidates ADD COLUMN dedupe_key TEXT"],
   ['event_candidates', 'duplicate_of', "ALTER TABLE event_candidates ADD COLUMN duplicate_of TEXT"],
+  /* The event an approval created. Approve is not a status flip — it inserts a
+     row into `events` and derives that row's id — and nothing recorded the
+     link back, so undoing an approval meant guessing which event came from
+     which candidate by string-matching the source field. With automatic
+     triage approving records unattended, that link has to be exact: it is what
+     makes an auto-approval reversible. */
+  ['event_candidates', 'event_id', 'ALTER TABLE event_candidates ADD COLUMN event_id TEXT'],
   /* events.date_iso is the authoritative date every age derives from. Without
      it, `days_ago` was the only date the table stored for events added through
      the review queue, so advancing the snapshot date could not re-age them:

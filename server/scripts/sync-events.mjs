@@ -51,6 +51,28 @@ if (unclassified.length) {
   process.exit(1);
 }
 
+/* Administrative overrides (event_overrides, written by the admin events
+   screen) outrank the code definition here.
+
+   Without this step the screen would be a lie. Every id below is upserted on
+   every run, so an admin who deleted a duplicate earthquake record would see
+   it reappear the next morning, and an edited severity would revert to the
+   number in the source file — silently, with the index moving back and
+   nothing reporting why. A tombstoned id is skipped entirely; a patched one
+   is re-patched after the upsert has overwritten it. */
+const OVERRIDES = new Map(db.prepare('SELECT event_id, deleted, patch_json FROM event_overrides').all()
+  .map((o) => [o.event_id, { deleted: Boolean(o.deleted), patch: o.patch_json ? JSON.parse(o.patch_json) : null }]));
+
+const PATCH_COLUMN = {
+  title: 'title', summary: 'summary', sev: 'sev', type: 'type', conf: 'conf',
+  first: 'first', second: 'second', watch: 'watch', detail: 'detail', source: 'source',
+  dateISO: 'date_iso', stages: 'stages_json', countries: 'countries_json',
+};
+
+const tombstoned = ALL.filter((e) => OVERRIDES.get(e.id)?.deleted);
+const patched = ALL.filter((e) => OVERRIDES.get(e.id)?.patch);
+const SYNCABLE = ALL.filter((e) => !OVERRIDES.get(e.id)?.deleted);
+
 const upsert = db.prepare(`INSERT INTO events (id, date, date_iso, days_ago, sev, type, conf, title, summary, first, second, watch, detail, source, stages_json, countries_json, timeline_json)
   VALUES (@id, @date, @date_iso, @days_ago, @sev, @type, @conf, @title, @summary, @first, @second, @watch, @detail, @source, @stages_json, @countries_json, @timeline_json)
   ON CONFLICT(id) DO UPDATE SET
@@ -60,7 +82,7 @@ const upsert = db.prepare(`INSERT INTO events (id, date, date_iso, days_ago, sev
     countries_json=excluded.countries_json, timeline_json=excluded.timeline_json, updated_at=datetime('now')`);
 
 db.transaction(() => {
-  for (const e of ALL) {
+  for (const e of SYNCABLE) {
     upsert.run({
       id: e.id, date: e.date, date_iso: e.dateISO, days_ago: daysAgoOf(e.dateISO, DATASET_AS_OF), sev: e.sev, type: e.type, conf: e.conf,
       title: e.title, summary: e.summary ?? null, first: e.first ?? null, second: e.second ?? null, watch: e.watch ?? null,
@@ -69,6 +91,29 @@ db.transaction(() => {
       timeline_json: JSON.stringify(e.timeline ?? []),
     });
   }
+})();
+
+/* Re-apply administrative edits the upsert above just overwrote. Only the
+   columns a human actually changed are written back, so an edited severity
+   survives while every other field still tracks the source file. */
+const repatched = db.transaction(() => {
+  let changed = 0;
+  for (const e of patched) {
+    const { patch } = OVERRIDES.get(e.id);
+    const sets = [];
+    const values = [];
+    for (const [key, value] of Object.entries(patch)) {
+      const column = PATCH_COLUMN[key];
+      if (!column) continue;
+      sets.push(`${column} = ?`);
+      values.push(key === 'stages' || key === 'countries' ? JSON.stringify(value) : value);
+    }
+    if (!sets.length) continue;
+    if (patch.dateISO) { sets.push('days_ago = ?'); values.push(daysAgoOf(patch.dateISO, DATASET_AS_OF)); }
+    db.prepare(`UPDATE events SET ${sets.join(', ')}, updated_at = datetime('now') WHERE id = ?`).run(...values, e.id);
+    changed++;
+  }
+  return changed;
 })();
 
 /* Re-age EVERY row that has an authoritative date, not just the code-defined
@@ -92,6 +137,8 @@ const undated = db.prepare('SELECT COUNT(*) c FROM events WHERE date_iso IS NULL
 db.pragma('wal_checkpoint(TRUNCATE)');
 const total = db.prepare('SELECT COUNT(*) c FROM events').get().c;
 const newest = db.prepare('SELECT id, date, days_ago FROM events ORDER BY days_ago ASC LIMIT 1').get();
-console.log(`Synced ${ALL.length} code-defined events (${SEED_EVENTS.length} sample + ${HISTORY_EVENTS.length} historical + ${DECADE_EVENTS.length} decade backfill); vault holds ${total}.`);
+console.log(`Synced ${SYNCABLE.length} code-defined events (${SEED_EVENTS.length} sample + ${HISTORY_EVENTS.length} historical + ${DECADE_EVENTS.length} decade backfill); vault holds ${total}.`);
+if (tombstoned.length) console.log(`  ${tombstoned.length} code-defined event(s) held back by an admin deletion: ${tombstoned.map((e) => e.id).join(', ')}`);
+if (repatched) console.log(`  ${repatched} event(s) re-patched from admin edits after the upsert.`);
 console.log(`Ages re-derived against DATASET_AS_OF=${DATASET_AS_OF} for every dated row (${reaged} age${reaged === 1 ? '' : 's'} changed). Newest: ${newest.id} (${newest.date}, ${newest.days_ago}d ago).`);
 if (undated) console.warn(`WARNING: ${undated} event(s) have no date_iso and cannot be re-aged — they will not decay as the snapshot date advances.`);

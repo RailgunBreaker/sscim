@@ -3,7 +3,9 @@ import { db } from '../db.js';
 import { adminAuth } from '../middleware/adminAuth.js';
 import { getSnapshotDate } from '../meta.js';
 import { daysAgoOf } from '../history-events.js';
-import { candidates, pendingCandidates, candidateById, approveCandidate, rejectCandidate, publishPendingReviews, unpublishedReviews, dashboardSummary, scheduleAutoPublish, autoPublishStatus, cancelAutoPublish } from '../review-queue.js';
+import { candidates, pendingCandidates, candidateById, approveCandidate, rejectCandidate, publishPendingReviews, unpublishedReviews, dashboardSummary, scheduleAutoPublish, autoPublishStatus, cancelAutoPublish, triagePreview, applyTriage, bulkDecide, autoTriaged, untriage, publishVaultChanges } from '../review-queue.js';
+import { listEvents, updateEvent, deleteEvent, restoreEvent, allOverrides } from '../event-admin.js';
+import { eventImpacts, removalPreview } from '../event-impact.js';
 
 export const adminRouter = Router();
 adminRouter.use(adminAuth);
@@ -46,6 +48,44 @@ adminRouter.post('/review/candidates/:id/reject', (req, res) => {
   try {
     const reviewedBy = req.get('x-reviewer') || 'admin-ui';
     decided(res, rejectCandidate(req.params.id, req.body?.reason, reviewedBy), 200);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+/* ---- bulk review ----------------------------------------------------------
+   GET  /review/triage   what triage would do — no writes, safe to poll
+   POST /review/triage   apply the two automatic verdicts
+   POST /review/bulk     decide an explicit list the reviewer selected
+   GET  /review/auto     what triage decided unattended (the audit trail)
+   POST /review/auto/:id/undo  reverse one auto-approval
+   ------------------------------------------------------------------------- */
+adminRouter.get('/review/triage', (req, res) => res.json(triagePreview()));
+
+adminRouter.post('/review/triage', (req, res) => {
+  try {
+    res.json(applyTriage({ reviewer: req.get('x-reviewer') === 'admin-ui' ? undefined : req.get('x-reviewer') }));
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+adminRouter.post('/review/bulk', (req, res) => {
+  try {
+    const { ids, action, reason } = req.body || {};
+    const result = bulkDecide({ ids, action, reason, reviewer: req.get('x-reviewer') || 'admin-ui' });
+    const pending = pendingCandidates().length;
+    res.json({ ...result, pending, unpublished: unpublishedReviews().length, autoPublish: scheduleAutoPublish({ queueEmpty: pending === 0 }) });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+adminRouter.get('/review/auto', (req, res) => res.json({ decisions: autoTriaged(Number(req.query.limit) || 200) }));
+
+adminRouter.post('/review/auto/:id/undo', (req, res) => {
+  try {
+    res.json(untriage(req.params.id));
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -128,6 +168,60 @@ adminRouter.delete('/owners/:companyId/:ownerName', (req, res) => {
   res.status(204).end();
 });
 
+/* ---- event administration (the historical record) -------------------------
+   GET    /events/admin           every event + origin + what removing it does
+   GET    /events/impact          impacts alone (no rows), for a refresh
+   POST   /events/removal-preview { ids } — combined effect of removing a set
+   PUT    /events/:id             edit, recorded as an override so it survives sync
+   DELETE /events/:id             delete, tombstoned for the same reason
+   POST   /events/:id/restore     drop the override
+   GET    /events/overrides       every administrative change on record
+   POST   /events/publish         rebuild snapshot, audit, commit, push
+   ------------------------------------------------------------------------- */
+adminRouter.get('/events/admin', (req, res) => {
+  try {
+    res.json(listEvents({ includeImpact: req.query.impact !== 'false' }));
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+adminRouter.get('/events/impact', (req, res) => {
+  try {
+    res.json(eventImpacts());
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+/* The combined delta is NOT the sum of the individual ones — overlapping
+   events saturate through the noisy-OR — so removing a duplicate cluster has
+   to be previewed as a set. */
+adminRouter.post('/events/removal-preview', (req, res) => {
+  const { ids } = req.body || {};
+  if (!Array.isArray(ids) || !ids.length) return res.status(400).json({ error: 'ids (non-empty array) is required' });
+  try {
+    res.json(removalPreview(ids));
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+adminRouter.get('/events/overrides', (req, res) => res.json({ overrides: allOverrides() }));
+
+adminRouter.post('/events/:id/restore', (req, res) => {
+  try {
+    res.json(restoreEvent(req.params.id));
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+adminRouter.post('/events/publish', (req, res) => {
+  const result = publishVaultChanges({ message: req.body?.message, reviewer: req.get('x-reviewer') || 'admin-ui' });
+  res.status(result.published ? 200 : 202).json(result);
+});
+
 /* ---- events (the live intelligence feed) ---- */
 /* dateISO is what makes an event re-ageable when the snapshot date advances
    (see db.js events.date_iso). Accept it, and derive days_ago from it when
@@ -148,27 +242,34 @@ adminRouter.post('/events', (req, res) => {
   res.status(201).json(e);
 });
 
+/* Edits go through event-admin.js rather than straight to SQL so the change
+   is recorded in event_overrides. Without that record, scripts/sync-events.mjs
+   upserts the code definition back over the top on the next pipeline run and
+   the edit silently reverts. */
 adminRouter.put('/events/:id', (req, res) => {
-  const { id } = req.params;
-  const e = req.body || {};
-  const existing = db.prepare('SELECT id FROM events WHERE id = ?').get(id);
-  if (!existing) return res.status(404).json({ error: 'Event not found' });
-  if (e.dateISO && !/^\d{4}-\d{2}-\d{2}$/.test(e.dateISO)) return res.status(400).json({ error: 'dateISO must be YYYY-MM-DD' });
-  db.prepare(`UPDATE events SET date=COALESCE(?,date), date_iso=COALESCE(?,date_iso), days_ago=COALESCE(?,days_ago), sev=COALESCE(?,sev), type=COALESCE(?,type),
-    conf=COALESCE(?,conf), title=COALESCE(?,title), summary=COALESCE(?,summary), first=COALESCE(?,first), second=COALESCE(?,second),
-    watch=COALESCE(?,watch), detail=COALESCE(?,detail), source=COALESCE(?,source),
-    stages_json=COALESCE(?,stages_json), countries_json=COALESCE(?,countries_json), timeline_json=COALESCE(?,timeline_json),
-    updated_at=datetime('now') WHERE id=?`)
-    .run(e.date ?? null, e.dateISO ?? null, e.dateISO ? daysAgoOf(e.dateISO, getSnapshotDate()) : (e.daysAgo ?? null), e.sev ?? null, e.type ?? null, e.conf ?? null, e.title ?? null, e.summary ?? null,
-      e.first ?? null, e.second ?? null, e.watch ?? null, e.detail ?? null, e.source ?? null,
-      e.stages ? JSON.stringify(e.stages) : null, e.countries ? JSON.stringify(e.countries) : null, e.timeline ? JSON.stringify(e.timeline) : null,
-      id);
-  res.json(db.prepare('SELECT * FROM events WHERE id = ?').get(id));
+  try {
+    /* `reason` is metadata about the edit, not a column — it is recorded on
+       the override. Splitting it out here keeps updateEvent free to reject
+       every other unknown key as a typo rather than silently ignoring it. */
+    const { reason, ...patch } = req.body || {};
+    res.json(updateEvent(req.params.id, patch, {
+      actor: req.get('x-reviewer') || 'admin-ui',
+      reason: reason ?? null,
+    }));
+  } catch (error) {
+    res.status(error.message === 'Event not found.' ? 404 : 400).json({ error: error.message });
+  }
 });
 
 adminRouter.delete('/events/:id', (req, res) => {
-  db.prepare('DELETE FROM events WHERE id = ?').run(req.params.id);
-  res.status(204).end();
+  try {
+    res.json(deleteEvent(req.params.id, {
+      reason: req.body?.reason ?? req.query.reason ?? null,
+      actor: req.get('x-reviewer') || 'admin-ui',
+    }));
+  } catch (error) {
+    res.status(error.message === 'Event not found.' ? 404 : 400).json({ error: error.message });
+  }
 });
 
 /* ---- data notes (citation trail) ---- */

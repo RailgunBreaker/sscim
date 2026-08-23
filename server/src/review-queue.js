@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { db } from './db.js';
 import { getSnapshotDate, getMeta, setMeta } from './meta.js';
 import { daysAgoOf } from './history-events.js';
+import { partition, VERDICTS, TRIAGE_ACTOR, AUTO_APPROVE_ON, AUTO_REJECT_ON } from './triage.js';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const serverDir = path.resolve(here, '..');
@@ -98,11 +99,11 @@ export function approveCandidate(candidateId, input, reviewer) {
       source: `${candidate.source_feed} (${candidate.raw.url ?? candidate.source_ref}) - AI-drafted, human-reviewed`,
       stages_json: JSON.stringify(input.stages || p.stages), countries_json: JSON.stringify(input.countries || p.countries), timeline_json: JSON.stringify([]),
     });
-    db.prepare("UPDATE event_candidates SET status='approved', reviewed_at=datetime('now'), reviewed_by=? WHERE id=?").run(reviewer, candidateId);
+    db.prepare("UPDATE event_candidates SET status='approved', reviewed_at=datetime('now'), reviewed_by=?, event_id=? WHERE id=?").run(reviewer, fields.eventId, candidateId);
   })();
   try { addAssumption(fields.eventId, { ...fields, reason }); } catch (error) {
     db.prepare('DELETE FROM events WHERE id = ?').run(fields.eventId);
-    db.prepare("UPDATE event_candidates SET status='pending', reviewed_at=NULL, reviewed_by=NULL WHERE id=?").run(candidateId);
+    db.prepare("UPDATE event_candidates SET status='pending', reviewed_at=NULL, reviewed_by=NULL, event_id=NULL WHERE id=?").run(candidateId);
     throw error;
   }
   db.pragma('wal_checkpoint(TRUNCATE)');
@@ -115,6 +116,142 @@ export function rejectCandidate(candidateId, reason, reviewer) {
   if (!info.changes) throw new Error('Candidate not found or already reviewed.');
   db.pragma('wal_checkpoint(TRUNCATE)');
   return { candidateId };
+}
+
+/* ---------------- bulk decisions and automatic triage ----------------------
+   Reviewing a feed one record at a time does not scale past the first quiet
+   week: most of what arrives is not a supply-chain event at all, and opening
+   each one to say so is the whole cost of the queue.
+
+   Both entry points below route through approveCandidate/rejectCandidate
+   rather than writing status directly. That matters — approve is not an
+   UPDATE, it inserts the event, derives its id, appends to
+   event-assumptions.js, and rolls the whole thing back if the assumption
+   write fails. A bulk path that set status='approved' itself would produce
+   approved candidates with no event behind them. */
+
+/* Per-item failures must not abort the batch: one candidate whose event id
+   collides should not strand the other twenty. Each result carries its own
+   ok/error so the caller can report exactly what happened. */
+function decideEach(ids, action, { reason, reviewer, inputs = {} }) {
+  const results = [];
+  for (const id of ids) {
+    try {
+      const out = action === 'approve'
+        ? approveCandidate(id, { ...(inputs[id] || {}), reason }, reviewer)
+        : rejectCandidate(id, reason, reviewer);
+      results.push({ id, ok: true, ...out });
+    } catch (error) {
+      results.push({ id, ok: false, error: error.message });
+    }
+  }
+  return results;
+}
+
+export function bulkDecide({ ids, action, reason, reviewer = 'admin-ui' }) {
+  if (!Array.isArray(ids) || !ids.length) throw new Error('No candidates selected.');
+  if (!['approve', 'reject'].includes(action)) throw new Error('Action must be approve or reject.');
+  const results = decideEach(ids, action, { reason, reviewer });
+  return {
+    action,
+    attempted: results.length,
+    succeeded: results.filter((r) => r.ok).length,
+    failed: results.filter((r) => !r.ok),
+    results,
+  };
+}
+
+/* What triage WOULD do, with no writes. The admin UI calls this to render the
+   queue already sorted, and to put a number on the Run-triage button before
+   anyone presses it. */
+export function triagePreview() {
+  const groups = partition(pendingCandidates());
+  const strip = (c) => ({
+    id: c.id, date_iso: c.date_iso, source_feed: c.source_feed, duplicate_of: c.duplicate_of,
+    title: c.proposal?.title || c.raw?.title || null,
+    sev: c.proposal?.proposedSev ?? null,
+    confidence: c.proposal?.confidence ?? null,
+    operational: c.proposal?.proposedOperational ?? null,
+    eventType: c.proposal?.eventType ?? null,
+    triage: c.triage,
+  });
+  return {
+    settings: { autoApprove: AUTO_APPROVE_ON, autoReject: AUTO_REJECT_ON },
+    counts: {
+      autoApprove: groups[VERDICTS.AUTO_APPROVE].length,
+      autoReject: groups[VERDICTS.AUTO_REJECT].length,
+      review: groups[VERDICTS.REVIEW].length,
+    },
+    autoApprove: groups[VERDICTS.AUTO_APPROVE].map(strip),
+    autoReject: groups[VERDICTS.AUTO_REJECT].map(strip),
+    review: groups[VERDICTS.REVIEW].map(strip),
+  };
+}
+
+/* Applies the two automatic verdicts and leaves the review group alone.
+
+   Rejections run first, deliberately. They are the cheap, reversible half —
+   a status flip — while approvals insert events and rewrite a source file. If
+   something goes wrong partway, the queue is left smaller and cleaner rather
+   than half-populated with events whose noise was never cleared. */
+export function applyTriage({ reviewer = TRIAGE_ACTOR } = {}) {
+  const plan = triagePreview();
+
+  const rejected = decideEach(plan.autoReject.map((c) => c.id), 'reject', {
+    reason: null, reviewer,
+  });
+  /* The rejection reason is per-candidate (each has its own irrelevantReason),
+     so write them individually rather than stamping one shared string. */
+  for (const item of plan.autoReject) {
+    if (rejected.find((r) => r.id === item.id)?.ok) {
+      db.prepare('UPDATE event_candidates SET ai_notes = ? WHERE id = ?')
+        .run(`Auto-rejected by triage: ${item.triage.reason}`, item.id);
+    }
+  }
+
+  const approved = decideEach(plan.autoApprove.map((c) => c.id), 'approve', {
+    reason: null, reviewer,
+  });
+
+  db.pragma('wal_checkpoint(TRUNCATE)');
+
+  const remaining = pendingCandidates().length;
+  return {
+    rejected: { attempted: rejected.length, succeeded: rejected.filter((r) => r.ok).length, failed: rejected.filter((r) => !r.ok) },
+    approved: { attempted: approved.length, succeeded: approved.filter((r) => r.ok).length, failed: approved.filter((r) => !r.ok) },
+    remaining,
+    autoPublish: scheduleAutoPublish({ queueEmpty: remaining === 0 }),
+  };
+}
+
+/* Everything that went in unattended, newest first — the audit trail for the
+   auto-approve decision. */
+export function autoTriaged(limit = 200) {
+  return db.prepare(`SELECT id, status, reviewed_at, reviewed_by, ai_notes, proposed_json FROM event_candidates
+    WHERE reviewed_by = ? ORDER BY reviewed_at DESC LIMIT ?`).all(TRIAGE_ACTOR, limit)
+    .map((r) => ({ ...r, proposal: r.proposed_json ? JSON.parse(r.proposed_json) : null }));
+}
+
+/* Reverses one auto-approval: drops the event it created and returns the
+   candidate to the queue. The assumption entry in event-assumptions.js is
+   left in place — it is a source file under review, and silently rewriting it
+   from an undo path is how that file gets corrupted. It is reported instead. */
+export function untriage(candidateId) {
+  const candidate = candidateById(candidateId);
+  if (!candidate) throw new Error('Candidate not found.');
+  if (candidate.reviewed_by !== TRIAGE_ACTOR) throw new Error('That candidate was not decided by automatic triage.');
+
+  const eventId = candidate.event_id;
+  db.transaction(() => {
+    if (eventId) db.prepare('DELETE FROM events WHERE id = ?').run(eventId);
+    db.prepare("UPDATE event_candidates SET status='pending', reviewed_at=NULL, reviewed_by=NULL, event_id=NULL WHERE id=?").run(candidateId);
+  })();
+  db.pragma('wal_checkpoint(TRUNCATE)');
+  return {
+    candidateId,
+    removedEvent: eventId ?? null,
+    note: eventId ? `Remove the ${eventId} entry from app/src/engine/event-assumptions.js by hand.` : null,
+  };
 }
 
 function run(file, args, cwd) { return execFileSync(file, args, { cwd, encoding: 'utf8', stdio: 'pipe' }); }
@@ -180,6 +317,41 @@ export function publishPendingReviews() {
     // Decisions stay safely recorded in the database; auto-publish retries and
     // so does the scheduled pipeline. Surface the failure to the reviewer.
     return { published: false, count: queued.length, error: String(error.stderr || error.message).slice(0, 800) };
+  }
+}
+
+/* Publish edits made directly to the vault — the admin events screen, not the
+   review queue.
+
+   Separate from publishPendingReviews because the gate is not optional here.
+   That function rebuilds the snapshot only when something was APPROVED, since
+   a queue of pure rejections cannot move the index. An event edit always can:
+   changing a severity, or deleting one of five overlapping earthquake
+   records, re-derives the published number. So the snapshot is regenerated
+   and audited on every call, and a failed audit aborts before anything is
+   committed — the last good deployment stays live, which is the same contract
+   pipeline.mjs step 6 enforces. */
+export function publishVaultChanges({ message, reviewer = 'admin-ui' } = {}) {
+  try {
+    run('node', ['scripts/build-vault-snapshot.mjs'], appDir);
+    run('node', ['scripts/audit-snapshot.mjs'], appDir);
+  } catch (error) {
+    return { published: false, stage: 'verify', error: String(error.stdout || error.stderr || error.message).slice(0, 800) };
+  }
+
+  try {
+    run('git', ['add', 'server/data/sscim.db', 'app/src/engine/event-assumptions.js'], repoDir);
+    const staged = spawnSync('git', ['diff', '--cached', '--quiet'], { cwd: repoDir }).status === 1;
+    if (!staged) return { published: true, count: 0, message: 'Nothing to publish — the working tree already matches the database.' };
+
+    const subject = message || 'Vault: administrative event edits';
+    run('git', ['commit', '-m', subject, '-m', `Recorded by ${reviewer} via the admin events screen.`], repoDir);
+    run('git', ['pull', '--rebase', '--autostash', 'origin', 'main'], repoDir);
+    run('git', ['push', 'origin', 'main'], repoDir);
+    setMeta('last_vault_publish_at', new Date().toISOString());
+    return { published: true, message: subject };
+  } catch (error) {
+    return { published: false, stage: 'publish', error: String(error.stderr || error.message).slice(0, 800) };
   }
 }
 
