@@ -76,8 +76,8 @@ npm run docs         # rebuild the documentation library
 For review or API work, start the backend separately:
 
 ```powershell
-cd ..
-.\start-api.ps1      # API on :8787
+cd ..\server
+npm run api:restart  # API on :8787 (reads server/.env)
 ```
 
 The public site remains static. The local API is the only writer, and is needed only for administration, review, and live quotes.
