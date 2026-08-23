@@ -29,6 +29,8 @@ server/                    Express API, SQLite vault, ingestion, review, publica
     triage.js                the auto-approve / auto-reject / needs-review rules
     event-admin.js           edit / delete / restore events, recorded as overrides
     event-impact.js          what removing an event does to the index
+    system-status.js         health checks, counts, git state for the status console
+    status-page.html         the console the API serves at / and /status
     history-events.js        curated 2021→2026 events
     decade-events.js         the 2016→2025 backfill that completes the ten-year window
     ingest/                  usgs, federal-register, webz-news, dedupe
@@ -115,6 +117,30 @@ feeds ──► candidate queue ──► AI draft (proposal only)
 ```
 
 Nothing skips the gate. If the audit or tests fail, nothing is committed and the last good deployment stays live.
+
+## The status console
+
+`http://localhost:8787/` (or `/status`) — served by the API process itself.
+
+That is the point of it. The dashboard is a GitHub Pages artifact talking to whatever `VITE_API_BASE_URL` was baked into it at build time, which makes it exactly the wrong thing to reach for when the question is *"is this API healthy, and what is it connected to"*. The status page is served **by** the process it describes, on the port that process is listening on, so opening it answers half the question before it renders anything.
+
+It reports:
+
+- **Checks first.** Raw counts do not tell you whether something is wrong, so every figure with a "should be" is also a check with a severity and a suggested fix — a stale snapshot date, a pipeline that has not run in a week, candidates whose drafting failed, commits sitting unpushed, a missing `ADMIN_TOKEN`. Each of those is invisible until someone thinks to look for that specific thing, and each one silently stops the deployed site from being current.
+- **The live chain index**, computed from the same engine the dashboard renders.
+- **Pipeline and snapshot** — last run, its status, how far the snapshot date is behind today.
+- **Vault** — events, overrides, candidate queue, table counts, database and WAL size.
+- **Environment** — Node version, which tokens are set, which AI backend is available, and the triage/auto-publish flags actually in effect for this process.
+- **Repository** — branch, last commit, unpushed count, working-tree state.
+- **Management** — run triage, publish review decisions, commit vault edits. Each is a confirm-then-POST to the same token-protected endpoint the admin dashboard uses; nothing here is a second implementation.
+
+### Security shape
+
+The HTML shell carries **no data**. Every figure comes from `GET /api/admin/status`, behind the admin token like every other admin route, and the page prompts for that token and keeps it in `sessionStorage` for the tab. A status console that leaked the vault's shape, the environment flags and the git state to anyone who could reach the port would be a worse problem than the one it solves — which matters as soon as the API is hosted anywhere but localhost.
+
+Server values are rendered as text nodes, never `innerHTML`: a branch name or a commit subject is data, and a page that rendered them as markup would turn one into script.
+
+`?index=false` skips the engine build for a cheap poll — ~90ms instead of ~260ms. The page's auto-refresh uses the full version every 15s.
 
 ## Administering the historical record
 

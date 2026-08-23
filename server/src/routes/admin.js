@@ -6,6 +6,7 @@ import { daysAgoOf } from '../history-events.js';
 import { candidates, pendingCandidates, candidateById, approveCandidate, rejectCandidate, publishPendingReviews, unpublishedReviews, dashboardSummary, scheduleAutoPublish, autoPublishStatus, cancelAutoPublish, triagePreview, applyTriage, bulkDecide, autoTriaged, untriage, publishVaultChanges } from '../review-queue.js';
 import { listEvents, updateEvent, deleteEvent, restoreEvent, allOverrides } from '../event-admin.js';
 import { eventImpacts, removalPreview } from '../event-impact.js';
+import { systemStatus } from '../system-status.js';
 
 export const adminRouter = Router();
 adminRouter.use(adminAuth);
@@ -50,6 +51,22 @@ adminRouter.post('/review/candidates/:id/reject', (req, res) => {
     decided(res, rejectCandidate(req.params.id, req.body?.reason, reviewedBy), 200);
   } catch (error) {
     res.status(400).json({ error: error.message });
+  }
+});
+
+/* ---- system status --------------------------------------------------------
+   Behind the admin token like every other route here. The page at /status
+   carries no data of its own precisely so that this stays the only way to
+   read it: a status console that leaked the vault's shape, the environment
+   flags and the git state to anyone who could reach the port would be a worse
+   problem than the one it solves.
+
+   `?index=false` skips the engine build for a cheap poll. */
+adminRouter.get('/status', (req, res) => {
+  try {
+    res.json(systemStatus({ includeIndex: req.query.index !== 'false' }));
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 });
 
