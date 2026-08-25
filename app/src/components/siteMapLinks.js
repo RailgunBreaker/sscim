@@ -36,6 +36,8 @@ export const SITE_SECTIONS = [
     heading: 'Data & limits',
     links: [
       { href: 'docs/reference/README.md.html', label: 'Reference library', note: 'Where every figure came from' },
+      { href: 'docs/reference/EVIDENCE-COVERAGE.md.html', label: 'Evidence coverage', note: 'How much of the dataset is sourced, counted — and what a passing audit does not establish' },
+      { href: 'docs/reference/SOURCE-REGISTER.md.html', label: 'Source register', note: 'Every source cited, in Chicago style' },
       { href: 'docs/DATA_SOURCES_AND_OUTPUTS.md.html', label: 'Data sources and outputs', note: 'What is sourced, what is judged' },
       { href: 'docs/ACADEMIC_GUIDE.md.html', label: 'Academic guide', note: 'How to cite it, and what not to claim' },
       { href: 'docs.html', id: 'docs', label: 'Full document library →', note: 'Every document, searchable' },

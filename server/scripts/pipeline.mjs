@@ -49,6 +49,7 @@ import { fetchEarthquakeCandidates } from '../src/ingest/usgs.mjs';
 import { fetchPolicyCandidates } from '../src/ingest/federal-register.mjs';
 import { fetchNewsCandidates } from '../src/ingest/webz-news.mjs';
 import { findDuplicate, storyKey, WINDOW_DAYS } from '../src/ingest/dedupe.js';
+import { findIncidentMatch, incidentNote } from '../src/ingest/incident.js';
 import { aiAvailable, analyzeCandidate } from '../src/ai/analyze.mjs';
 import { claudeCodeAvailable, analyzeBatchWithClaudeCode } from '../src/ai/analyze-claude-code.mjs';
 import { triagePreview, applyTriage } from '../src/review-queue.js';
@@ -125,8 +126,10 @@ async function main() {
      the same upstream record, so a wire story syndicated across sites arrives
      as N distinct candidates. Compare against everything recent regardless of
      status — a story already rejected must not return under a new url. */
-  const recent = () => db.prepare(`SELECT id, date_iso, dedupe_key, json_extract(raw_json, '$.title') AS title
-    FROM event_candidates WHERE date_iso >= date(?, '-${WINDOW_DAYS} days')`).all(UNTIL);
+  const recent = () => db.prepare(`SELECT id, date_iso, dedupe_key, source_feed, raw_json,
+      json_extract(raw_json, '$.title') AS title
+    FROM event_candidates WHERE date_iso >= date(?, '-${WINDOW_DAYS} days')`).all(UNTIL)
+    .map((r) => { try { return { ...r, raw: JSON.parse(r.raw_json) }; } catch { return { ...r, raw: {} }; } });
 
   let queued = 0;
   let collapsed = 0;
@@ -149,6 +152,24 @@ async function main() {
       flagNear.run(hit.id, `Possible duplicate of ${hit.id} - confirm before approving.`, id);
       flagged++; queued++;
     } else {
+      /* Second pass: the SAME INCIDENT, not the same headline.
+
+         Title similarity catches a syndicated wire story. It does not
+         catch several reports of one event written from different angles
+         — "M7.1 Kumamoto earthquake halts Kyushu fabs", "Sony halts
+         Kumamoto image-sensor fab", "TSMC's JASM resumes after M7.1
+         earthquake" share few tokens and all three got through, all three
+         were scored, and one earthquake moved the index as though three
+         had happened. See src/ingest/incident.js.
+
+         Flagged, never collapsed: this is a hypothesis about the world,
+         and the reasons are written onto the candidate so a person can
+         judge it rather than trust a number. */
+      const incident = findIncidentMatch(c, recent().filter((r) => r.id !== id));
+      if (incident) {
+        flagNear.run(incident.id, incidentNote(incident), id);
+        flagged++;
+      }
       queued++;
     }
   }

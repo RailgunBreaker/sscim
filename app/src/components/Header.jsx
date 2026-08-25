@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { C } from '../theme.js';
 import { t } from '../i18n/index.js';
 import { useVault } from '../data/VaultContext.jsx';
@@ -7,8 +8,27 @@ import Freshness from './Freshness.jsx';
 export default function Header({
   lang, setLang, setSel, setShowGuide, setShowBriefing, tourTarget,
 }) {
-  const { data } = useVault();
-  const { COMPANIES } = data;
+  const { data, engine } = useVault();
+  const { COMPANIES, COUNTRY_NAMES } = data;
+
+  /* Counted from the snapshot, not typed in. "24 · 109 · 16" was three
+     hard-coded numbers, and the last of them was ambiguous besides: the
+     vault holds more countries than it scores. Some carry a stage share
+     and contribute to every number on screen; the rest exist only because
+     facilities are located there and contribute to none of them. Both are
+     reported, and the tooltip says which is which. */
+  const scope = useMemo(() => {
+    const stages = engine.STAGES || data.STAGES || [];
+    const countryIds = Object.keys(COUNTRY_NAMES || {});
+    const scored = countryIds.filter((id) => stages.some((st) => (st.shares || {})[id] > 0));
+    return {
+      stages: stages.length,
+      companies: COMPANIES.length,
+      scored: scored.length,
+      hostOnly: countryIds.length - scored.length,
+      total: countryIds.length,
+    };
+  }, [engine, data, COMPANIES, COUNTRY_NAMES]);
   return (
     <header style={{ borderBottom: `1px solid ${C.line}`, padding: "12px 16px", display: "flex", flexWrap: "wrap", gap: 10, alignItems: "center" }}>
       <div>
@@ -17,7 +37,11 @@ export default function Header({
           <span className="mono" style={{ color: C.copper, fontSize: 10, letterSpacing: 2 }}>v4 · OSM MAP · COMPANY SPREAD</span>
         </div>
         <div style={{ color: C.dim, fontSize: 11.5, marginTop: 2 }}>
-          {lang === "en" ? "Semiconductor Supply Chain Intelligence Map" : t("fullname")} · 24 · {COMPANIES.length} · 16
+          {lang === "en" ? "Semiconductor Supply Chain Intelligence Map" : t("fullname")}{' · '}
+          <span title={`${scope.stages} chain stages · ${scope.companies} modeled companies · ${scope.scored} scored countries (those carrying a production share). ${scope.hostOnly} further countries host facilities but carry no share, so they contribute to no score — ${scope.total} appear on the map in total.`}>
+            {scope.stages} · {scope.companies} · {scope.scored}
+            <span style={{ color: C.faint }}>{` (+${scope.hostOnly} host-only)`}</span>
+          </span>
           <span style={{ marginLeft: 8 }}><Freshness /></span>
         </div>
       </div>

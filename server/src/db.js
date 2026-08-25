@@ -249,6 +249,27 @@ for (const [table, column, ddl] of [
      approved. Since the review queue is the live feed, those events never
      decayed and held the index near its peak indefinitely. */
   ['events', 'date_iso', 'ALTER TABLE events ADD COLUMN date_iso TEXT'],
+  /* How this event's classification came to be published. The `source`
+     string used to assert "AI-drafted, human-reviewed" on every reviewed
+     event, including the ones automatic triage approved with no human in
+     the loop — a provenance claim the record could not support. This is
+     the structured version of that claim, so the public interface can
+     state it without parsing prose:
+       'human'    a person approved it through the admin surface
+       'automatic' triage approved it unattended (reviewed_by='auto-triage')
+       'curated'  hand-authored in the seed data, never in the queue
+       'legacy'   predates this column; provenance is not recorded
+     Never invent a reviewer identity: 'automatic' is a fact about the
+     process, not a person. */
+  ['events', 'provenance', 'ALTER TABLE events ADD COLUMN provenance TEXT'],
+  ['events', 'reviewed_by', 'ALTER TABLE events ADD COLUMN reviewed_by TEXT'],
+  /* Incident grouping. Several reports of one real-world incident used to
+     accumulate through noisy-OR as though each were a separate event —
+     seven adverse contributions for one earthquake. One record per
+     incident is the primary (scored); the rest are updates or recovery
+     reports, kept with their citations but not independently scored. */
+  ['events', 'incident_id', 'ALTER TABLE events ADD COLUMN incident_id TEXT'],
+  ['events', 'incident_role', 'ALTER TABLE events ADD COLUMN incident_role TEXT'],
 ]) {
   const has = db.prepare(`PRAGMA table_info(${table})`).all().some((c) => c.name === column);
   if (!has) db.exec(ddl);

@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { db } from './db.js';
 import { getSnapshotDate, getMeta, setMeta } from './meta.js';
 import { daysAgoOf } from './history-events.js';
-import { partition, VERDICTS, TRIAGE_ACTOR, AUTO_APPROVE_ON, AUTO_REJECT_ON } from './triage.js';
+import { partition, VERDICTS, TRIAGE_ACTOR, AUTO_APPROVE_ON, AUTO_REJECT_ON, provenanceFor, provenanceLabel, PROVENANCE } from './triage.js';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const serverDir = path.resolve(here, '..');
@@ -59,13 +59,50 @@ function safeEventId(value) {
   return value;
 }
 
+/* ====================================================================
+   Public-output sanitising.
+
+   `events.detail` and the `reason` written into app/src/engine/
+   event-assumptions.js are both PUBLIC: they are served by the API, baked
+   into the static snapshot, and rendered in the dashboard. Review-workflow
+   strings must never reach them. Eight published events carried
+   "Published: Review: reject cand_webz_news_04f59e01..." as their public
+   classification note before this existed.
+
+   The same patterns live in app/src/engine/event-assumptions.js
+   (INTERNAL_NOTE_PATTERNS) so the render side refuses them too, and the
+   app's public-output test asserts the generated snapshot is clean. Two
+   independent guards, because one of them will eventually be bypassed.
+   ==================================================================== */
+const INTERNAL_NOTE_PATTERNS = [
+  /\bReview:\s*(approve|reject|publish)\b/i,
+  /\bcand_[a-z0-9_]+/i,
+  /\bPublished:\s*Review\b/i,
+  /\bdecision\(s\)\s+awaiting\s+publication/i,
+  /\bawaiting\s+publication\b/i,
+];
+
+export function looksInternal(text) {
+  return INTERNAL_NOTE_PATTERNS.some((re) => re.test(String(text || '')));
+}
+
+const NO_PUBLIC_REASON = 'Classified through the review queue; no public classification rationale was recorded.';
+
+/* Returns the reason when it is publishable, or a truthful stand-in when it
+   is workflow text. Never publishes the workflow text itself. */
+export function publicReason(reason) {
+  const text = String(reason || '').trim();
+  if (!text) return NO_PUBLIC_REASON;
+  return looksInternal(text) ? NO_PUBLIC_REASON : text;
+}
+
 function addAssumption(id, { direction, channel, operational, reason }) {
   const text = fs.readFileSync(assumptionFile, 'utf8');
   if (new RegExp(`\\n\\s*${id}:`).test(text)) throw new Error(`An assumption for ${id} already exists.`);
   const anchor = 'export const EVENT_ASSUMPTIONS = Object.freeze({';
   const at = text.indexOf(anchor);
   if (at < 0) throw new Error('Could not locate EVENT_ASSUMPTIONS in the source file.');
-  const entry = `\n  ${id}: Object.freeze({ direction: ${JSON.stringify(direction)}, channel: ${JSON.stringify(channel)}, operational: ${operational}, reason: ${JSON.stringify(reason)} }),\n`;
+  const entry = `\n  ${id}: Object.freeze({ direction: ${JSON.stringify(direction)}, channel: ${JSON.stringify(channel)}, operational: ${operational}, reason: ${JSON.stringify(publicReason(reason))} }),\n`;
   fs.writeFileSync(assumptionFile, text.slice(0, at + anchor.length) + entry + text.slice(at + anchor.length), 'utf8');
 }
 
@@ -86,17 +123,34 @@ export function approveCandidate(candidateId, input, reviewer) {
   if (db.prepare('SELECT 1 FROM events WHERE id = ?').get(fields.eventId)) throw new Error(`Event ID ${fields.eventId} already exists.`);
   const reason = input.reason || p.classificationReason || 'Human-reviewed candidate classification.';
   const date = new Date(`${candidate.date_iso}T00:00:00Z`).toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric', timeZone: 'UTC' });
+  /* PROVENANCE, recorded rather than asserted.
+
+     This used to write "AI-drafted, human-reviewed" into `source` for every
+     approval — including the ones automatic triage made with no human in the
+     loop. Now the actual approver decides the value, it is stored in its own
+     column, and the prose clause is derived from it, so the two cannot drift
+     apart. No reviewer identity is invented for an automatic approval. */
+  const provenance = provenanceFor(reviewer);
+
   db.transaction(() => {
     /* date_iso is stored, not just days_ago: it is what lets sync-events.mjs
        re-age this row when the snapshot date advances. Without it the event
        would sit at today's age forever and never decay out of the index. */
-    db.prepare(`INSERT INTO events (id, date, date_iso, days_ago, sev, type, conf, title, summary, first, second, watch, detail, source, stages_json, countries_json, timeline_json)
-      VALUES (@id, @date, @date_iso, @days_ago, @sev, @type, @conf, @title, @summary, @first, @second, @watch, @detail, @source, @stages_json, @countries_json, @timeline_json)`).run({
+    db.prepare(`INSERT INTO events (id, date, date_iso, days_ago, sev, type, conf, title, summary, first, second, watch, detail, source, provenance, reviewed_by, stages_json, countries_json, timeline_json)
+      VALUES (@id, @date, @date_iso, @days_ago, @sev, @type, @conf, @title, @summary, @first, @second, @watch, @detail, @source, @provenance, @reviewed_by, @stages_json, @countries_json, @timeline_json)`).run({
       id: fields.eventId, date, date_iso: candidate.date_iso, days_ago: daysAgoOf(candidate.date_iso, getSnapshotDate()), sev: fields.sev,
       type: p.eventType, conf: p.confidence, title: input.title || p.title, summary: input.summary || p.summary,
       first: p.first, second: p.second, watch: p.watch,
-      detail: `${p.detail}\n\nReviewer note: ${reason}`,
-      source: `${candidate.source_feed} (${candidate.raw.url ?? candidate.source_ref}) - AI-drafted, human-reviewed`,
+      /* `detail` is public. The classification rationale belongs in it; the
+         review workflow's own bookkeeping does not, and used to end up there
+         verbatim ("Reviewer note: Published: Review: reject cand_webz_news_..."),
+         putting internal candidate ids onto a public event card. Anything that
+         looks like workflow text is kept out of the published field; the audit
+         trail stays in the candidate row behind the admin token. */
+      detail: `${p.detail}\n\nClassification note: ${publicReason(reason)}`,
+      source: `${candidate.source_feed} (${candidate.raw.url ?? candidate.source_ref}) - ${provenanceLabel(provenance)}`,
+      provenance,
+      reviewed_by: provenance === PROVENANCE.AUTOMATIC ? TRIAGE_ACTOR : reviewer,
       stages_json: JSON.stringify(input.stages || p.stages), countries_json: JSON.stringify(input.countries || p.countries), timeline_json: JSON.stringify([]),
     });
     db.prepare("UPDATE event_candidates SET status='approved', reviewed_at=datetime('now'), reviewed_by=?, event_id=? WHERE id=?").run(reviewer, fields.eventId, candidateId);

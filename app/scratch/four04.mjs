@@ -1,0 +1,10 @@
+import { chromium } from 'playwright-core';
+const b = await chromium.launch({ channel: 'msedge' });
+const p = await (await b.newContext({ viewport: { width: 1600, height: 1000 } })).newPage();
+const bad = [];
+p.on('response', (r) => { if (r.status() >= 400) bad.push(`${r.status()} ${r.url()}`); });
+await p.goto('http://localhost:5173/sscim-app.html', { waitUntil: 'load' });
+await p.waitForSelector('footer', { timeout: 40000 });
+await p.waitForTimeout(3000);
+console.log(bad.length ? bad.slice(0, 12).join('\n') : 'no failed requests');
+await b.close();

@@ -11,6 +11,9 @@ server/data/*.db-shm
 # Build artifact — regenerated from the database by app/scripts/build-vault-snapshot.mjs.
 app/src/data/vault-snapshot.json
 app/src/docs/generated-library.js
+# Landing-page dataset figures, regenerated from the snapshot by
+# app/scripts/build-landing-stats.mjs (runs as part of `npm run snapshot`).
+app/src/landing/generated-stats.js
 app/public/docs-manifest.json
 .env
 .env.local

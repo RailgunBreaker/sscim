@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { db } from '../db.js';
 import { adminAuth } from '../middleware/adminAuth.js';
+import { adminRateLimit } from '../middleware/rateLimit.js';
 import { getSnapshotDate } from '../meta.js';
 import { daysAgoOf } from '../history-events.js';
 import { candidates, pendingCandidates, candidateById, approveCandidate, rejectCandidate, publishPendingReviews, unpublishedReviews, dashboardSummary, scheduleAutoPublish, autoPublishStatus, cancelAutoPublish, triagePreview, applyTriage, bulkDecide, autoTriaged, untriage, publishVaultChanges } from '../review-queue.js';
@@ -10,6 +11,12 @@ import { systemStatus } from '../system-status.js';
 
 export const adminRouter = Router();
 adminRouter.use(adminAuth);
+/* A ceiling on authenticated WRITES only — reads stay unlimited because
+   the admin dashboard polls them. This does not replace the token; it
+   bounds what a leaked token or a runaway script can do per minute on the
+   paths that insert events, rewrite event-assumptions.js, and can trigger
+   a git publish. See middleware/rateLimit.js. */
+adminRouter.use(adminRateLimit());
 
 /* ---- review queue (human gate for pipeline candidates) ---- */
 adminRouter.get('/review/candidates', (req, res) => {

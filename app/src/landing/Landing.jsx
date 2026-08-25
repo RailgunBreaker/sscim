@@ -38,14 +38,24 @@ const STYLE = `
   .card p{font-size:13px;color:var(--dim)}
   .formula{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:14px 16px;font-size:11.5px;color:var(--text);overflow-x:auto}
   .formula > div + div{margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}
-  .langbar b{cursor:pointer;border:1px solid var(--line);border-radius:3px;padding:2px 7px;font-size:10px;color:var(--faint);font-weight:700;transition:background .15s ease,color .15s ease}
-  .langbar b.on{background:var(--copper);color:#0C111C;border-color:var(--copper)}
+  /* Real <button>s. These were clickable <b> elements: not focusable, not
+     announced as controls, and unreachable by keyboard entirely — the
+     language of the whole page could only be changed with a mouse. */
+  .langbar button{cursor:pointer;background:transparent;font-family:inherit;border:1px solid var(--line);border-radius:3px;padding:3px 8px;font-size:10px;color:var(--faint);font-weight:700;transition:background .15s ease,color .15s ease;min-height:24px}
+  .langbar button:hover{color:var(--text);border-color:var(--copperDim)}
+  .langbar button[aria-pressed="true"]{background:var(--copper);color:#0C111C;border-color:var(--copper)}
+  .langbar button:focus-visible{outline:2px solid var(--copper);outline-offset:2px}
   .disclaimer{border:1px solid var(--copperDim);background:rgba(223,168,61,.06);border-radius:6px;padding:12px 14px;color:var(--amber);font-size:11px;line-height:1.7}
   footer{padding:28px 0;font-size:10.5px;color:var(--faint);line-height:1.7}
   @media (max-width:640px){ header .wrap{gap:8px} .badge{display:none} }
 `;
 
 const Html = ({ tag: Tag = 'span', html, ...rest }) => <Tag {...rest} dangerouslySetInnerHTML={{ __html: html }} />;
+
+/* "EN"/"简"/"繁"/"日" are legible to a reader who already reads that
+   script and opaque to a screen reader, so each button carries the
+   language's full name as its accessible name. */
+const LANG_NAMES = { en: 'English', zh: '简体中文 — Simplified Chinese', tw: '繁體中文 — Traditional Chinese', ja: '日本語 — Japanese' };
 
 export default function Landing() {
   const [lang, setLang] = useState('en');
@@ -60,11 +70,15 @@ export default function Landing() {
           <a className="logo" href="index.html" aria-label="SSCIM home"><img src="sscim-logo.png" alt="SSCIM" /></a>
           <span className="tag mono">SEMICONDUCTOR SUPPLY CHAIN INTELLIGENCE MAP</span>
           <span className="badge">SSCIM INTELLIGENCE</span>
-          <span className="langbar mono" style={{ marginLeft: 'auto', display: 'flex', gap: 3 }}>
+          <div className="langbar mono" role="group" aria-label="Language"
+            style={{ marginLeft: 'auto', display: 'flex', gap: 3 }}>
             {Object.entries(LANG_LABELS).map(([l, label]) => (
-              <b key={l} className={lang === l ? 'on' : ''} onClick={() => setLang(l)}>{label}</b>
+              <button key={l} type="button" aria-pressed={lang === l}
+                aria-label={LANG_NAMES[l] || label} onClick={() => setLang(l)}>
+                {label}
+              </button>
             ))}
-          </span>
+          </div>
           <a href="intro.html" style={{ fontSize: 13 }}>{t('navIntro')}</a>
           <a href="updates.html" style={{ fontSize: 13 }}>{t('navUpdates')}</a>
           <a href="docs.html" style={{ fontSize: 13 }}>Documentation</a>
@@ -90,7 +104,31 @@ export default function Landing() {
             <div className="card"><span className="k mono">{t('card1K')}</span><h3>{t('card1H')}</h3><p>{t('card1P')}</p></div>
             <div className="card"><span className="k mono">{t('card2K')}</span><h3>{t('card2H')}</h3><p>{t('card2P')}</p></div>
             <div className="card"><span className="k mono">{t('card3K')}</span><h3>{t('card3H')}</h3><p>{t('card3P')}</p></div>
+            {/* The Facility Playground — the headline capability, and
+                previously not mentioned on this page at all. */}
+            <div className="card" style={{ borderColor: 'var(--copperDim)' }}>
+              <span className="k mono">{t('card4K')}</span><h3>{t('card4Hd')}</h3><p>{t('card4Pd')}</p>
+            </div>
           </div>
+        </div>
+      </section>
+
+      {/* An explicit inventory of what the product does today. Added
+          because the page advertised two workflows that no longer exist
+          (a one-tap hypothetical scenario, a Taiwan Strait crisis
+          briefing) while omitting the one that had become the headline. */}
+      <section>
+        <div className="wrap">
+          <h2>{t('h2Does')}</h2>
+          <p className="sub">{t('subDoes')}</p>
+          <ul style={{ display: 'grid', gap: 8, listStyle: 'none', margin: 0, padding: 0 }}>
+            {t('doesList').map((item) => (
+              <li key={item} style={{ display: 'flex', gap: 10, alignItems: 'flex-start', fontSize: 13.5, color: 'var(--dim)' }}>
+                <span aria-hidden style={{ color: 'var(--copper)', flexShrink: 0 }}>▸</span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
@@ -123,6 +161,11 @@ export default function Landing() {
       <section>
         <div className="wrap">
           <h2>{t('h2DataSource')}</h2>
+          {/* The scope sentence, stated once and in full, with every figure
+              interpolated from the shipped snapshot rather than typed —
+              including the scored/host-only country split that "16
+              countries" used to elide. */}
+          <p className="sub" style={{ maxWidth: 760 }}>{t('scopeNote')}</p>
           <div className="grid">
             <div className="card"><h3>{t('currentCard4H')}</h3><p>{t('currentCard4P')}</p></div>
             <div className="card"><h3>{t('card5H')}</h3><p>{t('card5P')}</p></div>

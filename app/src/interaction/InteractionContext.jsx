@@ -62,6 +62,23 @@ export function InteractionProvider({ defaultSelected = null, children }) {
     pgRedo: () => dispatch({ type: 'PG_REDO' }),
     pgToggleMulti: (entity) => dispatch({ type: 'PG_TOGGLE_MULTI', payload: entity }),
     pgClearMulti: () => dispatch({ type: 'PG_CLEAR_MULTI' }),
+    /* Facility playground (§ Priority 0). Shared by the full playground
+       view and the compact Layer-3 Explore tab, so switching tabs or
+       views never erases the plant the reader had selected. */
+    facFocus: (id, opts = {}) => dispatch({ type: 'FAC_FOCUS', payload: { id, ...opts } }),
+    facBack: () => dispatch({ type: 'FAC_BACK' }),
+    facForward: () => dispatch({ type: 'FAC_FORWARD' }),
+    facHome: () => dispatch({ type: 'FAC_HOME' }),
+    facReset: () => dispatch({ type: 'FAC_RESET' }),
+    facSet: (patch) => dispatch({ type: 'FAC_SET', payload: patch }),
+    facSetFilters: (patch) => dispatch({ type: 'FAC_SET_FILTERS', payload: patch }),
+    facToggleExpand: (id) => dispatch({ type: 'FAC_TOGGLE_EXPAND', payload: id }),
+    facToggleCollapse: (id) => dispatch({ type: 'FAC_TOGGLE_COLLAPSE', payload: id }),
+    facToggleHidden: (id) => dispatch({ type: 'FAC_TOGGLE_HIDDEN', payload: id }),
+    facClearHidden: () => dispatch({ type: 'FAC_CLEAR_HIDDEN' }),
+    facSelectLink: (key) => dispatch({ type: 'FAC_SELECT_LINK', payload: key }),
+    facSetRoute: (route) => dispatch({ type: 'FAC_SET_ROUTE', payload: route }),
+    facility: state.facility,
     lensAvailable: (lens) => lensAvailable(lens, state.scenarioActive),
     // cross-panel flyTo plumbing
     subscribeFlyTo,

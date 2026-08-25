@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { interactionReducer, initInteraction, lensAvailable, sameSel, isDraftSource } from './reducer.js';
+import { interactionReducer, initInteraction, lensAvailable, sameSel, isDraftSource, VIEW_MODES, initFacilityPlayground } from './reducer.js';
 
 const S = (type, id) => ({ type, id });
 
@@ -217,5 +217,179 @@ describe('sameSel', () => {
     expect(sameSel(S('country', 'tw'), S('country', 'kr'))).toBe(false);
     expect(sameSel(null, null)).toBe(true);
     expect(sameSel(S('country', 'tw'), null)).toBe(false);
+  });
+});
+
+/* ====================================================================
+   Facility playground (§ Priority 0).
+
+   The state that used to live inside FacilityExplorer as component state,
+   which produced two verified defects: switching the Layer-3 tab from
+   Explore to Events and back erased the selected facility, and neither the
+   focus nor the exploration trail appeared in the shareable URL. Both are
+   consequences of WHERE the state lived, so the fix is tested here — at
+   the one place both surfaces now read from.
+   ==================================================================== */
+describe('facility playground state', () => {
+  const start = () => initInteraction(null);
+  const run = (actions, from = start()) => actions.reduce(interactionReducer, from);
+
+  it('starts empty', () => {
+    expect(start().facility).toMatchObject({ focusId: null, rootId: null, hops: 1, direction: 'both' });
+  });
+
+  it('focusing sets both the focus and the root the first time', () => {
+    const s = run([{ type: 'FAC_FOCUS', payload: { id: 'a' } }]);
+    expect(s.facility.focusId).toBe('a');
+    expect(s.facility.rootId).toBe('a');
+    expect(s.facility.trail).toEqual([]);
+  });
+
+  it('recentring keeps the original root and pushes the old focus onto the trail', () => {
+    const s = run([
+      { type: 'FAC_FOCUS', payload: { id: 'a' } },
+      { type: 'FAC_FOCUS', payload: { id: 'b' } },
+      { type: 'FAC_FOCUS', payload: { id: 'c' } },
+    ]);
+    expect(s.facility.focusId).toBe('c');
+    expect(s.facility.rootId).toBe('a');
+    expect(s.facility.trail).toEqual(['a', 'b']);
+  });
+
+  it('back and forward walk the exploration history in both directions', () => {
+    let s = run([
+      { type: 'FAC_FOCUS', payload: { id: 'a' } },
+      { type: 'FAC_FOCUS', payload: { id: 'b' } },
+      { type: 'FAC_FOCUS', payload: { id: 'c' } },
+    ]);
+    s = interactionReducer(s, { type: 'FAC_BACK' });
+    expect(s.facility.focusId).toBe('b');
+    expect(s.facility.forward).toEqual(['c']);
+    s = interactionReducer(s, { type: 'FAC_BACK' });
+    expect(s.facility.focusId).toBe('a');
+    s = interactionReducer(s, { type: 'FAC_FORWARD' });
+    expect(s.facility.focusId).toBe('b');
+    s = interactionReducer(s, { type: 'FAC_FORWARD' });
+    expect(s.facility.focusId).toBe('c');
+    expect(s.facility.forward).toEqual([]);
+  });
+
+  it('back at the start of the trail is a no-op, not a crash', () => {
+    const s = run([{ type: 'FAC_FOCUS', payload: { id: 'a' } }, { type: 'FAC_BACK' }, { type: 'FAC_BACK' }]);
+    expect(s.facility.focusId).toBe('a');
+  });
+
+  it('returns to the original facility without losing the trail', () => {
+    let s = run([
+      { type: 'FAC_FOCUS', payload: { id: 'a' } },
+      { type: 'FAC_FOCUS', payload: { id: 'b' } },
+    ]);
+    s = interactionReducer(s, { type: 'FAC_HOME' });
+    expect(s.facility.focusId).toBe('a');
+    expect(s.facility.trail).toEqual(['a', 'b']);
+  });
+
+  /* Moving the camera must not throw away the network the reader opened. */
+  it('keeps expanded and collapsed branches when recentring', () => {
+    const s = run([
+      { type: 'FAC_FOCUS', payload: { id: 'a' } },
+      { type: 'FAC_TOGGLE_EXPAND', payload: 'x' },
+      { type: 'FAC_TOGGLE_COLLAPSE', payload: 'y' },
+      { type: 'FAC_FOCUS', payload: { id: 'b' } },
+    ]);
+    expect(s.facility.expanded).toEqual(['x']);
+    expect(s.facility.collapsed).toEqual(['y']);
+  });
+
+  it('drops the previous shape when a NEW exploration is started', () => {
+    const s = run([
+      { type: 'FAC_FOCUS', payload: { id: 'a' } },
+      { type: 'FAC_TOGGLE_EXPAND', payload: 'x' },
+      { type: 'FAC_FOCUS', payload: { id: 'b', asRoot: true } },
+    ]);
+    expect(s.facility.rootId).toBe('b');
+    expect(s.facility.expanded).toEqual([]);
+  });
+
+  it('expanding and collapsing are mutually exclusive for one node', () => {
+    let s = run([{ type: 'FAC_FOCUS', payload: { id: 'a' } }, { type: 'FAC_TOGGLE_COLLAPSE', payload: 'x' }]);
+    expect(s.facility.collapsed).toEqual(['x']);
+    s = interactionReducer(s, { type: 'FAC_TOGGLE_EXPAND', payload: 'x' });
+    expect(s.facility.collapsed).toEqual([]);
+    expect(s.facility.expanded).toEqual(['x']);
+  });
+
+  it('toggling twice returns to the starting state', () => {
+    const s = run([
+      { type: 'FAC_FOCUS', payload: { id: 'a' } },
+      { type: 'FAC_TOGGLE_EXPAND', payload: 'x' },
+      { type: 'FAC_TOGGLE_EXPAND', payload: 'x' },
+    ]);
+    expect(s.facility.expanded).toEqual([]);
+  });
+
+  /* Topology-only removal, and it has to be reversible. */
+  it('hides and restores a facility, and refuses to hide the root', () => {
+    let s = run([{ type: 'FAC_FOCUS', payload: { id: 'a' } }, { type: 'FAC_TOGGLE_HIDDEN', payload: 'b' }]);
+    expect(s.facility.hidden).toEqual(['b']);
+    s = interactionReducer(s, { type: 'FAC_TOGGLE_HIDDEN', payload: 'a' });
+    expect(s.facility.hidden).toEqual(['b']); // the root cannot be hidden away
+    s = interactionReducer(s, { type: 'FAC_CLEAR_HIDDEN' });
+    expect(s.facility.hidden).toEqual([]);
+  });
+
+  it('clamps hop depth and rejects an invalid direction', () => {
+    const s = run([{ type: 'FAC_SET', payload: { hops: 99, direction: 'sideways' } }]);
+    expect(s.facility.hops).toBe(6);
+    expect(s.facility.direction).toBe('both');
+  });
+
+  it('accepts "all reachable" as a depth', () => {
+    expect(run([{ type: 'FAC_SET', payload: { hops: Infinity } }]).facility.hops).toBe(Infinity);
+  });
+
+  it('merges filter patches and clears them all on null', () => {
+    let s = run([{ type: 'FAC_SET_FILTERS', payload: { country: 'jp' } }]);
+    s = interactionReducer(s, { type: 'FAC_SET_FILTERS', payload: { relClass: 'service' } });
+    expect(s.facility.filters).toEqual({ country: 'jp', relClass: 'service' });
+    s = interactionReducer(s, { type: 'FAC_SET_FILTERS', payload: null });
+    expect(s.facility.filters).toBeNull();
+  });
+
+  it('resets everything to the starting state', () => {
+    const s = run([
+      { type: 'FAC_FOCUS', payload: { id: 'a' } },
+      { type: 'FAC_TOGGLE_EXPAND', payload: 'x' },
+      { type: 'FAC_SET', payload: { hops: 3 } },
+      { type: 'FAC_RESET' },
+    ]);
+    expect(s.facility).toEqual(initFacilityPlayground());
+  });
+
+  /* The state-loss defect, stated as a property: nothing about the
+     playground depends on which Layer-3 tab is showing, because the tab is
+     not in this reducer at all. Selecting other entities must leave it
+     alone. */
+  it('is untouched by selecting an event, a company or a stage', () => {
+    const s = run([
+      { type: 'FAC_FOCUS', payload: { id: 'a' } },
+      { type: 'FAC_SET', payload: { hops: 2, direction: 'upstream' } },
+      { type: 'SELECT', payload: { type: 'event', id: 'e1' } },
+      { type: 'SELECT', payload: { type: 'company', id: 'tsmc' } },
+      { type: 'SET_VIEW_MODE', payload: 'topology' },
+      { type: 'CLEAR' },
+    ]);
+    expect(s.facility).toMatchObject({ focusId: 'a', hops: 2, direction: 'upstream' });
+  });
+
+  it('accepts playground as a view mode', () => {
+    expect(run([{ type: 'SET_VIEW_MODE', payload: 'playground' }]).viewMode).toBe('playground');
+    expect(VIEW_MODES).toContain('playground');
+  });
+
+  it('bounds the trail so it cannot grow without limit', () => {
+    let s = start();
+    for (let i = 0; i < 80; i += 1) s = interactionReducer(s, { type: 'FAC_FOCUS', payload: { id: `f${i}` } });
+    expect(s.facility.trail.length).toBeLessThanOrEqual(40);
   });
 });

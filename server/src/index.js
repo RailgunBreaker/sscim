@@ -1,6 +1,6 @@
 import './load-env.js';
 import express from 'express';
-import cors from 'cors';
+import { corsMiddleware } from './middleware/cors.js';
 import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -17,8 +17,12 @@ if (seedIfEmpty()) {
 }
 
 const app = express();
-app.use(cors());
-app.use(express.json());
+/* An origin allowlist rather than `cors()`'s wildcard. Localhost is always
+   allowed so development needs no configuration; anything else comes from
+   SSCIM_ALLOWED_ORIGINS. See middleware/cors.js for why non-browser
+   clients (no Origin header) still pass. */
+app.use(corsMiddleware());
+app.use(express.json({ limit: '1mb' }));
 
 app.get('/api/health', (req, res) => res.json({ ok: true }));
 

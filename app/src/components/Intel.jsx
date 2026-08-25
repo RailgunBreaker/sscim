@@ -1,77 +1,157 @@
+import { useId } from 'react';
 import { C } from '../theme.js';
 import { t } from '../i18n/index.js';
 import { useVault } from '../data/VaultContext.jsx';
-import { getEventAssumption } from '../engine/event-assumptions.js';
-import { TYPE_COLORS, riskColor } from '../utils/colors.js';
+import { riskColor } from '../utils/colors.js';
 import { onEnterSpace } from '../utils/a11y.js';
 import { STAGE_INTRO, introForCompany } from '../data/glossary.js';
 import Logo from './Logo.jsx';
 import Detail from './Detail.jsx';
-import IndexHistory from './IndexHistory.jsx';
 import DecadeHistory from './DecadeHistory.jsx';
 import Quote from './Quote.jsx';
 import Watchlist from './Watchlist.jsx';
 import FacilityExplorer from './FacilityExplorer.jsx';
+import EventFeed from './EventFeed.jsx';
 
-/* ================= Intelligence Panel ================= */
+/* ====================================================================
+   Intel — Layer 3, the intelligence panel.
+
+   THE LAYOUT DEFECT THIS FIXES. The feed wrapper carried
+   `maxHeight: horizontal ? 420 : 440`. On a 1363×936 desktop the panel
+   itself was ~1317px tall — its height set by the left detail column —
+   while the feed was pinned to a 420px internal scroller, leaving roughly
+   900px of empty panel below the Events list. Every tab shared the
+   wrapper, so every tab had it; Events and Explore just made it obvious.
+
+   THE FIX, and why it is CSS rather than arithmetic. The horizontal
+   layout is a two-column grid whose items stretch, so the right column
+   already receives exactly the left column's height — the browser
+   computes it, and it stays correct at every viewport without a resize
+   listener or a measured pixel value. Inside that column:
+
+     display: flex; flex-direction: column   tab bar, then content
+     the panel: flex: 1; min-height: 0       fills what is left over
+     overflow-y: auto on the panel           one scrollbar, in one place
+
+   `min-height: 0` is the load-bearing line. A flex item's default
+   `min-height: auto` refuses to shrink below its content, so without it
+   the panel grows to fit 167 event cards and pushes the page to ten
+   thousand pixels instead of scrolling internally. That is the failure
+   mode the acceptance criteria name explicitly.
+
+   A `minHeight` floor on the grid keeps the panel usable when the detail
+   column happens to be short, and it is viewport-relative rather than a
+   magic number, so 1366×768 and 1920×1080 both get a sensible panel.
+
+   NARROW/MOBILE. No nested scroller at all: the tabs stack above the
+   content and the content flows into the document, which is what phone
+   readers expect and what makes a long feed reachable by ordinary page
+   scrolling. `maxHeight: none` rather than a smaller box.
+
+   TAB SEMANTICS. The bar is a real tablist — role, aria-selected,
+   aria-controls, roving tabindex, arrow-key navigation — because seven
+   unlabelled buttons above a changing region is otherwise unnavigable by
+   keyboard or screen reader. It scrolls horizontally instead of crushing
+   its labels when there is not enough width.
+   ==================================================================== */
+
+const TABS = [
+  ['watch', '★ WATCH'],
+  ['explore', '⇄ EXPLORE'],
+  ['events', 'EVENTS'],
+  ['history', 'HISTORY'],
+  ['companies', 'COMPANIES'],
+  ['movers', 'MOVERS 7D'],
+  ['capital', 'CAPITAL'],
+];
+
 export default function Intel({ sel, setSel, model, scenario, onResetScenario, onPlayScenario, scenarioActive, horizontal, feedTab, setFeedTab, baseGraph }) {
   const { data, engine } = useVault();
   const { EVENTS, COMPANY_BY_ID, COUNTRY_NAMES, SUPPLIERS, CUSTOMERS, QUOTES } = data;
-  const { STAGE_BY_ID, CAP_RANK, MOVERS7D, COMPANY_CRITICALITY, COMPANY_RANK, eventField, operationalIndex, toDisplayIndex } = engine;
+  const { STAGE_BY_ID, CAP_RANK, MOVERS7D, COMPANY_CRITICALITY, COMPANY_RANK } = engine;
+  const baseId = useId();
+  const tabId = (k) => `${baseId}-tab-${k}`;
+  const panelId = (k) => `${baseId}-panel-${k}`;
+
+  /* Arrow keys move between tabs, Home/End jump to the ends — the
+     standard tablist keyboard contract. */
+  const onTabKeyDown = (e) => {
+    const i = TABS.findIndex(([k]) => k === feedTab);
+    const go = (n) => { e.preventDefault(); const [k] = TABS[(n + TABS.length) % TABS.length]; setFeedTab(k); document.getElementById(tabId(k))?.focus(); };
+    if (e.key === 'ArrowRight') go(i + 1);
+    else if (e.key === 'ArrowLeft') go(i - 1);
+    else if (e.key === 'Home') go(0);
+    else if (e.key === 'End') go(TABS.length - 1);
+  };
+
   return (
-    <div style={{ display: horizontal ? "grid" : "block", gridTemplateColumns: horizontal ? "1.5fr 1fr" : undefined }}>
-      <div style={{ padding: 12, borderRight: horizontal ? `1px solid ${C.line}` : "none", borderBottom: horizontal ? "none" : `1px solid ${C.line}` }}>
+    <div style={{
+      display: horizontal ? 'grid' : 'block',
+      gridTemplateColumns: horizontal ? '1.5fr 1fr' : undefined,
+      // Stretch is the default, stated because the whole fix depends on it:
+      // the right column takes the left column's height.
+      alignItems: horizontal ? 'stretch' : undefined,
+      // A floor, so a short detail column does not produce a cramped feed.
+      // Viewport-relative rather than a magic pixel count.
+      minHeight: horizontal ? 'clamp(440px, 58vh, 900px)' : undefined,
+    }}>
+      <div style={{
+        padding: 12,
+        borderRight: horizontal ? `1px solid ${C.line}` : 'none',
+        borderBottom: horizontal ? 'none' : `1px solid ${C.line}`,
+        minWidth: 0,
+      }}>
         <Detail sel={sel} setSel={setSel} model={model} scenario={scenario} onResetScenario={onResetScenario} onPlayScenario={onPlayScenario} scenarioActive={scenarioActive} baseGraph={baseGraph} />
       </div>
-      <div>
-        <div style={{ display: "flex", gap: 0, borderBottom: `1px solid ${C.line}` }}>
-          {[["watch", "★ WATCH"], ["explore", "⇄ EXPLORE"], ["events", "EVENTS"], ["history", "HISTORY"], ["companies", "COMPANIES"], ["movers", "MOVERS 7D"], ["capital", "CAPITAL"]].map(([k, v]) => [k, t(v)]).map(([k, v]) => (
-            <button key={k} onClick={() => setFeedTab(k)} className="mono"
-              style={{ flex: 1, padding: "8px 0", background: "transparent", border: "none", borderBottom: feedTab === k ? `2px solid ${C.copper}` : "2px solid transparent", color: feedTab === k ? C.copper : C.dim, fontSize: 9.5, letterSpacing: 1.5, cursor: "pointer", fontFamily: "inherit" }}>
+
+      <div style={{ display: 'flex', flexDirection: 'column', minWidth: 0, minHeight: 0 }}>
+        <div role="tablist" aria-label="Intelligence panel sections" onKeyDown={onTabKeyDown}
+          style={{
+            display: 'flex', gap: 0, borderBottom: `1px solid ${C.line}`, flexShrink: 0,
+            // Seven labels do not fit at 375px. Scrolling the bar keeps every
+            // tab reachable without shrinking the type below legibility.
+            overflowX: 'auto', scrollbarWidth: 'thin',
+          }}>
+          {TABS.map(([k, v]) => [k, t(v)]).map(([k, v]) => (
+            <button key={k} id={tabId(k)} role="tab" type="button"
+              aria-selected={feedTab === k} aria-controls={panelId(k)}
+              tabIndex={feedTab === k ? 0 : -1}
+              onClick={() => setFeedTab(k)} className="mono"
+              style={{
+                flex: '1 0 auto', minWidth: 78, padding: '8px 10px', background: 'transparent', border: 'none',
+                borderBottom: feedTab === k ? `2px solid ${C.copper}` : '2px solid transparent',
+                color: feedTab === k ? C.copper : C.dim, fontSize: 9.5, letterSpacing: 1.5,
+                cursor: 'pointer', fontFamily: 'inherit', whiteSpace: 'nowrap',
+              }}>
               {v}
             </button>
           ))}
         </div>
-        <div style={{ overflowY: "auto", padding: "8px 12px 12px", maxHeight: horizontal ? 420 : 440 }}>
-          {feedTab === "watch" && <Watchlist model={model} setSel={setSel} />}
-          {feedTab === "explore" && <FacilityExplorer setSel={setSel} model={model} />}
-          {feedTab === "events" && (
-            <>
-              <IndexHistory engine={engine} events={EVENTS} onSelectEvent={(id) => setSel({ type: "event", id })} />
-              <div className="mono" style={{ fontSize: 9.5, color: C.faint, marginBottom: 8, lineHeight: 1.5 }}>
-                "index" = this event's own operational-impact display index (0–10, 5 = neutral, &gt;5 net adverse, &lt;5 net mitigating) — propagated through the graph alone, not combined with other events. <span style={{ color: C.faint }}>"excluded from score" = a hazard-signal/mixed/strategic event, shown but not scored — see its card for why.</span>
-              </div>
-              {[...EVENTS].sort((a, b) => (a.daysAgo ?? 0) - (b.daysAgo ?? 0)).map((e) => {
-                const active = sel.type === "event" && sel.id === e.id;
-                const assumption = getEventAssumption(e.id);
-                const ownIndex = toDisplayIndex(operationalIndex(eventField(e).field));
-                return (
-                  <div key={e.id} className="evcard" onClick={() => setSel({ type: "event", id: e.id })}
-                    role="button" tabIndex={0} onKeyDown={onEnterSpace(() => setSel({ type: "event", id: e.id }))}
-                    style={{ border: `1px solid ${active ? C.copper : C.line}`, background: active ? "#1A2132" : C.panel, borderRadius: 6, padding: "8px 10px", marginBottom: 8 }}>
-                    <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
-                      <span className="mono" style={{ fontSize: 9, letterSpacing: 1, color: TYPE_COLORS[e.type] || C.copper, border: `1px solid ${TYPE_COLORS[e.type] || C.copper}`, borderRadius: 3, padding: "1px 6px" }}>{e.type.toUpperCase()}</span>
-                      <span className="mono" style={{ fontSize: 10, color: C.faint }}>{e.date}</span>
-                      <span className="mono" style={{ fontSize: 10, color: assumption.operational ? C.copper : C.faint, marginLeft: "auto" }}
-                        title={assumption.operational ? "Operational-impact display index for this event alone: 0–10, 5=neutral, above 5=net adverse, below 5=net mitigating." : assumption.reason}>
-                        {assumption.operational ? `index ${ownIndex.toFixed(2)} / 10` : "excluded from score"}
-                      </span>
-                    </div>
-                    <div style={{ fontSize: 13, fontWeight: 600, marginTop: 5, lineHeight: 1.35 }}>{e.title}</div>
-                  </div>
-                );
-              })}
-            </>
-          )}
-          {feedTab === "history" && <DecadeHistory onSelectEvent={(id) => setSel({ type: "event", id })} />}
-          {feedTab === "capital" && (
+
+        {/* The one intentional internal scroller, and only in horizontal
+            mode. flex:1 + minHeight:0 is what makes it fill the remaining
+            column height and scroll rather than grow. */}
+        <div role="tabpanel" id={panelId(feedTab)} aria-labelledby={tabId(feedTab)} tabIndex={0}
+          style={{
+            flex: horizontal ? '1 1 auto' : undefined,
+            minHeight: 0,
+            overflowY: horizontal ? 'auto' : 'visible',
+            maxHeight: horizontal ? undefined : 'none',
+            padding: '8px 12px 12px',
+          }}>
+          {feedTab === 'watch' && <Watchlist model={model} setSel={setSel} />}
+          {feedTab === 'explore' && <FacilityExplorer setSel={setSel} model={model} />}
+          {feedTab === 'events' && <EventFeed sel={sel} setSel={setSel} engine={engine} events={EVENTS} />}
+          {feedTab === 'history' && <DecadeHistory onSelectEvent={(id) => setSel({ type: 'event', id })} />}
+
+          {feedTab === 'capital' && (
             <>
               <div className="mono" style={{ fontSize: 9.5, color: C.faint, marginBottom: 8, lineHeight: 1.5 }}>
-                CAPITAL POWER = Σ ownership% × company systemic criticality (§10 in ⓘ Methodology). <b>Not</b> a 0–10 score — it's an unbounded ranking number, useful only to compare owners against each other. <span style={{ color: C.amber }}>Amber = state-linked capital.</span> Data from public filings.
+                CAPITAL POWER = Σ ownership% × company systemic criticality (§10 in ⓘ Methodology). <b>Not</b> a 0–10 score — it&apos;s an unbounded ranking number, useful only to compare owners against each other. <span style={{ color: C.amber }}>Amber = state-linked capital.</span> Data from public filings.
               </div>
               {CAP_RANK.slice(0, 14).map((r, i) => (
-                <div key={r.o} style={{ border: `1px solid ${C.line}`, background: C.panel, borderRadius: 6, padding: "7px 10px", marginBottom: 6 }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <div key={r.o} style={{ border: `1px solid ${C.line}`, background: C.panel, borderRadius: 6, padding: '7px 10px', marginBottom: 6 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                     <span className="mono" style={{ fontSize: 10, color: C.faint, width: 20 }}>#{i + 1}</span>
                     <span style={{ fontSize: 12.5, fontWeight: 600, flex: 1, color: r.gov ? C.amber : C.text }}>{r.o}</span>
                     <span className="mono" style={{ fontSize: 11, fontWeight: 600, color: C.copper }}
@@ -80,49 +160,51 @@ export default function Intel({ sel, setSel, model, scenario, onResetScenario, o
                     </span>
                   </div>
                   <div className="mono" style={{ fontSize: 8.5, color: C.faint, marginTop: 3, lineHeight: 1.5 }}>
-                    {r.holdings.slice(0, 4).map(([cid, sh]) => `${COMPANY_BY_ID[cid].name} ${(sh * 100).toFixed(1)}%`).join(" · ")}
+                    {r.holdings.slice(0, 4).map(([cid, sh]) => `${COMPANY_BY_ID[cid].name} ${(sh * 100).toFixed(1)}%`).join(' · ')}
                   </div>
                 </div>
               ))}
             </>
           )}
-          {feedTab === "movers" && (
+
+          {feedTab === 'movers' && (
             <>
               <div className="mono" style={{ fontSize: 9.5, color: C.faint, marginBottom: 8, lineHeight: 1.5 }}>
-                Score = each stage's baseline operational-impact display index (0–10, 5 = neutral), recomputed 7 days ago via engine replay. Δ = today's score minus that — never the active scenario, which never touches this baseline history.
+                Score = each stage&apos;s baseline operational-impact display index (0–10, 5 = neutral), recomputed 7 days ago via engine replay. Δ = today&apos;s score minus that — never the active scenario, which never touches this baseline history.
               </div>
               {MOVERS7D.slice(0, 12).map((m) => {
                 const st = STAGE_BY_ID[m.id];
                 const up = m.d >= 0;
                 return (
-                  <div key={m.id} className="evcard" onClick={() => setSel({ type: "stage", id: m.id })}
-                    role="button" tabIndex={0} onKeyDown={onEnterSpace(() => setSel({ type: "stage", id: m.id }))}
+                  <div key={m.id} className="evcard" onClick={() => setSel({ type: 'stage', id: m.id })}
+                    role="button" tabIndex={0} onKeyDown={onEnterSpace(() => setSel({ type: 'stage', id: m.id }))}
                     title={STAGE_INTRO[m.id]}
-                    style={{ border: `1px solid ${C.line}`, background: C.panel, borderRadius: 6, padding: "7px 10px", marginBottom: 6, display: "flex", alignItems: "center", gap: 8 }}>
+                    style={{ border: `1px solid ${C.line}`, background: C.panel, borderRadius: 6, padding: '7px 10px', marginBottom: 6, display: 'flex', alignItems: 'center', gap: 8 }}>
                     <span style={{ fontSize: 12.5, fontWeight: 600, flex: 1 }}>{st.name}</span>
                     <span className="mono" style={{ fontSize: 10, color: C.dim }} title="Baseline operational-impact display index right now: 0–10, 5=neutral, above 5=net adverse, below 5=net mitigating.">{m.now.toFixed(1)} / 10</span>
-                    <span className="mono" style={{ fontSize: 11, fontWeight: 600, color: Math.abs(m.d) < 0.03 ? C.faint : up ? C.red : C.green, width: 52, textAlign: "right" }}
+                    <span className="mono" style={{ fontSize: 11, fontWeight: 600, color: Math.abs(m.d) < 0.03 ? C.faint : up ? C.red : C.green, width: 52, textAlign: 'right' }}
                       title="Change vs. the same baseline score 7 days ago (engine replay, not a live time series).">
-                      {Math.abs(m.d) < 0.03 ? "—" : `${up ? "▲" : "▼"} ${Math.abs(m.d).toFixed(2)}`}
+                      {Math.abs(m.d) < 0.03 ? '—' : `${up ? '▲' : '▼'} ${Math.abs(m.d).toFixed(2)}`}
                     </span>
                   </div>
                 );
               })}
             </>
           )}
-          {feedTab === "companies" && (
+
+          {feedTab === 'companies' && (
             <>
               <div className="mono" style={{ fontSize: 9.5, color: C.faint, marginBottom: 8, lineHeight: 1.5 }}>
-                Ranked by systemic criticality (0–10): the modeled chain effect if that company's production were fully disrupted — see a company's own detail view for its separate vulnerability/contribution numbers (§9 in ⓘ Methodology).
+                Ranked by systemic criticality (0–10): the modeled chain effect if that company&apos;s production were fully disrupted — see a company&apos;s own detail view for its separate vulnerability/contribution numbers (§9 in ⓘ Methodology).
               </div>
               {COMPANY_RANK.slice(0, 18).map((co, i) => {
-                const active = sel.type === "company" && sel.id === co.id;
+                const active = sel.type === 'company' && sel.id === co.id;
                 const criticality = COMPANY_CRITICALITY[co.id].value;
                 return (
-                  <div key={co.id} className="evcard" onClick={() => setSel({ type: "company", id: co.id })}
-                    role="button" tabIndex={0} onKeyDown={onEnterSpace(() => setSel({ type: "company", id: co.id }))}
+                  <div key={co.id} className="evcard" onClick={() => setSel({ type: 'company', id: co.id })}
+                    role="button" tabIndex={0} onKeyDown={onEnterSpace(() => setSel({ type: 'company', id: co.id }))}
                     title={introForCompany(co, { STAGE_BY_ID, COUNTRY_NAMES, CUSTOMERS, SUPPLIERS })}
-                    style={{ border: `1px solid ${active ? C.copper : C.line}`, background: active ? "#1A2132" : C.panel, borderRadius: 6, padding: "7px 10px", marginBottom: 6, display: "flex", alignItems: "center", gap: 8 }}>
+                    style={{ border: `1px solid ${active ? C.copper : C.line}`, background: active ? '#1A2132' : C.panel, borderRadius: 6, padding: '7px 10px', marginBottom: 6, display: 'flex', alignItems: 'center', gap: 8 }}>
                     <span className="mono" style={{ fontSize: 10, color: C.faint, width: 20 }}>#{i + 1}</span>
                     <Logo cid={co.id} />
                     <span style={{ fontSize: 12.5, fontWeight: 600, flex: 1 }}>{co.name}</span>

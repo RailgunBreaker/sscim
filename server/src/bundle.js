@@ -57,6 +57,15 @@ export function getEvents() {
     id: e.id, date: e.date, daysAgo: e.days_ago, sev: e.sev, type: e.type, conf: e.conf,
     title: e.title, summary: e.summary, first: e.first, second: e.second, watch: e.watch,
     detail: e.detail, source: e.source,
+    /* Provenance is published, not implied. 'automatic' means triage
+       approved this record unattended; the interface says so rather than
+       letting the source string's "human-reviewed" stand for every row.
+       Legacy rows (no column value) report 'legacy' — unknown, stated —
+       instead of being upgraded to a claim the record cannot support. */
+    provenance: e.provenance || 'legacy',
+    reviewedBy: e.reviewed_by || null,
+    incidentId: e.incident_id || null,
+    incidentRole: e.incident_role || null,
     stages: JSON.parse(e.stages_json), countries: JSON.parse(e.countries_json), timeline: JSON.parse(e.timeline_json),
   }));
 }

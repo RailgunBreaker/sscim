@@ -5,7 +5,8 @@ import { VaultProvider, useVault } from './data/VaultContext.jsx';
 import { WatchlistProvider } from './interaction/WatchlistContext.jsx';
 import { buildModel, reviewDateISO } from './engine/buildModel.js';
 import { InteractionProvider, useInteraction } from './interaction/InteractionContext.jsx';
-import { encodeInteractionState, decodeInteractionState, encodeNetworkState, decodeNetworkState } from './interaction/urlState.js';
+import { encodeInteractionState, decodeInteractionState, encodeNetworkState, decodeNetworkState, encodeFacilityState, decodeFacilityState } from './interaction/urlState.js';
+import { defaultEventSelection } from './engine/eventSelection.js';
 import { deriveAnalysisGraph } from './engine/networkOps.js';
 import { findCentreRoutes } from './engine/networkPaths.js';
 
@@ -27,6 +28,7 @@ import Intel from './components/Intel.jsx';
 import Guide from './components/Guide.jsx';
 import Briefing from './components/Briefing.jsx';
 import SiteMap from './components/SiteMap.jsx';
+import FacilityPlayground from './components/FacilityPlayground.jsx';
 
 const GLOBAL_STYLE = `
   * { box-sizing: border-box; }
@@ -120,9 +122,24 @@ function VaultGate() {
    dashboard body. Splitting these means DashboardBody can consume
    useInteraction() while the provider still lives above it. */
 function Dashboard() {
-  const { data } = useVault();
+  const { data, engine } = useVault();
+  /* The opening selection is the NEWEST event, derived from validated
+     `daysAgo` rather than from `EVENTS[0]`. The bundle's array order is
+     not chronological, so the old expression opened the dashboard on a
+     July 3 record while the newest reviewed event was from August 19 —
+     the one thing a live-reading dashboard must not get wrong. Ties among
+     equally-recent events are broken by the same "furthest from neutral"
+     ranking the status bar uses, so the answer is deterministic; an empty
+     or entirely undated event list yields no selection at all rather than
+     an arbitrary one. See engine/eventSelection.js. */
+  const defaultSelected = useMemo(
+    () => defaultEventSelection(data.EVENTS, {
+      rank: (e) => Math.abs(engine.toDisplayIndex(engine.operationalIndex(engine.eventField(e).field)) - 5),
+    }),
+    [data.EVENTS, engine],
+  );
   return (
-    <InteractionProvider defaultSelected={{ type: 'event', id: data.EVENTS[0]?.id }}>
+    <InteractionProvider defaultSelected={defaultSelected}>
       <WatchlistProvider>
         <DashboardBody />
       </WatchlistProvider>
@@ -135,8 +152,16 @@ function DashboardBody() {
   const { EVENTS, COMPANY_BY_ID } = data;
   const { STAGE_BY_ID, OUT, COMPANY_CRITICALITY, COMPANY_RANK } = engine;
 
-  const { state, setSel, clear, setScenarioActive, setLens, setFocusedPath, setViewMode, setMetric, setRoute, pgSet } = useInteraction();
-  const sel = state.selected || { type: 'event', id: EVENTS[0]?.id };
+  const { state, setSel, clear, setScenarioActive, setLens, setFocusedPath, setViewMode, setMetric, setRoute, pgSet, facSet } = useInteraction();
+  /* Same rule as the provider's default, for the case where the
+     selection has been explicitly cleared. Never EVENTS[0]. */
+  const fallbackSel = useMemo(
+    () => defaultEventSelection(EVENTS, {
+      rank: (e) => Math.abs(engine.toDisplayIndex(engine.operationalIndex(engine.eventField(e).field)) - 5),
+    }),
+    [EVENTS, engine],
+  );
+  const sel = state.selected || fallbackSel || { type: 'none', id: null };
 
   const [tab, setTab] = useState("flow");
   const [feedTab, setFeedTab] = useState("events");
@@ -292,6 +317,14 @@ function DashboardBody() {
         if (nodes.length) setFocusedPath({ sourceId: nodes[0], targetId: nodes.at(-1), path: { nodes, edges, attenuation: r.weightProduct, channel: 'downstream' } });
       }
     }
+    /* Facility-playground state (focus, root, hop depth, direction,
+       expanded/collapsed branches, filters, trail, selected connection).
+       Restored last so it cannot be clobbered by anything above, and
+       applied only when the link actually carries a focus — an existing
+       SSCIM URL with no `fac` key opens exactly as it did before. */
+    const facState = decodeFacilityState(window.location.hash);
+    if (facState.focusId) facSet(facState);
+
     urlRestoredRef.current = true;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -311,13 +344,14 @@ function DashboardBody() {
       removedEdgeIds: state.playground.removedEdgeIds,
       route: sr ? { origin: sr.centres[0], dest: sr.centres[sr.centres.length - 1], objective: sr.objective } : null,
     });
-    const qs = [core, net].filter(Boolean).join('&');
+    const facq = encodeFacilityState(state.facility);
+    const qs = [core, net, facq].filter(Boolean).join('&');
     const targetHash = qs ? `#${qs}` : '';
     if (window.location.hash !== targetHash) {
       window.history.replaceState(null, '', qs ? `#${qs}` : window.location.pathname + window.location.search);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.lens, state.viewMode, state.selected, asOfDaysAgo, state.focusedPath, state.analysisMetric, state.playground.removedNodeIds, state.playground.removedEdgeIds, state.selectedRoute]);
+  }, [state.lens, state.viewMode, state.selected, asOfDaysAgo, state.focusedPath, state.analysisMetric, state.playground.removedNodeIds, state.playground.removedEdgeIds, state.selectedRoute, state.facility]);
 
   const hl = useMemo(() => {
     const s = new Set(), c = new Set();
@@ -367,7 +401,7 @@ function DashboardBody() {
     const lead = ranked[0];
     const prefix = model.reviewing
       ? `AS OF ${reviewDateISO(engine, asOfDaysAgo)} — newest then:`
-      : `${source === 'live' ? 'live vault' : 'snapshot'} —`;
+      : `${source === 'live' ? 'LIVE VAULT' : 'STATIC SNAPSHOT'} —`;
     return `${prefix} ${lead.event.title} (${lead.event.date}) — own-field index ${lead.index.toFixed(2)}.`;
   }, [model.scenarioActive, model.reviewing, asOfDaysAgo, scenario, EVENTS, engine, source]);
 
@@ -377,12 +411,21 @@ function DashboardBody() {
   // topology network, or both stacked.
   const mapPane = <OsmMap model={displayModel} hl={hl} onApplyHazard={setHazard} />;
   const networkPane = <><NetworkGraph baseGraph={baseGraph} /><NetworkRoutePanel baseGraph={baseGraph} /><NetworkAnalysisPanel baseGraph={baseGraph} /><NetworkComparePanel baseGraph={baseGraph} /></>;
+  /* The Facility Playground is a first-class view alongside Geographic,
+     Topology and Split — not a tab inside the Layer-3 sidebar. It takes
+     the full pane width because a facility network past one hop has
+     nowhere to go in a 360px column, and because its labels were being
+     scaled down to roughly six pixels there. The compact explorer in
+     Layer 3 remains as an entry point and shares this view's state. */
+  const playgroundPane = <FacilityPlayground model={displayModel} />;
   const layer1 = viewMode === 'topology' ? networkPane
-    : viewMode === 'split' ? (<>{mapPane}{networkPane}</>)
-      : mapPane;
+    : viewMode === 'playground' ? playgroundPane
+      : viewMode === 'split' ? (<>{mapPane}{networkPane}</>)
+        : mapPane;
   const layer1Title = viewMode === 'topology' ? 'LAYER 1 · FUNCTIONAL-CENTRE NETWORK · MODELED STAGE-MEDIATED CONNECTIVITY'
-    : viewMode === 'split' ? 'LAYER 1 · WORLD MAP + FUNCTIONAL-CENTRE NETWORK'
-      : 'LAYER 1 · WORLD MAP · OPENSTREETMAP';
+    : viewMode === 'playground' ? 'LAYER 1 · FACILITY PLAYGROUND · MODELED PLANT-TO-PLANT RELATIONSHIPS, NOT SHIPMENTS'
+      : viewMode === 'split' ? 'LAYER 1 · WORLD MAP + FUNCTIONAL-CENTRE NETWORK'
+        : 'LAYER 1 · WORLD MAP · OPENSTREETMAP';
 
   return (
     <div style={{ minHeight: "100vh", background: C.bg, color: C.text, fontFamily: 'Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif' }}>
@@ -394,19 +437,21 @@ function DashboardBody() {
         tourTarget={tourTarget}
       />
 
-      <LiveBar model={model} whatChanged={whatChanged} hazard={scenario} onClearHazard={resetScenario} />
+      <LiveBar model={model} whatChanged={whatChanged} hazard={scenario} onClearHazard={resetScenario} source={source} />
       <TimeMachine asOfDaysAgo={asOfDaysAgo} setAsOfDaysAgo={setAsOfDaysAgo} setSel={setSel}
         selectedId={sel.type === 'event' ? sel.id : null} />
       <LensBar scenarioName={scenario?.name} />
-      {viewMode !== 'geographic' && <NetworkToolbar />}
+      {viewMode !== 'geographic' && viewMode !== 'playground' && <NetworkToolbar />}
 
       {!wide && <TabBar panes={panes} tab={tab} setTab={setTab} />}
 
       {wide ? (
         <>
-          <div style={{ display: "grid", gridTemplateColumns: viewMode === 'geographic' ? "1fr 1.9fr" : "1.9fr 1fr", gap: 1, background: C.line }}>
+          <div style={{ display: "grid", gridTemplateColumns: viewMode === 'playground' ? "minmax(0, 1fr)" : viewMode === 'geographic' ? "minmax(0, 1fr) minmax(0, 1.9fr)" : "minmax(0, 1.9fr) minmax(0, 1fr)", gap: 1, background: C.line }}>
             <Pane id="pane-map" highlight={tourTarget === "pane-map"} title={layer1Title}>{layer1}</Pane>
-            <Pane id="pane-flow" highlight={tourTarget === "pane-flow"} title="LAYER 2 · INDUSTRY FLOW · TAP A STAGE FOR ITS SUBSECTION"><FlowGraph sel={sel} setSel={setSel} hl={hl} model={displayModel} scenarioActive={model.scenarioActive} /></Pane>
+            {viewMode !== 'playground' && (
+              <Pane id="pane-flow" highlight={tourTarget === "pane-flow"} title="LAYER 2 · INDUSTRY FLOW · TAP A STAGE FOR ITS SUBSECTION"><FlowGraph sel={sel} setSel={setSel} hl={hl} model={displayModel} scenarioActive={model.scenarioActive} /></Pane>
+            )}
           </div>
           <div style={{ borderTop: `1px solid ${C.line}` }}>
             <Pane id="pane-intel" highlight={tourTarget === "pane-intel"} title="LAYER 3 · INTELLIGENCE PANEL">
@@ -434,15 +479,19 @@ function DashboardBody() {
       <footer className="mono" style={{ padding: "10px 16px", fontSize: 10, color: C.faint, borderTop: `1px solid ${C.line}`, lineHeight: 1.6 }}>
         SSCIM INTELLIGENCE · Supply-chain sensitivity and comparison analysis (data as of {model.datasetAsOf}) — not a calibrated, causal, or probabilistic forecast, and not investment advice.
         Map data © OpenStreetMap contributors · model {model.modelVersion}.
-        {source === 'static' && (
-          <span style={{ color: C.amber }}> · DATA SERVICE UNAVAILABLE — showing the latest available dataset.</span>
-        )}
+        {source === 'static'
+          ? <span style={{ color: C.amber }}> · STATIC SNAPSHOT — the vault API is not reachable from here, so this page is reading the dataset frozen into the build. Complete and real, but not continuously updated.</span>
+          : <span style={{ color: C.dim }}> · LIVE VAULT — figures read from the vault API.</span>}
         {/* A live vault older than this build answers 200 with a section
             simply missing, which is how the map once drew 0 of 275 plants
             with nothing on screen to say why. Never silent again. */}
         {data.LIVE_GAPS?.stale && (
           <span style={{ color: C.amber }}> · STALE VAULT API — {data.LIVE_GAPS.message}</span>
         )}
+        {' · '}
+        <a href="docs/reference/EVIDENCE-COVERAGE.md.html" style={{ color: C.copper }}>Evidence coverage</a>
+        {' · '}
+        <a href="docs/reference/SOURCE-REGISTER.md.html" style={{ color: C.copper }}>Source register</a>
         {!model.graphValid && (
           <span style={{ color: C.red }}> · MODEL DIAGNOSTIC: the stage graph failed validation — see <a href="docs/METHODOLOGY.md.html" style={{ color: C.copper }}>Methodology</a>.</span>
         )}

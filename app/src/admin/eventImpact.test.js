@@ -20,8 +20,16 @@ import { getEventAssumption } from '../engine/event-assumptions.js';
 
 const fixture = makeFixtureData();
 
-// Four operational/adverse ids, used as a stand-in duplicate cluster.
-const CLUSTER = ['p260729_web6934', 'p260728_usgtgb9', 'p260729_web1ae0', 'p260729_web3084'];
+/* Four operational/adverse ids, used as a stand-in duplicate cluster.
+
+   These were previously the four Kumamoto earthquake records — which was
+   apt, since they WERE a duplicate cluster, and that is exactly why they
+   can no longer be used here: they are now grouped under one incident with
+   a single scored primary (see EVENT_INCIDENTS), so the rest are
+   deliberately non-operational and would score nothing. These four are
+   unrelated adverse operational events, chosen only so the noisy-OR
+   saturation arithmetic below has four real contributors to saturate. */
+const CLUSTER = ['h2103_renesas', 'h2202_kioxia', 'h2204_shanghai', 'h2309_duv'];
 const ADVERSE = 'e1';
 const MITIGATING = 'e2';
 

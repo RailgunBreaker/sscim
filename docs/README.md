@@ -1,13 +1,13 @@
 # SSCIM: Semiconductor Supply Chain Intelligence Map
 
-SSCIM is an explainable research tool for exploring how a semiconductor disruption may move through a modeled supply chain. It combines a world map, a directed stage graph, company footprints, historical events, and user-built scenarios over a single computational engine.
+SSCIM is an explainable research tool for exploring how a semiconductor disruption may move through a modeled supply chain. It combines a world map, a directed stage graph, a facility network, company footprints, and reviewed historical events over a single computational engine.
 
 **SSCIM is not** a live trading signal, a prediction engine, a measured trade-flow model, or investment advice.
 
 ## What it is for
 
 - **General readers** — understand why a material, equipment supplier, fab, or region can matter far beyond its own borders. Start with the [public guide](PUBLIC_GUIDE.md).
-- **Analysts and teams** — compare modeled exposure, pathways, and alternative scenarios with every assumption visible.
+- **Analysts and teams** — compare modeled exposure, trace pathways between plants and functional centres, and screen hazard footprints, with every assumption visible.
 - **Researchers** — inspect a reproducible sensitivity model rather than a black-box risk score. Start with the [academic guide](ACADEMIC_GUIDE.md).
 - **Contributors** — add evidence through a reviewed, auditable pipeline. Start with the [developer guide](DEVELOPER_GUIDE.md).
 
@@ -21,15 +21,18 @@ Existing maps of that structure — consortium charts, research-body diagrams, s
 
 The model contains 24 production stages across seven tiers — research and IP, materials, equipment, fabrication, chip products, backend, systems, and end markets — connected by 34 directed edges describing declared production dependencies. Country-stage shares and company stakes locate real activity within that structure.
 
-An event or scenario seeds a shock at selected stages. The engine ages it with a 12-day half-life, propagates it across every reachable path using declared downstream and upstream transmission priors, combines overlapping contributions with a bounded rule, and aggregates the result.
+An event seeds a shock at selected stages. The engine ages it with a 12-day half-life, propagates it across every reachable path using declared downstream and upstream transmission priors, combines overlapping contributions with a bounded rule, and aggregates the result.
 
-The same code path serves historical events, hypothetical scenarios, and company-disruption analysis. **Change the input, not the method** — that is what makes the three comparable.
+The same code path serves reviewed historical events, a hazard footprint you place on the map, and company-disruption analysis. **Change the input, not the method** — that is what makes the three comparable.
 
-Results appear across three synchronized views:
+Results appear across four synchronized views:
 
-1. **Map** — country-level modeled exposure, by production geography rather than headquarters.
+1. **Geographic** — every named plant on a world map, the modeled links between them, and a hazard radius you can place anywhere. Country-level exposure is drawn by production geography rather than headquarters.
 2. **Industry flow** — stage-level structure and propagation.
-3. **Topology** — derived country × stage functional centres and modeled routes.
+3. **Topology** — derived country × stage functional centres and modeled routes, with reachability, betweenness, and reversible node/edge removal.
+4. **Facility Playground** — pick one named plant and trace the modeled network around it: suppliers left, customers right, one hop or three or everything reachable, with expansion, collapse, recentring, filters, and a complete connection table. Every connection is a **modeled stage-mediated relationship**, never a confirmed shipment, customer contract, or trade route.
+
+The whole of that state — view, pinned entity, reviewed date, and the entire playground exploration — is encoded in the URL, so a view can be linked and reproduced.
 
 Read the explanation, source, confidence label, and assumptions before using any score.
 
@@ -39,7 +42,9 @@ Read the explanation, source, confidence label, and assumptions before using any
 - **Evidence quality** from **effect size**. Confidence is reported alongside a magnitude, never multiplied into it.
 - **Company vulnerability** from **contribution** from **criticality** — three distinct questions, three separately labeled numbers.
 - **Downstream input dependence** from **upstream revenue dependence**. A supplier's sales share to a customer is not the customer's dependence on that supplier.
-- **Baseline history** from **hypothetical scenarios**. A scenario is shown as a comparison and never rewrites the past.
+- **Baseline history** from **the hazard overlay**. A hazard footprint is a bounded screening hypothesis, shown as a comparison against the live reading, and never rewrites the past.
+- **One incident** from **several reports of it**. The index accumulates events through a bounded noisy-OR, which is correct for independent events and wrong for repeated coverage of one. Records describing the same incident are grouped: exactly one is scored, the rest are published as updates or recovery reports with their own sources and their own assessments.
+- **A modeled relationship** from **an observed one**. No dataset here records which plant ships to which plant, so every facility-to-facility connection is labelled modeled, at every hop depth.
 
 ## Start here
 
@@ -74,13 +79,25 @@ delivered.
 
 ## Data and limits
 
-The public site is built from a versioned static snapshot. Sources, classifications, and company/country data are curated; model outputs are derived; propagation coefficients and certain stage judgments are **declared priors** — chosen to produce directionally sensible, reproducible, inspectable behaviour, and fitted to nothing.
+The public site is built from a versioned static snapshot. When the vault API is unreachable — which is the normal case for the static deployment — the interface says **STATIC SNAPSHOT** rather than **LIVE VAULT**, and shows the dataset date. Sources, classifications, and company/country data are curated; model outputs are derived; propagation coefficients and certain stage judgments are **declared priors** — chosen to produce directionally sensible, reproducible, inspectable behaviour, and fitted to nothing.
+
+Country coverage has two tiers and the interface distinguishes them: some countries carry a production share and contribute to scores, while others appear only because facilities are located there and contribute nothing to any number. The landing page states both counts; `npm run audit:data` reports the split on every run.
+
+Facility significance is an **analyst ordinal (1–5), not measured capacity**, so every share derived from it is a share of the modeled sample rather than of world output.
 
 The model has no facility-level capacity, inventory, bill-of-materials, qualification, or recovery-time data. A real capacity-constrained shock, such as a fab physically destroyed, would propagate differently than this model predicts. See the [project roadmap](MODEL_ROADMAP.md) for the full list of what calibration would require, and the [validation note](computation-demo/validation/MLE_VALIDATION.md) for what has and has not been established.
 
 ## Contributing
 
-Submit evidence with a stable source, a date, a bounded claim, the affected stages, and its uncertainty. Candidates are reviewed before approval — an AI may draft a proposal, but a proposal has no authority until a human accepts it. Approval updates the local vault; publication rebuilds the snapshot, runs the audit and tests, and pushes only if that gate passes.
+Submit evidence with a stable source, a date, a bounded claim, the affected stages, and its uncertainty. Candidates are reviewed before approval — an AI may draft a proposal, but a proposal has no authority until a human accepts it.
+
+**Automatic approval is opt-in and off by default.** With `SSCIM_TRIAGE_AUTO_APPROVE` unset, every relevant candidate waits for a person. Setting it to `on` enables bounded unattended approval (High confidence only, no duplicate flag, never without a draft); anything approved that way is recorded with `provenance='automatic'` and its source line says *"AI-drafted, automatically approved by triage — not human-reviewed"*. No reviewer identity is ever invented for an unattended approval. `SELECT * FROM events WHERE provenance='automatic'` is the complete list of what went in that way.
+
+Automatic **rejection** is configured separately (`SSCIM_TRIAGE_AUTO_REJECT`, default on). The asymmetry is deliberate: a wrongly rejected candidate stays in the queue with its reason attached and costs one glance to recover, while a wrongly approved one is already published and already moving the index.
+
+Internal review notes — candidate identifiers, approve/reject commands, the publication log — stay in the `event_candidates` table behind the admin token and never reach a public field. A test over the generated snapshot fails the build if one does.
+
+Approval updates the local vault; publication rebuilds the snapshot, runs the audit and tests, and pushes only if that gate passes.
 
 ## Acknowledgements
 

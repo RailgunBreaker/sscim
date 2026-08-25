@@ -18,6 +18,7 @@ it does **not** know.
 | --- | --- | --- |
 | [Algorithm and priors](ALGORITHM-AND-PRIORS.md) | Every declared coefficient, what is computed rather than collected, why none of it is fitted, and the literature each method comes from | 2026-08-23 |
 | [Companies and ownership](COMPANIES-AND-OWNERSHIP.md) | The 109 modeled companies, their stage stakes, and the 75 shareholder rows | 2026-08-22 |
+| [Evidence coverage](EVIDENCE-COVERAGE.md) | **How much of the dataset carries a source at all** — counted from the vault, with schema integrity, graph integrity, citation completeness, source quality and factual validation reported as five separate claims | generated |
 | [Events](EVENTS.md) | The 163 dated events, both curation routes, and the review gate between a candidate and an event | 2026-08-22 |
 | [Facilities](FACILITIES.md) | The 275 named plants, what is sourced inside a record and what is judgement | 2026-08-22 |
 | [Market and display data](MARKET-AND-DISPLAY-DATA.md) | Quotes, basemap tiles and logos — everything that is shown but never computed with | 2026-08-22 |
@@ -25,6 +26,20 @@ it does **not** know.
 | [Supply-chain structure](SUPPLY-CHAIN-STRUCTURE.md) | The 24 stages, 34 flow edges, 243 customer relationships and the derived site network | 2026-08-22 |
 
 ## On citation completeness
+
+Two documents, answering two different questions.
+
+[Evidence coverage](EVIDENCE-COVERAGE.md) answers the prior one: **how much of
+the model is sourced at all.** A register of citations can only describe the
+things that have one, so the companies with no evidence note, the stages whose
+shares are analyst judgement, and the facility records that name a source but
+not a link are all invisible in it — and they are most of the uncertainty. That
+page counts them, and keeps five claims apart that are easy to blur together:
+schema integrity, graph integrity, citation completeness, source quality, and
+factual validation. **The last of those is not established for this dataset**,
+and a passing data audit does not establish it: the audit checks that records
+are well-formed and internally consistent, which is a structural property, not
+a factual one.
 
 The [source register](SOURCE-REGISTER.md) renders every source in Chicago
 bibliography style, and reports how complete each entry actually is rather than

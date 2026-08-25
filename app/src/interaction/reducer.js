@@ -35,7 +35,33 @@ export function sameSel(a, b) {
 
 export const DRAFT_DIRECTIONS = ['adverse', 'mitigating', 'neutral'];
 
-export const VIEW_MODES = ['geographic', 'topology', 'split'];
+export const VIEW_MODES = ['geographic', 'topology', 'split', 'playground'];
+
+/* Facility-playground defaults. This lives in the shared reducer rather
+   than inside FacilityExplorer/FacilityPlayground because it was local
+   component state, and local state produced two real defects: switching
+   the Layer-3 tab from Explore to Events and back erased the selected
+   facility, and neither the focus nor the exploration trail appeared in
+   the shareable URL. Anything a reader would be annoyed to lose belongs
+   here. */
+export const FACILITY_DIRECTIONS = ['upstream', 'downstream', 'both'];
+
+export function initFacilityPlayground() {
+  return {
+    focusId: null,      // the plant currently centred
+    rootId: null,       // where this exploration started, for "back to start"
+    expanded: [],       // per-node overrides that reach one hop further
+    collapsed: [],      // branches folded away (the node itself still shows)
+    hidden: [],         // topology-only removals, reversible
+    trail: [],          // back-stack of previous focuses
+    forward: [],        // redo-stack, so back/forward both work
+    hops: 1,
+    direction: 'both',
+    filters: null,      // null = EMPTY_FILTERS (engine/facilityTraversal.js)
+    selectedLink: null, // linkKey of the connection whose explanation is open
+    route: null,        // { from, to } highlighted route between two visible plants
+  };
+}
 
 export function initInteraction(defaultSelected = null) {
   return {
@@ -64,6 +90,9 @@ export function initInteraction(defaultSelected = null) {
     // edge removals over the immutable base graph, an undo/redo stack, and a
     // multi-selection set. Reset clears the removals and restores baseline.
     playground: { removedNodeIds: [], removedEdgeIds: [], multi: [], past: [], future: [] },
+    // Facility playground (§ Priority 0): focus, traversal shape and filters,
+    // shared by the full playground view and the compact Layer-3 Explore tab.
+    facility: initFacilityPlayground(),
   };
 }
 
@@ -262,6 +291,137 @@ export function interactionReducer(state, action) {
 
     case 'PG_CLEAR_MULTI':
       return { ...state, playground: { ...state.playground, multi: [] } };
+
+    /* ---- facility playground (§ Priority 0) ----
+       Focus moves push onto a back-stack and clear the forward-stack,
+       which is what makes browser-style back/forward behave the way a
+       reader expects. Expanded/collapsed sets are NOT cleared on a
+       recenter: the network the user has opened up is the thing they
+       built, and throwing it away to move the camera would be hostile. */
+    case 'FAC_FOCUS': {
+      const id = action.payload?.id ?? action.payload;
+      if (!id) return state;
+      const f = state.facility;
+      if (f.focusId === id) return state;
+      const asRoot = action.payload?.asRoot || !f.rootId;
+      return { ...state, facility: {
+        ...f,
+        focusId: id,
+        rootId: asRoot ? id : f.rootId,
+        trail: f.focusId ? [...f.trail, f.focusId].slice(-40) : f.trail,
+        forward: [],
+        selectedLink: null,
+        route: null,
+        // Starting a fresh exploration drops the previous one's shape.
+        expanded: asRoot ? [] : f.expanded,
+        collapsed: asRoot ? [] : f.collapsed,
+      } };
+    }
+
+    case 'FAC_BACK': {
+      const f = state.facility;
+      if (!f.trail.length) return state;
+      const prev = f.trail[f.trail.length - 1];
+      return { ...state, facility: {
+        ...f,
+        focusId: prev,
+        trail: f.trail.slice(0, -1),
+        forward: f.focusId ? [f.focusId, ...f.forward].slice(0, 40) : f.forward,
+        selectedLink: null,
+      } };
+    }
+
+    case 'FAC_FORWARD': {
+      const f = state.facility;
+      if (!f.forward.length) return state;
+      const next = f.forward[0];
+      return { ...state, facility: {
+        ...f,
+        focusId: next,
+        trail: f.focusId ? [...f.trail, f.focusId].slice(-40) : f.trail,
+        forward: f.forward.slice(1),
+        selectedLink: null,
+      } };
+    }
+
+    case 'FAC_HOME': {
+      const f = state.facility;
+      if (!f.rootId || f.focusId === f.rootId) return state;
+      return { ...state, facility: {
+        ...f,
+        focusId: f.rootId,
+        trail: f.focusId ? [...f.trail, f.focusId].slice(-40) : f.trail,
+        forward: [],
+        selectedLink: null,
+      } };
+    }
+
+    case 'FAC_RESET':
+      return { ...state, facility: initFacilityPlayground() };
+
+    case 'FAC_SET': {
+      const patch = action.payload || {};
+      const f = { ...state.facility, ...patch };
+      /* Infinity is the legitimate "all reachable" depth and must survive
+         the clamp — `typeof Infinity === 'number'`, so testing the type
+         first would silently turn it into 6. Anything else non-finite is a
+         bad patch and falls back to what was already set. */
+      if (f.hops === Infinity) f.hops = Infinity;
+      else if (Number.isFinite(f.hops)) f.hops = Math.max(1, Math.min(6, Math.floor(f.hops)));
+      else f.hops = state.facility.hops;
+      if (patch.direction && !FACILITY_DIRECTIONS.includes(patch.direction)) f.direction = state.facility.direction;
+      return { ...state, facility: f };
+    }
+
+    case 'FAC_SET_FILTERS': {
+      const f = state.facility;
+      return { ...state, facility: { ...f, filters: action.payload ? { ...(f.filters || {}), ...action.payload } : null } };
+    }
+
+    case 'FAC_TOGGLE_EXPAND': {
+      const id = action.payload;
+      if (!id) return state;
+      const f = state.facility;
+      const has = f.expanded.includes(id);
+      return { ...state, facility: {
+        ...f,
+        expanded: has ? f.expanded.filter((x) => x !== id) : [...f.expanded, id],
+        // Expanding a branch that was folded away is the same intent as unfolding it.
+        collapsed: has ? f.collapsed : f.collapsed.filter((x) => x !== id),
+      } };
+    }
+
+    case 'FAC_TOGGLE_COLLAPSE': {
+      const id = action.payload;
+      if (!id) return state;
+      const f = state.facility;
+      const has = f.collapsed.includes(id);
+      return { ...state, facility: {
+        ...f,
+        collapsed: has ? f.collapsed.filter((x) => x !== id) : [...f.collapsed, id],
+        expanded: has ? f.expanded : f.expanded.filter((x) => x !== id),
+      } };
+    }
+
+    /* Topology-only, and labelled that way wherever it surfaces: hiding a
+       plant changes what the graph can reach and nothing else. It does not
+       feed the risk model and is never a capacity estimate. */
+    case 'FAC_TOGGLE_HIDDEN': {
+      const id = action.payload;
+      if (!id || id === state.facility.rootId) return state;
+      const f = state.facility;
+      const has = f.hidden.includes(id);
+      return { ...state, facility: { ...f, hidden: has ? f.hidden.filter((x) => x !== id) : [...f.hidden, id] } };
+    }
+
+    case 'FAC_CLEAR_HIDDEN':
+      return { ...state, facility: { ...state.facility, hidden: [] } };
+
+    case 'FAC_SELECT_LINK':
+      return { ...state, facility: { ...state.facility, selectedLink: action.payload || null } };
+
+    case 'FAC_SET_ROUTE':
+      return { ...state, facility: { ...state.facility, route: action.payload || null } };
 
     case 'PLAYBACK': {
       const p = { ...state.playback, ...action.payload };

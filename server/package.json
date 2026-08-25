@@ -16,11 +16,13 @@
     "quotes": "node scripts/fetch-quotes.mjs",
     "sync:countries": "node scripts/sync-countries.mjs",
     "api:restart": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/restart-api.ps1",
-    "sources": "node scripts/build-source-register.mjs",
+    "sources": "node scripts/build-source-register.mjs && node scripts/build-evidence-coverage.mjs",
     "sources:resolve": "node scripts/resolve-citations.mjs",
     "sources:propose": "node scripts/resolve-citations.mjs --propose",
     "sources:sec": "node scripts/resolve-sec-citations.mjs",
-    "sources:methods": "node scripts/resolve-method-citations.mjs"
+    "sources:methods": "node scripts/resolve-method-citations.mjs",
+    "evidence": "node scripts/build-evidence-coverage.mjs",
+    "repair:provenance": "node scripts/repair-event-provenance.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.115.0",

@@ -29,39 +29,33 @@ export const UNCLASSIFIED_ASSUMPTION = Object.freeze({
 });
 
 export const EVENT_ASSUMPTIONS = Object.freeze({
+  p260820_web147f: Object.freeze({ direction: "mitigating", channel: "upstream", operational: false, reason: "A decade-long R&D capital commitment with no near-term output. No wafer capacity is added, removed, or shifted in the reporting period, so realized operational scale is essentially nil — severity 2. Direction is mitigating only in the long run (additional U.S. memory/packaging R&D capability); operational=false because this is a long-term strategic/investment signal, not a change in effect." }),
+
+  p260820_web17aa: Object.freeze({ direction: "mitigating", channel: "upstream", operational: false, reason: "A pre-construction sequencing change on a fab whose production target is 2030. Nothing is built, installed, or producing, and no existing output is affected, so realized operational scale is near zero — severity 2. Direction is mitigating in the long run (potential added U.S. leading-edge foundry capacity), but operational=false: this is an announced-but-not-in-effect capacity signal, and it is explicitly contingent on a customer that does not yet exist." }),
+
+  p260820_web771c: Object.freeze({ direction: "mixed", channel: "both", operational: false, reason: "The realized change here is commercial pricing, not capacity: no wafer output is lost, delayed, or taken offline, and the increases are scoped to new orders only, so the operational footprint is well below the 4-anchor (one company losing one supply line) — severity 3, reflecting a cross-vendor pricing move at a leading-edge foundry rather than a disruption. Direction is mixed because the record couples an adverse cost/allocation signal for fabless buyers with a mitigating capacity signal (2nm ramp, Taylor acceleration), and because price increases redistribute margin between foundries and customers rather than removing supply. operational=false on rule 3: simultaneous winners and losers, plus the Taylor components are not yet in effect." }),
+
+  p260821_web8e15: Object.freeze({ direction: "mitigating", channel: "upstream", operational: false, reason: "Unconfirmed report of a capacity decision that has not been made, for a facility that would take years to produce wafers. Nothing is realized: no site acquired, no construction, no equipment orders, no output. Logged as a long-horizon capacity/geographic-diversification signal rather than an event, which is exactly the case rule 3 assigns operational=false. Severity 1 because zero current capacity is affected in either direction." }),
+
 
   p260819_man0819: Object.freeze({ direction: "mixed", channel: "downstream", operational: false, reason: "A pricing action, not a production event: no wafer capacity was lost or gained, so rule 3 applies — reallocative, with the foundries as winners and fabless customers as payers. It is worth recording because a second-source foundry gaining pricing power is the clearest market evidence that leading-edge capacity is the binding constraint, which is a structural signal the model already represents. Severity 3 and operational=false keep it out of the scored index while leaving it visible." }),
 
   p260807_man0807: Object.freeze({ direction: "adverse", channel: "downstream", operational: true, reason: "This is a realized capacity-allocation event, not a market reaction: the price is the visible symptom of memory-fab wafer starts being moved off commodity DRAM onto HBM, and the effect on downstream PC, handset and embedded builders is current rather than forecast. Severity 4 rather than higher because no capacity was destroyed and every affected buyer can still buy — at a price. Scored as operational because the constraint is on physical allocation, but it sits at the boundary: the same event is a windfall for the memory makers, which is why direction is recorded as adverse only from the consuming side." }),
 
-  p260804_man0804: Object.freeze({ direction: "mitigating", channel: "downstream", operational: true, reason: "This is the resolution half of the M7.1 Kumamoto event already in the dataset at severity 7, and it is realized rather than announced: named plants restarted on named dates. Severity 3 reflects that recovery was staged over roughly three weeks with residual capacity loss at Kawashiri through late August, not that the disruption was small — the original event carries that weight. Direction is mitigating because it releases capacity the earlier events removed." }),
-
-  p260729_webbe69: Object.freeze({ direction: "mitigating", channel: "downstream", operational: false, reason: "Recorded. 1 decision(s) awaiting publication." }),
-
-  p260714_fed4132: Object.freeze({ direction: "mitigating", channel: "downstream", operational: false, reason: "Published: Review: reject cand_webz_news_04f59e01b8bab71dc7c23814c78ec641915d994f" }),
-
-  p260728_webef0b: Object.freeze({ direction: "mixed", channel: "upstream", operational: false, reason: "Published: Review: approve p260728_web4420" }),
-
-  p260728_web4420: Object.freeze({ direction: "adverse", channel: "downstream", operational: false, reason: "Published: Review: reject cand_webz_news_4ba0c3389095b2f227635e770868fafa9168c58b" }),
-
-  p260729_web6934: Object.freeze({ direction: "adverse", channel: "upstream", operational: true, reason: "Published: Review: approve p260729_web807f" }),
-
-  p260729_web807f: Object.freeze({ direction: "mitigating", channel: "upstream", operational: false, reason: "Published: Review: reject cand_webz_news_dea3c680f9e6c867539a5c67799ad690aba2b414" }),
-
-  p260729_web2ef3: Object.freeze({ direction: "mitigating", channel: "downstream", operational: false, reason: "Published: Review: approve p260728_usgtgb9" }),
-
-  p260728_usgtgb9: Object.freeze({ direction: "adverse", channel: "both", operational: true, reason: "Realized multi-site production halt with confirmed physical damage at one operator (Renesas) plus regional power and rail outages. This matches the existing M7.1 Kumamoto anchor at 7: several named fabs down with confirmed damage, but concentrated in one prefecture and with the largest local fab (JASM) undamaged and already restoring, so it does not approach the sector-wide breadth of the 9 anchor." }),
-
-  p260729_webaa64: Object.freeze({ direction: "adverse", channel: "both", operational: false, reason: "As reported by this source the event is predominantly precautionary: every named site reports no major damage, halts are inspection-driven and same-day, and the article's own assessment is minimal immediate disruption. That is a hazard signal with assessment underway rather than established capacity loss, so operational=false and severity stays low. This is deliberately lower than the severity assigned to candidate ...b1017aa1 for the same earthquake, because that source establishes confirmed physical damage and multi-day halts at Renesas and Toyota that this earlier snapshot lists only as 'assessing'. If the two are merged, the higher assessment governs." }),
-
-  p260729_web1ae0: Object.freeze({ direction: "adverse", channel: "both", operational: true, reason: "Published: Review: reject cand_webz_news_10d7f9f9b2ab24f1f038d4999d984b36851ca11c" }),
-
-  p260729_webfdb0: Object.freeze({ direction: "mixed", channel: "downstream", operational: false, reason: "Published: Review: approve p260729_web57b8" }),
-
-  p260729_web57b8: Object.freeze({ direction: "adverse", channel: "downstream", operational: true, reason: "Production at a single named fab genuinely stopped, so this is operational rather than a hazard signal — but the realized scale is small: one site, no structural damage found, and resumption already under way at the time of reporting. That sits well below the 6 anchor for a multi-week single-site outage and near the 4 anchor for one company losing one supply line. Direction is adverse because the underlying operational change is a production pause; the resumption framing is why severity stays low rather than making the record mitigating. Channel is downstream because the disruption originates at a foundry and propagates to its customers." }),
-
-  p260729_web3084: Object.freeze({ direction: "adverse", channel: "both", operational: true, reason: "Production was actually stopped, not merely threatened: several named fabs and vehicle plants suspended output and at least one operator (Renesas) reported confirmed physical damage. This matches the dataset's severity-7 anchor for the M7.1 Kumamoto quake halting several named fabs with confirmed damage — multi-site, multi-company, but with halts so far measured in days rather than weeks and partial resumption already underway, so it does not exceed that anchor. Channel is both because upstream wafer/sensor/MCU output and downstream vehicle assembly were hit simultaneously." }),
-
+  p260804_man0804: Object.freeze({ direction: "mitigating", channel: "downstream", operational: false, reason: "The resolution half of the M7.1 Kumamoto event: named plants restarting on named dates, with residual capacity loss at Kawashiri into late August. Recorded as a recovery update of h2607_kumamoto rather than as an independently scored event — the primary record carries the disruption's weight and already anticipates the staged restart, so scoring the recovery separately would offset an anchor that has already accounted for it." }),
+  p260729_webbe69: Object.freeze({ direction: "mitigating", channel: "downstream", operational: false, reason: "A disclosed pipeline of prospective memory supply partnerships, explicitly described as not yet contracted. Mitigating in the long run if the volumes are signed; operational=false because no contract exists, no capacity is allocated, and a pursued order is not a realized change in supply." }),
+  p260714_fed4132: Object.freeze({ direction: "mitigating", channel: "downstream", operational: false, reason: "A licensing-status change, not a change in production: moving the UAE into Country Group A:5 widens which license exceptions are available for advanced computing items. Mitigating in direction because it removes a licensing barrier rather than adding one, but operational=false — no wafer capacity is added, removed, or redirected, and the record establishes eligibility rather than any realized shipment." }),
+  p260728_webef0b: Object.freeze({ direction: "mixed", channel: "upstream", operational: false, reason: "First-article manufacture of a domestically developed immersion DUV tool. Direction is mixed: it is a mitigating capability signal for the domestic chain and an adverse competitive signal for incumbent tool vendors, and the two are simultaneous. operational=false because an initial production run establishes that the tool exists, not that qualified capacity has changed — no fab output is added or lost in the reporting period." }),
+  p260728_web4420: Object.freeze({ direction: "adverse", channel: "downstream", operational: false, reason: "An investigation and a meeting, not an enforcement action. Direction is adverse because the subject is possible export-control violations, but operational=false on the same rule every other open probe in this table follows: no licence was revoked, no shipment was stopped, and no remedy is determined at this date." }),
+  p260729_web6934: Object.freeze({ direction: "adverse", channel: "upstream", operational: false, reason: "Sony's Kumamoto image-sensor fab halted indefinitely — the single-operator detail of the same earthquake, and the most severe individual outcome within it. Same incident as h2607_kumamoto — the M7.1 Kumamoto earthquake of Jul 28, 2026 — reported by a different source. Recorded as a non-scoring UPDATE of that primary incident rather than as an event of its own: the index accumulates events through noisy-OR, so several representations of one earthquake would each contribute independently and inflate the reading for a disruption that happened once. The primary record carries the severity; this record keeps its own source, its own reporting, and its own assessment, and is displayed alongside it. See EVENT_INCIDENTS below." }),
+  p260729_web807f: Object.freeze({ direction: "mitigating", channel: "upstream", operational: false, reason: "A national policy framework with a 2030 fab target. Mitigating only in the long run — additional regional capacity and ASEAN integration — and operational=false because nothing is built, funded to construction, or producing: this is a stated intention, which is exactly the case that is displayed but not scored." }),
+  p260729_web2ef3: Object.freeze({ direction: "mitigating", channel: "downstream", operational: false, reason: "A capacity ramp reaching a reported milestone at one fab. Mitigating in direction — leading-edge capacity easing — but operational=false because 20k wpm against a fleet of roughly 175k is a small marginal addition on an already-announced ramp, and the figure is a press citation of a single reported number rather than a disclosed change in output." }),
+  p260728_usgtgb9: Object.freeze({ direction: "adverse", channel: "both", operational: false, reason: "Realized multi-site production halt with confirmed physical damage at one operator (Renesas) plus regional power and rail outages — the seismological record of the same event. Same incident as h2607_kumamoto — the M7.1 Kumamoto earthquake of Jul 28, 2026 — reported by a different source. Recorded as a non-scoring UPDATE of that primary incident rather than as an event of its own: the index accumulates events through noisy-OR, so several representations of one earthquake would each contribute independently and inflate the reading for a disruption that happened once. The primary record carries the severity; this record keeps its own source, its own reporting, and its own assessment, and is displayed alongside it. See EVENT_INCIDENTS below." }),
+  p260729_webaa64: Object.freeze({ direction: "adverse", channel: "both", operational: false, reason: "As reported by this source the event is predominantly precautionary: every named site reports no major damage, halts are inspection-driven and same-day, and the article's own assessment is minimal immediate disruption — an early snapshot of the same earthquake, before damage at Renesas and Toyota was confirmed. Same incident as h2607_kumamoto — the M7.1 Kumamoto earthquake of Jul 28, 2026 — reported by a different source. Recorded as a non-scoring UPDATE of that primary incident rather than as an event of its own: the index accumulates events through noisy-OR, so several representations of one earthquake would each contribute independently and inflate the reading for a disruption that happened once. The primary record carries the severity; this record keeps its own source, its own reporting, and its own assessment, and is displayed alongside it. See EVENT_INCIDENTS below." }),
+  p260729_web1ae0: Object.freeze({ direction: "adverse", channel: "both", operational: false, reason: "Renesas, Sony and Tokyo Electron plants halted; Toyota and Honda suspended Kyushu output — the broadest single account of the same earthquake. Same incident as h2607_kumamoto — the M7.1 Kumamoto earthquake of Jul 28, 2026 — reported by a different source. Recorded as a non-scoring UPDATE of that primary incident rather than as an event of its own: the index accumulates events through noisy-OR, so several representations of one earthquake would each contribute independently and inflate the reading for a disruption that happened once. The primary record carries the severity; this record keeps its own source, its own reporting, and its own assessment, and is displayed alongside it. See EVENT_INCIDENTS below." }),
+  p260729_webfdb0: Object.freeze({ direction: "mixed", channel: "downstream", operational: false, reason: "A multi-year foundry supply agreement. Direction is mixed because a long-term commitment of one foundry's leading-edge and advanced-packaging capacity to one customer is mitigating for that customer and adverse for everyone else queuing for the same capacity. operational=false: the agreement is announced and forward-dated, so nothing is in effect in the reporting period, and the headline value is a reported figure, not a disclosed one." }),
+  p260729_web57b8: Object.freeze({ direction: "mitigating", channel: "downstream", operational: false, reason: "A RESUMPTION report: TSMC's JASM fab restarting after structural inspection found no damage. Recorded as a recovery update of h2607_kumamoto, not as an adverse event — it was previously classified adverse and scored, which counted a plant coming back online as a fresh disruption. operational=false because the primary record already states that JASM passed inspection and was resuming, so scoring the recovery again would double-count it in the opposite direction against an anchor that has already priced it." }),
+  p260729_web3084: Object.freeze({ direction: "adverse", channel: "both", operational: false, reason: "Production was actually stopped, not merely threatened: several named fabs and vehicle plants suspended output and at least one operator (Renesas) reported confirmed physical damage. Same incident as h2607_kumamoto — the M7.1 Kumamoto earthquake of Jul 28, 2026 — reported by a different source. Recorded as a non-scoring UPDATE of that primary incident rather than as an event of its own: the index accumulates events through noisy-OR, so several representations of one earthquake would each contribute independently and inflate the reading for a disruption that happened once. The primary record carries the severity; this record keeps its own source, its own reporting, and its own assessment, and is displayed alongside it. See EVENT_INCIDENTS below." }),
   // U.S. expands AI-chip export-control rules — policy/export-control channel,
   // affects both the exporting equipment/materials side (upstream echo) and
   // the restricted downstream logic/HBM/packaging demand side.
@@ -258,6 +252,107 @@ export const EVENT_ASSUMPTIONS = Object.freeze({
   exportmax: Object.freeze({ direction: 'adverse', channel: 'both', operational: true, reason: 'Export-controls-max scenario: adverse policy shock, both directions.' }),
   custom: Object.freeze({ direction: 'adverse', channel: 'downstream', operational: true, reason: 'User-built scenario; the Scenario Builder does not yet capture direction/channel explicitly, so this is the documented default.' }),
 });
+
+/* ====================================================================
+   EVENT_INCIDENTS — which records describe the same real-world incident.
+
+   THE PROBLEM THIS SOLVES. The index accumulates events through
+   noisy-OR. That is correct for independent events and wrong for several
+   reports of one: the July 28–29, 2026 M7.1 Kumamoto earthquake arrived
+   as a curated record plus six ingested news records — a USGS bulletin,
+   four wire accounts of the same halts, and a resumption report — and
+   each one contributed to the reading as though a separate earthquake had
+   occurred. One quake, seven adverse contributions.
+
+   THE FIX, and what it deliberately is NOT. No citation is deleted and no
+   record is removed. Every source stays in the feed with its own url, its
+   own reporting and its own severity assessment, because the sources are
+   the evidence and thinning them to tidy a list would be the wrong trade.
+   What changes is that exactly one record per incident is SCORED — the
+   primary — and the rest are marked as updates of it, displayed and
+   readable but not independently accumulated.
+
+   role:
+     'primary'  the scoring record for the incident
+     'update'   another account of the same incident (non-scoring)
+     'recovery' a resumption / "no damage found" report (non-scoring)
+
+   Recovery reports are singled out because they are the case that goes
+   wrong in the most misleading direction: "JASM resumes operations, no
+   structural damage found" was classified adverse and scored, so a plant
+   coming back online was raising the disruption reading.
+   ==================================================================== */
+export const EVENT_INCIDENTS = Object.freeze({
+  h2607_kumamoto:  Object.freeze({ incident: 'kumamoto_m71_2026_07', role: 'primary' }),
+  p260728_usgtgb9: Object.freeze({ incident: 'kumamoto_m71_2026_07', role: 'update' }),
+  p260729_web3084: Object.freeze({ incident: 'kumamoto_m71_2026_07', role: 'update' }),
+  p260729_web1ae0: Object.freeze({ incident: 'kumamoto_m71_2026_07', role: 'update' }),
+  p260729_web6934: Object.freeze({ incident: 'kumamoto_m71_2026_07', role: 'update' }),
+  p260729_webaa64: Object.freeze({ incident: 'kumamoto_m71_2026_07', role: 'update' }),
+  p260729_web57b8: Object.freeze({ incident: 'kumamoto_m71_2026_07', role: 'recovery' }),
+  p260804_man0804: Object.freeze({ incident: 'kumamoto_m71_2026_07', role: 'recovery' }),
+});
+
+export const INCIDENT_LABELS = Object.freeze({
+  kumamoto_m71_2026_07: 'M7.1 Kumamoto earthquake, 28 July 2026',
+});
+
+export function incidentOf(id) {
+  return EVENT_INCIDENTS[id] || null;
+}
+
+/* Every record describing one incident, primary first. */
+export function incidentGroup(incidentId) {
+  return Object.entries(EVENT_INCIDENTS)
+    .filter(([, v]) => v.incident === incidentId)
+    .sort((a, b) => (a[1].role === 'primary' ? -1 : b[1].role === 'primary' ? 1 : 0))
+    .map(([id, v]) => ({ id, ...v }));
+}
+
+/* ====================================================================
+   PUBLIC vs INTERNAL notes.
+
+   `reason` is rendered in the public dashboard and baked into the static
+   snapshot. It is therefore a PUBLIC field, and it must never carry the
+   review workflow's own bookkeeping. It did: eight entries in this table
+   held strings like "Published: Review: reject cand_webz_news_04f59e01…"
+   and "Published: Review: approve p260728_web4420", which put internal
+   candidate identifiers and the literal approve/reject commands into a
+   public tooltip. Those have been replaced with the real classification
+   rationale for each event; the audit trail they came from still exists
+   where it belongs — the `event_candidates` table behind the admin token.
+
+   This guard exists so it cannot come back. Anything matching one of
+   these patterns is suppressed at render time rather than displayed, and
+   the same predicate is asserted over the generated snapshot by the
+   public-output test, so a regression fails the build instead of
+   shipping.
+   ==================================================================== */
+export const INTERNAL_NOTE_PATTERNS = Object.freeze([
+  /\bReview:\s*(approve|reject|publish)\b/i,   // the literal review commands
+  /\bcand_[a-z0-9_]+/i,                        // internal candidate identifiers
+  /\bPublished:\s*Review\b/i,                 // the publish-log prefix
+  /\bdecision\(s\)\s+awaiting\s+publication/i,
+  /\bawaiting\s+publication\b/i,
+]);
+
+export function looksInternal(text) {
+  const t = String(text || '');
+  return INTERNAL_NOTE_PATTERNS.some((re) => re.test(t));
+}
+
+const NO_PUBLIC_NOTE = 'Classified as displayed but excluded from the scored operational index. No public '
+  + 'classification note is recorded for this event yet — its direction, channel and scoring flag are shown on its card.';
+
+/* The only string a public surface should render for an event's
+   classification. Returns the curated rationale when there is one, and a
+   truthful placeholder — never the internal note — when there is not. */
+export function publicClassificationNote(id) {
+  const a = EVENT_ASSUMPTIONS[id];
+  if (!a) return UNCLASSIFIED_ASSUMPTION.reason;
+  if (looksInternal(a.reason)) return NO_PUBLIC_NOTE;
+  return a.reason;
+}
 
 export function getEventAssumption(id) {
   return EVENT_ASSUMPTIONS[id] ?? UNCLASSIFIED_ASSUMPTION;

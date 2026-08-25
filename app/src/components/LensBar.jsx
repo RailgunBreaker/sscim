@@ -3,7 +3,13 @@ import { useVault } from '../data/VaultContext.jsx';
 import { useInteraction } from '../interaction/InteractionContext.jsx';
 import { LENSES, LENS_LABELS, VIEW_MODES } from '../interaction/reducer.js';
 
-const VIEW_LABELS = { geographic: 'Geographic', topology: 'Topology', split: 'Split' };
+const VIEW_LABELS = { geographic: 'Geographic', topology: 'Topology', split: 'Split', playground: '⇄ Facility Playground' };
+const VIEW_TITLES = {
+  geographic: 'World map',
+  topology: 'Functional-centre network',
+  split: 'Map + network together',
+  playground: 'Pick one plant and trace the modeled network around it — full width. Modeled relationships, not shipments.',
+};
 
 /* Global analytical-lens control + focus breadcrumb, shared by the world
    map and industry graph (task §4 / §11). Sits directly under the scenario
@@ -40,7 +46,7 @@ export default function LensBar({ scenarioName }) {
           const on = viewMode === v;
           return (
             <button key={v} type="button" role="radio" aria-checked={on} onClick={() => setViewMode(v)}
-              title={v === 'geographic' ? 'World map' : v === 'topology' ? 'Functional-centre network' : 'Map + network together'}
+              title={VIEW_TITLES[v]}
               style={{ fontSize: 11, padding: '4px 10px', borderRadius: 4, fontFamily: 'inherit', cursor: 'pointer',
                 background: on ? C.copper : 'transparent', color: on ? '#0C111C' : C.dim,
                 border: `1px solid ${on ? C.copper : C.line}`, fontWeight: on ? 700 : 400 }}>

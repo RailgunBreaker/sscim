@@ -6,7 +6,7 @@
   "scripts": {
     "predev": "npm run snapshot && npm run docs",
     "dev": "vite",
-    "snapshot": "node scripts/build-vault-snapshot.mjs",
+    "snapshot": "node scripts/build-vault-snapshot.mjs && node scripts/build-landing-stats.mjs",
     "docs": "node scripts/build-doc-library.mjs",
     "prebuild": "npm run snapshot && npm run docs",
     "build": "vite build",
@@ -14,7 +14,9 @@
     "audit:data": "node scripts/audit-snapshot.mjs",
     "test": "vitest run",
     "docs:pages": "node scripts/build-doc-pages.mjs",
-    "postbuild": "npm run docs:pages"
+    "postbuild": "npm run docs:pages",
+    "smoke": "node scripts/browser-smoke.mjs",
+    "stats": "node scripts/build-landing-stats.mjs"
   },
   "dependencies": {
     "katex": "^0.16.9",
@@ -27,6 +29,7 @@
     "@vitejs/plugin-react": "^4.3.1",
     "jsdom": "^25.0.1",
     "vite": "^5.4.0",
-    "vitest": "^2.1.9"
+    "vitest": "^2.1.9",
+    "playwright-core": "^1.62.1"
   }
 }

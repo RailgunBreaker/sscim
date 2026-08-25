@@ -20,7 +20,7 @@
        never in a shareable URL (see WatchlistContext.jsx).
    ==================================================================== */
 
-import { LENSES, VIEW_MODES } from './reducer.js';
+import { LENSES, VIEW_MODES, FACILITY_DIRECTIONS } from './reducer.js';
 
 const SEL_TYPES = ['country', 'stage', 'company', 'event', 'scenario', 'centre', 'facility'];
 
@@ -74,6 +74,104 @@ export function decodeNetworkState(str) {
     const [origin, dest, objective] = rt.split('>');
     if (origin && dest) out.route = { origin, dest, objective: objective || 'strongest' };
   }
+  return out;
+}
+
+/* ====================================================================
+   Facility-playground state (§ Priority 0).
+
+   Kept in its own codec, and every key prefixed `fac`, so an existing
+   SSCIM link that carries none of them decodes to an empty object and
+   opens exactly as it did before. Nothing here is required; the
+   playground falls back to its own defaults for anything absent.
+
+   Compactness matters — these hashes get pasted into chat — so the
+   defaults are omitted rather than written out, ids are comma-joined,
+   and filters collapse to one `k:v` list with only the non-default keys.
+   ==================================================================== */
+const FAC_LIST_KEYS = [['expanded', 'facx'], ['collapsed', 'facc'], ['hidden', 'fach']];
+
+export function encodeFacilityState(fac = {}) {
+  const p = new URLSearchParams();
+  if (!fac || !fac.focusId) return p.toString();
+
+  p.set('fac', fac.focusId);
+  if (fac.rootId && fac.rootId !== fac.focusId) p.set('facr', fac.rootId);
+  if (Number.isFinite(fac.hops) && fac.hops !== 1) p.set('facd', String(fac.hops));
+  else if (fac.hops === Infinity) p.set('facd', 'all');
+  if (fac.direction && fac.direction !== 'both' && FACILITY_DIRECTIONS.includes(fac.direction)) p.set('facdir', fac.direction);
+
+  FAC_LIST_KEYS.forEach(([field, key]) => {
+    const list = (fac[field] || []).filter(Boolean);
+    if (list.length) p.set(key, list.join(','));
+  });
+
+  /* The trail is what makes "move backward through exploration history"
+     survive a reload. Bounded hard: a shareable URL is not a place to
+     store forty ids, and the tail is the part a reader actually walks
+     back to. */
+  const trail = (fac.trail || []).filter(Boolean).slice(-8);
+  if (trail.length) p.set('fact', trail.join(','));
+
+  const f = fac.filters || {};
+  const parts = Object.entries(f)
+    .filter(([, v]) => v !== '' && v !== null && v !== undefined && v !== 'all' && v !== 0)
+    .map(([k, v]) => `${k}:${v}`);
+  if (parts.length) p.set('facf', parts.join(','));
+
+  if (fac.selectedLink) p.set('facl', fac.selectedLink);
+  if (fac.route?.from && fac.route?.to) p.set('facrt', `${fac.route.from}>${fac.route.to}`);
+
+  return p.toString();
+}
+
+export function decodeFacilityState(str) {
+  const out = {};
+  if (!str) return out;
+  const p = new URLSearchParams(str.replace(/^[#?]/, ''));
+
+  const focusId = p.get('fac');
+  if (!focusId) return out;
+  out.focusId = focusId;
+  out.rootId = p.get('facr') || focusId;
+
+  const depth = p.get('facd');
+  if (depth === 'all') out.hops = Infinity;
+  else if (depth && Number.isFinite(Number(depth))) out.hops = Math.max(1, Math.min(6, Math.floor(Number(depth))));
+
+  const dir = p.get('facdir');
+  if (dir && FACILITY_DIRECTIONS.includes(dir)) out.direction = dir;
+
+  FAC_LIST_KEYS.forEach(([field, key]) => {
+    const raw = p.get(key);
+    if (raw) out[field] = raw.split(',').filter(Boolean);
+  });
+
+  const trail = p.get('fact');
+  if (trail) out.trail = trail.split(',').filter(Boolean);
+
+  const facf = p.get('facf');
+  if (facf) {
+    const filters = {};
+    facf.split(',').forEach((pair) => {
+      const at = pair.indexOf(':');
+      if (at < 1) return;
+      const k = pair.slice(0, at);
+      const v = pair.slice(at + 1);
+      filters[k] = k === 'minRel' ? Number(v) || 0 : v;
+    });
+    if (Object.keys(filters).length) out.filters = filters;
+  }
+
+  const link = p.get('facl');
+  if (link) out.selectedLink = link;
+
+  const rt = p.get('facrt');
+  if (rt && rt.includes('>')) {
+    const [from, to] = rt.split('>');
+    if (from && to) out.route = { from, to };
+  }
+
   return out;
 }
 
