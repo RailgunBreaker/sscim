@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { encodeInteractionState, decodeInteractionState, encodeNetworkState, decodeNetworkState, encodeFacilityState, decodeFacilityState } from './urlState.js';
+import { DEFAULT_FACILITY_HOPS } from './reducer.js';
 
 describe('urlState encode/decode', () => {
   it('omits defaults and encodes only meaningful state', () => {
@@ -116,11 +117,23 @@ describe('facility playground URL state', () => {
   });
 
   it('round-trips hop depth, including "all reachable"', () => {
-    expect(roundTrip({ focusId: 'a', hops: 3 }).hops).toBe(3);
+    expect(roundTrip({ focusId: 'a', hops: 1 }).hops).toBe(1);
+    expect(roundTrip({ focusId: 'a', hops: 2 }).hops).toBe(2);
     expect(roundTrip({ focusId: 'a', hops: Infinity }).hops).toBe(Infinity);
-    // 1 is the default and is omitted for compactness, not lost.
-    expect(encodeFacilityState({ focusId: 'a', hops: 1 })).not.toMatch(/facd/);
-    expect(roundTrip({ focusId: 'a', hops: 1 }).hops).toBeUndefined();
+  });
+
+  /* The omitted depth has to be the one the reducer actually starts on.
+     These are pinned to DEFAULT_FACILITY_HOPS rather than to a literal so
+     that moving the default cannot leave the encoder omitting one value
+     while the decoder falls back to another — which would silently open a
+     shared link on a different graph than the one it was copied from. */
+  it('omits the depth the playground already opens on, and writes every other', () => {
+    expect(encodeFacilityState({ focusId: 'a', hops: DEFAULT_FACILITY_HOPS })).not.toMatch(/facd/);
+    expect(roundTrip({ focusId: 'a', hops: DEFAULT_FACILITY_HOPS }).hops).toBeUndefined();
+    [1, 2, 3, 4, 5, 6].filter((h) => h !== DEFAULT_FACILITY_HOPS).forEach((h) => {
+      expect(encodeFacilityState({ focusId: 'a', hops: h })).toMatch(/facd/);
+      expect(roundTrip({ focusId: 'a', hops: h }).hops).toBe(h);
+    });
   });
 
   it('round-trips direction, omitting the default', () => {

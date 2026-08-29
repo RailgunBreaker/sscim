@@ -46,6 +46,19 @@ export const VIEW_MODES = ['geographic', 'topology', 'split', 'playground'];
    here. */
 export const FACILITY_DIRECTIONS = ['upstream', 'downstream', 'both'];
 
+/* Hop depth a fresh exploration opens on. It used to be 1, which drew the
+   focus plant and the ring of plants directly attached to it — and because
+   a plant's nearest modeled neighbours are dominated by whoever it already
+   trades with, that ring reads as one company's orbit rather than as a
+   chain. Three hops is the shallowest depth at which the picture is
+   actually a chain: supplier-of-supplier on the left, customer-of-customer
+   on the right, several companies and several stages deep in both
+   directions.
+   The traversal is bounded (DEFAULT_MAX_NODES) and reports truncation, so
+   a deeper default cannot silently hide anything; the hop control still
+   offers 1 for anyone who wants the immediate ring back. */
+export const DEFAULT_FACILITY_HOPS = 3;
+
 export function initFacilityPlayground() {
   return {
     focusId: null,      // the plant currently centred
@@ -55,7 +68,7 @@ export function initFacilityPlayground() {
     hidden: [],         // topology-only removals, reversible
     trail: [],          // back-stack of previous focuses
     forward: [],        // redo-stack, so back/forward both work
-    hops: 1,
+    hops: DEFAULT_FACILITY_HOPS,
     direction: 'both',
     filters: null,      // null = EMPTY_FILTERS (engine/facilityTraversal.js)
     selectedLink: null, // linkKey of the connection whose explanation is open

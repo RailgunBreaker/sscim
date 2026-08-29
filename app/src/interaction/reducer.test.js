@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { interactionReducer, initInteraction, lensAvailable, sameSel, isDraftSource, VIEW_MODES, initFacilityPlayground } from './reducer.js';
+import { interactionReducer, initInteraction, lensAvailable, sameSel, isDraftSource, VIEW_MODES, initFacilityPlayground, DEFAULT_FACILITY_HOPS } from './reducer.js';
 
 const S = (type, id) => ({ type, id });
 
@@ -235,7 +235,7 @@ describe('facility playground state', () => {
   const run = (actions, from = start()) => actions.reduce(interactionReducer, from);
 
   it('starts empty', () => {
-    expect(start().facility).toMatchObject({ focusId: null, rootId: null, hops: 1, direction: 'both' });
+    expect(start().facility).toMatchObject({ focusId: null, rootId: null, hops: DEFAULT_FACILITY_HOPS, direction: 'both' });
   });
 
   it('focusing sets both the focus and the root the first time', () => {

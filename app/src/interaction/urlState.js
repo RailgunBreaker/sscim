@@ -20,7 +20,7 @@
        never in a shareable URL (see WatchlistContext.jsx).
    ==================================================================== */
 
-import { LENSES, VIEW_MODES, FACILITY_DIRECTIONS } from './reducer.js';
+import { LENSES, VIEW_MODES, FACILITY_DIRECTIONS, DEFAULT_FACILITY_HOPS } from './reducer.js';
 
 const SEL_TYPES = ['country', 'stage', 'company', 'event', 'scenario', 'centre', 'facility'];
 
@@ -97,7 +97,14 @@ export function encodeFacilityState(fac = {}) {
 
   p.set('fac', fac.focusId);
   if (fac.rootId && fac.rootId !== fac.focusId) p.set('facr', fac.rootId);
-  if (Number.isFinite(fac.hops) && fac.hops !== 1) p.set('facd', String(fac.hops));
+  /* Only a non-default depth is written, so the common URL stays short.
+     The default is the reducer's, imported rather than repeated — when it
+     moved from 1 to 3 a literal here would have made `facd` absent mean
+     "1" to the encoder and "3" to the decoder, and every shared link would
+     have round-tripped to a different graph than the one it was copied
+     from. (A link shared before that move carries no `facd` and therefore
+     now opens at three hops — the same plant, more of its chain.) */
+  if (Number.isFinite(fac.hops) && fac.hops !== DEFAULT_FACILITY_HOPS) p.set('facd', String(fac.hops));
   else if (fac.hops === Infinity) p.set('facd', 'all');
   if (fac.direction && fac.direction !== 'both' && FACILITY_DIRECTIONS.includes(fac.direction)) p.set('facdir', fac.direction);
 

@@ -36,6 +36,7 @@ import { WatchlistProvider } from '../interaction/WatchlistContext.jsx';
 import FacilityPlayground from './FacilityPlayground.jsx';
 import FacilityExplorer from './FacilityExplorer.jsx';
 import FacilityConnectionTable from './FacilityConnectionTable.jsx';
+import { FLOW_PARTICLES, flowParticleKeys } from './FacilityGraph.jsx';
 import { useVault } from '../data/VaultContext.jsx';
 
 const FAB18 = 'tsmc_fab18';
@@ -190,6 +191,73 @@ describe('FacilityPlayground — a focused facility', () => {
     expect(hide.getAttribute('title')).toMatch(/does not feed the risk model/i);
   });
 
+  /* The playground used to open at one hop, which draws the focus plant
+     and the ring of plants directly attached to it — and because a plant's
+     nearest neighbours are dominated by whoever it already trades with,
+     that ring reads as one company's orbit rather than as a chain. */
+  it('opens on the chain, not on one plant’s immediate ring', async () => {
+    const { host, text } = await focused();
+    // Every node past the first hop is labelled with its depth.
+    expect(text()).toMatch(/hop 2/);
+    expect(host.querySelectorAll('g.fg-node').length).toBeGreaterThan(20);
+    // More than one operator is on screen — that is the point of the change.
+    const operators = new Set(
+      [...host.querySelectorAll('g.fg-node text')].map((t) => t.textContent),
+    );
+    expect(operators.size).toBeGreaterThan(4);
+  });
+
+  it('still lets a reader ask for the immediate ring back', async () => {
+    const m = await focused(FAB18, { hops: 1 });
+    expect(m.text()).not.toMatch(/hop 2/);
+  });
+
+  /* Fab 18's own deeper columns fit, so it says nothing — the line is not
+     decoration that fires on every graph. Foxconn Zhengzhou sits far enough
+     downstream that hop 2 overflows the column cap, and there the reader
+     has to be told, because the connection table below covers the FOCUSED
+     plant only and reaches none of those deeper facilities. */
+  it('states what is reachable but not drawn beyond the first hop', async () => {
+    expect((await focused()).text()).not.toMatch(/at hop 2 or deeper/i);
+    const { text } = await focused('foxconn_zhengzhou');
+    expect(text()).toMatch(/\d+ more facilities at hop 2 or deeper are reachable but not drawn/i);
+    expect(text()).toMatch(/centre on a nearer plant/i);
+  });
+
+  /* A glyph in a column whose connecting edge cannot be drawn — because
+     the plant it was reached through fell outside the cap — is a plant
+     floating with nothing joining it to the chain. Three of the 275 roots
+     produced one once the default depth moved past a single hop. */
+  it('never draws a plant whose link to the chain is not on screen', async () => {
+    for (const root of ['foxconn_zhengzhou', 'foxconn_bacgiang', 'apple_cupertino']) {
+      const { host } = await focused(root);
+      const drawn = new Set([...host.querySelectorAll('g[data-node]')].map((g) => g.getAttribute('data-node')));
+      const joined = new Set();
+      host.querySelectorAll('path[role="button"][aria-label]').forEach((p) => {
+        const m = /between (.+) and (.+), \d/.exec(p.getAttribute('aria-label'));
+        if (m) { joined.add(m[1]); joined.add(m[2]); }
+      });
+      const names = [...host.querySelectorAll('g[data-node] > text:first-of-type')].map((t) => t.textContent);
+      expect(drawn.size).toBeGreaterThan(0);
+      // Every drawn plant's name turns up as an endpoint of a drawn edge.
+      names.forEach((n) => {
+        const truncated = n.endsWith('…');
+        expect([...joined].some((j) => (truncated ? j.startsWith(n.slice(0, -1)) : j === n))).toBe(true);
+      });
+    }
+  });
+
+  it('animates flow along edges, within the frame budget', async () => {
+    const { host, text } = await focused();
+    const dots = host.querySelectorAll('circle.fg-flow');
+    expect(dots.length).toBeGreaterThan(0);
+    expect(dots.length).toBeLessThanOrEqual(FLOW_PARTICLES);
+    expect(text()).toMatch(/Co-input links carry no dot/i);
+    // Motion is decoration; it must switch itself off when asked to.
+    const css = [...host.querySelectorAll('style')].map((s) => s.textContent).join('\n');
+    expect(css).toMatch(/prefers-reduced-motion/);
+  });
+
   it('warns instead of drawing when "all reachable" would be unreadable', async () => {
     const m = await focused();
     const btn = [...m.host.querySelectorAll('button')].find((b) => b.textContent === 'All reachable');
@@ -285,5 +353,46 @@ describe('FacilityExplorer — the compact surface', () => {
     expect(m.text()).toMatch(/53 INBOUND · 7 OUTBOUND/);
     const showAll = [...m.host.querySelectorAll('button')].find((b) => /^Show all 60$/.test(b.textContent));
     expect(showAll).toBeTruthy();
+  });
+});
+
+/* ====================================================================
+   Flow particles. The entrance and hover animations carry no meaning and
+   need no test; this one does, because a dot travelling between two
+   plants asserts that output moves that way — and for one of the three
+   relationship classes that assertion would be false.
+   ==================================================================== */
+describe('flowParticleKeys — motion only where the model has a direction', () => {
+  const placed = { a: {}, b: {}, c: {} };
+  const link = (from, to, flow, weight, stage = 's1') => ({ from, to, flow, weight, fromStage: stage, toStage: 's2' });
+
+  it('animates a forward link and a service link', () => {
+    const keys = flowParticleKeys([link('a', 'b', 'forward', 1), link('a', 'c', 'service', 1)], placed);
+    expect(keys.size).toBe(2);
+  });
+
+  /* Co-input means both ends feed a COMMON downstream step. Neither
+     supplies the other, so a dot travelling between them would draw a
+     flow the dataset does not contain. */
+  it('never animates a co-input link, however strong it is', () => {
+    expect(flowParticleKeys([link('a', 'b', 'co-input', 999)], placed).size).toBe(0);
+  });
+
+  it('skips a link whose far end fell outside the column cap', () => {
+    expect(flowParticleKeys([link('a', 'not_drawn', 'forward', 1)], placed).size).toBe(0);
+  });
+
+  it('drops the weakest, not the strongest, when the frame budget bites', () => {
+    const many = Array.from({ length: FLOW_PARTICLES + 10 }, (_, i) => link('a', 'b', 'forward', i, `s${i}`));
+    const keys = flowParticleKeys(many, placed);
+    expect(keys.size).toBe(FLOW_PARTICLES);
+    expect(keys.has('a>b|s0>s2|forward')).toBe(false);
+    expect(keys.has(`a>b|s${FLOW_PARTICLES + 9}>s2|forward`)).toBe(true);
+  });
+
+  it('does not reorder the caller’s link array', () => {
+    const links = [link('a', 'b', 'forward', 1), link('a', 'c', 'forward', 9)];
+    flowParticleKeys(links, placed);
+    expect(links.map((l) => l.weight)).toEqual([1, 9]);
   });
 });
