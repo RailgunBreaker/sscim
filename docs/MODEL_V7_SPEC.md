@@ -1201,7 +1201,7 @@ assumptions, reproducible to the last digit, and uncalibrated.**
 ## Appendix B — verification run
 
 <!-- BEGIN GENERATED: verification-run -->
-Recorded 2026-09-03T18:26:34.580Z · commit `7749dc869d76a70fa1a4c09928c96f4a2c2e14cc` · model `sscim-model-v7-exposure-robustness` · dataset `2026-08-29`
+Recorded 2026-09-03T18:44:26.568Z · commit `82ab46a16ec8f62bb0940a41fc38ea4370840d23` · model `sscim-model-v7-exposure-robustness` · dataset `2026-08-29`
 
 | Command | Result | Detail |
 | --- | --- | --- |
@@ -1212,7 +1212,7 @@ Recorded 2026-09-03T18:26:34.580Z · commit `7749dc869d76a70fa1a4c09928c96f4a2c2
 | `app: npm run docs:verify` | pass | docs:verify PASSED — documentation and code agree. |
 | `app: npm test` | pass | Test Files  44 passed (44) · Tests  815 passed (815) |
 | `app: npm run build` | pass | Published 33 documentation page(s) + /docs/ index · 839 equation(s) rendered · KaTeX css + 20 font(s). |
-| `app: npm run smoke` | pass | 162/162 checks passed |
+| `app: npm run smoke` | pass | 172/172 checks passed |
 | `app: npm run sensitivity -- --samples 1024` | pass | design: 12 continuous dimensions x 1024 samples = 14336 model evaluations |
 | `app: npm run benchmark` | pass | headline index  5.395609  ->  6.120182   (+0.724573) |
 | `app: npm run demo` | pass | headline index 6.120182 · 160 incidents from 167 records |

@@ -1,19 +1,19 @@
 {
-  "recordedAt": "2026-09-03T18:26:34.580Z",
-  "commit": "7749dc869d76a70fa1a4c09928c96f4a2c2e14cc",
+  "recordedAt": "2026-09-03T18:44:26.568Z",
+  "commit": "82ab46a16ec8f62bb0940a41fc38ea4370840d23",
   "modelVersion": "sscim-model-v7-exposure-robustness",
   "datasetAsOf": "2026-08-29",
   "commands": [
     {
       "command": "server: npm ci",
       "result": "pass",
-      "seconds": 11.2,
+      "seconds": 11.3,
       "detail": "added 113 packages, and audited 114 packages in 11s"
     },
     {
       "command": "app: npm ci",
       "result": "pass",
-      "seconds": 3.6,
+      "seconds": 3.3,
       "detail": "added 156 packages, and audited 157 packages in 3s"
     },
     {
@@ -49,13 +49,13 @@
     {
       "command": "app: npm run smoke",
       "result": "pass",
-      "seconds": 82,
-      "detail": "162/162 checks passed"
+      "seconds": 82.2,
+      "detail": "172/172 checks passed"
     },
     {
       "command": "app: npm run sensitivity -- --samples 1024",
       "result": "pass",
-      "seconds": 115.1,
+      "seconds": 115.3,
       "detail": "design: 12 continuous dimensions x 1024 samples = 14336 model evaluations"
     },
     {
@@ -81,8 +81,8 @@
     "total": 815
   },
   "browserSmoke": {
-    "passed": 162,
-    "total": 162,
+    "passed": 172,
+    "total": 172,
     "sections": [
       "375x812",
       "768x1024",

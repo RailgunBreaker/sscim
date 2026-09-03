@@ -81,10 +81,48 @@ async function launch() {
   }
 }
 
-/* The dashboard fetches the vault API and falls back to the static
-   snapshot when it is unreachable. Nothing is running on 8787 here, so
-   the fallback path is what gets exercised — which is also the path the
-   GitHub Pages deploy uses, so it is the right one to smoke-test. */
+/* THE VAULT API IS UNREACHABLE FROM HERE, AND THAT IS THE POINT.
+
+   The dashboard fetches the vault API and falls back to the bundled static
+   snapshot when it cannot reach it. This suite drives the artifact that
+   will actually be deployed, so it inherits that artifact's
+   VITE_API_BASE_URL — and the API is unreachable from the smoke in two
+   different ways depending on where it runs:
+
+     locally, with no VITE_API_BASE_URL, the app targets localhost:8787,
+     nothing is listening, and the browser reports ERR_CONNECTION_REFUSED;
+
+     in CI, where VITE_API_BASE_URL points at the real backend, the request
+     leaves for a public host that does not allow-list this run's ephemeral
+     127.0.0.1:<random-port> origin — and never should — so the browser
+     reports a CORS block instead.
+
+   Both are the same fact: no vault API is reachable from the test harness.
+   That is exactly the path the Pages deploy takes whenever the backend is
+   down, so it is the right path to smoke — but only if the fallback is
+   VERIFIED rather than assumed, which is what the STATIC SNAPSHOT
+   assertion below does. Silencing the error without that assertion would
+   mean a fetch failure plus a broken fallback rendered as a pass. */
+const RESOURCE_FAILURE = /Failed to load resource|net::ERR|ERR_CONNECTION/i;
+const CORS_BLOCK = /blocked by CORS policy|Access-Control-Allow-Origin|Cross-Origin Request Blocked/i;
+
+function isExpectedVaultFailure(text, message, base) {
+  // The app's own deliberate notice that it fell back.
+  if (/vault API unreachable/i.test(text)) return true;
+  // Resource load failures were already tolerated at any origin, and stay
+  // that way: this build legitimately requests third-party favicons, and a
+  // served favicon.ico 404 is same-origin. Narrowing that is a separate
+  // question from this one, and is not smuggled in here.
+  if (RESOURCE_FAILURE.test(text)) return true;
+  /* A CORS block is tolerated ONLY when the blocked request left this
+     server's origin. A same-origin CORS failure would mean the build is
+     asking this very server for something it will not serve, which is a
+     real defect and still fails. */
+  if (!CORS_BLOCK.test(text)) return false;
+  const urls = [...(text.match(/https?:\/\/[^\s'"]+/gi) || []), message.location?.()?.url].filter(Boolean);
+  return urls.some((u) => !u.startsWith(base));
+}
+
 let nav = 0;
 async function openDashboard(page, base, hash = '') {
   /* A unique query string per navigation. Without it, going from
@@ -127,13 +165,26 @@ async function main() {
       page.on('console', (m) => {
         if (m.type() !== 'error') return;
         const text = m.text();
-        // The deliberate, expected fallback notice is not a defect.
-        if (/vault API unreachable|Failed to load resource|net::ERR|ERR_CONNECTION/i.test(text)) return;
+        if (isExpectedVaultFailure(text, m, base)) return;
         consoleErrors.push(`${vp.name}: ${text}`);
       });
       page.on('pageerror', (e) => consoleErrors.push(`${vp.name}: ${e.message}`));
 
       await openDashboard(page, base);
+
+      /* ---- THE FALLBACK ACTUALLY ENGAGED ----
+         The console filter above tolerates the vault API being unreachable
+         from this harness. This is the assertion that makes that tolerance
+         safe: the app must SAY it is reading the static snapshot. Without
+         it, a failed fetch plus a fallback that never rendered would pass
+         as silently as a healthy page. */
+      const sourceLabel = await page.locator('body').innerText();
+      const isStatic = /STATIC SNAPSHOT/.test(sourceLabel);
+      const isLive = /LIVE VAULT/.test(sourceLabel);
+      check(isStatic || isLive, `${vp.name} states which data source it is reading`,
+        isStatic ? 'static snapshot' : isLive ? 'live vault' : 'NEITHER — the page names no data source');
+      check(isStatic, `${vp.name} fell back to the bundled snapshot when the vault API was unreachable`,
+        isLive ? 'reported LIVE VAULT — a vault API answered this run' : 'static snapshot');
 
       /* ---- no page-level horizontal overflow, at any width ---- */
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
