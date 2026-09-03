@@ -95,7 +95,7 @@ The dashboard's HISTORY panel reports this directly, as the correlation between 
 | --- | --- | --- |
 | Structural vulnerability | Stable modeled sensitivity of a stage, country, or company footprint | A probability, or realized risk |
 | Operational index | Event-driven signed sensitivity, displayed around neutral 5 | A forecast, loss estimate, or market signal |
-| Network influence | Normalized reach of a unit shock through the graph | A validated centrality metric, or economic loss |
+| Network influence | Reach of a unit shock through the graph; published both raw and snapshot-relative | Not a centrality metric with established properties, not economic loss, and the 0–10 figure is not comparable across snapshots |
 | Company vulnerability | Average adverse impact across occupied stages, size-independent | A company-level risk rating |
 | Company contribution | Share-weighted share of an aggregate modeled effect | A financial-loss estimate |
 | Company criticality | Effect of fully disrupting that company, normalized against the observed maximum | An investment view of any kind |

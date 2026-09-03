@@ -1,5 +1,12 @@
 # SSCIM project roadmap
 
+**Model version:** `sscim-model-v7-exposure-robustness`. The canonical
+specification is [`docs/MODEL_V7_SPEC.md`](MODEL_V7_SPEC.md); its
+[§11](MODEL_V7_SPEC.md#11-limitations-and-calibration-roadmap) states the data
+each parameter would need and the five steps that must be completed before any
+parameter may be promoted from `status: assumption` to `status: calibrated`.
+
+
 This roadmap records what SSCIM has already delivered, what changed from the
 earlier release, and what the project intends to build next. It is both a
 public progress record and a planning document for contributors.
@@ -241,9 +248,12 @@ scores computed under the current stage-level method.
 
 ### 5. Calibration and validation — research prerequisite
 
-The current `downstreamTransmission`, `upstreamTransmission`,
-`halfLifeDays`, `specificityFloor`, and noisy-OR combination are declared
-priors, not fitted coefficients.
+Every parameter in `app/src/engine/registry.js` is `status: assumption`:
+the transmission coefficients, the three persistence durations, the minimum
+dependency factor, the ramping-site weight, the structural weights, and every
+categorical model form are declared priors, not fitted coefficients. The
+canonical list, with each one's range and rationale, is
+[spec §5](MODEL_V7_SPEC.md#5-parameter-register).
 
 A defensible calibration programme would:
 

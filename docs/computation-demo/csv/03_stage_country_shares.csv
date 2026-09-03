@@ -1,4 +1,4 @@
-stage_id,country,share
+stage,country,share
 research,us,0.3
 research,uk,0.2
 research,be,0.15

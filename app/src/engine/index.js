@@ -1,36 +1,57 @@
 /* ====================================================================
-   Engine factory — takes the vault data (fetched live from server/, or
-   from the static build-time snapshot fallback — see VaultContext.jsx)
-   and returns every derived computation: graph structure, structural
-   vulnerability, directional shock propagation, company vulnerability/
-   contribution/criticality, capital power, spread trees, and history.
+   Engine factory — SSCIM MODEL v7 ("exposure robustness").
 
-   This is a sensitivity/comparison tool over a frozen demonstration
-   snapshot — not a calibrated, causal, or probabilistic forecasting
-   model. See docs/MODEL_ROADMAP.md and README "Model status and limitations".
+   Takes the vault data (fetched live from server/, or from the static
+   build-time snapshot fallback — see VaultContext.jsx) and returns every
+   derived computation: graph structure, structural vulnerability, joint
+   incident propagation, company measures, capital power, spread trees,
+   country measures and history.
 
-   buildEngine()'s input signature is intentionally unchanged (locked by
-   VaultContext.jsx, which is out of scope for this pass): it still
-   accepts exactly { STAGES, FLOW_EDGES, COMPANIES, CUSTOMERS, POLICIES,
-   EVENTS, OWNERS }. Everything about how those tables are used internally
-   has been rebuilt — see priors.js, math.js, graph.js, diagnostics.js,
-   event-assumptions.js for the pieces this file composes.
+   WHAT THIS IS. A deterministic, bounded comparison and sensitivity
+   environment over a frozen demonstration snapshot. Its outputs are
+   BOUNDED COMPARATIVE EXPOSURE SCORES.
+
+   WHAT THIS IS NOT. Not probabilities. Not monetary losses. Not
+   forecasts. Not observed trade flows. Not causal estimates. Not
+   calibrated risk estimates. See docs/MODEL_V7_SPEC.md, which is the
+   canonical specification this file implements; nothing here may define
+   a formula that contradicts it.
+
+   THE THREE LAYERS STAY SEPARATE, as they did in v6:
+     1. STRUCTURAL BASELINE   time-invariant, event-free.
+     2. OPERATIONAL FIELD     the current incident field.
+     3. SCENARIO DELTA        a hypothesis applied on top (buildModel.js).
+
+   CONFIDENCE AND EVIDENCE QUALITY ARE METADATA. They are displayed. They
+   never multiply a modelled effect, here or anywhere else.
+
+   ORDER OF OPERATIONS (spec §4):
+     raw records -> incident deduplication -> signed source vector
+       -> persistence -> joint propagation -> incident aggregation
+       -> geographic / company aggregation -> scenario delta
    ==================================================================== */
-import { MODEL_PRIORS, SENSITIVITY_PRESETS } from './priors.js';
-import { clamp, clamp10, clampSigned, decay, combineSigned, hhiWithResidual, log1pNormalized, topologicalSort } from './math.js';
-import { buildAdjacency, buildDependenceMatrices, propagateFromSource, findTopPaths } from './graph.js';
+import { BASE_PARAMS, MODEL_VERSION, resolveParams } from './registry.js';
+import { clamp, clamp10, clampSigned, decay, hhiBounds, stageWeights } from './math.js';
+import { aggregateNonNegative } from './aggregation.js';
+import {
+  buildAdjacency, buildEdgeAllocations, buildDependencyMatrices,
+  propagateSignedVector, traceSignedVector, findTopPaths,
+} from './propagation.js';
 import { validateGraph, createDiagnostics } from './diagnostics.js';
-import { getEventAssumption } from './event-assumptions.js';
+import { getEventAssumption, incidentOf } from './event-assumptions.js';
+import { groupIncidents, incidentSourceVector, incidentHorizonDays, uniqueStages } from './eventSource.js';
+import { EVENT_MODEL, ACTIVE_HORIZON_DAYS } from './event-model.js';
+import { policyExposure } from './policy.js';
+import { DEFAULT_DATASET_AS_OF } from './priors.js';
 
-export function buildEngine({ STAGES, FLOW_EDGES, COMPANIES, CUSTOMERS, POLICIES, EVENTS, OWNERS, datasetAsOf }) {
-  /* The snapshot date is data, not a constant: the pipeline advances it in the
-     vault's `meta` table and it arrives on the bundle. Only the DISPLAYED date
-     varies — every event's age is already derived against it at sync time, so
-     the coefficients the model computes with are unchanged. Falls back to the
-     priors constant when a bundle predates the meta table. */
-  const PRIORS = datasetAsOf && datasetAsOf !== MODEL_PRIORS.datasetAsOf
-    ? Object.freeze({ ...MODEL_PRIORS, datasetAsOf })
-    : MODEL_PRIORS;
+export function buildEngine({ STAGES, FLOW_EDGES, COMPANIES, CUSTOMERS, POLICIES, EVENTS, OWNERS, datasetAsOf, params: paramOverrides, computeHistory = true }) {
+  /* The snapshot date is data, not a constant: the pipeline advances it in
+     the vault's `meta` table and it arrives on the bundle. Only the
+     DISPLAYED date varies — every incident's age is already derived
+     against it at sync time. */
+  const DATASET_AS_OF = datasetAsOf || DEFAULT_DATASET_AS_OF;
+  const PARAMS = paramOverrides ? resolveParams(paramOverrides) : BASE_PARAMS;
+
   const diagnostics = createDiagnostics();
   const stageIds = STAGES.map((s) => s.id);
 
@@ -40,6 +61,13 @@ export function buildEngine({ STAGES, FLOW_EDGES, COMPANIES, CUSTOMERS, POLICIES
   const { OUT, IN } = buildAdjacency(stageIds, FLOW_EDGES);
   const STAGE_BY_ID = Object.fromEntries(STAGES.map((s) => [s.id, s]));
   const COMPANY_BY_ID = Object.fromEntries(COMPANIES.map((c) => [c.id, c]));
+
+  /* Non-substitutability. The dataset field is still called `subst` for
+     backwards compatibility with stored bundles, but by the dataset's own
+     convention a HIGH value means the stage is HARD to substitute. v7 uses
+     the unambiguous name everywhere in output, UI and documentation; the
+     adapter is here and nowhere else. */
+  const nonSubstitutabilityOf = (id) => STAGE_BY_ID[id]?.nonSubstitutability ?? STAGE_BY_ID[id]?.subst ?? 0;
 
   // If the graph is invalid (cycle / dangling edge), fall back to a stable
   // node order so the rest of the engine can still run and expose the
@@ -75,169 +103,152 @@ export function buildEngine({ STAGES, FLOW_EDGES, COMPANIES, CUSTOMERS, POLICIES
     return Object.values(m).sort((a, b) => b.w - a.w);
   })();
 
-  /* ---------------- directional dependence matrices (all reachable paths) ---------------- */
-  const { D, U } = buildDependenceMatrices(stageIds, OUT, IN, (id) => STAGE_BY_ID[id]?.subst, MODEL_PRIORS);
+  /* ---------------- edge allocations and dependency matrices ----------------
+     D[b][a] = f_d * q_ba * (phi + (1-phi) nu_a),  sum_a q_ba = 1
+     U[a][b] = f_u * r_ab,                         sum_b r_ab = 1  */
+  const ALLOCATIONS = buildEdgeAllocations(stageIds, OUT, IN, FLOW_EDGES);
+  if (ALLOCATIONS.fallbacks.incomingEqualSplit.length) {
+    diagnostics.warn('edge-allocation', `${ALLOCATIONS.fallbacks.incomingEqualSplit.length} stage(s) have no evidence-based INCOMING dependency allocation — equal split across inbound edges used and reported: ${ALLOCATIONS.fallbacks.incomingEqualSplit.join(', ')}`);
+  }
+  if (ALLOCATIONS.fallbacks.outgoingEqualSplit.length) {
+    diagnostics.warn('edge-allocation', `${ALLOCATIONS.fallbacks.outgoingEqualSplit.length} stage(s) have no evidence-based OUTGOING exposure allocation — equal split across outbound edges used and reported: ${ALLOCATIONS.fallbacks.outgoingEqualSplit.join(', ')}`);
+  }
+  ALLOCATIONS.fallbacks.renormalized.forEach((m) => diagnostics.warn('edge-allocation', m));
 
-  function propagateSignedSource(sourceId, magnitude, channel, priors = MODEL_PRIORS) {
-    let matrices = { D, U };
-    if (priors !== MODEL_PRIORS) {
-      matrices = buildDependenceMatrices(stageIds, OUT, IN, (id) => STAGE_BY_ID[id]?.subst, priors);
+  const matricesFor = (params) => buildDependencyMatrices(stageIds, OUT, IN, nonSubstitutabilityOf, params, ALLOCATIONS);
+  const { D, U, nu: NON_SUBSTITUTABILITY_UNIT } = matricesFor(PARAMS);
+  const matrixCache = new Map([[PARAMS, { D, U }]]);
+  const matricesOf = (params) => {
+    if (params === PARAMS) return { D, U };
+    if (!matrixCache.has(params)) matrixCache.set(params, matricesFor(params));
+    const m = matrixCache.get(params);
+    return { D: m.D, U: m.U };
+  };
+
+  /* Propagate one already-built signed source vector. */
+  function propagateVectorField(z, channel, params = PARAMS) {
+    const m = matricesOf(params);
+    return propagateSignedVector({ z, channel, stageIds, OUT, IN, TOPO, REV_TOPO, D: m.D, U: m.U });
+  }
+
+  /* Single-stage convenience used by the network-influence and company
+     constructs, which inject a unit shock at one stage. */
+  function propagateSignedSource(sourceId, magnitude, channel, params = PARAMS) {
+    if (!Number.isFinite(magnitude) || magnitude === 0 || !stageIds.includes(sourceId)) {
+      return Object.fromEntries(stageIds.map((id) => [id, 0]));
     }
-    return propagateFromSource({
-      sourceId, magnitude, channel, stageIds, OUT, IN, TOPO, REV_TOPO,
-      D: matrices.D, U: matrices.U, tolerance: priors.contributionTolerance,
+    return propagateVectorField({ [sourceId]: clampSigned(magnitude) }, channel, params).field;
+  }
+
+  function propagateTrace(sourceId, magnitude, channel, params = PARAMS) {
+    const m = matricesOf(params);
+    return traceSignedVector({
+      z: { [sourceId]: clampSigned(magnitude) }, channel,
+      stageIds, OUT, IN, TOPO, REV_TOPO, D: m.D, U: m.U,
     });
   }
 
-  /* Single-source traced propagation — same field as propagateSignedSource,
-     plus a hop-by-hop trace for playback (see graph.js). */
-  function propagateTrace(sourceId, magnitude, channel, priors = MODEL_PRIORS) {
-    let matrices = { D, U };
-    if (priors !== MODEL_PRIORS) {
-      matrices = buildDependenceMatrices(stageIds, OUT, IN, (id) => STAGE_BY_ID[id]?.subst, priors);
-    }
-    return propagateFromSource({
-      sourceId, magnitude, channel, stageIds, OUT, IN, TOPO, REV_TOPO,
-      D: matrices.D, U: matrices.U, tolerance: priors.contributionTolerance, trace: true,
+  /* Playback trace over several injected sources, propagated JOINTLY as
+     one vector — the same calculation the rest of the engine performs, so
+     `field` here is identical to the untraced result rather than a
+     re-derivation. */
+  function buildTrace(sources, params = PARAMS) {
+    const z = {};
+    const used = [];
+    (sources || []).forEach((s) => {
+      if (!Number.isFinite(s.magnitude) || s.magnitude === 0 || !stageIds.includes(s.stageId)) return;
+      z[s.stageId] = clampSigned((z[s.stageId] ?? 0) + s.magnitude);
+      used.push({ stageId: s.stageId, magnitude: s.magnitude, channel: s.channel });
     });
+    // A mixed channel set is resolved to the widest requested channel: the
+    // sources are one vector now, and propagating it twice under different
+    // channels would reintroduce the per-source separation v7 removes.
+    const channels = new Set(used.map((s) => s.channel ?? 'both'));
+    const channel = channels.size === 1 ? [...channels][0] : 'both';
+    const m = matricesOf(params);
+    const traced = traceSignedVector({ z, channel, stageIds, OUT, IN, TOPO, REV_TOPO, D: m.D, U: m.U });
+    return { field: traced.field, trace: traced.trace, sources: used };
   }
 
-  /* Combines several single-source traces into one synchronized playback
-     trace over the SAME combined field the rest of the engine produces
-     (per-source fields, noisy-OR combined at each node — identical to
-     eventField / companyCriticalityRaw). This never re-derives the field:
-     `field` here equals combineSigned across the per-source fields, and a
-     node is revealed at the last step any contributing source reaches it,
-     so the cumulative field at the final step equals `field` exactly.
-
-     `sources`: [{ stageId, magnitude, channel }]. Returns
-     { field, trace, sources } where sources echoes the effective inputs. */
-  function buildTrace(sources, priors = MODEL_PRIORS) {
-    const per = (sources || [])
-      .filter((s) => Number.isFinite(s.magnitude) && s.magnitude !== 0 && stageIds.includes(s.stageId))
-      .map((s) => ({ stageId: s.stageId, magnitude: s.magnitude, channel: s.channel, ...propagateTrace(s.stageId, s.magnitude, s.channel, priors) }));
-
-    const field = {};
-    stageIds.forEach((id) => {
-      const vals = per.map((p) => p.field[id]).filter((v) => v);
-      field[id] = vals.length ? combineSigned(vals) : 0;
-    });
-
-    // A node is revealed at the latest step any source settles it; an edge
-    // lights up when the node it feeds ("affected": the buyer for downstream
-    // links, the supplier for upstream echoes) is revealed.
-    const revealStep = {};
-    const allEdges = [];
-    per.forEach((p) => p.trace.forEach((step) => {
-      step.nodes.forEach((id) => { revealStep[id] = Math.max(revealStep[id] ?? 0, step.step); });
-      step.edges.forEach((e) => allEdges.push(e));
-    }));
-    // Anchor every injected source at step 0 so playback opens on the shock
-    // itself. A source's displayed value is its final combined field value,
-    // so pinning it early keeps the reveal monotonic (it never changes) and
-    // the cumulative-at-final-step-equals-field guarantee intact.
-    per.forEach((p) => { revealStep[p.stageId] = 0; });
-
-    const reached = stageIds.filter((id) => id in revealStep && field[id]);
-    const maxStep = reached.reduce((m, id) => Math.max(m, revealStep[id]), 0);
-
-    const edgeAt = {};
-    const seenEdge = new Set();
-    allEdges.forEach((e) => {
-      const affected = e.dir === 'downstream' ? e.to : e.from;
-      if (!(affected in revealStep) || !field[affected]) return;
-      const key = `${e.from}|${e.to}|${e.dir}`;
-      if (seenEdge.has(key)) return; seenEdge.add(key);
-      (edgeAt[revealStep[affected]] ||= []).push(e);
-    });
-
-    const trace = [];
-    const cumulative = {};
-    for (let k = 0; k <= maxStep; k++) {
-      const nodesAtK = reached.filter((id) => revealStep[id] === k);
-      const incremental = {};
-      nodesAtK.forEach((id) => { incremental[id] = field[id]; cumulative[id] = field[id]; });
-      trace.push({
-        step: k,
-        nodes: nodesAtK,
-        edges: edgeAt[k] || [],
-        incrementalContribution: incremental,
-        cumulativeContribution: { ...cumulative },
-      });
-    }
-    return { field, trace, sources: per.map(({ stageId, magnitude, channel }) => ({ stageId, magnitude, channel })) };
-  }
-
-  /* Playback trace for one event — the multi-source companion to
-     eventField(); its `field` equals eventField(e).field exactly. */
-  function eventTrace(e, priors = MODEL_PRIORS) {
-    const { magnitude, assumption } = eventCentralMagnitude(e, priors);
-    const sources = (e.stages || []).map((sid) => ({ stageId: sid, magnitude, channel: assumption.channel }));
-    return { ...buildTrace(sources, priors), magnitude, assumption };
-  }
-
-  /* Strongest modeled propagation paths between two stages, for the
-     explain-path view (§11). Pure graph structure + the same dependence
-     priors — an unvalidated modeled route, not a measured shipment path. */
+  /* Strongest modeled propagation routes between two stages. Pure graph
+     structure plus the same dependency priors the propagation uses — a
+     modeled route, not a measured shipment path. */
   function topPaths(sourceId, targetId, opts = {}) {
     return findTopPaths({ sourceId, targetId, OUT, IN, D, U, ...opts });
   }
 
-  /* ---------------- economic weight ("modeled turnover proxy") ---------------- */
-  const ECONOMIC_WEIGHT = log1pNormalized(STAGES.map((s) => [s.id, s.value]));
+  /* ---------------- stage economic weights ----------------
+     Normalized DIRECTLY to sum to one, so the headline index is a plain
+     weighted mean and the country chain contributions reconcile to it
+     exactly. Turnover is an IMPORTANCE PROXY: supply-chain turnover is
+     sequential, so it is not an additive economic loss and no output
+     derived from it is money. */
+  const STAGE_WEIGHT = stageWeights(STAGES.map((s) => [s.id, s.value]), PARAMS.stageWeighting);
+  const ECONOMIC_WEIGHT = STAGE_WEIGHT; // compatibility alias — same object, unambiguous name preferred
 
-  /* ---------------- network influence (Leontief-style sensitivity proxy) ----------------
+  /* ---------------- network influence ----------------
      For each stage j: inject a unit adverse shock, propagate downstream
-     over all paths, weight affected stages by ECONOMIC_WEIGHT, sum, then
-     normalize 0-10. This is a MODELED SENSITIVITY measure, not measured
-     economic loss or a validated centrality metric. */
+     over the whole DAG, weight the affected stages by their economic
+     weight and sum. RAW is published as itself; the 0-10 figure is
+     explicitly SNAPSHOT-RELATIVE (divided by the largest raw value in
+     THIS snapshot) and is therefore not comparable across snapshots. */
   const NETWORK_INFLUENCE_RAW = {};
   STAGES.forEach((s) => {
     const field = propagateSignedSource(s.id, 1, 'downstream');
     let sum = 0;
-    stageIds.forEach((id) => { sum += (ECONOMIC_WEIGHT[id] ?? 0) * Math.abs(field[id] ?? 0); });
+    stageIds.forEach((id) => { sum += (STAGE_WEIGHT[id] ?? 0) * Math.abs(field[id] ?? 0); });
     NETWORK_INFLUENCE_RAW[s.id] = sum;
   });
-  const maxInfluence = Math.max(...Object.values(NETWORK_INFLUENCE_RAW), 1e-9);
-  const NETWORK_INFLUENCE = Object.fromEntries(stageIds.map((id) => [id, clamp10(10 * NETWORK_INFLUENCE_RAW[id] / maxInfluence)]));
-  const NETWORK_INFLUENCE_RANK = [...stageIds].sort((a, b) => NETWORK_INFLUENCE[b] - NETWORK_INFLUENCE[a]);
-  const CHOKE = NETWORK_INFLUENCE; // compatibility alias — see MISSION spec; UI now labels this "Network influence"
+  const MAX_NETWORK_INFLUENCE_RAW = Math.max(...Object.values(NETWORK_INFLUENCE_RAW), 1e-12);
+  const NETWORK_INFLUENCE_SNAPSHOT_RELATIVE = Object.fromEntries(
+    stageIds.map((id) => [id, clamp10(10 * NETWORK_INFLUENCE_RAW[id] / MAX_NETWORK_INFLUENCE_RAW)]),
+  );
+  const NETWORK_INFLUENCE = NETWORK_INFLUENCE_SNAPSHOT_RELATIVE; // the 0-10 display score
+  const NETWORK_INFLUENCE_RANK = [...stageIds].sort((a, b) =>
+    NETWORK_INFLUENCE_RAW[b] - NETWORK_INFLUENCE_RAW[a] || (a < b ? -1 : 1));
+  const CHOKE = NETWORK_INFLUENCE; // compatibility alias
 
-  /* ---------------- geographic concentration (HHI + explicit residual) ---------------- */
-  const GEO_CONCENTRATION = {}, GEO_DIAGNOSTIC = {};
+  /* ---------------- geographic concentration: HHI with explicit bounds ---------------- */
+  const GEO_BOUNDS = {};
   STAGES.forEach((s) => {
-    const r = hhiWithResidual(s.shares);
-    GEO_CONCENTRATION[s.id] = r.score10;
+    const r = hhiBounds(s.shares);
+    GEO_BOUNDS[s.id] = r;
     if (r.overAllocated) diagnostics.warn('geo', `Stage "${s.id}" country shares sum to more than 1 — normalized for computation.`);
+    if (r.residual > 1e-6) {
+      diagnostics.warn('geo', `Stage "${s.id}" discloses ${(r.observedSum * 100).toFixed(1)}% of country shares — HHI is reported as the interval [${r.lower.toFixed(4)}, ${r.upper.toFixed(4)}]; the conservative upper bound is the published base.`);
+    }
   });
+  const GEO_CONCENTRATION = Object.fromEntries(stageIds.map((id) => [
+    id, PARAMS.hhiResidual === 'lower' ? GEO_BOUNDS[id].lowerScore10 : GEO_BOUNDS[id].upperScore10,
+  ]));
   const GEO = GEO_CONCENTRATION; // compatibility alias
 
-  /* ---------------- policy exposure (unchanged formula — not a flagged defect) ---------------- */
-  const POLICY_EXPOSURE = Object.fromEntries(STAGES.map((s) => {
-    const sevs = POLICIES.filter((p) => p.stages.includes(s.id)).map((p) => p.sev).sort((a, b) => b - a);
-    return [s.id, sevs.length ? clamp10(sevs[0] + 0.4 * sevs.slice(1).reduce((a, v) => a + v, 0)) : 0];
-  }));
+  /* ---------------- policy exposure: family-deduplicated, bounded ---------------- */
+  const POLICY_RESULT = policyExposure(stageIds, POLICIES, PARAMS.policyAggregator);
+  const POLICY_EXPOSURE = POLICY_RESULT.scores;
+  const POLICY_FAMILY_BREAKDOWN = POLICY_RESULT.breakdown;
   const POLICY = POLICY_EXPOSURE; // compatibility alias
+  if (POLICY_RESULT.duplicateRecords) {
+    diagnostics.warn('policy', `${POLICY_RESULT.duplicateRecords} policy record(s) collapsed into an existing family before scoring — a duplicate report or revision cannot raise a stage's policy exposure.`);
+  }
 
-  /* ---------------- structural vulnerability (5 static components, renormalized weights) ----------------
-     Excludes any event-driven "shock" term entirely — this is the
-     time-invariant structural layer. Weights are derived from
-     MODEL_PRIORS.componentWeights (the single source of truth for every
-     model coefficient — see priors.js) by dropping "choke" -> renamed to
-     "networkInfluence" and "shock" (event-driven, not structural), then
-     renormalizing the remaining four so they sum to 1. */
-  const { shock: _shockWeight, choke: chokeWeight, ...restWeights } = MODEL_PRIORS.componentWeights;
-  const structuralWeightSum = chokeWeight + Object.values(restWeights).reduce((a, w) => a + w, 0);
-  const STRUCTURAL_WEIGHTS = Object.freeze({
-    networkInfluence: chokeWeight / structuralWeightSum,
-    ...Object.fromEntries(Object.entries(restWeights).map(([k, w]) => [k, w / structuralWeightSum])),
-  });
+  /* ---------------- structural vulnerability ----------------
+     Five components, weights from the v7 registry (normalized to sum to
+     one). Event-free by construction: there is no "shock" term, and the
+     v6 declared-but-unread `shock` weight is deleted. */
+  const STRUCTURAL_WEIGHTS = PARAMS.structuralWeights;
   function structuralComponents(stage) {
-    return { networkInfluence: NETWORK_INFLUENCE[stage.id], geo: GEO_CONCENTRATION[stage.id], policy: POLICY_EXPOSURE[stage.id], subst: stage.subst, market: stage.market };
+    return {
+      networkInfluence: NETWORK_INFLUENCE[stage.id],
+      geo: GEO_CONCENTRATION[stage.id],
+      policy: POLICY_EXPOSURE[stage.id],
+      nonSubstitutability: stage.nonSubstitutability ?? stage.subst,
+      market: stage.market,
+    };
   }
   const STRUCTURAL_VULNERABILITY = Object.fromEntries(STAGES.map((s) => {
     const comp = structuralComponents(s);
-    const val = Object.entries(STRUCTURAL_WEIGHTS).reduce((a, [k, w]) => a + w * clamp10(comp[k]), 0);
+    const val = Object.entries(STRUCTURAL_WEIGHTS).reduce((a, [k, w]) => a + w * clamp10(comp[k] ?? 0), 0);
     return [s.id, clamp10(val)];
   }));
 
@@ -246,78 +257,148 @@ export function buildEngine({ STAGES, FLOW_EDGES, COMPANIES, CUSTOMERS, POLICIES
   COMPANIES.forEach((c) => Object.entries(c.stakes).forEach(([sid, sh]) => STAGE_COMPANIES[sid]?.push([c.id, sh])));
   Object.values(STAGE_COMPANIES).forEach((arr) => arr.sort((a, b) => b[1] - a[1]));
 
-  /* ---------------- operational impact: signed, all-paths, noisy-OR combined ----------------
-     eventCentral(e) returns the event's signed origin magnitude at the
-     declared snapshot date (MODEL_PRIORS.datasetAsOf), independent of
-     confidence — confidence is metadata only (see event-assumptions.js /
-     Detail.jsx / Briefing.jsx), never a multiplier on physical impact. */
-  function eventCentralMagnitude(e, priors = MODEL_PRIORS) {
-    // A scenario built in-app can carry its own semantic classification
-    // (direction/channel/operational) on the event object; otherwise fall
-    // back to the curated id lookup, then to the safe unclassified default.
-    const assumption = e.assumption || getEventAssumption(e.id);
-    const sign = assumption.direction === 'mitigating' ? -1 : 1;
-    const intensity = clamp((e.sev ?? 0) / 10, 0, 1) * decay(e.daysAgo ?? 0, priors.halfLifeDays);
-    return { magnitude: clampSigned(sign * intensity), assumption };
-  }
+  /* ==================================================================
+     OPERATIONAL LAYER
+     ================================================================== */
 
-  /* One event's full propagated field (used for the per-event Detail view
-     regardless of whether it counts toward the aggregate operational
-     score — hazard/mixed/strategic events are still shown their own
-     propagated field, just excluded from the combined aggregate below). */
-  function eventField(e, priors = MODEL_PRIORS) {
-    const { magnitude, assumption } = eventCentralMagnitude(e, priors);
-    const perStageFields = (e.stages || []).map((sid) => propagateSignedSource(sid, magnitude, assumption.channel, priors));
-    const combined = {};
-    stageIds.forEach((id) => {
-      const vals = perStageFields.map((f) => f[id]).filter((v) => v);
-      combined[id] = vals.length ? combineSigned(vals) : 0;
+  const assumptionOf = (e) => e?.assumption || getEventAssumption(e?.id);
+  const curatedModelOf = (e) => e?.model || EVENT_MODEL[e?.id] || null;
+
+  /* Build one incident's source vector + propagated field. */
+  function incidentField(incident, params = PARAMS) {
+    const e = incident.primary;
+    const assumption = assumptionOf(e);
+    const source = incidentSourceVector({
+      event: e, assumption, ageDays: e.daysAgo ?? 0, params, curated: curatedModelOf(e),
     });
-    return { field: combined, magnitude, assumption };
+    if (!source.scored) {
+      return {
+        incidentId: incident.incidentId,
+        field: Object.fromEntries(stageIds.map((id) => [id, 0])),
+        source, scored: false, assumption,
+      };
+    }
+    const { field, adverse, mitigating } = propagateVectorField(source.z, source.channel, params);
+    return { incidentId: incident.incidentId, field, adverse, mitigating, source, scored: true, assumption };
   }
 
-  /* Aggregate operational field across a list of events — ONLY events whose
-     EVENT_ASSUMPTIONS mark them `operational: true` contribute; hazard-only,
-     mixed-reallocative, and long-term-strategic events are real and
-     individually inspectable (via eventField above) but excluded from this
-     single score, per the MISSION spec. */
-  function operationalField(eventList, priors = MODEL_PRIORS) {
-    const perNode = {}; stageIds.forEach((id) => (perNode[id] = []));
-    for (const e of eventList) {
-      const { field, assumption } = eventField(e, priors);
-      if (!assumption.operational) continue;
-      stageIds.forEach((id) => { if (field[id]) perNode[id].push(field[id]); });
+  /* One record's own propagated field, for the per-record inspection view.
+     A record that is not the primary of its incident is displayed but
+     contributes nothing to the aggregate — that is what deduplication
+     means — so its own field is reported as zero with the reason. */
+  function eventField(e, params = PARAMS) {
+    const assumption = assumptionOf(e);
+    const source = incidentSourceVector({
+      event: e, assumption, ageDays: e.daysAgo ?? 0, params, curated: curatedModelOf(e),
+    });
+    const zero = Object.fromEntries(stageIds.map((id) => [id, 0]));
+    if (!source.scored) return { field: zero, source, scored: false, assumption, magnitude: 0 };
+    const { field } = propagateVectorField(source.z, source.channel, params);
+    // A single representative magnitude for the ranking and status displays:
+    // the strongest signed source component of this record.
+    const magnitude = Object.values(source.z).reduce((m, v) => (Math.abs(v) > Math.abs(m) ? v : m), 0);
+    return { field, source, scored: true, assumption, magnitude };
+  }
+
+  /* The v6 name, kept because the UI ranks and labels records with it.
+     v7 semantics: the strongest signed SOURCE component of the record at
+     the evaluation date — severity x exposure x persistence, signed by the
+     curated direction, and never multiplied by confidence. */
+  function eventCentralMagnitude(e, params = PARAMS) {
+    const { magnitude, assumption, source } = eventField(e, params);
+    return { magnitude, assumption, source };
+  }
+
+  /* Playback trace for one record — the companion to eventField(); its
+     `field` equals eventField(e).field exactly. */
+  function eventTrace(e, params = PARAMS) {
+    const assumption = assumptionOf(e);
+    const source = incidentSourceVector({
+      event: e, assumption, ageDays: e.daysAgo ?? 0, params, curated: curatedModelOf(e),
+    });
+    const m = matricesOf(params);
+    const traced = traceSignedVector({
+      z: source.z, channel: source.channel, stageIds, OUT, IN, TOPO, REV_TOPO, D: m.D, U: m.U,
+    });
+    const magnitude = Object.values(source.z).reduce((acc, v) => (Math.abs(v) > Math.abs(acc) ? v : acc), 0);
+    return { ...traced, sources: Object.entries(source.z).map(([stageId, mag]) => ({ stageId, magnitude: mag, channel: source.channel })), magnitude, assumption, source };
+  }
+
+  /* Deduplicate a record list into incidents. */
+  function incidentsOf(eventList) {
+    return groupIncidents(eventList, { incidentOf });
+  }
+
+  /* Aggregate operational field across a list of RECORDS.
+
+     Records are grouped into incidents FIRST, each incident is propagated
+     jointly ONCE, and only then are distinct incidents combined with the
+     bounded aggregation operator — separately by sign, then netted. */
+  function operationalField(eventList, params = PARAMS) {
+    const incidents = incidentsOf(eventList);
+    const pos = {}; const neg = {};
+    stageIds.forEach((id) => { pos[id] = []; neg[id] = []; });
+    for (const inc of incidents) {
+      const { field, scored } = incidentField(inc, params);
+      if (!scored) continue;
+      stageIds.forEach((id) => {
+        const v = field[id];
+        if (v > 0) pos[id].push(v);
+        else if (v < 0) neg[id].push(-v);
+      });
     }
     const combined = {};
-    stageIds.forEach((id) => { combined[id] = combineSigned(perNode[id]); });
+    stageIds.forEach((id) => {
+      const a = aggregateNonNegative(pos[id], params.incidentAggregation);
+      const m = aggregateNonNegative(neg[id], params.incidentAggregation);
+      combined[id] = clampSigned(a - m);
+    });
     return combined;
   }
 
-  function operationalIndex(field) {
-    let num = 0, den = 0;
-    stageIds.forEach((id) => { const w = ECONOMIC_WEIGHT[id] ?? 0; num += (field[id] ?? 0) * w; den += w; });
-    return den ? clampSigned(num / den) : 0;
+  /* Headline index: the economic-weight-weighted mean of the stage field.
+     The weights sum to one, so this is a plain weighted mean in [-1,1]. */
+  function operationalIndex(field, params = PARAMS) {
+    const w = params === PARAMS ? STAGE_WEIGHT : stageWeights(STAGES.map((s) => [s.id, s.value]), params.stageWeighting);
+    let num = 0;
+    stageIds.forEach((id) => { num += (field[id] ?? 0) * (w[id] ?? 0); });
+    return clampSigned(num);
   }
+
   // 5 = neutral (no net active operational effect); >5 net adverse, <5 net mitigating.
-  // This is a deliberately different, separately-labeled metric from
-  // STRUCTURAL_VULNERABILITY (see README "Model status and limitations").
   const toDisplayIndex = (signed) => clamp10(5 + 5 * signed);
 
+  /* ---------------- assumption envelope ----------------
+     The PRINCIPAL uncertainty analysis in v7 is the global sensitivity
+     design in engine/sensitivity.js (scripts/build-sensitivity.mjs). This
+     is the cheap in-app companion: a one-at-a-time low/high sweep over the
+     propagation and persistence parameters, kept because the dashboard
+     needs an envelope it can compute in a render. It is an ASSUMPTION
+     ENVELOPE, never a confidence interval. */
+  const ENVELOPE_PARAMS = ['downstreamTransmission', 'upstreamTransmission', 'minimumDependencyFactor',
+    'acuteHalfLifeDays', 'marketHalfLifeDays', 'outageRecoveryDays'];
+
   function sensitivityEnvelope(eventList) {
-    const low = operationalIndex(operationalField(eventList, SENSITIVITY_PRESETS.low));
-    const base = operationalIndex(operationalField(eventList, SENSITIVITY_PRESETS.base));
-    const high = operationalIndex(operationalField(eventList, SENSITIVITY_PRESETS.high));
-    const vals = [low, base, high].sort((a, b) => a - b);
-    return { low: vals[0], base, high: vals[2] };
+    const base = operationalIndex(operationalField(eventList, PARAMS), PARAMS);
+    let lo = base, hi = base;
+    for (const key of ENVELOPE_PARAMS) {
+      for (const level of ['low', 'high']) {
+        const p = resolveParams({ [key]: PARAM_LEVEL[key][level] });
+        const v = operationalIndex(operationalField(eventList, p), p);
+        if (v < lo) lo = v;
+        if (v > hi) hi = v;
+      }
+    }
+    return { low: lo, base, high: hi };
   }
 
-  /* ---------------- company metrics: vulnerability / contribution / criticality ----------------
-     Three deliberately distinct numbers — see README "Model status and
-     limitations" and MISSION spec "SEPARATE THE METRICS". */
-  function adverseOnly(v) { return Math.max(0, v ?? 0); }
+  /* ==================================================================
+     COMPANY MEASURES
+     ================================================================== */
+  const adverseOnly = (v) => Math.max(0, v ?? 0);
 
   function companyVulnerability(c, field) {
-    // Share-INDEPENDENT: the average adverse impact across the stages the
+    // Share-INDEPENDENT: the mean adverse impact across the stages the
     // company is present in. Two companies exposed only to the same stage
     // get the same vulnerability regardless of their relative size there.
     const stages = Object.keys(c.stakes);
@@ -327,59 +408,68 @@ export function buildEngine({ STAGES, FLOW_EDGES, COMPANIES, CUSTOMERS, POLICIES
   }
 
   function companyContribution(c, field) {
-    // Share-WEIGHTED: market share does not cancel. A larger stage share
-    // at the same adverse-impact level produces a larger contribution.
+    // Share-WEIGHTED: market share does not cancel.
     let total = 0;
     Object.entries(c.stakes).forEach(([sid, share]) => {
       const stageTotal = STAGE_COMPANIES[sid]?.reduce((a, [, sh]) => a + sh, 0) ?? share;
       let normShare = share;
-      if (stageTotal > 1 + 1e-6) {
-        normShare = share / stageTotal;
-        diagnostics.warn('company-share', `Stage "${sid}" company shares sum to ${stageTotal.toFixed(3)} (>1) — contribution normalized for computation; treat as within modeled sample.`);
-      }
-      total += normShare * adverseOnly(field[sid]) * (ECONOMIC_WEIGHT[sid] ?? 0);
+      if (stageTotal > 1 + 1e-6) normShare = share / stageTotal;
+      total += normShare * adverseOnly(field[sid]) * (STAGE_WEIGHT[sid] ?? 0);
     });
     return total;
   }
 
-  function companyCriticalityRaw(c, priors = MODEL_PRIORS) {
-    // "If this company were fully disrupted" — inject a shock at every
-    // stage it occupies, sized to its within-stage share, propagate in
-    // both directions, and take the network-influence-weighted mean.
-    // Unnormalized: this is the raw NI-weighted mean impact, before the
-    // max-observed scaling companyCriticality() applies below.
-    const perStageFields = Object.entries(c.stakes).map(([sid, share]) => propagateSignedSource(sid, clampSigned(share), 'both', priors));
-    const field = {};
-    stageIds.forEach((id) => {
-      const vals = perStageFields.map((f) => f[id]).filter((v) => v);
-      field[id] = vals.length ? combineSigned(vals) : 0;
+  let companyShareWarningIssued = false;
+  Object.entries(STAGE_COMPANIES).forEach(([sid, arr]) => {
+    const total = arr.reduce((a, [, sh]) => a + sh, 0);
+    if (total > 1 + 1e-6 && !companyShareWarningIssued) {
+      companyShareWarningIssued = true;
+      diagnostics.warn('company-share', `At least one stage's company shares sum to more than 1 (e.g. "${sid}" at ${total.toFixed(3)}) — contributions are normalized for computation; treat as within the modeled sample.`);
+    }
+  });
+
+  /* Company criticality: "if this company were fully disrupted".
+
+     TOPOLOGY IS APPLIED EXACTLY ONCE. v6 propagated from every stage the
+     company occupies (topology, pass one) and then weighted the resulting
+     field by NETWORK_INFLUENCE (which is itself a propagation-derived
+     reachability measure — topology, pass two), so a company on a
+     well-connected stage was rewarded twice for the same connectivity.
+     v7 weights the propagated field by the ECONOMIC WEIGHT, which carries
+     no topology at all.
+
+     The company's stakes are injected as ONE joint source vector, so a
+     company present in several stages is one disruption, not several. */
+  function companyCriticalityRaw(c, params = PARAMS) {
+    const z = {};
+    Object.entries(c.stakes || {}).forEach(([sid, share]) => {
+      if (!stageIds.includes(sid)) return;
+      z[sid] = clamp(share, 0, 1);
     });
+    const { field } = propagateVectorField(z, 'both', params);
+    const w = params === PARAMS ? STAGE_WEIGHT : stageWeights(STAGES.map((s) => [s.id, s.value]), params.stageWeighting);
     let num = 0, den = 0;
-    stageIds.forEach((id) => { const w = NETWORK_INFLUENCE[id] ?? 0; num += adverseOnly(field[id]) * w; den += w; });
+    stageIds.forEach((id) => { const ww = w[id] ?? 0; num += adverseOnly(field[id]) * ww; den += ww; });
     return { field, raw: den ? num / den : 0 };
   }
 
-  // Criticality is normalized against the largest raw score actually
-  // achieved across the current company set — the same max-observed
-  // approach NETWORK_INFLUENCE uses (§1) — rather than against the
-  // theoretical, practically-unreachable ceiling of every stage being
-  // saturated at once. Dividing by that ceiling squashed every real
-  // company's score into a sliver near 0 (the most systemically
-  // important company in the snapshot scored under 2/10, indistinguishable
-  // from a minor one at ~1/10). This is a strictly increasing rescaling of
-  // the same raw number, so "larger market share never reduces
-  // criticality" still holds — it just means the single most critical
-  // company in the current snapshot now scores at (or near) 10.
-  const MAX_CRITICALITY_RAW = Math.max(...COMPANIES.map((c) => companyCriticalityRaw(c).raw), 1e-9);
+  /* Snapshot-relative rescaling. The 0-10 number is the raw value divided
+     by the largest raw value IN THIS SNAPSHOT. It orders companies within
+     one snapshot and NOTHING ELSE: it is not comparable across snapshots,
+     because the denominator changes when the company set does. The raw
+     value is published alongside it for exactly that reason. */
+  const COMPANY_CRITICALITY_RAW = Object.fromEntries(COMPANIES.map((c) => [c.id, companyCriticalityRaw(c).raw]));
+  const MAX_CRITICALITY_RAW = Math.max(...Object.values(COMPANY_CRITICALITY_RAW), 1e-12);
 
-  function companyCriticality(c, priors = MODEL_PRIORS) {
-    const { field, raw } = companyCriticalityRaw(c, priors);
-    return { field, value: clamp10(10 * (raw / MAX_CRITICALITY_RAW)) };
+  function companyCriticality(c, params = PARAMS) {
+    const { field, raw } = companyCriticalityRaw(c, params);
+    return { field, raw, value: clamp10(10 * (raw / MAX_CRITICALITY_RAW)), snapshotRelative: true };
   }
 
   const COMPANY_CRITICALITY = Object.fromEntries(COMPANIES.map((c) => [c.id, companyCriticality(c)]));
-  const COMPANY_IMPACTS = COMPANY_CRITICALITY; // compatibility alias (was "companyImpact"/CII)
-  const COMPANY_RANK = [...COMPANIES].sort((a, b) => COMPANY_CRITICALITY[b.id].value - COMPANY_CRITICALITY[a.id].value);
+  const COMPANY_IMPACTS = COMPANY_CRITICALITY; // compatibility alias
+  const COMPANY_RANK = [...COMPANIES].sort((a, b) =>
+    COMPANY_CRITICALITY_RAW[b.id] - COMPANY_CRITICALITY_RAW[a.id] || (a.id < b.id ? -1 : 1));
 
   const CAP_RANK = (() => {
     const m = {};
@@ -397,7 +487,7 @@ export function buildEngine({ STAGES, FLOW_EDGES, COMPANIES, CUSTOMERS, POLICIES
     })).sort((a, b) => b.power - a.power);
   })();
 
-  /* ---------------- spread trees (pure graph traversal — not a flagged defect) ---------------- */
+  /* ---------------- spread trees (pure graph traversal) ---------------- */
   function supplierSpread(cid) {
     const seen = new Set([cid]);
     const mk = (list) => list.filter(([c]) => !seen.has(c)).map(([c, rel]) => ({ cid: c, rel })).sort((a, b) => b.rel - a.rel).slice(0, 5);
@@ -423,7 +513,7 @@ export function buildEngine({ STAGES, FLOW_EDGES, COMPANIES, CUSTOMERS, POLICIES
       const rows = [];
       stageSet.forEach((sid) => (STAGE_COMPANIES[sid] || []).forEach(([cid, sh]) => {
         if (seenCo.has(cid)) return;
-        rows.push({ cid, sid, contribution: sh * adverseOnly(field[sid]) * (ECONOMIC_WEIGHT[sid] ?? 0) * 10 });
+        rows.push({ cid, sid, contribution: sh * adverseOnly(field[sid]) * (STAGE_WEIGHT[sid] ?? 0) * 10 });
       }));
       const best = {};
       rows.forEach((r) => { if (!best[r.cid] || r.contribution > best[r.cid].contribution) best[r.cid] = r; });
@@ -451,69 +541,120 @@ export function buildEngine({ STAGES, FLOW_EDGES, COMPANIES, CUSTOMERS, POLICIES
     return [h1, h2];
   }
 
-  /* ---------------- country aggregation: structural (static) + operational (event-driven) ---------------- */
+  /* ==================================================================
+     COUNTRY AGGREGATION — two distinct, separately labelled measures.
+
+     LOCAL PRESSURE   share-weighted MEAN of the stage field over the
+                      stages this country participates in, normalized by
+                      the country's own modeled stage footprint. "How hard
+                      is the part of the chain that sits here being
+                      squeezed?" Comparable between countries; says nothing
+                      about how much of the whole chain that is.
+
+     CHAIN CONTRIBUTION  the country's UNNORMALIZED contribution to the
+                      overall weighted field: sum_s share(c,s) * w_s * f_s.
+                      Because sum_c share(c,s) = 1 wherever shares are
+                      fully disclosed, these reconcile to the headline
+                      index exactly. "How much of the headline number is
+                      this country?"
+
+     v6's country `directSignals` term is REMOVED. It combined a
+     country-tagged event's raw magnitude into the country reading on top
+     of the same event's stage field, so a country tagged on an event it
+     also hosts stages for counted that event twice. In v7 an incident
+     enters a country's output through its stage source and propagation,
+     exactly once.
+     ================================================================== */
   function countryData(eventList, field, COUNTRY_NAMES) {
     const acc = {};
-    Object.keys(COUNTRY_NAMES).forEach((c) => (acc[c] = { w: 0, structComp: { networkInfluence: 0, geo: 0, policy: 0, subst: 0, market: 0 }, stages: [] }));
+    Object.keys(COUNTRY_NAMES).forEach((c) => (acc[c] = {
+      w: 0, structComp: { networkInfluence: 0, geo: 0, policy: 0, nonSubstitutability: 0, market: 0 }, stages: [],
+    }));
     STAGES.forEach((s) => {
       const comp = structuralComponents(s);
-      Object.entries(s.shares).forEach(([c, sh]) => {
+      Object.entries(s.shares || {}).forEach(([c, sh]) => {
         if (!acc[c]) return;
         acc[c].w += sh; acc[c].stages.push([s.id, sh]);
-        Object.keys(comp).forEach((k) => (acc[c].structComp[k] += sh * clamp10(comp[k])));
+        Object.keys(comp).forEach((k) => (acc[c].structComp[k] += sh * clamp10(comp[k] ?? 0)));
       });
     });
+
     const out = {};
     Object.entries(acc).forEach(([c, a]) => {
       if (!a.w) return;
       const structComp = {}; Object.keys(a.structComp).forEach((k) => (structComp[k] = a.structComp[k] / a.w));
       const structural = clamp10(Object.entries(STRUCTURAL_WEIGHTS).reduce((s, [k, w]) => s + w * clamp10(structComp[k]), 0));
 
-      // operational: share-weighted mean of stage operational field for stages this country participates in,
-      // combined (not maxed) with any direct country-tagged event effect.
-      let opNum = 0, opDen = 0;
-      a.stages.forEach(([sid, sh]) => { opNum += sh * (field[sid] ?? 0); opDen += sh; });
-      const stageOperational = opDen ? opNum / opDen : 0;
-      const directSignals = [];
-      for (const e of eventList) {
-        if (e.countries?.includes(c)) {
-          const { magnitude, assumption } = eventCentralMagnitude(e);
-          if (assumption.operational) directSignals.push(magnitude);
-        }
-      }
-      const operational = clampSigned(combineSigned([stageOperational, ...directSignals]));
-      out[c] = { structComp, structural, operational, weight: a.w, stages: a.stages.sort((x, y) => y[1] - x[1]) };
+      let pressureNum = 0, pressureDen = 0, chain = 0;
+      a.stages.forEach(([sid, sh]) => {
+        const f = field[sid] ?? 0;
+        pressureNum += sh * f;
+        pressureDen += sh;
+        chain += sh * (STAGE_WEIGHT[sid] ?? 0) * f;
+      });
+      const localPressure = pressureDen ? clampSigned(pressureNum / pressureDen) : 0;
+
+      out[c] = {
+        structComp, structural,
+        localPressure,
+        chainContribution: chain,
+        /* Deprecated alias for `localPressure`, kept so stored v6 views
+           keep resolving. New code and all documentation use the two
+           unambiguous names above. */
+        operational: localPressure,
+        weight: a.w,
+        stages: a.stages.sort((x, y) => y[1] - x[1]),
+      };
     });
     return out;
   }
 
-  /* ---------------- history: baseline-only, at past offsets from the snapshot date ----------------
-     At a date t days before the snapshot, an event's age was (daysAgo − t);
-     events with a negative age had not happened yet and are excluded — an
-     event must never contribute to the index before its own date. (The
-     earlier version ADDED t, which both pre-echoed future events into the
-     past and prevented any event from ever peaking on its own date.)
-     Events whose decayed magnitude is negligible (< 1e-4, i.e. older than
-     ~160 days at the 12-day half-life) are skipped for speed — this is what
-     makes the multi-year LONG_HISTORY below tractable. */
-  const eventsAsOf = (t) => EVENTS
-    .filter((e) => (e.daysAgo ?? 0) - t >= 0 && decay((e.daysAgo ?? 0) - t, MODEL_PRIORS.halfLifeDays) > 1e-4)
+  /* ==================================================================
+     HISTORY — baseline only, at past offsets from the snapshot date.
+
+     THIS IS A v7 RETROSPECTIVE, AND IT IS LABELLED AS ONE. The series is
+     recomputed today, under today's model, over the records as they stood
+     at each past date. It is NOT what was published on those dates: the v6
+     engine produced materially different numbers from the same records
+     (see docs/benchmarks/v6-to-v7-benchmark.json). Archived briefings keep
+     their own stored model version and are never restated.
+     ==================================================================
+
+
+     At a date t days before the snapshot, an incident's age was
+     (daysAgo - t); incidents with a negative age had not happened yet and
+     are excluded. Incidents past their own persistence horizon at that
+     date are skipped for speed — the horizon comes from the incident's own
+     curated profile (persistence.js), never from one global constant.
+     ================================================================== */
+  const HORIZON_CACHE = new Map();
+  const horizonOf = (e, params) => {
+    const key = `${e.id}|${params.acuteHalfLifeDays}|${params.marketHalfLifeDays}|${params.outageRecoveryDays}`;
+    if (!HORIZON_CACHE.has(key)) HORIZON_CACHE.set(key, incidentHorizonDays(e, params, curatedModelOf(e)));
+    return HORIZON_CACHE.get(key);
+  };
+
+  const eventsAsOf = (t, params = PARAMS) => EVENTS
+    .filter((e) => {
+      const age = (e.daysAgo ?? 0) - t;
+      return age >= 0 && age <= horizonOf(e, params);
+    })
     .map((e) => ({ ...e, daysAgo: (e.daysAgo ?? 0) - t }));
+
   const chainIndexAt = (t) => toDisplayIndex(operationalIndex(operationalField(eventsAsOf(t))));
-  const HISTORY = Array.from({ length: 22 }, (_, i) => chainIndexAt(21 - i)); // 21 days before snapshot -> snapshot date
   const stageScoreAt = (sid, t) => toDisplayIndex(operationalField(eventsAsOf(t))[sid] ?? 0);
 
-  /* Long-run computed history — weekly samples back to the oldest event,
-     plus an exact sample on each event's own date so spikes are not
-     attenuated by grid placement. Baseline events only, like HISTORY.
+  /* `computeHistory: false` skips the multi-year replay. The global
+     sensitivity sweep builds thousands of engines and reads only the
+     current-date outputs; replaying a decade of history for each one would
+     cost minutes and change nothing it reports. Nothing else sets it. */
+  const HISTORY = computeHistory
+    ? Array.from({ length: 22 }, (_, i) => chainIndexAt(21 - i)) // 21 days before snapshot -> snapshot date
+    : [];
 
-     The span cap exists so a single mis-dated event cannot make the engine
-     replay an unbounded history at construction time. It is set past a full
-     decade because the event table now reaches back to 2016
-     (server/src/decade-events.js); a shorter cap silently truncated the
-     oldest years out of the chart. Cost is bounded and small: one
-     chainIndexAt call is ~0.1ms, and eventsAsOf drops everything outside
-     the ~160-day decay horizon before any propagation runs. */
+  /* Long-run computed history — weekly samples back to the oldest record,
+     plus an exact sample on each record's own date so spikes are not
+     attenuated by grid placement. */
   const maxDaysAgo = EVENTS.reduce((m, e) => Math.max(m, e.daysAgo ?? 0), 0);
   const longSpanDays = Math.min(maxDaysAgo + 14, 4200); // safety cap ~11.5y
   const longOffsets = new Set([0]);
@@ -522,42 +663,125 @@ export function buildEngine({ STAGES, FLOW_EDGES, COMPANIES, CUSTOMERS, POLICIES
     const d = e.daysAgo ?? 0;
     if (d > 0 && d <= longSpanDays) { longOffsets.add(d); longOffsets.add(Math.max(0, d - 3)); }
   });
-  const LONG_HISTORY = [...longOffsets].sort((a, b) => b - a)
-    .map((t) => ({ daysAgo: t, index: chainIndexAt(t) }));
-  const MOVERS7D = STAGES.map((s) => { const now = stageScoreAt(s.id, 0), prev = stageScoreAt(s.id, 7); return { id: s.id, now, d: now - prev }; })
-    .sort((a, b) => Math.abs(b.d) - Math.abs(a.d));
+  const LONG_HISTORY = computeHistory
+    ? [...longOffsets].sort((a, b) => b - a).map((t) => ({ daysAgo: t, index: chainIndexAt(t) }))
+    : [];
+  const MOVERS7D = computeHistory
+    ? STAGES.map((s) => { const now = stageScoreAt(s.id, 0), prev = stageScoreAt(s.id, 7); return { id: s.id, now, d: now - prev }; })
+      .sort((a, b) => Math.abs(b.d) - Math.abs(a.d))
+    : [];
+
+  /* ==================================================================
+     MODEL AUDIT — every fallback, counted and machine-readable.
+     Each entry corresponds to a documented fallback rule in
+     docs/MODEL_V7_SPEC.md §6, so the specification can quote these counts
+     rather than claiming coverage the data does not have.
+     ================================================================== */
+  const MODEL_AUDIT = (() => {
+    const codes = {};
+    const byCode = {};
+    const bump = (code, id, detail) => {
+      codes[code] = (codes[code] ?? 0) + 1;
+      (byCode[code] ||= []).push({ id, detail });
+    };
+    const incidents = incidentsOf(EVENTS);
+    let scoredIncidents = 0;
+    for (const inc of incidents) {
+      const e = inc.primary;
+      const assumption = assumptionOf(e);
+      const source = incidentSourceVector({ event: e, assumption, ageDays: e.daysAgo ?? 0, params: PARAMS, curated: curatedModelOf(e) });
+      source.diagnostics.forEach((d) => bump(d.code, d.id, d.detail));
+      if (source.scored) scoredIncidents += 1;
+      if (inc.recordCount > 1) bump('incident_deduplicated', inc.incidentId, `${inc.recordCount} records collapsed to one incident (primary "${e.id}")`);
+    }
+    return {
+      counts: codes,
+      details: byCode,
+      recordCount: EVENTS.length,
+      incidentCount: incidents.length,
+      scoredIncidentCount: scoredIncidents,
+      curatedEventCount: Object.keys(EVENT_MODEL).length,
+      activeHorizonDays: ACTIVE_HORIZON_DAYS,
+      edgeAllocationFallback: {
+        incomingEqualSplit: ALLOCATIONS.fallbacks.incomingEqualSplit.length,
+        outgoingEqualSplit: ALLOCATIONS.fallbacks.outgoingEqualSplit.length,
+        renormalized: ALLOCATIONS.fallbacks.renormalized.length,
+      },
+      hhiPartialDisclosure: stageIds.filter((id) => GEO_BOUNDS[id].residual > 1e-6).length,
+      policyDuplicateRecords: POLICY_RESULT.duplicateRecords,
+      policyFamilies: POLICY_RESULT.families.length,
+    };
+  })();
+
+  /* A missing profile or exposure on an ACTIVE operational incident is a
+     hard defect, not a footnote — the audit script fails the build on it. */
+  if (MODEL_AUDIT.counts.missing_profile_active) {
+    diagnostics.error('event-model', `${MODEL_AUDIT.counts.missing_profile_active} operational incident(s) inside the ${ACTIVE_HORIZON_DAYS}-day curated horizon have no explicit temporal profile.`);
+  }
+  if (MODEL_AUDIT.counts.missing_profile_archived) {
+    diagnostics.warn('event-model', `${MODEL_AUDIT.counts.missing_profile_archived} archived operational record(s) outside the ${ACTIVE_HORIZON_DAYS}-day curated horizon use the legacy "${'acute_exponential'}" profile fallback.`);
+  }
+  if (MODEL_AUDIT.counts.legacy_equal_stage_exposure) {
+    diagnostics.warn('event-model', `${MODEL_AUDIT.counts.legacy_equal_stage_exposure} operational record(s) use the legacy 1/k equal stage-exposure fallback.`);
+  }
+  if (MODEL_AUDIT.counts.country_only_event) {
+    diagnostics.warn('event-model', `${MODEL_AUDIT.counts.country_only_event} record(s) carry countries but no defensible stage mapping — displayed, operationally unscored.`);
+  }
+  if (MODEL_AUDIT.counts.unknown_direction_unscored) {
+    diagnostics.warn('event-model', `${MODEL_AUDIT.counts.unknown_direction_unscored} record(s) have a mixed or unclassified direction with no signed stage components — displayed, operationally unscored.`);
+  }
 
   // bounded-output self-check — surfaces as a diagnostic rather than silently shipping NaN/Infinity to the UI
   Object.entries(NETWORK_INFLUENCE).forEach(([id, v]) => { if (!Number.isFinite(v)) diagnostics.error('bounds', `NETWORK_INFLUENCE[${id}] is not finite.`); });
   HISTORY.forEach((v, i) => { if (!Number.isFinite(v) || v < 0 || v > 10) diagnostics.error('bounds', `HISTORY[${i}] out of [0,10] bounds: ${v}`); });
   LONG_HISTORY.forEach((p, i) => { if (!Number.isFinite(p.index) || p.index < 0 || p.index > 10) diagnostics.error('bounds', `LONG_HISTORY[${i}] out of [0,10] bounds: ${p.index}`); });
 
-  return {
-    OUT, IN, STAGE_BY_ID, COMPANY_BY_ID, SUPPLIERS, COUNTRY_LINKS, TOPO, REV_TOPO,
-    MODEL_PRIORS: PRIORS, SENSITIVITY_PRESETS, diagnostics, graphValid: graphCheck.valid,
+  /* The parameter view the UI and the archived-briefing pipeline read.
+     Carries the resolved v7 parameters plus the two fields every stored
+     artefact needs to be interpretable later. */
+  const MODEL_PRIORS = Object.freeze({ ...PARAMS, datasetAsOf: DATASET_AS_OF, modelVersion: MODEL_VERSION });
 
-    D, U, NETWORK_INFLUENCE, NETWORK_INFLUENCE_RANK, CHOKE, GEO_CONCENTRATION, GEO, POLICY_EXPOSURE, POLICY,
-    STRUCTURAL_VULNERABILITY, STRUCTURAL_WEIGHTS, ECONOMIC_WEIGHT, STAGE_COMPANIES,
+  return {
+    STAGES, OUT, IN, STAGE_BY_ID, COMPANY_BY_ID, SUPPLIERS, COUNTRY_LINKS, TOPO, REV_TOPO,
+    MODEL_PRIORS, PARAMS, MODEL_VERSION, datasetAsOf: DATASET_AS_OF,
+    diagnostics, graphValid: graphCheck.valid, MODEL_AUDIT,
+
+    D, U, EDGE_ALLOCATIONS: ALLOCATIONS, NON_SUBSTITUTABILITY_UNIT,
+    NETWORK_INFLUENCE_RAW, NETWORK_INFLUENCE_SNAPSHOT_RELATIVE, NETWORK_INFLUENCE, NETWORK_INFLUENCE_RANK, CHOKE,
+    GEO_BOUNDS, GEO_CONCENTRATION, GEO,
+    POLICY_EXPOSURE, POLICY, POLICY_FAMILY_BREAKDOWN, POLICY_FAMILIES: POLICY_RESULT.families,
+    STRUCTURAL_VULNERABILITY, STRUCTURAL_WEIGHTS, STAGE_WEIGHT, ECONOMIC_WEIGHT, STAGE_COMPANIES,
 
     clamp10, clampSigned, decay,
+    incidentsOf, incidentField,
     eventCentralMagnitude, eventField, operationalField, operationalIndex, toDisplayIndex, sensitivityEnvelope,
-    propagateTrace, buildTrace, eventTrace, topPaths,
+    propagateSignedSource, propagateVectorField, propagateTrace, buildTrace, eventTrace, topPaths,
 
-    companyVulnerability, companyContribution, companyCriticality,
+    companyVulnerability, companyContribution, companyCriticality, companyCriticalityRaw,
+    COMPANY_CRITICALITY_RAW, MAX_CRITICALITY_RAW,
     COMPANY_IMPACTS, COMPANY_CRITICALITY, COMPANY_RANK, CAP_RANK,
 
     supplierSpread, companySpread, customerSpread, countryData,
     structuralComponents, HISTORY, LONG_HISTORY, chainIndexAt, stageScoreAt, MOVERS7D,
 
-    /* Exposed for the historical time-series layer (engine/timeseries.js),
-       which replays the index over arbitrary event subsets to attribute each
-       event's marginal contribution. EVENTS is the exact table the history
-       above was computed from; eventsAsOf is the engine's own back-dating
-       rule, shared so an analysis can never drift from the chart. */
     EVENTS, eventsAsOf, longSpanDays,
+    /* Every consumer of HISTORY / LONG_HISTORY must be able to say what it
+       is looking at. These two fields exist so no surface can present a
+       recomputed series as a contemporaneous record by omission. */
+    HISTORY_IS_RETROSPECTIVE: true,
+    HISTORY_LABEL: `v7 retrospective — recomputed under ${MODEL_VERSION}, not the values published on those dates`,
     indexOf: (eventList, t = 0) => toDisplayIndex(operationalIndex(operationalField(
-      (eventList || []).filter((e) => (e.daysAgo ?? 0) - t >= 0 && decay((e.daysAgo ?? 0) - t, MODEL_PRIORS.halfLifeDays) > 1e-4)
-        .map((e) => ({ ...e, daysAgo: (e.daysAgo ?? 0) - t })),
+      (eventList || []).filter((e) => {
+        const age = (e.daysAgo ?? 0) - t;
+        return age >= 0 && age <= horizonOf(e, PARAMS);
+      }).map((e) => ({ ...e, daysAgo: (e.daysAgo ?? 0) - t })),
     ))),
   };
 }
+
+/* low/high levels for the in-app envelope sweep, read from the registry so
+   they cannot drift from the published parameter table. */
+import { PARAMETERS } from './registry.js';
+const PARAM_LEVEL = Object.fromEntries(Object.entries(PARAMETERS).map(([k, p]) => [k, { low: p.low, high: p.high }]));
+
+export { uniqueStages };

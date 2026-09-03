@@ -295,18 +295,18 @@ Implemented in `app/src/engine/index.js — severity and structural vulnerabilit
 
 ### Exponential decay of event salience
 
-Implemented in `app/src/engine/math.js — decay(); priors.js — halfLifeDays`.
+Implemented in `app/src/engine/persistence.js — the exponential profiles; app/src/engine/registry.js — acuteHalfLifeDays, marketHalfLifeDays`.
 
 - Wu, Fang, and Bernardo A. Huberman. "Novelty and collective attention." *Proceedings of the National Academy of Sciences* 104, no. 45 (2007): 17599–17601. https://doi.org/10.1073/pnas.0704916104.
-  *Why cited:* Empirical basis for treating attention to an event as decaying rather than persisting. The 12-day half-life itself is a declared prior, not a fitted value.
+  *Why cited:* Empirical basis for treating attention to an event as decaying rather than persisting. The half-life values themselves are declared priors, not fitted values — and v7 applies a decay only to the two exponential profiles, not to standing controls, which are modelled as in force or not.
   *Verified against:* Crossref.
 
 ### Herfindahl–Hirschman concentration index
 
-Implemented in `app/src/engine/math.js — hhiWithResidual()`.
+Implemented in `app/src/engine/math.js — hhiBounds()`.
 
 - Hirschman, Albert Otto. *National Power and the Structure of Foreign Trade*. University of California Press, 1945. https://openlibrary.org/works/OL2745858W.
-  *Why cited:* Where the concentration index originates. Hirschman introduced it here; Herfindahl arrived at it independently in 1950, and the joint name is later usage.
+  *Why cited:* Where the concentration index originates. Hirschman introduced it here; Herfindahl arrived at it independently in 1950, and the joint name is later usage. v7 publishes the index as a `[lower, upper]` interval, because the concentration of the undisclosed residual is not identified by the observed shares.
   *Verified against:* Open Library.
 - U.S. Department of Justice and Federal Trade Commission. *Merger Guidelines*. 2023. https://www.ftc.gov/system/files/ftc_gov/pdf/2023_merger_guidelines_final_12.18.2023.pdf.
   *Why cited:* The concentration thresholds the screening rules are set against. Cited for the thresholds only: this model measures share of a modeled sample, not a legally defined market.
@@ -314,7 +314,7 @@ Implemented in `app/src/engine/math.js — hhiWithResidual()`.
 
 ### Input-output structure
 
-Implemented in `app/src/engine/graph.js — stage dependence matrices`.
+Implemented in `app/src/engine/propagation.js — stage dependency matrices`.
 
 - Miller, Ronald E., and Peter D. Blair. "Input-Output Analysis." Cambridge University Press, 2009. https://doi.org/10.1017/cbo9780511626982.
   *Why cited:* The input-output framework the stage graph approximates. Cited to be explicit that the dependence matrices are equal-allocation priors, not measured technical coefficients.
@@ -328,9 +328,9 @@ Implemented in `app/src/engine/networkAnalysis.js — removal_impact metric`.
   *Why cited:* The attack-tolerance framing: how much connectivity a network loses when a node is removed.
   *Verified against:* Crossref.
 
-### Noisy-OR combination
+### Bounded saturating aggregation (noisy-OR functional form)
 
-Implemented in `app/src/engine/math.js — combineSigned()`.
+Implemented in `app/src/engine/aggregation.js`. Cited for the **functional form only**: v7 uses it as a bounded aggregation operator across distinct incidents, for monotonicity and saturation, and not as a probability calculation — the inputs are bounded exposure scores, not probabilities, and no independence assumption is made.
 
 - Oniśko, Agnieszka, Marek J. Druzdzel, and Hanna Wasyluk. "Learning Bayesian network parameters from small data sets: application of Noisy-OR gates." *International Journal of Approximate Reasoning* 27, no. 2 (2001): 165–182. https://doi.org/10.1016/s0888-613x(01)00039-1.
   *Why cited:* The noisy-OR gate as a parameter-reduction device, and its behaviour on small samples.

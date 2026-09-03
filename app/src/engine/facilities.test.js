@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import {
   haversineKm, siteWeight, buildFacilityLayer, facilitiesWithin,
   hazardFootprint, footprintToDraftSources, facilityImpact, facilitiesForEvent,
-  MIN_STAGE_EXPOSURE, STATUS_EXPOSURE,
+  DISPLAY_EXPOSURE_THRESHOLD, STATUS_EXPOSURE, footprintToHazardScenario, SCALE_MAPPINGS, statusWeight,
 } from './facilities.js';
 
 const site = (id, over = {}) => ({
@@ -125,28 +125,50 @@ describe('hazardFootprint', () => {
     expect(fp.stages.some((s) => s.stageId === 'adv_fab')).toBe(false);
   });
 
-  it('separates stages material enough to shock from ones merely touched', () => {
+  /* THE v6 CLIFF, GONE. A footprint below the display threshold used to be
+     dropped from the model entirely; now it is dimmed in the readout and
+     scored in proportion to what it actually is. */
+  it('keeps a below-threshold footprint as a scored source, and only DIMS it in the readout', () => {
     const wide = buildFacilityLayer([
       site('tiny', { lat: 0, lng: 0, stages: ['osat'], scale: 1 }),
       ...Array.from({ length: 10 }, (_, i) => site(`far${i}`, { lat: 50, lng: 50, stages: ['osat'], scale: 5 })),
     ]);
     const clipped = hazardFootprint({ lat: 0, lng: 0, radiusKm: 50 }, wide);
     const osat = clipped.stages.find((s) => s.stageId === 'osat');
-    expect(osat.exposure).toBeLessThan(MIN_STAGE_EXPOSURE);
-    expect(clipped.materialStages).toHaveLength(0);
-    expect(footprintToDraftSources(clipped)).toEqual([]);
+    expect(osat.exposure).toBeLessThan(DISPLAY_EXPOSURE_THRESHOLD);
+    expect(osat.exposure).toBeGreaterThan(0);
+    expect(clipped.displayStages).toHaveLength(0);   // display partition only
+    expect(clipped.minorStages).toHaveLength(1);
+    expect(footprintToDraftSources(clipped).map((s) => s.id)).toEqual(['osat']); // still a source
   });
 
-  it('builds draft sources only from material stages', () => {
+  it('builds a draft source from every stage with a nonzero footprint, carrying its exposure', () => {
     expect(footprintToDraftSources(fp).map((s) => s.id).sort()).toEqual(['m_consumer', 'mature_fab']);
     expect(footprintToDraftSources(fp).every((s) => s.type === 'stage')).toBe(true);
+    const mature = footprintToDraftSources(fp).find((s) => s.id === 'mature_fab');
+    expect(mature.exposure).toBeCloseTo(5 / 8, 9);
   });
 
   it('is empty, not broken, when nothing modeled is nearby', () => {
     const empty = hazardFootprint({ lat: -40, lng: -100, radiusKm: 100 }, layer);
     expect(empty.hits).toEqual([]);
     expect(empty.stages).toEqual([]);
-    expect(empty.materialStages).toEqual([]);
+    expect(empty.displayStages).toEqual([]);
+    expect(empty.minorStages).toEqual([]);
+    expect(footprintToDraftSources(empty)).toEqual([]);
+  });
+
+  /* Zero footprint must be zero, not "small". A radius that contains only
+     idle or under-construction sites has nothing to lose. */
+  it('drops a stage whose only sites inside the radius have zero operational weight', () => {
+    const idleLayer = buildFacilityLayer([
+      site('idle_in', { lat: 0, lng: 0, stages: ['osat'], scale: 5, status: 'idle' }),
+      site('running_far', { lat: 50, lng: 50, stages: ['osat'], scale: 5 }),
+    ]);
+    const fpIdle = hazardFootprint({ lat: 0, lng: 0, radiusKm: 50 }, idleLayer);
+    expect(fpIdle.hits).toHaveLength(1);
+    expect(fpIdle.stages).toEqual([]);
+    expect(footprintToHazardScenario(fpIdle, { severity: 9 })).toBeNull();
   });
 });
 

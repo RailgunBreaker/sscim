@@ -26,7 +26,7 @@ import { riskColor } from '../utils/colors.js';
                   slider to that date and pins the event.
 
    Marginal, not standalone, and the difference matters: propagation
-   combines through a saturating noisy-OR, so two severity-7 events on the
+   combines through a bounded, saturating operator, so two severity-7 incidents on the
    same stages do not move the index twice as far as one. The marginal
    figure is what that event actually added to the number that was
    published.

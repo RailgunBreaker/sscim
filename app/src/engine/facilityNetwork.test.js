@@ -9,8 +9,14 @@ import {
   facilityCaveats, facilityProfile, KIND_LABEL,
 } from './facilityProfile.js';
 
+/* The display name is DELIBERATELY not the id. A fixture whose name equals
+   its id makes an identity comparison on `name` indistinguishable from one
+   on `id`, so a test that compares the wrong field passes for years and
+   then fails the day two plants share a display name — which is exactly
+   what a curated facility table eventually produces ("Fab 18", "Plant 2").
+   Every assertion below therefore compares stable ids. */
 const site = (id, over = {}) => ({
-  id, name: id, company: 'sup', country: 'jp', lat: 0, lng: 0,
+  id, name: `Plant ${id.replace(/_/g, ' ')}`, company: 'sup', country: 'jp', lat: 0, lng: 0,
   kind: 'fab', stages: ['wafers'], scale: 3, status: 'operating',
   output: 'Something useful', node: null, waferSize: null, since: 2000, source: 'test', ...over,
 });
@@ -33,6 +39,36 @@ describe('buildFacilityNetwork', () => {
     expect(net.links.every((l) => l.to === 'cust_fab')).toBe(true);
     expect(net.links.some((l) => l.from === 'unrelated' || l.to === 'unrelated')).toBe(false);
     expect(net.links.every((l) => l.flow === 'forward')).toBe(true);
+  });
+
+  /* DISCONNECTED NODES, COMPARED BY STABLE ID.
+
+     A site with no modeled link is a real and common state — 56 of the 275
+     sites in the shipped snapshot are in it — and the readouts that report
+     it must identify sites by `id`, never by `name`. Two curated plants can
+     legitimately share a display name ("Fab 18"), at which point a
+     name-keyed comparison silently merges them and under-reports the
+     disconnected set. */
+  it('identifies the disconnected site by its stable id, and its name is not its id', () => {
+    const unlinked = layer.FACILITIES.filter((f) => !net.linksByFacility[f.id]);
+    expect(unlinked.map((f) => f.id)).toEqual(['unrelated']);
+    expect(unlinked[0].name).not.toBe(unlinked[0].id); // the fixture keeps the two distinguishable
+    expect(net.linksByFacility.unrelated).toBeUndefined();
+  });
+
+  it('keeps two sites that SHARE a display name separate, because identity is the id', () => {
+    const twins = buildFacilityLayer([
+      site('twin_a', { id: 'twin_a', name: 'Fab 18', company: 'sup', stages: ['wafers'] }),
+      site('twin_b', { id: 'twin_b', name: 'Fab 18', company: 'other', stages: ['osat'] }),
+      site('cust_fab', { company: 'cust', stages: ['adv_fab'], country: 'tw' }),
+    ]);
+    const n = buildFacilityNetwork({ layer: twins, CUSTOMERS: { sup: [['cust', 0.4]] }, dependence });
+    expect(n.links.map((l) => l.from)).toEqual(['twin_a']);
+    const unlinked = twins.FACILITIES.filter((f) => !n.linksByFacility[f.id]).map((f) => f.id).sort();
+    expect(unlinked).toEqual(['twin_b']);
+    // Keyed by name instead, the two would collapse into one and the
+    // disconnected site would vanish from the report.
+    expect(new Set(twins.FACILITIES.map((f) => f.name)).size).toBeLessThan(twins.FACILITIES.length);
   });
 
   it('still links a relationship whose physical flow runs the other way, marked as a service', () => {

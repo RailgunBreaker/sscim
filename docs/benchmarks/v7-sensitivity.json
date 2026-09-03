@@ -1,0 +1,1130 @@
+{
+  "modelVersion": "sscim-model-v7-exposure-robustness",
+  "datasetAsOf": "2026-08-29",
+  "snapshotDate": "2026-08-29",
+  "generatedAt": "2026-09-03T18:26:33.511Z",
+  "design": {
+    "method": "Saltelli sampling with Sobol first-order and total-order estimators, over the registry assumption box",
+    "generator": "splitmix32, fixed seed — no unseeded randomness anywhere in this path",
+    "seed": 20260829,
+    "samples": 1024,
+    "continuousDimensions": 12,
+    "numericalEvaluations": 14336,
+    "modelFormCombinations": 486,
+    "interpretation": "Uniform sampling over an assumption box is a COMPUTATIONAL DESIGN, not a probability distribution over what is true. Every spread reported here is an assumption envelope. None of it is a confidence interval, a credible interval, or a prediction interval."
+  },
+  "parameterRegister": {
+    "modelVersion": "sscim-model-v7-exposure-robustness",
+    "parameters": [
+      {
+        "name": "downstreamTransmission",
+        "symbol": "f_d",
+        "definition": "Total fraction of a supplier stage’s modeled exposure that can reach its buyer stages in one hop, before the per-edge allocation and the dependency factor divide it up.",
+        "low": 0.3,
+        "base": 0.55,
+        "high": 0.8,
+        "domain": [
+          0,
+          1
+        ],
+        "exclusiveMax": true,
+        "units": "dimensionless",
+        "component": "propagation.downstream",
+        "rationale": "Strictly below 1 so the incoming coefficients at any node sum to less than one and the joint propagation is a contraction: the field stays finite on any DAG and cannot manufacture exposure. The base retains the v6 value for continuity; the range spans \"inputs are largely substitutable within one hop\" (0.30) to \"a buyer stage is nearly wholly dependent on its modeled inputs\" (0.80).",
+        "affects": [
+          "stage operational field",
+          "headline index",
+          "country measures",
+          "company criticality",
+          "network influence"
+        ],
+        "status": "assumption",
+        "modelVersion": "sscim-model-v7-exposure-robustness"
+      },
+      {
+        "name": "upstreamTransmission",
+        "symbol": "f_u",
+        "definition": "Total fraction of a buyer stage’s modeled exposure that echoes back to its supplier stages in one hop (demand-side echo), before the per-edge allocation.",
+        "low": 0.1,
+        "base": 0.3,
+        "high": 0.5,
+        "domain": [
+          0,
+          1
+        ],
+        "exclusiveMax": true,
+        "units": "dimensionless",
+        "component": "propagation.upstream",
+        "rationale": "Held below the downstream coefficient because a supplier losing one buyer has more resale options than a buyer losing a specific input has substitutes; strictly below 1 for the same contraction guarantee as f_d. Base retains the v6 value.",
+        "affects": [
+          "stage operational field",
+          "headline index",
+          "country measures",
+          "company criticality"
+        ],
+        "status": "assumption",
+        "modelVersion": "sscim-model-v7-exposure-robustness"
+      },
+      {
+        "name": "minimumDependencyFactor",
+        "symbol": "phi",
+        "definition": "Floor on the dependency multiplier, so a fully substitutable input (non-substitutability 0) still transmits a residual fraction phi of the downstream coefficient rather than exactly zero.",
+        "low": 0.1,
+        "base": 0.25,
+        "high": 0.4,
+        "domain": [
+          0,
+          1
+        ],
+        "units": "dimensionless",
+        "component": "propagation.downstream",
+        "rationale": "Renamed from the v6 `specificityFloor`, which read as a floor on specificity rather than on the dependency it produces. Substitution is never instant or free even for a commodity input, so a hard zero is the less defensible end; the range spans \"substitution is cheap\" to \"substitution is slow even where alternatives exist\".",
+        "affects": [
+          "downstream dependency matrix D",
+          "stage operational field",
+          "headline index"
+        ],
+        "status": "assumption",
+        "modelVersion": "sscim-model-v7-exposure-robustness"
+      },
+      {
+        "name": "acuteHalfLifeDays",
+        "symbol": "H_a",
+        "definition": "Half-life in days of the acute_exponential persistence profile: the age at which a physical-disruption incident’s modeled source is half its day-zero value.",
+        "low": 7,
+        "base": 14,
+        "high": 30,
+        "domain": [
+          0.5,
+          3650
+        ],
+        "units": "days",
+        "component": "persistence.acute_exponential",
+        "rationale": "Spans the observable restart span of a single-site physical outage: inspection-and-restart within a week at the fast end, a quarter-scale rebuild at the slow end. v6 used one 12-day half-life for every event class, which is exactly what this profile split replaces.",
+        "affects": [
+          "event source vector",
+          "stage operational field",
+          "headline index",
+          "history"
+        ],
+        "status": "assumption",
+        "modelVersion": "sscim-model-v7-exposure-robustness"
+      },
+      {
+        "name": "marketHalfLifeDays",
+        "symbol": "H_m",
+        "definition": "Half-life in days of the market_exponential persistence profile, used for allocation, pricing and licensing-throughput incidents whose effect decays on a commercial rather than a physical timescale.",
+        "low": 21,
+        "base": 45,
+        "high": 90,
+        "domain": [
+          0.5,
+          3650
+        ],
+        "units": "days",
+        "component": "persistence.market_exponential",
+        "rationale": "Allocation and pricing shocks persist through contract and qualification cycles rather than through repair, so they decay markedly more slowly than acute outages; the range spans roughly one quarter-cycle to three.",
+        "affects": [
+          "event source vector",
+          "stage operational field",
+          "headline index",
+          "history"
+        ],
+        "status": "assumption",
+        "modelVersion": "sscim-model-v7-exposure-robustness"
+      },
+      {
+        "name": "outageRecoveryDays",
+        "symbol": "T_r",
+        "definition": "Length in days of the linear ramp-down of the outage_recovery persistence profile, from the start of recovery to full restoration.",
+        "low": 30,
+        "base": 60,
+        "high": 120,
+        "domain": [
+          1,
+          3650
+        ],
+        "units": "days",
+        "component": "persistence.outage_recovery",
+        "rationale": "Applies where a record states that restoration has begun but is staged. Linear rather than exponential because staged restarts are reported as a sequence of line restarts, not as a decay; the range spans a one-month to a four-month restoration programme.",
+        "affects": [
+          "event source vector",
+          "stage operational field",
+          "headline index"
+        ],
+        "status": "assumption",
+        "modelVersion": "sscim-model-v7-exposure-robustness"
+      },
+      {
+        "name": "rampingSiteWeight",
+        "symbol": "w_ramp",
+        "definition": "Operational weight of a site whose status is \"ramping\" when computing the modeled facility footprint. Operating sites are 1; idle and under-construction sites are 0.",
+        "low": 0.25,
+        "base": 0.5,
+        "high": 0.75,
+        "domain": [
+          0,
+          1
+        ],
+        "units": "dimensionless",
+        "component": "facilities.footprint",
+        "rationale": "A ramping line produces something but not at its steady-state rate, and the snapshot records no ramp curve, so the discount is a judgement. The range spans \"barely started\" to \"nearly at rate\"; the two endpoints of the status scale (0 and 1) are definitional, not assumptions.",
+        "affects": [
+          "modeled facility footprint",
+          "hazard stage exposure",
+          "hazard scenario delta"
+        ],
+        "status": "assumption",
+        "modelVersion": "sscim-model-v7-exposure-robustness"
+      }
+    ],
+    "structuralWeights": [
+      {
+        "name": "structuralWeight.networkInfluence",
+        "symbol": "w^struct_NI",
+        "definition": "Raw weight of the network-influence component in the structural vulnerability index.",
+        "low": 0.1875,
+        "base": 0.25,
+        "high": 0.3125,
+        "domain": [
+          0,
+          1
+        ],
+        "units": "dimensionless",
+        "component": "structural.weights",
+        "rationale": "Largest single weight in v6 and retained for continuity: how much of the chain a stage can reach is the one structural component derived entirely from the graph rather than from an analyst score. Range is +/-25% of the raw value.",
+        "affects": [
+          "structural vulnerability",
+          "country structural score"
+        ],
+        "status": "assumption",
+        "modelVersion": "sscim-model-v7-exposure-robustness",
+        "key": "networkInfluence",
+        "effectiveBase": 0.2777777777777778
+      },
+      {
+        "name": "structuralWeight.geo",
+        "symbol": "w^struct_geo",
+        "definition": "Raw weight of the geographic-concentration (HHI) component in the structural vulnerability index.",
+        "low": 0.15,
+        "base": 0.2,
+        "high": 0.25,
+        "domain": [
+          0,
+          1
+        ],
+        "units": "dimensionless",
+        "component": "structural.weights",
+        "rationale": "Retains the v6 raw value. Concentration is computed from disclosed country shares, so it is better evidenced than the analyst-scored components and carries a correspondingly higher weight. Range is +/-25%.",
+        "affects": [
+          "structural vulnerability",
+          "country structural score"
+        ],
+        "status": "assumption",
+        "modelVersion": "sscim-model-v7-exposure-robustness",
+        "key": "geo",
+        "effectiveBase": 0.22222222222222224
+      },
+      {
+        "name": "structuralWeight.policy",
+        "symbol": "w^struct_pol",
+        "definition": "Raw weight of the policy-exposure component in the structural vulnerability index.",
+        "low": 0.15,
+        "base": 0.2,
+        "high": 0.25,
+        "domain": [
+          0,
+          1
+        ],
+        "units": "dimensionless",
+        "component": "structural.weights",
+        "rationale": "Retains the v6 raw value; policy exposure is derived from a curated register of standing controls, not from event flow. Range is +/-25%.",
+        "affects": [
+          "structural vulnerability",
+          "country structural score"
+        ],
+        "status": "assumption",
+        "modelVersion": "sscim-model-v7-exposure-robustness",
+        "key": "policy",
+        "effectiveBase": 0.22222222222222224
+      },
+      {
+        "name": "structuralWeight.nonSubstitutability",
+        "symbol": "w^struct_nu",
+        "definition": "Raw weight of the non-substitutability (specificity) component in the structural vulnerability index.",
+        "low": 0.1125,
+        "base": 0.15,
+        "high": 0.1875,
+        "domain": [
+          0,
+          1
+        ],
+        "units": "dimensionless",
+        "component": "structural.weights",
+        "rationale": "Retains the v6 raw value under the corrected name (v6 called the field `subst`, \"substitutability\", while using it with the opposite sense). A declared analyst ordinal, hence a lower weight than the measured components. Range is +/-25%.",
+        "affects": [
+          "structural vulnerability",
+          "country structural score"
+        ],
+        "status": "assumption",
+        "modelVersion": "sscim-model-v7-exposure-robustness",
+        "key": "nonSubstitutability",
+        "effectiveBase": 0.16666666666666666
+      },
+      {
+        "name": "structuralWeight.market",
+        "symbol": "w^struct_mkt",
+        "definition": "Raw weight of the market-importance component in the structural vulnerability index.",
+        "low": 0.075,
+        "base": 0.1,
+        "high": 0.125,
+        "domain": [
+          0,
+          1
+        ],
+        "units": "dimensionless",
+        "component": "structural.weights",
+        "rationale": "Retains the v6 raw value. The most purely judgemental of the five components, so it carries the smallest weight. Range is +/-25%.",
+        "affects": [
+          "structural vulnerability",
+          "country structural score"
+        ],
+        "status": "assumption",
+        "modelVersion": "sscim-model-v7-exposure-robustness",
+        "key": "market",
+        "effectiveBase": 0.11111111111111112
+      }
+    ],
+    "modelForms": [
+      {
+        "name": "severityMapping",
+        "symbol": "g",
+        "definition": "Mapping from the displayed 1-10 ordinal severity rubric to a [0,1] modeled intensity.",
+        "options": [
+          "linear",
+          "concave",
+          "convex"
+        ],
+        "base": "linear",
+        "component": "event source vector",
+        "rationale": "Severity is an ORDINAL human rubric, so no mapping to a cardinal intensity is calibrated, or even identifiable from the rubric alone. Linear is the continuity base because it is the v6 behaviour and the least committed of the three; concave (square root) and convex (square) bracket it monotonically and are reported as model-form cases.",
+        "affects": [
+          "event source vector",
+          "stage operational field",
+          "headline index"
+        ],
+        "status": "assumption",
+        "modelVersion": "sscim-model-v7-exposure-robustness"
+      },
+      {
+        "name": "facilityScaleMapping",
+        "symbol": "w(k)",
+        "definition": "Mapping from a site’s ordinal 1-5 `scale` field to a site weight in the modeled facility footprint.",
+        "options": [
+          "equal",
+          "linear",
+          "convex"
+        ],
+        "base": "linear",
+        "component": "facilities.footprint",
+        "rationale": "`scale` is an analyst ordinal, so ratios of its values are NOT observed production capacity and no mapping is calibrated. Linear w(k)=k is the continuity base (the v6 behaviour); equal w(k)=1 discards the ordinal entirely and convex w(k)=k^2 assumes large sites dominate, bracketing it.",
+        "affects": [
+          "modeled facility footprint",
+          "hazard stage exposure",
+          "hazard scenario delta"
+        ],
+        "status": "assumption",
+        "modelVersion": "sscim-model-v7-exposure-robustness"
+      },
+      {
+        "name": "incidentAggregation",
+        "symbol": "A",
+        "definition": "Bounded operator combining the per-stage fields of DISTINCT, deduplicated incidents of the same sign.",
+        "options": [
+          "bounded_union",
+          "max",
+          "clipped_sum"
+        ],
+        "base": "bounded_union",
+        "component": "incident aggregation",
+        "rationale": "bounded_union, 1 - prod(1 - x_i), is the continuity base because it saturates rather than exceeding 1 and a second adverse incident can never reduce the total. It is a BOUNDED AGGREGATION OPERATOR, not an assumption of probabilistic independence: the incidents are not events in a probability space. max (only the largest incident counts) and clipped_sum (fully additive up to the bound) bracket it.",
+        "affects": [
+          "stage operational field",
+          "headline index",
+          "country measures"
+        ],
+        "status": "assumption",
+        "modelVersion": "sscim-model-v7-exposure-robustness"
+      },
+      {
+        "name": "hhiResidual",
+        "symbol": "HHI bound",
+        "definition": "Which bound of the partially observed Herfindahl-Hirschman index to publish as the geographic-concentration score.",
+        "options": [
+          "upper",
+          "lower"
+        ],
+        "base": "upper",
+        "component": "structural.geo",
+        "rationale": "Disclosed country shares often sum to less than one. The LOWER bound (sum of squared observed shares) assumes the unobserved residual is infinitely fragmented; the UPPER bound adds the squared residual, i.e. assumes it is one undisclosed holder. The upper bound is the explicitly conservative base for a concentration measure; both are published and both enter sensitivity.",
+        "affects": [
+          "geographic concentration",
+          "structural vulnerability",
+          "country structural score"
+        ],
+        "status": "assumption",
+        "modelVersion": "sscim-model-v7-exposure-robustness"
+      },
+      {
+        "name": "stageWeighting",
+        "symbol": "w_s",
+        "definition": "How the stage economic weights used by the headline index and the country chain contribution are derived from the stage turnover proxy.",
+        "options": [
+          "turnover_normalized",
+          "equal",
+          "log_turnover"
+        ],
+        "base": "turnover_normalized",
+        "component": "aggregation.weights",
+        "rationale": "Turnover is an IMPORTANCE PROXY, not an additive loss base: supply-chain turnover is sequential, so summing it counts the same silicon at every stage. turnover_normalized (value_s divided by the total) is the base because it is the most direct reading of the proxy and sums to one by construction; equal (1/n) drops the proxy entirely and log_turnover compresses its skew, bracketing it.",
+        "affects": [
+          "headline index",
+          "country chain contribution",
+          "network influence"
+        ],
+        "status": "assumption",
+        "modelVersion": "sscim-model-v7-exposure-robustness"
+      },
+      {
+        "name": "policyAggregator",
+        "symbol": "A_pol",
+        "definition": "Bounded operator combining per-family policy severities into a stage policy-exposure score.",
+        "options": [
+          "bounded_union",
+          "max",
+          "clipped_sum"
+        ],
+        "base": "bounded_union",
+        "component": "structural.policy",
+        "rationale": "Replaces the v6 record-count-driven \"strongest + 0.4 times the sum of the rest\", which grew without bound in the number of RECORDS and so rose when one control was re-reported. The family-level bounded union saturates at 10 and is invariant to duplicate records and revisions by construction.",
+        "affects": [
+          "policy exposure",
+          "structural vulnerability",
+          "country structural score"
+        ],
+        "status": "assumption",
+        "modelVersion": "sscim-model-v7-exposure-robustness"
+      }
+    ]
+  },
+  "base": {
+    "headlineIndex": 6.120182154284025,
+    "params": {
+      "downstreamTransmission": 0.55,
+      "upstreamTransmission": 0.3,
+      "minimumDependencyFactor": 0.25,
+      "acuteHalfLifeDays": 14,
+      "marketHalfLifeDays": 45,
+      "outageRecoveryDays": 60,
+      "rampingSiteWeight": 0.5,
+      "severityMapping": "linear",
+      "facilityScaleMapping": "linear",
+      "incidentAggregation": "bounded_union",
+      "hhiResidual": "upper",
+      "stageWeighting": "turnover_normalized",
+      "policyAggregator": "bounded_union",
+      "structuralWeightsRaw": {
+        "networkInfluence": 0.25,
+        "geo": 0.2,
+        "policy": 0.2,
+        "nonSubstitutability": 0.15,
+        "market": 0.1
+      },
+      "structuralWeights": {
+        "networkInfluence": 0.2777777777777778,
+        "geo": 0.22222222222222224,
+        "policy": 0.22222222222222224,
+        "nonSubstitutability": 0.16666666666666666,
+        "market": 0.11111111111111112
+      },
+      "modelVersion": "sscim-model-v7-exposure-robustness"
+    },
+    "hazardDeltas": {
+      "kumamoto": 0.09747334348704761,
+      "hsinchu": 0.6056783286071745,
+      "pyeongtaek": 0.2111244387863458
+    }
+  },
+  "numericalParameters": {
+    "headlineEnvelope": {
+      "low": 5.549007811468045,
+      "base": 6.120182154284025,
+      "high": 6.878843829419557,
+      "width": 1.3298360179515116,
+      "containsBase": true,
+      "kind": "assumption-envelope",
+      "note": "Assumption envelope over the declared parameter box. NOT a confidence interval: uniform sampling over an assumption box is a computational design, not a probability distribution over what is true."
+    },
+    "parameterInfluence": [
+      {
+        "key": "marketHalfLifeDays",
+        "symbol": "H_m",
+        "units": "days",
+        "low": 21,
+        "base": 45,
+        "high": 90,
+        "firstOrder": 0.7807081756989224,
+        "totalOrder": 0.7597502886703995
+      },
+      {
+        "key": "downstreamTransmission",
+        "symbol": "f_d",
+        "units": "dimensionless",
+        "low": 0.3,
+        "base": 0.55,
+        "high": 0.8,
+        "firstOrder": 0.15047370167312588,
+        "totalOrder": 0.12824701116332196
+      },
+      {
+        "key": "upstreamTransmission",
+        "symbol": "f_u",
+        "units": "dimensionless",
+        "low": 0.1,
+        "base": 0.3,
+        "high": 0.5,
+        "firstOrder": 0.06992517595264301,
+        "totalOrder": 0.05356984949479767
+      },
+      {
+        "key": "outageRecoveryDays",
+        "symbol": "T_r",
+        "units": "days",
+        "low": 30,
+        "base": 60,
+        "high": 120,
+        "firstOrder": 0.046024957271204564,
+        "totalOrder": 0.029979510939550078
+      },
+      {
+        "key": "minimumDependencyFactor",
+        "symbol": "phi",
+        "units": "dimensionless",
+        "low": 0.1,
+        "base": 0.25,
+        "high": 0.4,
+        "firstOrder": 0.01607842492519199,
+        "totalOrder": 0.005033827860748634
+      },
+      {
+        "key": "acuteHalfLifeDays",
+        "symbol": "H_a",
+        "units": "days",
+        "low": 7,
+        "base": 14,
+        "high": 30,
+        "firstOrder": 0.01653327529946211,
+        "totalOrder": 1.1461191924948828e-20
+      },
+      {
+        "key": "rampingSiteWeight",
+        "symbol": "w_ramp",
+        "units": "dimensionless",
+        "low": 0.25,
+        "base": 0.5,
+        "high": 0.75,
+        "firstOrder": 0.016533275290226294,
+        "totalOrder": 0
+      },
+      {
+        "key": "structuralWeight.networkInfluence",
+        "symbol": "w^struct_NI",
+        "units": "dimensionless",
+        "low": 0.1875,
+        "base": 0.25,
+        "high": 0.3125,
+        "firstOrder": 0.016533275290226294,
+        "totalOrder": 0
+      },
+      {
+        "key": "structuralWeight.geo",
+        "symbol": "w^struct_geo",
+        "units": "dimensionless",
+        "low": 0.15,
+        "base": 0.2,
+        "high": 0.25,
+        "firstOrder": 0.016533275290226294,
+        "totalOrder": 0
+      },
+      {
+        "key": "structuralWeight.policy",
+        "symbol": "w^struct_pol",
+        "units": "dimensionless",
+        "low": 0.15,
+        "base": 0.2,
+        "high": 0.25,
+        "firstOrder": 0.016533275290226294,
+        "totalOrder": 0
+      },
+      {
+        "key": "structuralWeight.nonSubstitutability",
+        "symbol": "w^struct_nu",
+        "units": "dimensionless",
+        "low": 0.1125,
+        "base": 0.15,
+        "high": 0.1875,
+        "firstOrder": 0.016533275290226294,
+        "totalOrder": 0
+      },
+      {
+        "key": "structuralWeight.market",
+        "symbol": "w^struct_mkt",
+        "units": "dimensionless",
+        "low": 0.075,
+        "base": 0.1,
+        "high": 0.125,
+        "firstOrder": 0.016533275290226294,
+        "totalOrder": 0
+      }
+    ],
+    "degenerate": false,
+    "varianceOverBox": 0.06490952465280735,
+    "oneAtATime": [
+      {
+        "key": "marketHalfLifeDays",
+        "symbol": "H_m",
+        "low": 21,
+        "high": 90,
+        "atLow": 5.706201885122277,
+        "atBase": 6.120182154284025,
+        "atHigh": 6.498301268551474,
+        "range": 0.7920993834291972,
+        "monotoneIncreasing": true,
+        "monotoneDecreasing": false
+      },
+      {
+        "key": "downstreamTransmission",
+        "symbol": "f_d",
+        "low": 0.3,
+        "high": 0.8,
+        "atLow": 5.999601035751244,
+        "atBase": 6.120182154284025,
+        "atHigh": 6.298326194237038,
+        "range": 0.2987251584857944,
+        "monotoneIncreasing": true,
+        "monotoneDecreasing": false
+      },
+      {
+        "key": "upstreamTransmission",
+        "symbol": "f_u",
+        "low": 0.1,
+        "high": 0.5,
+        "atLow": 6.036213520089675,
+        "atBase": 6.120182154284025,
+        "atHigh": 6.228566106420979,
+        "range": 0.19235258633130403,
+        "monotoneIncreasing": true,
+        "monotoneDecreasing": false
+      },
+      {
+        "key": "outageRecoveryDays",
+        "symbol": "T_r",
+        "low": 30,
+        "high": 120,
+        "atLow": 6.005565271903571,
+        "atBase": 6.120182154284025,
+        "atHigh": 6.177490595474254,
+        "range": 0.17192532357068302,
+        "monotoneIncreasing": true,
+        "monotoneDecreasing": false
+      },
+      {
+        "key": "minimumDependencyFactor",
+        "symbol": "phi",
+        "low": 0.1,
+        "high": 0.4,
+        "atLow": 6.095405157899958,
+        "atBase": 6.120182154284025,
+        "atHigh": 6.146792228296644,
+        "range": 0.051387070396685885,
+        "monotoneIncreasing": true,
+        "monotoneDecreasing": false
+      },
+      {
+        "key": "acuteHalfLifeDays",
+        "symbol": "H_a",
+        "low": 7,
+        "high": 30,
+        "atLow": 6.120182154284025,
+        "atBase": 6.120182154284025,
+        "atHigh": 6.120182154459106,
+        "range": 1.7508039462654779e-10,
+        "monotoneIncreasing": true,
+        "monotoneDecreasing": false
+      },
+      {
+        "key": "rampingSiteWeight",
+        "symbol": "w_ramp",
+        "low": 0.25,
+        "high": 0.75,
+        "atLow": 6.120182154284025,
+        "atBase": 6.120182154284025,
+        "atHigh": 6.120182154284025,
+        "range": 0,
+        "monotoneIncreasing": true,
+        "monotoneDecreasing": true
+      },
+      {
+        "key": "structuralWeight.networkInfluence",
+        "symbol": "w^struct_NI",
+        "low": 0.1875,
+        "high": 0.3125,
+        "atLow": 6.120182154284025,
+        "atBase": 6.120182154284025,
+        "atHigh": 6.120182154284025,
+        "range": 0,
+        "monotoneIncreasing": true,
+        "monotoneDecreasing": true
+      },
+      {
+        "key": "structuralWeight.geo",
+        "symbol": "w^struct_geo",
+        "low": 0.15,
+        "high": 0.25,
+        "atLow": 6.120182154284025,
+        "atBase": 6.120182154284025,
+        "atHigh": 6.120182154284025,
+        "range": 0,
+        "monotoneIncreasing": true,
+        "monotoneDecreasing": true
+      },
+      {
+        "key": "structuralWeight.policy",
+        "symbol": "w^struct_pol",
+        "low": 0.15,
+        "high": 0.25,
+        "atLow": 6.120182154284025,
+        "atBase": 6.120182154284025,
+        "atHigh": 6.120182154284025,
+        "range": 0,
+        "monotoneIncreasing": true,
+        "monotoneDecreasing": true
+      },
+      {
+        "key": "structuralWeight.nonSubstitutability",
+        "symbol": "w^struct_nu",
+        "low": 0.1125,
+        "high": 0.1875,
+        "atLow": 6.120182154284025,
+        "atBase": 6.120182154284025,
+        "atHigh": 6.120182154284025,
+        "range": 0,
+        "monotoneIncreasing": true,
+        "monotoneDecreasing": true
+      },
+      {
+        "key": "structuralWeight.market",
+        "symbol": "w^struct_mkt",
+        "low": 0.075,
+        "high": 0.125,
+        "atLow": 6.120182154284025,
+        "atBase": 6.120182154284025,
+        "atHigh": 6.120182154284025,
+        "range": 0,
+        "monotoneIncreasing": true,
+        "monotoneDecreasing": true
+      }
+    ],
+    "rankStability": {
+      "stageOperationalField": {
+        "spearmanVsBase": {
+          "min": 0.8234782608695652,
+          "mean": 0.9528702445652152,
+          "max": 1,
+          "belowPoint9": 0.05224609375
+        },
+        "topKFrequency": {
+          "hbm": 1,
+          "memory_fab": 1,
+          "logic_ai": 0.9091796875,
+          "metro": 0.69580078125,
+          "m_consumer": 0.466796875,
+          "adv_fab": 0.38330078125,
+          "depo": 0.29052734375,
+          "mature_fab": 0.0927734375,
+          "litho": 0.07958984375,
+          "m_auto": 0.0791015625,
+          "etch": 0.0029296875
+        },
+        "baseTopK": [
+          "memory_fab",
+          "hbm",
+          "logic_ai",
+          "metro",
+          "depo"
+        ]
+      },
+      "structuralVulnerability": {
+        "spearmanVsBase": {
+          "min": 0.931304347826087,
+          "mean": 0.9888862941576068,
+          "max": 1,
+          "belowPoint9": 0
+        },
+        "topKFrequency": {
+          "adv_fab": 1,
+          "hbm": 1,
+          "litho": 1,
+          "logic_ai": 1,
+          "systems": 0.6005859375,
+          "metro": 0.3994140625
+        },
+        "baseTopK": [
+          "adv_fab",
+          "litho",
+          "logic_ai",
+          "hbm",
+          "systems"
+        ]
+      },
+      "companyCriticalityRaw": {
+        "spearmanVsBase": {
+          "min": 0.9522829844217706,
+          "mean": 0.9888832495082592,
+          "max": 0.9999258620849435,
+          "belowPoint9": 0
+        },
+        "topKFrequency": {
+          "foxconn": 1,
+          "nvidia": 1,
+          "samsung": 1,
+          "tsmc": 1,
+          "ase": 0.6875,
+          "apple": 0.265625,
+          "asml": 0.046875
+        },
+        "baseTopK": [
+          "tsmc",
+          "nvidia",
+          "foxconn",
+          "samsung",
+          "ase"
+        ]
+      },
+      "networkInfluenceRaw": {
+        "spearmanVsBase": {
+          "min": 0.9330434782608695,
+          "mean": 0.9856623641304303,
+          "max": 1,
+          "belowPoint9": 0
+        },
+        "topKFrequency": {
+          "logic_ai": 1,
+          "m_ai": 1,
+          "systems": 1,
+          "design": 0.94921875,
+          "adv_fab": 0.7431640625,
+          "m_consumer": 0.2568359375,
+          "adv_pkg": 0.05078125
+        },
+        "baseTopK": [
+          "systems",
+          "m_ai",
+          "logic_ai",
+          "adv_fab",
+          "design"
+        ]
+      }
+    },
+    "scenarioSignStability": {
+      "kumamoto": {
+        "positiveShare": 1,
+        "negativeShare": 0,
+        "zeroShare": 0,
+        "dominantSign": "positive",
+        "stable": true,
+        "envelope": {
+          "low": 0.07166573492068906,
+          "base": 0.09747334348704761,
+          "high": 0.1369100759025601,
+          "width": 0.06524434098187104,
+          "containsBase": true,
+          "kind": "assumption-envelope",
+          "note": "Assumption envelope over the declared parameter box. NOT a confidence interval: uniform sampling over an assumption box is a computational design, not a probability distribution over what is true."
+        }
+      },
+      "hsinchu": {
+        "positiveShare": 1,
+        "negativeShare": 0,
+        "zeroShare": 0,
+        "dominantSign": "positive",
+        "stable": true,
+        "envelope": {
+          "low": 0.45257499276956814,
+          "base": 0.6056783286071745,
+          "high": 0.8566819005812114,
+          "width": 0.40410690781164327,
+          "containsBase": true,
+          "kind": "assumption-envelope",
+          "note": "Assumption envelope over the declared parameter box. NOT a confidence interval: uniform sampling over an assumption box is a computational design, not a probability distribution over what is true."
+        }
+      },
+      "pyeongtaek": {
+        "positiveShare": 1,
+        "negativeShare": 0,
+        "zeroShare": 0,
+        "dominantSign": "positive",
+        "stable": true,
+        "envelope": {
+          "low": 0.12220585755261215,
+          "base": 0.2111244387863458,
+          "high": 0.3529136110235829,
+          "width": 0.23070775347097072,
+          "containsBase": true,
+          "kind": "assumption-envelope",
+          "note": "Assumption envelope over the declared parameter box. NOT a confidence interval: uniform sampling over an assumption box is a computational design, not a probability distribution over what is true."
+        }
+      }
+    }
+  },
+  "modelForms": {
+    "note": "Reported SEPARATELY from the numerical parameters: a model form is a different model, not a different value of the same model. Averaging across them would present a choice between structures as if it were noise.",
+    "options": {
+      "severityMapping": {
+        "base": "linear",
+        "options": [
+          "linear",
+          "concave",
+          "convex"
+        ]
+      },
+      "facilityScaleMapping": {
+        "base": "linear",
+        "options": [
+          "equal",
+          "linear",
+          "convex"
+        ]
+      },
+      "incidentAggregation": {
+        "base": "bounded_union",
+        "options": [
+          "bounded_union",
+          "max",
+          "clipped_sum"
+        ]
+      },
+      "hhiResidual": {
+        "base": "upper",
+        "options": [
+          "upper",
+          "lower"
+        ]
+      },
+      "stageWeighting": {
+        "base": "turnover_normalized",
+        "options": [
+          "turnover_normalized",
+          "equal",
+          "log_turnover"
+        ]
+      },
+      "policyAggregator": {
+        "base": "bounded_union",
+        "options": [
+          "bounded_union",
+          "max",
+          "clipped_sum"
+        ]
+      }
+    },
+    "headlineEnvelope": {
+      "low": 5.437546109322323,
+      "base": 6.120182154284025,
+      "high": 6.58708315195968,
+      "width": 1.1495370426373572,
+      "containsBase": true,
+      "kind": "assumption-envelope",
+      "note": "Assumption envelope over the declared parameter box. NOT a confidence interval: uniform sampling over an assumption box is a computational design, not a probability distribution over what is true."
+    },
+    "effects": [
+      {
+        "key": "severityMapping",
+        "base": "linear",
+        "byOption": {
+          "linear": {
+            "min": 5.597150533352327,
+            "mean": 5.962409532319604,
+            "max": 6.253938877526726
+          },
+          "concave": {
+            "min": 5.697424526576632,
+            "mean": 6.1739779227094935,
+            "max": 6.58708315195968
+          },
+          "convex": {
+            "min": 5.437546109322323,
+            "mean": 5.660487133510576,
+            "max": 5.8186103154973825
+          }
+        },
+        "meanSpread": 0.5134907891989178
+      },
+      {
+        "key": "incidentAggregation",
+        "base": "bounded_union",
+        "byOption": {
+          "bounded_union": {
+            "min": 5.680371038796719,
+            "mean": 6.0045741849476695,
+            "max": 6.3647528236134345
+          },
+          "max": {
+            "min": 5.437546109322323,
+            "mean": 5.650116437020319,
+            "max": 5.9312957830209365
+          },
+          "clipped_sum": {
+            "min": 5.731934362982051,
+            "mean": 6.142183966571671,
+            "max": 6.58708315195968
+          }
+        },
+        "meanSpread": 0.4920675295513517
+      },
+      {
+        "key": "stageWeighting",
+        "base": "turnover_normalized",
+        "byOption": {
+          "turnover_normalized": {
+            "min": 5.503179153269719,
+            "mean": 6.010424320957459,
+            "max": 6.58708315195968
+          },
+          "equal": {
+            "min": 5.437546109322323,
+            "mean": 5.851698143561769,
+            "max": 6.346767923164272
+          },
+          "log_turnover": {
+            "min": 5.479104398253826,
+            "mean": 5.934752124020426,
+            "max": 6.475966262846211
+          }
+        },
+        "meanSpread": 0.15872617739568984
+      },
+      {
+        "key": "facilityScaleMapping",
+        "base": "linear",
+        "byOption": {
+          "equal": {
+            "min": 5.437546109322323,
+            "mean": 5.932291529513219,
+            "max": 6.58708315195968
+          },
+          "linear": {
+            "min": 5.437546109322323,
+            "mean": 5.932291529513219,
+            "max": 6.58708315195968
+          },
+          "convex": {
+            "min": 5.437546109322323,
+            "mean": 5.932291529513219,
+            "max": 6.58708315195968
+          }
+        },
+        "meanSpread": 0
+      },
+      {
+        "key": "hhiResidual",
+        "base": "upper",
+        "byOption": {
+          "upper": {
+            "min": 5.437546109322323,
+            "mean": 5.932291529513219,
+            "max": 6.58708315195968
+          },
+          "lower": {
+            "min": 5.437546109322323,
+            "mean": 5.932291529513219,
+            "max": 6.58708315195968
+          }
+        },
+        "meanSpread": 0
+      },
+      {
+        "key": "policyAggregator",
+        "base": "bounded_union",
+        "byOption": {
+          "bounded_union": {
+            "min": 5.437546109322323,
+            "mean": 5.93229152951322,
+            "max": 6.58708315195968
+          },
+          "max": {
+            "min": 5.437546109322323,
+            "mean": 5.93229152951322,
+            "max": 6.58708315195968
+          },
+          "clipped_sum": {
+            "min": 5.437546109322323,
+            "mean": 5.93229152951322,
+            "max": 6.58708315195968
+          }
+        },
+        "meanSpread": 0
+      }
+    ],
+    "rankStability": {
+      "stageOperationalField": {
+        "spearmanVsBase": {
+          "min": 0.9008695652173913,
+          "mean": 0.9582608695652173,
+          "max": 1,
+          "belowPoint9": 0
+        },
+        "topKFrequency": {
+          "hbm": 1,
+          "logic_ai": 1,
+          "memory_fab": 1,
+          "metro": 0.7777777777777778,
+          "depo": 0.4444444444444444,
+          "adv_fab": 0.3333333333333333,
+          "m_consumer": 0.3333333333333333,
+          "litho": 0.1111111111111111
+        },
+        "baseTopK": [
+          "memory_fab",
+          "hbm",
+          "logic_ai",
+          "metro",
+          "depo"
+        ]
+      }
+    },
+    "scenarioSignStability": {
+      "kumamoto": {
+        "positiveShare": 1,
+        "negativeShare": 0,
+        "zeroShare": 0,
+        "dominantSign": "positive",
+        "stable": true
+      },
+      "hsinchu": {
+        "positiveShare": 1,
+        "negativeShare": 0,
+        "zeroShare": 0,
+        "dominantSign": "positive",
+        "stable": true
+      },
+      "pyeongtaek": {
+        "positiveShare": 1,
+        "negativeShare": 0,
+        "zeroShare": 0,
+        "dominantSign": "positive",
+        "stable": true
+      }
+    }
+  }
+}

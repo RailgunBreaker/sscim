@@ -1,5 +1,23 @@
 # Reference — Facilities
 
+*Model version: `sscim-model-v7-exposure-robustness`. How a facility footprint
+becomes a stage exposure is defined in
+[`docs/MODEL_V7_SPEC.md` §3.3](../MODEL_V7_SPEC.md#33-modeled-facility-footprint--enginefacilitiesjs).*
+
+**Two things about the `scale` field, stated before any number on this page.**
+
+1. It is an **analyst ordinal on 1–5**. Ratios of its values are not observed
+   production capacity, and no output derived from it may be described as a
+   capacity share. The mapping from the ordinal to a site weight is a declared
+   model form with three options (`equal`, `linear`, `convex`), reported
+   separately in sensitivity.
+2. A hazard's effect on a stage is **continuous in the modeled facility
+   footprint** inside the radius: zero footprint gives exactly zero, more
+   footprint never gives less, and a 5% footprint does not give what a 100%
+   footprint gives. The 5% line that appears in the interface is a **display
+   threshold** and gates nothing the model computes.
+
+
 *Last updated: 2026-08-22. Part of the [reference library](README.md).*
 
 **275 named sites** across 24 countries, covering all 109 modeled companies.
