@@ -210,9 +210,9 @@ const report = {
     },
     {
       change: 'Stage economic weights are normalized to sum to one',
-      direction: 'changes the headline weighting, not any stage field',
-      why: 'v6 weighted by a MAX-normalized log1p transform, so the weights summed to an arbitrary number and the headline index was a weighted mean with a hand-shaped denominator. v7 normalizes turnover directly to a partition of one, which is what makes the country chain contributions reconcile to the headline index exactly.',
-      evidence: 'stages[].economicWeight',
+      direction: 'changes the headline weighting AND every weight-derived measure — network influence moves the most of any published number',
+      why: 'v6 weighted by a MAX-normalized log1p transform, so the weights summed to an arbitrary number and the headline index was a weighted mean with a hand-shaped denominator. v7 normalizes turnover directly to a partition of one, which is what makes the country chain contributions reconcile to the headline index exactly. The log1p transform also compressed the turnover range hard: a 500B stage and a 3B stage differed by about 2.5x in v6 weight and by about 170x in v7. Network influence sums the propagated field against these weights, so it re-ranks accordingly, and structural vulnerability moves with it. This is a change in the WEIGHTING, not in any stage field: the operational field per stage is unaffected by it.',
+      evidence: 'stages[].economicWeight, stages[].networkInfluence, summaryOfDifferences.stageNetworkInfluence',
     },
     {
       change: 'HHI is published as an interval',
