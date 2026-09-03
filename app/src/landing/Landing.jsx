@@ -149,8 +149,8 @@ export default function Landing() {
           <h2>{t('h2Explain')}</h2>
           <p className="sub">{t('subExplain')}</p>
           <div className="formula mono">
-            <div><Tex tex={"\\text{struct}_n = w_{\\text{ni}}\\,NI_n + w_{\\text{geo}}\\,GEO_n + w_{\\text{pol}}\\,POL_n + w_{\\text{subst}}\\,\\text{subst}_n + w_{\\text{mkt}}\\,\\text{mkt}_n"} block /></div>
-            <div><Tex tex={"\\text{decay}(\\text{age},H)=2^{-\\text{age}/H},\\ H{=}12\\text{d},\\qquad \\text{combinePositive}(v)=1-\\textstyle\\prod_i(1-v_i)"} block /></div>
+            <div><Tex tex={"\\text{struct}_s = w_{\\text{ni}}NI_s + w_{\\text{geo}}GEO_s + w_{\\text{pol}}POL_s + w_{\\nu}(10\\nu_s) + w_{\\text{mkt}}\\,\\text{mkt}_s"} block /></div>
+            <div><Tex tex={"z_{e,s}=d_{e,s}\\,g(q_e)\\,\\alpha_{e,s}\\,R_e(t),\\qquad D_{ba}=f_d\\,q_{ba}\\big[\\phi+(1-\\phi)\\nu_a\\big]"} block /></div>
             <div style={{ marginTop: 6, fontSize: 10.5 }}>
               {t('formulaNote')} <span style={{ color: 'var(--copper)' }}>{t('sourcesTag')}</span>
             </div>

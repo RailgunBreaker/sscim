@@ -45,14 +45,30 @@
    Run from server/:  node scripts/build-evidence-coverage.mjs
    ==================================================================== */
 
-import { writeFileSync } from 'node:fs';
+import { writeFileSync, readFileSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { db } from '../src/db.js';
+import { MODEL_VERSION } from '../../app/src/engine/registry.js';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const OUT = resolve(HERE, '..', '..', 'docs', 'reference', 'EVIDENCE-COVERAGE.md');
 const today = new Date().toISOString().slice(0, 10);
+
+/* The snapshot this count describes. Stating it is not decoration: a
+   coverage report that does not say which data it counted cannot be shown
+   to be current, and docs:verify fails a report whose snapshot date has
+   fallen behind the committed one. */
+const SNAPSHOT_DATE = (() => {
+  try {
+    const row = db.prepare("SELECT value FROM meta WHERE key = 'snapshotDate'").get();
+    if (row?.value) return row.value;
+  } catch { /* older databases have no meta table */ }
+  try {
+    const snap = JSON.parse(readFileSync(resolve(HERE, '..', '..', 'app', 'src', 'data', 'vault-snapshot.json'), 'utf8'));
+    return snap.meta?.snapshotDate ?? 'unknown';
+  } catch { return 'unknown'; }
+})();
 
 const rows = (sql, ...a) => db.prepare(sql).all(...a);
 const one = (sql, ...a) => db.prepare(sql).get(...a);
@@ -111,6 +127,7 @@ const ownerEdges = one('SELECT COUNT(*) AS c FROM owners').c;
 const md = `# Evidence coverage
 
 *Generated from the vault by \`server/scripts/build-evidence-coverage.mjs\`. Last generated: ${today}.*
+*Model version: \`${MODEL_VERSION}\` · snapshot date: ${SNAPSHOT_DATE} · canonical specification: [MODEL_V7_SPEC.md](../MODEL_V7_SPEC.md).*
 
 How much of this dataset carries a source, counted from
 \`server/data/sscim.db\` rather than asserted. The companion

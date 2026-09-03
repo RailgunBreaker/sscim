@@ -187,7 +187,7 @@ function QueueView({ tab, list, triage, selected, setSelected, selectedIds, setS
    The column that matters is Δ-if-removed, not severity. Severity says how
    bad the event was; it does not say what deleting it does to the published
    number, because effects decay with age and overlapping events saturate
-   through the engine's noisy-OR. A severity-9 export control from 2022 moves
+   through the engine's bounded, saturating aggregation. A severity-9 export control from 2022 moves
    today's index by nothing, and one of five near-identical earthquake records
    moves it far less than it would alone. The server computes both from the
    same engine the dashboard renders, so this screen and the published index

@@ -1,0 +1,8 @@
+family,severity,records,stages
+bis,9,bis,adv_fab|depo|etch|hbm|litho|logic_ai|metro
+chips,4,chips,adv_fab|mature_fab|memory_fab
+cnmat,7,cnmat,analog|gases|wafers
+meti,6,meti,depo|etch|metro|resist
+nl,8,nl,litho
+tariff,4,tariff,m_auto|m_consumer|mature_fab|systems
+twp,5,twp,adv_fab|adv_pkg

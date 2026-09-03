@@ -91,7 +91,7 @@ export default function DecadeHistory({ onSelectEvent }) {
       <div className="mono" style={{ fontSize: 9.5, color: C.faint, marginBottom: 8, lineHeight: 1.5 }}>
         Every event in the {years}-year window, and what each did to the index. <b style={{ color: C.dim }}>Impact</b> is
         marginal: the index on the event&apos;s own date minus the same date with that event removed. Because
-        simultaneous shocks combine through a saturating noisy-OR, marginal effects are smaller than
+        distinct incidents combine through a bounded, saturating operator, marginal effects are smaller than
         standalone ones and do <b style={{ color: C.dim }}>not</b> sum to the index — that is the honest
         attribution, not a rounding artifact.
       </div>
@@ -256,6 +256,10 @@ export default function DecadeHistory({ onSelectEvent }) {
           a month with more ingested records scores higher than an equally eventful month with fewer.
           Compare the EVENTS and SCORED columns per year before reading a trend into the means.
           Snapshot date {data.META?.snapshotDate || engine.MODEL_PRIORS.datasetAsOf}.
+          {' '}<b style={{ color: C.amber }}>This series is a {engine.MODEL_PRIORS.modelVersion} retrospective:</b> every
+          point is recomputed today, under today&apos;s model, over the records as they stood on that date. It is not what
+          was published on those dates — an earlier model version produced materially different numbers from the same
+          records.
         </div>
       )}
     </div>

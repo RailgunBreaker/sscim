@@ -1,91 +1,157 @@
 {
+  "modelVersion": "sscim-model-v7-exposure-robustness",
+  "datasetAsOf": "2026-08-29",
+  "generatedAt": "2026-09-03T18:15:48.297Z",
+  "whatThisEstablishes": [
+    "Recoverability of three coefficients under a synthetic, correctly specified data-generating process.",
+    "Correctness of the numerical optimization and Wald variance machinery.",
+    "Pipeline regression: the engine at base parameters still produces these values, and two builds agree bit-for-bit."
+  ],
+  "whatThisDoesNotEstablish": [
+    "Real-world identifiability — the data-generating process is the model itself.",
+    "External validity — no real disruption outcome appears anywhere in this file.",
+    "Calibrated uncertainty — the intervals below hold under the simulation only; every parameter remains status: assumption.",
+    "An independent implementation — this script imports the engine primitives it checks."
+  ],
   "partC": {
-    "chainIndexBase": 6.27939444567629,
-    "matchedEngine": true
+    "chainIndexBase": 6.120182154284025,
+    "deterministic": true,
+    "matchedExplicitBaseParameters": true
   },
   "partA": {
     "design": {
       "stages": 24,
       "offsets": [
         0,
-        3,
-        6,
-        9,
-        12,
-        15
+        7,
+        14,
+        21,
+        28,
+        35
       ],
       "nObs": 144,
       "sigmaTrue": 0.02,
-      "replications": 200,
+      "replications": 60,
       "start": [
         0.4,
         0.2,
-        8
+        30
+      ],
+      "estimated": [
+        "downstreamTransmission",
+        "upstreamTransmission",
+        "marketHalfLifeDays"
+      ],
+      "truth": [
+        0.55,
+        0.3,
+        45
       ]
     },
     "summary": [
       {
-        "parameter": "f_down",
+        "parameter": "downstreamTransmission",
         "truth": 0.55,
-        "meanEstimate": 0.5507592968971625,
-        "sdEstimate": 0.026183530476792023,
-        "meanSE": 0.025350596701076263,
-        "coverage95": 0.95
+        "meanEstimate": 0.5475456912925759,
+        "bias": -0.0024543087074241354,
+        "sdEstimate": 0.01727925151593293,
+        "meanSE": 0.017700463100914603,
+        "syntheticCoverage95": 0.95
       },
       {
-        "parameter": "f_up",
+        "parameter": "upstreamTransmission",
         "truth": 0.3,
-        "meanEstimate": 0.29972255765058525,
-        "sdEstimate": 0.009234793466046758,
-        "meanSE": 0.00889792064131014,
-        "coverage95": 0.945
+        "meanEstimate": 0.300535170353491,
+        "bias": 0.000535170353490988,
+        "sdEstimate": 0.01502737918814057,
+        "meanSE": 0.012862905857575137,
+        "syntheticCoverage95": 0.9333333333333333
       },
       {
-        "parameter": "halfLife",
-        "truth": 12,
-        "meanEstimate": 12.004954516558255,
-        "sdEstimate": 0.15286115336345052,
-        "meanSE": 0.1528085698817365,
-        "coverage95": 0.965
+        "parameter": "marketHalfLifeDays",
+        "truth": 45,
+        "meanEstimate": 45.00831807346661,
+        "bias": 0.008318073466611509,
+        "sdEstimate": 0.8571746151295677,
+        "meanSE": 0.8877261195024861,
+        "syntheticCoverage95": 0.95
       }
-    ]
+    ],
+    "coverageCaveat": "Coverage is measured under the synthetic DGP. It is not a real-world confidence level."
   },
   "partB": {
-    "draws": 400,
+    "draws": 200,
+    "parametersVaried": [
+      "downstreamTransmission",
+      "upstreamTransmission",
+      "marketHalfLifeDays"
+    ],
     "chainIndex": {
-      "base": 6.27939444567629,
-      "mean": 6.275645661909579,
-      "p2_5": 6.056025140793354,
-      "p97_5": 6.529929298783047
+      "base": 6.120182154284025,
+      "mean": 6.224510621327089,
+      "assumptionEnvelope": {
+        "low": 5.682130165728783,
+        "high": 6.765790214455747
+      },
+      "p2_5": 5.717887811731846,
+      "p97_5": 6.690890098075372,
+      "note": "The envelope is the span over the declared assumption box. It is NOT a confidence interval: the box is a choice, not a distribution over the truth. Percentiles are reported only to describe where the sampled values fell."
     },
-    "tsmcTop1Rate": 1,
-    "lithoStructuralTop1Rate": 1,
-    "advfabStructuralTopRate": 0,
-    "kendallTau": {
-      "mean": 0.9600985389058788,
-      "min": 0.9007815154604146
+    "companyCriticalitySpearman": {
+      "mean": 0.9896432576199878,
+      "min": 0.9569073368734188
+    },
+    "structuralSpearman": {
+      "mean": 0.9968130434782598,
+      "min": 0.9878260869565217
     },
     "top5Modal": [
       {
-        "top5": "tsmc|nvidia|asml|samsung|skhynix",
-        "share": 0.64
+        "top5": "tsmc|nvidia|foxconn|samsung|ase",
+        "share": 0.715
       },
       {
-        "top5": "tsmc|nvidia|asml|samsung|foxconn",
-        "share": 0.185
+        "top5": "tsmc|nvidia|foxconn|samsung|apple",
+        "share": 0.23
       },
       {
-        "top5": "tsmc|asml|nvidia|samsung|skhynix",
-        "share": 0.175
+        "top5": "nvidia|tsmc|foxconn|samsung|apple",
+        "share": 0.035
       }
     ],
-    "nvidiaCrit": {
-      "p2_5": 4.870629780952729,
-      "p97_5": 5.535031494118384
-    },
-    "asmlCrit": {
-      "p2_5": 4.049610908171564,
-      "p97_5": 5.352963028326653
+    "structuralTopFrequency": {
+      "adv_fab": 0.775,
+      "litho": 0.225
     }
+  },
+  "baseParameters": {
+    "downstreamTransmission": 0.55,
+    "upstreamTransmission": 0.3,
+    "minimumDependencyFactor": 0.25,
+    "acuteHalfLifeDays": 14,
+    "marketHalfLifeDays": 45,
+    "outageRecoveryDays": 60,
+    "rampingSiteWeight": 0.5,
+    "severityMapping": "linear",
+    "facilityScaleMapping": "linear",
+    "incidentAggregation": "bounded_union",
+    "hhiResidual": "upper",
+    "stageWeighting": "turnover_normalized",
+    "policyAggregator": "bounded_union",
+    "structuralWeightsRaw": {
+      "networkInfluence": 0.25,
+      "geo": 0.2,
+      "policy": 0.2,
+      "nonSubstitutability": 0.15,
+      "market": 0.1
+    },
+    "structuralWeights": {
+      "networkInfluence": 0.2777777777777778,
+      "geo": 0.22222222222222224,
+      "policy": 0.22222222222222224,
+      "nonSubstitutability": 0.16666666666666666,
+      "market": 0.11111111111111112
+    },
+    "modelVersion": "sscim-model-v7-exposure-robustness"
   }
 }

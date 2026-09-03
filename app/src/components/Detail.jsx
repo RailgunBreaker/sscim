@@ -198,8 +198,12 @@ export default function Detail({ sel, setSel, model, scenario, onResetScenario, 
   const isStage = sel.type === "stage";
   const node = isStage ? STAGE_BY_ID[sel.id] : null;
   const structural = isStage ? STRUCTURAL_VULNERABILITY[sel.id] : model.countriesActive[sel.id]?.structural;
-  const operationalNow = isStage ? model.activeField[sel.id] : model.countriesActive[sel.id]?.operational;
-  const operationalBase = isStage ? model.baselineField[sel.id] : model.countriesBase[sel.id]?.operational;
+  /* For a country this is LOCAL PRESSURE — the share-weighted mean of the
+     stage field over the stages the country participates in, normalized by
+     its own modeled footprint. Its unnormalized companion, the country's
+     chain contribution to the headline index, is shown below. */
+  const operationalNow = isStage ? model.activeField[sel.id] : model.countriesActive[sel.id]?.localPressure;
+  const operationalBase = isStage ? model.baselineField[sel.id] : model.countriesBase[sel.id]?.localPressure;
   const delta = (operationalNow ?? 0) - (operationalBase ?? 0);
   const name = isStage ? node.name : COUNTRY_NAMES[sel.id];
   const related = EVENTS.filter((e) => (isStage ? e.stages : e.countries).includes(sel.id));
@@ -222,7 +226,13 @@ export default function Detail({ sel, setSel, model, scenario, onResetScenario, 
         {isStage ? STAGE_INTRO[sel.id] : introForCountry(sel.id, { COUNTRY_NAMES, STAGE_BY_ID, COMPANIES }, model)}
       </p>
       <div className="mono" style={{ fontSize: 10.5, color: C.dim, margin: "6px 0" }}>
-        Operational impact (current): <b style={{ color: (operationalNow ?? 0) > 0 ? C.red : (operationalNow ?? 0) < 0 ? C.green : C.dim }}>{(operationalNow ?? 0).toFixed(3)}</b> (positive = adverse, negative = mitigating)<MetricTag kind="operational" />
+        {isStage ? 'Operational impact (current)' : 'Local pressure (current)'}: <b style={{ color: (operationalNow ?? 0) > 0 ? C.red : (operationalNow ?? 0) < 0 ? C.green : C.dim }}>{(operationalNow ?? 0).toFixed(3)}</b> (positive = adverse, negative = mitigating)<MetricTag kind="operational" />
+        {!isStage && (
+          <>
+            {' · '}chain contribution <b style={{ color: C.copper }}>{(model.countriesActive[sel.id]?.chainContribution ?? 0).toFixed(4)}</b>
+            {' '}<span style={{ color: C.faint }}>(this country&apos;s unnormalized share of the headline field; local pressure is normalized over its own footprint)</span>
+          </>
+        )}
       </div>
       {isStage && (
         <div className="mono" style={{ fontSize: 10.5, color: C.dim, margin: "6px 0" }}>
@@ -267,8 +277,14 @@ export default function Detail({ sel, setSel, model, scenario, onResetScenario, 
       <div className="mono" style={{ fontSize: 9, letterSpacing: 2, color: C.dim, margin: "8px 0 4px" }}>STRUCTURAL VULNERABILITY BREAKDOWN (TIME-INVARIANT)</div>
       {comp && Object.keys(STRUCTURAL_WEIGHTS).map((k) => {
         const val = Math.min(10, Math.max(0, comp[k]));
-        const label = { networkInfluence: 'Network influence', geo: 'Geographic concentration (HHI+Other)', policy: 'Policy exposure', subst: 'Substitutability risk', market: 'Market sensitivity' }[k];
-        const analyst = k === 'subst' || k === 'market';
+        const label = {
+          networkInfluence: 'Network influence (snapshot-relative)',
+          geo: 'Geographic concentration (HHI, upper bound)',
+          policy: 'Policy exposure (policy families)',
+          nonSubstitutability: 'Non-substitutability',
+          market: 'Market sensitivity',
+        }[k];
+        const analyst = k === 'nonSubstitutability' || k === 'market';
         return (
           <div key={k} style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
             <span className="mono" style={{ fontSize: 10, color: C.dim, width: 200, flexShrink: 0 }}>

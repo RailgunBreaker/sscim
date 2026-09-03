@@ -78,6 +78,15 @@ jobs:
         working-directory: app
         run: npm run audit:data
 
+      # Code-documentation parity. Fails the build when a published
+      # parameter table, the documented model version, a documented
+      # equation, a required definition, an unqualified over-read term, or
+      # a reported test count / snapshot date / screenshot has drifted
+      # away from the code. See app/scripts/verify-docs.mjs.
+      - name: Verify documentation against the model
+        working-directory: app
+        run: npm run docs:verify
+
       - name: Run unit tests
         working-directory: app
         run: npm test
@@ -87,6 +96,30 @@ jobs:
         env:
           VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
         run: npm run build
+
+      # BROWSER SMOKE — after the build, before the deploy.
+      #
+      # This is the gate that only a real browser can hold. vitest+jsdom
+      # reports every element as 0x0, so a 900px blank region, a page that
+      # scrolls horizontally at 375px, and a feed pinned to 420px inside a
+      # 1317px panel are all invisible to it. Those are layout defects, and
+      # layout defects are exactly what a static deploy ships to everyone at
+      # once. Running it here means a broken layout fails the workflow
+      # instead of reaching Pages.
+      #
+      # playwright-core drives the browser Chromium action provides; there
+      # is no extra dependency to install.
+      - name: Install Chromium for the browser smoke
+        id: setup-chrome
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: stable
+
+      - name: Browser smoke over the production build
+        working-directory: app
+        env:
+          CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
+        run: npm run smoke
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

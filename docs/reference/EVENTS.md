@@ -1,5 +1,33 @@
 # Reference — Events
 
+*Model version: `sscim-model-v7-exposure-robustness`. How a record becomes a
+number is defined in [`docs/MODEL_V7_SPEC.md`](../MODEL_V7_SPEC.md) —
+[§2](../MODEL_V7_SPEC.md#2-complete-notation) for the source-vector notation,
+[§3.1](../MODEL_V7_SPEC.md#31-event-source-vector-construction--engineeventsourcejs)
+for the formula, and [§6](../MODEL_V7_SPEC.md#6-fallback-and-missing-data-rules)
+for what happens when a record is missing something.*
+
+**Three v7 rules govern every record on this page.**
+
+1. **Records are grouped into incidents before scoring.** Several reports of one
+   disruption are one disruption: only the primary record of an incident carries
+   source mass. Updates and recovery reports are displayed, keep their own
+   source and assessment, and inform the incident's curated persistence profile,
+   but they are never independent shocks.
+2. **A record's severity is spread across the stages it touches**, by an explicit
+   per-stage exposure with a recorded basis. Tagging a record to more stages does
+   not make it hit harder. Where no curated exposure exists, a counted equal
+   split applies and the fallback is reported.
+3. **An unknown direction is never treated as adverse.** A `mixed` or
+   `unclassified` record produces no scalar field at all unless a signed per-stage
+   decomposition was curated for it.
+
+Each record also carries an explicit **temporal profile** — how its effect
+persists from its own date — chosen from five declared shapes and justified
+against dates in the record itself. See
+[§3.7](../MODEL_V7_SPEC.md#37-temporal-profiles--enginepersistencejs).
+
+
 *Last updated: 2026-08-22. Part of the [reference library](README.md).*
 
 **163 events** in the vault, arriving by two routes that never mix. Every one

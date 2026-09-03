@@ -1,6 +1,7 @@
 # Evidence coverage
 
-*Generated from the vault by `server/scripts/build-evidence-coverage.mjs`. Last generated: 2026-08-24.*
+*Generated from the vault by `server/scripts/build-evidence-coverage.mjs`. Last generated: 2026-09-03.*
+*Model version: `sscim-model-v7-exposure-robustness` · snapshot date: 2026-08-29 · canonical specification: [MODEL_V7_SPEC.md](../MODEL_V7_SPEC.md).*
 
 How much of this dataset carries a source, counted from
 `server/data/sscim.db` rather than asserted. The companion

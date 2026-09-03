@@ -52,7 +52,8 @@ Read the explanation, source, confidence label, and assumptions before using any
 | --- | --- |
 | Use the dashboard without technical background | [Public guide](PUBLIC_GUIDE.md) |
 | Understand the equations | [Methodology](METHODOLOGY.md) |
-| See every formula derived with real numbers | [Calculation specification](calculation.md) |
+| See every formula, exactly as implemented | [Model v7 specification](MODEL_V7_SPEC.md) — canonical |
+| Follow the calculation step by step | [Calculation walkthrough](calculation.md) |
 | Evaluate it for research | [Academic guide](ACADEMIC_GUIDE.md) |
 | Set up, build, or change the software | [Developer guide](DEVELOPER_GUIDE.md) |
 | Understand the deployment | [System architecture](SYSTEM_ARCHITECTURE.md) |
@@ -85,7 +86,7 @@ Country coverage has two tiers and the interface distinguishes them: some countr
 
 Facility significance is an **analyst ordinal (1–5), not measured capacity**, so every share derived from it is a share of the modeled sample rather than of world output.
 
-The model has no facility-level capacity, inventory, bill-of-materials, qualification, or recovery-time data. A real capacity-constrained shock, such as a fab physically destroyed, would propagate differently than this model predicts. See the [project roadmap](MODEL_ROADMAP.md) for the full list of what calibration would require, and the [validation note](computation-demo/validation/MLE_VALIDATION.md) for what has and has not been established.
+The model has no facility-level capacity, inventory, bill-of-materials, qualification, or recovery-time data. A real capacity-constrained shock, such as a fab physically destroyed, would propagate differently than this model predicts. See the [project roadmap](MODEL_ROADMAP.md) for the full list of what calibration would require, [spec §9](MODEL_V7_SPEC.md#9-validation-status) for the status of each validation activity separately, and the [synthetic parameter recovery note](computation-demo/validation/SYNTHETIC_PARAMETER_RECOVERY.md) for what that test does and does not establish.
 
 ## Contributing
 

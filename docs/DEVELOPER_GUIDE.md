@@ -151,7 +151,7 @@ The review queue decides what enters the index. The admin *Events* tab decides w
 Severity says how bad an event was. It does not say what deleting it does to the published index, and the gap between the two is large:
 
 - Effects **decay**. A severity-9 export control from 2022 moves today's reading by nothing.
-- Overlapping events **saturate**. Propagation combines through a noisy-OR (`engine/math.js` `combineSigned`), so five near-identical earthquake records each contribute far less than any one of them would alone.
+- Overlapping incidents **saturate**. Distinct incidents combine through a bounded aggregation operator (`engine/aggregation.js`), so two adverse incidents on the same stages move the index by less than twice one of them. (Five near-identical earthquake *records* are a different matter entirely: they are deduplicated into one incident before scoring, and contribute once — see `engine/eventSource.js`.)
 
 So the screen shows what the engine says: the index with the event, the index without it, and the difference. `server/src/event-impact.js` computes this from `buildBundle()` → `buildVaultData()` → `buildEngine()` — the same path the dashboard renders — and never re-derives an index of its own. That is the rule `engine/timeseries.js` follows, and it is what stops this screen and the published number from disagreeing.
 

@@ -19,6 +19,8 @@ import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 import { buildEngine } from '../src/engine/index.js';
 import { getEventAssumption } from '../src/engine/event-assumptions.js';
+import { MODEL_VERSION } from '../src/engine/registry.js';
+import { ACTIVE_HORIZON_DAYS } from '../src/engine/event-model.js';
 import { buildFacilityLayer } from '../src/engine/facilities.js';
 import { buildFacilityNetwork } from '../src/engine/facilityNetwork.js';
 import { facilityIntro } from '../src/engine/facilityProfile.js';
@@ -279,8 +281,66 @@ function main() {
     }
   }
 
+  /* ---- v7 MODEL AUDIT ------------------------------------------------
+     Every fallback the model took, counted, with two of them promoted to
+     HARD FAILURES because they are curation defects rather than honest
+     gaps in the data:
+
+       missing_profile_active
+         An operational incident inside the curated horizon with no
+         explicit temporal profile. v6 had one global half-life and so
+         could not have this defect; v7 requires a person to state, with a
+         recorded basis, how each live incident persists.
+
+       curated_exposure_stage_mismatch
+         A curated exposure vector that names no stage the record carries.
+         The curation and the record have drifted apart, and the model
+         silently falls back to the equal split — which is exactly the kind
+         of invisible degradation this audit exists to prevent.
+
+     Everything else degrades to a documented fallback and is reported.
+     See docs/MODEL_V7_SPEC.md §6. */
+  const modelAudit = engine?.MODEL_AUDIT;
+  if (modelAudit) {
+    const c = modelAudit.counts;
+    if (c.missing_profile_active) {
+      err(`${c.missing_profile_active} operational incident(s) inside the ${ACTIVE_HORIZON_DAYS}-day curated horizon have no explicit temporal profile — curate one in app/src/engine/event-model.js with a recorded basis`);
+      (modelAudit.details.missing_profile_active || []).forEach((d) => err(`  missing profile: ${d.id} — ${d.detail}`));
+    }
+    if (c.curated_exposure_stage_mismatch) {
+      err(`${c.curated_exposure_stage_mismatch} incident(s) have a curated exposure vector that names no stage the record carries — the curation has drifted from the record`);
+      (modelAudit.details.curated_exposure_stage_mismatch || []).forEach((d) => err(`  curation mismatch: ${d.id} — ${d.detail}`));
+    }
+    if (c.legacy_equal_stage_exposure) warn(`${c.legacy_equal_stage_exposure} archived operational record(s) use the legacy 1/k equal stage-exposure fallback (outside the ${ACTIVE_HORIZON_DAYS}-day curated horizon; persistence there is below 1e-3 under every registry setting)`);
+    if (c.missing_profile_archived) warn(`${c.missing_profile_archived} archived operational record(s) use the legacy temporal-profile fallback`);
+    if (c.curated_exposure_orphan_stage) warn(`${c.curated_exposure_orphan_stage} curated exposure vector(s) name a stage absent from the record's own tags — dropped`);
+    if (c.duplicate_stage_tags) warn(`${c.duplicate_stage_tags} record(s) carry duplicate stage tags — deduplicated before scoring, so no number changes`);
+    if (c.country_only_event) warn(`${c.country_only_event} record(s) carry countries but no stage mapping — displayed, operationally unscored`);
+    if (c.unknown_direction_unscored) warn(`${c.unknown_direction_unscored} record(s) have a mixed or unclassified direction with no signed stage components — displayed, operationally unscored (an unknown direction is never treated as adverse)`);
+    if (c.incident_deduplicated) warn(`${c.incident_deduplicated} incident(s) were reported by more than one record — collapsed before scoring, so a well-covered disruption scores once`);
+    const ea = modelAudit.edgeAllocationFallback;
+    if (ea.incomingEqualSplit || ea.outgoingEqualSplit) {
+      warn(`no evidence-based edge allocations exist in this snapshot: ${ea.incomingEqualSplit} stage(s) fall back to an equal INCOMING split and ${ea.outgoingEqualSplit} to an equal OUTGOING split — every dependency coefficient in this build rests on that fallback`);
+    }
+    if (modelAudit.hhiPartialDisclosure) {
+      warn(`${modelAudit.hhiPartialDisclosure} stage(s) disclose less than 100% of their country shares — geographic concentration is published as a [lower, upper] interval for those, with the conservative upper bound as the base`);
+    }
+    if (modelAudit.policyDuplicateRecords) {
+      warn(`${modelAudit.policyDuplicateRecords} policy record(s) collapsed into an existing family before scoring — a duplicate report or revision cannot raise a stage's policy exposure`);
+    }
+  }
+
   console.log(`\nSSCIM static-snapshot audit — ${SNAPSHOT_PATH}`);
+  console.log(`model=${MODEL_VERSION} snapshot=${bundle.meta?.snapshotDate ?? 'unknown'}`);
   console.log(`stages=${bundle.stages.length} companies=${bundle.companies.length} events=${bundle.events.length} policies=${bundle.policies.length} scenarios=${bundle.scenarios.length} countries=${bundle.countries.length} facilities=${facilities.length}${network ? ` siteLinks=${network.stats.shown}` : ''}`);
+  if (modelAudit) {
+    console.log(`records=${modelAudit.recordCount} incidents=${modelAudit.incidentCount} scored=${modelAudit.scoredIncidentCount} curated=${modelAudit.curatedEventCount} (horizon ${modelAudit.activeHorizonDays}d) policyFamilies=${modelAudit.policyFamilies}`);
+    const counts = Object.entries(modelAudit.counts);
+    if (counts.length) {
+      console.log('\nModel fallback diagnostics (machine-readable codes — see docs/MODEL_V7_SPEC.md §6):');
+      counts.sort((a, b) => b[1] - a[1]).forEach(([code, n]) => console.log(`  ${String(n).padStart(4)}  ${code}`));
+    }
+  }
   if (excludedEvents.length) {
     console.log(`\nEvents displayed but excluded from scored operational impact (${excludedEvents.length}):`);
     excludedEvents.forEach((line) => console.log(`  - ${line}`));

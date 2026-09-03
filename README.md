@@ -249,7 +249,9 @@ snapshot still there as the fallback.
 | [Project overview](docs/README.md) | What SSCIM is, in one page ([日本語](docs/README.ja.md) · [简体中文](docs/README.zh.md)) |
 | [Public guide](docs/PUBLIC_GUIDE.md) | Plain-language walkthrough |
 | [Methodology](docs/METHODOLOGY.md) | Every formula and declared prior |
-| [Worked calculations](docs/calculation.md) | The arithmetic, step by step |
+| [**Model v7 specification**](docs/MODEL_V7_SPEC.md) | The canonical definition: notation, every formula, the parameter register, fallbacks, a reproducible worked example, validation status |
+| [Calculation walkthrough](docs/calculation.md) | The arithmetic, step by step |
+| [Release blockers](docs/RELEASE_BLOCKERS.md) | What must be decided before this is a public release |
 | [Academic guide](docs/ACADEMIC_GUIDE.md) | How to cite it, and what not to claim |
 | [Developer guide](docs/DEVELOPER_GUIDE.md) | Set up, build, change |
 | [System architecture](docs/SYSTEM_ARCHITECTURE.md) | How the pieces fit |
@@ -261,10 +263,18 @@ snapshot still there as the fallback.
 
 ## License
 
+> **⚠ PUBLIC-RELEASE BLOCKER — requires a decision by the repository owner.**
+
 **No license has been chosen for this repository.** Without one, default
 copyright applies: the source is readable here, but no reuse, modification or
-redistribution rights are granted.
+redistribution rights are granted — including the right to clone and run it.
 
-Selecting a license is the repository owner's decision and has deliberately not
-been made on their behalf. Until one is added, treat this code as
-all-rights-reserved.
+Selecting a license assigns rights the repository owner holds, and it is
+irreversible in practice, so it has deliberately **not** been made on their
+behalf and no license has been invented. Until one is added, treat everything
+here as all-rights-reserved.
+
+[**`docs/RELEASE_BLOCKERS.md`**](docs/RELEASE_BLOCKERS.md) sets out exactly what
+this blocks, why it was not resolved, the options, the two decisions that travel
+with it (the curated dataset's terms, and inbound contribution terms), and the
+five steps that close it.

@@ -64,11 +64,20 @@ function serve() {
 }
 
 async function launch() {
-  for (const channel of ['msedge', 'chrome']) {
+  /* CHROME_PATH is how CI hands over the browser it installed (see the
+     "Install Chromium for the browser smoke" step in
+     .github/workflows/static.yml). Locally it is unset and the channel
+     search below finds whatever is on the machine. */
+  if (process.env.CHROME_PATH) {
+    try { return await chromium.launch({ executablePath: process.env.CHROME_PATH, headless: !HEADED }); } catch (e) {
+      throw new Error(`CHROME_PATH is set to "${process.env.CHROME_PATH}" but that browser did not launch. ${e.message}`);
+    }
+  }
+  for (const channel of ['msedge', 'chrome', 'chromium']) {
     try { return await chromium.launch({ channel, headless: !HEADED }); } catch { /* try the next one */ }
   }
   try { return await chromium.launch({ headless: !HEADED }); } catch (e) {
-    throw new Error(`No usable Chromium found (tried Edge, Chrome, bundled). ${e.message}`);
+    throw new Error(`No usable Chromium found (tried CHROME_PATH, Edge, Chrome, Chromium, bundled). ${e.message}`);
   }
 }
 
@@ -267,6 +276,34 @@ async function main() {
     const hop2 = await page.locator('svg text').filter({ hasText: /hop 2/ }).count();
     check(hop2 > 0, 'two-hop traversal draws hop-2 nodes', `${hop2} nodes`);
     await shot(page, 'playground-asml-2hop');
+
+    /* THREE HOPS — the depth the playground now opens on, and the depth at
+       which the accessible name previously started lying. Past hop 1 the
+       connection table below the graph lists only the FOCUSED plant's own
+       connections, so a label promising "a complete table of every
+       connection" was false for everything the graph drew further out. */
+    await openDashboard(page, base, '#view=playground&fac=asml_veldhoven&facd=3');
+    await page.waitForSelector('section[aria-label="Complete connection table"]', { timeout: 20000 });
+    await page.waitForTimeout(700);
+    const hop3 = await page.locator('svg text').filter({ hasText: /hop 3/ }).count();
+    check(hop3 > 0, 'three-hop traversal draws hop-3 nodes', `${hop3} nodes`);
+
+    /* The accessible name must count what is ON THE CANVAS, not what the
+       traversal reached: nodes are dropped by the per-column cap and by the
+       drawn-parent rule, and a screen-reader user has no other way to find
+       that out. */
+    const graphSvg = page.locator('svg[role="img"][aria-label*="Modeled connection graph"]').first();
+    const label3 = (await graphSvg.getAttribute('aria-label')) || '';
+    const claimedNodes = Number((label3.match(/(\d+)\s+connected facilit/) || [])[1] ?? -1);
+    const drawnNodes = await graphSvg.locator('g.fg-node').count();
+    check(claimedNodes === drawnNodes,
+      'the graph label counts the nodes actually drawn, not the nodes reached',
+      `label says ${claimedNodes}, canvas has ${drawnNodes}`);
+    check(/lists every modeled connection of/i.test(label3),
+      'the graph label describes the table as the FOCUSED plant\'s connections, not every connection');
+    check(!/complete, searchable table of every connection/i.test(label3),
+      'the graph label no longer promises a table of every connection in the graph');
+    await shot(page, 'playground-asml-3hop');
 
     // Focus survives a Layer-3 tab switch (the state-loss defect).
     await openDashboard(page, base, '#fac=asml_veldhoven');

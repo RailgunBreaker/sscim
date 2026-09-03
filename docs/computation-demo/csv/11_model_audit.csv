@@ -1,0 +1,10 @@
+diagnostic,count,meaning
+legacy_equal_stage_exposure,49,machine-readable fallback diagnostic — see MODEL_V7_SPEC.md §6
+missing_profile_archived,49,machine-readable fallback diagnostic — see MODEL_V7_SPEC.md §6
+incident_deduplicated,1,machine-readable fallback diagnostic — see MODEL_V7_SPEC.md §6
+edge_allocation_incoming_equal_split,17,stages with no evidence-based inbound dependency allocation
+edge_allocation_outgoing_equal_split,21,stages with no evidence-based outbound exposure allocation
+hhi_partial_disclosure,6,stages whose country shares sum to less than one
+policy_families,7,register rows after family deduplication
+policy_duplicate_records,0,rows collapsed into an existing family
+curated_incidents,30,incidents with an explicit exposure vector and profile (curated horizon 900 d)

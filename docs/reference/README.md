@@ -1,5 +1,11 @@
 # SSCIM reference library
 
+*Model version: `sscim-model-v7-exposure-robustness`. This library documents the
+**data**. The **model** — every symbol, formula, parameter range and fallback
+rule — is defined once, in [`docs/MODEL_V7_SPEC.md`](../MODEL_V7_SPEC.md), and
+no page here defines a competing formula.*
+
+
 Where every figure in the model comes from, and who decided it.
 
 This library exists because a supply-chain model is easy to read as
@@ -153,6 +159,7 @@ cd server && node scripts/build-source-register.mjs
 
 - [Data sources, inputs, and outputs](../DATA_SOURCES_AND_OUTPUTS.md) — how the data flows and what each output means
 - [Methodology](../METHODOLOGY.md) — every formula and declared prior
-- [Calculation specification](../calculation.md) — the arithmetic, step by step
+- [Model v7 specification](../MODEL_V7_SPEC.md) — the canonical definition of every formula
+- [Calculation walkthrough](../calculation.md) — the arithmetic, step by step
 - [Academic guide](../ACADEMIC_GUIDE.md) — how to cite this, and what not to claim
 - [Model roadmap](../MODEL_ROADMAP.md) — delivered, planned, and the gaps between

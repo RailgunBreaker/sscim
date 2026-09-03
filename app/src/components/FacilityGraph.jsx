@@ -34,7 +34,7 @@ import { linkKey, localScale, localRel, relationshipClass } from '../engine/faci
 
    HONEST COUNTS. A column shows at most `maxPerColumn` nodes because
    twenty-five labels in one column are unreadable. What it never does is
-   imply that is all of them: the caption states the exact visible count
+   imply that is all of them: the caption states the exact drawn count
    against the exact total ("showing the strongest 14 of 53 suppliers"),
    and the connection table beside it reaches every single one. The
    previous version said "the list below has all of them" while the list
@@ -248,11 +248,19 @@ export default function FacilityGraph({
       });
     });
 
+    /* The ids that ACTUALLY have a circle on the canvas: the focus plus
+       every placed node. A node can be in `traversal.nodes` and still not
+       be here — capped out of its column, or dropped because the node it
+       was reached through was itself dropped. The accessible name is built
+       from this set, not from the traversal, so the count a screen reader
+       hears is the count a sighted reader can point at. */
+    const drawnNodeIds = new Set([focus.id, ...placed.map((p) => p.node.id)]);
+
     const posOf = {};
     placed.forEach((p) => { posOf[p.node.id] = p; });
     posOf[focus.id] = { x: cx, y: height / 2, node: { id: focus.id, depth: 0 }, facility: focus, signed: 0 };
 
-    return { placed, posOf, width, height, cx, cy: height / 2, totals, shown, signedKeys, minCol, maxCol };
+    return { placed, posOf, drawnNodeIds, width, height, cx, cy: height / 2, totals, shown, signedKeys, minCol, maxCol };
   }, [traversal, focus, byId, maxPerColumn, heightProp]);
 
   /* ---- zoom / pan / fit ---- */
@@ -461,6 +469,43 @@ export default function FacilityGraph({
     .filter((k) => Math.abs(k) > 1)
     .reduce((n, k) => n + Math.max(0, (layout.totals[k] || 0) - (layout.shown[k] || 0)), 0);
 
+  /* ---- ACCESSIBLE NAME: counts that describe what is actually rendered ----
+
+     Two claims used to be made here that were not true, and a screen-reader
+     user had no way to find that out.
+
+       1. "N connected facilities drawn" used the TRAVERSAL size. The
+          traversal is what was reached; the canvas draws what survived the
+          per-column cap and the drawn-parent rule, which is fewer. The
+          count now comes from layout.drawnNodeIds, i.e. from the circles.
+
+       2. "a complete, searchable table of EVERY connection is provided
+          below" was false past hop 1: the table lists the connections OF
+          THE FOCUSED PLANT, and knows nothing about hop-2 neighbours' own
+          links. It now says exactly that, and says when the graph reaches
+          further than the table does.
+
+     Edges are counted the same way: an edge whose endpoint was not drawn
+     renders as null, so only edges with both endpoints drawn are claimed. */
+  const drawnNodeCount = Math.max(0, layout.drawnNodeIds.size - 1); // the focus is not a "connected facility"
+  const drawnLinkCount = traversal.links
+    .filter((l) => layout.drawnNodeIds.has(l.from) && layout.drawnNodeIds.has(l.to)).length;
+  const reachedNodeCount = Math.max(0, traversal.nodes.length - 1);
+  const undrawnNodeCount = Math.max(0, reachedNodeCount - drawnNodeCount);
+  const graphReachesPastTheTable = layout.signedKeys.some((k) => Math.abs(k) > 1 && (layout.shown[k] || 0) > 0);
+
+  const a11yLabel = [
+    `Modeled connection graph centred on ${focus.name}.`,
+    `${drawnNodeCount} connected facilit${drawnNodeCount === 1 ? 'y is' : 'ies are'} drawn as nodes,`,
+    `joined by ${drawnLinkCount} drawn modeled relationship${drawnLinkCount === 1 ? '' : 's'}.`,
+    undrawnNodeCount > 0
+      ? `A further ${undrawnNodeCount} reachable facilit${undrawnNodeCount === 1 ? 'y is' : 'ies are'} not drawn, having been capped out of a column or reached through a facility that is itself not drawn.`
+      : 'Every facility reached by the traversal is drawn.',
+    graphReachesPastTheTable
+      ? `The table below this graph lists every modeled connection of ${focus.name} itself; it does not list the connections of the facilities two or more hops away that this graph also draws. Centre the graph on one of those to see its own connections in the table.`
+      : `The table below this graph lists every modeled connection of ${focus.name}, which is every connection drawn here.`,
+  ].join(' ');
+
   return (
     <div>
       <div style={{ display: 'flex', gap: 6, alignItems: 'center', marginBottom: 5, flexWrap: 'wrap' }}>
@@ -489,7 +534,7 @@ export default function FacilityGraph({
         style={{ display: 'block', minWidth: layout.width, background: C.panel2, border: `1px solid ${C.line}`, borderRadius: 6, touchAction: 'none', maxHeight: compact ? 380 : '62vh' }}
         onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={endDrag} onPointerCancel={endDrag}
         role="img"
-        aria-label={`Modeled connection graph centred on ${focus.name}: ${traversal.nodes.length - 1} connected facilities drawn, ${traversal.links.length} modeled relationships. A complete, searchable table of every connection is provided below this graph.`}>
+        aria-label={a11yLabel}>
 
         <style>{GRAPH_STYLE}</style>
 
@@ -531,7 +576,7 @@ export default function FacilityGraph({
         )}
         {anyCapped && (
           <text x={layout.cx} y={layout.height - 12} textAnchor="middle" fill={C.amber} fontSize="10">
-            {`showing the strongest ${upShown} of ${upTotal} suppliers and ${downShown} of ${downTotal} customers — the table below reaches every one`}
+            {`showing the strongest ${upShown} of ${upTotal} suppliers and ${downShown} of ${downTotal} customers — the table below lists every direct connection of this plant`}
           </text>
         )}
       </svg>

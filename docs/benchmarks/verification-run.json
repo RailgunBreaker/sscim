@@ -1,0 +1,153 @@
+{
+  "recordedAt": "2026-09-03T18:26:34.580Z",
+  "commit": "7749dc869d76a70fa1a4c09928c96f4a2c2e14cc",
+  "modelVersion": "sscim-model-v7-exposure-robustness",
+  "datasetAsOf": "2026-08-29",
+  "commands": [
+    {
+      "command": "server: npm ci",
+      "result": "pass",
+      "seconds": 11.2,
+      "detail": "added 113 packages, and audited 114 packages in 11s"
+    },
+    {
+      "command": "app: npm ci",
+      "result": "pass",
+      "seconds": 3.6,
+      "detail": "added 156 packages, and audited 157 packages in 3s"
+    },
+    {
+      "command": "app: npm run snapshot",
+      "result": "pass",
+      "seconds": 0.5,
+      "detail": "(109 companies, 24 stages, 167 events)"
+    },
+    {
+      "command": "app: npm run audit:data",
+      "result": "pass",
+      "seconds": 0.4,
+      "detail": "audit:data PASSED — 0 hard failures, 30 warning(s)."
+    },
+    {
+      "command": "app: npm run docs:verify",
+      "result": "pass",
+      "seconds": 0.4,
+      "detail": "docs:verify PASSED — documentation and code agree."
+    },
+    {
+      "command": "app: npm test",
+      "result": "pass",
+      "seconds": 17.7,
+      "detail": "Test Files  44 passed (44) · Tests  815 passed (815)"
+    },
+    {
+      "command": "app: npm run build",
+      "result": "pass",
+      "seconds": 3.5,
+      "detail": "Published 33 documentation page(s) + /docs/ index · 839 equation(s) rendered · KaTeX css + 20 font(s)."
+    },
+    {
+      "command": "app: npm run smoke",
+      "result": "pass",
+      "seconds": 82,
+      "detail": "162/162 checks passed"
+    },
+    {
+      "command": "app: npm run sensitivity -- --samples 1024",
+      "result": "pass",
+      "seconds": 115.1,
+      "detail": "design: 12 continuous dimensions x 1024 samples = 14336 model evaluations"
+    },
+    {
+      "command": "app: npm run benchmark",
+      "result": "pass",
+      "seconds": 0.5,
+      "detail": "headline index  5.395609  ->  6.120182   (+0.724573)"
+    },
+    {
+      "command": "app: npm run demo",
+      "result": "pass",
+      "seconds": 0.4,
+      "detail": "headline index 6.120182 · 160 incidents from 167 records"
+    }
+  ],
+  "tests": {
+    "files": 44,
+    "filesFailed": 0,
+    "passed": 815,
+    "failed": 0,
+    "skipped": 0,
+    "todo": 0,
+    "total": 815
+  },
+  "browserSmoke": {
+    "passed": 162,
+    "total": 162,
+    "sections": [
+      "375x812",
+      "768x1024",
+      "1366x768",
+      "1366x936",
+      "1920x1080",
+      "deep checks (1920x1080)",
+      "views and history review",
+      "accessibility",
+      "landing page"
+    ]
+  },
+  "sensitivity": {
+    "seed": 20260829,
+    "samples": 1024,
+    "continuousDimensions": 12,
+    "numericalEvaluations": 14336,
+    "modelFormCombinations": 486,
+    "baseHeadlineIndex": 6.120182154284025,
+    "numericalEnvelope": {
+      "low": 5.549007811468045,
+      "base": 6.120182154284025,
+      "high": 6.878843829419557,
+      "width": 1.3298360179515116,
+      "containsBase": true,
+      "kind": "assumption-envelope",
+      "note": "Assumption envelope over the declared parameter box. NOT a confidence interval: uniform sampling over an assumption box is a computational design, not a probability distribution over what is true."
+    },
+    "modelFormEnvelope": {
+      "low": 5.437546109322323,
+      "base": 6.120182154284025,
+      "high": 6.58708315195968,
+      "width": 1.1495370426373572,
+      "containsBase": true,
+      "kind": "assumption-envelope",
+      "note": "Assumption envelope over the declared parameter box. NOT a confidence interval: uniform sampling over an assumption box is a computational design, not a probability distribution over what is true."
+    }
+  },
+  "benchmark": {
+    "from": {
+      "modelVersion": "sscim-model-v6-client-sensitivity",
+      "datasetAsOf": "2026-08-29",
+      "frozenAt": "2026-09-03T15:35:00.577Z",
+      "commit": "7749dc869d76a70fa1a4c09928c96f4a2c2e14cc"
+    },
+    "to": {
+      "modelVersion": "sscim-model-v7-exposure-robustness",
+      "datasetAsOf": "2026-08-29"
+    },
+    "headline": {
+      "v6": 5.395609,
+      "v7": 6.120182,
+      "delta": 0.724573,
+      "v6Envelope": {
+        "low": 5.167437,
+        "base": 5.395609,
+        "high": 5.694332
+      },
+      "v7Envelope": {
+        "low": 5.706202,
+        "base": 6.120182,
+        "high": 6.498301
+      },
+      "envelopeNote": "The v6 envelope moved all three coefficients together in the same direction. The v7 in-app envelope moves each parameter one at a time over its declared range; the principal analysis is the global design in docs/benchmarks/v7-sensitivity.json."
+    }
+  },
+  "allPassed": true
+}

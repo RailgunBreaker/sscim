@@ -14,7 +14,7 @@
    2. Attribution is MARGINAL, not standalone. An event's effect is the
       index on its own date with that event present, minus the same date
       with only that event removed. Because propagation combines through a
-      saturating noisy-OR (math.js combineSigned), standalone magnitudes do
+      bounded, saturating operator (aggregation.js), standalone magnitudes do
       not add up — two severity-7 events on the same stages do not move the
       index twice as far as one. Marginal attribution is the honest answer
       to "what did this event contribute to the number we published", and

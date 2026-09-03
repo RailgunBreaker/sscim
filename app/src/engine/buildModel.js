@@ -42,9 +42,15 @@ export function buildModel({ data, engine, scenario, asOfDaysAgo = 0 }) {
 
   const countriesBase = countryData(EVENTS, baselineField, data.COUNTRY_NAMES);
   const countriesActive = countryData(activeEvents, activeField, data.COUNTRY_NAMES);
+  /* Two country deltas, because there are two country measures and they
+     answer different questions (see engine/index.js countryData):
+       localPressure     how hard the part of the chain sitting here is squeezed
+       chainContribution how much of the headline number this country is */
   const countryDelta = {};
+  const countryChainDelta = {};
   Object.keys(data.COUNTRY_NAMES).forEach((cid) => {
-    countryDelta[cid] = (countriesActive[cid]?.operational ?? 0) - (countriesBase[cid]?.operational ?? 0);
+    countryDelta[cid] = (countriesActive[cid]?.localPressure ?? 0) - (countriesBase[cid]?.localPressure ?? 0);
+    countryChainDelta[cid] = (countriesActive[cid]?.chainContribution ?? 0) - (countriesBase[cid]?.chainContribution ?? 0);
   });
 
   const baselineChainSigned = operationalIndex(baselineField);
@@ -60,12 +66,23 @@ export function buildModel({ data, engine, scenario, asOfDaysAgo = 0 }) {
        "6.3 from 4 events" and "6.3 from 40" are not the same reading. */
     eventsInWindow: EVENTS.length,
     baselineField, activeField, stageDelta,
-    countriesBase, countriesActive, countryDelta,
+    countriesBase, countriesActive, countryDelta, countryChainDelta,
     baselineChainIndex: toDisplayIndex(baselineChainSigned),
     activeChainIndex: toDisplayIndex(activeChainSigned),
     chainIndexDelta: toDisplayIndex(activeChainSigned) - toDisplayIndex(baselineChainSigned),
+    /* ASSUMPTION ENVELOPE, never a confidence interval: the span the
+       headline index moves over as each propagation and persistence
+       parameter is taken to the ends of its declared assumption range, one
+       at a time. Uniform movement over an assumption box is a computational
+       design, not a probability distribution over what is true. The full
+       global design lives in engine/sensitivity.js. */
     envelope: { low: toDisplayIndex(envelopeRaw.low), base: toDisplayIndex(envelopeRaw.base), high: toDisplayIndex(envelopeRaw.high) },
+    modelAudit: engine.MODEL_AUDIT,
     history: engine.HISTORY, // baseline-only — a hypothetical overlay never rewrites history
+    /* The series is recomputed under the CURRENT model over past records.
+       It is a v7 retrospective, not a record of what was published then. */
+    historyIsRetrospective: engine.HISTORY_IS_RETROSPECTIVE,
+    historyLabel: engine.HISTORY_LABEL,
     diagnostics: engine.diagnostics.list,
     graphValid: engine.graphValid,
     datasetAsOf: engine.MODEL_PRIORS.datasetAsOf,

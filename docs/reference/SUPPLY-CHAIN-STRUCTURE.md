@@ -1,5 +1,16 @@
 # Reference — Supply-chain structure
 
+*Model version: `sscim-model-v7-exposure-robustness`. How this structure is
+turned into dependency coefficients is defined in
+[`docs/MODEL_V7_SPEC.md` §3.4](../MODEL_V7_SPEC.md#34-dependency-matrices--enginepropagationjs).*
+
+**Edge allocations.** Each edge may carry evidence-based dependency shares
+(`q` inbound, `r` outbound), normalized to sum to one at each node. **This
+snapshot supplies none**, so every edge uses the equal-split fallback, and the
+model counts that rather than presenting it as evidence — see the
+`edge-allocation` diagnostics in `npm run audit:data`.
+
+
 *Last updated: 2026-08-22. Part of the [reference library](README.md).*
 
 The graph everything else is computed over: **24 stages**, **34 directed
@@ -27,7 +38,7 @@ diagnostic rather than silently accepted.
 
 ## Flow edges — the 34 dependencies
 
-Curated from published process-flow descriptions and **validated acyclic** on
+Curated from published process-flow descriptions and **checked acyclic** on
 every build. A cycle, a dangling edge or a duplicate surfaces as an explicit
 diagnostic rather than silently propagating arbitrary values — a topological
 order has to exist for propagation to be defined at all.

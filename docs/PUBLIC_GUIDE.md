@@ -1,5 +1,10 @@
 # SSCIM public guide
 
+**Model version:** `sscim-model-v7-exposure-robustness` — the exact definition of
+every number described here is in the
+[model specification](MODEL_V7_SPEC.md).
+
+
 This guide assumes no background in semiconductors, networks, or statistics. It explains what you are looking at, what each number does and does not mean, and how to avoid the misreadings the interface makes easy.
 
 ## The one-paragraph version
@@ -59,8 +64,11 @@ The interface labels the provenance of what it shows, and those labels are the m
 | A high country score | That country will suffer economic loss |
 | A company ranked first by criticality | That company is a good or bad investment |
 | A topology route | Goods physically travel that way |
-| An index of 6.9 | A 69% chance of anything |
-| A sensitivity range (low/base/high) | A confidence interval |
+| An index of 6.9 | A 69% chance of anything — the index is not a probability of any kind |
+| A sensitivity range (low/base/high) | **Not** a confidence interval. It is an assumption envelope: the span the number moves over as we push our own stated guesses to the ends of the ranges we declared. Nothing establishes that the truth is inside it. |
+| A country's score | Its share of the world's problem. There are two country numbers and they answer different questions: **local pressure** ("how hard is the part of the chain that sits here being squeezed?") and **chain contribution** ("how much of the headline number is this country?") |
+| A stage or company ranked 10/10 | A number you can compare with last month's 10/10. Those scores are **snapshot-relative** — divided by the biggest value in *this* snapshot — so the raw figure is published beside them for comparisons over time |
+| A share of a stage's plants inside a hazard circle | A share of world capacity, or an amount of damage. It is a share of the **plants this project has modelled**, weighted by an analyst's 1–5 significance ordinal |
 
 ## Before sharing a conclusion
 
@@ -71,6 +79,7 @@ SSCIM is a research aid. It is not investment, legal, or operational advice.
 ## Where to go next
 
 - [Plain-English guide](computation-demo/PLAIN_ENGLISH_GUIDE.md) — the same system from zero, with no mathematics.
-- [Methodology](METHODOLOGY.md) — the actual formulas, if you want to check the reasoning.
-- [Computation demo](computation-demo/COMPUTATION_DEMO.md) — every step worked with real numbers.
+- [Methodology](METHODOLOGY.md) — why the model is shaped the way it is.
+- [**Model v7 specification**](MODEL_V7_SPEC.md) — the exact, canonical definition of every number on the screen, including a worked example you can reproduce with a calculator.
+- [Computation demo](computation-demo/COMPUTATION_DEMO.md) — the live engine's own tables, exported as CSV.
 - [Model roadmap](MODEL_ROADMAP.md) — what the model does not yet know, stated plainly.

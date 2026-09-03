@@ -219,9 +219,9 @@ BlackRock:                       0.079  × 7.383262  = 0.583
 | `subst`, `market` per stage | "How replaceable is EUV lithography?" is a judgment about qualification time, alternatives, and switching cost — no vendor sells this number | Written rubric (e.g. subst 9–10 = sole supplier, >3y qualification; 5 = second source exists at cost), Tier-D label, data-note per figure |
 | Policy / event `sev` | Rule texts don't carry a 0–10 intensity | Rubric anchored to scope (sev 9 = category-wide license requirement; 4 = narrow/administrative) |
 | Event classification (direction/channel/operational) | Proven above: FR 2026-00789 is titled like a restriction but *is* an easing — sign requires reading | Versioned lookup table, one entry per event id, with a written reason; unclassified → displayed but excluded from the score |
-| Graph edges | The chain's structure (litho equips fabs; fabs feed accelerators) is domain knowledge from CSET/SIA-style supply-chain studies | Change-controlled; validated as a DAG on every build |
-| As-of date & FX | A snapshot needs a declared clock and currency basis | Stated in `MODEL_PRIORS.datasetAsOf`; ECB reference rate cited |
-| Transmission priors (0.55/0.30/0.25/12d) | Would require backtesting against documented episodes (2021 ABF shortage, 2023 Ga/Ge) to calibrate | Declared priors + sensitivity envelope until then |
+| Graph edges | The chain's structure (litho equips fabs; fabs feed accelerators) is domain knowledge from CSET/SIA-style supply-chain studies | Change-controlled; checked acyclic on every build |
+| As-of date & FX | A snapshot needs a declared clock and currency basis | Stated in the vault's `meta.snapshotDate`; ECB reference rate cited |
+| Transmission and persistence parameters | Would require backtesting against documented episodes (2021 ABF shortage, 2023 Ga/Ge) to calibrate | Declared priors, each `status: assumption` in [`registry.js`](../MODEL_V7_SPEC.md#5-parameter-register), plus a global assumption envelope until then |
 
 ## 6. Reproducing / extending
 

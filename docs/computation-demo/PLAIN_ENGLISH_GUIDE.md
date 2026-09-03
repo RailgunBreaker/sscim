@@ -1,6 +1,11 @@
 # SSCIM from zero — plain-English guide (no math background needed)
 
-This document explains how the whole thing works **from scratch**, then answers the five open questions, honestly. Companion docs: [COMPUTATION_DEMO.md](COMPUTATION_DEMO.md) (exact formulas & numbers), [REAL_DATA_EXAMPLE.md](REAL_DATA_EXAMPLE.md) (real-source example), [DATA_PIPELINE.md](DATA_PIPELINE.md) (automation design).
+*Model version: `sscim-model-v7-exposure-robustness`. This page explains the
+system with no mathematics. The mathematics, when you want it, is in
+[`docs/MODEL_V7_SPEC.md`](../MODEL_V7_SPEC.md).*
+
+
+This document explains how the whole thing works **from scratch**, then answers the five open questions, honestly. Companion docs: [MODEL_V7_SPEC.md](../MODEL_V7_SPEC.md) (the exact formulas), [COMPUTATION_DEMO.md](COMPUTATION_DEMO.md) (the live engine's own tables), [REAL_DATA_EXAMPLE.md](REAL_DATA_EXAMPLE.md) (real-source example), [DATA_PIPELINE.md](DATA_PIPELINE.md) (automation design).
 
 ---
 
@@ -118,7 +123,7 @@ Sensible spend order: start 100% free (EDGAR + Federal Register + EUR-Lex + pres
 
 Split it into three different things with three different answers:
 
-1. **The boxes-and-arrows structure** (which 24 stages exist, who feeds whom — the [§2.2 table](COMPUTATION_DEMO.md#22-stages--24-dag-nodes-csv-02_stagescsv--03_stage_country_sharescsv) skeleton): **hardcoded on purpose, changed by code review.** This is industry knowledge distilled from studies (CSET "The Semiconductor Supply Chain", SIA/BCG reports) — it changes over *years* (e.g., HBM becoming its own stage), not weeks. Auto-updating structure would mean letting a scraper redesign your world model. Review it maybe twice a year.
+1. **The boxes-and-arrows structure** (which 24 stages exist, who feeds whom — the skeleton in [`csv/02_stages.csv`](csv/02_stages.csv)): **hardcoded on purpose, changed by code review.** This is industry knowledge distilled from studies (CSET "The Semiconductor Supply Chain", SIA/BCG reports) — it changes over *years* (e.g., HBM becoming its own stage), not weeks. Auto-updating structure would mean letting a scraper redesign your world model. Review it maybe twice a year.
 2. **The numbers attached to the structure** (stage sizes, country shares, company shares): **periodic scheduled update — quarterly** — because their sources publish quarterly/annually (filings, tracker reports). Each update should flow through the review pipeline with a citation attached, not be edited in code.
 3. **Policies and events**: **continuous automatic discovery** (daily cron against Federal Register/EUR-Lex/news APIs) with **human classification before publishing** (see Q4 for why).
 
@@ -128,21 +133,38 @@ So: structure = hardcoded + reviewed · quantities = quarterly refresh · news =
 
 Two different senses of "correct":
 
-**Internally correct — yes, with evidence.** The building blocks are standard (HHI concentration index, topological-order graph propagation, noisy-OR combination, true half-life decay); the engine has a unit-test suite; and in [COMPUTATION_DEMO.md](COMPUTATION_DEMO.md) every step was recomputed **by hand** and matched the code digit-for-digit. Several real bugs from the earlier version are documented as fixed (a fake "half-life" that wasn't, confidence multiplied into impact size, market share cancelling out of company scores). It also behaves sensibly on real inputs: fed the January 2026 BIS *easing*, the index correctly went below neutral.
+**Internally correct — yes, with evidence.** The building blocks are standard (the HHI concentration index, topological-order graph propagation, a bounded saturating aggregation operator, true half-life decay); the engine has a unit-test suite; and the worked example in [MODEL_V7_SPEC.md §7](../MODEL_V7_SPEC.md#7-worked-numerical-example) is recomputable **by hand** and is checked against the live engine in CI. Note what that does and does not mean: passing your own tests is not validation, and it is not evidence that the model describes the world — see [spec §9](../MODEL_V7_SPEC.md#9-validation-status). Several real bugs from the earlier version are documented as fixed (a fake "half-life" that wasn't, confidence multiplied into impact size, market share cancelling out of company scores). It also behaves sensibly on real inputs: fed the January 2026 BIS *easing*, the index correctly went below neutral.
 
 **Predictively correct — unproven, and the docs say so loudly.** No parameter has been calibrated against a real historical disruption. The model is a *consistent ranking machine* ("A is more exposed than B, under these declared assumptions"), not a forecaster ("TSMC will lose $X"). Treat every output as relative, not absolute. The planned fix is backtesting against documented episodes (2021 substrate shortage, 2023 gallium licensing) — roadmap, not done.
 
-**The parameters in plain words** (full detail: [COMPUTATION_DEMO.md §2.1](COMPUTATION_DEMO.md#21-model-parameters--model_priors-csv-01_model_priorscsv)) — all hand-picked judgment calls living in one file (`priors.js`):
+**The parameters in plain words** (full detail: [MODEL_V7_SPEC.md §5](../MODEL_V7_SPEC.md#5-parameter-register)) — all hand-picked judgement calls living in one file (`app/src/engine/registry.js`), every one marked `status: assumption`:
 
-| Parameter | Plain meaning | Why this value |
+| Parameter | Plain meaning | Why it is a judgement |
 |---|---|---|
-| half-life = 12 days | news loses half its punch every 12 days | "a story stops changing operations after ~2 months" — judgment |
-| downstream = 0.55 | losing a supplier passes ~55% of the pain to the buyer per hop | >50% so supply shocks matter; <100% so they fade with distance |
-| upstream = 0.30 | losing a customer passes ~30% back to the supplier | weaker: suppliers can resell elsewhere more easily than buyers can re-qualify inputs |
-| specificity floor = 0.25 | even an easily-replaced input passes ≥25% | switching suppliers is never instant |
-| tolerance = 1e-4 | stop tracking dye below 0.01% | pure computational cutoff |
-| component weights | fragility recipe: network position 25% > geography 20% = policy 20% > substitutability 15% > market 10% | the *ordering* is the claim; exact values are round numbers |
-| ±30% envelope | recompute with all of the above 30% higher/lower | shows how much the answer depends on the guesses |
+| downstream transmission | losing a supplier passes some of the pain to the buyer, one hop at a time | set above a half so supply shocks matter, and strictly below one so they always fade with distance instead of amplifying |
+| upstream transmission | losing a customer passes some of it back to the supplier | held weaker than downstream: a supplier can resell elsewhere more easily than a buyer can re-qualify a missing input |
+| minimum dependency factor | even an easily replaced input still passes something | switching suppliers is never instant or free, so a hard zero is the less defensible end |
+| acute half-life | a physical outage with no recorded restart schedule fades on a repair timescale | spans "inspected and restarted within a week" to "a quarter-scale rebuild" |
+| market half-life | a pricing or allocation shock fades on a commercial timescale | contracts and qualification cycles, not repair — so markedly slower than an outage |
+| outage recovery duration | a staged restart declines to zero over a run of line restarts | reported as a sequence of restarts, so the decline is a straight line, not a curve |
+| ramping-site weight | a plant that is starting up counts for part of a running one | it produces something, but the data records no ramp curve |
+| structural weights | the fragility recipe: network position first, then geography and policy, then non-substitutability, then market | the *ordering* is the claim; the exact values are round numbers |
+
+Each of those has a **low, a base and a high** value written down beside it. That
+is not a margin of error and not a confidence interval — it is a range someone
+thought defensible, so the whole model can be re-run across it and you can see
+which answers depend on the guesses and which do not.
+
+There are also six **shape** choices — how severity maps to intensity, how a
+plant's 1–5 size ordinal becomes a weight, how separate incidents combine, and so
+on. Each is a *different model* rather than a different number, so they are
+reported separately and never averaged together.
+
+**Two things the model no longer has**, both because they were wrong rather than
+imprecise: one single half-life applied to every kind of event, and a cut-off
+that stopped propagation early. The first treated a standing export rule and a
+one-week fab inspection identically; the second was never necessary, because the
+arithmetic is exact on this kind of graph.
 
 And the reason judgment fields (severity, event direction) stay human: the standing example is Federal Register doc 2026-00789 — titled like an export restriction, actually an **easing**. A keyword classifier flips the sign; a human reader doesn't.
 
@@ -150,12 +172,12 @@ And the reason judgment fields (severity, event direction) stay human: the stand
 
 Seven things, all recomputed from scratch on every data change:
 
-1. **Chain index** — one number, 0–10, 5 = calm. "How bad is the supply-chain news environment right now?" Plus a low/base/high band showing parameter sensitivity. (Snapshot: 6.14, mildly adverse.)
-2. **Per-stage scoreboard** — every box's structural fragility (static) next to its current shock level (dynamic). (Snapshot: lithography most fragile structurally at 8.0; advanced fab most shocked at 8.8.)
-3. **Company criticality ranking** — "whose disappearance would hurt the chain most", all 109 ranked. (TSMC 10.0, NVIDIA 5.2, ASML 4.7…) Plus the two supporting per-company numbers (exposure, current-shock flow-through).
-4. **Capital-power ranking** — which shareholders control the most critical capacity, state-linked owners flagged. (BlackRock 2.85, Vanguard 2.76, …)
-5. **Country risk board** — structural + operational score per country, derived from production shares.
-6. **Movers & history** — which stages changed most in 7 days, and the 21-day index curve.
+1. **Chain index** — one number, 0–10, where 5 is calm. "How adverse is the recorded supply-chain environment right now?" Plus an **assumption envelope**: the span the number moves over when the declared guesses are pushed to the ends of their stated ranges. That span is not a confidence interval.
+2. **Per-stage scoreboard** — every box's structural fragility (static) next to its current shock level (dynamic).
+3. **Company criticality ranking** — "whose disappearance would strain the chain most", all 109 ranked. Published twice: a raw figure you can compare between snapshots, and a 0–10 figure that only orders companies *within* this snapshot. Plus the two supporting per-company numbers (vulnerability and contribution).
+4. **Capital-power ranking** — which shareholders hold the most critical capacity, state-linked owners flagged.
+5. **Country board** — a structural score per country plus **two** operational numbers, because they answer different questions: *local pressure* ("how hard is the part of the chain sitting here being squeezed?") and *chain contribution* ("how much of the headline number is this country?").
+6. **Movers & history** — which stages changed most in 7 days, and the 21-day index curve. A hypothetical never rewrites history.
 7. **The GP briefing** — a generated daily text summary ("what changed, who is most exposed, what to watch") composed from items 1–6. This is the intended first commercial product.
 
 The intended user action: an analyst/investor/policy person opens the dashboard (or reads the briefing) and immediately sees *what changed, how far it spreads, and who is exposed* — with every number traceable back through the docs above to a formula, a parameter, and (eventually) a cited source.

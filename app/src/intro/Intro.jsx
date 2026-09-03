@@ -131,9 +131,9 @@ export default function Intro() {
 
         <h2>{t('h2_4')}</h2>
         <div className="formula mono">
-          <div><Tex tex={"\\text{struct}_n = w_{\\text{ni}}\\,NI_n + w_{\\text{geo}}\\,GEO_n + w_{\\text{pol}}\\,POL_n + w_{\\text{subst}}\\,\\text{subst}_n + w_{\\text{mkt}}\\,\\text{mkt}_n"} block /></div>
-          <div><Tex tex={"\\text{decay}(\\text{age},H)=2^{-\\text{age}/H},\\ H{=}12\\text{d}"} block /></div>
-          <div><Tex tex={"\\text{vulnerability}_c=10\\cdot\\overline{\\max(0,\\text{field})},\\qquad \\text{contribution}_c=\\textstyle\\sum_s \\text{share}_{c,s}\\cdot\\max(0,\\text{field}_s)\\cdot EW_s"} block /></div>
+          <div><Tex tex={"\\text{struct}_s = w_{\\text{ni}}NI_s + w_{\\text{geo}}GEO_s + w_{\\text{pol}}POL_s + w_{\\nu}(10\\nu_s) + w_{\\text{mkt}}\\,\\text{mkt}_s"} block /></div>
+          <div><Tex tex={"z_{e,s} = d_{e,s}\\,g(q_e)\\,\\alpha_{e,s}\\,R_e(t)"} block /></div>
+          <div><Tex tex={"x^{d}_{b}=\\operatorname{clip}_{[0,1]}\\Big(z_b+\\textstyle\\sum_{a\\in IN(b)}D_{ba}x^{d}_{a}\\Big),\\qquad p_{s}=\\operatorname{clip}_{[-1,1]}\\big[z_s+(x^{d}_{s}-z_s)+(x^{u}_{s}-z_s)\\big]"} block /></div>
         </div>
         <Html tag="p" html={t('s4Body')} />
 

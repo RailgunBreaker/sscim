@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { C } from '../theme.js';
 import { useVault } from '../data/VaultContext.jsx';
 import { useInteraction } from '../interaction/InteractionContext.jsx';
-import { footprintToDraftSources, footprintToHazardScenario, MIN_STAGE_EXPOSURE, siteWeight } from '../engine/facilities.js';
+import { footprintToDraftSources, footprintToHazardScenario, DISPLAY_EXPOSURE_THRESHOLD, siteWeight } from '../engine/facilities.js';
 import { linksSeveredBy } from '../engine/facilityNetwork.js';
 import { flagEmoji } from '../data/glossary.js';
 import { pct, fmtSigned } from '../interaction/lensEncoding.js';
@@ -24,9 +24,11 @@ import { pct, fmtSigned } from '../interaction/lensEncoding.js';
         composer every preset uses, so the Δ is computed by the identical
         propagation engine rather than by a second implementation here.
 
-   Stages whose exposure falls below MIN_STAGE_EXPOSURE are listed as
-   "touched" but are NOT shocked: a radius clipping one small plant on the
-   edge of a cluster should not hit that plant's whole stage.
+   EVERY stage with a nonzero footprint is shocked, in PROPORTION to that
+   footprint. DISPLAY_EXPOSURE_THRESHOLD only dims a row so the eye goes to
+   the material ones first — it does not gate anything the model computes.
+   (In v6 it did: below 5% a stage scored nothing and above 5% it scored a
+   full-severity shock, so 4.99% and 100% were the two available answers.)
    ==================================================================== */
 
 export default function HazardPanel({ footprint, radiusKm, onRadiusChange, onClear, onApplyHazard }) {
@@ -81,8 +83,8 @@ export default function HazardPanel({ footprint, radiusKm, onRadiusChange, onCle
     </li>
   );
 
-  const material = footprint?.materialStages || [];
-  const touchedOnly = (footprint?.stages || []).filter((s) => s.exposure < MIN_STAGE_EXPOSURE);
+  const material = footprint?.displayStages || [];
+  const minor = footprint?.minorStages || [];
 
   return (
     <div style={{ marginTop: 10, border: `1px solid ${C.line}`, borderRadius: 6, background: C.panel2, padding: '9px 11px' }}>
@@ -143,14 +145,12 @@ export default function HazardPanel({ footprint, radiusKm, onRadiusChange, onCle
           </div>
           <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'grid', gap: 2 }}>
             {material.map((s) => stageRow(s, true))}
-            {touchedOnly.map((s) => stageRow(s, false))}
+            {minor.map((s) => stageRow(s, false))}
           </ul>
-          {touchedOnly.length > 0 && (
-            <div className="mono" style={{ fontSize: 8.5, color: C.faint, marginTop: 4, lineHeight: 1.6 }}>
-              Dimmed rows are below the {pct(MIN_STAGE_EXPOSURE)} threshold — touched, but too small a slice of the stage to
-              shock it. They stay listed rather than being rounded away.
-            </div>
-          )}
+          <div className="mono" style={{ fontSize: 8.5, color: C.faint, marginTop: 4, lineHeight: 1.6 }}>
+            Each stage is shocked in proportion to the share shown — a modeled facility footprint, not a capacity share and
+            not physical damage.{minor.length > 0 && ` Dimmed rows sit below the ${pct(DISPLAY_EXPOSURE_THRESHOLD)} display threshold; they are still scored, just small.`}
+          </div>
 
           {/* --- what the radius cuts in the site network --- */}
           {severedPartners.length > 0 && (
