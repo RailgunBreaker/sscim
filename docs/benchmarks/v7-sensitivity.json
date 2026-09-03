@@ -1,8 +1,8 @@
 {
   "modelVersion": "sscim-model-v7-exposure-robustness",
-  "datasetAsOf": "2026-08-29",
-  "snapshotDate": "2026-08-29",
-  "generatedAt": "2026-09-03T19:01:14.014Z",
+  "datasetAsOf": "2026-09-04",
+  "snapshotDate": "2026-09-04",
+  "generatedAt": "2026-09-03T19:37:46.928Z",
   "design": {
     "method": "Saltelli sampling with Sobol first-order and total-order estimators, over the registry assumption box",
     "generator": "splitmix32, fixed seed — no unseeded randomness anywhere in this path",
@@ -418,7 +418,7 @@
     ]
   },
   "base": {
-    "headlineIndex": 6.120182154284025,
+    "headlineIndex": 6.027796984877245,
     "params": {
       "downstreamTransmission": 0.55,
       "upstreamTransmission": 0.3,
@@ -450,17 +450,17 @@
       "modelVersion": "sscim-model-v7-exposure-robustness"
     },
     "hazardDeltas": {
-      "kumamoto": 0.09747334348704761,
-      "hsinchu": 0.6056783286071745,
-      "pyeongtaek": 0.2111244387863458
+      "kumamoto": 0.10076101453072983,
+      "hsinchu": 0.62122756059635,
+      "pyeongtaek": 0.21831461306438982
     }
   },
   "numericalParameters": {
     "headlineEnvelope": {
-      "low": 5.549007811468045,
-      "base": 6.120182154284025,
-      "high": 6.878843829419557,
-      "width": 1.3298360179515116,
+      "low": 5.446289144622437,
+      "base": 6.027796984877245,
+      "high": 6.809229367884212,
+      "width": 1.3629402232617753,
       "containsBase": true,
       "kind": "assumption-envelope",
       "note": "Assumption envelope over the declared parameter box. NOT a confidence interval: uniform sampling over an assumption box is a computational design, not a probability distribution over what is true."
@@ -473,8 +473,8 @@
         "low": 21,
         "base": 45,
         "high": 90,
-        "firstOrder": 0.7807081756989224,
-        "totalOrder": 0.7597502886703995
+        "firstOrder": 0.7932587744665587,
+        "totalOrder": 0.7750443818797105
       },
       {
         "key": "downstreamTransmission",
@@ -483,18 +483,8 @@
         "low": 0.3,
         "base": 0.55,
         "high": 0.8,
-        "firstOrder": 0.15047370167312588,
-        "totalOrder": 0.12824701116332196
-      },
-      {
-        "key": "upstreamTransmission",
-        "symbol": "f_u",
-        "units": "dimensionless",
-        "low": 0.1,
-        "base": 0.3,
-        "high": 0.5,
-        "firstOrder": 0.06992517595264301,
-        "totalOrder": 0.05356984949479767
+        "firstOrder": 0.13266608861879162,
+        "totalOrder": 0.11298509753181847
       },
       {
         "key": "outageRecoveryDays",
@@ -503,8 +493,18 @@
         "low": 30,
         "base": 60,
         "high": 120,
-        "firstOrder": 0.046024957271204564,
-        "totalOrder": 0.029979510939550078
+        "firstOrder": 0.05799949867799099,
+        "totalOrder": 0.04441956942896158
+      },
+      {
+        "key": "upstreamTransmission",
+        "symbol": "f_u",
+        "units": "dimensionless",
+        "low": 0.1,
+        "base": 0.3,
+        "high": 0.5,
+        "firstOrder": 0.056232815296143907,
+        "totalOrder": 0.042347783630645015
       },
       {
         "key": "minimumDependencyFactor",
@@ -513,8 +513,8 @@
         "low": 0.1,
         "base": 0.25,
         "high": 0.4,
-        "firstOrder": 0.01607842492519199,
-        "totalOrder": 0.005033827860748634
+        "firstOrder": 0.013935216699731115,
+        "totalOrder": 0.0043393795626048065
       },
       {
         "key": "acuteHalfLifeDays",
@@ -523,8 +523,8 @@
         "low": 7,
         "base": 14,
         "high": 30,
-        "firstOrder": 0.01653327529946211,
-        "totalOrder": 1.1461191924948828e-20
+        "firstOrder": 0.014486723948180808,
+        "totalOrder": 8.810400495709435e-21
       },
       {
         "key": "rampingSiteWeight",
@@ -533,7 +533,7 @@
         "low": 0.25,
         "base": 0.5,
         "high": 0.75,
-        "firstOrder": 0.016533275290226294,
+        "firstOrder": 0.014486723940015604,
         "totalOrder": 0
       },
       {
@@ -543,7 +543,7 @@
         "low": 0.1875,
         "base": 0.25,
         "high": 0.3125,
-        "firstOrder": 0.016533275290226294,
+        "firstOrder": 0.014486723940015604,
         "totalOrder": 0
       },
       {
@@ -553,7 +553,7 @@
         "low": 0.15,
         "base": 0.2,
         "high": 0.25,
-        "firstOrder": 0.016533275290226294,
+        "firstOrder": 0.014486723940015604,
         "totalOrder": 0
       },
       {
@@ -563,7 +563,7 @@
         "low": 0.15,
         "base": 0.2,
         "high": 0.25,
-        "firstOrder": 0.016533275290226294,
+        "firstOrder": 0.014486723940015604,
         "totalOrder": 0
       },
       {
@@ -573,7 +573,7 @@
         "low": 0.1125,
         "base": 0.15,
         "high": 0.1875,
-        "firstOrder": 0.016533275290226294,
+        "firstOrder": 0.014486723940015604,
         "totalOrder": 0
       },
       {
@@ -583,22 +583,22 @@
         "low": 0.075,
         "base": 0.1,
         "high": 0.125,
-        "firstOrder": 0.016533275290226294,
+        "firstOrder": 0.014486723940015604,
         "totalOrder": 0
       }
     ],
     "degenerate": false,
-    "varianceOverBox": 0.06490952465280735,
+    "varianceOverBox": 0.06856797575807179,
     "oneAtATime": [
       {
         "key": "marketHalfLifeDays",
         "symbol": "H_m",
         "low": 21,
         "high": 90,
-        "atLow": 5.706201885122277,
-        "atBase": 6.120182154284025,
-        "atHigh": 6.498301268551474,
-        "range": 0.7920993834291972,
+        "atLow": 5.61230779549062,
+        "atBase": 6.027796984877245,
+        "atHigh": 6.427793997678758,
+        "range": 0.8154862021881373,
         "monotoneIncreasing": true,
         "monotoneDecreasing": false
       },
@@ -607,22 +607,10 @@
         "symbol": "f_d",
         "low": 0.3,
         "high": 0.8,
-        "atLow": 5.999601035751244,
-        "atBase": 6.120182154284025,
-        "atHigh": 6.298326194237038,
-        "range": 0.2987251584857944,
-        "monotoneIncreasing": true,
-        "monotoneDecreasing": false
-      },
-      {
-        "key": "upstreamTransmission",
-        "symbol": "f_u",
-        "low": 0.1,
-        "high": 0.5,
-        "atLow": 6.036213520089675,
-        "atBase": 6.120182154284025,
-        "atHigh": 6.228566106420979,
-        "range": 0.19235258633130403,
+        "atLow": 5.913029878254683,
+        "atBase": 6.027796984877245,
+        "atHigh": 6.1984802642634715,
+        "range": 0.28545038600878847,
         "monotoneIncreasing": true,
         "monotoneDecreasing": false
       },
@@ -631,10 +619,22 @@
         "symbol": "T_r",
         "low": 30,
         "high": 120,
-        "atLow": 6.005565271903571,
-        "atBase": 6.120182154284025,
-        "atHigh": 6.177490595474254,
-        "range": 0.17192532357068302,
+        "atLow": 5.893381247657435,
+        "atBase": 6.027796984877245,
+        "atHigh": 6.099639878908524,
+        "range": 0.20625863125108967,
+        "monotoneIncreasing": true,
+        "monotoneDecreasing": false
+      },
+      {
+        "key": "upstreamTransmission",
+        "symbol": "f_u",
+        "low": 0.1,
+        "high": 0.5,
+        "atLow": 5.952909302810973,
+        "atBase": 6.027796984877245,
+        "atHigh": 6.1244329996203835,
+        "range": 0.1715236968094107,
         "monotoneIncreasing": true,
         "monotoneDecreasing": false
       },
@@ -643,10 +643,10 @@
         "symbol": "phi",
         "low": 0.1,
         "high": 0.4,
-        "atLow": 6.095405157899958,
-        "atBase": 6.120182154284025,
-        "atHigh": 6.146792228296644,
-        "range": 0.051387070396685885,
+        "atLow": 6.004579611535215,
+        "atBase": 6.027796984877245,
+        "atHigh": 6.052744748791813,
+        "range": 0.0481651372565981,
         "monotoneIncreasing": true,
         "monotoneDecreasing": false
       },
@@ -655,10 +655,10 @@
         "symbol": "H_a",
         "low": 7,
         "high": 30,
-        "atLow": 6.120182154284025,
-        "atBase": 6.120182154284025,
-        "atHigh": 6.120182154459106,
-        "range": 1.7508039462654779e-10,
+        "atLow": 6.027796984877245,
+        "atBase": 6.027796984877245,
+        "atHigh": 6.027796985035612,
+        "range": 1.5836665312463083e-10,
         "monotoneIncreasing": true,
         "monotoneDecreasing": false
       },
@@ -667,9 +667,9 @@
         "symbol": "w_ramp",
         "low": 0.25,
         "high": 0.75,
-        "atLow": 6.120182154284025,
-        "atBase": 6.120182154284025,
-        "atHigh": 6.120182154284025,
+        "atLow": 6.027796984877245,
+        "atBase": 6.027796984877245,
+        "atHigh": 6.027796984877245,
         "range": 0,
         "monotoneIncreasing": true,
         "monotoneDecreasing": true
@@ -679,9 +679,9 @@
         "symbol": "w^struct_NI",
         "low": 0.1875,
         "high": 0.3125,
-        "atLow": 6.120182154284025,
-        "atBase": 6.120182154284025,
-        "atHigh": 6.120182154284025,
+        "atLow": 6.027796984877245,
+        "atBase": 6.027796984877245,
+        "atHigh": 6.027796984877245,
         "range": 0,
         "monotoneIncreasing": true,
         "monotoneDecreasing": true
@@ -691,9 +691,9 @@
         "symbol": "w^struct_geo",
         "low": 0.15,
         "high": 0.25,
-        "atLow": 6.120182154284025,
-        "atBase": 6.120182154284025,
-        "atHigh": 6.120182154284025,
+        "atLow": 6.027796984877245,
+        "atBase": 6.027796984877245,
+        "atHigh": 6.027796984877245,
         "range": 0,
         "monotoneIncreasing": true,
         "monotoneDecreasing": true
@@ -703,9 +703,9 @@
         "symbol": "w^struct_pol",
         "low": 0.15,
         "high": 0.25,
-        "atLow": 6.120182154284025,
-        "atBase": 6.120182154284025,
-        "atHigh": 6.120182154284025,
+        "atLow": 6.027796984877245,
+        "atBase": 6.027796984877245,
+        "atHigh": 6.027796984877245,
         "range": 0,
         "monotoneIncreasing": true,
         "monotoneDecreasing": true
@@ -715,9 +715,9 @@
         "symbol": "w^struct_nu",
         "low": 0.1125,
         "high": 0.1875,
-        "atLow": 6.120182154284025,
-        "atBase": 6.120182154284025,
-        "atHigh": 6.120182154284025,
+        "atLow": 6.027796984877245,
+        "atBase": 6.027796984877245,
+        "atHigh": 6.027796984877245,
         "range": 0,
         "monotoneIncreasing": true,
         "monotoneDecreasing": true
@@ -727,9 +727,9 @@
         "symbol": "w^struct_mkt",
         "low": 0.075,
         "high": 0.125,
-        "atLow": 6.120182154284025,
-        "atBase": 6.120182154284025,
-        "atHigh": 6.120182154284025,
+        "atLow": 6.027796984877245,
+        "atBase": 6.027796984877245,
+        "atHigh": 6.027796984877245,
         "range": 0,
         "monotoneIncreasing": true,
         "monotoneDecreasing": true
@@ -738,22 +738,22 @@
     "rankStability": {
       "stageOperationalField": {
         "spearmanVsBase": {
-          "min": 0.8234782608695652,
-          "mean": 0.9528702445652152,
-          "max": 1,
-          "belowPoint9": 0.05224609375
+          "min": 0.7643478260869565,
+          "mean": 0.9467968749999998,
+          "max": 0.9982608695652174,
+          "belowPoint9": 0.0849609375
         },
         "topKFrequency": {
-          "hbm": 1,
           "memory_fab": 1,
-          "logic_ai": 0.9091796875,
-          "metro": 0.69580078125,
-          "m_consumer": 0.466796875,
-          "adv_fab": 0.38330078125,
-          "depo": 0.29052734375,
-          "mature_fab": 0.0927734375,
-          "litho": 0.07958984375,
-          "m_auto": 0.0791015625,
+          "hbm": 0.9970703125,
+          "logic_ai": 0.88330078125,
+          "metro": 0.79248046875,
+          "depo": 0.36572265625,
+          "m_consumer": 0.36376953125,
+          "adv_fab": 0.328125,
+          "litho": 0.14697265625,
+          "mature_fab": 0.07275390625,
+          "m_auto": 0.046875,
           "etch": 0.0029296875
         },
         "baseTopK": [
@@ -844,10 +844,10 @@
         "dominantSign": "positive",
         "stable": true,
         "envelope": {
-          "low": 0.07166573492068906,
-          "base": 0.09747334348704761,
-          "high": 0.1369100759025601,
-          "width": 0.06524434098187104,
+          "low": 0.07326483334788225,
+          "base": 0.10076101453072983,
+          "high": 0.14398810936871342,
+          "width": 0.07072327602083117,
           "containsBase": true,
           "kind": "assumption-envelope",
           "note": "Assumption envelope over the declared parameter box. NOT a confidence interval: uniform sampling over an assumption box is a computational design, not a probability distribution over what is true."
@@ -860,10 +860,10 @@
         "dominantSign": "positive",
         "stable": true,
         "envelope": {
-          "low": 0.45257499276956814,
-          "base": 0.6056783286071745,
-          "high": 0.8566819005812114,
-          "width": 0.40410690781164327,
+          "low": 0.4594503604166018,
+          "base": 0.62122756059635,
+          "high": 0.8876223117627875,
+          "width": 0.4281719513461857,
           "containsBase": true,
           "kind": "assumption-envelope",
           "note": "Assumption envelope over the declared parameter box. NOT a confidence interval: uniform sampling over an assumption box is a computational design, not a probability distribution over what is true."
@@ -876,10 +876,10 @@
         "dominantSign": "positive",
         "stable": true,
         "envelope": {
-          "low": 0.12220585755261215,
-          "base": 0.2111244387863458,
-          "high": 0.3529136110235829,
-          "width": 0.23070775347097072,
+          "low": 0.12551560440537823,
+          "base": 0.21831461306438982,
+          "high": 0.36578541665149,
+          "width": 0.24026981224611177,
           "containsBase": true,
           "kind": "assumption-envelope",
           "note": "Assumption envelope over the declared parameter box. NOT a confidence interval: uniform sampling over an assumption box is a computational design, not a probability distribution over what is true."
@@ -939,10 +939,10 @@
       }
     },
     "headlineEnvelope": {
-      "low": 5.437546109322323,
-      "base": 6.120182154284025,
-      "high": 6.58708315195968,
-      "width": 1.1495370426373572,
+      "low": 5.4017182445849095,
+      "base": 6.027796984877245,
+      "high": 6.446358924719489,
+      "width": 1.0446406801345791,
       "containsBase": true,
       "kind": "assumption-envelope",
       "note": "Assumption envelope over the declared parameter box. NOT a confidence interval: uniform sampling over an assumption box is a computational design, not a probability distribution over what is true."
@@ -953,85 +953,85 @@
         "base": "linear",
         "byOption": {
           "linear": {
-            "min": 5.597150533352327,
-            "mean": 5.962409532319604,
-            "max": 6.253938877526726
+            "min": 5.548850000930652,
+            "mean": 5.882903874582631,
+            "max": 6.142165153390563
           },
           "concave": {
-            "min": 5.697424526576632,
-            "mean": 6.1739779227094935,
-            "max": 6.58708315195968
+            "min": 5.64074413764391,
+            "mean": 6.078033132228137,
+            "max": 6.446358924719489
           },
           "convex": {
-            "min": 5.437546109322323,
-            "mean": 5.660487133510576,
-            "max": 5.8186103154973825
+            "min": 5.4017182445849095,
+            "mean": 5.6046697209091,
+            "max": 5.744727638555621
           }
         },
-        "meanSpread": 0.5134907891989178
+        "meanSpread": 0.4733634113190375
       },
       {
         "key": "incidentAggregation",
         "base": "bounded_union",
         "byOption": {
           "bounded_union": {
-            "min": 5.680371038796719,
-            "mean": 6.0045741849476695,
-            "max": 6.3647528236134345
+            "min": 5.627269152521692,
+            "mean": 5.926056488589174,
+            "max": 6.255817253130401
           },
           "max": {
-            "min": 5.437546109322323,
-            "mean": 5.650116437020319,
-            "max": 5.9312957830209365
+            "min": 5.4017182445849095,
+            "mean": 5.594600032701073,
+            "max": 5.848689118520552
           },
           "clipped_sum": {
-            "min": 5.731934362982051,
-            "mean": 6.142183966571671,
-            "max": 6.58708315195968
+            "min": 5.67193519994734,
+            "mean": 6.044950206429608,
+            "max": 6.446358924719489
           }
         },
-        "meanSpread": 0.4920675295513517
+        "meanSpread": 0.4503501737285349
       },
       {
         "key": "stageWeighting",
         "base": "turnover_normalized",
         "byOption": {
           "turnover_normalized": {
-            "min": 5.503179153269719,
-            "mean": 6.010424320957459,
-            "max": 6.58708315195968
+            "min": 5.458045064802421,
+            "mean": 5.922845447511339,
+            "max": 6.446358924719489
           },
           "equal": {
-            "min": 5.437546109322323,
-            "mean": 5.851698143561769,
-            "max": 6.346767923164272
+            "min": 5.4017182445849095,
+            "mean": 5.78456276131086,
+            "max": 6.237328915804265
           },
           "log_turnover": {
-            "min": 5.479104398253826,
-            "mean": 5.934752124020426,
-            "max": 6.475966262846211
+            "min": 5.438035008569205,
+            "mean": 5.858198518897655,
+            "max": 6.352174601775767
           }
         },
-        "meanSpread": 0.15872617739568984
+        "meanSpread": 0.1382826862004789
       },
       {
         "key": "facilityScaleMapping",
         "base": "linear",
         "byOption": {
           "equal": {
-            "min": 5.437546109322323,
-            "mean": 5.932291529513219,
-            "max": 6.58708315195968
+            "min": 5.4017182445849095,
+            "mean": 5.855202242573285,
+            "max": 6.446358924719489
           },
           "linear": {
-            "min": 5.437546109322323,
-            "mean": 5.932291529513219,
-            "max": 6.58708315195968
+            "min": 5.4017182445849095,
+            "mean": 5.855202242573285,
+            "max": 6.446358924719489
           },
           "convex": {
-            "min": 5.437546109322323,
-            "mean": 5.932291529513219,
-            "max": 6.58708315195968
+            "min": 5.4017182445849095,
+            "mean": 5.855202242573285,
+            "max": 6.446358924719489
           }
         },
         "meanSpread": 0
@@ -1041,14 +1041,14 @@
         "base": "upper",
         "byOption": {
           "upper": {
-            "min": 5.437546109322323,
-            "mean": 5.932291529513219,
-            "max": 6.58708315195968
+            "min": 5.4017182445849095,
+            "mean": 5.855202242573273,
+            "max": 6.446358924719489
           },
           "lower": {
-            "min": 5.437546109322323,
-            "mean": 5.932291529513219,
-            "max": 6.58708315195968
+            "min": 5.4017182445849095,
+            "mean": 5.855202242573273,
+            "max": 6.446358924719489
           }
         },
         "meanSpread": 0
@@ -1058,19 +1058,19 @@
         "base": "bounded_union",
         "byOption": {
           "bounded_union": {
-            "min": 5.437546109322323,
-            "mean": 5.93229152951322,
-            "max": 6.58708315195968
+            "min": 5.4017182445849095,
+            "mean": 5.855202242573284,
+            "max": 6.446358924719489
           },
           "max": {
-            "min": 5.437546109322323,
-            "mean": 5.93229152951322,
-            "max": 6.58708315195968
+            "min": 5.4017182445849095,
+            "mean": 5.855202242573284,
+            "max": 6.446358924719489
           },
           "clipped_sum": {
-            "min": 5.437546109322323,
-            "mean": 5.93229152951322,
-            "max": 6.58708315195968
+            "min": 5.4017182445849095,
+            "mean": 5.855202242573284,
+            "max": 6.446358924719489
           }
         },
         "meanSpread": 0
@@ -1079,8 +1079,8 @@
     "rankStability": {
       "stageOperationalField": {
         "spearmanVsBase": {
-          "min": 0.9008695652173913,
-          "mean": 0.9582608695652173,
+          "min": 0.9130434782608695,
+          "mean": 0.9649275362318874,
           "max": 1,
           "belowPoint9": 0
         },
@@ -1088,11 +1088,11 @@
           "hbm": 1,
           "logic_ai": 1,
           "memory_fab": 1,
-          "metro": 0.7777777777777778,
-          "depo": 0.4444444444444444,
-          "adv_fab": 0.3333333333333333,
-          "m_consumer": 0.3333333333333333,
-          "litho": 0.1111111111111111
+          "metro": 1,
+          "depo": 0.3333333333333333,
+          "adv_fab": 0.2222222222222222,
+          "litho": 0.2222222222222222,
+          "m_consumer": 0.2222222222222222
         },
         "baseTopK": [
           "memory_fab",

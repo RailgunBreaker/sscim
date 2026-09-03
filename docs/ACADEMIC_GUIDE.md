@@ -79,9 +79,9 @@ Full citations in Chicago author-date form are in the [source register](referenc
 
 ## Citation suggestion
 
-Describe SSCIM by repository commit and snapshot date. Cite the specific documents, sources, and assumptions used, and identify results as model-derived sensitivity outputs. For example:
+Describe SSCIM by repository commit and snapshot date. The commit and date below are placeholders — substitute the ones your run actually used, which `docs/benchmarks/verification-run.json` records for the verified run. Cite the specific documents, sources, and assumptions used, and identify results as model-derived sensitivity outputs. For example:
 
-> Supply-chain exposure figures were produced with SSCIM model version `sscim-model-v7-exposure-robustness` (commit `abc1234`, snapshot as-of 2026-08-29), a deterministic exposure-sensitivity model whose propagation, persistence and structural parameters are declared and uncalibrated (`status: assumption`; ranges in `app/src/engine/registry.js`). Figures are bounded comparative exposure scores within that snapshot, not estimates of realized loss, and the reported spread is an assumption envelope rather than a confidence interval.
+> Supply-chain exposure figures were produced with SSCIM model version `sscim-model-v7-exposure-robustness` (commit `abc1234`, snapshot as-of `YYYY-MM-DD`), a deterministic exposure-sensitivity model whose propagation, persistence and structural parameters are declared and uncalibrated (`status: assumption`; ranges in `app/src/engine/registry.js`). Figures are bounded comparative exposure scores within that snapshot, not estimates of realized loss, and the reported spread is an assumption envelope rather than a confidence interval.
 
 ## Further reading
 

@@ -1,31 +1,31 @@
 {
-  "recordedAt": "2026-09-03T19:01:15.057Z",
-  "commit": "4b56b5a4b90960d018cae0a46b6abf345b9ba039",
+  "recordedAt": "2026-09-03T19:37:47.874Z",
+  "commit": "cf35ab5446d4e54a6eac162d988a9639ccab311d",
   "modelVersion": "sscim-model-v7-exposure-robustness",
-  "datasetAsOf": "2026-08-29",
+  "datasetAsOf": "2026-09-04",
   "commands": [
     {
       "command": "server: npm ci",
       "result": "pass",
-      "seconds": 11.4,
+      "seconds": 11.2,
       "detail": "added 113 packages, and audited 114 packages in 11s"
     },
     {
       "command": "app: npm ci",
       "result": "pass",
-      "seconds": 3.3,
+      "seconds": 3.6,
       "detail": "added 156 packages, and audited 157 packages in 3s"
     },
     {
       "command": "app: npm run snapshot",
       "result": "pass",
-      "seconds": 0.6,
+      "seconds": 0.5,
       "detail": "(109 companies, 24 stages, 167 events)"
     },
     {
       "command": "app: npm run audit:data",
       "result": "pass",
-      "seconds": 0.5,
+      "seconds": 0.4,
       "detail": "audit:data PASSED — 0 hard failures, 30 warning(s)."
     },
     {
@@ -37,38 +37,38 @@
     {
       "command": "app: npm test",
       "result": "pass",
-      "seconds": 17.9,
+      "seconds": 17.5,
       "detail": "Test Files  44 passed (44) · Tests  815 passed (815)"
     },
     {
       "command": "app: npm run build",
       "result": "pass",
-      "seconds": 3.6,
+      "seconds": 3.4,
       "detail": "Published 33 documentation page(s) + /docs/ index · 839 equation(s) rendered · KaTeX css + 20 font(s)."
     },
     {
       "command": "app: npm run smoke",
       "result": "pass",
-      "seconds": 82.5,
+      "seconds": 82,
       "detail": "172/172 checks passed"
     },
     {
       "command": "app: npm run sensitivity -- --samples 1024",
       "result": "pass",
-      "seconds": 114.6,
+      "seconds": 114.5,
       "detail": "design: 12 continuous dimensions x 1024 samples = 14336 model evaluations"
     },
     {
       "command": "app: npm run benchmark",
       "result": "pass",
-      "seconds": 0.5,
-      "detail": "headline index  5.395609  ->  6.120182   (+0.724573)"
+      "seconds": 0.4,
+      "detail": "SKIPPED, and the committed comparison is left untouched."
     },
     {
       "command": "app: npm run demo",
       "result": "pass",
       "seconds": 0.4,
-      "detail": "headline index 6.120182 · 160 incidents from 167 records"
+      "detail": "headline index 6.027797 · 160 incidents from 167 records"
     }
   ],
   "tests": {
@@ -101,21 +101,21 @@
     "continuousDimensions": 12,
     "numericalEvaluations": 14336,
     "modelFormCombinations": 486,
-    "baseHeadlineIndex": 6.120182154284025,
+    "baseHeadlineIndex": 6.027796984877245,
     "numericalEnvelope": {
-      "low": 5.549007811468045,
-      "base": 6.120182154284025,
-      "high": 6.878843829419557,
-      "width": 1.3298360179515116,
+      "low": 5.446289144622437,
+      "base": 6.027796984877245,
+      "high": 6.809229367884212,
+      "width": 1.3629402232617753,
       "containsBase": true,
       "kind": "assumption-envelope",
       "note": "Assumption envelope over the declared parameter box. NOT a confidence interval: uniform sampling over an assumption box is a computational design, not a probability distribution over what is true."
     },
     "modelFormEnvelope": {
-      "low": 5.437546109322323,
-      "base": 6.120182154284025,
-      "high": 6.58708315195968,
-      "width": 1.1495370426373572,
+      "low": 5.4017182445849095,
+      "base": 6.027796984877245,
+      "high": 6.446358924719489,
+      "width": 1.0446406801345791,
       "containsBase": true,
       "kind": "assumption-envelope",
       "note": "Assumption envelope over the declared parameter box. NOT a confidence interval: uniform sampling over an assumption box is a computational design, not a probability distribution over what is true."

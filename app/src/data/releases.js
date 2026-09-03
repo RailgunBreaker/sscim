@@ -25,6 +25,30 @@
 
 export const RELEASES = [
   {
+    id: 'model-v7',
+    date: '2026-09-04',
+    version: 'v0.7',
+    title: 'Model v7: exposure robustness',
+    lede: 'A breaking redesign of how an event becomes a number. Five things the previous model did were not defensible on inspection — this release fixes them, and publishes the arithmetic, the assumptions and the sensitivity analysis so the next reader can check the work rather than take it.',
+    changes: [
+      { kind: 'changed', text: 'Tagging an event to more stages no longer makes it hit harder. v6 injected an event\'s FULL severity independently at every stage it was tagged to, so the same earthquake scored four times if it was described thoroughly. Each incident now carries one signed source vector with an explicit per-stage exposure between 0 and 1, curated with a written basis.' },
+      { kind: 'changed', text: 'Several reports of one disruption are now one disruption. Records are grouped into incidents before anything is scored, and only the primary record of an incident carries weight — the M7.1 Kumamoto earthquake arrived as eight separate records.' },
+      { kind: 'changed', text: 'Persistence is a property of the event, not of the model. Five explicit temporal profiles replace a single 12-day half-life that decayed a standing export-control rule at the same rate as a same-week fab inspection. This is the largest single cause of the change in the headline number.' },
+      { kind: 'fixed', text: 'The 5% hazard threshold is gone from the model. A footprint of 4.99% used to score nothing and 5.01% used to score a full-severity shock — so 5.01% and 100% were the only two answers available. A hazard now scales continuously with the modeled facility footprint inside the radius. The 5% line survives only as a display preference.' },
+      { kind: 'fixed', text: 'An event tagged to a country that also hosts its stages counted twice. That double count is removed: an event reaches a country through its stage source and propagation, exactly once.' },
+      { kind: 'fixed', text: 'Within one incident, two propagation paths that reconverge on a stage are the same disruption arriving twice, and are now summed rather than combined as though they were independent causes.' },
+      { kind: 'fixed', text: 'Filing the same policy twice, or logging a revision of it, used to raise a stage\'s structural score with nothing having changed in the world. Policy records are now collapsed into families before scoring, so duplicates and revisions are idempotent by construction.' },
+      { kind: 'changed', text: 'Scores that are normalized against the largest value in the current snapshot — network influence and company criticality — are now labelled snapshot-relative and published alongside the raw measure, because only the raw one is comparable between snapshots. Company criticality also stopped applying the graph twice, which re-ranks companies whose stages differ in connectivity.' },
+      { kind: 'changed', text: 'Geographic concentration is published as an interval rather than a single number, because the concentration of the undisclosed share of a stage is not determined by the data. The conservative end remains the headline figure.' },
+      { kind: 'changed', text: 'Countries now carry two separate numbers instead of one that mixed them: local pressure (how hard the part of the chain sitting there is being squeezed) and chain contribution (how much of the headline number that country is).' },
+      { kind: 'added', text: 'Every coefficient now lives in one registry with a definition, a valid range, units, a rationale and a status. All of them read "assumption": none has been fitted to observed disruption outcomes, and the file says so per parameter.' },
+      { kind: 'added', text: 'A global sensitivity analysis replaces three presets that moved every coefficient together in the same direction — a design that cannot tell you which assumption an answer rests on. A fixed-seed Sobol design over twelve dimensions now reports exactly that, with the categorical modelling choices reported separately.' },
+      { kind: 'added', text: 'A canonical specification (docs/MODEL_V7_SPEC.md) with complete notation, every executable formula, the order of operations, the fallback rules, and a worked example small enough to reproduce with a calculator. Its parameter tables and worked example are generated from the code, and CI fails if a published number drifts from what the engine computes.' },
+      { kind: 'data', text: 'Dataset advanced to 4 September 2026 and every event re-aged against it. No new events were ingested in this release: the newest record is still 21 August 2026, and the freshness readout reports that gap rather than hiding it.' },
+    ],
+    limits: 'None of this makes the model calibrated. Every coefficient is still a declared assumption, no parameter has been fitted to a real disruption outcome, and no out-of-sample validation exists — the specification states which validation activities have been done and which have not, and the two that would justify the word "validated" are among the ones that have not. This snapshot also supplies no evidence-based dependency shares at all, so every propagation coefficient rests on an equal split, which the audit now counts out loud rather than leaving implicit. The v6 results are preserved unchanged with their original model version; the v7 history is a retrospective and is labelled as one, because those numbers were never published on those dates.',
+  },
+  {
     id: 'live-first',
     date: '2026-08-22',
     version: 'v0.6',

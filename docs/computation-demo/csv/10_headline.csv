@@ -1,11 +1,11 @@
 metric,value,note
 model_version,sscim-model-v7-exposure-robustness,from app/src/engine/registry.js
-dataset_as_of,2026-08-29,"every incident age is measured against this date, never the reader clock"
+dataset_as_of,2026-09-04,"every incident age is measured against this date, never the reader clock"
 records,167,raw records in the snapshot
 incidents,160,after deduplication by incidentId
 scored_incidents,77,incidents producing a nonzero source vector
-operational_index_signed,0.224036430857,sum of w_s * F_s; weights sum to one
-headline_index_displayed,6.120182154284,5 + 5 * signed; 5 is neutral
-assumption_envelope_low,5.706201885122,one-at-a-time sweep; NOT a confidence interval
-assumption_envelope_high,6.498301268551,one-at-a-time sweep; NOT a confidence interval
-country_chain_contribution_total,0.223240070544,equals the signed index where country shares sum to one; the gap is the undisclosed residual
+operational_index_signed,0.205559396975,sum of w_s * F_s; weights sum to one
+headline_index_displayed,6.027796984877,5 + 5 * signed; 5 is neutral
+assumption_envelope_low,5.612307795491,one-at-a-time sweep; NOT a confidence interval
+assumption_envelope_high,6.427793997679,one-at-a-time sweep; NOT a confidence interval
+country_chain_contribution_total,0.204916373286,equals the signed index where country shares sum to one; the gap is the undisclosed residual

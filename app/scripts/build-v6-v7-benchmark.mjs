@@ -43,8 +43,35 @@ const datasetAsOf = bundle.meta?.snapshotDate;
 const engine = buildEngine({ ...data, datasetAsOf });
 const model = buildModel({ data, engine });
 
-if (v6.datasetAsOf !== engine.MODEL_PRIORS.datasetAsOf) {
-  console.warn(`WARNING: the frozen v6 benchmark is dated ${v6.datasetAsOf} but this snapshot is ${engine.MODEL_PRIORS.datasetAsOf}. Differences below mix model change with data change.`);
+/* THE COMPARISON IS ONLY INTERPRETABLE AT A MATCHED DATASET DATE.
+
+   The v6 reference was frozen from the v6 engine at one dataset date, and
+   the v6 engine no longer exists, so it can never be re-frozen at another.
+   Once the snapshot advances, recomputing this file would silently turn a
+   MODEL comparison into a model-and-data comparison: every difference
+   would carry an unknown mixture of "v7 computes this differently" and
+   "the records are six days older", with no way for a reader to separate
+   them.
+
+   A warning was not enough — it printed above a file that then got
+   overwritten anyway, and the overwritten file looked exactly as
+   authoritative as the good one. So this now REFUSES, leaves the
+   matched-date artefact untouched, and exits cleanly: nothing is wrong,
+   the comparison simply is not recomputable at this date and the valid one
+   is already committed.
+
+   --allow-date-mismatch forces it, into a separate, clearly named file. */
+const ALLOW_MISMATCH = process.argv.includes('--allow-date-mismatch');
+const DATE_MISMATCH = v6.datasetAsOf !== engine.MODEL_PRIORS.datasetAsOf;
+
+if (DATE_MISMATCH && !ALLOW_MISMATCH) {
+  console.log('SSCIM v6 -> v7 benchmark — SKIPPED, and the committed comparison is left untouched.');
+  console.log(`  The frozen v6 reference is dated ${v6.datasetAsOf}; this snapshot is ${engine.MODEL_PRIORS.datasetAsOf}.`);
+  console.log('  Recomputing now would mix the v6->v7 MODEL change with a DATA change, and the two would be');
+  console.log('  inseparable in every number. The v6 engine is gone, so the reference cannot be re-frozen at the');
+  console.log(`  new date either. ${OUT.split(/[\\/]/).pop()} therefore remains the matched-date comparison, at ${v6.datasetAsOf}.`);
+  console.log('  Pass --allow-date-mismatch to write a clearly-labelled cross-date file alongside it.');
+  process.exit(0);
 }
 
 const HAZARD_POINTS = v6.hazards.map((h) => h.point);
@@ -247,8 +274,14 @@ const report = {
   events: eventRows,
 };
 
+const target = DATE_MISMATCH ? OUT.replace(/\.json$/, '-CROSS-DATE.json') : OUT;
+if (DATE_MISMATCH) {
+  report.crossDateWarning = `NOT A CLEAN MODEL COMPARISON. The v6 reference is dated ${v6.datasetAsOf} and this snapshot is ${engine.MODEL_PRIORS.datasetAsOf}, so every difference below mixes the v6->v7 model change with ${'the data change between those dates'}. The matched-date comparison, which is the interpretable one, is in v6-to-v7-benchmark.json.`;
+  report.matchedDateComparison = 'docs/benchmarks/v6-to-v7-benchmark.json';
+}
+
 mkdirSync(OUT_DIR, { recursive: true });
-writeFileSync(OUT, `${JSON.stringify(report, null, 2)}\n`);
+writeFileSync(target, `${JSON.stringify(report, null, 2)}\n`);
 
 console.log(`SSCIM v6 -> v7 benchmark`);
 console.log(`  from ${report.from.modelVersion} (${report.from.datasetAsOf})`);
@@ -258,4 +291,4 @@ console.log('  ablations:');
 ablations.forEach((a) => console.log(`    ${a.label.padEnd(58)} ${a.headlineIndex}`));
 console.log('  hazard scenario deltas (v6 -> v7):');
 hazards.forEach((h) => console.log(`    ${h.id.padEnd(12)} ${h.v6.chainIndexDelta} -> ${h.v7.chainIndexDelta}   (${h.v6.materialStages} material stages -> ${h.v7.scoredStages} scored, ${h.v7.belowDisplayThreshold} below the display threshold)`));
-console.log(`\nWrote ${OUT}`);
+console.log(`\nWrote ${target}`);

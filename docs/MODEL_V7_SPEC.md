@@ -1201,7 +1201,7 @@ assumptions, reproducible to the last digit, and uncalibrated.**
 ## Appendix B — verification run
 
 <!-- BEGIN GENERATED: verification-run -->
-Model `sscim-model-v7-exposure-robustness` · dataset `2026-08-29`. The commit and timestamp of the recorded run are in
+Model `sscim-model-v7-exposure-robustness` · dataset `2026-09-04`. The commit and timestamp of the recorded run are in
 [`docs/benchmarks/verification-run.json`](benchmarks/verification-run.json); they are deliberately not quoted here, because a
 document that pins the commit it was generated at can never be up to date with the commit that contains it.
 
@@ -1216,6 +1216,6 @@ document that pins the commit it was generated at can never be up to date with t
 | `app: npm run build` | pass | Published 33 documentation page(s) + /docs/ index · 839 equation(s) rendered · KaTeX css + 20 font(s). |
 | `app: npm run smoke` | pass | 172/172 checks passed |
 | `app: npm run sensitivity -- --samples 1024` | pass | design: 12 continuous dimensions x 1024 samples = 14336 model evaluations |
-| `app: npm run benchmark` | pass | headline index  5.395609  ->  6.120182   (+0.724573) |
-| `app: npm run demo` | pass | headline index 6.120182 · 160 incidents from 167 records |
+| `app: npm run benchmark` | pass | SKIPPED, and the committed comparison is left untouched. |
+| `app: npm run demo` | pass | headline index 6.027797 · 160 incidents from 167 records |
 <!-- END GENERATED: verification-run -->

@@ -130,8 +130,14 @@ record(`app: npm run sensitivity -- --samples ${SENSITIVITY_SAMPLES}`, sensitivi
 
 /* 10. v6 -> v7 benchmark */
 const benchmark = run('v6 to v7 benchmark', 'npm run benchmark', appDir);
+/* Two legitimate outcomes here, and the record must say which: a
+   recomputed comparison, or a clean skip because the snapshot has moved
+   past the frozen v6 reference's date, at which point the comparison
+   would no longer be a pure model comparison. */
 record('app: npm run benchmark', benchmark,
-  (strip(benchmark.stdout).match(/headline index\s+[^\n]*/) || ['(no summary line)'])[0].trim());
+  (strip(benchmark.stdout).match(/headline index\s+[^\n]*/)
+    || strip(benchmark.stdout).match(/SKIPPED[^\n]*/)
+    || ['(no summary line)'])[0].trim());
 
 /* 11. computation-demo export */
 const demo = run('computation demonstration export', 'npm run demo', appDir);
