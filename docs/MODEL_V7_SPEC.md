@@ -1201,12 +1201,14 @@ assumptions, reproducible to the last digit, and uncalibrated.**
 ## Appendix B — verification run
 
 <!-- BEGIN GENERATED: verification-run -->
-Recorded 2026-09-03T18:44:26.568Z · commit `82ab46a16ec8f62bb0940a41fc38ea4370840d23` · model `sscim-model-v7-exposure-robustness` · dataset `2026-08-29`
+Model `sscim-model-v7-exposure-robustness` · dataset `2026-08-29`. The commit and timestamp of the recorded run are in
+[`docs/benchmarks/verification-run.json`](benchmarks/verification-run.json); they are deliberately not quoted here, because a
+document that pins the commit it was generated at can never be up to date with the commit that contains it.
 
 | Command | Result | Detail |
 | --- | --- | --- |
-| `server: npm ci` | pass | added 113 packages, and audited 114 packages in 11s |
-| `app: npm ci` | pass | added 156 packages, and audited 157 packages in 3s |
+| `server: npm ci` | pass | added 113 packages, and audited 114 packages |
+| `app: npm ci` | pass | added 156 packages, and audited 157 packages |
 | `app: npm run snapshot` | pass | (109 companies, 24 stages, 167 events) |
 | `app: npm run audit:data` | pass | audit:data PASSED — 0 hard failures, 30 warning(s). |
 | `app: npm run docs:verify` | pass | docs:verify PASSED — documentation and code agree. |

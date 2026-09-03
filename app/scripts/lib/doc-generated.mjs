@@ -262,6 +262,28 @@ function workedExampleBlock() {
   return lines.join('\n');
 }
 
+/* THE VERIFICATION-RUN BLOCK MUST NOT CHANGE ON EVERY COMMIT.
+
+   The first version of this rendered the recording timestamp and the
+   commit hash. That created a loop with no fixed point: the artefact
+   records the commit it ran at, the document quotes the artefact, and the
+   document is committed — so every commit invalidated the document, which
+   needed a further commit to regenerate, which invalidated it again.
+   docs:verify would have failed on main forever.
+
+   The rule this settles on: the document quotes WHAT WAS VERIFIED — the
+   commands, their outcomes, and the counts. WHEN and AT WHICH COMMIT is
+   provenance, it stays in the JSON artefact, and the document points at
+   it. The staleness gate keeps its real job: change a test count or a
+   smoke count and this block changes, so the regeneration is required.
+
+   Volatile detail is normalized out for the same reason. An install line
+   reads "added 113 packages, and audited 114 packages in 11s", and that
+   duration differs on every machine and every run. */
+const stableDetail = (detail) => String(detail ?? '')
+  .replace(/\s+in\s+\d+(?:\.\d+)?\s*m?s\b/gi, '')   // "… in 11s" / "… in 1.4s"
+  .trim();
+
 function verificationRunBlock() {
   let run;
   try {
@@ -269,9 +291,11 @@ function verificationRunBlock() {
   } catch {
     return '_No verification run has been recorded yet. Run `npm run verify:all` to produce `docs/benchmarks/verification-run.json`._';
   }
-  const rows = run.commands.map((c) => `| \`${c.command}\` | ${c.result} | ${c.detail} |`);
+  const rows = run.commands.map((c) => `| \`${c.command}\` | ${c.result} | ${stableDetail(c.detail)} |`);
   return [
-    `Recorded ${run.recordedAt} · commit \`${run.commit}\` · model \`${run.modelVersion}\` · dataset \`${run.datasetAsOf}\``,
+    `Model \`${run.modelVersion}\` · dataset \`${run.datasetAsOf}\`. The commit and timestamp of the recorded run are in`,
+    '[`docs/benchmarks/verification-run.json`](benchmarks/verification-run.json); they are deliberately not quoted here, because a',
+    'document that pins the commit it was generated at can never be up to date with the commit that contains it.',
     '',
     '| Command | Result | Detail |',
     '| --- | --- | --- |',

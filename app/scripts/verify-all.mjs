@@ -34,6 +34,12 @@ const argOf = (name, fallback) => {
   return i >= 0 && process.argv[i + 1] ? process.argv[i + 1] : fallback;
 };
 const SKIP_INSTALL = process.argv.includes('--skip-install');
+/* A partial run is for local iteration, not for the record. Letting one
+   overwrite the artefact would drop the install rows from the published
+   table and make the documentation depend on how the command happened to
+   be invoked. --record forces it anyway, for the rare case where that is
+   what you want. */
+const RECORD = !SKIP_INSTALL || process.argv.includes('--record');
 const SENSITIVITY_SAMPLES = argOf('sensitivity', '1024');
 
 const commands = [];
@@ -163,16 +169,23 @@ const report = {
   allPassed: commands.every((c) => c.result === 'pass'),
 };
 
-mkdirSync(OUT_DIR, { recursive: true });
-writeFileSync(OUT, `${JSON.stringify(report, null, 2)}\n`);
+if (RECORD) {
+  mkdirSync(OUT_DIR, { recursive: true });
+  writeFileSync(OUT, `${JSON.stringify(report, null, 2)}\n`);
+}
 
 console.log(`\n${'─'.repeat(60)}`);
 console.log(`model ${MODEL_VERSION} · dataset ${datasetAsOf} · commit ${commit ?? 'unknown'}`);
 commands.forEach((c) => console.log(`  ${c.result === 'pass' ? 'PASS' : 'FAIL'}  ${c.command.padEnd(46)} ${c.detail}`));
 console.log(`\n  tests: ${testStats.total} total — ${testStats.passed} passed, ${testStats.failed} failed, ${testStats.skipped} skipped, ${testStats.todo} todo, across ${testStats.files} files`);
 console.log(`  browser smoke: ${smokeStats.passed}/${smokeStats.total} checks across ${smokeSections.length} scenario sections`);
-console.log(`\nWrote ${OUT}`);
-console.log('Now run `npm run docs:generate` so the documentation quotes this run, then `npm run docs:verify`.');
+if (RECORD) {
+  console.log(`\nWrote ${OUT}`);
+  console.log('Now run `npm run docs:generate` so the documentation quotes this run, then `npm run docs:verify`.');
+} else {
+  console.log(`\nNOT recorded: this was a partial run (--skip-install), so ${OUT} is left alone.`);
+  console.log('Re-run without --skip-install to record the definition-of-done run, or pass --record to force it.');
+}
 
 if (!report.allPassed) {
   console.error('\nVERIFICATION RUN FAILED — see the FAIL rows above.');

@@ -1,13 +1,13 @@
 {
-  "recordedAt": "2026-09-03T18:44:26.568Z",
-  "commit": "82ab46a16ec8f62bb0940a41fc38ea4370840d23",
+  "recordedAt": "2026-09-03T19:01:15.057Z",
+  "commit": "4b56b5a4b90960d018cae0a46b6abf345b9ba039",
   "modelVersion": "sscim-model-v7-exposure-robustness",
   "datasetAsOf": "2026-08-29",
   "commands": [
     {
       "command": "server: npm ci",
       "result": "pass",
-      "seconds": 11.3,
+      "seconds": 11.4,
       "detail": "added 113 packages, and audited 114 packages in 11s"
     },
     {
@@ -19,13 +19,13 @@
     {
       "command": "app: npm run snapshot",
       "result": "pass",
-      "seconds": 0.5,
+      "seconds": 0.6,
       "detail": "(109 companies, 24 stages, 167 events)"
     },
     {
       "command": "app: npm run audit:data",
       "result": "pass",
-      "seconds": 0.4,
+      "seconds": 0.5,
       "detail": "audit:data PASSED — 0 hard failures, 30 warning(s)."
     },
     {
@@ -37,25 +37,25 @@
     {
       "command": "app: npm test",
       "result": "pass",
-      "seconds": 17.7,
+      "seconds": 17.9,
       "detail": "Test Files  44 passed (44) · Tests  815 passed (815)"
     },
     {
       "command": "app: npm run build",
       "result": "pass",
-      "seconds": 3.5,
+      "seconds": 3.6,
       "detail": "Published 33 documentation page(s) + /docs/ index · 839 equation(s) rendered · KaTeX css + 20 font(s)."
     },
     {
       "command": "app: npm run smoke",
       "result": "pass",
-      "seconds": 82.2,
+      "seconds": 82.5,
       "detail": "172/172 checks passed"
     },
     {
       "command": "app: npm run sensitivity -- --samples 1024",
       "result": "pass",
-      "seconds": 115.3,
+      "seconds": 114.6,
       "detail": "design: 12 continuous dimensions x 1024 samples = 14336 model evaluations"
     },
     {
