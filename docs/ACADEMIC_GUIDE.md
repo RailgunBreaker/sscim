@@ -1,6 +1,6 @@
 # SSCIM academic guide
 
-**Model version:** `sscim-model-v7-exposure-robustness`. Canonical specification:
+**Model version:** `sscim-model-v7.1-exposure-robustness`. Canonical specification:
 [`docs/MODEL_V7_SPEC.md`](MODEL_V7_SPEC.md).
 
 For researchers deciding whether SSCIM is usable for a given question, and on what terms. The short answer: it is a transparent, deterministic, fully inspectable exposure-sensitivity model with declared priors, and it is not calibrated to anything. That combination makes it useful for some questions and unusable for others.
@@ -54,7 +54,7 @@ To make a result reproducible, record:
 
 1. The repository **commit hash**.
 2. The **snapshot date** (the vault's `meta.snapshotDate`), which all incident ages are measured against. This is not the date you ran it.
-3. The **model version** (`sscim-model-v7-exposure-robustness`). v6 and v7 produce materially different numbers from identical data — see the [change log](MODEL_V7_SPEC.md#10-v6--v7-change-log) — so a figure without a model version is not reproducible.
+3. The **model version** (`sscim-model-v7.1-exposure-robustness`). v6 and v7 produce materially different numbers from identical data — see the [change log](MODEL_V7_SPEC.md#10-v6--v7-change-log) — so a figure without a model version is not reproducible.
 4. The selected **incident or scenario id**, and any parameter overrides.
 5. Any temporary **topology removals** made in the network playground, which change the graph and therefore every derived value.
 6. Which **parameter set and model forms** the reported figures come from, if not the registry base.
@@ -81,7 +81,7 @@ Full citations in Chicago author-date form are in the [source register](referenc
 
 Describe SSCIM by repository commit and snapshot date. The commit and date below are placeholders — substitute the ones your run actually used, which `docs/benchmarks/verification-run.json` records for the verified run. Cite the specific documents, sources, and assumptions used, and identify results as model-derived sensitivity outputs. For example:
 
-> Supply-chain exposure figures were produced with SSCIM model version `sscim-model-v7-exposure-robustness` (commit `abc1234`, snapshot as-of `YYYY-MM-DD`), a deterministic exposure-sensitivity model whose propagation, persistence and structural parameters are declared and uncalibrated (`status: assumption`; ranges in `app/src/engine/registry.js`). Figures are bounded comparative exposure scores within that snapshot, not estimates of realized loss, and the reported spread is an assumption envelope rather than a confidence interval.
+> Supply-chain exposure figures were produced with SSCIM model version `sscim-model-v7.1-exposure-robustness` (commit `abc1234`, snapshot as-of `YYYY-MM-DD`), a deterministic exposure-sensitivity model whose propagation, persistence and structural parameters are declared and uncalibrated (`status: assumption`; ranges in `app/src/engine/registry.js`). Figures are bounded comparative exposure scores within that snapshot, not estimates of realized loss, and the reported spread is an assumption envelope rather than a confidence interval.
 
 ## Further reading
 

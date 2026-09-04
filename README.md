@@ -263,7 +263,17 @@ snapshot still there as the fallback.
 
 ## License
 
-> **⚠ PUBLIC-RELEASE BLOCKER — requires a decision by the repository owner.**
+> **⚠ PROPRIETARY — ALL RIGHTS RESERVED. Release blocked pending an owner decision.**
+
+**This project is being prepared as a proprietary commercial product.** No
+open-source licence applies, and none should be added. See
+[`PROPRIETARY_NOTICE.md`](PROPRIETARY_NOTICE.md) for the all-rights-reserved
+terms and what is explicitly *not* claimed, and
+[`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md) for dependency and
+third-party data attribution.
+
+Dependency licences have been audited: 251 installed packages, all
+permissive, **zero copyleft**.
 
 **No license has been chosen for this repository.** Without one, default
 copyright applies: the source is readable here, but no reuse, modification or

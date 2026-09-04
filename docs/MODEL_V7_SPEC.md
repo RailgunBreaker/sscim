@@ -1,8 +1,8 @@
-# SSCIM Model v7 — Canonical Technical Specification
+# SSCIM Model v7.1 — Canonical Technical Specification
 
 **Model version:**
 <!-- BEGIN GENERATED: model-version -->
-`sscim-model-v7-exposure-robustness`
+`sscim-model-v7.1-exposure-robustness`
 <!-- END GENERATED: model-version -->
 
 This document is the **canonical specification** of the SSCIM model. Every other
@@ -160,7 +160,9 @@ it after reading a source), **derived** (computed from other quantities), or
 
 | Symbol | Meaning | Domain | Unit | Source |
 | --- | --- | --- | --- | --- |
-| $NI^{\mathrm{raw}}_s$ | raw network influence | $\ge 0$ | dimensionless | derived |
+| $\mathrm{DirectFootprint}_s$ | the stage's own normalized economic weight | $[0,1]$ | dimensionless | derived |
+| $\mathrm{SpilloverReach}_s$ | economically weighted downstream field at OTHER stages | $\ge 0$ | dimensionless | derived |
+| $NI^{\mathrm{raw}}_s$ | raw network influence = spillover reach (v7.1) | $\ge 0$ | dimensionless | derived |
 | $NI_s$ | **snapshot-relative** network influence | $[0,10]$ | display score | derived |
 | $\mathrm{HHI}^{-}_s, \mathrm{HHI}^{+}_s$ | HHI lower and upper bounds | $[0,1]$ | dimensionless | derived |
 | $GEO_s$ | geographic concentration score | $[0,10]$ | display score | derived |
@@ -290,10 +292,23 @@ $$
 \sum_{b \in \mathrm{OUT}(a)} U_{ab} \le f_u < 1
 $$
 
-which makes the propagation below a contraction: the field is finite, bounded and
-order-independent on any DAG, and **no truncation tolerance is needed** (v6's
-`contributionTolerance` is removed from substantive calculation; a display
-epsilon survives only for formatting).
+**What that bound says, and what it does not.** It bounds each stage
+**individually**: the inflow into any one node is a strict fraction of its
+inputs' values, so the per-stage recursion settles on a DAG, every value stays
+inside its clip, the result is order-independent, and **no truncation tolerance
+is needed** (v6's `contributionTolerance` is removed from substantive
+calculation; a display epsilon survives only for formatting).
+
+It does **not** conserve anything network-wide. $f_d$ and $f_u$ are **per-stage
+inheritance multipliers**, not shares of a fixed quantity being divided up. One
+source reaches several buyers, each inheriting up to $f_d$ of what it depends on,
+so the signal **branches**: the sum of propagated values across all stages
+routinely exceeds the source magnitude. On the shipped snapshot a unit shock at
+`gases` sums to about **2.09** across stages while no single stage exceeds 1.0.
+
+The propagated field is therefore a **dimensionless dependency signal, not a
+conserved physical mass**. The defensible claim is *"no stage exceeds its
+bound"*, never *"the system cannot manufacture exposure"*.
 
 ### 3.5 Joint incident propagation — `engine/propagation.js`
 
@@ -410,11 +425,39 @@ $$
 
 ### 3.8 Structural components — `engine/index.js`, `engine/policy.js`, `engine/math.js`
 
-**Network influence.** Inject a unit adverse shock at stage $j$, propagate
-downstream over the whole DAG, weight by the normalized stage economic weight:
+**Direct footprint and spillover reach (changed in v7.1).** v7.0 published one
+quantity as "network influence":
 
 $$
-NI^{\mathrm{raw}}_j = \sum_{s} w_s \,\bigl|\,\mathrm{propagate}_{\mathrm{down}}(j)_s\,\bigr|
+NI^{v7.0}_j = \sum_{s} w_s\, p_{j \to s}, \qquad p_{j \to j} = 1
+$$
+
+The $s = j$ term is $w_j \cdot 1 = w_j$, so **every stage scored at least its own
+economic weight before any propagation occurred**. A large stage with no
+downstream edge ranked as highly "network influential" on the strength of its own
+size: in the shipped snapshot `m_ai` ranked **second** and has no outgoing edge at
+all. It also counted economic size twice inside the structural index, which
+already carries market importance as its own weighted component.
+
+v7.1 publishes the two separately, because they answer different questions and
+only one of them is about the network:
+
+$$
+\mathrm{DirectFootprint}_j = w_j
+$$
+
+$$
+\mathrm{SpilloverReach}_j = \sum_{s \ne j} w_s \,\bigl|\,\mathrm{propagate}_{\mathrm{down}}(j)_s\,\bigr|
+$$
+
+The **structural index uses spillover reach**. Direct footprint is published
+beside it and is deliberately **not** fed into the structural score. The v7.0
+quantity is preserved for comparison as
+`SYSTEM_WEIGHTED_REACH_INCLUDING_SOURCE` — named for what it is, and never called
+network influence.
+
+$$
+NI^{\mathrm{raw}}_j = \mathrm{SpilloverReach}_j
 $$
 
 $$
@@ -681,11 +724,11 @@ observed disruption outcomes; see §11 for what would have to happen first.
 <!-- BEGIN GENERATED: parameter-detail -->
 #### `downstreamTransmission` — $f_d$
 
-**Definition.** Total fraction of a supplier stage’s modeled exposure that can reach its buyer stages in one hop, before the per-edge allocation and the dependency factor divide it up.
+**Definition.** Per-RECEIVING-STAGE inherited-sensitivity multiplier. Under incoming-share normalization it caps how much dependency signal a buyer stage can inherit from all of its modeled inputs combined in one hop. It is NOT a globally conserved fraction of an incident: the same source reaches several buyers, so signal branches rather than being divided up.
 
 **Assumption range.** low 0.3 · base 0.55 · high 0.8 (dimensionless); valid domain `[0, 1)`.
 
-**Rationale.** Strictly below 1 so the incoming coefficients at any node sum to less than one and the joint propagation is a contraction: the field stays finite on any DAG and cannot manufacture exposure. The base retains the v6 value for continuity; the range spans "inputs are largely substitutable within one hop" (0.30) to "a buyer stage is nearly wholly dependent on its modeled inputs" (0.80).
+**Rationale.** Strictly below 1 so that the incoming coefficients AT ANY ONE STAGE sum to less than one. That bounds each stage individually and makes the per-stage recursion settle on a DAG; it does NOT bound the network-wide total, because a source branches to several buyers and the summed signal across stages can exceed the source magnitude. The base retains the v6 value for continuity; the range spans "inputs are largely substitutable within one hop" (0.30) to "a buyer stage is nearly wholly dependent on its modeled inputs" (0.80).
 
 **Affects.** stage operational field; headline index; country measures; company criticality; network influence.
 
@@ -693,11 +736,11 @@ observed disruption outcomes; see §11 for what would have to happen first.
 
 #### `upstreamTransmission` — $f_u$
 
-**Definition.** Total fraction of a buyer stage’s modeled exposure that echoes back to its supplier stages in one hop (demand-side echo), before the per-edge allocation.
+**Definition.** Per-SUPPLYING-STAGE upstream-inheritance multiplier. Under outgoing-share normalization it caps how much demand-side echo a supplier stage inherits from all of its modeled buyers combined in one hop. Like f_d it is a per-stage cap, not a conserved share of the incident.
 
 **Assumption range.** low 0.1 · base 0.3 · high 0.5 (dimensionless); valid domain `[0, 1)`.
 
-**Rationale.** Held below the downstream coefficient because a supplier losing one buyer has more resale options than a buyer losing a specific input has substitutes; strictly below 1 for the same contraction guarantee as f_d. Base retains the v6 value.
+**Rationale.** Held below the downstream coefficient because a supplier losing one buyer has more resale options than a buyer losing a specific input has substitutes; strictly below 1 for the same per-stage bound as f_d. Base retains the v6 value.
 
 **Affects.** stage operational field; headline index; country measures; company criticality.
 
@@ -1126,6 +1169,26 @@ The v6 methodology is preserved, with a historical warning, in
 
 ---
 
+## 10b. v7.0 → v7.1 change log (migration note)
+
+v7.0 results are preserved in
+[`docs/benchmarks/v7-exposure-robustness-frozen-benchmark.json`](benchmarks/v7-exposure-robustness-frozen-benchmark.json),
+frozen before this revision. v7.1 is a **minor model revision**: it changes one
+published structural construct and corrects several descriptions. **No
+operational-layer number changes** — the headline index, stage fields, country
+measures and scenario deltas are identical between v7.0 and v7.1.
+
+| # | Change | Kind | Effect |
+| --- | --- | --- | --- |
+| 1 | **Network influence excludes the source stage.** `NI_j` was $\sum_s w_s p_{j \to s}$ including $p_{j\to j}=1$; it is now $\sum_{s \ne j} w_s p_{j \to s}$. | **Formula** | Re-ranks the structural network component. Terminal stages fall (`m_ai` from rank 2 to zero reach); connective upstream stages rise. Changes structural vulnerability and country structural scores. |
+| 2 | **`DirectFootprint` published separately** and kept out of the structural score. | **Formula** | Removes double counting of economic size, which entered both through the old NI and through `market`. |
+| 3 | **v7.0 measure retained as `SYSTEM_WEIGHTED_REACH_INCLUDING_SOURCE`.** | Naming | Comparison only. Never called network influence. |
+| 4 | **$f_d$ / $f_u$ redefined in words** as per-stage inheritance multipliers, not conserved shares. | **Interpretation** | No numerical change. The previous "cannot manufacture exposure" and "contraction" language was true per stage and false network-wide; the propagated field branches. |
+| 5 | **Benchmark ablation label corrected** and the v6 weighting explanation restated as *effective log-turnover* rather than "weights that did not sum to one". | **Interpretation** | No numerical change to v7.1 outputs; the v6→v7 attribution prose is corrected. |
+| 6 | **Sobol estimator reports raw, unclipped values** with replicate seeds, convergence and standard errors. | Reporting | Previous clipping presented estimator noise as exact. |
+| 7 | **Event-curation uncertainty** analysed separately from parameter and model-form uncertainty. | Reporting | New third uncertainty class, previously unmeasured and implicitly zero. |
+| 8 | **Legacy-assisted historical periods** marked and counted. | Reporting | Fallback incidents are no longer described as immaterial to every published number. |
+
 ## 11. Limitations and calibration roadmap
 
 ### 11.1 What is not known
@@ -1142,6 +1205,39 @@ The v6 methodology is preserved, with a historical warning, in
   reason, and the interval is published.
 - **The graph is a curated abstraction.** 24 stages is a modelling choice, not a
   fact about the industry.
+
+### 11.1b Four distinct classes of uncertainty, kept apart
+
+A single "uncertainty" figure would merge four things that behave differently
+and are fixed by different work. They are measured separately and never summed.
+
+| Class | What is varied | Headline width | Interval | Measured by |
+| --- | --- | ---: | --- | --- |
+| **Data** | Inputs that are missing, undisclosed, ordinal or a curated sample | not a single width | see 11.1 | `npm run audit:data` (0 hard failures, 30 warnings) |
+| **Parameter** | The 12 continuous registry parameters over their declared low-high box | **1.363** | [5.446, 6.809] | `npm run sensitivity` |
+| **Model form** | 5 discrete structural choices (severity mapping, facility scale mapping, incident aggregation, HHI residual, stage weighting) | **1.045** | [5.402, 6.446] | `npm run sensitivity`, reported separately |
+| **Curation** | Analyst exposure judgements and persistence classification for the 30 curated incidents | **0.722** | [5.611, 6.334] | `npm run curation` |
+
+Base headline index 6.028 on dataset `2026-09-04`.
+
+Four points follow from the table, and each one matters more than the widths:
+
+1. **They are not additive and not independent.** Widening a parameter and
+   re-judging an exposure can move the index the same way or opposite ways.
+   No total uncertainty is published, because none has been derived.
+2. **None is a confidence interval.** Each is an assumption envelope over a
+   declared box. Uniform sampling inside that box is a computational device,
+   not a probability distribution over what is true.
+3. **Curation uncertainty was previously unmeasured**, which amounted to
+   asserting it was zero. It is of the same order as the other two, so
+   analyst judgement is a first-order driver of the headline, not a detail.
+4. **The historical series is more sensitive than the current snapshot.**
+   Curation uncertainty on the historical peak is **1.012** index points
+   against 0.722 on the headline, and 49 archived operational records carry
+   no curated exposure or profile at all. Dates that depend on them are
+   marked **legacy-assisted**; moving those fallback assumptions moves the
+   legacy-era peak by about **1.03** index points while leaving today's
+   reading unchanged. See `docs/benchmarks/v7-legacy-fallback.json`.
 
 ### 11.2 What would have to exist to calibrate each parameter
 
@@ -1201,7 +1297,7 @@ assumptions, reproducible to the last digit, and uncalibrated.**
 ## Appendix B — verification run
 
 <!-- BEGIN GENERATED: verification-run -->
-Model `sscim-model-v7-exposure-robustness` · dataset `2026-09-04`. The commit and timestamp of the recorded run are in
+Model `sscim-model-v7.1-exposure-robustness` · dataset `2026-09-04`. The commit and timestamp of the recorded run are in
 [`docs/benchmarks/verification-run.json`](benchmarks/verification-run.json); they are deliberately not quoted here, because a
 document that pins the commit it was generated at can never be up to date with the commit that contains it.
 
@@ -1209,13 +1305,13 @@ document that pins the commit it was generated at can never be up to date with t
 | --- | --- | --- |
 | `server: npm ci` | pass | added 113 packages, and audited 114 packages |
 | `app: npm ci` | pass | added 156 packages |
-| `app: npm run snapshot` | FAIL | (no summary line) |
-| `app: npm run audit:data` | FAIL | (no summary line) |
-| `app: npm run docs:verify` | FAIL | (no summary line) |
-| `app: npm test` | FAIL | · |
-| `app: npm run build` | FAIL | built |
-| `app: npm run smoke` | FAIL | (no summary line) |
-| `app: npm run sensitivity -- --samples 1024` | FAIL | (no summary line) |
-| `app: npm run benchmark` | FAIL | (no summary line) |
-| `app: npm run demo` | FAIL | (no summary line) |
+| `app: npm run snapshot` | pass | (109 companies, 24 stages, 167 events) |
+| `app: npm run audit:data` | pass | audit:data PASSED — 0 hard failures, 30 warning(s). |
+| `app: npm run docs:verify` | pass | docs:verify PASSED — documentation and code agree. |
+| `app: npm test` | pass | Test Files  47 passed (47) · Tests  888 passed (888) |
+| `app: npm run build` | pass | Published 35 documentation page(s) + /docs/ index · 855 equation(s) rendered · KaTeX css + 20 font(s). |
+| `app: npm run smoke` | pass | 172/172 checks passed |
+| `app: npm run sensitivity -- --samples 1024` | pass | design: 12 continuous dimensions x 1024 samples = 14336 model evaluations |
+| `app: npm run benchmark` | pass | SKIPPED, and the committed comparison is left untouched. |
+| `app: npm run demo` | pass | headline index 6.027797 · 160 incidents from 167 records |
 <!-- END GENERATED: verification-run -->

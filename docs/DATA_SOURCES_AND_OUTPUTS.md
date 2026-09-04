@@ -77,7 +77,7 @@ What the network is not: a shipment route, a logistics lane, or an observed trad
 
 The event record is a **curated sample, not a census**, and its density is uneven: recent months are ingested daily through the pipeline, while 2017 is represented by a handful of records written in one pass. Because the operational index aggregates whatever events are inside the decay horizon, a period covered more thoroughly scores higher than an equally eventful period covered more thinly — the index is measuring the dataset as well as the world.
 
-The dashboard's HISTORY panel reports this directly, as the correlation between the index and the trailing 30-day severity mass of scored events, next to per-year event counts. Read those counts before reading a trend into the yearly means. Two consequences follow: cross-year comparisons of the *level* are weak evidence, and a single real event entered several times (one earthquake reported by six sources, each approved separately) inflates the index materially, because simultaneous shocks accumulate through noisy-OR rather than being deduplicated by the model.
+The dashboard's HISTORY panel reports this directly, as the correlation between the index and the trailing 30-day severity mass of scored events, next to per-year event counts. Read those counts before reading a trend into the yearly means. One consequence follows: cross-year comparisons of the *level* are weak evidence. A single real event entered several times no longer inflates the index — records are grouped into incidents before anything is scored, and only the primary record of an incident carries weight, so the M7.1 Kumamoto earthquake's eight records score once. What duplicate coverage still does is make a period *look* better evidenced than it is.
 
 ## Processing
 
@@ -101,7 +101,7 @@ The dashboard's HISTORY panel reports this directly, as the correlation between 
 | Company criticality | Effect of fully disrupting that company, normalized against the observed maximum | An investment view of any kind |
 | Capital power | Ownership stake weighted by company criticality | Influence, control, or intent |
 | Index history | The operational model replayed over the snapshot's event record, daily across a ten-year window | A live market or macro time series |
-| Per-event index impact | The **marginal** change on the event's own date: the index with that event minus the index without it | An additive decomposition — marginal effects do not sum to the index, because shocks combine through a saturating noisy-OR |
+| Per-event index impact | The **marginal** change on the event's own date: the index with that event minus the index without it | An additive decomposition — marginal effects do not sum to the index, because distinct incidents combine through a bounded saturating operator |
 | Topology routes and metrics | Graph-derived pathways and counterfactual sensitivity | Trade volumes, logistics routes, or contracts |
 | Sensitivity envelope (low/base/high) | The same computation at ±30% on transmission and half-life | A confidence interval — it is not one |
 | Briefing | A textual summary generated from current model state | Independent reporting or investment research |

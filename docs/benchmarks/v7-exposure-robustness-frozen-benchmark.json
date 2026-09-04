@@ -1,0 +1,952 @@
+{
+  "frozen": true,
+  "generatedAt": "2026-09-04T05:43:49.199Z",
+  "modelVersion": "sscim-model-v7-exposure-robustness",
+  "datasetAsOf": "2026-09-04",
+  "commit": "a737f6963dbf75d08e9d2f70f4f57c7eff1eabf5",
+  "note": "Frozen output surface of this model version, captured before a breaking model revision. Never regenerate: the engine that produced it will not exist after the revision.",
+  "counts": {
+    "stages": 24,
+    "edges": 34,
+    "events": 167,
+    "policies": 7,
+    "companies": 109,
+    "facilities": 275
+  },
+  "headline": {
+    "baselineChainIndex": 6.027797,
+    "operationalIndexSigned": 0.2055594,
+    "envelope": {
+      "low": 5.612308,
+      "base": 6.027797,
+      "high": 6.427794
+    }
+  },
+  "stages": {
+    "research": {
+      "structural": 2.273152,
+      "networkInfluenceRaw": 0.0455611567,
+      "networkInfluenceScore": 1.603347,
+      "geo": 1.85,
+      "policy": 0,
+      "stageWeight": 0.0081833061,
+      "operationalField": 0.0100613588
+    },
+    "eda": {
+      "structural": 3.384398,
+      "networkInfluenceRaw": 0.035140463,
+      "networkInfluenceScore": 1.236632,
+      "geo": 4.434,
+      "policy": 0,
+      "stageWeight": 0.0061374795,
+      "operationalField": 0.015013882
+    },
+    "design": {
+      "structural": 3.794103,
+      "networkInfluenceRaw": 0.1140166428,
+      "networkInfluenceScore": 4.012371,
+      "geo": 3.058,
+      "policy": 0,
+      "stageWeight": 0.1022913257,
+      "operationalField": 0.0506521567
+    },
+    "wafers": {
+      "structural": 4.303786,
+      "networkInfluenceRaw": 0.0281898292,
+      "networkInfluenceScore": 0.992031,
+      "geo": 3.502,
+      "policy": 7,
+      "stageWeight": 0.0061374795,
+      "operationalField": 0.06386896
+    },
+    "resist": {
+      "structural": 4.657468,
+      "networkInfluenceRaw": 0.0202688579,
+      "networkInfluenceScore": 0.713283,
+      "geo": 5.942,
+      "policy": 6,
+      "stageWeight": 0.0012274959,
+      "operationalField": 0.0728307822
+    },
+    "gases": {
+      "structural": 3.742116,
+      "networkInfluenceRaw": 0.0232677497,
+      "networkInfluenceScore": 0.818818,
+      "geo": 1.816,
+      "policy": 7,
+      "stageWeight": 0.0032733224,
+      "operationalField": 0.0236579541
+    },
+    "substrates": {
+      "structural": 2.541971,
+      "networkInfluenceRaw": 0.0175469354,
+      "networkInfluenceScore": 0.617496,
+      "geo": 2.792,
+      "policy": 0,
+      "stageWeight": 0.0049099836,
+      "operationalField": 0.0287940874
+    },
+    "litho": {
+      "structural": 6.788438,
+      "networkInfluenceRaw": 0.0390091923,
+      "networkInfluenceScore": 1.372776,
+      "geo": 8.182,
+      "policy": 9.8,
+      "stageWeight": 0.0122749591,
+      "operationalField": 0.2370483919
+    },
+    "depo": {
+      "structural": 4.900838,
+      "networkInfluenceRaw": 0.0242963675,
+      "networkInfluenceScore": 0.855016,
+      "geo": 2.76,
+      "policy": 9.6,
+      "stageWeight": 0.0081833061,
+      "operationalField": 0.257242802
+    },
+    "etch": {
+      "structural": 5.011922,
+      "networkInfluenceRaw": 0.0226113797,
+      "networkInfluenceScore": 0.795719,
+      "geo": 3.334,
+      "policy": 9.6,
+      "stageWeight": 0.0090016367,
+      "operationalField": 0.2333631877
+    },
+    "cmp": {
+      "structural": 2.575391,
+      "networkInfluenceRaw": 0.0094174046,
+      "networkInfluenceScore": 0.331409,
+      "geo": 4.3,
+      "policy": 0,
+      "stageWeight": 0.0024549918,
+      "operationalField": 0.058989219
+    },
+    "metro": {
+      "structural": 5.384332,
+      "networkInfluenceRaw": 0.0221758901,
+      "networkInfluenceScore": 0.780394,
+      "geo": 4.904,
+      "policy": 9.6,
+      "stageWeight": 0.0053191489,
+      "operationalField": 0.3064213652
+    },
+    "adv_fab": {
+      "structural": 6.837417,
+      "networkInfluenceRaw": 0.1201525778,
+      "networkInfluenceScore": 4.228302,
+      "geo": 4.408,
+      "policy": 9.7,
+      "stageWeight": 0.0490998363,
+      "operationalField": 0.240233151
+    },
+    "mature_fab": {
+      "structural": 3.885905,
+      "networkInfluenceRaw": 0.0531628601,
+      "networkInfluenceScore": 1.87086,
+      "geo": 1.998,
+      "policy": 6.4,
+      "stageWeight": 0.0368248773,
+      "operationalField": 0.1879507356
+    },
+    "memory_fab": {
+      "structural": 4.560722,
+      "networkInfluenceRaw": 0.0755701857,
+      "networkInfluenceScore": 2.659398,
+      "geo": 4.074,
+      "policy": 4,
+      "stageWeight": 0.0531914894,
+      "operationalField": 0.518326121
+    },
+    "logic_ai": {
+      "structural": 6.556264,
+      "networkInfluenceRaw": 0.1342200547,
+      "networkInfluenceScore": 4.723352,
+      "geo": 4.974,
+      "policy": 9,
+      "stageWeight": 0.1227495908,
+      "operationalField": 0.3633199532
+    },
+    "analog": {
+      "structural": 4.02383,
+      "networkInfluenceRaw": 0.0475286774,
+      "networkInfluenceScore": 1.672587,
+      "geo": 2.2665,
+      "policy": 7,
+      "stageWeight": 0.0368248773,
+      "operationalField": 0.1357475423
+    },
+    "hbm": {
+      "structural": 6.018704,
+      "networkInfluenceRaw": 0.0240325722,
+      "networkInfluenceScore": 0.845733,
+      "geo": 6.152,
+      "policy": 9,
+      "stageWeight": 0.0102291326,
+      "operationalField": 0.4638928172
+    },
+    "adv_pkg": {
+      "structural": 4.795959,
+      "networkInfluenceRaw": 0.0848354804,
+      "networkInfluenceScore": 2.985454,
+      "geo": 3.1,
+      "policy": 5,
+      "stageWeight": 0.0184124386,
+      "operationalField": 0.1014808142
+    },
+    "osat": {
+      "structural": 2.483662,
+      "networkInfluenceRaw": 0.0622766557,
+      "networkInfluenceScore": 2.191584,
+      "geo": 2.562,
+      "policy": 0,
+      "stageWeight": 0.0163666121,
+      "operationalField": 0.142469075
+    },
+    "systems": {
+      "structural": 5.487333,
+      "networkInfluenceRaw": 0.2841627455,
+      "networkInfluenceScore": 10,
+      "geo": 2.318,
+      "policy": 4,
+      "stageWeight": 0.2045826514,
+      "operationalField": 0.1700960716
+    },
+    "m_ai": {
+      "structural": 3.841678,
+      "networkInfluenceRaw": 0.143207856,
+      "networkInfluenceScore": 5.039642,
+      "geo": 4.238,
+      "policy": 0,
+      "stageWeight": 0.143207856,
+      "operationalField": 0.1354823493
+    },
+    "m_auto": {
+      "structural": 2.960641,
+      "networkInfluenceRaw": 0.0368248773,
+      "networkInfluenceScore": 1.295908,
+      "geo": 2.078,
+      "policy": 4,
+      "stageWeight": 0.0368248773,
+      "operationalField": 0.1929334045
+    },
+    "m_consumer": {
+      "structural": 3.722151,
+      "networkInfluenceRaw": 0.1022913257,
+      "networkInfluenceScore": 3.599744,
+      "geo": 2.75,
+      "policy": 4,
+      "stageWeight": 0.1022913257,
+      "operationalField": 0.2393034874
+    }
+  },
+  "countries": {
+    "us": {
+      "structural": 4.360402,
+      "localPressure": 0.1861003,
+      "chainContribution": 0.07059581
+    },
+    "cn": {
+      "structural": 4.003558,
+      "localPressure": 0.16986577,
+      "chainContribution": 0.03925449
+    },
+    "tw": {
+      "structural": 4.609846,
+      "localPressure": 0.15677726,
+      "chainContribution": 0.02516353
+    },
+    "kr": {
+      "structural": 4.887642,
+      "localPressure": 0.3185312,
+      "chainContribution": 0.03384684
+    },
+    "jp": {
+      "structural": 4.054959,
+      "localPressure": 0.12519544,
+      "chainContribution": 0.01261334
+    },
+    "nl": {
+      "structural": 6.480401,
+      "localPressure": 0.24429673,
+      "chainContribution": 0.00300179
+    },
+    "de": {
+      "structural": 3.669205,
+      "localPressure": 0.09738778,
+      "chainContribution": 0.00602364
+    },
+    "fr": {
+      "structural": 3.38911,
+      "localPressure": 0.07290232,
+      "chainContribution": 0.00086888
+    },
+    "uk": {
+      "structural": 2.471537,
+      "localPressure": 0.01535581,
+      "chainContribution": 0.00017191
+    },
+    "be": {
+      "structural": 2.273152,
+      "localPressure": 0.01006136,
+      "chainContribution": 0.00001235
+    },
+    "ie": {
+      "structural": 6.837417,
+      "localPressure": 0.24023315,
+      "chainContribution": 0.00023591
+    },
+    "il": {
+      "structural": 4.479044,
+      "localPressure": 0.18782862,
+      "chainContribution": 0.00058949
+    },
+    "sg": {
+      "structural": 4.081181,
+      "localPressure": 0.17328022,
+      "chainContribution": 0.00377163
+    },
+    "my": {
+      "structural": 3.969312,
+      "localPressure": 0.14501653,
+      "chainContribution": 0.00387642
+    },
+    "vn": {
+      "structural": 4.39046,
+      "localPressure": 0.18249234,
+      "chainContribution": 0.00479707
+    },
+    "ph": {
+      "structural": 2.483662,
+      "localPressure": 0.14246907,
+      "chainContribution": 0.00009327
+    }
+  },
+  "companies": {
+    "arm": {
+      "criticalityRaw": 0.0159464049,
+      "criticalityScore": 0.873286
+    },
+    "imec": {
+      "criticalityRaw": 0.0091122313,
+      "criticalityScore": 0.49902
+    },
+    "synopsys": {
+      "criticalityRaw": 0.012365106,
+      "criticalityScore": 0.67716
+    },
+    "cadence": {
+      "criticalityRaw": 0.0109103877,
+      "criticalityScore": 0.597494
+    },
+    "siemens_eda": {
+      "criticalityRaw": 0.0047278347,
+      "criticalityScore": 0.258914
+    },
+    "nvidia": {
+      "criticalityRaw": 0.1471680373,
+      "criticalityScore": 8.05948
+    },
+    "amd": {
+      "criticalityRaw": 0.0226337948,
+      "criticalityScore": 1.239512
+    },
+    "qualcomm": {
+      "criticalityRaw": 0.0140944358,
+      "criticalityScore": 0.771865
+    },
+    "apple": {
+      "criticalityRaw": 0.0445165286,
+      "criticalityScore": 2.437894
+    },
+    "mediatek": {
+      "criticalityRaw": 0.0117453631,
+      "criticalityScore": 0.643221
+    },
+    "hisilicon": {
+      "criticalityRaw": 0.0148246691,
+      "criticalityScore": 0.811855
+    },
+    "shinetsu": {
+      "criticalityRaw": 0.0118234449,
+      "criticalityScore": 0.647497
+    },
+    "sumco": {
+      "criticalityRaw": 0.006765559,
+      "criticalityScore": 0.370508
+    },
+    "globalwafers": {
+      "criticalityRaw": 0.0043694235,
+      "criticalityScore": 0.239286
+    },
+    "jsr": {
+      "criticalityRaw": 0.0048645259,
+      "criticalityScore": 0.2664
+    },
+    "tok": {
+      "criticalityRaw": 0.0040537716,
+      "criticalityScore": 0.222
+    },
+    "linde": {
+      "criticalityRaw": 0.0046535499,
+      "criticalityScore": 0.254846
+    },
+    "airliquide": {
+      "criticalityRaw": 0.0041881949,
+      "criticalityScore": 0.229361
+    },
+    "ibiden": {
+      "criticalityRaw": 0.002982979,
+      "criticalityScore": 0.163359
+    },
+    "unimicron": {
+      "criticalityRaw": 0.0031584484,
+      "criticalityScore": 0.172969
+    },
+    "asml": {
+      "criticalityRaw": 0.0376572859,
+      "criticalityScore": 2.062256
+    },
+    "nikon": {
+      "criticalityRaw": 0.0017719848,
+      "criticalityScore": 0.097041
+    },
+    "canon": {
+      "criticalityRaw": 0.0021657593,
+      "criticalityScore": 0.118605
+    },
+    "amat": {
+      "criticalityRaw": 0.0201297151,
+      "criticalityScore": 1.10238
+    },
+    "tel": {
+      "criticalityRaw": 0.0071834616,
+      "criticalityScore": 0.393394
+    },
+    "lam": {
+      "criticalityRaw": 0.0111108659,
+      "criticalityScore": 0.608473
+    },
+    "kla": {
+      "criticalityRaw": 0.0128620163,
+      "criticalityScore": 0.704373
+    },
+    "tsmc": {
+      "criticalityRaw": 0.1826024023,
+      "criticalityScore": 10
+    },
+    "samsung": {
+      "criticalityRaw": 0.069052763,
+      "criticalityScore": 3.781591
+    },
+    "intel": {
+      "criticalityRaw": 0.0143676021,
+      "criticalityScore": 0.786824
+    },
+    "rapidus": {
+      "criticalityRaw": 0.0011371944,
+      "criticalityScore": 0.062277
+    },
+    "smic": {
+      "criticalityRaw": 0.0079556478,
+      "criticalityScore": 0.435681
+    },
+    "umc": {
+      "criticalityRaw": 0.0079556478,
+      "criticalityScore": 0.435681
+    },
+    "gf": {
+      "criticalityRaw": 0.005062685,
+      "criticalityScore": 0.277252
+    },
+    "ti": {
+      "criticalityRaw": 0.0158378593,
+      "criticalityScore": 0.867341
+    },
+    "infineon": {
+      "criticalityRaw": 0.0041810928,
+      "criticalityScore": 0.228972
+    },
+    "st": {
+      "criticalityRaw": 0.0050643248,
+      "criticalityScore": 0.277342
+    },
+    "tower": {
+      "criticalityRaw": 0.0014464814,
+      "criticalityScore": 0.079215
+    },
+    "skhynix": {
+      "criticalityRaw": 0.0387599286,
+      "criticalityScore": 2.122641
+    },
+    "micron": {
+      "criticalityRaw": 0.0221443951,
+      "criticalityScore": 1.212711
+    },
+    "ymtc": {
+      "criticalityRaw": 0.0019886818,
+      "criticalityScore": 0.108908
+    },
+    "cxmt": {
+      "criticalityRaw": 0.0039773636,
+      "criticalityScore": 0.217816
+    },
+    "kioxia": {
+      "criticalityRaw": 0.0127275636,
+      "criticalityScore": 0.69701
+    },
+    "ase": {
+      "criticalityRaw": 0.0509960656,
+      "criticalityScore": 2.792738
+    },
+    "amkor": {
+      "criticalityRaw": 0.022985211,
+      "criticalityScore": 1.258757
+    },
+    "jcet": {
+      "criticalityRaw": 0.0095631969,
+      "criticalityScore": 0.523717
+    },
+    "foxconn": {
+      "criticalityRaw": 0.1014708085,
+      "criticalityScore": 5.556926
+    },
+    "ibm_res": {
+      "criticalityRaw": 0.0045561157,
+      "criticalityScore": 0.24951
+    },
+    "leti": {
+      "criticalityRaw": 0.0036448925,
+      "criticalityScore": 0.199608
+    },
+    "ansys": {
+      "criticalityRaw": 0,
+      "criticalityScore": 0
+    },
+    "empyrean": {
+      "criticalityRaw": 0.0005455194,
+      "criticalityScore": 0.029875
+    },
+    "broadcom": {
+      "criticalityRaw": 0.0187609065,
+      "criticalityScore": 1.027418
+    },
+    "marvell": {
+      "criticalityRaw": 0.0074281718,
+      "criticalityScore": 0.406795
+    },
+    "unisoc": {
+      "criticalityRaw": 0.0046981453,
+      "criticalityScore": 0.257288
+    },
+    "sksiltron": {
+      "criticalityRaw": 0.0026780338,
+      "criticalityScore": 0.146659
+    },
+    "siltronic": {
+      "criticalityRaw": 0.0023961355,
+      "criticalityScore": 0.131221
+    },
+    "nsig": {
+      "criticalityRaw": 0.0007047457,
+      "criticalityScore": 0.038595
+    },
+    "sumitomo_chem": {
+      "criticalityRaw": 0.0016215086,
+      "criticalityScore": 0.0888
+    },
+    "dupont": {
+      "criticalityRaw": 0.0014188201,
+      "criticalityScore": 0.0777
+    },
+    "resonac": {
+      "criticalityRaw": 0.00279213,
+      "criticalityScore": 0.152908
+    },
+    "tnsc": {
+      "criticalityRaw": 0.0030248075,
+      "criticalityScore": 0.16565
+    },
+    "airproducts": {
+      "criticalityRaw": 0.002326775,
+      "criticalityScore": 0.127423
+    },
+    "skmaterials": {
+      "criticalityRaw": 0.00186142,
+      "criticalityScore": 0.101938
+    },
+    "shinko": {
+      "criticalityRaw": 0.0022811016,
+      "criticalityScore": 0.124922
+    },
+    "samsungem": {
+      "criticalityRaw": 0.0021056322,
+      "criticalityScore": 0.115312
+    },
+    "ats": {
+      "criticalityRaw": 0.0022811016,
+      "criticalityScore": 0.124922
+    },
+    "asmi": {
+      "criticalityRaw": 0.0029744839,
+      "criticalityScore": 0.162894
+    },
+    "kokusai": {
+      "criticalityRaw": 0.0019829893,
+      "criticalityScore": 0.108596
+    },
+    "naura": {
+      "criticalityRaw": 0.0043269268,
+      "criticalityScore": 0.236959
+    },
+    "amec": {
+      "criticalityRaw": 0.0016171665,
+      "criticalityScore": 0.088562
+    },
+    "hitachiht": {
+      "criticalityRaw": 0.0024856723,
+      "criticalityScore": 0.136125
+    },
+    "ebara": {
+      "criticalityRaw": 0.0028252214,
+      "criticalityScore": 0.15472
+    },
+    "entegris": {
+      "criticalityRaw": 0.0011300886,
+      "criticalityScore": 0.061888
+    },
+    "onto": {
+      "criticalityRaw": 0.0017740712,
+      "criticalityScore": 0.097155
+    },
+    "nova": {
+      "criticalityRaw": 0.0013305534,
+      "criticalityScore": 0.072866
+    },
+    "huahong": {
+      "criticalityRaw": 0.0036162036,
+      "criticalityScore": 0.198037
+    },
+    "vis": {
+      "criticalityRaw": 0.0018081018,
+      "criticalityScore": 0.099019
+    },
+    "nexchip": {
+      "criticalityRaw": 0.0021697221,
+      "criticalityScore": 0.118822
+    },
+    "sonysemi": {
+      "criticalityRaw": 0.0036162036,
+      "criticalityScore": 0.198037
+    },
+    "renesas": {
+      "criticalityRaw": 0.0045010754,
+      "criticalityScore": 0.246496
+    },
+    "bosch": {
+      "criticalityRaw": 0.0082273717,
+      "criticalityScore": 0.450562
+    },
+    "nanya": {
+      "criticalityRaw": 0.0023864182,
+      "criticalityScore": 0.130689
+    },
+    "winbond": {
+      "criticalityRaw": 0.0015909454,
+      "criticalityScore": 0.087126
+    },
+    "google": {
+      "criticalityRaw": 0.0360464573,
+      "criticalityScore": 1.974041
+    },
+    "amazon": {
+      "criticalityRaw": 0.0312658821,
+      "criticalityScore": 1.712238
+    },
+    "cambricon": {
+      "criticalityRaw": 0.0012443922,
+      "criticalityScore": 0.068148
+    },
+    "biren": {
+      "criticalityRaw": 0.0004666471,
+      "criticalityScore": 0.025555
+    },
+    "onsemi": {
+      "criticalityRaw": 0.0022513576,
+      "criticalityScore": 0.123293
+    },
+    "adi": {
+      "criticalityRaw": 0.008683808,
+      "criticalityScore": 0.475558
+    },
+    "nxp": {
+      "criticalityRaw": 0.0022513576,
+      "criticalityScore": 0.123293
+    },
+    "microchip": {
+      "criticalityRaw": 0.0019297351,
+      "criticalityScore": 0.10568
+    },
+    "spil": {
+      "criticalityRaw": 0.0108138695,
+      "criticalityScore": 0.592209
+    },
+    "pti": {
+      "criticalityRaw": 0.0081104021,
+      "criticalityScore": 0.444156
+    },
+    "utac": {
+      "criticalityRaw": 0.0013040723,
+      "criticalityScore": 0.071416
+    },
+    "kyec": {
+      "criticalityRaw": 0.0017387631,
+      "criticalityScore": 0.095221
+    },
+    "inari": {
+      "criticalityRaw": 0.0013040723,
+      "criticalityScore": 0.071416
+    },
+    "quanta": {
+      "criticalityRaw": 0.0285386649,
+      "criticalityScore": 1.562886
+    },
+    "wistron": {
+      "criticalityRaw": 0.0380515532,
+      "criticalityScore": 2.083847
+    },
+    "supermicro": {
+      "criticalityRaw": 0.0158548138,
+      "criticalityScore": 0.86827
+    },
+    "luxshare": {
+      "criticalityRaw": 0.0190257766,
+      "criticalityScore": 1.041924
+    },
+    "microsoft": {
+      "criticalityRaw": 0.0233743264,
+      "criticalityScore": 1.280067
+    },
+    "meta": {
+      "criticalityRaw": 0.0200351369,
+      "criticalityScore": 1.0972
+    },
+    "alibaba": {
+      "criticalityRaw": 0.0050087842,
+      "criticalityScore": 0.2743
+    },
+    "tesla": {
+      "criticalityRaw": 0.0024230598,
+      "criticalityScore": 0.132696
+    },
+    "denso": {
+      "criticalityRaw": 0.0078749444,
+      "criticalityScore": 0.431262
+    },
+    "vw": {
+      "criticalityRaw": 0.0060576495,
+      "criticalityScore": 0.33174
+    },
+    "xiaomi": {
+      "criticalityRaw": 0.0126042944,
+      "criticalityScore": 0.690259
+    },
+    "lenovo": {
+      "criticalityRaw": 0.0126042944,
+      "criticalityScore": 0.690259
+    },
+    "hp": {
+      "criticalityRaw": 0.0088230061,
+      "criticalityScore": 0.483181
+    }
+  },
+  "events": {
+    "e1": {
+      "scored": true,
+      "profile": "market_exponential",
+      "persistence": 0.37892914,
+      "intensity": 0.8,
+      "sourceVector": {
+        "logic_ai": 0.27282898,
+        "hbm": 0.21220032,
+        "adv_fab": 0.10610016,
+        "adv_pkg": 0.09094299
+      }
+    },
+    "e2": {
+      "scored": true,
+      "profile": "market_exponential",
+      "persistence": 0.37313712,
+      "intensity": 0.4,
+      "sourceVector": {
+        "adv_pkg": -0.11940388,
+        "logic_ai": -0.0522392
+      }
+    },
+    "e4": {
+      "scored": true,
+      "profile": "market_exponential",
+      "persistence": 0.34547822,
+      "intensity": 0.7,
+      "sourceVector": {
+        "gases": 0.18137607,
+        "analog": 0.07255043
+      }
+    },
+    "h2607_kumamoto": {
+      "scored": true,
+      "profile": "outage_recovery",
+      "persistence": 0.48333333,
+      "intensity": 0.7,
+      "sourceVector": {
+        "mature_fab": 0.1015,
+        "analog": 0.15225,
+        "m_auto": 0.11841667,
+        "m_consumer": 0.05075
+      }
+    },
+    "p260807_man0807": {
+      "scored": true,
+      "profile": "market_exponential",
+      "persistence": 0.64966945,
+      "intensity": 0.4,
+      "sourceVector": {
+        "memory_fab": 0.20789423,
+        "hbm": 0.07796033,
+        "systems": 0.1169405,
+        "m_consumer": 0.12993389
+      }
+    },
+    "h2210_bis": {
+      "scored": true,
+      "profile": "acute_exponential",
+      "persistence": 0,
+      "intensity": 0.9,
+      "sourceVector": {
+        "logic_ai": 0,
+        "adv_fab": 0,
+        "memory_fab": 0,
+        "litho": 0,
+        "depo": 0,
+        "etch": 0,
+        "metro": 0
+      }
+    },
+    "h2504_ree": {
+      "scored": true,
+      "profile": "market_exponential",
+      "persistence": 0.00034262,
+      "intensity": 0.7,
+      "sourceVector": {
+        "gases": 0.00019187,
+        "analog": 0.00007195,
+        "m_auto": 0.00010792
+      }
+    },
+    "x2505_eda": {
+      "scored": false,
+      "profile": "persistent_policy",
+      "persistence": 0,
+      "intensity": 0.6,
+      "sourceVector": {}
+    }
+  },
+  "hazards": [
+    {
+      "id": "kumamoto",
+      "point": {
+        "id": "kumamoto",
+        "lat": 32.8,
+        "lng": 130.7,
+        "radiusKm": 100,
+        "severity": 7
+      },
+      "sitesInside": 6,
+      "scoredStages": 7,
+      "stageExposure": {
+        "m_consumer": 0.16216216,
+        "wafers": 0.10666667,
+        "mature_fab": 0.0896861,
+        "etch": 0.07692308,
+        "depo": 0.06818182,
+        "m_auto": 0.04081633,
+        "analog": 0.03404255
+      },
+      "chainIndexDelta": 0.100761
+    },
+    {
+      "id": "hsinchu",
+      "point": {
+        "id": "hsinchu",
+        "lat": 24.8,
+        "lng": 121,
+        "radiusKm": 60,
+        "severity": 7
+      },
+      "sitesInside": 22,
+      "scoredStages": 14,
+      "stageExposure": {
+        "systems": 0.30769231,
+        "m_ai": 0.28125,
+        "gases": 0.22222222,
+        "adv_pkg": 0.21782178,
+        "substrates": 0.13114754,
+        "cmp": 0.10526316,
+        "adv_fab": 0.09433962,
+        "osat": 0.09230769,
+        "resist": 0.09090909,
+        "mature_fab": 0.08071749,
+        "wafers": 0.08,
+        "memory_fab": 0.05970149,
+        "design": 0.05479452,
+        "analog": 0.05106383
+      },
+      "chainIndexDelta": 0.621228
+    },
+    {
+      "id": "pyeongtaek",
+      "point": {
+        "id": "pyeongtaek",
+        "lat": 37,
+        "lng": 127.1,
+        "radiusKm": 60,
+        "severity": 7
+      },
+      "sitesInside": 8,
+      "scoredStages": 6,
+      "stageExposure": {
+        "hbm": 0.94444444,
+        "memory_fab": 0.26865672,
+        "adv_fab": 0.22641509,
+        "substrates": 0.09836066,
+        "adv_pkg": 0.05940594,
+        "mature_fab": 0.02690583
+      },
+      "chainIndexDelta": 0.218315
+    }
+  ],
+  "history": [
+    6.372438,
+    6.354616,
+    6.336943,
+    6.319417,
+    6.302036,
+    6.284801,
+    6.267709,
+    6.25076,
+    6.233953,
+    6.217285,
+    6.200757,
+    6.184366,
+    6.168112,
+    6.151994,
+    6.136009,
+    6.120158,
+    6.104438,
+    6.088849,
+    6.07339,
+    6.058058,
+    6.042853,
+    6.027774
+  ]
+}

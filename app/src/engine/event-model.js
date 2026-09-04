@@ -21,6 +21,29 @@
                 with `profileBasis` pointing at the dates in the record
                 that justify the shape.
 
+   THREE OPTIONAL FIELDS CARRY THE UNCERTAINTY IN THOSE JUDGEMENTS. Both
+   `exposure` and `profile` are readings of a news record, and until v7.1
+   nothing varied them — they were effectively treated as exact.
+
+     evidenceStrength  'strong' | 'moderate' | 'weak'. How specific the
+                       underlying record is about scope. Drives the default
+                       exposure band (+/-25%, +/-50%, +/-75%) used by the
+                       curation-uncertainty analysis. Defaults to
+                       'moderate' where not stated, and the analysis counts
+                       how many incidents rely on that default.
+
+     exposureLow /     Explicit per-stage bands, where a range can be
+     exposureHigh      defended directly from the record. Override the
+                       evidence-strength default.
+
+     altProfile        A defensible ALTERNATIVE persistence classification,
+                       where the record genuinely supports more than one
+                       reading. Varied as a discrete scenario, never blended.
+
+   THIS IS METADATA ABOUT CONFIDENCE, AND IT NEVER MULTIPLIES AN IMPACT.
+   `evidenceStrength` widens an uncertainty band; it does not scale any
+   published number, exactly as the `conf` field does not.
+
    CURATION SCOPE. Every operational incident inside ACTIVE_HORIZON_DAYS
    of the snapshot date is curated here explicitly; the data audit HARD
    FAILS if one is missing. Archived operational records older than that
@@ -48,11 +71,19 @@
    90*log2(1000) ~ 897 d) — is inside the curated set. */
 export const ACTIVE_HORIZON_DAYS = 900;
 
-const E = (exposure, exposureBasis, profile, profileBasis) => Object.freeze({
+const E = (exposure, exposureBasis, profile, profileBasis, extra = {}) => Object.freeze({
   exposure: Object.freeze({ ...exposure }),
   exposureBasis,
   profile: Object.freeze({ ...profile }),
   profileBasis,
+  /* Optional uncertainty metadata — see the header. Absent means "not
+     individually graded", which the curation analysis counts rather than
+     silently treating as confident. */
+  ...(extra.evidenceStrength ? { evidenceStrength: extra.evidenceStrength } : {}),
+  ...(extra.exposureLow ? { exposureLow: Object.freeze({ ...extra.exposureLow }) } : {}),
+  ...(extra.exposureHigh ? { exposureHigh: Object.freeze({ ...extra.exposureHigh }) } : {}),
+  ...(extra.altProfile ? { altProfile: Object.freeze({ ...extra.altProfile }) } : {}),
+  ...(extra.uncertaintyBasis ? { uncertaintyBasis: extra.uncertaintyBasis } : {}),
 });
 
 export const EVENT_MODEL = Object.freeze({
@@ -62,12 +93,24 @@ export const EVENT_MODEL = Object.freeze({
     'The record describes commodity-DRAM wafer starts being moved onto HBM, so the memory-fab stage carries most of the footprint. HBM is named as the destination of those wafer starts rather than as a disrupted stage, hence the low exposure. System builders and consumer devices are the price-taking side the record names explicitly.',
     { kind: 'market_exponential' },
     'An allocation and pricing move with no capacity destroyed: it unwinds on a contracting and qualification timescale, not a repair one.',
+  
+    {
+      evidenceStrength: 'moderate',
+      altProfile: { kind: 'acute_exponential' },
+      uncertaintyBasis: 'The spot print and the reallocation are sourced; the downstream bill-of-materials effects are explicitly flagged as inference in the record itself.',
+    },
   ),
   h2607_kumamoto: E(
     { mature_fab: 0.30, analog: 0.45, m_auto: 0.35, m_consumer: 0.15 },
     'Named affected sites are JASM (specialty/mature logic), Sony Kumamoto image sensors and Renesas automotive MCU lines (both analog/sensor), and Toyota and Honda Kyushu assembly. Each is the Kyushu share of a global stage, not the whole stage: analog carries the largest exposure because two of the named operators sit there and one remains shut.',
     { kind: 'outage_recovery', recoveryStartDays: 7 },
     'The record and its recovery updates give named plants restarting on named dates from 4 August 2026, seven days after the 28 July quake, with residual loss at Kawashiri into late August — a staged restart, so the decline is linear from day 7 over the registry recovery duration, not an exponential decay.',
+  
+    {
+      evidenceStrength: 'strong',
+      altProfile: { kind: 'acute_exponential' },
+      uncertaintyBasis: 'Named operators, named sites and dated restarts, so the scope is unusually well specified for this table. The alternative profile is the honest competing reading: if the staged restart had not been separately reported, this would have been scored as an ordinary acute outage.',
+    },
   ),
   e1: E(
     { logic_ai: 0.90, hbm: 0.70, adv_fab: 0.35, adv_pkg: 0.30 },
@@ -104,6 +147,12 @@ export const EVENT_MODEL = Object.freeze({
     'A near-doubling of contract DRAM prices is a whole-stage condition for memory fabs. Consumer devices carry the larger downstream exposure because memory is a larger share of their bill of materials than of an AI system.',
     { kind: 'market_exponential' },
     'A price and allocation peak: the record itself states momentum begins cooling at consumer affordability limits, i.e. a commercial-timescale decay.',
+  
+    {
+      evidenceStrength: 'moderate',
+      altProfile: { kind: 'acute_exponential' },
+      uncertaintyBasis: 'The price move is quantified, but how much of each downstream stage it touches is inferred from bill-of-materials share rather than reported. The alternative profile tests reading the peak as a short shock rather than a commercial-timescale one.',
+    },
   ),
   h2601_ease: E(
     { logic_ai: 0.45, m_ai: 0.55 },
@@ -122,6 +171,11 @@ export const EVENT_MODEL = Object.freeze({
     'The suspension covers the sweeping October materials controls, which are a materials-stage measure; analog is relieved only through the parts that consume them.',
     { kind: 'persistent_policy', effectiveAfterDays: 8, expiresAfterDays: 376 },
     'The record carries an explicit dated window: agreed 30 October 2025, formalized 7 November 2025 (day 8), expiring 10 November 2026 (day 376) unless extended. A suspension is either in force or it is not — it does not fade — so it is modelled as in force across that interval and zero outside it.',
+  
+    {
+      evidenceStrength: 'strong',
+      uncertaintyBasis: 'The suspension carries an agreement date, a formalization date and a stated expiry, so the window is read from the record rather than assumed.',
+    },
   ),
   h2510_reemax: E(
     { gases: 0.85, analog: 0.35, m_auto: 0.40, m_ai: 0.25 },
@@ -134,6 +188,12 @@ export const EVENT_MODEL = Object.freeze({
     'Nexperia is one operator, so its share of the analog, mature-fab and OSAT stages is partial. Automotive carries the largest exposure because the record describes auto production cuts as the realized consequence of roughly 70% of Nexperia packaged output being frozen.',
     { kind: 'outage_recovery', recoveryStartDays: 32 },
     'The record states partial Chinese exemptions from November 2025 eased the squeeze — roughly 32 days after the 30 September seizure — so the effect declines from that point rather than decaying from day zero.',
+  
+    {
+      evidenceStrength: 'moderate',
+      altProfile: { kind: 'market_exponential' },
+      uncertaintyBasis: 'The frozen output share is reported, but the recovery start is inferred from "partial exemptions from November". The alternative treats the episode as a commercial re-sourcing rather than a staged restart.',
+    },
   ),
   x2509_affiliates: E(
     { depo: 0.35, etch: 0.35, metro: 0.35, mature_fab: 0.20, memory_fab: 0.25 },
@@ -146,6 +206,11 @@ export const EVENT_MODEL = Object.freeze({
     'Revoking validated end-user authorisations for two operators\' China fabs affects those fabs\' tool inflow across every equipment stage named, and the memory-fab stage through the plants themselves. Litho is lower because it was already the most tightly licensed stage before the revocation.',
     { kind: 'persistent_policy', effectiveAfterDays: 124 },
     'The record gives an explicit effective date: notice issued 29 August 2025, effective 31 December 2025, i.e. day 124. This is a standing revocation of a named authorisation that is NOT represented in the structural policy register, and it has not been superseded, so it is in force with no expiry.',
+  
+    {
+      evidenceStrength: 'strong',
+      uncertaintyBasis: 'Notice date and effective date are both stated in the record.',
+    },
   ),
   h2507_h20back: E(
     { logic_ai: 0.40, m_ai: 0.55 },
@@ -170,6 +235,11 @@ export const EVENT_MODEL = Object.freeze({
     'All three vendors suspended Chinese sales and support, so most of the EDA stage is in scope and design work in progress genuinely stopped. The fab stages are exposed only through tape-outs that were in flight.',
     { kind: 'persistent_policy', effectiveAfterDays: 0, expiresAfterDays: 36 },
     'The record carries both boundary dates: suspensions began 28 May 2025 and restrictions were lifted 3 July 2025, a 36-day window. Modelled as fully in force inside that window and exactly zero after it, which is what "lifted" means.',
+  
+    {
+      evidenceStrength: 'strong',
+      uncertaintyBasis: 'Both boundary dates are in the record and all three vendors confirmed suspension, so the in-force window is directly evidenced rather than inferred.',
+    },
   ),
   h2505_rescind: E(
     { logic_ai: 0.35, m_ai: 0.45 },
@@ -200,6 +270,11 @@ export const EVENT_MODEL = Object.freeze({
     'A due-diligence rule imposes a compliance burden across foundry and packaging rather than removing capacity, so exposures are moderate and roughly even across the stages named.',
     { kind: 'market_exponential' },
     'A due-diligence obligation absorbed into standard practice over a commercial cycle.',
+  
+    {
+      evidenceStrength: 'weak',
+      uncertaintyBasis: 'A due-diligence obligation with no reported output effect. The exposures represent compliance burden, which the record does not quantify.',
+    },
   ),
   h2412_gaban: E(
     { gases: 0.70, analog: 0.25 },
@@ -224,12 +299,22 @@ export const EVENT_MODEL = Object.freeze({
     'Controls on quantum, GAAFET and advanced additive technologies are forward-looking: they touch the leading-edge fraction of each stage rather than current volume output.',
     { kind: 'market_exponential' },
     'A prospective-technology control whose current-period bite is licensing friction.',
+  
+    {
+      evidenceStrength: 'weak',
+      uncertaintyBasis: 'A forward-looking technology control. What fraction of current output it touches is not stated and is arguably near zero; the exposures are a judgement about leading-edge share.',
+    },
   ),
   h2405_huawei: E(
     { design: 0.20, logic_ai: 0.15, m_consumer: 0.20 },
     'Revoking licences for one buyer is a single-customer cut, so the share of each stage exposed is small and the record itself describes a modest magnitude.',
     { kind: 'market_exponential' },
     'A single-buyer supply cutoff absorbed commercially.',
+  
+    {
+      evidenceStrength: 'weak',
+      uncertaintyBasis: 'A single-buyer licence revocation whose share of each stage is not reported anywhere in the record; the exposures are an order-of-magnitude judgement.',
+    },
   ),
   h2404_hualien: E(
     { adv_fab: 0.30, memory_fab: 0.20 },

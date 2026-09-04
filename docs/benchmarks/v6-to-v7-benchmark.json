@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-03T19:01:14.595Z",
+  "generatedAt": "2026-09-04T05:54:41.140Z",
   "from": {
     "modelVersion": "sscim-model-v6-client-sensitivity",
     "datasetAsOf": "2026-08-29",
@@ -7,8 +7,11 @@
     "commit": "7749dc869d76a70fa1a4c09928c96f4a2c2e14cc"
   },
   "to": {
-    "modelVersion": "sscim-model-v7-exposure-robustness",
-    "datasetAsOf": "2026-08-29"
+    "modelVersion": "sscim-model-v7.1-exposure-robustness",
+    "datasetAsOf": "2026-08-29",
+    "snapshotDate": "2026-09-04",
+    "backDatedByDays": 6,
+    "backDatingNote": "The committed snapshot is dated 2026-09-04. Every incident was re-aged back 6 day(s) using the engine's own back-dating rule, and incidents dated after 2026-08-29 were excluded, so this is a MATCHED-DATE model comparison against the frozen v6 reference."
   },
   "disclaimer": "v6 results are preserved with their original model version and are NOT restated as v7. This document compares two models over the same snapshot; it does not imply the v7 numbers were published at the time the v6 numbers were.",
   "headline": {
@@ -455,42 +458,65 @@
     {
       "label": "v7 base",
       "note": "The published v7 result.",
+      "params": {},
       "headlineIndex": 6.120182
     },
     {
       "label": "v7 with the v6 HHI convention",
       "note": "v6 always added the squared residual, which is the v7 upper bound — so this is unchanged from base and confirms the HHI change moved no headline number, only the published interval.",
+      "params": {
+        "hhiResidual": "upper"
+      },
       "headlineIndex": 6.120182
     },
     {
       "label": "v7 with the lower HHI bound",
       "note": "The optimistic completion of the unobserved residual. Affects structural scores, not the operational field.",
+      "params": {
+        "hhiResidual": "lower"
+      },
       "headlineIndex": 6.120182
     },
     {
       "label": "v7 with max incident aggregation",
       "note": "Only the single largest incident counts per stage. Isolates how much of the headline number is cumulative rather than dominant.",
+      "params": {
+        "incidentAggregation": "max"
+      },
       "headlineIndex": 5.74735
     },
     {
       "label": "v7 with clipped-sum incident aggregation",
       "note": "Fully additive up to the bound. The upper end of the aggregation model form.",
+      "params": {
+        "incidentAggregation": "clipped_sum"
+      },
       "headlineIndex": 6.253939
     },
     {
       "label": "v7 with equal stage weighting",
       "note": "Drops the turnover proxy entirely from the headline weighting.",
+      "params": {
+        "stageWeighting": "equal"
+      },
       "headlineIndex": 5.956351
     },
     {
       "label": "v7 with log-turnover stage weighting",
-      "note": "Compresses the turnover skew; closest to the v6 max-normalized log1p weighting, which did NOT sum to one.",
+      "note": "This is the closest setting to v6's EFFECTIVE weighting. v6 stored max-normalized log1p weights, which did not themselves sum to one — but the headline index divided by their sum, so the normalization happened downstream and the effective v6 weighting was simply proportional to log1p(turnover). The substantive v7 change is therefore from effective LOG-turnover weighting to RAW-turnover weighting, not from unnormalized weights to normalized ones.",
+      "params": {
+        "stageWeighting": "log_turnover"
+      },
       "headlineIndex": 6.044778
     },
     {
-      "label": "v7 with a 12-day market half-life (the single v6 half-life)",
-      "note": "The nearest v7 setting to v6's single 12-day half-life for every event class. Isolates most of the headline movement: v6 decayed policy, allocation and pricing incidents as fast as a fab inspection.",
-      "headlineIndex": 5.706202
+      "label": "v7 with every exponential half-life set to 12 days",
+      "note": "Both exponential classes set to v6's single 12-day half-life, which is the closest a PARAMETER change can come to v6 persistence. It is NOT a reconstruction of v6, and the remaining differences are model form rather than parameter value: incidents on the outage_recovery profile still decline along a staged linear schedule instead of decaying, incidents on persistent_policy are still in force or not rather than fading, and strategic_context incidents are still unscored. v6 had none of those profiles — it decayed every class exponentially at 12 days. This ablation therefore isolates MOST of the persistence effect, not all of it.",
+      "params": {
+        "marketHalfLifeDays": 12,
+        "acuteHalfLifeDays": 12
+      },
+      "headlineIndex": 5.50029
     }
   ],
   "materialChangesByCause": [
@@ -498,7 +524,7 @@
       "change": "Event-specific persistence replaces one global 12-day half-life",
       "direction": "raises the headline index",
       "why": "v6 decayed every incident class at the same 12-day half-life, so a standing export-control regime and a same-week fab inspection faded identically and almost everything older than a quarter contributed nothing. v7 gives allocation, pricing and licensing incidents a market half-life (base 45 d), outages a staged linear recovery, and standing controls a dated in-force window. More of the recorded operational history is therefore live at the snapshot date. This is the single largest contributor to the headline movement — see the 12-day ablation.",
-      "evidence": "ablations[\"v7 with a 12-day market half-life (the single v6 half-life)\"]"
+      "evidence": "ablations[\"v7 with every exponential half-life set to 12 days\"] — and note that ablation is not a v6 reconstruction; see its own note."
     },
     {
       "change": "Multi-stage full-shock multiplication removed",
@@ -528,9 +554,9 @@
       "evidence": "stages[].policy"
     },
     {
-      "change": "Stage economic weights are normalized to sum to one",
+      "change": "Stage weighting moves from effective LOG-turnover to RAW turnover",
       "direction": "changes the headline weighting AND every weight-derived measure — network influence moves the most of any published number",
-      "why": "v6 weighted by a MAX-normalized log1p transform, so the weights summed to an arbitrary number and the headline index was a weighted mean with a hand-shaped denominator. v7 normalizes turnover directly to a partition of one, which is what makes the country chain contributions reconcile to the headline index exactly. The log1p transform also compressed the turnover range hard: a 500B stage and a 3B stage differed by about 2.5x in v6 weight and by about 170x in v7. Network influence sums the propagated field against these weights, so it re-ranks accordingly, and structural vulnerability moves with it. This is a change in the WEIGHTING, not in any stage field: the operational field per stage is unaffected by it.",
+      "why": "The v6 stored weights were a max-normalized log1p transform and did not sum to one, but that is not the substantive difference: the headline index divided by their sum, so the normalization happened downstream and the EFFECTIVE v6 weighting was proportional to log1p(turnover). v7 weights by raw turnover normalized to a partition of one. The real change is therefore the TRANSFORM, not the normalization — and the transform matters a great deal, because log1p compresses the range hard: final systems (500B) and photoresists (3B) differ by about 4.5x in effective v6 weight and about 167x in v7. Network influence sums the propagated field against these weights, so it re-ranks accordingly, and structural vulnerability moves with it. Normalizing directly is still what makes the country chain contributions reconcile to the headline index exactly. This is a change in the WEIGHTING, not in any stage field: the operational field per stage is unaffected by it.",
       "evidence": "stages[].economicWeight, stages[].networkInfluence, summaryOfDifferences.stageNetworkInfluence"
     },
     {
@@ -555,8 +581,8 @@
   "summaryOfDifferences": {
     "stageStructural": {
       "n": 24,
-      "maxAbsDelta": 1.31668,
-      "meanAbsDelta": 0.819501
+      "maxAbsDelta": 1.521833,
+      "meanAbsDelta": 0.72442021
     },
     "stageOperationalField": {
       "n": 24,
@@ -570,13 +596,13 @@
     },
     "stageNetworkInfluence": {
       "n": 24,
-      "maxAbsDelta": 4.740046,
-      "meanAbsDelta": 2.92020363
+      "maxAbsDelta": 5.478599,
+      "meanAbsDelta": 2.59791288
     },
     "countryStructural": {
       "n": 16,
-      "maxAbsDelta": 1.172683,
-      "meanAbsDelta": 0.83731375
+      "maxAbsDelta": 0.906475,
+      "meanAbsDelta": 0.50764363
     }
   },
   "hazards": [
@@ -712,16 +738,16 @@
       "id": "research",
       "structural": {
         "v6": 3.398502,
-        "v7": 2.273152,
-        "delta": -1.12535
+        "v7": 3.132468,
+        "delta": -0.266034
       },
       "networkInfluence": {
         "v6": 5.654609,
-        "v7": 1.603347,
-        "delta": -4.051262
+        "v7": 4.696884,
+        "delta": -0.957725
       },
       "networkInfluenceRaw": {
-        "v7": 0.04556116,
+        "v7": 0.03737785,
         "note": "Published separately in v7; v6 published only the snapshot-relative 0-10 score."
       },
       "geo": {
@@ -752,16 +778,16 @@
       "id": "eda",
       "structural": {
         "v6": 4.19642,
-        "v7": 3.384398,
-        "delta": -0.812022
+        "v7": 4.053251,
+        "delta": -0.143169
       },
       "networkInfluence": {
         "v6": 4.159911,
-        "v7": 1.236632,
-        "delta": -2.923279
+        "v7": 3.644502,
+        "delta": -0.515409
       },
       "networkInfluenceRaw": {
-        "v7": 0.03514046,
+        "v7": 0.02900298,
         "note": "Published separately in v7; v6 published only the snapshot-relative 0-10 score."
       },
       "geo": {
@@ -792,16 +818,16 @@
       "id": "design",
       "structural": {
         "v6": 4.391948,
-        "v7": 3.794103,
-        "delta": -0.597845
+        "v7": 3.088833,
+        "delta": -1.303115
       },
       "networkInfluence": {
         "v6": 6.164613,
-        "v7": 4.012371,
-        "delta": -2.152242
+        "v7": 1.473398,
+        "delta": -4.691215
       },
       "networkInfluenceRaw": {
-        "v7": 0.11401664,
+        "v7": 0.01172532,
         "note": "Published separately in v7; v6 published only the snapshot-relative 0-10 score."
       },
       "geo": {
@@ -832,16 +858,16 @@
       "id": "wafers",
       "structural": {
         "v6": 5.294014,
-        "v7": 4.303786,
-        "delta": -0.990228
+        "v7": 4.797969,
+        "delta": -0.496045
       },
       "networkInfluence": {
         "v6": 4.55685,
-        "v7": 0.992031,
-        "delta": -3.564819
+        "v7": 2.771089,
+        "delta": -1.785761
       },
       "networkInfluenceRaw": {
-        "v7": 0.02818983,
+        "v7": 0.02205235,
         "note": "Published separately in v7; v6 published only the snapshot-relative 0-10 score."
       },
       "geo": {
@@ -872,16 +898,16 @@
       "id": "resist",
       "structural": {
         "v6": 5.57764,
-        "v7": 4.657468,
-        "delta": -0.920172
+        "v7": 5.12398,
+        "delta": -0.45366
       },
       "networkInfluence": {
         "v6": 4.025906,
-        "v7": 0.713283,
-        "delta": -3.312623
+        "v7": 2.392729,
+        "delta": -1.633177
       },
       "networkInfluenceRaw": {
-        "v7": 0.02026886,
+        "v7": 0.01904136,
         "note": "Published separately in v7; v6 published only the snapshot-relative 0-10 score."
       },
       "geo": {
@@ -912,16 +938,16 @@
       "id": "gases",
       "structural": {
         "v6": 5.058796,
-        "v7": 3.742116,
-        "delta": -1.31668
+        "v7": 4.212581,
+        "delta": -0.846215
       },
       "networkInfluence": {
         "v6": 5.558864,
-        "v7": 0.818818,
-        "delta": -4.740046
+        "v7": 2.512491,
+        "delta": -3.046373
       },
       "networkInfluenceRaw": {
-        "v7": 0.02326775,
+        "v7": 0.01999443,
         "note": "Published separately in v7; v6 published only the snapshot-relative 0-10 score."
       },
       "geo": {
@@ -952,16 +978,16 @@
       "id": "substrates",
       "structural": {
         "v6": 3.281276,
-        "v7": 2.541971,
-        "delta": -0.739305
+        "v7": 2.811543,
+        "delta": -0.469733
       },
       "networkInfluence": {
         "v6": 3.278994,
-        "v7": 0.617496,
-        "delta": -2.661498
+        "v7": 1.587954,
+        "delta": -1.69104
       },
       "networkInfluenceRaw": {
-        "v7": 0.01754694,
+        "v7": 0.01263695,
         "note": "Published separately in v7; v6 published only the snapshot-relative 0-10 score."
       },
       "geo": {
@@ -992,16 +1018,16 @@
       "id": "litho",
       "structural": {
         "v6": 8.004899,
-        "v7": 6.788438,
-        "delta": -1.216461
+        "v7": 7.340281,
+        "delta": -0.664618
       },
       "networkInfluence": {
         "v6": 5.592036,
-        "v7": 1.372776,
-        "delta": -4.21926
+        "v7": 3.359412,
+        "delta": -2.232624
       },
       "networkInfluenceRaw": {
-        "v7": 0.03900919,
+        "v7": 0.02673423,
         "note": "Published separately in v7; v6 published only the snapshot-relative 0-10 score."
       },
       "geo": {
@@ -1032,16 +1058,16 @@
       "id": "depo",
       "structural": {
         "v6": 5.903679,
-        "v7": 4.900838,
-        "delta": -1.002841
+        "v7": 5.225767,
+        "delta": -0.677912
       },
       "networkInfluence": {
         "v6": 4.145243,
-        "v7": 0.855016,
-        "delta": -3.290227
+        "v7": 2.02476,
+        "delta": -2.120483
       },
       "networkInfluenceRaw": {
-        "v7": 0.02429637,
+        "v7": 0.01611306,
         "note": "Published separately in v7; v6 published only the snapshot-relative 0-10 score."
       },
       "geo": {
@@ -1072,16 +1098,16 @@
       "id": "etch",
       "structural": {
         "v6": 6.016204,
-        "v7": 5.011922,
-        "delta": -1.004282
+        "v7": 5.265943,
+        "delta": -0.750261
       },
       "networkInfluence": {
         "v6": 4.091135,
-        "v7": 0.795719,
-        "delta": -3.295416
+        "v7": 1.710194,
+        "delta": -2.380941
       },
       "networkInfluenceRaw": {
-        "v7": 0.02261138,
+        "v7": 0.01360974,
         "note": "Published separately in v7; v6 published only the snapshot-relative 0-10 score."
       },
       "geo": {
@@ -1112,16 +1138,16 @@
       "id": "cmp",
       "structural": {
         "v6": 3.113051,
-        "v7": 2.575391,
-        "delta": -0.53766
+        "v7": 2.726359,
+        "delta": -0.386692
       },
       "networkInfluence": {
         "v6": 2.266983,
-        "v7": 0.331409,
-        "delta": -1.935574
+        "v7": 0.874894,
+        "delta": -1.392089
       },
       "networkInfluenceRaw": {
-        "v7": 0.0094174,
+        "v7": 0.00696241,
         "note": "Published separately in v7; v6 published only the snapshot-relative 0-10 score."
       },
       "geo": {
@@ -1152,16 +1178,16 @@
       "id": "metro",
       "structural": {
         "v6": 6.319269,
-        "v7": 5.384332,
-        "delta": -0.934937
+        "v7": 5.755947,
+        "delta": -0.563322
       },
       "networkInfluence": {
         "v6": 3.82617,
-        "v7": 0.780394,
-        "delta": -3.045776
+        "v7": 2.118211,
+        "delta": -1.707959
       },
       "networkInfluenceRaw": {
-        "v7": 0.02217589,
+        "v7": 0.01685674,
         "note": "Published separately in v7; v6 published only the snapshot-relative 0-10 score."
       },
       "geo": {
@@ -1192,16 +1218,16 @@
       "id": "adv_fab",
       "structural": {
         "v6": 7.876976,
-        "v7": 6.837417,
-        "delta": -1.039559
+        "v7": 8.143016,
+        "delta": 0.26604
       },
       "networkInfluence": {
         "v6": 7.730715,
-        "v7": 4.228302,
-        "delta": -3.502413
+        "v7": 8.928457,
+        "delta": 1.197742
       },
       "networkInfluenceRaw": {
-        "v7": 0.12015258,
+        "v7": 0.07105274,
         "note": "Published separately in v7; v6 published only the snapshot-relative 0-10 score."
       },
       "geo": {
@@ -1232,16 +1258,16 @@
       "id": "mature_fab",
       "structural": {
         "v6": 4.845874,
-        "v7": 3.885905,
-        "delta": -0.959969
+        "v7": 3.936507,
+        "delta": -0.909367
       },
       "networkInfluence": {
         "v6": 5.966746,
-        "v7": 1.87086,
-        "delta": -4.095886
+        "v7": 2.053024,
+        "delta": -3.913722
       },
       "networkInfluenceRaw": {
-        "v7": 0.05316286,
+        "v7": 0.01633798,
         "note": "Published separately in v7; v6 published only the snapshot-relative 0-10 score."
       },
       "geo": {
@@ -1272,16 +1298,16 @@
       "id": "memory_fab",
       "structural": {
         "v6": 5.824723,
-        "v7": 4.560722,
-        "delta": -1.264001
+        "v7": 4.603138,
+        "delta": -1.221585
       },
       "networkInfluence": {
         "v6": 7.209803,
-        "v7": 2.659398,
-        "delta": -4.550405
+        "v7": 2.812097,
+        "delta": -4.397706
       },
       "networkInfluenceRaw": {
-        "v7": 0.07557019,
+        "v7": 0.0223787,
         "note": "Published separately in v7; v6 published only the snapshot-relative 0-10 score."
       },
       "geo": {
@@ -1312,16 +1338,16 @@
       "id": "logic_ai",
       "structural": {
         "v6": 6.948361,
-        "v7": 6.556264,
-        "delta": -0.392097
+        "v7": 5.644604,
+        "delta": -1.303757
       },
       "networkInfluence": {
         "v6": 6.1349,
-        "v7": 4.723352,
-        "delta": -1.411548
+        "v7": 1.441374,
+        "delta": -4.693526
       },
       "networkInfluenceRaw": {
-        "v7": 0.13422005,
+        "v7": 0.01147046,
         "note": "Published separately in v7; v6 published only the snapshot-relative 0-10 score."
       },
       "geo": {
@@ -1352,16 +1378,16 @@
       "id": "analog",
       "structural": {
         "v6": 4.973399,
-        "v7": 4.02383,
-        "delta": -0.949569
+        "v7": 3.932843,
+        "delta": -1.040556
       },
       "networkInfluence": {
         "v6": 5.091036,
-        "v7": 1.672587,
-        "delta": -3.418449
+        "v7": 1.345035,
+        "delta": -3.746001
       },
       "networkInfluenceRaw": {
-        "v7": 0.04752868,
+        "v7": 0.0107038,
         "note": "Published separately in v7; v6 published only the snapshot-relative 0-10 score."
       },
       "geo": {
@@ -1392,16 +1418,16 @@
       "id": "hbm",
       "structural": {
         "v6": 6.897192,
-        "v7": 6.018704,
-        "delta": -0.878488
+        "v7": 6.265593,
+        "delta": -0.631599
       },
       "networkInfluence": {
         "v6": 4.008292,
-        "v7": 0.845733,
-        "delta": -3.162559
+        "v7": 1.734534,
+        "delta": -2.273758
       },
       "networkInfluenceRaw": {
-        "v7": 0.02403257,
+        "v7": 0.01380344,
         "note": "Published separately in v7; v6 published only the snapshot-relative 0-10 score."
       },
       "geo": {
@@ -1432,16 +1458,16 @@
       "id": "adv_pkg",
       "structural": {
         "v6": 5.610131,
-        "v7": 4.795959,
-        "delta": -0.814172
+        "v7": 6.285192,
+        "delta": 0.675061
       },
       "networkInfluence": {
         "v6": 5.916472,
-        "v7": 2.985454,
-        "delta": -2.931018
+        "v7": 8.346691,
+        "delta": 2.430219
       },
       "networkInfluenceRaw": {
-        "v7": 0.08483548,
+        "v7": 0.06642304,
         "note": "Published separately in v7; v6 published only the snapshot-relative 0-10 score."
       },
       "geo": {
@@ -1472,16 +1498,16 @@
       "id": "osat",
       "structural": {
         "v6": 3.287953,
-        "v7": 2.483662,
-        "delta": -0.804291
+        "v7": 3.477399,
+        "delta": 0.189446
       },
       "networkInfluence": {
         "v6": 5.087031,
-        "v7": 2.191584,
-        "delta": -2.895447
+        "v7": 5.769036,
+        "delta": 0.682005
       },
       "networkInfluenceRaw": {
-        "v7": 0.06227666,
+        "v7": 0.04591004,
         "note": "Published separately in v7; v6 published only the snapshot-relative 0-10 score."
       },
       "geo": {
@@ -1521,7 +1547,7 @@
         "delta": 0
       },
       "networkInfluenceRaw": {
-        "v7": 0.28416275,
+        "v7": 0.07958009,
         "note": "Published separately in v7; v6 published only the snapshot-relative 0-10 score."
       },
       "geo": {
@@ -1552,16 +1578,16 @@
       "id": "m_ai",
       "structural": {
         "v6": 3.963611,
-        "v7": 3.841678,
-        "delta": -0.121933
+        "v7": 2.441778,
+        "delta": -1.521833
       },
       "networkInfluence": {
         "v6": 5.478599,
-        "v7": 5.039642,
-        "delta": -0.438957
+        "v7": 0,
+        "delta": -5.478599
       },
       "networkInfluenceRaw": {
-        "v7": 0.14320786,
+        "v7": 0,
         "note": "Published separately in v7; v6 published only the snapshot-relative 0-10 score."
       },
       "geo": {
@@ -1592,16 +1618,16 @@
       "id": "m_auto",
       "structural": {
         "v6": 3.771973,
-        "v7": 2.960641,
-        "delta": -0.811332
+        "v7": 2.600667,
+        "delta": -1.171306
       },
       "networkInfluence": {
         "v6": 4.216702,
-        "v7": 1.295908,
-        "delta": -2.920794
+        "v7": 0,
+        "delta": -4.216702
       },
       "networkInfluenceRaw": {
-        "v7": 0.03682488,
+        "v7": 0,
         "note": "Published separately in v7; v6 published only the snapshot-relative 0-10 score."
       },
       "geo": {
@@ -1632,16 +1658,16 @@
       "id": "m_consumer",
       "structural": {
         "v6": 4.156981,
-        "v7": 3.722151,
-        "delta": -0.43483
+        "v7": 2.722222,
+        "delta": -1.434759
       },
       "networkInfluence": {
         "v6": 5.165133,
-        "v7": 3.599744,
-        "delta": -1.565389
+        "v7": 0,
+        "delta": -5.165133
       },
       "networkInfluenceRaw": {
-        "v7": 0.10229133,
+        "v7": 0,
         "note": "Published separately in v7; v6 published only the snapshot-relative 0-10 score."
       },
       "geo": {
@@ -1674,8 +1700,8 @@
       "id": "us",
       "structural": {
         "v6": 5.097438,
-        "v7": 4.360402,
-        "delta": -0.737036
+        "v7": 4.320286,
+        "delta": -0.777152
       },
       "localPressure": {
         "v6Operational": 0.1983871,
@@ -1690,8 +1716,8 @@
       "id": "cn",
       "structural": {
         "v6": 4.685611,
-        "v7": 4.003558,
-        "delta": -0.682053
+        "v7": 3.959286,
+        "delta": -0.726325
       },
       "localPressure": {
         "v6Operational": 0.15887475,
@@ -1706,8 +1732,8 @@
       "id": "tw",
       "structural": {
         "v6": 5.410728,
-        "v7": 4.609846,
-        "delta": -0.800882
+        "v7": 5.297042,
+        "delta": -0.113686
       },
       "localPressure": {
         "v6Operational": 0.07347613,
@@ -1722,8 +1748,8 @@
       "id": "kr",
       "structural": {
         "v6": 5.812821,
-        "v7": 4.887642,
-        "delta": -0.925179
+        "v7": 5.074085,
+        "delta": -0.738736
       },
       "localPressure": {
         "v6Operational": 0.23695185,
@@ -1738,8 +1764,8 @@
       "id": "jp",
       "structural": {
         "v6": 4.948905,
-        "v7": 4.054959,
-        "delta": -0.893946
+        "v7": 4.289757,
+        "delta": -0.659148
       },
       "localPressure": {
         "v6Operational": 0.25644678,
@@ -1754,8 +1780,8 @@
       "id": "nl",
       "structural": {
         "v6": 7.653084,
-        "v7": 6.480401,
-        "delta": -1.172683
+        "v7": 6.994383,
+        "delta": -0.658701
       },
       "localPressure": {
         "v6Operational": 0.01832405,
@@ -1770,8 +1796,8 @@
       "id": "de",
       "structural": {
         "v6": 4.550996,
-        "v7": 3.669205,
-        "delta": -0.881791
+        "v7": 3.814393,
+        "delta": -0.736603
       },
       "localPressure": {
         "v6Operational": 0.08228722,
@@ -1786,8 +1812,8 @@
       "id": "fr",
       "structural": {
         "v6": 4.45194,
-        "v7": 3.38911,
-        "delta": -1.06283
+        "v7": 3.655401,
+        "delta": -0.796539
       },
       "localPressure": {
         "v6Operational": 0.08517087,
@@ -1802,8 +1828,8 @@
       "id": "uk",
       "structural": {
         "v6": 3.528082,
-        "v7": 2.471537,
-        "delta": -1.056545
+        "v7": 3.126776,
+        "delta": -0.401306
       },
       "localPressure": {
         "v6Operational": 0.00820281,
@@ -1818,8 +1844,8 @@
       "id": "be",
       "structural": {
         "v6": 3.398502,
-        "v7": 2.273152,
-        "delta": -1.12535
+        "v7": 3.132468,
+        "delta": -0.266034
       },
       "localPressure": {
         "v6Operational": 0.00531225,
@@ -1834,8 +1860,8 @@
       "id": "ie",
       "structural": {
         "v6": 7.876976,
-        "v7": 6.837417,
-        "delta": -1.039559
+        "v7": 8.143016,
+        "delta": 0.26604
       },
       "localPressure": {
         "v6Operational": 0.04300006,
@@ -1850,8 +1876,8 @@
       "id": "il",
       "structural": {
         "v6": 5.303426,
-        "v7": 4.479044,
-        "delta": -0.824382
+        "v7": 4.396951,
+        "delta": -0.906475
       },
       "localPressure": {
         "v6Operational": 0.04732914,
@@ -1866,8 +1892,8 @@
       "id": "sg",
       "structural": {
         "v6": 4.669112,
-        "v7": 4.081181,
-        "delta": -0.587931
+        "v7": 4.329193,
+        "delta": -0.339919
       },
       "localPressure": {
         "v6Operational": 0.09103143,
@@ -1882,8 +1908,8 @@
       "id": "my",
       "structural": {
         "v6": 4.488121,
-        "v7": 3.969312,
-        "delta": -0.518809
+        "v7": 4.696624,
+        "delta": 0.208503
       },
       "localPressure": {
         "v6Operational": 0.09272993,
@@ -1898,8 +1924,8 @@
       "id": "vn",
       "structural": {
         "v6": 4.674213,
-        "v7": 4.39046,
-        "delta": -0.283753
+        "v7": 4.336528,
+        "delta": -0.337685
       },
       "localPressure": {
         "v6Operational": 0.15316913,
@@ -1914,8 +1940,8 @@
       "id": "ph",
       "structural": {
         "v6": 3.287953,
-        "v7": 2.483662,
-        "delta": -0.804291
+        "v7": 3.477399,
+        "delta": 0.189446
       },
       "localPressure": {
         "v6Operational": 0.05713947,

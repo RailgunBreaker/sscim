@@ -38,8 +38,40 @@ if (!v6.frozen || !v6.modelVersion.startsWith('sscim-model-v6')) {
 }
 
 const bundle = JSON.parse(readFileSync(SNAPSHOT, 'utf8'));
-const data = buildVaultData(bundle);
-const datasetAsOf = bundle.meta?.snapshotDate;
+const rawData = buildVaultData(bundle);
+const snapshotDate = bundle.meta?.snapshotDate;
+
+/* --as-of <YYYY-MM-DD> RE-AGES the record set to a past date, so the
+   matched-date comparison against the frozen v6 reference stays
+   REPRODUCIBLE after the snapshot advances. Without it this comparison was
+   a one-shot artefact: once the dataset moved it could never be
+   regenerated, so a mistake inside it (and there was one — a mislabelled
+   ablation) could never be corrected either.
+
+   The re-ageing is the engine's own back-dating rule, not a second
+   implementation: an incident's age at date t is (daysAgo - t), and
+   incidents dated after t are excluded because they had not happened. */
+const asOfArg = (() => {
+  const i = process.argv.indexOf('--as-of');
+  return i >= 0 ? process.argv[i + 1] : null;
+})();
+
+const dayDiff = (a, b) => Math.round((Date.parse(`${a}T00:00:00Z`) - Date.parse(`${b}T00:00:00Z`)) / 86400000);
+
+let data = rawData;
+let datasetAsOf = snapshotDate;
+let backDatedBy = 0;
+if (asOfArg) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(asOfArg)) { console.error(`--as-of expects YYYY-MM-DD, got "${asOfArg}"`); process.exit(1); }
+  backDatedBy = dayDiff(snapshotDate, asOfArg);
+  if (backDatedBy < 0) { console.error(`--as-of ${asOfArg} is AFTER the snapshot date ${snapshotDate}; the record set does not exist yet.`); process.exit(1); }
+  const shifted = rawData.EVENTS
+    .filter((e) => (e.daysAgo ?? 0) - backDatedBy >= 0)
+    .map((e) => ({ ...e, daysAgo: (e.daysAgo ?? 0) - backDatedBy }));
+  data = { ...rawData, EVENTS: shifted };
+  datasetAsOf = asOfArg;
+}
+
 const engine = buildEngine({ ...data, datasetAsOf });
 const model = buildModel({ data, engine });
 
@@ -62,11 +94,12 @@ const model = buildModel({ data, engine });
 
    --allow-date-mismatch forces it, into a separate, clearly named file. */
 const ALLOW_MISMATCH = process.argv.includes('--allow-date-mismatch');
-const DATE_MISMATCH = v6.datasetAsOf !== engine.MODEL_PRIORS.datasetAsOf;
+const DATE_MISMATCH = v6.datasetAsOf !== datasetAsOf;
 
 if (DATE_MISMATCH && !ALLOW_MISMATCH) {
   console.log('SSCIM v6 -> v7 benchmark — SKIPPED, and the committed comparison is left untouched.');
-  console.log(`  The frozen v6 reference is dated ${v6.datasetAsOf}; this snapshot is ${engine.MODEL_PRIORS.datasetAsOf}.`);
+  console.log(`  The frozen v6 reference is dated ${v6.datasetAsOf}; this run is at ${datasetAsOf}.`);
+  console.log(`  To regenerate the matched-date comparison, re-age the record set:  npm run benchmark -- --as-of ${v6.datasetAsOf}`);
   console.log('  Recomputing now would mix the v6->v7 MODEL change with a DATA change, and the two would be');
   console.log('  inseparable in every number. The v6 engine is gone, so the reference cannot be re-frozen at the');
   console.log(`  new date either. ${OUT.split(/[\\/]/).pop()} therefore remains the matched-date comparison, at ${v6.datasetAsOf}.`);
@@ -106,9 +139,19 @@ const hazards = HAZARD_POINTS.map((p) => {
    Two of the v7 changes CAN be isolated on the shipped data, by rerunning
    v7 with that one decision reverted to its v6 form. The rest cannot be
    isolated without reinstating v6 code, and are attributed in prose. */
+/* `params` is recorded in the output, not just applied. The v7.0 benchmark
+   labelled one experiment "a 12-day market half-life" while actually running
+   21 and 7 days — a label that described an experiment nobody ran. The
+   recorded parameters make that checkable, and benchmarkLabels.test.js
+   fails the build if a label and its parameters disagree. */
 const ablation = (label, params, note) => {
   const e = buildEngine({ ...data, datasetAsOf, params, computeHistory: false });
-  return { label, note, headlineIndex: round(e.toDisplayIndex(e.operationalIndex(e.operationalField(data.EVENTS)))) };
+  return {
+    label,
+    note,
+    params: params ?? {},
+    headlineIndex: round(e.toDisplayIndex(e.operationalIndex(e.operationalField(data.EVENTS)))),
+  };
 };
 
 const ablations = [
@@ -124,9 +167,16 @@ const ablations = [
   ablation('v7 with equal stage weighting', { stageWeighting: 'equal' },
     'Drops the turnover proxy entirely from the headline weighting.'),
   ablation('v7 with log-turnover stage weighting', { stageWeighting: 'log_turnover' },
-    'Compresses the turnover skew; closest to the v6 max-normalized log1p weighting, which did NOT sum to one.'),
-  ablation('v7 with a 12-day market half-life (the single v6 half-life)', { marketHalfLifeDays: 21, acuteHalfLifeDays: 7 },
-    'The nearest v7 setting to v6\'s single 12-day half-life for every event class. Isolates most of the headline movement: v6 decayed policy, allocation and pricing incidents as fast as a fab inspection.'),
+    'This is the closest setting to v6\'s EFFECTIVE weighting. v6 stored max-normalized log1p weights, which did not themselves sum '
+    + 'to one — but the headline index divided by their sum, so the normalization happened downstream and the effective v6 weighting '
+    + 'was simply proportional to log1p(turnover). The substantive v7 change is therefore from effective LOG-turnover weighting to '
+    + 'RAW-turnover weighting, not from unnormalized weights to normalized ones.'),
+  ablation('v7 with every exponential half-life set to 12 days', { marketHalfLifeDays: 12, acuteHalfLifeDays: 12 },
+    'Both exponential classes set to v6\'s single 12-day half-life, which is the closest a PARAMETER change can come to v6 persistence. '
+    + 'It is NOT a reconstruction of v6, and the remaining differences are model form rather than parameter value: incidents on the '
+    + 'outage_recovery profile still decline along a staged linear schedule instead of decaying, incidents on persistent_policy are '
+    + 'still in force or not rather than fading, and strategic_context incidents are still unscored. v6 had none of those profiles — '
+    + 'it decayed every class exponentially at 12 days. This ablation therefore isolates MOST of the persistence effect, not all of it.'),
 ];
 
 const stageRows = data.STAGES.map((s) => {
@@ -189,7 +239,15 @@ const spread = (rows, pick) => {
 const report = {
   generatedAt: new Date().toISOString(),
   from: { modelVersion: v6.modelVersion, datasetAsOf: v6.datasetAsOf, frozenAt: v6.generatedAt, commit: v6.commit },
-  to: { modelVersion: MODEL_VERSION, datasetAsOf: engine.MODEL_PRIORS.datasetAsOf },
+  to: {
+    modelVersion: MODEL_VERSION,
+    datasetAsOf,
+    snapshotDate,
+    backDatedByDays: backDatedBy,
+    backDatingNote: backDatedBy
+      ? `The committed snapshot is dated ${snapshotDate}. Every incident was re-aged back ${backDatedBy} day(s) using the engine's own back-dating rule, and incidents dated after ${datasetAsOf} were excluded, so this is a MATCHED-DATE model comparison against the frozen v6 reference.`
+      : 'Run directly against the committed snapshot with no back-dating.',
+  },
   disclaimer: 'v6 results are preserved with their original model version and are NOT restated as v7. This document compares two models over the same snapshot; it does not imply the v7 numbers were published at the time the v6 numbers were.',
   headline: {
     v6: v6.headline.baselineChainIndex,
@@ -206,7 +264,7 @@ const report = {
       change: 'Event-specific persistence replaces one global 12-day half-life',
       direction: 'raises the headline index',
       why: 'v6 decayed every incident class at the same 12-day half-life, so a standing export-control regime and a same-week fab inspection faded identically and almost everything older than a quarter contributed nothing. v7 gives allocation, pricing and licensing incidents a market half-life (base 45 d), outages a staged linear recovery, and standing controls a dated in-force window. More of the recorded operational history is therefore live at the snapshot date. This is the single largest contributor to the headline movement — see the 12-day ablation.',
-      evidence: 'ablations["v7 with a 12-day market half-life (the single v6 half-life)"]',
+      evidence: 'ablations["v7 with every exponential half-life set to 12 days"] — and note that ablation is not a v6 reconstruction; see its own note.',
     },
     {
       change: 'Multi-stage full-shock multiplication removed',
@@ -236,9 +294,9 @@ const report = {
       evidence: 'stages[].policy',
     },
     {
-      change: 'Stage economic weights are normalized to sum to one',
+      change: 'Stage weighting moves from effective LOG-turnover to RAW turnover',
       direction: 'changes the headline weighting AND every weight-derived measure — network influence moves the most of any published number',
-      why: 'v6 weighted by a MAX-normalized log1p transform, so the weights summed to an arbitrary number and the headline index was a weighted mean with a hand-shaped denominator. v7 normalizes turnover directly to a partition of one, which is what makes the country chain contributions reconcile to the headline index exactly. The log1p transform also compressed the turnover range hard: a 500B stage and a 3B stage differed by about 2.5x in v6 weight and by about 170x in v7. Network influence sums the propagated field against these weights, so it re-ranks accordingly, and structural vulnerability moves with it. This is a change in the WEIGHTING, not in any stage field: the operational field per stage is unaffected by it.',
+      why: 'The v6 stored weights were a max-normalized log1p transform and did not sum to one, but that is not the substantive difference: the headline index divided by their sum, so the normalization happened downstream and the EFFECTIVE v6 weighting was proportional to log1p(turnover). v7 weights by raw turnover normalized to a partition of one. The real change is therefore the TRANSFORM, not the normalization — and the transform matters a great deal, because log1p compresses the range hard: final systems (500B) and photoresists (3B) differ by about 4.5x in effective v6 weight and about 167x in v7. Network influence sums the propagated field against these weights, so it re-ranks accordingly, and structural vulnerability moves with it. Normalizing directly is still what makes the country chain contributions reconcile to the headline index exactly. This is a change in the WEIGHTING, not in any stage field: the operational field per stage is unaffected by it.',
       evidence: 'stages[].economicWeight, stages[].networkInfluence, summaryOfDifferences.stageNetworkInfluence',
     },
     {

@@ -35,9 +35,10 @@
        survives the whole box, it does not rest on the coefficients.
 
    NO UNSEEDED RANDOMNESS. Every sample is drawn from a seeded
-   deterministic generator, so two runs over the same snapshot produce
-   byte-identical output, and the sensitivity report can be regenerated
-   and diffed like any other build artefact.
+   deterministic generator, so the COMPUTED VALUES are identical run to
+   run for a given seed and snapshot. The written artefact is not
+   byte-identical, because it records a generation timestamp; the numerical
+   content is what reproduces, and that is the claim to make.
    ==================================================================== */
 import { PARAMETERS, STRUCTURAL_WEIGHT_SPECS, STRUCTURAL_COMPONENTS, MODEL_FORMS } from './registry.js';
 import { spearman } from './math.js';
@@ -110,19 +111,100 @@ export function sobolIndices({ yA, yB, yAB }) {
   const all = [...yA, ...yB];
   const varY = variance(all);
   const n = yA.length;
-  const first = [];
-  const total = [];
+  const degenerate = !(varY > 1e-15);
+
+  const firstRaw = [];
+  const totalRaw = [];
   for (const yABi of yAB) {
-    if (!(varY > 1e-15)) { first.push(0); total.push(0); continue; }
+    if (degenerate) { firstRaw.push(0); totalRaw.push(0); continue; }
     let sFirst = 0, sTotal = 0;
     for (let j = 0; j < n; j++) {
       sFirst += (yB[j] - yABi[j]) ** 2;
       sTotal += (yA[j] - yABi[j]) ** 2;
     }
-    first.push(Math.min(1, Math.max(0, (varY - sFirst / (2 * n)) / varY)));
-    total.push(Math.min(1, Math.max(0, (sTotal / (2 * n)) / varY)));
+    firstRaw.push((varY - sFirst / (2 * n)) / varY);
+    totalRaw.push((sTotal / (2 * n)) / varY);
   }
-  return { first, total, variance: varY, degenerate: !(varY > 1e-15) };
+
+  /* RAW IS WHAT THE ESTIMATOR SAID. `first`/`total` are the same numbers
+     clipped to [0,1] FOR DISPLAY ONLY, and the pair is always reported
+     together so the clipping is visible rather than silent. v7.0 returned
+     only the clipped values, which presented estimator noise as an exact
+     result — a first-order index of exactly 0 could mean "no influence" or
+     "-0.03 of sampling noise", and nothing distinguished them. */
+  const clip01 = (v) => Math.min(1, Math.max(0, v));
+  return {
+    first: firstRaw.map(clip01),
+    total: totalRaw.map(clip01),
+    firstRaw,
+    totalRaw,
+    clipped: firstRaw.map((v, i) => v < 0 || v > 1 || totalRaw[i] < 0 || totalRaw[i] > 1),
+    /* S_i > ST_i is impossible in theory and common in finite samples. It
+       is reported, not hidden: it is the clearest single signal that N is
+       too small for the dimension in question. */
+    firstExceedsTotal: firstRaw.map((v, i) => v > totalRaw[i] + 1e-12),
+    variance: varY,
+    degenerate,
+    samples: n,
+  };
+}
+
+/* Bootstrap standard errors and percentile intervals, by resampling the N
+   paired evaluations with replacement. The pairing matters: A, B and every
+   AB_i share a sample index, so a bootstrap draw must take the whole row or
+   the estimator's variance-cancellation is destroyed. */
+export function sobolBootstrap({ yA, yB, yAB, replicates = 200, seed = 424242 }) {
+  const n = yA.length;
+  const rng = makeRng(seed);
+  const firstDraws = yAB.map(() => []);
+  const totalDraws = yAB.map(() => []);
+
+  for (let r = 0; r < replicates; r++) {
+    const idx = Array.from({ length: n }, () => Math.floor(rng() * n));
+    const pick = (arr) => idx.map((i) => arr[i]);
+    const est = sobolIndices({ yA: pick(yA), yB: pick(yB), yAB: yAB.map(pick) });
+    est.firstRaw.forEach((v, i) => firstDraws[i].push(v));
+    est.totalRaw.forEach((v, i) => totalDraws[i].push(v));
+  }
+
+  const summarise = (draws) => {
+    const sorted = [...draws].sort((a, b) => a - b);
+    const m = mean(draws);
+    const sd = Math.sqrt(variance(draws));
+    const q = (p) => sorted[Math.min(sorted.length - 1, Math.max(0, Math.floor(p * sorted.length)))];
+    return { mean: m, standardError: sd, ci95: [q(0.025), q(0.975)] };
+  };
+
+  return {
+    replicates,
+    seed,
+    first: firstDraws.map(summarise),
+    total: totalDraws.map(summarise),
+    note: 'Bootstrap over the paired evaluations. These intervals describe ESTIMATOR uncertainty at this sample size — how well the design has resolved the index — and say nothing about whether the assumption box is right.',
+  };
+}
+
+/* Convergence: recompute the indices on nested prefixes of the same design
+   and report how much they are still moving. A dimension whose index is
+   still drifting at full N has not been resolved, whatever its point
+   estimate says. */
+export function sobolConvergence({ yA, yB, yAB, steps = [0.25, 0.5, 1] }) {
+  const n = yA.length;
+  const out = [];
+  for (const frac of steps) {
+    const k = Math.max(8, Math.floor(n * frac));
+    const cut = (arr) => arr.slice(0, k);
+    const est = sobolIndices({ yA: cut(yA), yB: cut(yB), yAB: yAB.map(cut) });
+    out.push({ samples: k, first: est.firstRaw, total: est.totalRaw });
+  }
+  const last = out[out.length - 1];
+  const prev = out[out.length - 2] ?? last;
+  return {
+    steps: out,
+    maxFirstDrift: Math.max(...last.first.map((v, i) => Math.abs(v - prev.first[i]))),
+    maxTotalDrift: Math.max(...last.total.map((v, i) => Math.abs(v - prev.total[i]))),
+    note: 'Drift is the largest change in any index between the last two sample sizes. Large drift means the design has not converged for at least one dimension.',
+  };
 }
 
 /* ---------------- the sampled dimensions ----------------

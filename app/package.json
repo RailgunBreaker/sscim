@@ -1,7 +1,8 @@
 {
   "name": "sscim-app",
   "private": true,
-  "version": "0.0.0",
+  "license": "UNLICENSED",
+  "version": "0.7.1",
   "type": "module",
   "scripts": {
     "predev": "npm run snapshot && npm run docs",
@@ -21,6 +22,8 @@
     "docs:pages": "node scripts/build-doc-pages.mjs",
     "demo": "node scripts/build-computation-demo.mjs",
     "sensitivity": "node scripts/build-sensitivity.mjs",
+    "curation": "node scripts/build-curation-uncertainty.mjs",
+    "legacy": "node scripts/build-legacy-fallback.mjs",
     "benchmark": "node scripts/build-v6-v7-benchmark.mjs",
     "recovery": "node ../docs/computation-demo/validation/mle-validation.mjs",
     "smoke": "node scripts/browser-smoke.mjs",

@@ -1,6 +1,6 @@
 # Reference — Facilities
 
-*Model version: `sscim-model-v7-exposure-robustness`. How a facility footprint
+*Model version: `sscim-model-v7.1-exposure-robustness`. How a facility footprint
 becomes a stage exposure is defined in
 [`docs/MODEL_V7_SPEC.md` §3.3](../MODEL_V7_SPEC.md#33-modeled-facility-footprint--enginefacilitiesjs).*
 

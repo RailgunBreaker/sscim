@@ -1,6 +1,6 @@
 # SSCIM from zero — plain-English guide (no math background needed)
 
-*Model version: `sscim-model-v7-exposure-robustness`. This page explains the
+*Model version: `sscim-model-v7.1-exposure-robustness`. This page explains the
 system with no mathematics. The mathematics, when you want it, is in
 [`docs/MODEL_V7_SPEC.md`](../MODEL_V7_SPEC.md).*
 
@@ -54,10 +54,10 @@ Separately there is a list of **109 companies**, each tagged with "which boxes i
 
 Imagine pouring **dye into one box** and watching it flow along the arrows:
 
-1. **The pour** = an event. Its strength = how severe the event is (0–10 → 0–1) × how fresh it is. Freshness **halves every 12 days** — a 12-day-old story hits half as hard, a two-month-old story is basically water.
+1. **The pour** = an incident. Its strength = how severe it is (0–10 → 0–1) × **how much of that box it actually touches** (a curated exposure fraction, not the whole box) × **how much of it is still live today**. That last part depends on the KIND of incident: a physical outage fades on a repair timescale, a pricing or allocation squeeze on a slower commercial one, a staged restart declines along its reported schedule, a standing rule is simply in force until it is superseded, and a long-horizon announcement is not scored at all. One half-life for everything was the old model's mistake.
 2. **Each hop dilutes.** When dye flows from "lithography" into "advanced factories", it gets multiplied by a small number (≈0.27 in the current setup). That number is bigger when the receiving box has few other inputs, and bigger when the sending box is hard to replace. Flowing *backwards* (my customer died, so my sales drop) also happens, but weaker.
-3. **Dye keeps flowing hop after hop** until it's too diluted to matter (below 0.01% — then we stop chasing it).
-4. **When two streams of dye hit the same box**, they combine like risks, not like sums: two 40% problems make a 64% problem, not an 80% one — and never more than 100%. (This is the "noisy-OR" you see in the docs; that's the entire idea.)
+3. **Dye keeps flowing hop after hop**, all the way through. Nothing is cut off part-way: the arithmetic settles on its own, so there is no "too diluted to bother" threshold any more.
+4. **When two SEPARATE incidents hit the same box**, they combine like risks, not like sums: two 40% problems make a 64% problem, not an 80% one — and never more than 100%. Two paths of the *same* incident arriving at one box are a different matter entirely — that is one disruption arriving twice, so those are simply added up and capped, not treated as two independent causes.
 5. Some events are **good news** (a capacity expansion, an export-control *easing*) — negative dye that cancels positive dye.
 
 ### 1.5 A toy example you can do in your head

@@ -33,7 +33,7 @@
    likelihood or bootstrap uncertainty, out-of-sample validation).
    ==================================================================== */
 
-export const MODEL_VERSION = 'sscim-model-v7-exposure-robustness';
+export const MODEL_VERSION = 'sscim-model-v7.1-exposure-robustness';
 
 const P = (spec) => Object.freeze({ ...spec, status: spec.status ?? 'assumption', modelVersion: MODEL_VERSION });
 
@@ -42,23 +42,23 @@ export const PARAMETERS = Object.freeze({
   downstreamTransmission: P({
     name: 'downstreamTransmission',
     symbol: 'f_d',
-    definition: 'Total fraction of a supplier stage’s modeled exposure that can reach its buyer stages in one hop, before the per-edge allocation and the dependency factor divide it up.',
+    definition: 'Per-RECEIVING-STAGE inherited-sensitivity multiplier. Under incoming-share normalization it caps how much dependency signal a buyer stage can inherit from all of its modeled inputs combined in one hop. It is NOT a globally conserved fraction of an incident: the same source reaches several buyers, so signal branches rather than being divided up.',
     low: 0.30, base: 0.55, high: 0.80,
     domain: [0, 1], exclusiveMax: true,
     units: 'dimensionless',
     component: 'propagation.downstream',
-    rationale: 'Strictly below 1 so the incoming coefficients at any node sum to less than one and the joint propagation is a contraction: the field stays finite on any DAG and cannot manufacture exposure. The base retains the v6 value for continuity; the range spans "inputs are largely substitutable within one hop" (0.30) to "a buyer stage is nearly wholly dependent on its modeled inputs" (0.80).',
+    rationale: 'Strictly below 1 so that the incoming coefficients AT ANY ONE STAGE sum to less than one. That bounds each stage individually and makes the per-stage recursion settle on a DAG; it does NOT bound the network-wide total, because a source branches to several buyers and the summed signal across stages can exceed the source magnitude. The base retains the v6 value for continuity; the range spans "inputs are largely substitutable within one hop" (0.30) to "a buyer stage is nearly wholly dependent on its modeled inputs" (0.80).',
     affects: ['stage operational field', 'headline index', 'country measures', 'company criticality', 'network influence'],
   }),
   upstreamTransmission: P({
     name: 'upstreamTransmission',
     symbol: 'f_u',
-    definition: 'Total fraction of a buyer stage’s modeled exposure that echoes back to its supplier stages in one hop (demand-side echo), before the per-edge allocation.',
+    definition: 'Per-SUPPLYING-STAGE upstream-inheritance multiplier. Under outgoing-share normalization it caps how much demand-side echo a supplier stage inherits from all of its modeled buyers combined in one hop. Like f_d it is a per-stage cap, not a conserved share of the incident.',
     low: 0.10, base: 0.30, high: 0.50,
     domain: [0, 1], exclusiveMax: true,
     units: 'dimensionless',
     component: 'propagation.upstream',
-    rationale: 'Held below the downstream coefficient because a supplier losing one buyer has more resale options than a buyer losing a specific input has substitutes; strictly below 1 for the same contraction guarantee as f_d. Base retains the v6 value.',
+    rationale: 'Held below the downstream coefficient because a supplier losing one buyer has more resale options than a buyer losing a specific input has substitutes; strictly below 1 for the same per-stage bound as f_d. Base retains the v6 value.',
     affects: ['stage operational field', 'headline index', 'country measures', 'company criticality'],
   }),
   minimumDependencyFactor: P({
@@ -130,10 +130,10 @@ export const PARAMETERS = Object.freeze({
 export const STRUCTURAL_WEIGHT_SPECS = Object.freeze({
   networkInfluence: P({
     name: 'structuralWeight.networkInfluence', symbol: 'w^{\\mathrm{struct}}_{\\mathrm{NI}}',
-    definition: 'Raw weight of the network-influence component in the structural vulnerability index.',
+    definition: 'Raw weight of the network-influence component in the structural vulnerability index. As of v7.1 that component is SPILLOVER REACH — the economically weighted downstream field a unit shock at this stage produces at OTHER stages, excluding the stage itself.',
     low: 0.1875, base: 0.25, high: 0.3125, domain: [0, 1], units: 'dimensionless',
     component: 'structural.weights',
-    rationale: 'Largest single weight in v6 and retained for continuity: how much of the chain a stage can reach is the one structural component derived entirely from the graph rather than from an analyst score. Range is +/-25% of the raw value.',
+    rationale: 'Largest single weight in v6 and retained for continuity: how much of the chain a stage can reach is the one structural component derived entirely from the graph rather than from an analyst score. In v7.0 the underlying quantity wrongly included the stage\'s own economic weight, which both flattered terminal stages and counted economic size twice against `market`; v7.1 excludes the source, so this component is now purely about reach. Range is +/-25% of the raw value.',
     affects: ['structural vulnerability', 'country structural score'],
   }),
   geo: P({

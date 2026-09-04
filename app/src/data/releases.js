@@ -119,7 +119,7 @@ export const RELEASES = [
       { kind: 'added', text: 'A versioned supply-chain snapshot: 24 production stages and 34 directed dependencies, validated acyclic.' },
       { kind: 'added', text: 'A deterministic propagation engine shared by historical events and company-disruption analysis — the same code path for every question the tool answers.' },
       { kind: 'added', text: 'Structural vulnerability and operational impact kept as two separate, separately-labelled numbers, because blending them hides which one moved.' },
-      { kind: 'added', text: 'Declared and inspectable priors, including the 12-day half-life, plus methodology, worked calculations and data audits.' },
+      { kind: 'added', text: 'Declared and inspectable priors, including the single 12-day half-life this release then used for every event class, plus methodology, worked calculations and data audits. (Superseded in v0.7: persistence is now per-incident.)' },
       { kind: 'added', text: 'A static publication that stays readable when the author\'s machine and the live API are offline.' },
     ],
     limits: 'At this stage updating the evidence meant editing data by hand, and the interface did not clearly separate reviewed source material from generated proposals. Both are what the next two releases addressed.',

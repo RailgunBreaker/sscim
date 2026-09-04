@@ -25,8 +25,13 @@ describe('the registry is complete and internally valid', () => {
     expect(r.valid).toBe(true);
   });
 
-  it('declares the v7 model version, and every entry carries it', () => {
-    expect(MODEL_VERSION).toBe('sscim-model-v7-exposure-robustness');
+  it('declares the current model version, and every entry carries it', () => {
+    /* v7.1 is a minor model revision: network influence excludes the source
+       stage, and the propagation parameters are redefined in words. The
+       version string must move with it, or archived artefacts become
+       impossible to attribute. */
+    expect(MODEL_VERSION).toBe('sscim-model-v7.1-exposure-robustness');
+    expect(MODEL_VERSION).toMatch(/^sscim-model-v7(\.\d+)?-/);
     [...Object.values(PARAMETERS), ...Object.values(STRUCTURAL_WEIGHT_SPECS), ...Object.values(MODEL_FORMS)]
       .forEach((p) => expect(p.modelVersion).toBe(MODEL_VERSION));
   });

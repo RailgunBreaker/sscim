@@ -1,0 +1,165 @@
+{
+  "modelVersion": "sscim-model-v7.1-exposure-robustness",
+  "datasetAsOf": "2026-09-04",
+  "generatedAt": "2026-09-04T05:58:02.326Z",
+  "uncertaintyClass": "event curation",
+  "separateFrom": [
+    "parameter uncertainty — docs/benchmarks/v7-sensitivity.json (numericalParameters)",
+    "model-form uncertainty — docs/benchmarks/v7-sensitivity.json (modelForms)"
+  ],
+  "design": {
+    "method": "Per-incident exposure vectors moved to the ends of their evidence-strength bands, and declared alternative persistence profiles substituted, one variant at a time.",
+    "evidenceBands": {
+      "strong": 0.25,
+      "moderate": 0.5,
+      "weak": 0.75
+    },
+    "defaultEvidenceStrength": "moderate",
+    "interpretation": "These bands are ASSUMPTIONS about how wrong a curated judgement might be, not measurements of how wrong it is. They are deliberately broad. The result is a curation-assumption envelope and is not a confidence interval."
+  },
+  "coverage": {
+    "curatedIncidents": 30,
+    "incidentsWithExposureBand": 30,
+    "individuallyGraded": 10,
+    "usingDefaultBand": 30,
+    "withAlternativeProfile": 4,
+    "gradedIds": [
+      {
+        "id": "p260807_man0807",
+        "evidenceStrength": "moderate"
+      },
+      {
+        "id": "h2607_kumamoto",
+        "evidenceStrength": "strong"
+      },
+      {
+        "id": "h2603_memorypeak",
+        "evidenceStrength": "moderate"
+      },
+      {
+        "id": "h2510_truce",
+        "evidenceStrength": "strong"
+      },
+      {
+        "id": "h2509_nexperia",
+        "evidenceStrength": "moderate"
+      },
+      {
+        "id": "x2508_veurevoke",
+        "evidenceStrength": "strong"
+      },
+      {
+        "id": "x2505_eda",
+        "evidenceStrength": "strong"
+      },
+      {
+        "id": "x2501_foundryrule",
+        "evidenceStrength": "weak"
+      },
+      {
+        "id": "x2409_gaafet",
+        "evidenceStrength": "weak"
+      },
+      {
+        "id": "h2405_huawei",
+        "evidenceStrength": "weak"
+      }
+    ],
+    "limitation": "20 of 30 curated incidents are NOT individually evidence-graded and fall back to the 'moderate' band. Archived operational incidents outside the curated horizon carry no curated exposure at all and are therefore NOT represented in this analysis — their uncertainty is excluded here, not zero. See docs/benchmarks/v7-legacy-fallback.json."
+  },
+  "results": {
+    "headlineIndex": {
+      "low": 5.611393,
+      "base": 6.027797,
+      "high": 6.333653,
+      "width": 0.72226,
+      "kind": "curation-assumption-envelope"
+    },
+    "historicalPeak": {
+      "low": 5.905985,
+      "base": 6.501429,
+      "high": 6.918453,
+      "width": 1.012468,
+      "kind": "curation-assumption-envelope",
+      "basePeakDaysAgo": 28,
+      "note": "Curation moves historical peaks considerably more than it moves the current reading, because the incidents driving past peaks are older and their exposure judgements carry the whole signal."
+    },
+    "stageRankStability": {
+      "spearmanVsBase": {
+        "min": 0.9347826086956522,
+        "values": [
+          0.9765,
+          0.9922,
+          0.9348
+        ]
+      },
+      "baseTop5": [
+        "memory_fab",
+        "hbm",
+        "logic_ai",
+        "metro",
+        "depo"
+      ],
+      "top5RetentionMin": 0.8
+    },
+    "companyRankStability": {
+      "spearmanVsBase": {
+        "min": 1,
+        "values": [
+          1,
+          1,
+          1
+        ]
+      },
+      "baseTop5": [
+        "tsmc",
+        "nvidia",
+        "foxconn",
+        "samsung",
+        "ase"
+      ],
+      "top5RetentionMin": 1
+    },
+    "scenarioDeltas": {
+      "kumamoto": {
+        "base": 0.100761,
+        "envelope": {
+          "low": 0.090049,
+          "base": 0.100761,
+          "high": 0.11464,
+          "width": 0.024591,
+          "kind": "curation-assumption-envelope"
+        },
+        "signStable": true
+      },
+      "hsinchu": {
+        "base": 0.621228,
+        "envelope": {
+          "low": 0.561937,
+          "base": 0.621228,
+          "high": 0.696456,
+          "width": 0.134519,
+          "kind": "curation-assumption-envelope"
+        },
+        "signStable": true
+      },
+      "pyeongtaek": {
+        "base": 0.218315,
+        "envelope": {
+          "low": 0.189054,
+          "base": 0.218315,
+          "high": 0.263401,
+          "width": 0.074347,
+          "kind": "curation-assumption-envelope"
+        },
+        "signStable": true
+      }
+    },
+    "variants": {
+      "base": 6.027797,
+      "exposureLow": 5.611393,
+      "exposureHigh": 6.333653,
+      "alternativeProfiles": 5.732821
+    }
+  }
+}

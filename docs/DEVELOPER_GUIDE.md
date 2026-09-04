@@ -52,14 +52,14 @@ docs/                      Markdown rendered by docs.html
 | File | Responsibility |
 | --- | --- |
 | `priors.js` | every numerical coefficient, in one frozen object |
-| `math.js` | decay, clamping, noisy-OR combination, HHI, topological sort |
+| `math.js` | decay, clamping, HHI bounds, normalized stage weights, topological sort, rank correlation |
 | `graph.js` | adjacency, the `D`/`U` dependence matrices, propagation, pathfinding |
 | `event-assumptions.js` | the hand-curated per-event classification table |
 | `timeseries.js` | analysis of the whole index history — peaks, runs, per-event attribution |
 | `index.js` | assembles everything into the engine the UI consumes |
 | `diagnostics.js` | graph validation — runs before anything else |
 
-`timeseries.js` never re-derives the index: every figure it reports comes from the engine's own `chainIndexAt` / `indexOf`, so the analysis and the history chart cannot disagree. Its per-event attribution is **marginal** — the index on the event's own date minus the same date with that event removed — because propagation combines through a saturating noisy-OR, so standalone magnitudes do not sum. Both numbers are reported; the gap between them is the overlap with everything else active at the time.
+`timeseries.js` never re-derives the index: every figure it reports comes from the engine's own `chainIndexAt` / `indexOf`, so the analysis and the history chart cannot disagree. Its per-event attribution is **marginal** — the index on the event's own date minus the same date with that event removed — because distinct incidents combine through a bounded saturating operator, so standalone magnitudes do not sum. Both numbers are reported; the gap between them is the overlap with everything else active at the time.
 
 ## Local development
 
@@ -228,7 +228,7 @@ npm run snapshot && npm run audit:data && npm test
 
 `sync-events.mjs` refuses to run if any code-defined event has no entry in `event-assumptions.js`. That is not pedantry: an unclassified id falls back to `operational: false` and is displayed while being **silently** excluded from the scored index, which is very hard to notice afterwards. The same script also rejects duplicate ids across the three sets.
 
-Because the backfilled events are years old and the half-life is 12 days, adding them does not move the current index at all — they exist for the historical series. The dashboard's Layer 3 **HISTORY** tab (`components/DecadeHistory.jsx`) is where that series is read: the decade replay, per-event marginal attribution, and per-year and per-type breakdowns.
+The backfilled events are years old, so under the v7 persistence profiles they contribute very little to the CURRENT index — but not nothing, and they are not immaterial to the historical series, which is what they exist for. Standing-policy records in particular are in force or not rather than decaying, so age alone does not settle whether a record still counts. The dashboard's Layer 3 **HISTORY** tab (`components/DecadeHistory.jsx`) is where that series is read: the decade replay, per-event marginal attribution, and per-year and per-type breakdowns.
 
 ## Reviewing candidates
 

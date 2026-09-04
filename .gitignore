@@ -21,3 +21,6 @@ app/public/docs-manifest.json
 
 # API process logs written by scripts/restart-api.ps1
 server/logs/
+
+# Transient verification-run logs
+app/*.log

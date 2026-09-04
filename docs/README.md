@@ -21,7 +21,7 @@ Existing maps of that structure — consortium charts, research-body diagrams, s
 
 The model contains 24 production stages across seven tiers — research and IP, materials, equipment, fabrication, chip products, backend, systems, and end markets — connected by 34 directed edges describing declared production dependencies. Country-stage shares and company stakes locate real activity within that structure.
 
-An event seeds a shock at selected stages. The engine ages it with a 12-day half-life, propagates it across every reachable path using declared downstream and upstream transmission priors, combines overlapping contributions with a bounded rule, and aggregates the result.
+An incident seeds a signed shock across the stages it touches, scaled by a curated per-stage exposure. The engine ages it with the persistence profile curated for that incident, propagates the whole incident jointly across every reachable path using declared downstream and upstream transmission priors, combines separate incidents with a bounded rule, and aggregates the result.
 
 The same code path serves reviewed historical events, a hazard footprint you place on the map, and company-disruption analysis. **Change the input, not the method** — that is what makes the three comparable.
 
@@ -43,7 +43,7 @@ Read the explanation, source, confidence label, and assumptions before using any
 - **Company vulnerability** from **contribution** from **criticality** — three distinct questions, three separately labeled numbers.
 - **Downstream input dependence** from **upstream revenue dependence**. A supplier's sales share to a customer is not the customer's dependence on that supplier.
 - **Baseline history** from **the hazard overlay**. A hazard footprint is a bounded screening hypothesis, shown as a comparison against the live reading, and never rewrites the past.
-- **One incident** from **several reports of it**. The index accumulates events through a bounded noisy-OR, which is correct for independent events and wrong for repeated coverage of one. Records describing the same incident are grouped: exactly one is scored, the rest are published as updates or recovery reports with their own sources and their own assessments.
+- **One incident** from **several reports of it**. Distinct incidents accumulate through a bounded operator that is monotone — right for separate disruptions, wrong for repeated coverage of one. Records describing the same incident are therefore grouped *before* anything is scored: exactly one is scored, the rest are published as updates or recovery reports with their own sources and their own assessments.
 - **A modeled relationship** from **an observed one**. No dataset here records which plant ships to which plant, so every facility-to-facility connection is labelled modeled, at every hop depth.
 
 ## Start here

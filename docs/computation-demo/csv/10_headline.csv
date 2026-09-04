@@ -1,5 +1,5 @@
 metric,value,note
-model_version,sscim-model-v7-exposure-robustness,from app/src/engine/registry.js
+model_version,sscim-model-v7.1-exposure-robustness,from app/src/engine/registry.js
 dataset_as_of,2026-09-04,"every incident age is measured against this date, never the reader clock"
 records,167,raw records in the snapshot
 incidents,160,after deduplication by incidentId

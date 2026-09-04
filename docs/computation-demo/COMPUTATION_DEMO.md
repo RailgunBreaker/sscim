@@ -1,6 +1,6 @@
 # SSCIM v7 — Computation demonstration
 
-*Model version: `sscim-model-v7-exposure-robustness`. Canonical specification:
+*Model version: `sscim-model-v7.1-exposure-robustness`. Canonical specification:
 [`docs/MODEL_V7_SPEC.md`](../MODEL_V7_SPEC.md).*
 
 Every table referenced here is **exported from the running engine** by
@@ -95,11 +95,15 @@ registry** as this CSV, so the two cannot disagree.
 | Edges | `csv/04_dependency_matrices.csv` | `D_ba` and `U_ab` per edge, with the allocations that produced them. **`allocation_source` reads `equal_split_fallback` on every row**: this snapshot supplies no evidence-based dependency shares. |
 | Policy families | `csv/05_policy_families.csv` | Register rows after family deduplication. Within a family only the strongest severity counts. |
 
-Check the contraction bound yourself: group `csv/04_dependency_matrices.csv` by
+Check the **per-stage** bound yourself: group `csv/04_dependency_matrices.csv` by
 `buyer_b` and sum `D_ba`. Every group total is at or below the registry's
 `downstreamTransmission`, which is strictly below 1. The same holds for `U_ab`
 grouped by `supplier_a` against `upstreamTransmission`. That bound is what makes
-the propagation finite and order-independent with no truncation.
+the propagation settle with no truncation.
+
+It is a bound on each stage, **not** a conservation law for the network: one
+source branches to several buyers, so the summed signal across stages can exceed
+the source magnitude while every stage stays inside its own bound.
 
 ---
 

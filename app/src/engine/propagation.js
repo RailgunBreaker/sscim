@@ -32,11 +32,25 @@
      sum_{a in IN(b)} D[b][a] <= f_d < 1        and
      sum_{b in OUT(a)} U[a][b] <= f_u < 1
 
-   which is what makes the propagation below a contraction — the field is
-   finite, bounded and order-independent on any DAG, with no truncation
-   tolerance needed. v6's `contributionTolerance` is therefore GONE from
-   substantive calculation; a tiny epsilon survives only for display
-   formatting.
+   WHAT THAT BOUND DOES AND DOES NOT SAY. It bounds each stage
+   INDIVIDUALLY: the inflow into any one node is a strict fraction of its
+   inputs' values, so the per-stage recursion settles on a DAG, every value
+   stays inside its clip, the result is order-independent, and no
+   truncation tolerance is needed (v6's `contributionTolerance` is
+   therefore gone from substantive calculation; a tiny epsilon survives for
+   display formatting only).
+
+   IT DOES NOT CONSERVE ANYTHING NETWORK-WIDE. f_d and f_u are per-stage
+   inheritance multipliers, not shares of a fixed quantity being divided
+   up. One source reaches several buyers, each of which inherits up to f_d
+   of what it depends on, so the signal BRANCHES: the sum of propagated
+   values across all stages routinely exceeds the source magnitude. On the
+   shipped snapshot a unit shock at `gases` sums to about 2.09 across
+   stages while no single stage exceeds 1.0.
+
+   So the propagated field is a DIMENSIONLESS DEPENDENCY SIGNAL, not a
+   conserved physical mass, and the claim to make about it is "no stage
+   exceeds its bound", never "the system cannot manufacture exposure".
 
    THE PROPAGATION. For a nonnegative source vector z of ONE incident:
 

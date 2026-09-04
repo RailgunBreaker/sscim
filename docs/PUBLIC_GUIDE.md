@@ -1,6 +1,6 @@
 # SSCIM public guide
 
-**Model version:** `sscim-model-v7-exposure-robustness` — the exact definition of
+**Model version:** `sscim-model-v7.1-exposure-robustness` — the exact definition of
 every number described here is in the
 [model specification](MODEL_V7_SPEC.md).
 
@@ -36,7 +36,7 @@ Every number sits on a 0–10 scale, but they answer different questions.
 
 **Structural vulnerability** — a relatively stable property of a stage: how geographically concentrated it is, how central in the network, how exposed to policy, how substitutable, how market-sensitive. This barely changes week to week. A high number means "if something goes wrong here, the structure will carry it."
 
-**Operational impact** — the model's response to whatever event you have selected. It is displayed around a neutral value of **5**: above 5 is adverse pressure, below 5 is mitigating. It moves as you change the selection, and decays as events age, halving roughly every 12 days.
+**Operational impact** — the model's response to whatever event you have selected. It is displayed around a neutral value of **5**: above 5 is adverse pressure, below 5 is mitigating. It moves as you change the selection, and fades as incidents age — but at a rate that depends on the KIND of incident: a physical outage fades on a repair timescale, a pricing or allocation squeeze on a slower commercial one, a staged restart along its reported schedule, and a standing rule does not fade at all until it is superseded.
 
 **Contribution** — a company's share of an aggregate modeled effect, weighted by how much of a stage that company holds. It is **not** an estimate of that company's financial loss.
 

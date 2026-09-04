@@ -1,0 +1,6139 @@
+{
+  "modelVersion": "sscim-model-v7.1-exposure-robustness",
+  "datasetAsOf": "2026-09-04",
+  "generatedAt": "2026-09-04T06:05:14.276Z",
+  "whatThisMeasures": "The dependence of published HISTORICAL figures on fallback assumptions for uncurated operational incidents.",
+  "correctionToEarlierClaim": "v7.0 documentation stated that archived fallback incidents \"cannot move a published number materially\". That holds for the CURRENT snapshot only. Over the historical series those incidents carry the signal, and the peak moves materially when their assumptions move. The claim is withdrawn and replaced by the numbers below.",
+  "fallbackPopulation": {
+    "operationalRecordsWithoutCuration": 49,
+    "curatedIncidents": 30,
+    "curatedHorizonDays": 900,
+    "exposureFallback": "equal 1/k across the k unique tagged stages",
+    "profileFallback": "acute_exponential"
+  },
+  "variantsTested": {
+    "halved": "each fallback incident carries half the default exposure",
+    "doubled": "each fallback incident carries twice the default exposure, capped at 1",
+    "concentrated": "the whole unit of exposure placed on one stage instead of split across k",
+    "marketProfile": "the assumed persistence profile swapped from acute to market"
+  },
+  "currentSnapshot": {
+    "base": 6.027797,
+    "variants": {
+      "halved": 6.027797,
+      "doubled": 6.027797,
+      "concentrated": 6.027797,
+      "marketProfile": 6.027797
+    },
+    "spread": 0,
+    "reading": "Small, because every fallback incident is years old and its persistence multiplier at the snapshot date is tiny. This is the part of the original claim that was true."
+  },
+  "globalPeak": {
+    "base": 6.501429,
+    "basePeakDaysAgo": 28,
+    "variants": {
+      "halved": 6.501429,
+      "doubled": 6.501429,
+      "concentrated": 6.501429,
+      "marketProfile": 6.501429
+    },
+    "spread": 0,
+    "reading": "The highest point of the whole series. On this snapshot it sits among fully curated incidents, so it is unmoved by fallback assumptions BY CONSTRUCTION — which is exactly why quoting only this number made the fallbacks look immaterial."
+  },
+  "legacyEraPeak": {
+    "fromDaysAgo": 900,
+    "base": 5.771892,
+    "basePeakDaysAgo": 1053,
+    "variants": {
+      "halved": 5.398951,
+      "doubled": 6.430193,
+      "concentrated": 5.716653,
+      "marketProfile": 5.875487
+    },
+    "low": 5.398951,
+    "high": 6.430193,
+    "spread": 1.031242,
+    "reading": "The highest point of the era older than the curated horizon, where every contributing incident runs on fallback assumptions. This is the figure that moves, and it is the one the original claim got wrong."
+  },
+  "periodCuration": {
+    "sampled": 759,
+    "fullyCurated": 241,
+    "legacyAssisted": 518,
+    "maxFallbackShare": 1,
+    "note": "A date is \"legacy-assisted\" when at least one incident contributing to it runs on fallback assumptions. Charts must distinguish these from fully curated dates."
+  },
+  "periods": [
+    {
+      "daysAgo": 3661,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 3654,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 3651,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 3648,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 3647,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 3640,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 3633,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 3626,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 3619,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 3615,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 3612,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 3605,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 3599,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 3598,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 3596,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 3591,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 3584,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 3577,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 3570,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 3563,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 3560,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 3556,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 3549,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 3542,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 3535,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 3528,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 3525,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 3521,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 3514,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 3507,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 3500,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 3493,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 3486,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 3479,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 3472,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 3465,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 3458,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 3451,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 3444,
+      "index": 5.38502,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3441,
+      "index": 5.331877,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3437,
+      "index": 5.27225,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3430,
+      "index": 5.19251,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3423,
+      "index": 5.136125,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3416,
+      "index": 5.096255,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3409,
+      "index": 5.068063,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3402,
+      "index": 5.048128,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3395,
+      "index": 5.034031,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3388,
+      "index": 5.024064,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3381,
+      "index": 5.017016,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3374,
+      "index": 5.012032,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3367,
+      "index": 5.008508,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3360,
+      "index": 5.006016,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3353,
+      "index": 5.004254,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3346,
+      "index": 5.003008,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3339,
+      "index": 5.002127,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3332,
+      "index": 5.001504,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3325,
+      "index": 5.001063,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3318,
+      "index": 5.000752,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3311,
+      "index": 5.000532,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3307,
+      "index": 5.000436,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3304,
+      "index": 5.000376,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3297,
+      "index": 5.000266,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3290,
+      "index": 5.000188,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3283,
+      "index": 5.000133,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3276,
+      "index": 5.000094,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3271,
+      "index": 5.000073,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3269,
+      "index": 5.000066,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3268,
+      "index": 5.000063,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3262,
+      "index": 5.000047,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3255,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 3248,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 3243,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 3241,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 3240,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 3234,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 3229,
+      "index": 5.12141,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3227,
+      "index": 5.109964,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3226,
+      "index": 5.104652,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3220,
+      "index": 5.077756,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3213,
+      "index": 5.054982,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3206,
+      "index": 5.038878,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3199,
+      "index": 5.027491,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3195,
+      "index": 5.022552,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3192,
+      "index": 5.019439,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3185,
+      "index": 5.013745,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3178,
+      "index": 5.00972,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3175,
+      "index": 5.008378,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3171,
+      "index": 5.006873,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3164,
+      "index": 5.00486,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3157,
+      "index": 5.003436,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3150,
+      "index": 5.00243,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3143,
+      "index": 5.001718,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3136,
+      "index": 5.001215,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3129,
+      "index": 5.000859,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3122,
+      "index": 5.000607,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3115,
+      "index": 5.00043,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3108,
+      "index": 5.000304,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3101,
+      "index": 5.000215,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3098,
+      "index": 5.000185,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3095,
+      "index": 5.00016,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3094,
+      "index": 5.000152,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3087,
+      "index": 5.000107,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3080,
+      "index": 5.000076,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3073,
+      "index": 5.000054,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3066,
+      "index": 5.000038,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3063,
+      "index": 5.40936,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 2,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3060,
+      "index": 5.352858,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 2,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3059,
+      "index": 5.335813,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 2,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3052,
+      "index": 5.237456,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 2,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3045,
+      "index": 5.167907,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 2,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3038,
+      "index": 5.118719,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3031,
+      "index": 5.083947,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3024,
+      "index": 5.05936,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3017,
+      "index": 5.255074,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 2,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3014,
+      "index": 5.22014,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 2,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3010,
+      "index": 5.18084,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 2,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 3003,
+      "index": 5.128111,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 2,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2996,
+      "index": 5.090707,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 2,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2989,
+      "index": 5.064199,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 2,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2982,
+      "index": 5.045425,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 2,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2975,
+      "index": 4.742171,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2972,
+      "index": 4.777763,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2968,
+      "index": 4.817695,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2962,
+      "index": 4.864551,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2961,
+      "index": 4.871095,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2959,
+      "index": 4.883248,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2954,
+      "index": 5.168609,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2951,
+      "index": 5.145362,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2947,
+      "index": 5.11927,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2944,
+      "index": 5.102821,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2941,
+      "index": 5.088638,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2940,
+      "index": 5.08436,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2933,
+      "index": 5.059663,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2930,
+      "index": 5.051431,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2927,
+      "index": 5.044334,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2926,
+      "index": 5.042194,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2919,
+      "index": 5.029838,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2912,
+      "index": 5.0211,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2905,
+      "index": 5.014921,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2898,
+      "index": 5.010551,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2895,
+      "index": 5.009095,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2892,
+      "index": 5.00784,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2891,
+      "index": 5.007461,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2884,
+      "index": 5.005276,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2877,
+      "index": 5.003731,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2870,
+      "index": 5.002609,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2867,
+      "index": 5.10458,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2864,
+      "index": 5.090151,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2863,
+      "index": 5.085798,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2861,
+      "index": 5.077712,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2856,
+      "index": 5.060675,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2849,
+      "index": 5.042907,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2846,
+      "index": 5.036985,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2843,
+      "index": 5.031881,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2842,
+      "index": 5.030341,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2835,
+      "index": 5.021455,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2834,
+      "index": 5.020419,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2831,
+      "index": 5.017601,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2828,
+      "index": 5.015153,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2821,
+      "index": 5.010715,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2814,
+      "index": 5.007577,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2807,
+      "index": 5.005358,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2802,
+      "index": 5.004183,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2800,
+      "index": 5.003788,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2799,
+      "index": 5.003605,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2793,
+      "index": 5.002679,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2786,
+      "index": 5.001919,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 2,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2779,
+      "index": 5.001357,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 2,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2772,
+      "index": 5.00096,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 2,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2765,
+      "index": 5.000656,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2758,
+      "index": 5.000464,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2751,
+      "index": 5.000328,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2744,
+      "index": 5.000232,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2737,
+      "index": 5.000164,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2730,
+      "index": 5.000116,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2723,
+      "index": 5.000082,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2716,
+      "index": 5.000058,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2709,
+      "index": 5.000041,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2702,
+      "index": 5.000029,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2695,
+      "index": 5.000021,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2688,
+      "index": 5.000014,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2684,
+      "index": 5.000012,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2681,
+      "index": 5.00001,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2674,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 2668,
+      "index": 5.544556,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2667,
+      "index": 5.518252,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2665,
+      "index": 5.469393,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2664,
+      "index": 5.661116,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 2,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2661,
+      "index": 5.573708,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 2,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2660,
+      "index": 5.547099,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 2,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2653,
+      "index": 5.39136,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 2,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2646,
+      "index": 5.278984,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 2,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2639,
+      "index": 5.198397,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 2,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2638,
+      "index": 5.448708,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2635,
+      "index": 5.387903,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2632,
+      "index": 5.3352,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2625,
+      "index": 5.238106,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2622,
+      "index": 5.375885,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2619,
+      "index": 5.325315,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2618,
+      "index": 5.309978,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2611,
+      "index": 5.220727,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2604,
+      "index": 5.156848,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2597,
+      "index": 5.111294,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2590,
+      "index": 5.163904,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2587,
+      "index": 5.141723,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2583,
+      "index": 5.116669,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2576,
+      "index": 5.082885,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2573,
+      "index": 5.40018,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2570,
+      "index": 5.345492,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2569,
+      "index": 5.32896,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2562,
+      "index": 5.233252,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2555,
+      "index": 5.165256,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2548,
+      "index": 5.117015,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2541,
+      "index": 5.082822,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2534,
+      "index": 5.058605,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2527,
+      "index": 5.04146,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2520,
+      "index": 5.029327,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2513,
+      "index": 5.020742,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2506,
+      "index": 5.014669,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2499,
+      "index": 5.236569,
+      "contributingIncidents": 7,
+      "fallbackIncidents": 7,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2496,
+      "index": 5.204001,
+      "contributingIncidents": 7,
+      "fallbackIncidents": 7,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2492,
+      "index": 5.167428,
+      "contributingIncidents": 7,
+      "fallbackIncidents": 7,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2485,
+      "index": 5.118464,
+      "contributingIncidents": 7,
+      "fallbackIncidents": 7,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2478,
+      "index": 5.08376,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2471,
+      "index": 5.059228,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2469,
+      "index": 5.053648,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2466,
+      "index": 5.046248,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2464,
+      "index": 5.04189,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2457,
+      "index": 5.029625,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2450,
+      "index": 5.020926,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2443,
+      "index": 5.014798,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2436,
+      "index": 5.010464,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2429,
+      "index": 5.007387,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2422,
+      "index": 5.005224,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2415,
+      "index": 5.003694,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2408,
+      "index": 5.002612,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2401,
+      "index": 5.001839,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 2,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2398,
+      "index": 5.292997,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2395,
+      "index": 5.252557,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2394,
+      "index": 5.240357,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2387,
+      "index": 5.16996,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2380,
+      "index": 5.120158,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 2,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2373,
+      "index": 5.084965,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 2,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2366,
+      "index": 5.060079,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 2,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2361,
+      "index": 5.35824,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2359,
+      "index": 5.324887,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2358,
+      "index": 5.309379,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2352,
+      "index": 5.230566,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2345,
+      "index": 5.163453,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2338,
+      "index": 5.115788,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2331,
+      "index": 5.081979,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2324,
+      "index": 5.05802,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2317,
+      "index": 5.041053,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2310,
+      "index": 5.029022,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 2,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2303,
+      "index": 5.493383,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2300,
+      "index": 5.425367,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2296,
+      "index": 5.349021,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2289,
+      "index": 5.246868,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2282,
+      "index": 5.174599,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2275,
+      "index": 5.123478,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2268,
+      "index": 5.087321,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2261,
+      "index": 5.06175,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2254,
+      "index": 5.043666,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2247,
+      "index": 5.030878,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2240,
+      "index": 5.021835,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2233,
+      "index": 5.01544,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2226,
+      "index": 5.010918,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2219,
+      "index": 5.00772,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2212,
+      "index": 5.005459,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2209,
+      "index": 5.465961,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2206,
+      "index": 5.401736,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2205,
+      "index": 5.382357,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2198,
+      "index": 5.270473,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2191,
+      "index": 5.191307,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2184,
+      "index": 5.135301,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2182,
+      "index": 5.122551,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2180,
+      "index": 5.44099,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2179,
+      "index": 5.420236,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2177,
+      "index": 5.381539,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2170,
+      "index": 5.271598,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2169,
+      "index": 5.3455,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2166,
+      "index": 5.298766,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2163,
+      "index": 5.258239,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2156,
+      "index": 5.183524,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2149,
+      "index": 5.130233,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2142,
+      "index": 5.09232,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2138,
+      "index": 5.075816,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2135,
+      "index": 5.065396,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2133,
+      "index": 5.059255,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2130,
+      "index": 5.051103,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2128,
+      "index": 5.0463,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2121,
+      "index": 5.032768,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2114,
+      "index": 5.023144,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2107,
+      "index": 5.016373,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2100,
+      "index": 5.011581,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2093,
+      "index": 5.145492,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2090,
+      "index": 5.125436,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2086,
+      "index": 5.259758,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2083,
+      "index": 5.224526,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2079,
+      "index": 5.184759,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2072,
+      "index": 5.131186,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2065,
+      "index": 5.221101,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2062,
+      "index": 5.191771,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2058,
+      "index": 5.158414,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2051,
+      "index": 5.113059,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2044,
+      "index": 5.080469,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2037,
+      "index": 5.057163,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2030,
+      "index": 5.040552,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2026,
+      "index": 5.165367,
+      "contributingIncidents": 7,
+      "fallbackIncidents": 7,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2023,
+      "index": 5.143212,
+      "contributingIncidents": 7,
+      "fallbackIncidents": 7,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2018,
+      "index": 5.112491,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2016,
+      "index": 5.102104,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2015,
+      "index": 5.097269,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2009,
+      "index": 5.072635,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 2002,
+      "index": 5.05158,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1995,
+      "index": 5.188558,
+      "contributingIncidents": 7,
+      "fallbackIncidents": 7,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1992,
+      "index": 5.163532,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1991,
+      "index": 5.155929,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1988,
+      "index": 5.135102,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1981,
+      "index": 5.096426,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1977,
+      "index": 5.079423,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1974,
+      "index": 5.068635,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1967,
+      "index": 5.048759,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1960,
+      "index": 5.034591,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1953,
+      "index": 5.024517,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1946,
+      "index": 5.017364,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1939,
+      "index": 5.012293,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1932,
+      "index": 5.008699,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1925,
+      "index": 5.006155,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1918,
+      "index": 5.004354,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1914,
+      "index": 5.003572,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1911,
+      "index": 5.00308,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1909,
+      "index": 5.17934,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1906,
+      "index": 5.154598,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1904,
+      "index": 5.140035,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1897,
+      "index": 5.099031,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1890,
+      "index": 5.070038,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1883,
+      "index": 5.04953,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1876,
+      "index": 5.035015,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1869,
+      "index": 5.024761,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1862,
+      "index": 5.017509,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1855,
+      "index": 5.012381,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1848,
+      "index": 5.008755,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1842,
+      "index": 5.15267,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1841,
+      "index": 5.145316,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1839,
+      "index": 5.131641,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1838,
+      "index": 5.257345,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1835,
+      "index": 5.223834,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1834,
+      "index": 5.213599,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1827,
+      "index": 5.153393,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1820,
+      "index": 5.109644,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1813,
+      "index": 5.07812,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1806,
+      "index": 5.055521,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1804,
+      "index": 5.348165,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1801,
+      "index": 5.300827,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1799,
+      "index": 5.498156,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1796,
+      "index": 5.431264,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1792,
+      "index": 5.355503,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1786,
+      "index": 5.265643,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1785,
+      "index": 5.253011,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1783,
+      "index": 5.229496,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1778,
+      "index": 5.179725,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1771,
+      "index": 5.127495,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1764,
+      "index": 5.090358,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1757,
+      "index": 5.063995,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1750,
+      "index": 5.045303,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1743,
+      "index": 5.03206,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1736,
+      "index": 5.022683,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1729,
+      "index": 5.016045,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1722,
+      "index": 5.011332,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1716,
+      "index": 5.230557,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1715,
+      "index": 5.219429,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1713,
+      "index": 5.198757,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1708,
+      "index": 5.155196,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1705,
+      "index": 5.291588,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1702,
+      "index": 5.251511,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1701,
+      "index": 5.23941,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1694,
+      "index": 5.169487,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1687,
+      "index": 5.119945,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1684,
+      "index": 5.103418,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1680,
+      "index": 5.084863,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1673,
+      "index": 5.060032,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1669,
+      "index": 5.049255,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1667,
+      "index": 5.305655,
+      "contributingIncidents": 7,
+      "fallbackIncidents": 7,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1666,
+      "index": 5.291156,
+      "contributingIncidents": 7,
+      "fallbackIncidents": 7,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1664,
+      "index": 5.264154,
+      "contributingIncidents": 7,
+      "fallbackIncidents": 7,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1659,
+      "index": 5.206963,
+      "contributingIncidents": 7,
+      "fallbackIncidents": 7,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1653,
+      "index": 5.259541,
+      "contributingIncidents": 7,
+      "fallbackIncidents": 7,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1652,
+      "index": 5.247239,
+      "contributingIncidents": 7,
+      "fallbackIncidents": 7,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1650,
+      "index": 5.224313,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1645,
+      "index": 5.175776,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1638,
+      "index": 5.124775,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1631,
+      "index": 5.088471,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1624,
+      "index": 5.06268,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1617,
+      "index": 5.044353,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1613,
+      "index": 5.215877,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1610,
+      "index": 5.186386,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1603,
+      "index": 5.132216,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1596,
+      "index": 5.093702,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1589,
+      "index": 5.066363,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1582,
+      "index": 5.046978,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1575,
+      "index": 5.033245,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1568,
+      "index": 5.023521,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1561,
+      "index": 5.016639,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1554,
+      "index": 5.011769,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1547,
+      "index": 5.008323,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1540,
+      "index": 5.005886,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1533,
+      "index": 5.004163,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1527,
+      "index": 5.003074,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1526,
+      "index": 5.002925,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1524,
+      "index": 5.00265,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1519,
+      "index": 5.002069,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1512,
+      "index": 5.001452,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1505,
+      "index": 5.001026,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1498,
+      "index": 5.000726,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1492,
+      "index": 5.000539,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1491,
+      "index": 5.000513,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1489,
+      "index": 5.000465,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1487,
+      "index": 5.000421,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1484,
+      "index": 5.247004,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1481,
+      "index": 5.212911,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1477,
+      "index": 5.174636,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1470,
+      "index": 5.123487,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1465,
+      "index": 5.505652,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1463,
+      "index": 5.458569,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1462,
+      "index": 5.436677,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1456,
+      "index": 5.325427,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1449,
+      "index": 5.230697,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1442,
+      "index": 5.16342,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1435,
+      "index": 5.115702,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1428,
+      "index": 5.386671,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1425,
+      "index": 5.220908,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1423,
+      "index": 5.351713,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1422,
+      "index": 5.336039,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1421,
+      "index": 5.320999,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1420,
+      "index": 5.306575,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1414,
+      "index": 5.231868,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1407,
+      "index": 5.166415,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1400,
+      "index": 5.118908,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1393,
+      "index": 5.0847,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1390,
+      "index": 5.073188,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1389,
+      "index": 5.069704,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1386,
+      "index": 5.060203,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1379,
+      "index": 5.042725,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1372,
+      "index": 5.030289,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1368,
+      "index": 5.024875,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1365,
+      "index": 5.021457,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1359,
+      "index": 5.127104,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1358,
+      "index": 5.121016,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1356,
+      "index": 5.109693,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1351,
+      "index": 5.08578,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1344,
+      "index": 5.060761,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1337,
+      "index": 5.043017,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1330,
+      "index": 5.030444,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1323,
+      "index": 5.02154,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1316,
+      "index": 5.015238,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1313,
+      "index": 5.013136,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1309,
+      "index": 5.010778,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1302,
+      "index": 5.007623,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1295,
+      "index": 5.00537,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1288,
+      "index": 5.003797,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1281,
+      "index": 5.002685,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1274,
+      "index": 5.001866,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1267,
+      "index": 5.00132,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1263,
+      "index": 5.001083,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1260,
+      "index": 5.000933,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1253,
+      "index": 5.00066,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1246,
+      "index": 5.000467,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1243,
+      "index": 5.000402,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1239,
+      "index": 5.000303,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1232,
+      "index": 5.000209,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1225,
+      "index": 5.000147,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1218,
+      "index": 5.000104,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1211,
+      "index": 5.000074,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1204,
+      "index": 5.000052,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1202,
+      "index": 5.222369,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 2,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1199,
+      "index": 5.191676,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 2,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1197,
+      "index": 5.173606,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 2,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1190,
+      "index": 5.122759,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 2,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1183,
+      "index": 5.086804,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 2,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1176,
+      "index": 5.06138,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 2,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1169,
+      "index": 5.043393,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1162,
+      "index": 5.030684,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 1,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1159,
+      "index": 5.150109,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 2,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1156,
+      "index": 5.129417,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 2,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1155,
+      "index": 5.123174,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 2,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1148,
+      "index": 5.08713,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 2,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1142,
+      "index": 5.064752,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 2,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1141,
+      "index": 5.061626,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 2,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1139,
+      "index": 5.132237,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1136,
+      "index": 5.114156,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1134,
+      "index": 5.103485,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1127,
+      "index": 5.073357,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1122,
+      "index": 5.057346,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1120,
+      "index": 5.051962,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1119,
+      "index": 5.049462,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1113,
+      "index": 5.036788,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1106,
+      "index": 5.026036,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1102,
+      "index": 5.021366,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 3,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1099,
+      "index": 5.135081,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1096,
+      "index": 5.116615,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1092,
+      "index": 5.095828,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1085,
+      "index": 5.067916,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1079,
+      "index": 5.050533,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1078,
+      "index": 5.048101,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1076,
+      "index": 5.043582,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1071,
+      "index": 5.034052,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1064,
+      "index": 5.024098,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1057,
+      "index": 5.017049,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1053,
+      "index": 5.771892,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1050,
+      "index": 5.671533,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1044,
+      "index": 5.506327,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1043,
+      "index": 5.482851,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1041,
+      "index": 5.438981,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1036,
+      "index": 5.345435,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1029,
+      "index": 5.246265,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1022,
+      "index": 5.175139,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1015,
+      "index": 5.124323,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1008,
+      "index": 5.088161,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1005,
+      "index": 5.076064,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 1001,
+      "index": 5.062465,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 994,
+      "index": 5.044232,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 987,
+      "index": 5.031308,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 980,
+      "index": 5.022154,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 977,
+      "index": 5.300709,
+      "contributingIncidents": 7,
+      "fallbackIncidents": 7,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 974,
+      "index": 5.260547,
+      "contributingIncidents": 7,
+      "fallbackIncidents": 7,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 973,
+      "index": 5.248348,
+      "contributingIncidents": 7,
+      "fallbackIncidents": 7,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 966,
+      "index": 5.177176,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 959,
+      "index": 5.126071,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 6,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 952,
+      "index": 5.089533,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 945,
+      "index": 5.063506,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 938,
+      "index": 5.045004,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 931,
+      "index": 5.031872,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 924,
+      "index": 5.022562,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 923,
+      "index": 5.021475,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 920,
+      "index": 5.018517,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 917,
+      "index": 5.015966,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 5,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 910,
+      "index": 5.011286,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 903,
+      "index": 5.007983,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 898,
+      "index": 5.006234,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 896,
+      "index": 5.005647,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 895,
+      "index": 5.005374,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 889,
+      "index": 5.003993,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 4,
+      "fallbackShare": 1,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 884,
+      "index": 5.130874,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 4,
+      "fallbackShare": 0.8,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 882,
+      "index": 5.118548,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 4,
+      "fallbackShare": 0.8,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 881,
+      "index": 5.112827,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 4,
+      "fallbackShare": 0.8,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 875,
+      "index": 5.083851,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 4,
+      "fallbackShare": 0.8,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 872,
+      "index": 5.072284,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 4,
+      "fallbackShare": 0.8,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 869,
+      "index": 5.062312,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 4,
+      "fallbackShare": 0.8,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 868,
+      "index": 5.059304,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 4,
+      "fallbackShare": 0.8,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 861,
+      "index": 5.041881,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 2,
+      "fallbackShare": 0.6667,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 854,
+      "index": 5.029617,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 2,
+      "fallbackShare": 0.6667,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 850,
+      "index": 5.150458,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 2,
+      "fallbackShare": 0.5,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 847,
+      "index": 5.14149,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 2,
+      "fallbackShare": 0.5,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 843,
+      "index": 5.130612,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 2,
+      "fallbackShare": 0.5,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 840,
+      "index": 5.123171,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 2,
+      "fallbackShare": 0.5,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 833,
+      "index": 5.107844,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 2,
+      "fallbackShare": 0.5,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 826,
+      "index": 5.094879,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 2,
+      "fallbackShare": 0.5,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 819,
+      "index": 5.083804,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 2,
+      "fallbackShare": 0.5,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 812,
+      "index": 5.074262,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 2,
+      "fallbackShare": 0.5,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 805,
+      "index": 5.065979,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 2,
+      "fallbackShare": 0.5,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 798,
+      "index": 5.058745,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 2,
+      "fallbackShare": 0.5,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 791,
+      "index": 5.052393,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 2,
+      "fallbackShare": 0.5,
+      "curationStatus": "legacy-assisted"
+    },
+    {
+      "daysAgo": 784,
+      "index": 5.046771,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 779,
+      "index": 5.043174,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 777,
+      "index": 5.04182,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 776,
+      "index": 5.04116,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 770,
+      "index": 5.037425,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 763,
+      "index": 5.033514,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 756,
+      "index": 5.030028,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 749,
+      "index": 5.026916,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 742,
+      "index": 5.024135,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 735,
+      "index": 5.021646,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 729,
+      "index": 5.117687,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 728,
+      "index": 5.115895,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 726,
+      "index": 5.112391,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 721,
+      "index": 5.104088,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 714,
+      "index": 5.093482,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 707,
+      "index": 5.083954,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 700,
+      "index": 5.075395,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 693,
+      "index": 5.067697,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 689,
+      "index": 5.063663,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 686,
+      "index": 5.060795,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 679,
+      "index": 5.054594,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 672,
+      "index": 5.049025,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 665,
+      "index": 5.044023,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 662,
+      "index": 5.365935,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 659,
+      "index": 5.349703,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 658,
+      "index": 5.344451,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 651,
+      "index": 5.309794,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 644,
+      "index": 5.278573,
+      "contributingIncidents": 3,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 641,
+      "index": 5.552651,
+      "contributingIncidents": 4,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 640,
+      "index": 5.629129,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 638,
+      "index": 5.610705,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 637,
+      "index": 5.601688,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 634,
+      "index": 5.575401,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 631,
+      "index": 5.550224,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 630,
+      "index": 5.542071,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 623,
+      "index": 5.488186,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 616,
+      "index": 5.439516,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 609,
+      "index": 5.395584,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 602,
+      "index": 5.355952,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 599,
+      "index": 5.340181,
+      "contributingIncidents": 5,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 597,
+      "index": 5.698862,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 596,
+      "index": 5.688805,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 595,
+      "index": 5.678883,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 594,
+      "index": 5.669095,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 588,
+      "index": 5.613089,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 585,
+      "index": 5.586768,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 582,
+      "index": 5.561517,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 581,
+      "index": 5.553332,
+      "contributingIncidents": 6,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 577,
+      "index": 5.580591,
+      "contributingIncidents": 7,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 574,
+      "index": 5.555735,
+      "contributingIncidents": 7,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 567,
+      "index": 5.501584,
+      "contributingIncidents": 7,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 560,
+      "index": 5.452462,
+      "contributingIncidents": 7,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 553,
+      "index": 5.407952,
+      "contributingIncidents": 7,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 550,
+      "index": 5.390189,
+      "contributingIncidents": 7,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 547,
+      "index": 5.373171,
+      "contributingIncidents": 7,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 546,
+      "index": 5.367659,
+      "contributingIncidents": 7,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 539,
+      "index": 5.331215,
+      "contributingIncidents": 7,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 532,
+      "index": 5.298279,
+      "contributingIncidents": 7,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 525,
+      "index": 5.268533,
+      "contributingIncidents": 7,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 520,
+      "index": 5.249076,
+      "contributingIncidents": 7,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 518,
+      "index": 5.40329,
+      "contributingIncidents": 8,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 517,
+      "index": 5.397371,
+      "contributingIncidents": 8,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 515,
+      "index": 5.385783,
+      "contributingIncidents": 8,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 513,
+      "index": 6.066638,
+      "contributingIncidents": 9,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 511,
+      "index": 6.035934,
+      "contributingIncidents": 9,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 510,
+      "index": 6.020896,
+      "contributingIncidents": 9,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 508,
+      "index": 5.991437,
+      "contributingIncidents": 9,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 505,
+      "index": 5.948754,
+      "contributingIncidents": 9,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 504,
+      "index": 5.934918,
+      "contributingIncidents": 9,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 497,
+      "index": 5.843307,
+      "contributingIncidents": 9,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 490,
+      "index": 5.76031,
+      "contributingIncidents": 9,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 483,
+      "index": 5.685188,
+      "contributingIncidents": 9,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 479,
+      "index": 5.422689,
+      "contributingIncidents": 10,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 478,
+      "index": 5.416532,
+      "contributingIncidents": 10,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 476,
+      "index": 5.404473,
+      "contributingIncidents": 10,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 475,
+      "index": 5.398569,
+      "contributingIncidents": 10,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 469,
+      "index": 5.364829,
+      "contributingIncidents": 10,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 464,
+      "index": 5.685821,
+      "contributingIncidents": 11,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 462,
+      "index": 5.676605,
+      "contributingIncidents": 11,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 461,
+      "index": 5.672094,
+      "contributingIncidents": 11,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 455,
+      "index": 5.646343,
+      "contributingIncidents": 11,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 448,
+      "index": 5.618976,
+      "contributingIncidents": 11,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 441,
+      "index": 5.594245,
+      "contributingIncidents": 11,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 434,
+      "index": 5.50556,
+      "contributingIncidents": 12,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 431,
+      "index": 5.499649,
+      "contributingIncidents": 12,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 428,
+      "index": 4.952501,
+      "contributingIncidents": 13,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 427,
+      "index": 4.953278,
+      "contributingIncidents": 12,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 425,
+      "index": 4.954791,
+      "contributingIncidents": 12,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 420,
+      "index": 4.958353,
+      "contributingIncidents": 12,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 417,
+      "index": 4.960347,
+      "contributingIncidents": 12,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 416,
+      "index": 4.651629,
+      "contributingIncidents": 13,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 414,
+      "index": 4.661628,
+      "contributingIncidents": 13,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 413,
+      "index": 4.666526,
+      "contributingIncidents": 13,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 406,
+      "index": 4.698992,
+      "contributingIncidents": 13,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 399,
+      "index": 4.728453,
+      "contributingIncidents": 13,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 392,
+      "index": 4.755155,
+      "contributingIncidents": 13,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 389,
+      "index": 4.765812,
+      "contributingIncidents": 13,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 386,
+      "index": 4.776024,
+      "contributingIncidents": 13,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 385,
+      "index": 4.779331,
+      "contributingIncidents": 13,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 378,
+      "index": 4.801201,
+      "contributingIncidents": 13,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 371,
+      "index": 4.820969,
+      "contributingIncidents": 14,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 368,
+      "index": 4.828844,
+      "contributingIncidents": 14,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 364,
+      "index": 4.838822,
+      "contributingIncidents": 14,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 357,
+      "index": 4.854938,
+      "contributingIncidents": 14,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 350,
+      "index": 4.869475,
+      "contributingIncidents": 14,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 343,
+      "index": 4.882583,
+      "contributingIncidents": 14,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 340,
+      "index": 5.033146,
+      "contributingIncidents": 15,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 339,
+      "index": 5.216775,
+      "contributingIncidents": 16,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 337,
+      "index": 5.21603,
+      "contributingIncidents": 16,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 336,
+      "index": 5.215665,
+      "contributingIncidents": 16,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 330,
+      "index": 5.505623,
+      "contributingIncidents": 17,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 329,
+      "index": 5.501073,
+      "contributingIncidents": 17,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 327,
+      "index": 5.49216,
+      "contributingIncidents": 17,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 325,
+      "index": 5.483491,
+      "contributingIncidents": 17,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 322,
+      "index": 5.470931,
+      "contributingIncidents": 17,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 315,
+      "index": 5.443597,
+      "contributingIncidents": 17,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 309,
+      "index": 5.422224,
+      "contributingIncidents": 18,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 308,
+      "index": 5.418836,
+      "contributingIncidents": 18,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 306,
+      "index": 5.409525,
+      "contributingIncidents": 18,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 301,
+      "index": 5.316435,
+      "contributingIncidents": 18,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 294,
+      "index": 5.27643,
+      "contributingIncidents": 18,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 287,
+      "index": 5.237799,
+      "contributingIncidents": 18,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 280,
+      "index": 5.200452,
+      "contributingIncidents": 18,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 273,
+      "index": 5.164303,
+      "contributingIncidents": 18,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 268,
+      "index": 5.471134,
+      "contributingIncidents": 19,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 266,
+      "index": 5.451607,
+      "contributingIncidents": 19,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 265,
+      "index": 5.441978,
+      "contributingIncidents": 19,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 259,
+      "index": 5.385997,
+      "contributingIncidents": 19,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 252,
+      "index": 5.324347,
+      "contributingIncidents": 18,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 251,
+      "index": 5.315845,
+      "contributingIncidents": 18,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 248,
+      "index": 5.290776,
+      "contributingIncidents": 18,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 245,
+      "index": 5.4573,
+      "contributingIncidents": 17,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 238,
+      "index": 5.4276,
+      "contributingIncidents": 17,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 232,
+      "index": 5.064241,
+      "contributingIncidents": 18,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 231,
+      "index": 5.065697,
+      "contributingIncidents": 18,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 229,
+      "index": 5.068547,
+      "contributingIncidents": 18,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 224,
+      "index": 5.07532,
+      "contributingIncidents": 18,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 217,
+      "index": 5.084008,
+      "contributingIncidents": 18,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 210,
+      "index": 5.091847,
+      "contributingIncidents": 18,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 203,
+      "index": 5.098916,
+      "contributingIncidents": 18,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 196,
+      "index": 5.105289,
+      "contributingIncidents": 18,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 189,
+      "index": 5.111031,
+      "contributingIncidents": 18,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 182,
+      "index": 5.116202,
+      "contributingIncidents": 18,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 178,
+      "index": 5.687102,
+      "contributingIncidents": 19,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 175,
+      "index": 5.664934,
+      "contributingIncidents": 19,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 168,
+      "index": 5.616532,
+      "contributingIncidents": 19,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 161,
+      "index": 5.572504,
+      "contributingIncidents": 19,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 155,
+      "index": 5.537991,
+      "contributingIncidents": 19,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 154,
+      "index": 5.532513,
+      "contributingIncidents": 19,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 152,
+      "index": 5.521783,
+      "contributingIncidents": 19,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 147,
+      "index": 5.496235,
+      "contributingIncidents": 19,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 140,
+      "index": 5.463364,
+      "contributingIncidents": 19,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 133,
+      "index": 5.433608,
+      "contributingIncidents": 19,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 126,
+      "index": 5.406689,
+      "contributingIncidents": 18,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 119,
+      "index": 5.382371,
+      "contributingIncidents": 18,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 112,
+      "index": 5.360411,
+      "contributingIncidents": 18,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 105,
+      "index": 5.340592,
+      "contributingIncidents": 18,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 98,
+      "index": 5.322715,
+      "contributingIncidents": 18,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 95,
+      "index": 5.761038,
+      "contributingIncidents": 19,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 92,
+      "index": 5.735219,
+      "contributingIncidents": 19,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 91,
+      "index": 5.72685,
+      "contributingIncidents": 19,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 84,
+      "index": 5.671441,
+      "contributingIncidents": 19,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 77,
+      "index": 5.621252,
+      "contributingIncidents": 19,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 74,
+      "index": 5.649362,
+      "contributingIncidents": 20,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 72,
+      "index": 5.63508,
+      "contributingIncidents": 20,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 71,
+      "index": 5.628092,
+      "contributingIncidents": 20,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 70,
+      "index": 5.621203,
+      "contributingIncidents": 20,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 69,
+      "index": 5.707383,
+      "contributingIncidents": 21,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 68,
+      "index": 5.699385,
+      "contributingIncidents": 21,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 66,
+      "index": 5.683724,
+      "contributingIncidents": 21,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 64,
+      "index": 5.442024,
+      "contributingIncidents": 21,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 63,
+      "index": 6.259423,
+      "contributingIncidents": 22,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 61,
+      "index": 6.230792,
+      "contributingIncidents": 22,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 60,
+      "index": 6.216699,
+      "contributingIncidents": 22,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 56,
+      "index": 6.161815,
+      "contributingIncidents": 22,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 52,
+      "index": 6.109286,
+      "contributingIncidents": 22,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 50,
+      "index": 6.083893,
+      "contributingIncidents": 22,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 49,
+      "index": 6.071412,
+      "contributingIncidents": 22,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 47,
+      "index": 6.046879,
+      "contributingIncidents": 22,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 42,
+      "index": 5.987979,
+      "contributingIncidents": 20,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 38,
+      "index": 6.225516,
+      "contributingIncidents": 21,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 37,
+      "index": 6.215116,
+      "contributingIncidents": 21,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 35,
+      "index": 6.194693,
+      "contributingIncidents": 21,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 34,
+      "index": 6.184667,
+      "contributingIncidents": 21,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 31,
+      "index": 6.155325,
+      "contributingIncidents": 21,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 28,
+      "index": 6.501429,
+      "contributingIncidents": 22,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 25,
+      "index": 6.445228,
+      "contributingIncidents": 22,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 21,
+      "index": 6.372438,
+      "contributingIncidents": 22,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 16,
+      "index": 6.284801,
+      "contributingIncidents": 22,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 15,
+      "index": 6.267709,
+      "contributingIncidents": 22,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 14,
+      "index": 6.25076,
+      "contributingIncidents": 22,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 13,
+      "index": 6.233953,
+      "contributingIncidents": 22,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 12,
+      "index": 6.217285,
+      "contributingIncidents": 22,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 11,
+      "index": 6.200757,
+      "contributingIncidents": 22,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 7,
+      "index": 6.136009,
+      "contributingIncidents": 22,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    },
+    {
+      "daysAgo": 0,
+      "index": 6.027774,
+      "contributingIncidents": 22,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "fully-curated"
+    }
+  ]
+}

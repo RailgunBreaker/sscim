@@ -1,6 +1,6 @@
 # SSCIM project roadmap
 
-**Model version:** `sscim-model-v7-exposure-robustness`. The canonical
+**Model version:** `sscim-model-v7.1-exposure-robustness`. The canonical
 specification is [`docs/MODEL_V7_SPEC.md`](MODEL_V7_SPEC.md); its
 [§11](MODEL_V7_SPEC.md#11-limitations-and-calibration-roadmap) states the data
 each parameter would need and the five steps that must be completed before any
@@ -86,7 +86,7 @@ interface:
   hypothetical scenarios, and company-disruption analysis;
 - map, industry-flow, topology, company, country, and event views;
 - structural-vulnerability and operational-impact measures kept separate;
-- declared and inspectable propagation priors, including a 12-day half-life;
+- declared and inspectable propagation priors, including the per-incident persistence half-lives and durations;
 - source notes, methodology, calculation examples, and data audits;
 - a static publication that remains readable when the author's computer and
   local API are offline.

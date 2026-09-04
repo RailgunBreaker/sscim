@@ -22,10 +22,12 @@ const run = (z, channel = 'both', s = setup()) =>
   propagateSignedVector({ z, channel, ...s });
 
 /* ==================================================================
-   The contraction guarantees. These are what make the v7 propagation
-   finite and bounded on any DAG with no truncation tolerance at all.
+   THE PER-STAGE BOUND. This is what makes the propagation settle on any
+   DAG with no truncation tolerance. It is a statement about each stage
+   individually and NOT about the network-wide total — see the branching
+   tests below, which pin that distinction shut.
    ================================================================== */
-describe('dependency matrices — the bounds that make propagation a contraction', () => {
+describe('dependency matrices — the per-stage inheritance bound', () => {
   it('the incoming downstream coefficients at every node total at most f_d, which is strictly below 1', () => {
     const { D, IN } = setup(() => 10); // maximum non-substitutability = the worst case for the bound
     expect(BASE_PARAMS.downstreamTransmission).toBeLessThan(1);
@@ -56,6 +58,38 @@ describe('dependency matrices — the bounds that make propagation a contraction
     stageIds.forEach((a) => {
       expect((OUT[a] || []).reduce((s, b) => s + U[a][b], 0)).toBeLessThanOrEqual(params.upstreamTransmission + 1e-12);
     });
+  });
+
+  /* THE CLAIM THAT WAS TOO STRONG. v7.0 documentation said the bound meant
+     the propagation "cannot manufacture exposure". That is true per stage
+     and false for the network: f_d and f_u are per-stage inheritance
+     multipliers, not shares of a conserved quantity, so one source feeding
+     several buyers branches. */
+  it('BRANCHES: the summed signal across stages exceeds the source, while no stage exceeds its bound', () => {
+    // a -> b and a -> c and a -> d: one source, three independent inheritors.
+    const ids = ['a', 'b', 'c', 'd'];
+    const star = [['a', 'b'], ['a', 'c'], ['a', 'd']];
+    const s = setup(() => 10, BASE_PARAMS, ids, star);
+    const { field } = propagateSignedVector({ z: { a: 1 }, channel: 'downstream', ...s });
+
+    const total = ids.reduce((acc, id) => acc + Math.abs(field[id]), 0);
+    expect(total).toBeGreaterThan(1);                       // more signal than was injected
+    ids.forEach((id) => expect(Math.abs(field[id])).toBeLessThanOrEqual(1)); // yet every stage is bounded
+
+    // Each inheritor gets f_d x (its single incoming share = 1) x dependency factor.
+    ['b', 'c', 'd'].forEach((id) => expect(field[id]).toBeCloseTo(s.D[id].a, 12));
+  });
+
+  it('the more buyers a source has, the more total signal branching produces', () => {
+    const build = (n) => {
+      const ids = ['a', ...Array.from({ length: n }, (_, i) => `b${i}`)];
+      const edges = ids.slice(1).map((b) => ['a', b]);
+      const st = setup(() => 10, BASE_PARAMS, ids, edges);
+      const { field } = propagateSignedVector({ z: { a: 1 }, channel: 'downstream', ...st });
+      return ids.reduce((acc, id) => acc + Math.abs(field[id]), 0);
+    };
+    expect(build(4)).toBeGreaterThan(build(2));
+    expect(build(2)).toBeGreaterThan(build(1));
   });
 
   it('a higher non-substitutability at the supplier never lowers the downstream coefficient, or the propagated impact', () => {

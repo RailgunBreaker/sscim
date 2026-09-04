@@ -268,7 +268,7 @@ Verified against Crossref, Open Library or the issuing body — no DOI here
 was written from memory.
 
 **The declared priors are deliberately absent from this section.** The
-12-day half-life, the transmission coefficients and the stage weights are
+persistence half-lives and durations, the transmission coefficients and the stage weights are
 analyst judgement (Tier D). Attaching a reference to one of them would
 launder an assumption into a finding, which is the opposite of what this
 register is for. What is cited is the *form* of each calculation, never the

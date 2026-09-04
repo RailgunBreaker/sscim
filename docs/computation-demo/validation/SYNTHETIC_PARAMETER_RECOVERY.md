@@ -1,6 +1,6 @@
 # Synthetic parameter recovery
 
-*Model version: `sscim-model-v7-exposure-robustness`. Canonical specification:
+*Model version: `sscim-model-v7.1-exposure-robustness`. Canonical specification:
 [`docs/MODEL_V7_SPEC.md`](../../MODEL_V7_SPEC.md) — see
 [§9, validation status](../../MODEL_V7_SPEC.md#9-validation-status).*
 

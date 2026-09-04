@@ -1,6 +1,6 @@
 # SSCIM v7 — Calculation Walkthrough
 
-**Model version:** `sscim-model-v7-exposure-robustness`
+**Model version:** `sscim-model-v7.1-exposure-robustness`
 
 > **This document explains the calculation. It does not define it.**
 > The canonical, authoritative definition of every formula, symbol,
@@ -222,9 +222,17 @@ $$
 \sum_{b \in \mathrm{OUT}(a)} U_{ab} \le f_u < 1
 $$
 
-The propagation is therefore a **contraction**: finite, bounded, and
-order-independent on any DAG. No truncation tolerance is needed, and none is
-used.
+**This bounds each stage individually.** The inflow into any one node is a
+strict fraction of its inputs' values, so the per-stage recursion settles on a
+DAG, every value stays inside its clip, and the result is order-independent. No
+truncation tolerance is needed, and none is used.
+
+**It does not conserve anything network-wide.** $f_d$ and $f_u$ are *per-stage
+inheritance multipliers*, not shares of a fixed quantity being divided up — one
+source reaches several buyers, each inheriting up to $f_d$ of what it depends on,
+so the signal **branches**. On the shipped snapshot a unit shock at `gases` sums
+to about 2.09 across stages while no single stage exceeds 1.0. The propagated
+field is a dimensionless dependency signal, not a conserved mass.
 
 ### 6.2 The two channels
 

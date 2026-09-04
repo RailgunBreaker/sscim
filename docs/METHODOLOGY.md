@@ -1,6 +1,6 @@
 # SSCIM methodology
 
-**Model version:** `sscim-model-v7-exposure-robustness`
+**Model version:** `sscim-model-v7.1-exposure-robustness`
 
 This document describes what the engine in `app/src/engine/` computes, for a
 reader who wants the reasoning rather than the reference. No formula here is
@@ -104,9 +104,15 @@ represent.
 
 The bound that makes this work: because the edge allocations are a partition of
 one at each node and both transmission coefficients are strictly below 1, the
-incoming coefficients at any node sum to less than one. The propagation is a
-**contraction** — finite, bounded and order-independent on any DAG — so no
-truncation tolerance is needed, and none is used.
+incoming coefficients at any node sum to less than one. That bounds **each stage
+individually**, so the recursion settles on a DAG, every value stays inside its
+clip, and no truncation tolerance is needed.
+
+It bounds nothing network-wide. The two coefficients are per-stage inheritance
+multipliers rather than shares of a conserved quantity, so a source feeding
+several buyers makes the signal **branch**: the summed field across stages
+routinely exceeds the source magnitude, while no stage exceeds its own bound.
+The propagated field is a dependency signal, not a mass.
 
 ### 5. Exposure is continuous
 
@@ -348,6 +354,50 @@ interval, and nothing in this model produces one. The finding that travels is
 coefficients.
 
 ---
+
+## What the data does not know
+
+The data audit separates hard failures from warnings, and the build only
+stops on hard failures. That is the right gate for a prototype, but it
+leaves real limitations sitting in a log nobody reads. They are stated here,
+countable, because a limitation that is not visible is indistinguishable
+from one that does not exist.
+
+| Limitation | Extent in this snapshot |
+| --- | --- |
+| **No evidence-based edge allocations** | **Every** dependency coefficient rests on an equal split: 17 stages have no inbound allocation, 21 no outbound. This is the single largest unevidenced input to the model. |
+| **Missing evidence notes** | 20 of 24 stages and 105 of 109 companies carry no evidence note. Figures without one are carried-over analyst judgement, not individually verified numbers. |
+| **Partial country-share coverage** | 6 stages disclose less than 100% of their country shares, so their concentration is published as a `[lower, upper]` interval rather than a point. |
+| **Company shares summing above 100%** | Two stages exceed 100% because the underlying estimates use overlapping category definitions from different sources. Shares are renormalized for computation and treated as within the modeled sample. |
+| **Host-only countries** | 8 of 24 countries carry no stage share. They host facilities and contribute nothing to any score - a real distinction the map cannot show by itself. |
+| **Curated versus legacy-assisted events** | 30 incidents carry a curated stage exposure and persistence profile with a recorded basis. 49 scored incidents do not, and run on an equal 1/k split and a default acute profile. |
+| **Curation grading** | 10 of the 30 curated incidents are individually evidence-graded; the other 20 use a default uncertainty band. |
+
+### The three uncertainties, kept apart
+
+They are measured separately because they behave differently, and because
+adding them together would imply a precision none of them has:
+
+| Class | What varies | Headline effect | Artefact |
+| --- | --- | --- | --- |
+| **Parameter** | the registry coefficients | envelope about 1.3 index points | `docs/benchmarks/v7-sensitivity.json` |
+| **Model form** | the categorical structural choices | envelope about 1.1 index points | same file, reported separately |
+| **Event curation** | per-incident exposure and persistence judgements | envelope about 0.72 index points | `docs/benchmarks/v7-curation-uncertainty.json` |
+
+Curation uncertainty is the newest of the three and was previously
+unmeasured - which meant it was implicitly treated as zero. It is the same
+order of magnitude as the other two.
+
+### Legacy-assisted history
+
+The 49 uncurated incidents move today's reading by **nothing**: they are
+years old, and their persistence multipliers at the snapshot date are
+negligible. They move the **pre-curation historical peak by about one index
+point**. Earlier documentation said fallbacks could not materially affect
+any published number; that was true of the current snapshot and false of the
+historical series, and the claim is withdrawn. The history panel marks
+legacy-assisted periods, and `docs/benchmarks/v7-legacy-fallback.json`
+quantifies them.
 
 ## Reproducibility and limitations
 

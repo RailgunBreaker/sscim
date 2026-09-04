@@ -1,6 +1,6 @@
 # Reference — Events
 
-*Model version: `sscim-model-v7-exposure-robustness`. How a record becomes a
+*Model version: `sscim-model-v7.1-exposure-robustness`. How a record becomes a
 number is defined in [`docs/MODEL_V7_SPEC.md`](../MODEL_V7_SPEC.md) —
 [§2](../MODEL_V7_SPEC.md#2-complete-notation) for the source-vector notation,
 [§3.1](../MODEL_V7_SPEC.md#31-event-source-vector-construction--engineeventsourcejs)
@@ -142,9 +142,14 @@ decay horizon, a well-covered period scores higher than an equally eventful but
 thinly covered one — the index measures the dataset as well as the world. The
 history panel reports this directly, next to per-year event counts.
 
-Two consequences follow. Cross-year comparisons of the *level* are weak
-evidence. And one real event entered several times — one earthquake reported by
-six outlets, each approved separately — inflates the index materially, because
-simultaneous shocks accumulate through noisy-OR rather than being deduplicated
-by the model. The pipeline collapses same-story duplicates at ingest, but that
+One consequence follows: cross-year comparisons of the *level* are weak
+evidence.
+
+A second consequence used to follow and no longer does. One real event entered
+several times — one earthquake reported by six outlets, each approved separately
+— used to inflate the index, because the model accumulated the records rather
+than the incident. v7 groups records into incidents **before** anything is
+scored and scores only the primary record of each, so the eight Kumamoto records
+score once. Duplicate coverage now affects how well-evidenced a period *looks*,
+not what it scores. The pipeline also collapses same-story duplicates at ingest, but that
 is a heuristic on headline text, not a guarantee.

@@ -256,6 +256,16 @@ export default function DecadeHistory({ onSelectEvent }) {
           a month with more ingested records scores higher than an equally eventful month with fewer.
           Compare the EVENTS and SCORED columns per year before reading a trend into the means.
           Snapshot date {data.META?.snapshotDate || engine.MODEL_PRIORS.datasetAsOf}.
+          {' '}<b style={{ color: C.amber }}>Curation coverage.</b> {(() => {
+            const fbNow = engine.fallbackCountAt ? engine.fallbackCountAt(0) : 0;
+            const fbOld = engine.fallbackCountAt ? engine.fallbackCountAt(Math.min(1200, engine.longSpanDays)) : 0;
+            const total = engine.LEGACY_FALLBACK_IDS ? engine.LEGACY_FALLBACK_IDS.size : 0;
+            return `${total} scored incidents carry no curated stage exposure or persistence profile and run on `
+              + `an equal-split fallback instead. They contribute ${fbNow} incident(s) to today's reading and `
+              + `${fbOld} to a date three years back, so earlier parts of this chart are LEGACY-ASSISTED: their `
+              + `level depends on those fallback assumptions. Moving the assumptions moves the pre-curation peak `
+              + `by about one index point, while leaving today's reading unchanged.`;
+          })()}
           {' '}<b style={{ color: C.amber }}>This series is a {engine.MODEL_PRIORS.modelVersion} retrospective:</b> every
           point is recomputed today, under today&apos;s model, over the records as they stood on that date. It is not what
           was published on those dates — an earlier model version produced materially different numbers from the same

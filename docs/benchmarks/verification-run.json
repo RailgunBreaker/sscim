@@ -1,89 +1,99 @@
 {
-  "recordedAt": "2026-09-04T05:31:16.036Z",
-  "commit": null,
-  "modelVersion": "sscim-model-v7-exposure-robustness",
+  "recordedAt": "2026-09-04T06:47:53.662Z",
+  "commit": "a737f6963dbf75d08e9d2f70f4f57c7eff1eabf5",
+  "modelVersion": "sscim-model-v7.1-exposure-robustness",
   "datasetAsOf": "2026-09-04",
   "commands": [
     {
       "command": "server: npm ci",
       "result": "pass",
-      "seconds": 201.8,
+      "seconds": 156.2,
       "detail": "added 113 packages, and audited 114 packages in 3m"
     },
     {
       "command": "app: npm ci",
       "result": "pass",
-      "seconds": 301,
+      "seconds": 301.2,
       "detail": "added 156 packages in 5m"
     },
     {
       "command": "app: npm run snapshot",
-      "result": "FAIL",
-      "seconds": 0,
-      "detail": "(no summary line)"
+      "result": "pass",
+      "seconds": 0.5,
+      "detail": "(109 companies, 24 stages, 167 events)"
     },
     {
       "command": "app: npm run audit:data",
-      "result": "FAIL",
-      "seconds": 0,
-      "detail": "(no summary line)"
+      "result": "pass",
+      "seconds": 0.4,
+      "detail": "audit:data PASSED — 0 hard failures, 30 warning(s)."
     },
     {
       "command": "app: npm run docs:verify",
-      "result": "FAIL",
-      "seconds": 0,
-      "detail": "(no summary line)"
+      "result": "pass",
+      "seconds": 0.4,
+      "detail": "docs:verify PASSED — documentation and code agree."
     },
     {
       "command": "app: npm test",
-      "result": "FAIL",
-      "seconds": 0,
-      "detail": " · "
+      "result": "pass",
+      "seconds": 19.6,
+      "detail": "Test Files  47 passed (47) · Tests  888 passed (888)"
     },
     {
       "command": "app: npm run build",
-      "result": "FAIL",
-      "seconds": 0,
-      "detail": "built"
+      "result": "pass",
+      "seconds": 3.8,
+      "detail": "Published 35 documentation page(s) + /docs/ index · 855 equation(s) rendered · KaTeX css + 20 font(s)."
     },
     {
       "command": "app: npm run smoke",
-      "result": "FAIL",
-      "seconds": 0,
-      "detail": "(no summary line)"
+      "result": "pass",
+      "seconds": 82.6,
+      "detail": "172/172 checks passed"
     },
     {
       "command": "app: npm run sensitivity -- --samples 1024",
-      "result": "FAIL",
-      "seconds": 0,
-      "detail": "(no summary line)"
+      "result": "pass",
+      "seconds": 177.9,
+      "detail": "design: 12 continuous dimensions x 1024 samples = 14336 model evaluations"
     },
     {
       "command": "app: npm run benchmark",
-      "result": "FAIL",
-      "seconds": 0,
-      "detail": "(no summary line)"
+      "result": "pass",
+      "seconds": 0.4,
+      "detail": "SKIPPED, and the committed comparison is left untouched."
     },
     {
       "command": "app: npm run demo",
-      "result": "FAIL",
-      "seconds": 0,
-      "detail": "(no summary line)"
+      "result": "pass",
+      "seconds": 0.4,
+      "detail": "headline index 6.027797 · 160 incidents from 167 records"
     }
   ],
   "tests": {
-    "files": 0,
+    "files": 47,
     "filesFailed": 0,
-    "passed": 0,
+    "passed": 888,
     "failed": 0,
     "skipped": 0,
     "todo": 0,
-    "total": 0
+    "total": 888
   },
   "browserSmoke": {
-    "passed": 0,
-    "total": 0,
-    "sections": []
+    "passed": 172,
+    "total": 172,
+    "sections": [
+      "375x812",
+      "768x1024",
+      "1366x768",
+      "1366x936",
+      "1920x1080",
+      "deep checks (1920x1080)",
+      "views and history review",
+      "accessibility",
+      "landing page"
+    ]
   },
   "sensitivity": {
     "seed": 20260829,
@@ -119,8 +129,11 @@
       "commit": "7749dc869d76a70fa1a4c09928c96f4a2c2e14cc"
     },
     "to": {
-      "modelVersion": "sscim-model-v7-exposure-robustness",
-      "datasetAsOf": "2026-08-29"
+      "modelVersion": "sscim-model-v7.1-exposure-robustness",
+      "datasetAsOf": "2026-08-29",
+      "snapshotDate": "2026-09-04",
+      "backDatedByDays": 6,
+      "backDatingNote": "The committed snapshot is dated 2026-09-04. Every incident was re-aged back 6 day(s) using the engine's own back-dating rule, and incidents dated after 2026-08-29 were excluded, so this is a MATCHED-DATE model comparison against the frozen v6 reference."
     },
     "headline": {
       "v6": 5.395609,
@@ -139,5 +152,5 @@
       "envelopeNote": "The v6 envelope moved all three coefficients together in the same direction. The v7 in-app envelope moves each parameter one at a time over its declared range; the principal analysis is the global design in docs/benchmarks/v7-sensitivity.json."
     }
   },
-  "allPassed": false
+  "allPassed": true
 }

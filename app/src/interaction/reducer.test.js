@@ -236,6 +236,11 @@ describe('facility playground state', () => {
 
   it('starts empty', () => {
     expect(start().facility).toMatchObject({ focusId: null, rootId: null, hops: DEFAULT_FACILITY_HOPS, direction: 'both' });
+    /* v7.1 regression: the default is THREE hops, asserted as a literal.
+       Comparing against the constant would pass even if the constant moved,
+       which is the change this test exists to catch. */
+    expect(DEFAULT_FACILITY_HOPS).toBe(3);
+    expect(start().facility.hops).toBe(3);
   });
 
   it('focusing sets both the focus and the root the first time', () => {

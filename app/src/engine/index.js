@@ -186,23 +186,63 @@ export function buildEngine({ STAGES, FLOW_EDGES, COMPANIES, CUSTOMERS, POLICIES
   const STAGE_WEIGHT = stageWeights(STAGES.map((s) => [s.id, s.value]), PARAMS.stageWeighting);
   const ECONOMIC_WEIGHT = STAGE_WEIGHT; // compatibility alias — same object, unambiguous name preferred
 
-  /* ---------------- network influence ----------------
-     For each stage j: inject a unit adverse shock, propagate downstream
-     over the whole DAG, weight the affected stages by their economic
-     weight and sum. RAW is published as itself; the 0-10 figure is
-     explicitly SNAPSHOT-RELATIVE (divided by the largest raw value in
-     THIS snapshot) and is therefore not comparable across snapshots. */
-  const NETWORK_INFLUENCE_RAW = {};
+  /* ---------------- reach: THREE quantities, not one (v7.1) ----------------
+
+     THE v7.0 DEFECT. One number was published as "network influence":
+
+         NI_s = sum_j w_j * p_{s->j}        with p_{s->s} = 1
+
+     The j = s term is w_s * 1 = w_s, so every stage scored AT LEAST its own
+     economic weight before any propagation happened. A large stage with no
+     downstream edges at all therefore ranked as highly "network
+     influential". In the shipped snapshot `m_ai` (AI data centres) ranked
+     SECOND on this measure and has no outgoing edge whatsoever: its whole
+     score was its own size, wearing the name of a network property.
+
+     It also double-counted size inside the structural index, which already
+     carries market importance as a separate weighted component.
+
+     v7.1 publishes the two things separately, because they answer different
+     questions and only one of them is about the network:
+
+       DirectFootprint_s  = w_s                        how big this stage is
+       SpilloverReach_s   = sum_{j != s} w_j p_{s->j}  how much of the REST
+                                                       of the chain it moves
+
+     The structural index uses SPILLOVER REACH. DirectFootprint is published
+     beside it and is NOT fed into the structural score, so economic size
+     enters that score once (through market importance) rather than twice.
+
+     The v7.0 quantity is preserved for comparison under a name that says
+     what it actually was — SYSTEM_WEIGHTED_REACH_INCLUDING_SOURCE — and is
+     never called network influence. */
+  const DIRECT_FOOTPRINT = Object.fromEntries(stageIds.map((id) => [id, STAGE_WEIGHT[id] ?? 0]));
+  const SPILLOVER_REACH_RAW = {};
   STAGES.forEach((s) => {
     const field = propagateSignedSource(s.id, 1, 'downstream');
     let sum = 0;
-    stageIds.forEach((id) => { sum += (STAGE_WEIGHT[id] ?? 0) * Math.abs(field[id] ?? 0); });
-    NETWORK_INFLUENCE_RAW[s.id] = sum;
+    stageIds.forEach((id) => {
+      if (id === s.id) return;            // the source's own weight is DirectFootprint, not reach
+      sum += (STAGE_WEIGHT[id] ?? 0) * Math.abs(field[id] ?? 0);
+    });
+    SPILLOVER_REACH_RAW[s.id] = sum;
   });
-  const MAX_NETWORK_INFLUENCE_RAW = Math.max(...Object.values(NETWORK_INFLUENCE_RAW), 1e-12);
-  const NETWORK_INFLUENCE_SNAPSHOT_RELATIVE = Object.fromEntries(
-    stageIds.map((id) => [id, clamp10(10 * NETWORK_INFLUENCE_RAW[id] / MAX_NETWORK_INFLUENCE_RAW)]),
+  /* The v7.0 measure, kept only so the frozen v7.0 benchmark stays
+     explicable. Accurately named: it is reach PLUS the source's own weight. */
+  const SYSTEM_WEIGHTED_REACH_INCLUDING_SOURCE = Object.fromEntries(
+    stageIds.map((id) => [id, SPILLOVER_REACH_RAW[id] + DIRECT_FOOTPRINT[id]]),
   );
+
+  const MAX_SPILLOVER_REACH_RAW = Math.max(...Object.values(SPILLOVER_REACH_RAW), 1e-12);
+  const SPILLOVER_REACH_SNAPSHOT_RELATIVE = Object.fromEntries(
+    stageIds.map((id) => [id, clamp10(10 * SPILLOVER_REACH_RAW[id] / MAX_SPILLOVER_REACH_RAW)]),
+  );
+
+  /* `NETWORK_INFLUENCE*` keeps its name because the name was never the
+     problem — the calculation was. It now measures influence ON THE
+     NETWORK, which is what it always claimed to measure. */
+  const NETWORK_INFLUENCE_RAW = SPILLOVER_REACH_RAW;
+  const NETWORK_INFLUENCE_SNAPSHOT_RELATIVE = SPILLOVER_REACH_SNAPSHOT_RELATIVE;
   const NETWORK_INFLUENCE = NETWORK_INFLUENCE_SNAPSHOT_RELATIVE; // the 0-10 display score
   const NETWORK_INFLUENCE_RANK = [...stageIds].sort((a, b) =>
     NETWORK_INFLUENCE_RAW[b] - NETWORK_INFLUENCE_RAW[a] || (a < b ? -1 : 1));
@@ -713,6 +753,18 @@ export function buildEngine({ STAGES, FLOW_EDGES, COMPANIES, CUSTOMERS, POLICIES
     };
   })();
 
+  /* Which operational records run on FALLBACK assumptions rather than a
+     curated exposure vector and profile. Exposed so the history surfaces
+     can mark legacy-assisted periods instead of presenting every point as
+     equally well evidenced. */
+  const LEGACY_FALLBACK_IDS = new Set(
+    EVENTS.filter((e) => assumptionOf(e).operational && !curatedModelOf(e) && uniqueStages(e).length > 0).map((e) => e.id),
+  );
+  /* How many contributing incidents at a past date are running on
+     fallbacks. Zero means the date is fully curated. */
+  const fallbackCountAt = (t) => eventsAsOf(t)
+    .filter((e) => assumptionOf(e).operational && uniqueStages(e).length && LEGACY_FALLBACK_IDS.has(e.id)).length;
+
   /* A missing profile or exposure on an ACTIVE operational incident is a
      hard defect, not a footnote — the audit script fails the build on it. */
   if (MODEL_AUDIT.counts.missing_profile_active) {
@@ -747,6 +799,8 @@ export function buildEngine({ STAGES, FLOW_EDGES, COMPANIES, CUSTOMERS, POLICIES
     diagnostics, graphValid: graphCheck.valid, MODEL_AUDIT,
 
     D, U, EDGE_ALLOCATIONS: ALLOCATIONS, NON_SUBSTITUTABILITY_UNIT,
+    DIRECT_FOOTPRINT, SPILLOVER_REACH_RAW, SPILLOVER_REACH_SNAPSHOT_RELATIVE,
+    SYSTEM_WEIGHTED_REACH_INCLUDING_SOURCE,
     NETWORK_INFLUENCE_RAW, NETWORK_INFLUENCE_SNAPSHOT_RELATIVE, NETWORK_INFLUENCE, NETWORK_INFLUENCE_RANK, CHOKE,
     GEO_BOUNDS, GEO_CONCENTRATION, GEO,
     POLICY_EXPOSURE, POLICY, POLICY_FAMILY_BREAKDOWN, POLICY_FAMILIES: POLICY_RESULT.families,
@@ -765,6 +819,7 @@ export function buildEngine({ STAGES, FLOW_EDGES, COMPANIES, CUSTOMERS, POLICIES
     structuralComponents, HISTORY, LONG_HISTORY, chainIndexAt, stageScoreAt, MOVERS7D,
 
     EVENTS, eventsAsOf, longSpanDays,
+    LEGACY_FALLBACK_IDS, fallbackCountAt,
     /* Every consumer of HISTORY / LONG_HISTORY must be able to say what it
        is looking at. These two fields exist so no surface can present a
        recomputed series as a contemporaneous record by omission. */

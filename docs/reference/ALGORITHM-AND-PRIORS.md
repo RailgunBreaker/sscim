@@ -1,6 +1,6 @@
 # Reference — Algorithm and priors
 
-*Model version: `sscim-model-v7-exposure-robustness`. Part of the
+*Model version: `sscim-model-v7.1-exposure-robustness`. Part of the
 [reference library](README.md).*
 
 Every coefficient this model uses, where it came from, and why none of it is

@@ -1,6 +1,6 @@
 # Reference — Supply-chain structure
 
-*Model version: `sscim-model-v7-exposure-robustness`. How this structure is
+*Model version: `sscim-model-v7.1-exposure-robustness`. How this structure is
 turned into dependency coefficients is defined in
 [`docs/MODEL_V7_SPEC.md` §3.4](../MODEL_V7_SPEC.md#34-dependency-matrices--enginepropagationjs).*
 
@@ -26,7 +26,7 @@ packaging, and end markets.
 | Field | Tier | Meaning |
 | --- | --- | --- |
 | `id`, `name`, `x`, `y` | — | Identity and layout position |
-| `value` | B | Annual economic value, US$B — feeds the log-compressed economic weight |
+| `value` | B | Annual turnover proxy, US$B — normalized directly to sum to one across stages, giving the headline weighting. An importance proxy, not a loss base |
 | `shares` | B | Country production shares; the undisclosed remainder is kept as an **explicit residual**, not dropped |
 | `subst` | **D** | Substitutability 0–10. By this dataset's convention a HIGH value means *hard to substitute* |
 | `market` | **D** | Market sensitivity 0–10 |

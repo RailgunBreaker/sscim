@@ -78,6 +78,24 @@ try {
 const docs = await findMarkdownDocs();
 const byPath = Object.fromEntries(docs.map((d) => [d.path, d]));
 
+/* USER-VISIBLE SOURCE. A stale model description is exactly as wrong in a
+   tooltip or an intro paragraph as it is in a document, and the markdown
+   scan never looked at either. These files carry prose that ships to a
+   reader, so they are scanned for the same v6-only claims. */
+const UI_TEXT_FILES = [
+  'app/src/intro/i18n.js',
+  'app/src/landing/Landing.jsx',
+  'app/src/intro/Intro.jsx',
+  'app/src/components/briefingText.js',
+  'app/src/data/releases.js',
+  'app/src/data/compMeta.js',
+  'app/src/data/glossary.js',
+];
+const uiTexts = UI_TEXT_FILES
+  .map((rel) => ({ path: rel, full: resolve(repoRoot, rel) }))
+  .filter((f) => existsSync(f.full))
+  .map((f) => ({ path: f.path, content: readFileSync(f.full, 'utf8') }));
+
 /* ---------------- helpers ---------------- */
 const stripCode = (text) => text
   .replace(/```[\s\S]*?```/g, '\n')
@@ -110,7 +128,8 @@ function claims(content) {
 
 /* A heading under which v6 names are the SUBJECT rather than the active
    description: change logs, rename tables, historical appendices. */
-const HISTORICAL_HEADING = /\bv6\b|historical|archive|renamed|change log|superseded|previous version|legacy/i;
+const HISTORICAL_HEADING = /\bv6\b|v7\.0|historical|archive|renamed|change log|superseded|previous version|legacy|migration/i;
+const HISTORICAL_LINE_V = /\b(v6|v7\.0|frozen|historical|archived|superseded|previous|former|preserved|comparison|no longer)\b/i;
 
 /* Proper nouns that happen to contain a flagged word. "Validated End-User
    Authorization" is the legal name of a BIS licence programme; the word
@@ -129,6 +148,21 @@ for (const doc of docs) {
     // A v6 version string is allowed when the same line marks it as historical.
     if (/\b(v6|historical|archived|frozen|superseded|previous|former|no longer|preserved)\b/i.test(c.text)) continue;
     fail(doc.path, `line ${c.n}: names a v6 model version without marking it historical — "${c.text.trim().slice(0, 120)}"`);
+  }
+}
+
+/* A SUPERSEDED v7.x version string presented as the current one. The v6
+   check below catches the previous major line; this catches the previous
+   MINOR, which is the easier one to leave behind after a point release. */
+const SUPERSEDED_VERSIONS = ['sscim-model-v7-exposure-robustness'].filter((v) => v !== MODEL_VERSION);
+for (const doc of docs) {
+  if (isArchive(doc.path)) continue;
+  for (const c of claims(doc.content)) {
+    for (const v of SUPERSEDED_VERSIONS) {
+      if (!c.text.includes(v)) continue;
+      if (HISTORICAL_LINE_V.test(c.text) || HISTORICAL_HEADING.test(c.heading)) continue;
+      fail(doc.path, `line ${c.n}: names superseded model version "${v}" without marking it historical (current is "${MODEL_VERSION}")`);
+    }
   }
 }
 
@@ -157,6 +191,57 @@ for (const doc of docs) {
     }
   }
 }
+
+/* ---------------- 3b. v6-only DESCRIPTIONS of active behaviour ----------------
+   Section 3 above catches v6 IDENTIFIERS (function and parameter names).
+   This catches v6 BEHAVIOURAL CLAIMS, which survive perfectly well in prose
+   that never mentions a symbol — "halves every 12 days", "stops below
+   0.01%", "combines through a noisy-OR". Each is allowed only where the
+   line marks it as historical, or under a historical heading. */
+const V6_DESCRIPTIONS = [
+  { re: /\b12[- ]day half[- ]life\b|halv(?:es|ing)\s+(?:roughly\s+)?every\s+12\s+days/i,
+    why: 'v7 has per-incident persistence profiles, not one universal 12-day half-life' },
+  { re: /\bnoisy[- ]OR\b/i,
+    why: 'v7 combines DISTINCT incidents with a bounded saturating operator, and never applies an independence correction within one incident' },
+  { re: /\bindependent events\b/i,
+    why: 'v7 deduplicates records into incidents; independence is not assumed between them' },
+  { re: /0\.01\s*%|\btoo diluted to (?:matter|bother)\b/i,
+    why: 'v7 applies no substantive propagation cutoff — contributionTolerance is gone' },
+  { re: /log[- ]compressed (?:economic )?weight|log1p[- ]normalized weight|logarithmic(?:ally)? weighted headline/i,
+    why: 'v7 weights the headline index by raw normalized turnover, not on a logarithmic scale' },
+  { re: /\bonly six events\b|\bsix events\b/i,
+    why: 'the snapshot carries 167 records grouped into 160 incidents, not six' },
+  { re: /duplicates?\s+(?:necessarily\s+)?inflates?\b|inflates the (?:index|reading) materially/i,
+    why: 'v7 groups records into incidents before scoring, so duplicate coverage does not inflate the index' },
+  { re: /cannot manufacture exposure|propagation is a contraction/i,
+    why: 'the bound is per stage; the propagated signal branches and the network-wide sum can exceed the source' },
+  { re: /archived .{0,40}cannot materially affect|immaterial to (?:all|every) published number/i,
+    why: 'legacy fallback incidents can materially affect historical peaks; only the current snapshot is barely moved' },
+];
+const HISTORICAL_LINE = /\b(v6|v7\.0|historical|archived|no longer|superseded|previously|used to|was\b|formerly|replaced|removed|instead of|rather than|not\b|never\b)\b/i;
+
+/* A bibliography entry naming a technique is not a claim that the model
+   still behaves that way. The source register cites Pearl's noisy-OR for
+   the FUNCTIONAL FORM the bounded operator borrows, which is exactly the
+   distinction the register exists to draw. */
+const CITATION_CONTEXT = /functional form|why cited|verified against|https?:\/\/|doi\.org|\b(19|20)\d{2}\)|borrow/i;
+
+const scanV6Descriptions = (path, content) => {
+  for (const c of claims(content)) {
+    for (const d of V6_DESCRIPTIONS) {
+      if (!d.re.test(c.bare)) continue;
+      // The qualifier may sit on the heading or the line above, exactly as
+      // for the unsupported-term check — a wrapped sentence is still one
+      // sentence.
+      if (HISTORICAL_LINE.test(c.context)) continue;
+      if (HISTORICAL_HEADING.test(c.heading)) continue;
+      if (CITATION_CONTEXT.test(c.context)) continue;
+      fail(path, `line ${c.n}: describes v6 behaviour as active (${d.why}) — "${c.text.trim().slice(0, 120)}"`);
+    }
+  }
+};
+for (const doc of docs) { if (!isArchive(doc.path)) scanV6Descriptions(doc.path, doc.content); }
+for (const ui of uiTexts) scanV6Descriptions(ui.path, ui.content);
 
 /* ---------------- 4. unsupported terms without qualification ----------------
    These four words are the ones a reader most reliably over-reads. Each may
