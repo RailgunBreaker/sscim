@@ -21,7 +21,7 @@
 
    Run:  npm run docs:verify
    ==================================================================== */
-import { readFileSync, existsSync } from 'node:fs';
+import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
@@ -29,6 +29,13 @@ import { dirname } from 'node:path';
 import { findMarkdownDocs } from './lib/find-markdown.mjs';
 import { MODEL_VERSION, PARAMETERS, MODEL_FORMS, STRUCTURAL_COMPONENTS } from '../src/engine/registry.js';
 import { PROFILE_IDS } from '../src/engine/persistence.js';
+
+import {
+  checkArchiveBanners, checkArchivePointsAtCurrent, checkNoArchivedModelAsCurrent,
+  checkFrozenBenchmarksHaveSpecs, checkValidationConsistency, checkSupersededValidationArchived,
+  checkFrozenNotRegenerated, checkProvenanceChronology, checkRegistryPaths, checkRegistryCoverage,
+  ARCHIVE_RULES, REGISTRY, CURRENT_VALIDATION_MD, CURRENT_VALIDATION_JSON,
+} from './lib/archive-checks.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(here, '..', '..');
@@ -299,11 +306,61 @@ for (const path of MODEL_FACING) {
   }
 }
 
-/* ---------------- 7. archived documents carry the banner ---------------- */
-for (const doc of docs) {
-  if (!isArchive(doc.path)) continue;
-  if (!doc.content.includes(ARCHIVE_BANNER)) {
-    fail(doc.path, `is in ${ARCHIVE_PREFIX} but does not carry the "${ARCHIVE_BANNER}" banner`);
+/* ---------------- 7. the model archive ---------------- */
+/* Ten rules, each of which is proven to fire against a deliberately
+   stale fixture in src/docs/archiveChecks.test.js. They live in
+   scripts/lib/archive-checks.mjs so that the test can construct a broken
+   repository without creating one on disk. */
+{
+  const archiveSnapshot = JSON.parse(readFileSync(resolve(appDir, 'src', 'data', 'vault-snapshot.json'), 'utf8'));
+  const currentDataset = archiveSnapshot.meta?.snapshotDate;
+  const benchDir = resolve(repoRoot, 'docs', 'benchmarks');
+  const readJson = (file) => { try { return JSON.parse(readFileSync(file, 'utf8')); } catch { return null; } };
+
+  const benchmarks = readdirSync(benchDir)
+    .filter((f) => f.endsWith('frozen-benchmark.json'))
+    .map((f) => ({ path: `docs/benchmarks/${f}`, ...(readJson(resolve(benchDir, f)) ?? {}) }));
+
+  /* Every validation-results.json anywhere in docs/, so that a superseded
+     one left beside the current set is caught wherever it is put. */
+  const validationFiles = [];
+  const walkJson = (dir, rel) => {
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      if (entry.name === 'node_modules') continue;
+      const full = resolve(dir, entry.name);
+      const r = `${rel}/${entry.name}`;
+      if (entry.isDirectory()) walkJson(full, r);
+      else if (entry.name === 'validation-results.json') validationFiles.push({ path: r, ...(readJson(full) ?? {}) });
+    }
+  };
+  walkJson(resolve(repoRoot, 'docs'), 'docs');
+
+  const generatorSource = readFileSync(resolve(appDir, 'scripts', 'build-doc-generated.mjs'), 'utf8');
+  const validationMd = byPath[CURRENT_VALIDATION_MD]?.content ?? null;
+  const validationJson = validationFiles.find((v) => v.path === CURRENT_VALIDATION_JSON) ?? null;
+  const registry = byPath[REGISTRY]?.content ?? null;
+
+  const modelsPresent = [...new Set([
+    ...benchmarks.map((b) => b.modelVersion),
+    ...validationFiles.map((v) => v.modelVersion),
+    MODEL_VERSION,
+  ].filter(Boolean))];
+
+  const archiveFailures = [
+    ...checkArchiveBanners(docs),
+    ...checkArchivePointsAtCurrent(docs, MODEL_VERSION),
+    ...checkNoArchivedModelAsCurrent(docs, MODEL_VERSION),
+    ...checkFrozenBenchmarksHaveSpecs(benchmarks, docs),
+    ...checkValidationConsistency({ markdown: validationMd, results: validationJson, modelVersion: MODEL_VERSION, datasetAsOf: currentDataset }),
+    ...checkSupersededValidationArchived(validationFiles, MODEL_VERSION),
+    ...checkFrozenNotRegenerated({ generatorSource, docs, modelVersion: MODEL_VERSION }),
+    ...checkProvenanceChronology(docs),
+    ...checkRegistryPaths(registry, (rel) => existsSync(resolve(repoRoot, rel))),
+    ...checkRegistryCoverage(registry, modelsPresent, MODEL_VERSION),
+  ];
+  archiveFailures.forEach((f) => failures.push(f));
+  if (!archiveFailures.length) {
+    notes.push(`model archive: ${ARCHIVE_RULES.length} rules pass across ${modelsPresent.length} model version(s) and ${benchmarks.length} frozen benchmark(s)`);
   }
 }
 

@@ -1,7 +1,7 @@
 {
-  "modelVersion": "sscim-model-v7.1-exposure-robustness",
-  "datasetAsOf": "2026-09-04",
-  "generatedAt": "2026-09-04T10:01:55.651Z",
+  "modelVersion": "sscim-model-v7-exposure-robustness",
+  "datasetAsOf": "2026-08-29",
+  "generatedAt": "2026-09-03T18:15:48.297Z",
   "whatThisEstablishes": [
     "Recoverability of three coefficients under a synthetic, correctly specified data-generating process.",
     "Correctness of the numerical optimization and Wald variance machinery.",
@@ -14,7 +14,7 @@
     "An independent implementation — this script imports the engine primitives it checks."
   ],
   "partC": {
-    "chainIndexBase": 6.027796984877245,
+    "chainIndexBase": 6.120182154284025,
     "deterministic": true,
     "matchedExplicitBaseParameters": true
   },
@@ -52,28 +52,28 @@
       {
         "parameter": "downstreamTransmission",
         "truth": 0.55,
-        "meanEstimate": 0.547610347284967,
-        "bias": -0.002389652715032997,
-        "sdEstimate": 0.01790062957894411,
-        "meanSE": 0.018354269761955075,
+        "meanEstimate": 0.5475456912925759,
+        "bias": -0.0024543087074241354,
+        "sdEstimate": 0.01727925151593293,
+        "meanSE": 0.017700463100914603,
         "syntheticCoverage95": 0.95
       },
       {
         "parameter": "upstreamTransmission",
         "truth": 0.3,
-        "meanEstimate": 0.300796121526659,
-        "bias": 0.0007961215266590327,
-        "sdEstimate": 0.01623917120973126,
-        "meanSE": 0.013889367315272795,
+        "meanEstimate": 0.300535170353491,
+        "bias": 0.000535170353490988,
+        "sdEstimate": 0.01502737918814057,
+        "meanSE": 0.012862905857575137,
         "syntheticCoverage95": 0.9333333333333333
       },
       {
         "parameter": "marketHalfLifeDays",
         "truth": 45,
-        "meanEstimate": 44.99556344105058,
-        "bias": -0.004436558949421965,
-        "sdEstimate": 0.8682853433287114,
-        "meanSE": 0.8935680638844289,
+        "meanEstimate": 45.00831807346661,
+        "bias": 0.008318073466611509,
+        "sdEstimate": 0.8571746151295677,
+        "meanSE": 0.8877261195024861,
         "syntheticCoverage95": 0.95
       }
     ],
@@ -87,14 +87,14 @@
       "marketHalfLifeDays"
     ],
     "chainIndex": {
-      "base": 6.027796984877245,
-      "mean": 6.138225204568149,
+      "base": 6.120182154284025,
+      "mean": 6.224510621327089,
       "assumptionEnvelope": {
-        "low": 5.594662678490853,
-        "high": 6.684435465338291
+        "low": 5.682130165728783,
+        "high": 6.765790214455747
       },
-      "p2_5": 5.622135574248437,
-      "p97_5": 6.609495967584989,
+      "p2_5": 5.717887811731846,
+      "p97_5": 6.690890098075372,
       "note": "The envelope is the span over the declared assumption box. It is NOT a confidence interval: the box is a choice, not a distribution over the truth. Percentiles are reported only to describe where the sampled values fell."
     },
     "companyCriticalitySpearman": {
@@ -102,8 +102,8 @@
       "min": 0.9569073368734188
     },
     "structuralSpearman": {
-      "mean": 0.9970565217391318,
-      "min": 0.9930434782608696
+      "mean": 0.9968130434782598,
+      "min": 0.9878260869565217
     },
     "top5Modal": [
       {
@@ -120,7 +120,8 @@
       }
     ],
     "structuralTopFrequency": {
-      "adv_fab": 1
+      "adv_fab": 0.775,
+      "litho": 0.225
     }
   },
   "baseParameters": {
@@ -151,6 +152,6 @@
       "nonSubstitutability": 0.16666666666666666,
       "market": 0.11111111111111112
     },
-    "modelVersion": "sscim-model-v7.1-exposure-robustness"
+    "modelVersion": "sscim-model-v7-exposure-robustness"
   }
 }

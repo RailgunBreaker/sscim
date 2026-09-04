@@ -23,6 +23,7 @@ import { PROFILE_DEFINITIONS, PROFILE_IDS } from '../../src/engine/persistence.j
 import { workedExample, WORKED_STAGES, WORKED_EDGES, WORKED_INCIDENT, WORKED_SCENARIO } from '../../src/engine/workedExample.js';
 import { ACTIVE_HORIZON_DAYS, EVENT_MODEL } from '../../src/engine/event-model.js';
 import { DISPLAY_EXPOSURE_THRESHOLD } from '../../src/engine/facilities.js';
+import { modelDigest } from '../model-digest.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 export const repoRoot = resolve(here, '..', '..', '..');
@@ -305,7 +306,23 @@ function verificationRunBlock() {
   ].join('\n');
 }
 
+/* The current release's identity, as a digest of what the engine computes
+   rather than a commit hash. See docs/MODEL_ARCHIVE.md for why a commit
+   hash cannot do this job for the CURRENT release. applyGenerated is
+   synchronous, so this must be too. */
+function modelDigestBlock() {
+  const d = modelDigest();
+  return [
+    '| | |',
+    '| --- | --- |',
+    `| Model | \`${d.modelVersion}\` |`,
+    `| Dataset | \`${d.datasetAsOf}\` |`,
+    `| Output digest | \`sha256:${d.digest}\` |`,
+  ].join('\n');
+}
+
 export const GENERATORS = {
+  'model-digest': modelDigestBlock,
   'model-version': modelVersionBlock,
   'parameter-table': parameterTableBlock,
   'parameter-detail': parameterDetailBlock,

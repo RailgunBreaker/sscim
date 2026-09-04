@@ -5,7 +5,7 @@
 > v6 results, and a frozen result with no readable derivation behind it is not
 > a record of anything.
 >
-> The current model is **v7** (`sscim-model-v7-exposure-robustness`). Its
+> The current model is **v7.1** (`sscim-model-v7.1-exposure-robustness`). Its
 > canonical specification, including a **v7 worked numerical example generated
 > from the live engine**, is [`docs/MODEL_V7_SPEC.md`](../../MODEL_V7_SPEC.md).
 > The current computation demonstration is
@@ -18,6 +18,49 @@
 >
 > **Do not use anything in this file as a description of what the code now
 > does.** See the [v6 archive index](README.md) for the change list.
+>
+> ---
+>
+> ## Provenance of the dates in this document - READ BEFORE CITING
+>
+> The line below states **Generated: 2026-07-12** against a dataset
+> **as-of 2026-07-29**. A generation date seventeen days BEFORE the dataset
+> it claims to have consumed is not chronologically possible for the
+> procedure it describes, so one of the two dates is wrong.
+>
+> **Which one is wrong is unresolved, and this note does not invent an
+> explanation.** What the repository can establish:
+>
+> - The line entered the repository in commit `0b90a61` on 2026-07-29,
+>   already reading `2026-07-12`, already paired with `2026-07-29`.
+> - No earlier revision of the file exists, so there is no prior value to
+>   compare against and nothing in the history explains where `2026-07-12`
+>   came from.
+> - The dataset date, `2026-07-29`, is corroborated: it matches the date the
+>   file was committed and the snapshot the tables were exported from.
+>
+> On that evidence the **dataset date is the reliable one** and the
+> generation date is unreliable metadata of unknown origin. It has been left
+> exactly as written rather than silently corrected.
+>
+> **Two different v6 snapshots exist, and they are not interchangeable:**
+>
+> | Artefact | Dataset | What it is for |
+> | --- | --- | --- |
+> | This demonstration | `2026-07-29` | A readable, step-by-step derivation of the v6 formulas. |
+> | [`docs/benchmarks/v6-frozen-benchmark.json`](../../benchmarks/v6-frozen-benchmark.json) | `2026-08-29` | The frozen v6 output surface, captured at commit `7749dc8` immediately before the v7 redesign. |
+>
+> Both are genuine v6 output; they are the **same model family over
+> different snapshots**, so their numbers should not be expected to match
+> and neither one contradicts the other.
+>
+> **The frozen benchmark is authoritative for the v6-to-v7 numerical
+> comparison.** It is the artefact
+> [`docs/benchmarks/v6-to-v7-benchmark.json`](../../benchmarks/v6-to-v7-benchmark.json)
+> compares against, and it is the only v6 artefact whose dataset can be
+> matched against a v7 run. This demonstration is authoritative for **how
+> the v6 formulas worked**, and for nothing numerical beyond its own
+> snapshot.
 
 # SSCIM — Step-by-Step Computation Demonstration
 

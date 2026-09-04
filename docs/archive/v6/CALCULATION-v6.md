@@ -3,7 +3,13 @@
 > **This document describes a superseded model and is preserved for the
 > record only. Every formula below has been replaced.**
 >
-> The current model is **v7** (`sscim-model-v7-exposure-robustness`). Its
+> **This document defines `sscim-model-v6-client-sensitivity`**, the model
+> identifier stamped into
+> [`docs/benchmarks/v6-frozen-benchmark.json`](../../benchmarks/v6-frozen-benchmark.json)
+> (dataset `2026-08-29`, source commit `7749dc86`). Every release is listed in
+> [`docs/MODEL_ARCHIVE.md`](../../MODEL_ARCHIVE.md).
+>
+> The current model is **v7.1** (`sscim-model-v7.1-exposure-robustness`). Its
 > canonical specification is [`docs/MODEL_V7_SPEC.md`](../../MODEL_V7_SPEC.md),
 > and the measured comparison between the two is in
 > [`docs/benchmarks/v6-to-v7-benchmark.json`](../../benchmarks/v6-to-v7-benchmark.json).

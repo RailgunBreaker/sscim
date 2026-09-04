@@ -25,6 +25,7 @@
     "curation": "node scripts/build-curation-uncertainty.mjs",
     "legacy": "node scripts/build-legacy-fallback.mjs",
     "benchmark": "node scripts/build-v6-v7-benchmark.mjs",
+    "digest": "node scripts/model-digest.mjs",
     "recovery": "node ../docs/computation-demo/validation/mle-validation.mjs",
     "smoke": "node scripts/browser-smoke.mjs",
     "stats": "node scripts/build-landing-stats.mjs"

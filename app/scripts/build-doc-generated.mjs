@@ -17,8 +17,18 @@ const changed = [];
 const errors = [];
 const touched = [];
 
+/* Archived specifications are FROZEN. They still carry GENERATED markers,
+   because they are byte-for-byte copies of the file that was canonical at
+   the time, and rewriting those blocks would silently restate a superseded
+   model's numbers in current terms — destroying the only readable
+   definition behind a frozen benchmark. The generator therefore refuses to
+   enter docs/archive/, and verify-docs asserts that it does. */
+export const ARCHIVE_PREFIX = 'docs/archive/';
+const skippedArchives = [];
+
 for (const doc of docs) {
   if (!doc.content.includes('<!-- BEGIN GENERATED:')) continue;
+  if (doc.path.startsWith(ARCHIVE_PREFIX)) { skippedArchives.push(doc.path); continue; }
   const file = resolve(repoRoot, doc.path);
   const original = readFileSync(file, 'utf8');
   const { markdown, found, missing } = applyGenerated(original);
@@ -31,6 +41,7 @@ for (const doc of docs) {
 }
 
 touched.forEach((t) => console.log(`  ${t.path}: ${t.blocks.length} generated block(s) — ${t.blocks.join(', ')}`));
+skippedArchives.forEach((p) => console.log(`  ${p}: SKIPPED — frozen archive, generated blocks left at their historical values`));
 
 if (errors.length) {
   errors.forEach((e) => console.error(`ERROR ${e}`));

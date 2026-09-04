@@ -5,8 +5,28 @@
 > Everything in this folder describes a **superseded model**. It is kept for
 > the record and must not be read as a description of what the code now does.
 
-The current model is **v7**, `sscim-model-v7-exposure-robustness`. Its canonical
+The current model is **v7.1**, `sscim-model-v7.1-exposure-robustness`. Its canonical
 specification is [`docs/MODEL_V7_SPEC.md`](../../MODEL_V7_SPEC.md).
+
+## Identification
+
+| | |
+| --- | --- |
+| Model identifier | `sscim-model-v6-client-sensitivity` |
+| Public version | v6 |
+| Application version | `0.0.0` |
+| Frozen benchmark | [`docs/benchmarks/v6-frozen-benchmark.json`](../../benchmarks/v6-frozen-benchmark.json), dataset `2026-08-29` |
+| Worked demonstration | [`COMPUTATION_DEMO-v6.md`](COMPUTATION_DEMO-v6.md), dataset `2026-07-29` |
+| Source commit | `7749dc869d76a70fa1a4c09928c96f4a2c2e14cc` |
+| Status | **superseded** |
+
+The demonstration and the frozen benchmark run on **different snapshots**.
+They are the same model family over different data, and the frozen benchmark
+is the one authoritative for the v6-to-v7 comparison. The dates are explained
+in the provenance note at the top of
+[`COMPUTATION_DEMO-v6.md`](COMPUTATION_DEMO-v6.md).
+
+Every release is listed in [`docs/MODEL_ARCHIVE.md`](../../MODEL_ARCHIVE.md).
 
 ## Why this folder exists
 
