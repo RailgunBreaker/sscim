@@ -36,8 +36,8 @@ export default function FacilityConnectionDetail({ link, viewFrom, onFocus, onSe
 
   const row = (label, value, title) => (
     <div style={{ display: 'flex', gap: 8, alignItems: 'baseline', padding: '2.5px 0' }}>
-      <span className="mono" style={{ fontSize: 9, letterSpacing: 0.8, color: C.faint, width: 108, flexShrink: 0 }}>{label}</span>
-      <span style={{ fontSize: 11.5, color: C.text, lineHeight: 1.5 }} title={title}>{value}</span>
+      <span className="mono" style={{ fontSize: 12, color: C.faint, width: 108, flexShrink: 0 }}>{label}</span>
+      <span style={{ fontSize: 12, color: C.text, lineHeight: 1.5 }} title={title}>{value}</span>
     </div>
   );
 
@@ -45,7 +45,7 @@ export default function FacilityConnectionDetail({ link, viewFrom, onFocus, onSe
     <section aria-label="Explanation of the selected modeled connection"
       style={{ border: `1px solid ${C.copperDim}`, borderRadius: 6, background: C.panel, padding: '10px 12px' }}>
       <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginBottom: 7, flexWrap: 'wrap' }}>
-        <span className="mono" style={{ fontSize: 9, letterSpacing: 1.3, color: C.copper }}>
+        <span className="mono" style={{ fontSize: 12, color: C.copper }}>
           MODELED STAGE-MEDIATED RELATIONSHIP
         </span>
         {onClose && (
@@ -67,10 +67,10 @@ export default function FacilityConnectionDetail({ link, viewFrom, onFocus, onSe
 
       <div style={{ borderTop: `1px solid ${C.line}`, margin: '8px 0 7px' }} />
 
-      <div className="mono" style={{ fontSize: 9, letterSpacing: 1.2, color: C.faint, marginBottom: 5 }}>
+      <div className="mono" style={{ fontSize: 12, color: C.faint, marginBottom: 5 }}>
         WHAT PRODUCED THIS EDGE, AND HOW IT WAS SIZED
       </div>
-      <div style={{ fontSize: 11, color: C.dim, lineHeight: 1.6, marginBottom: 6 }}>
+      <div style={{ fontSize: 12, color: C.dim, lineHeight: 1.6, marginBottom: 6 }}>
         The edge exists because <b style={{ color: C.text }}>{x.fromCompany.name}</b> sells
         to <b style={{ color: C.text }}>{x.toCompany.name}</b> in the customer table, and
         because <b style={{ color: C.text }}>{x.fromStage.name}</b> reaches <b style={{ color: C.text }}>{x.toStage.name}</b> in
@@ -83,27 +83,27 @@ export default function FacilityConnectionDetail({ link, viewFrom, onFocus, onSe
 
       <div style={{ borderTop: `1px solid ${C.line}`, margin: '8px 0 7px' }} />
 
-      <div className="mono" style={{ fontSize: 9, letterSpacing: 1.2, color: C.faint, marginBottom: 5 }}>
+      <div className="mono" style={{ fontSize: 12, color: C.faint, marginBottom: 5 }}>
         STRENGTH — TWO SCALES, NOT COMPARABLE
       </div>
       {row('Local', x.strength.localPct != null ? pct(x.strength.localPct) : '—', x.strength.localScaleLabel || undefined)}
-      <div className="mono" style={{ fontSize: 8.5, color: C.faint, marginLeft: 116, marginBottom: 4 }}>
+      <div className="mono" style={{ fontSize: 12, color: C.faint, marginLeft: 116, marginBottom: 4 }}>
         {x.strength.localScaleLabel || 'no focus plant selected'} — this is the number the graph draws.
       </div>
       {row('Snapshot', x.strength.snapshotPct != null ? pct(x.strength.snapshotPct) : '—', x.strength.snapshotScaleLabel)}
-      <div className="mono" style={{ fontSize: 8.5, color: C.faint, marginLeft: 116 }}>
+      <div className="mono" style={{ fontSize: 12, color: C.faint, marginLeft: 116 }}>
         {x.strength.snapshotScaleLabel} — this is the number the connection table lists.
       </div>
 
       <div style={{ borderTop: `1px solid ${C.line}`, margin: '8px 0 7px' }} />
 
-      <div className="mono" style={{ fontSize: 9, letterSpacing: 1.2, color: C.faint, marginBottom: 5 }}>
+      <div className="mono" style={{ fontSize: 12, color: C.faint, marginBottom: 5 }}>
         EVIDENCE — {x.evidence.label.toUpperCase()}
       </div>
-      <div style={{ fontSize: 11, color: C.dim, lineHeight: 1.6, marginBottom: 6 }}>{x.evidence.note}</div>
+      <div style={{ fontSize: 12, color: C.dim, lineHeight: 1.6, marginBottom: 6 }}>{x.evidence.note}</div>
 
-      <div className="mono" style={{ fontSize: 9, letterSpacing: 1.2, color: C.amber, marginBottom: 4 }}>KNOWN LIMITATIONS</div>
-      <ul style={{ margin: 0, paddingLeft: 16, fontSize: 10.5, color: C.faint, lineHeight: 1.65 }}>
+      <div className="mono" style={{ fontSize: 12, color: C.amber, marginBottom: 4 }}>Known limitations</div>
+      <ul style={{ margin: 0, paddingLeft: 16, fontSize: 12, color: C.faint, lineHeight: 1.65 }}>
         {x.limitations.map((l) => <li key={l}>{l}</li>)}
       </ul>
 
@@ -134,6 +134,6 @@ function shortName(name) {
 }
 
 const chipStyle = {
-  fontSize: 10, padding: '3px 9px', borderRadius: 4, fontFamily: 'inherit', cursor: 'pointer',
+  fontSize: 12, padding: '3px 9px', borderRadius: 4, fontFamily: 'inherit', cursor: 'pointer',
   background: 'transparent', color: C.dim, border: `1px solid ${C.line}`, minHeight: 0,
 };

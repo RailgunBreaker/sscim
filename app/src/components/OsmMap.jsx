@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { C } from '../theme.js';
+import { Disclosure } from '../ui/primitives.jsx';
 import { useVault } from '../data/VaultContext.jsx';
 import { useInteraction } from '../interaction/InteractionContext.jsx';
 import { mapEncoding, fmtSigned, pct } from '../interaction/lensEncoding.js';
@@ -59,6 +60,12 @@ function legendFor(lens, legend) {
     note: legend.encoding + ' · ' + legend.note,
   };
 }
+
+/* The account key CARTO issues for its public basemap tiles. Public by
+   design: it ships inside the client, it is scoped to basemap delivery, and
+   it authorises nothing else. Kept as a named constant rather than buried
+   in a URL so that it is findable, and overridable via VITE_CARTO_KEY. */
+export const CARTO_BASEMAP_KEY = 'cb1_2vhf_1_f6c57da41931c07c5a4f8628';
 
 export default function OsmMap({ model, hl, lensOverride, onApplyHazard }) {
   const { data, engine } = useVault();
@@ -129,7 +136,24 @@ export default function OsmMap({ model, hl, lensOverride, onApplyHazard }) {
       worldCopyJump: true, zoomControl: false, attributionControl: true,
     });
     let fellBack = false, loaded = false;
-    const carto = L.tileLayer('https://basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    /* CARTO now watermarks unkeyed basemap tiles with "API KEY REQUIRED"
+       across the image. They still return HTTP 200, so Leaflet reports a
+       successful tileload and the OSM fallback below never fires — the map
+       renders, and every tile carries the notice. It has to be a key, not a
+       fallback.
+
+       The parameter is `key`. `api_key` and `apikey` are both accepted by
+       the CDN and both ignored, returning the watermarked tile with a 200,
+       which is how this was missed.
+
+       This is a PUBLIC basemap key, not a credential. It identifies the
+       account to CARTO for rate limiting and is visible in any built
+       client, exactly like a Mapbox public token; it grants no access to
+       anything of ours. VITE_CARTO_KEY overrides it at build time so a
+       deployment can use its own. See THIRD_PARTY_NOTICES.md §3. */
+    const cartoKey = import.meta.env?.VITE_CARTO_KEY || CARTO_BASEMAP_KEY;
+    const cartoUrl = `https://basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png${cartoKey ? `?key=${encodeURIComponent(cartoKey)}` : ''}`;
+    const carto = L.tileLayer(cartoUrl, {
       attribution: '© OpenStreetMap contributors © CARTO', subdomains: 'abcd', maxZoom: 20,
     }).addTo(map);
     carto.on('tileload', () => { loaded = true; setTileStatus('ok'); });
@@ -509,33 +533,36 @@ export default function OsmMap({ model, hl, lensOverride, onApplyHazard }) {
 
   return (
     <div style={{ padding: 10 }}>
-      <div className="mono" style={{ fontSize: 9.5, letterSpacing: 1, color: C.copper, marginBottom: 6 }}>
-        {legend.title.toUpperCase()}
-      </div>
+      <h3 style={{ fontSize: 13, fontWeight: 600, color: C.text, margin: '0 0 8px' }}>
+        {legend.title}
+      </h3>
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', margin: '-1px 0 6px' }}>
         <button type="button" onClick={() => setSitesOn((v) => !v)} aria-pressed={sitesOn}
           title={`Show the ${FACILITY_LAYER.FACILITIES.length} modeled plants. Drawn at every zoom; markers grow as you zoom in.`}
-          style={{ fontSize: 10, padding: '3px 9px', borderRadius: 4, fontFamily: 'inherit', cursor: 'pointer',
+          className="ui-button"
+          style={{ fontSize: 13, padding: '6px 12px', borderRadius: 5, fontFamily: 'inherit', cursor: 'pointer',
             background: sitesOn ? C.copper : 'transparent', color: sitesOn ? '#0C111C' : C.dim,
             border: `1px solid ${sitesOn ? C.copper : C.line}`, fontWeight: sitesOn ? 700 : 400 }}>
-          ▦ SITES
+          Sites
         </button>
         <button type="button" onClick={() => setLinksOn((v) => !v)} aria-pressed={linksOn}
           title="Draw the modeled site-to-site links. Pin a plant to see only its own links."
-          style={{ fontSize: 10, padding: '3px 9px', borderRadius: 4, fontFamily: 'inherit', cursor: 'pointer',
+          className="ui-button"
+          style={{ fontSize: 13, padding: '6px 12px', borderRadius: 5, fontFamily: 'inherit', cursor: 'pointer',
             background: linksOn ? C.copperDim : 'transparent', color: linksOn ? '#0C111C' : C.dim,
             border: `1px solid ${linksOn ? C.copperDim : C.line}`, fontWeight: linksOn ? 700 : 400 }}>
-          ⇄ LINKS
+          Links
         </button>
         <button type="button" onClick={() => { setHazardMode((v) => !v); }} aria-pressed={hazardMode}
           title="Click the map to place a hazard epicentre and see which plants fall inside the radius"
-          style={{ fontSize: 10, padding: '3px 9px', borderRadius: 4, fontFamily: 'inherit', cursor: 'pointer',
+          className="ui-button"
+          style={{ fontSize: 13, padding: '6px 12px', borderRadius: 5, fontFamily: 'inherit', cursor: 'pointer',
             background: hazardMode ? C.amber : 'transparent', color: hazardMode ? '#0C111C' : C.dim,
             border: `1px solid ${hazardMode ? C.amber : C.line}`, fontWeight: hazardMode ? 700 : 400 }}>
-          ⌖ HAZARD
+          Hazard
         </button>
-        <span className="mono" style={{ fontSize: 9, color: C.faint }}>
-          {hazardMode ? 'click the map to drop an epicentre'
+        <span style={{ fontSize: 12, color: C.faint }}>
+          {hazardMode ? 'Click the map to drop an epicentre'
             : sitesVisible ? `${FACILITY_LAYER.FACILITIES.length} plants${
               groupedCount ? ` · ${groupedCount} group${groupedCount === 1 ? '' : 's'} within ~${Math.round(clusterRadiusKm(24, zoom))} km — click one to open it` : ''
             }${linksOn
@@ -544,44 +571,55 @@ export default function OsmMap({ model, hl, lensOverride, onApplyHazard }) {
                 : ` · drawing the strongest ${FACILITY_NETWORK?.stats.shown ?? 0} of ${FACILITY_NETWORK?.stats.built ?? 0} modeled links — pin a plant for all of its own`
               : ''}` : ''}
         </span>
-        <label className="mono" style={{ fontSize: 9, color: C.faint, display: 'flex', alignItems: 'center', gap: 6, marginLeft: 'auto' }}>MAP SIZE
+        <label style={{ fontSize: 12, color: C.faint, display: 'flex', alignItems: 'center', gap: 6, marginLeft: 'auto' }}>Map height
           <input type="range" min="260" max="620" step="20" value={mapHeight} onChange={(e) => { setMapHeight(Number(e.target.value)); setTimeout(() => mapRef.current?.invalidateSize(), 0); }} aria-label="Map height" style={{ width: 84, accentColor: C.copper }} />
-          <span style={{ color: C.dim }}>{mapHeight}px</span>
+          <span className="mono" style={{ color: C.dim }}>{mapHeight}px</span>
         </label>
       </div>
       <div style={{ position: 'relative' }}>
         <div ref={divRef} className="sscim-map" style={{ height: mapHeight, borderRadius: 8, border: `1px solid ${C.line}`, transition: 'height .2s ease' }} />
         {tileStatus === 'failed' && (
-          <div className="mono" style={{ position: 'absolute', top: 8, left: 8, zIndex: 500, background: 'rgba(20,27,43,.92)', border: `1px solid ${C.amber}`, color: C.amber, borderRadius: 5, padding: '5px 9px', fontSize: 10, maxWidth: 260, lineHeight: 1.5 }}>
+          <div className="mono" style={{ position: 'absolute', top: 8, left: 8, zIndex: 500, background: 'rgba(20,27,43,.92)', border: `1px solid ${C.amber}`, color: C.amber, borderRadius: 5, padding: '5px 9px', fontSize: 12, maxWidth: 260, lineHeight: 1.5 }}>
             Map tiles blocked in this preview. Nodes & links remain interactive — deploy the HTML to any host to see the full basemap.
           </div>
         )}
       </div>
       <Legend items={lg.items} note={lg.note} />
 
-      {/* Shape key. Drawn with the same generator as the markers, so the key
-          cannot drift from the map it explains. Only shown when sites are. */}
+      {/* THE WALL OF SMALL PRINT, NOW OPT-IN. Three lines of 8.5-9.5px text
+          sat permanently under every map: a shouted shape-key heading, seven
+          glyph definitions, four colour definitions, and three ring rules —
+          more characters than the map had labels, none of it readable at a
+          glance, and all of it demanded before a reader had asked a
+          question. It is the same content, disclosed on request, at a size
+          that can actually be read. The colour scale above stays visible,
+          because that one is needed to read the map at all. */}
       {sitesVisible && (
-        <div style={{ marginTop: 6 }}>
-          <div className="mono" style={{ fontSize: 8.5, letterSpacing: 1.2, color: C.faint, marginBottom: 3 }}>
-            PLANT SHAPE = FUNCTION IN THE CHAIN · COLOUR = LIVE EFFECT
-          </div>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, alignItems: 'center' }}>
-            {facilityLegendItems(12).map((it) => (
-              <span key={it.kind} className="mono" style={{ display: 'inline-flex', alignItems: 'center', gap: 4, fontSize: 9.5, color: C.dim }}>
+        <Disclosure summary="What the plant symbols mean" style={{ marginTop: 8 }}>
+          <p style={{ margin: '0 0 8px', fontSize: 13, color: C.dim }}>
+            A plant's <b style={{ color: C.text }}>shape</b> is its function in the chain.
+            Its <b style={{ color: C.text }}>colour</b> is the live effect currently modelled on it.
+          </p>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, alignItems: 'center', marginBottom: 8 }}>
+            {facilityLegendItems(14).map((it) => (
+              <span key={it.kind} style={{ display: 'inline-flex', alignItems: 'center', gap: 5, fontSize: 13, color: C.dim }}>
                 <span aria-hidden style={{ display: 'inline-flex' }} dangerouslySetInnerHTML={{ __html: it.html }} />
                 {it.label}
               </span>
             ))}
-            <span className="mono" style={{ fontSize: 9, color: C.faint, display: 'inline-flex', gap: 8, flexWrap: 'wrap' }}>
-              <span style={{ color: IDLE_COLOR }}>● quiet</span>
-              <span style={{ color: C.amber }}>● moderate</span>
-              <span style={{ color: C.red }}>● adverse</span>
-              <span style={{ color: C.green }}>● mitigating</span>
-              <span>· hollow = no output to lose (construction or idle) · white ring = pinned · amber ring = in the hazard radius</span>
-            </span>
           </div>
-        </div>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, fontSize: 13, color: C.dim, marginBottom: 8 }}>
+            <span style={{ color: IDLE_COLOR }}>● Quiet</span>
+            <span style={{ color: C.amber }}>● Moderate</span>
+            <span style={{ color: C.red }}>● Adverse</span>
+            <span style={{ color: C.green }}>● Mitigating</span>
+          </div>
+          <ul style={{ margin: 0, paddingLeft: 18, fontSize: 13, color: C.faint, lineHeight: 1.6 }}>
+            <li>A hollow marker has no output to lose — under construction, or idle.</li>
+            <li>A white ring means the plant is pinned.</li>
+            <li>An amber ring means it falls inside the hazard radius.</li>
+          </ul>
+        </Disclosure>
       )}
 
       {footprint && (

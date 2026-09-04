@@ -86,7 +86,7 @@ export default function FlowGraph({ sel, setSel, hl, model, scenarioActive, pb, 
 
   return (
     <div style={{ padding: 10 }}>
-      <div className="mono" style={{ fontSize: 9.5, letterSpacing: 1, color: C.copper, marginBottom: 6 }}>{legend.title.toUpperCase()}</div>
+      <div className="mono" style={{ fontSize: 11, color: C.copper, marginBottom: 6 }}>{legend.title.toUpperCase()}</div>
       <div style={{ overflowX: 'auto' }}>
         <svg viewBox="0 0 1220 505" style={{ width: '100%', minWidth: 860, display: 'block', background: C.panel2, borderRadius: 6, border: `1px solid ${C.line}` }}>
           <defs>
@@ -178,7 +178,7 @@ export default function FlowGraph({ sel, setSel, hl, model, scenarioActive, pb, 
       {/* ---- STAGE SUBSECTION: companies & shares of the selected stage ---- */}
       {subStage && (
         <div style={{ marginTop: 8, border: `1px solid ${C.copperDim}`, borderRadius: 6, background: C.panel2, padding: '8px 10px' }}>
-          <div className="mono" style={{ fontSize: 9.5, letterSpacing: 2, color: C.copper, marginBottom: 4 }}>
+          <div className="mono" style={{ fontSize: 11, color: C.copper, marginBottom: 4 }}>
             SUBSECTION · {subStage.name.toUpperCase()} · MAJOR COMPANIES & MARKET SHARES
             {Math.abs(model.activeField[subStage.id] ?? 0) > 0.05 && <span style={{ color: riskColor((model.activeField[subStage.id] + 1) * 5), marginLeft: 8 }}>· operational impact {model.activeField[subStage.id].toFixed(2)}</span>}
           </div>
@@ -194,16 +194,16 @@ export default function FlowGraph({ sel, setSel, hl, model, scenarioActive, pb, 
                   title={introForCompany(co, { STAGE_BY_ID, COUNTRY_NAMES, CUSTOMERS, SUPPLIERS })}
                   style={{ minWidth: 128, border: `1px solid ${C.line}`, borderRadius: 6, background: C.panel, padding: '7px 9px', flexShrink: 0 }}>
                   <div style={{ fontSize: 11.5, fontWeight: 600, lineHeight: 1.2, display: 'flex', alignItems: 'center', gap: 5 }}><Logo cid={cid} size={15} />{co.name}</div>
-                  <div className="mono" style={{ fontSize: 9, color: C.faint, margin: '2px 0 4px' }}>HQ: {COUNTRY_NAMES[co.country]}</div>
+                  <div className="mono" style={{ fontSize: 11, color: C.faint, margin: '2px 0 4px' }}>HQ: {COUNTRY_NAMES[co.country]}</div>
                   <div style={{ height: 5, background: C.panel2, borderRadius: 3, overflow: 'hidden' }}>
                     <div style={{ width: `${sh * 100}%`, height: '100%', background: C.copper, opacity: 0.85 }} />
                   </div>
-                  <div className="mono" style={{ display: 'flex', justifyContent: 'space-between', fontSize: 9.5, marginTop: 3 }}>
+                  <div className="mono" style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, marginTop: 3 }}>
                     <span style={{ color: C.copper }}>share {(sh * 100).toFixed(0)}%</span>
                     {contribution > 0.02 && <span style={{ color: riskColor(contribution * 10) }}>contrib {contribution.toFixed(3)}</span>}
                   </div>
                   {(CUSTOMERS[cid] || []).length > 0 && (
-                    <div className="mono" style={{ fontSize: 8.5, color: C.dim, marginTop: 3, lineHeight: 1.5 }}>
+                    <div className="mono" style={{ fontSize: 11, color: C.dim, marginTop: 3, lineHeight: 1.5 }}>
                       → {(CUSTOMERS[cid] || []).slice(0, 3).map(([c2, r]) => `${COMPANY_BY_ID[c2].name.split(' ')[0]} ${(r * 100).toFixed(0)}%`).join(' · ')}
                     </div>
                   )}
@@ -213,7 +213,7 @@ export default function FlowGraph({ sel, setSel, hl, model, scenarioActive, pb, 
             {(() => {
               const tot = STAGE_COMPANIES[subStage.id].reduce((a, [, sh]) => a + sh, 0);
               return tot < 0.98 ? (
-                <div className="mono" style={{ minWidth: 90, border: `1px dashed ${C.line}`, borderRadius: 6, padding: '7px 9px', fontSize: 10, color: C.faint, flexShrink: 0, alignSelf: 'stretch', display: 'flex', alignItems: 'center' }}>
+                <div className="mono" style={{ minWidth: 90, border: `1px dashed ${C.line}`, borderRadius: 6, padding: '7px 9px', fontSize: 11, color: C.faint, flexShrink: 0, alignSelf: 'stretch', display: 'flex', alignItems: 'center' }}>
                   Others<br />{((1 - tot) * 100).toFixed(0)}% (unmodeled residual)
                 </div>
               ) : null;

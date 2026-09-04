@@ -64,14 +64,14 @@ export default function NetworkComparePanel({ baseGraph }) {
   return (
     <div style={{ padding: 10, borderTop: `1px solid ${C.line}` }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
-        <span className="mono" style={{ fontSize: 9.5, letterSpacing: 2, color: C.copper }}>COMPARISON WORKSPACE · {cols.length}/4</span>
-        <button type="button" onClick={cmpClear} style={{ fontSize: 10, padding: '2px 8px', borderRadius: 4, background: 'transparent', color: C.dim, border: `1px solid ${C.line}`, cursor: 'pointer', fontFamily: 'inherit' }}>Clear all</button>
+        <span className="mono" style={{ fontSize: 12, color: C.copper }}>COMPARISON WORKSPACE · {cols.length}/4</span>
+        <button type="button" onClick={cmpClear} style={{ fontSize: 12, padding: '2px 8px', borderRadius: 4, background: 'transparent', color: C.dim, border: `1px solid ${C.line}`, cursor: 'pointer', fontFamily: 'inherit' }}>Clear all</button>
       </div>
 
-      {cols.length < 2 && <div className="mono" style={{ fontSize: 10, color: C.faint, marginBottom: 6 }}>Add another centre (centre detail → “Add to comparison”) to compare side by side.</div>}
+      {cols.length < 2 && <div className="mono" style={{ fontSize: 12, color: C.faint, marginBottom: 6 }}>Add another centre (centre detail → “Add to comparison”) to compare side by side.</div>}
 
       <div style={{ overflowX: 'auto' }}>
-        <table style={{ borderCollapse: 'collapse', width: '100%', fontSize: 11 }}>
+        <table style={{ borderCollapse: 'collapse', width: '100%', fontSize: 12 }}>
           <thead>
             <tr>
               <th style={{ textAlign: 'left', padding: '3px 6px', color: C.faint, fontWeight: 400 }} className="mono"></th>
@@ -79,13 +79,13 @@ export default function NetworkComparePanel({ baseGraph }) {
                 <th key={col.id} style={{ padding: '3px 6px', textAlign: 'right', minWidth: 96 }}>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 4 }}>
                     <button type="button" onClick={() => select({ type: 'centre', id: col.id })}
-                      style={{ background: 'transparent', border: 'none', color: C.text, cursor: 'pointer', fontFamily: 'inherit', fontSize: 10.5, fontWeight: 600, padding: 0, textAlign: 'right' }}>
+                      style={{ background: 'transparent', border: 'none', color: C.text, cursor: 'pointer', fontFamily: 'inherit', fontSize: 12, fontWeight: 600, padding: 0, textAlign: 'right' }}>
                       {flagEmoji(col.centre.countryId)} {STAGE_BY_ID[col.centre.stageId]?.name || col.centre.stageId}
                     </button>
                     <button type="button" aria-label="Remove from comparison" onClick={() => cmpToggle({ type: 'centre', id: col.id })}
                       style={{ background: 'transparent', border: 'none', color: C.dim, cursor: 'pointer', fontSize: 12, lineHeight: 1 }}>×</button>
                   </div>
-                  <div className="mono" style={{ fontSize: 8.5, color: C.faint }}>{COUNTRY_NAMES[col.centre.countryId] || col.centre.countryId}</div>
+                  <div className="mono" style={{ fontSize: 12, color: C.faint }}>{COUNTRY_NAMES[col.centre.countryId] || col.centre.countryId}</div>
                 </th>
               ))}
             </tr>
@@ -96,7 +96,7 @@ export default function NetworkComparePanel({ baseGraph }) {
               const max = Math.max(...vals);
               return (
                 <tr key={row.id} style={{ borderTop: `1px solid ${C.line}` }}>
-                  <td className="mono" style={{ padding: '3px 6px', color: C.faint, fontSize: 9.5 }}>{row.label}</td>
+                  <td className="mono" style={{ padding: '3px 6px', color: C.faint, fontSize: 12 }}>{row.label}</td>
                   {cols.map((col, i) => {
                     const v = col.values[row.id];
                     const isMax = cols.length > 1 && v === max && v > 0;
@@ -109,7 +109,7 @@ export default function NetworkComparePanel({ baseGraph }) {
         </table>
       </div>
 
-      <div className="mono" style={{ fontSize: 8.5, color: C.faint, lineHeight: 1.6, marginTop: 6 }}>
+      <div className="mono" style={{ fontSize: 12, color: C.faint, lineHeight: 1.6, marginTop: 6 }}>
         Modeled / topology measures over the current (post-removal) graph — betweenness and removal impact are graph-structure sensitivities, not calibrated risk or economic-loss estimates.
       </div>
     </div>

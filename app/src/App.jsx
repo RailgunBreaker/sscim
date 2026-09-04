@@ -37,11 +37,30 @@ const GLOBAL_STYLE = `
   .node { cursor: pointer; transition: opacity .25s; }
   .evcard { cursor: pointer; transition: border-color .2s; }
   .evcard:hover { border-color: ${C.copper} !important; }
-  button:focus-visible, .node:focus-visible { outline: 2px solid ${C.copper}; outline-offset: 2px; }
+  /* ONE focus definition, applied to everything focusable. A control
+     without a visible focus ring is unusable from a keyboard, so this is
+     deliberately broad rather than opt-in. */
+  button:focus-visible, a:focus-visible, [role="tab"]:focus-visible, [role="radio"]:focus-visible,
+  input:focus-visible, select:focus-visible, summary:focus-visible, .node:focus-visible {
+    outline: 2px solid ${C.copper}; outline-offset: 2px; border-radius: 3px;
+  }
+  /* Interactive things respond to a pointer; non-interactive rows do not.
+     Every row looking hoverable was a large part of why the dashboard read
+     as a wall of buttons. */
+  .ui-button:hover:not(:disabled) { background: rgba(255,255,255,.06); }
+  .ui-button[aria-checked="true"]:hover, .ui-button[aria-selected="true"]:hover { filter: brightness(1.06); }
+  .ui-button:disabled { cursor: not-allowed; opacity: .45; }
+  .row-interactive { cursor: pointer; }
+  .row-interactive:hover { background: rgba(255,255,255,.045); }
+  .row-static { cursor: default; }
   .pulse { animation: pulse 1.4s ease-in-out infinite; }
   @media (prefers-reduced-motion: reduce) { .pulse { animation: none !important; } }
   @keyframes pulse { 0%,100% { opacity:.4 } 50% { opacity:1 } }
-  .mono { font-family: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-variant-numeric: tabular-nums; }
+  /* Historically named for a monospace family it never set. What every
+     call site actually wanted is figures that line up in a column, which
+     is a font FEATURE and not a family. Kept under the old name because
+     fifty files use it; it no longer pretends to be monospace. */
+  .mono { font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1; }
   .sscim-map { background: ${C.panel2}; }
   .sscim-map .osm-soft { filter: brightness(.75) invert(1) contrast(1.1) hue-rotate(200deg) saturate(.3); }
   .sscim-map .leaflet-control-attribution { background: rgba(12,17,28,.8); color: ${C.faint}; font-size: 9px; }
@@ -76,9 +95,10 @@ const GLOBAL_STYLE = `
      min-height never distorts the flow graph. */
   @media (max-width: 560px) {
     body { overflow-x: hidden; }
-    button:not(.node) { min-height: 34px; }
-    .mono { letter-spacing: .5px; }
-    .cbar { padding: 7px 10px !important; gap: 7px !important; }
+    /* 44px is the touch-target floor, not 34. Applies to every control
+       that is not an SVG graph node. */
+    button:not(.node), a.ui-button { min-height: 44px; }
+    .cbar { padding: 8px 12px !important; gap: 8px !important; }
   }
 `;
 
@@ -399,10 +419,11 @@ function DashboardBody() {
       return { event, index };
     }).sort((a, b) => Math.abs(b.index - 5) - Math.abs(a.index - 5));
     const lead = ranked[0];
-    const prefix = model.reviewing
-      ? `AS OF ${reviewDateISO(engine, asOfDaysAgo)} — newest then:`
-      : `${source === 'live' ? 'LIVE VAULT' : 'STATIC SNAPSHOT'} —`;
-    return `${prefix} ${lead.event.title} (${lead.event.date}) — own-field index ${lead.index.toFixed(2)}.`;
+    /* The data source is stated as a badge in the same row, so naming it
+       again here was the same fact twice. The review prefix stays, because
+       it says WHEN the reading is from, which the badge does not. */
+    const prefix = model.reviewing ? `As of ${reviewDateISO(engine, asOfDaysAgo)}, the newest was: ` : '';
+    return `${prefix}${lead.event.title} (${lead.event.date}) — own-field index ${lead.index.toFixed(2)}.`;
   }, [model.scenarioActive, model.reviewing, asOfDaysAgo, scenario, EVENTS, engine, source]);
 
   const panes = { map: t("Map"), flow: t("Flow"), intel: t("Intel") };
@@ -422,10 +443,17 @@ function DashboardBody() {
     : viewMode === 'playground' ? playgroundPane
       : viewMode === 'split' ? (<>{mapPane}{networkPane}</>)
         : mapPane;
-  const layer1Title = viewMode === 'topology' ? 'LAYER 1 · FUNCTIONAL-CENTRE NETWORK · MODELED STAGE-MEDIATED CONNECTIVITY'
-    : viewMode === 'playground' ? 'LAYER 1 · FACILITY PLAYGROUND · MODELED PLANT-TO-PLANT RELATIONSHIPS, NOT SHIPMENTS'
-      : viewMode === 'split' ? 'LAYER 1 · WORLD MAP + FUNCTIONAL-CENTRE NETWORK'
-        : 'LAYER 1 · WORLD MAP · OPENSTREETMAP';
+  /* Descriptive names, sentence case. The hint is a separate line rather
+     than a clause welded onto the title, and it keeps the modelled-not-
+     measured qualification where a reader meets the graph. */
+  const workspaceTitle = viewMode === 'topology' ? 'Functional-centre network'
+    : viewMode === 'playground' ? 'Facility network'
+      : viewMode === 'split' ? 'World map and network'
+        : 'World map';
+  const workspaceHint = viewMode === 'topology' ? 'Modeled stage-mediated connectivity, not measured trade'
+    : viewMode === 'playground' ? 'Modeled plant-to-plant relationships, not confirmed shipments or contracts'
+      : viewMode === 'split' ? 'Both views of the same selection'
+        : 'Facilities and country exposure';
 
   return (
     <div style={{ minHeight: "100vh", background: C.bg, color: C.text, fontFamily: 'Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif' }}>
@@ -448,22 +476,22 @@ function DashboardBody() {
       {wide ? (
         <>
           <div style={{ display: "grid", gridTemplateColumns: viewMode === 'playground' ? "minmax(0, 1fr)" : viewMode === 'geographic' ? "minmax(0, 1fr) minmax(0, 1.9fr)" : "minmax(0, 1.9fr) minmax(0, 1fr)", gap: 1, background: C.line }}>
-            <Pane id="pane-map" highlight={tourTarget === "pane-map"} title={layer1Title}>{layer1}</Pane>
+            <Pane id="pane-map" highlight={tourTarget === "pane-map"} title={workspaceTitle} hint={workspaceHint}>{layer1}</Pane>
             {viewMode !== 'playground' && (
-              <Pane id="pane-flow" highlight={tourTarget === "pane-flow"} title="LAYER 2 · INDUSTRY FLOW · TAP A STAGE FOR ITS SUBSECTION"><FlowGraph sel={sel} setSel={setSel} hl={hl} model={displayModel} scenarioActive={model.scenarioActive} /></Pane>
+              <Pane id="pane-flow" highlight={tourTarget === "pane-flow"} title="Industry flow" hint="Select a stage to open its subsection"><FlowGraph sel={sel} setSel={setSel} hl={hl} model={displayModel} scenarioActive={model.scenarioActive} /></Pane>
             )}
           </div>
           <div style={{ borderTop: `1px solid ${C.line}` }}>
-            <Pane id="pane-intel" highlight={tourTarget === "pane-intel"} title="LAYER 3 · INTELLIGENCE PANEL">
+            <Pane id="pane-intel" highlight={tourTarget === "pane-intel"} title="Intelligence">
               <Intel sel={sel} setSel={setSel} model={model} scenario={scenario} onResetScenario={resetScenario} scenarioActive={model.scenarioActive} feedTab={feedTab} setFeedTab={setFeedTab} baseGraph={baseGraph} horizontal />
             </Pane>
           </div>
         </>
       ) : (
         <>
-          {tab === "map" && <Pane id="pane-map" highlight={tourTarget === "pane-map"} title={layer1Title}>{layer1}</Pane>}
-          {tab === "flow" && <Pane id="pane-flow" highlight={tourTarget === "pane-flow"} title="LAYER 2 · INDUSTRY FLOW"><FlowGraph sel={sel} setSel={setSel} hl={hl} model={displayModel} scenarioActive={model.scenarioActive} /></Pane>}
-          {tab === "intel" && <Pane id="pane-intel" highlight={tourTarget === "pane-intel"} title="LAYER 3 · INTELLIGENCE PANEL"><Intel sel={sel} setSel={setSel} model={model} scenario={scenario} onResetScenario={resetScenario} scenarioActive={model.scenarioActive} feedTab={feedTab} setFeedTab={setFeedTab} baseGraph={baseGraph} /></Pane>}
+          {tab === "map" && <Pane id="pane-map" highlight={tourTarget === "pane-map"} title={workspaceTitle} hint={workspaceHint}>{layer1}</Pane>}
+          {tab === "flow" && <Pane id="pane-flow" highlight={tourTarget === "pane-flow"} title="Industry flow"><FlowGraph sel={sel} setSel={setSel} hl={hl} model={displayModel} scenarioActive={model.scenarioActive} /></Pane>}
+          {tab === "intel" && <Pane id="pane-intel" highlight={tourTarget === "pane-intel"} title="Intelligence"><Intel sel={sel} setSel={setSel} model={model} scenario={scenario} onResetScenario={resetScenario} scenarioActive={model.scenarioActive} feedTab={feedTab} setFeedTab={setFeedTab} baseGraph={baseGraph} /></Pane>}
         </>
       )}
 
@@ -476,7 +504,7 @@ function DashboardBody() {
       )}
       {showBriefing && <Briefing onClose={() => setShowBriefing(false)} model={model} scenario={scenario} />}
 
-      <footer className="mono" style={{ padding: "10px 16px", fontSize: 10, color: C.faint, borderTop: `1px solid ${C.line}`, lineHeight: 1.6 }}>
+      <footer className="mono" style={{ padding: "10px 16px", fontSize: 12, color: C.faint, borderTop: `1px solid ${C.line}`, lineHeight: 1.6 }}>
         SSCIM INTELLIGENCE · Supply-chain sensitivity and comparison analysis (data as of {model.datasetAsOf}) — not a calibrated, causal, or probabilistic forecast, and not investment advice.
         Map data © OpenStreetMap contributors · model {model.modelVersion}.
         {source === 'static'

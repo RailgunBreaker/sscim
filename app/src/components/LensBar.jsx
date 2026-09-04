@@ -1,22 +1,37 @@
-import { C } from '../theme.js';
+import { useState, useEffect } from 'react';
+import { color, space, font, radius, typeStyle } from '../ui/tokens.js';
+import { SegmentedControl, Button, StatusBadge } from '../ui/primitives.jsx';
 import { useVault } from '../data/VaultContext.jsx';
 import { useInteraction } from '../interaction/InteractionContext.jsx';
 import { LENSES, LENS_LABELS, VIEW_MODES } from '../interaction/reducer.js';
 
-const VIEW_LABELS = { geographic: 'Geographic', topology: 'Topology', split: 'Split', playground: '⇄ Facility Playground' };
-const VIEW_TITLES = {
-  geographic: 'World map',
-  topology: 'Functional-centre network',
-  split: 'Map + network together',
-  playground: 'Pick one plant and trace the modeled network around it — full width. Modeled relationships, not shipments.',
-};
+/* WHAT THIS BAR USED TO BE. One row holding two radiogroups of identical
+   appearance — VIEW (Geographic / Topology / Split / ⇄ Facility Playground)
+   and LENS (Structural / Operational / Hazard Δ / Selected share) — plus a
+   focus breadcrumb and two history buttons, all at 9 to 11px with 1.5px of
+   letter-spacing on the group labels. Two different KINDS of choice, drawn
+   the same way, are read as one list of eight peers.
 
-/* Global analytical-lens control + focus breadcrumb, shared by the world
-   map and industry graph (task §4 / §11). Sits directly under the scenario
-   bar. The lens buttons drive both maps at once; Scenario Δ is disabled
-   until a scenario is active. The breadcrumb shows what is pinned and
-   offers Back / Clear — the cross-panel Clear and Back controls required
-   by §3. */
+   They are not peers. The first picks WHICH WORKSPACE you are in; the
+   second picks WHICH MEASUREMENT is shaded within it. So the workspace
+   choice is now primary and named for the task ("Map", "Network",
+   "Facilities"), and the lens is a secondary control that reads as
+   subordinate to it.
+
+   Split view is not removed. It is a modifier on the two graph workspaces —
+   "show the other one alongside" — which is what it actually is, rather
+   than a fourth peer competing with them. */
+
+const WORKSPACES = [
+  { value: 'geographic', label: 'Map', title: 'World map of facilities and country exposure' },
+  { value: 'topology', label: 'Network', title: 'Functional-centre network graph' },
+  { value: 'playground', label: 'Facilities', title: 'Trace the modeled network around one plant. Modeled relationships, not shipments.' },
+];
+
+/* Which workspace a split view belongs to. Split shows both graphs, so the
+   primary control marks whichever single view the reader last chose. */
+const primaryFor = (viewMode, lastSingle) => (viewMode === 'split' ? lastSingle : viewMode);
+
 function entityLabel(sel, { COUNTRY_NAMES, STAGE_BY_ID, COMPANY_BY_ID, EVENTS }, scenarioName) {
   if (!sel) return null;
   if (sel.type === 'scenario') return { kind: 'Scenario', name: scenarioName || 'Active scenario' };
@@ -35,70 +50,110 @@ export default function LensBar({ scenarioName }) {
   const { data, engine } = useVault();
   const { state, setLens, clear, back, lensAvailable, setViewMode } = useInteraction();
   const { lens, selected, history, scenarioActive, viewMode } = state;
-  const names = { COUNTRY_NAMES: data.COUNTRY_NAMES, STAGE_BY_ID: engine.STAGE_BY_ID, COMPANY_BY_ID: data.COMPANY_BY_ID, EVENTS: data.EVENTS };
+  const [lastSingle, setLastSingle] = useState(viewMode === 'split' ? 'geographic' : viewMode);
+
+  useEffect(() => {
+    if (viewMode !== 'split' && VIEW_MODES.includes(viewMode)) setLastSingle(viewMode);
+  }, [viewMode]);
+
+  const names = {
+    COUNTRY_NAMES: data.COUNTRY_NAMES, STAGE_BY_ID: engine.STAGE_BY_ID,
+    COMPANY_BY_ID: data.COMPANY_BY_ID, EVENTS: data.EVENTS,
+  };
   const label = entityLabel(selected, names, scenarioName);
+  const workspace = primaryFor(viewMode, lastSingle);
+  const isGraphWorkspace = workspace === 'geographic' || workspace === 'topology';
+  const splitOn = viewMode === 'split';
 
+  /* Only the lens applies to every workspace; the split modifier applies to
+     the two graph workspaces. Facilities has its own controls, which live
+     with the graph rather than in the chrome. */
   return (
-    <div className="cbar" style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap', padding: '6px 16px', background: C.panel2, borderBottom: `1px solid ${C.line}` }}>
-      <span className="mono" style={{ fontSize: 9, letterSpacing: 1.5, color: C.faint, flexShrink: 0 }}>VIEW</span>
-      <div role="radiogroup" aria-label="View mode" style={{ display: 'flex', gap: 4 }}>
-        {VIEW_MODES.map((v) => {
-          const on = viewMode === v;
-          return (
-            <button key={v} type="button" role="radio" aria-checked={on} onClick={() => setViewMode(v)}
-              title={VIEW_TITLES[v]}
-              style={{ fontSize: 11, padding: '4px 10px', borderRadius: 4, fontFamily: 'inherit', cursor: 'pointer',
-                background: on ? C.copper : 'transparent', color: on ? '#0C111C' : C.dim,
-                border: `1px solid ${on ? C.copper : C.line}`, fontWeight: on ? 700 : 400 }}>
-              {VIEW_LABELS[v]}
-            </button>
-          );
-        })}
-      </div>
-      <span style={{ width: 1, alignSelf: 'stretch', background: C.line, margin: '0 2px' }} aria-hidden="true" />
-      <span className="mono" style={{ fontSize: 9, letterSpacing: 1.5, color: C.faint, flexShrink: 0 }}>LENS</span>
-      <div role="radiogroup" aria-label="Analytical lens" style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
-        {LENSES.map((l) => {
-          const on = lens === l;
-          const avail = lensAvailable(l);
-          return (
-            <button key={l} type="button" role="radio" aria-checked={on} disabled={!avail}
-              onClick={() => setLens(l)}
-              title={!avail ? 'Hazard Δ is available only while a hazard is applied on the map' : `Show ${LENS_LABELS[l]}`}
-              style={{
-                fontSize: 11, padding: '4px 10px', borderRadius: 4, fontFamily: 'inherit', cursor: avail ? 'pointer' : 'not-allowed',
-                background: on ? C.copper : 'transparent', color: on ? '#0C111C' : avail ? C.dim : C.faint,
-                border: `1px solid ${on ? C.copper : C.line}`, fontWeight: on ? 700 : 400, opacity: avail ? 1 : 0.5,
-              }}>
-              {LENS_LABELS[l]}
-            </button>
-          );
-        })}
+    <nav
+      className="cbar"
+      aria-label="Workspace"
+      style={{
+        display: 'flex', alignItems: 'center', gap: space.md, flexWrap: 'wrap',
+        padding: `${space.sm}px ${space.lg}px`,
+        background: color.surface.sunken,
+        borderBottom: `1px solid ${color.border.default}`,
+      }}
+    >
+      <SegmentedControl
+        label="Workspace"
+        options={WORKSPACES.map((w) => ({ value: w.value, label: w.label, title: w.title }))}
+        value={workspace}
+        onChange={(v) => setViewMode(v)}
+      />
+
+      {isGraphWorkspace && (
+        <Button
+          variant="quiet"
+          size="sm"
+          aria-pressed={splitOn}
+          onClick={() => setViewMode(splitOn ? lastSingle : 'split')}
+          title={workspace === 'geographic'
+            ? 'Show the network graph beside the map'
+            : 'Show the world map beside the network graph'}
+          style={splitOn ? { color: color.text.accent, background: color.surface.selected } : undefined}
+        >
+          {splitOn ? 'Side by side · on' : 'Side by side'}
+        </Button>
+      )}
+
+      <div style={{ display: 'flex', alignItems: 'center', gap: space.sm, minWidth: 0 }}>
+        <span id="lens-label" style={{ ...typeStyle.meta, whiteSpace: 'nowrap' }}>Shading</span>
+        <SegmentedControl
+          size="sm"
+          label="Metric shown on the graph"
+          options={LENSES.map((l) => ({
+            value: l,
+            label: LENS_LABELS[l],
+            disabled: !lensAvailable(l),
+            title: !lensAvailable(l)
+              ? 'Available only while a hazard is placed on the map'
+              : `Shade by ${LENS_LABELS[l]}`,
+          }))}
+          value={lens}
+          onChange={setLens}
+        />
       </div>
 
-      <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
-        {scenarioActive && (
-          <span className="mono" style={{ fontSize: 9, letterSpacing: 1, color: '#0C111C', background: C.amber, borderRadius: 3, padding: '2px 7px', fontWeight: 700 }}>
-            HAZARD APPLIED
-          </span>
-        )}
-        {label ? (
-          <span className="mono" style={{ fontSize: 10.5, color: C.dim }}>
-            <span style={{ color: C.faint }}>Focused: </span>
-            <span style={{ color: C.copper }}>{label.kind}</span> · {label.name}
-          </span>
-        ) : (
-          <span className="mono" style={{ fontSize: 10.5, color: C.faint }}>Nothing pinned</span>
-        )}
-        <button type="button" onClick={back} disabled={!history.length} aria-label="Back to previous selection"
-          style={{ fontSize: 10.5, padding: '3px 9px', borderRadius: 4, fontFamily: 'inherit', background: 'transparent', color: history.length ? C.dim : C.faint, border: `1px solid ${C.line}`, cursor: history.length ? 'pointer' : 'not-allowed', opacity: history.length ? 1 : 0.5 }}>
-          ← Back
-        </button>
-        <button type="button" onClick={clear} disabled={!selected} aria-label="Clear selection"
-          style={{ fontSize: 10.5, padding: '3px 9px', borderRadius: 4, fontFamily: 'inherit', background: 'transparent', color: selected ? C.dim : C.faint, border: `1px solid ${C.line}`, cursor: selected ? 'pointer' : 'not-allowed', opacity: selected ? 1 : 0.5 }}>
+      {/* minWidth 0 is what actually stops the page scrolling sideways. A
+          flex item defaults to min-width:auto, so this group refused to
+          shrink below its content and pushed the document to 476px at a
+          375px viewport — the selection readout alone is 380px of one long
+          event title. Constraining the group, and letting the readout be
+          the part that gives, keeps every control reachable. */}
+      <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: space.sm, flexWrap: 'wrap', minWidth: 0, maxWidth: '100%' }}>
+        {scenarioActive && <StatusBadge tone="warning">Hazard applied</StatusBadge>}
+
+        {/* The selection is announced to assistive technology when it
+            changes, because a graph highlight is invisible to a reader who
+            is not looking at the graph. */}
+        <span
+          aria-live="polite"
+          style={{
+            ...typeStyle.meta,
+            flex: '1 1 auto', minWidth: 0, maxWidth: 380,
+            overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+          }}
+        >
+          {label ? (
+            <>
+              Selected: <span style={{ color: color.text.accent }}>{label.kind}</span>{' '}
+              <span style={{ color: color.text.secondary }}>{label.name}</span>
+            </>
+          ) : 'Nothing selected'}
+        </span>
+
+        <Button variant="quiet" size="sm" onClick={back} disabled={!history.length} aria-label="Back to previous selection">
+          Back
+        </Button>
+        <Button variant="quiet" size="sm" onClick={clear} disabled={!selected} aria-label="Clear selection">
           Clear
-        </button>
+        </Button>
       </div>
-    </div>
+    </nav>
   );
 }

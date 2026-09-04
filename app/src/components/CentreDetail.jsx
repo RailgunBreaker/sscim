@@ -49,7 +49,7 @@ export default function CentreDetail({ centreId, baseGraph, model, setSel }) {
 
   const Row = ({ label, value, color }) => (
     <div style={{ display: 'flex', justifyContent: 'space-between', gap: 10, fontSize: 12, marginBottom: 3 }}>
-      <span className="mono" style={{ color: C.faint, fontSize: 10.5 }}>{label}</span>
+      <span className="mono" style={{ color: C.faint, fontSize: 12 }}>{label}</span>
       <span style={{ color: color || C.text, fontWeight: 600 }}>{value}</span>
     </div>
   );
@@ -58,7 +58,7 @@ export default function CentreDetail({ centreId, baseGraph, model, setSel }) {
     <div role="button" tabIndex={0}
       onClick={() => setSel({ type: 'centre', id: n.neighborId })}
       onKeyDown={onEnterSpace(() => setSel({ type: 'centre', id: n.neighborId }))}
-      style={{ display: 'flex', justifyContent: 'space-between', gap: 8, fontSize: 11.5, cursor: 'pointer', padding: '2px 0' }}>
+      style={{ display: 'flex', justifyContent: 'space-between', gap: 8, fontSize: 12, cursor: 'pointer', padding: '2px 0' }}>
       <span>{nameOf(n.neighborId)}</span>
       <span className="mono" style={{ color: C.copper }}>{n.edge.rawDisplayWeight.toFixed(3)}</span>
     </div>
@@ -67,29 +67,29 @@ export default function CentreDetail({ centreId, baseGraph, model, setSel }) {
   return (
     <div>
       <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, flexWrap: 'wrap' }}>
-        <span className="mono" style={{ fontSize: 9, letterSpacing: 1, color: '#0C111C', background: C.copper, borderRadius: 3, padding: '2px 7px', fontWeight: 700 }}>FUNCTIONAL CENTRE</span>
+        <span className="mono" style={{ fontSize: 12, color: '#0C111C', background: C.copper, borderRadius: 3, padding: '2px 7px', fontWeight: 700 }}>Functional centre</span>
         <h3 style={{ margin: 0, fontSize: 15 }}>{flagEmoji(centre.countryId)} {COUNTRY_NAMES[centre.countryId] || centre.countryId} · {stage?.name || centre.stageId}</h3>
       </div>
-      <div className="mono" style={{ fontSize: 10, color: C.faint, margin: '4px 0 8px' }}>{centre.tierLabel} tier · country × stage centre{isRemoved ? ' · TEMPORARILY REMOVED' : ''}</div>
+      <div className="mono" style={{ fontSize: 12, color: C.faint, margin: '4px 0 8px' }}>{centre.tierLabel} tier · country × stage centre{isRemoved ? ' · TEMPORARILY REMOVED' : ''}</div>
 
       {/* Node actions (§25) — also available here in the accessible side panel */}
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 8 }}>
         <button type="button" onClick={() => pgToggleNode(centreId)}
-          style={{ fontSize: 10.5, padding: '4px 9px', borderRadius: 4, fontFamily: 'inherit', cursor: 'pointer', background: isRemoved ? 'rgba(201,138,63,.16)' : 'transparent', color: isRemoved ? C.copper : C.dim, border: `1px solid ${isRemoved ? C.copper : C.line}` }}>
+          style={{ fontSize: 12, padding: '4px 9px', borderRadius: 4, fontFamily: 'inherit', cursor: 'pointer', background: isRemoved ? 'rgba(201,138,63,.16)' : 'transparent', color: isRemoved ? C.copper : C.dim, border: `1px solid ${isRemoved ? C.copper : C.line}` }}>
           {isRemoved ? '↺ Restore centre' : '✕ Temporarily remove'}
         </button>
         <button type="button" onClick={() => pgToggleMulti({ type: 'centre', id: centreId })}
-          style={{ fontSize: 10.5, padding: '4px 9px', borderRadius: 4, fontFamily: 'inherit', cursor: 'pointer', background: isMulti ? 'rgba(224,164,88,.16)' : 'transparent', color: isMulti ? C.amber : C.dim, border: `1px solid ${isMulti ? C.amber : C.line}` }}>
+          style={{ fontSize: 12, padding: '4px 9px', borderRadius: 4, fontFamily: 'inherit', cursor: 'pointer', background: isMulti ? 'rgba(224,164,88,.16)' : 'transparent', color: isMulti ? C.amber : C.dim, border: `1px solid ${isMulti ? C.amber : C.line}` }}>
           {isMulti ? '− Remove from selection' : '+ Add to multi-selection'}
         </button>
         <button type="button" onClick={() => draftSet({ sources: [{ type: 'stage', id: centre.stageId }], builderMode: true })}
           title="Turn this centre's stage into a scenario shock source (opens the composer)"
-          style={{ fontSize: 10.5, padding: '4px 9px', borderRadius: 4, fontFamily: 'inherit', cursor: 'pointer', background: 'transparent', color: C.copper, border: `1px solid ${C.copperDim}` }}>
+          style={{ fontSize: 12, padding: '4px 9px', borderRadius: 4, fontFamily: 'inherit', cursor: 'pointer', background: 'transparent', color: C.copper, border: `1px solid ${C.copperDim}` }}>
           ⚡ Apply shock here
         </button>
         <button type="button" onClick={() => cmpToggle({ type: 'centre', id: centreId })}
           title="Add this centre to the comparison workspace (up to 4)"
-          style={{ fontSize: 10.5, padding: '4px 9px', borderRadius: 4, fontFamily: 'inherit', cursor: 'pointer', background: inComparison ? 'rgba(201,138,63,.16)' : 'transparent', color: inComparison ? C.copper : C.dim, border: `1px solid ${inComparison ? C.copper : C.line}` }}>
+          style={{ fontSize: 12, padding: '4px 9px', borderRadius: 4, fontFamily: 'inherit', cursor: 'pointer', background: inComparison ? 'rgba(201,138,63,.16)' : 'transparent', color: inComparison ? C.copper : C.dim, border: `1px solid ${inComparison ? C.copper : C.line}` }}>
           {inComparison ? '− Remove from comparison' : '⊞ Add to comparison'}
         </button>
       </div>
@@ -106,13 +106,13 @@ export default function CentreDetail({ centreId, baseGraph, model, setSel }) {
 
       {centre.companies.length > 0 && (
         <>
-          <div className="mono" style={{ fontSize: 9, letterSpacing: 1.5, color: C.dim, margin: '8px 0 3px' }}>COMPANIES AT THIS CENTRE</div>
+          <div className="mono" style={{ fontSize: 12, color: C.dim, margin: '8px 0 3px' }}>Companies at this centre</div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
             {centre.companies.slice(0, 10).map((co) => (
               <span key={co.id} role="button" tabIndex={0}
                 onClick={() => setSel({ type: 'company', id: co.id })}
                 onKeyDown={onEnterSpace(() => setSel({ type: 'company', id: co.id }))}
-                className="mono" style={{ fontSize: 10, padding: '2px 7px', borderRadius: 10, border: `1px solid ${C.line}`, color: C.copper, cursor: 'pointer' }}>
+                className="mono" style={{ fontSize: 12, padding: '2px 7px', borderRadius: 10, border: `1px solid ${C.line}`, color: C.copper, cursor: 'pointer' }}>
                 {co.name} {(co.stake * 100).toFixed(0)}%
               </span>
             ))}
@@ -122,18 +122,18 @@ export default function CentreDetail({ centreId, baseGraph, model, setSel }) {
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginTop: 8 }}>
         <div>
-          <div className="mono" style={{ fontSize: 9, letterSpacing: 1.5, color: C.dim, marginBottom: 3 }}>DIRECT UPSTREAM ({up.length})</div>
-          {up.length === 0 && <div className="mono" style={{ fontSize: 10.5, color: C.faint }}>none</div>}
+          <div className="mono" style={{ fontSize: 12, color: C.dim, marginBottom: 3 }}>DIRECT UPSTREAM ({up.length})</div>
+          {up.length === 0 && <div className="mono" style={{ fontSize: 12, color: C.faint }}>none</div>}
           {up.map((n) => <NeighborRow key={n.edge.id} n={n} />)}
         </div>
         <div>
-          <div className="mono" style={{ fontSize: 9, letterSpacing: 1.5, color: C.dim, marginBottom: 3 }}>DIRECT DOWNSTREAM ({down.length})</div>
-          {down.length === 0 && <div className="mono" style={{ fontSize: 10.5, color: C.faint }}>none</div>}
+          <div className="mono" style={{ fontSize: 12, color: C.dim, marginBottom: 3 }}>DIRECT DOWNSTREAM ({down.length})</div>
+          {down.length === 0 && <div className="mono" style={{ fontSize: 12, color: C.faint }}>none</div>}
           {down.map((n) => <NeighborRow key={n.edge.id} n={n} />)}
         </div>
       </div>
 
-      <div className="mono" style={{ fontSize: 9, color: C.faint, marginTop: 10, lineHeight: 1.6 }}>
+      <div className="mono" style={{ fontSize: 12, color: C.faint, marginTop: 10, lineHeight: 1.6 }}>
         Weights are modeled stage-mediated connection weights (share × stage-edge prior × share) — model-derived exposure, not measured bilateral trade or verified shipments.
       </div>
     </div>

@@ -58,19 +58,19 @@ export function briefingText(model, scenario, data, engine) {
   L.push("");
   L.push(scenarioActive ? "MOST-MOVED STAGES (SCENARIO DELTA)" : "MOST-AFFECTED STAGES (OPERATIONAL IMPACT)");
   stageRows.forEach(({ s, metric, structural }) =>
-    L.push(`• ${s.name}: ${scenarioActive ? "Δ" : "impact"} ${metric >= 0 ? "+" : ""}${metric.toFixed(3)} [${scenarioActive ? "SCENARIO DELTA" : "OPERATIONAL"}] · structural vulnerability ${structural.toFixed(1)}/10 [STRUCTURAL]`));
+    L.push(`• ${s.name}: ${scenarioActive ? "Δ" : "impact"} ${metric >= 0 ? "+" : ""}${metric.toFixed(3)} [${scenarioActive ? "SCENARIO DELTA" : "Operational"}] · structural vulnerability ${structural.toFixed(1)}/10 [STRUCTURAL]`));
   L.push("");
   L.push(scenarioActive ? "COMPANY LEADERS (MARGINAL SCENARIO CONTRIBUTION)" : "COMPANY LEADERS (MODELED CONTRIBUTION)");
   companyRows.forEach(({ c, metric, vulnerability }) => {
     const via = Object.keys(c.stakes).map((sid) => STAGE_BY_ID[sid].name).slice(0, 2).join(", ");
-    L.push(`• ${c.name} (HQ: ${COUNTRY_NAMES[c.country]}): ${scenarioActive ? "Δ contribution" : "contribution"} ${metric >= 0 ? "+" : ""}${metric.toFixed(3)} [${scenarioActive ? "SCENARIO DELTA" : "OPERATIONAL"}] · vulnerability intensity ${vulnerability.toFixed(1)}/10 [OPERATIONAL, share-independent] via ${via}`);
+    L.push(`• ${c.name} (HQ: ${COUNTRY_NAMES[c.country]}): ${scenarioActive ? "Δ contribution" : "contribution"} ${metric >= 0 ? "+" : ""}${metric.toFixed(3)} [${scenarioActive ? "SCENARIO DELTA" : "Operational"}] · vulnerability intensity ${vulnerability.toFixed(1)}/10 [OPERATIONAL, share-independent] via ${via}`);
   });
   L.push("");
   L.push(scenarioActive ? "COUNTRY BOARD (SCENARIO DELTA — not ranked by structural baseline)" : "COUNTRY BOARD (OPERATIONAL IMPACT)");
   countryRows.forEach(({ name, metric, structural }) =>
-    L.push(`• ${name}: ${scenarioActive ? "Δ" : "impact"} ${metric >= 0 ? "+" : ""}${metric.toFixed(3)} [${scenarioActive ? "SCENARIO DELTA" : "OPERATIONAL"}] · structural baseline ${structural.toFixed(2)}/10 [STRUCTURAL]`));
+    L.push(`• ${name}: ${scenarioActive ? "Δ" : "impact"} ${metric >= 0 ? "+" : ""}${metric.toFixed(3)} [${scenarioActive ? "SCENARIO DELTA" : "Operational"}] · structural baseline ${structural.toFixed(2)}/10 [STRUCTURAL]`));
   L.push("");
-  L.push("WATCH NEXT");
+  L.push("What to watch next");
   evRows.slice(0, 3).forEach(({ e }) => L.push(`• ${e.watch}`));
   L.push("");
   L.push("METHOD (matches the published ⓘ Methodology documentation):");

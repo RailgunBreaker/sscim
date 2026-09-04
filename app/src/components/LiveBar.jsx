@@ -47,57 +47,70 @@ export default function LiveBar({ model, whatChanged, hazard, onClearHazard, sou
   const baselineDelta7d = baselineChainIndex - prev7;
   const isStatic = source === 'static';
 
-  const tone = scenarioActive ? { bg: '#2A1E14', border: C.amber, text: C.amber, label: '⌖ HAZARD APPLIED' }
-    : reviewing ? { bg: '#161A26', border: C.copperDim, text: C.copper, label: '⟲ HISTORY REVIEW' }
-      : isStatic ? { bg: C.panel2, border: C.line, text: C.dim, label: '◍ STATIC SNAPSHOT' }
-        : { bg: C.panel2, border: C.line, text: C.dim, label: '● LIVE VAULT' };
+  const tone = scenarioActive ? { bg: '#2A1E14', border: C.amber, text: C.amber, label: 'Hazard applied' }
+    : reviewing ? { bg: '#161A26', border: C.copperDim, text: C.copper, label: 'History review' }
+      : isStatic ? { bg: C.panel2, border: C.line, text: C.dim, label: 'Static snapshot' }
+        : { bg: C.panel2, border: C.line, text: C.dim, label: 'Live vault' };
 
   const sourceNote = isStatic
     ? `Static snapshot — the vault API is not reachable from here, so this is the dataset frozen into the build (data as of ${model.datasetAsOf}). Figures are real and complete; they do not update until the site is rebuilt.`
     : `Live vault — figures are read from the vault API (data as of ${model.datasetAsOf}).`;
 
+  /* HIERARCHY. This row answers, in order: what is the current reading,
+     what moved it, and where the numbers came from. It used to answer them
+     in the opposite order and at the opposite sizes — the source badge
+     shouted at 9px in caps, "WHAT CHANGED" was set in copper, and the index
+     itself sat last on the right at 15px. The number a reader came for is
+     now first and largest; the provenance is a quiet badge. */
   return (
-    <div className="mono" style={{ background: tone.bg, borderBottom: `1px solid ${tone.border}`, padding: '7px 16px', fontSize: 11.5, color: tone.text, lineHeight: 1.5, display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
-      <span style={{ fontSize: 9, letterSpacing: 1.4, color: tone.text, flexShrink: 0, fontWeight: 700 }} title={sourceNote}>{tone.label}</span>
-      {/* The source is stated even while a hazard or a history review owns
-          the main label, because those are claims about WHAT is being shown
-          and this is a claim about WHERE IT CAME FROM — they are different
-          questions and collapsing them is how "LIVE" ended up on a static
-          deploy in the first place. */}
-      {(scenarioActive || reviewing) && (
-        <span className="mono" style={{ fontSize: 8.5, letterSpacing: 1, color: C.faint, flexShrink: 0 }} title={sourceNote}>
-          {isStatic ? '◍ STATIC SNAPSHOT' : '● LIVE VAULT'}
+    <div style={{
+      background: tone.bg, borderBottom: `1px solid ${tone.border}`,
+      padding: '10px 16px', color: tone.text, lineHeight: 1.45,
+      display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap',
+    }}>
+      {/* 1 — the current result, and what KIND of reading it is */}
+      <span style={{ display: 'flex', alignItems: 'baseline', gap: 8, flexShrink: 0 }}>
+        <span style={{ fontSize: 12, color: C.faint }}>
+          {reviewing || scenarioActive ? tone.label : 'Chain index'}
         </span>
-      )}
-      <span className="mono" style={{ fontSize: 9, color: C.faint, flexShrink: 0 }} title={sourceNote}>
-        data as of {model.datasetAsOf}
-      </span>
-
-      <span style={{ flex: 1, minWidth: 220 }}>
-        <span style={{ color: C.copper, fontWeight: 600 }}>{t('WHAT CHANGED')} · </span>{whatChanged}
-      </span>
-
-      <span style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
-        <Spark data={history} />
-        <span style={{ fontSize: 10, color: C.faint }}>
-          {eventsInWindow} event{eventsInWindow === 1 ? '' : 's'} in window
-        </span>
-        <span style={{ fontSize: 11, color: C.dim }}>
-          index <b style={{ fontSize: 15, color: riskColor(activeChainIndex) }}>{activeChainIndex.toFixed(2)}</b>
-        </span>
+        <b className="mono" style={{ fontSize: 26, fontWeight: 600, lineHeight: 1.1, color: riskColor(activeChainIndex) }}>
+          {activeChainIndex.toFixed(2)}
+        </b>
         {scenarioActive ? (
-          <span style={{ fontSize: 10.5, color: C.amber }}>
-            {chainIndexDelta >= 0 ? '+' : ''}{chainIndexDelta.toFixed(2)} vs {baselineChainIndex.toFixed(2)} without it
+          <span className="mono" style={{ fontSize: 13, color: C.amber }}>
+            {chainIndexDelta >= 0 ? '+' : ''}{chainIndexDelta.toFixed(2)} vs {baselineChainIndex.toFixed(2)} without the hazard
           </span>
         ) : (
-          <span style={{ fontSize: 10.5, color: C.faint }}>
-            {baselineDelta7d >= 0 ? '+' : ''}{Number.isFinite(baselineDelta7d) ? baselineDelta7d.toFixed(2) : '—'} over 7d
+          <span className="mono" style={{ fontSize: 13, color: C.dim }}>
+            {baselineDelta7d >= 0 ? '+' : ''}{Number.isFinite(baselineDelta7d) ? baselineDelta7d.toFixed(2) : '—'} over 7 days
           </span>
         )}
+        <Spark data={history} />
+      </span>
+
+      {/* 2 — what moved it */}
+      <span style={{ flex: 1, minWidth: 240, fontSize: 13 }}>
+        <span style={{ color: C.faint }}>What changed: </span>{whatChanged}
+      </span>
+
+      {/* 3 — where it came from, and the one action */}
+      <span style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0, fontSize: 12, color: C.faint }}>
+        <span>{eventsInWindow} event{eventsInWindow === 1 ? '' : 's'} in window</span>
+        <span
+          title={sourceNote}
+          style={{
+            display: 'inline-flex', alignItems: 'center', gap: 5,
+            border: `1px solid ${tone.border}`, borderRadius: 3, padding: '2px 8px', color: tone.text,
+          }}
+        >
+          <span aria-hidden="true" style={{ width: 6, height: 6, borderRadius: '50%', background: tone.text }} />
+          {isStatic ? 'Static snapshot' : 'Live vault'}
+          {` · ${model.datasetAsOf}`}
+        </span>
         {scenarioActive && onClearHazard && (
-          <button type="button" onClick={onClearHazard}
+          <button type="button" onClick={onClearHazard} className="ui-button"
             title={hazard?.desc || 'Remove the hazard overlay and return to the observed reading'}
-            style={{ fontSize: 10, padding: '3px 9px', borderRadius: 4, fontFamily: 'inherit', cursor: 'pointer', fontWeight: 700, background: C.amber, color: '#0C111C', border: `1px solid ${C.amber}` }}>
+            style={{ fontSize: 13, padding: '5px 12px', borderRadius: 5, fontFamily: 'inherit', cursor: 'pointer', fontWeight: 600, background: C.amber, color: '#0C111C', border: `1px solid ${C.amber}` }}>
             Clear hazard
           </button>
         )}

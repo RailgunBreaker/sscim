@@ -65,18 +65,18 @@ export default function EventFeed({ sel, setSel, engine, events }) {
       <div style={{ display: 'grid', gap: 6, margin: '10px 0 8px' }}>
         <input type="search" value={filters.query} onChange={(e) => patch({ query: e.target.value })}
           placeholder="Search events — title, summary, stage, country…" aria-label="Search events"
-          style={{ width: '100%', background: C.panel2, border: `1px solid ${C.line}`, borderRadius: 4, color: C.text, fontFamily: 'inherit', fontSize: 11.5, padding: '6px 9px' }} />
+          style={{ width: '100%', background: C.panel2, border: `1px solid ${C.line}`, borderRadius: 4, color: C.text, fontFamily: 'inherit', fontSize: 12, padding: '6px 9px' }} />
 
         <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', alignItems: 'center' }}>
           <label style={selWrap}>
-            <span className="mono" style={selLabel}>TYPE</span>
+            <span className="mono" style={selLabel}>Type</span>
             <select value={filters.type} onChange={(e) => patch({ type: e.target.value })} style={selectStyle} aria-label="Filter by event type">
               <option value="all">All types</option>
               {types.map((t) => <option key={t} value={t}>{t}</option>)}
             </select>
           </label>
           <label style={selWrap}>
-            <span className="mono" style={selLabel}>SCORING</span>
+            <span className="mono" style={selLabel}>Scoring</span>
             <select value={filters.scored} onChange={(e) => patch({ scored: e.target.value })} style={selectStyle} aria-label="Filter by whether the event is scored">
               <option value="all">Scored and excluded</option>
               <option value="scored">Scored only</option>
@@ -84,7 +84,7 @@ export default function EventFeed({ sel, setSel, engine, events }) {
             </select>
           </label>
           <label style={selWrap}>
-            <span className="mono" style={selLabel}>DIRECTION</span>
+            <span className="mono" style={selLabel}>Direction</span>
             <select value={filters.direction} onChange={(e) => patch({ direction: e.target.value })} style={selectStyle} aria-label="Filter by direction">
               <option value="all">Any direction</option>
               <option value="adverse">Adverse</option>
@@ -93,7 +93,7 @@ export default function EventFeed({ sel, setSel, engine, events }) {
             </select>
           </label>
           <label style={selWrap}>
-            <span className="mono" style={selLabel}>DATE RANGE</span>
+            <span className="mono" style={selLabel}>Date range</span>
             <select value={filters.within} onChange={(e) => patch({ within: e.target.value })} style={selectStyle} aria-label="Filter by date range">
               <option value="all">All dates</option>
               <option value="7">Last 7 days</option>
@@ -110,14 +110,14 @@ export default function EventFeed({ sel, setSel, engine, events }) {
         </div>
       </div>
 
-      <div className="mono" aria-live="polite" style={{ fontSize: 10, color: C.copper, marginBottom: 8, fontWeight: 600 }}>
+      <div className="mono" aria-live="polite" style={{ fontSize: 12, color: C.copper, marginBottom: 8, fontWeight: 600 }}>
         {matches.length} matching event{matches.length === 1 ? '' : 's'}
         {active ? ` of ${list.length}` : ''}
         {remaining > 0 ? ` · showing the ${visible.length} most recent` : ''}
         <span style={{ color: C.faint, fontWeight: 400 }}> · newest first</span>
       </div>
 
-      <div className="mono" style={{ fontSize: 9.5, color: C.faint, marginBottom: 8, lineHeight: 1.5 }}>
+      <div className="mono" style={{ fontSize: 12, color: C.faint, marginBottom: 8, lineHeight: 1.5 }}>
         &quot;index&quot; = this event&apos;s own operational-impact display index (0–10, 5 = neutral, &gt;5 net adverse,
         &lt;5 net mitigating) — propagated through the graph alone, not combined with other events.{' '}
         <span style={{ color: C.faint }}>&quot;excluded from score&quot; = a hazard-signal/mixed/strategic event, shown
@@ -125,7 +125,7 @@ export default function EventFeed({ sel, setSel, engine, events }) {
       </div>
 
       {matches.length === 0 && (
-        <div className="mono" style={{ fontSize: 10.5, color: C.faint, lineHeight: 1.7, padding: '10px 0' }}>
+        <div className="mono" style={{ fontSize: 12, color: C.faint, lineHeight: 1.7, padding: '10px 0' }}>
           No event matches these filters. {list.length} events are in the current snapshot — clear the filters to see them.
         </div>
       )}
@@ -140,13 +140,13 @@ export default function EventFeed({ sel, setSel, engine, events }) {
             aria-label={`${e.type} event, ${e.date}: ${e.title}`}
             style={{ border: `1px solid ${isActive ? C.copper : C.line}`, background: isActive ? '#1A2132' : C.panel, borderRadius: 6, padding: '8px 10px', marginBottom: 8 }}>
             <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
-              <span className="mono" style={{ fontSize: 9, letterSpacing: 1, color: TYPE_COLORS[e.type] || C.copper, border: `1px solid ${TYPE_COLORS[e.type] || C.copper}`, borderRadius: 3, padding: '1px 6px' }}>
+              <span className="mono" style={{ fontSize: 12, color: TYPE_COLORS[e.type] || C.copper, border: `1px solid ${TYPE_COLORS[e.type] || C.copper}`, borderRadius: 3, padding: '1px 6px' }}>
                 {e.type.toUpperCase()}
               </span>
-              <span className="mono" style={{ fontSize: 10, color: C.faint }}>{e.date}</span>
+              <span className="mono" style={{ fontSize: 12, color: C.faint }}>{e.date}</span>
               {/* The tooltip is publicClassificationNote(), never assumption.reason:
                   the raw field can hold internal review-workflow text. */}
-              <span className="mono" style={{ fontSize: 10, color: assumption.operational ? C.copper : C.faint, marginLeft: 'auto' }}
+              <span className="mono" style={{ fontSize: 12, color: assumption.operational ? C.copper : C.faint, marginLeft: 'auto' }}
                 title={assumption.operational
                   ? 'Operational-impact display index for this event alone: 0–10, 5=neutral, above 5=net adverse, below 5=net mitigating.'
                   : publicClassificationNote(e.id)}>
@@ -166,13 +166,13 @@ export default function EventFeed({ sel, setSel, engine, events }) {
           <button type="button" onClick={() => setLimit(matches.length)} style={chipStyle}>
             Show all {matches.length}
           </button>
-          <span className="mono" style={{ fontSize: 9.5, color: C.amber }}>
+          <span className="mono" style={{ fontSize: 12, color: C.amber }}>
             {remaining} older event{remaining === 1 ? '' : 's'} not shown yet
           </span>
         </div>
       )}
       {remaining === 0 && matches.length > PAGE && (
-        <div className="mono" style={{ fontSize: 9.5, color: C.faint, padding: '4px 0 10px' }}>
+        <div className="mono" style={{ fontSize: 12, color: C.faint, padding: '4px 0 10px' }}>
           End of the feed — all {matches.length} matching events are listed above.
         </div>
       )}
@@ -181,12 +181,12 @@ export default function EventFeed({ sel, setSel, engine, events }) {
 }
 
 const chipStyle = {
-  fontSize: 10, padding: '3px 9px', borderRadius: 4, fontFamily: 'inherit', cursor: 'pointer',
+  fontSize: 12, padding: '3px 9px', borderRadius: 4, fontFamily: 'inherit', cursor: 'pointer',
   background: 'transparent', color: C.dim, border: `1px solid ${C.line}`, minHeight: 0,
 };
 const selectStyle = {
   background: C.panel2, border: `1px solid ${C.line}`, borderRadius: 4, color: C.text,
-  fontFamily: 'inherit', fontSize: 10.5, padding: '4px 6px', maxWidth: '100%',
+  fontFamily: 'inherit', fontSize: 12, padding: '4px 6px', maxWidth: '100%',
 };
 const selWrap = { display: 'grid', gap: 2, minWidth: 0 };
-const selLabel = { fontSize: 8.5, letterSpacing: 0.9, color: C.faint };
+const selLabel = { fontSize: 12, color: C.faint };

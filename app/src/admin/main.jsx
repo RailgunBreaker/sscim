@@ -15,7 +15,7 @@ async function api(path, token, options = {}) {
   return body;
 }
 
-function Metric({ label, value, color = C.text }) { return <div style={{ border: `1px solid ${C.line}`, borderRadius: 8, padding: 14, background: C.panel }}><div style={{ fontSize: 10, color: C.dim, letterSpacing: 1 }}>{label}</div><div style={{ color, fontSize: 28, fontWeight: 700, marginTop: 5 }}>{value}</div></div>; }
+function Metric({ label, value, color = C.text }) { return <div style={{ border: `1px solid ${C.line}`, borderRadius: 8, padding: 14, background: C.panel }}><div style={{ fontSize: 12, color: C.dim }}>{label}</div><div style={{ color, fontSize: 28, fontWeight: 700, marginTop: 5 }}>{value}</div></div>; }
 
 /* Tell the reviewer when the automatic publish is due, so recording a decision
    never leaves them wondering whether they still have to do something. */
@@ -29,7 +29,7 @@ function autoPublishNote(auto, pending) {
     : ` Publishing automatically in ${seconds}s unless you decide another.`;
 }
 
-const chip = (text, color) => <span style={{ border: `1px solid ${color}`, color, borderRadius: 4, padding: '1px 5px', fontSize: 10, marginRight: 4, whiteSpace: 'nowrap' }}>{text}</span>;
+const chip = (text, color) => <span style={{ border: `1px solid ${color}`, color, borderRadius: 4, padding: '1px 5px', fontSize: 12, marginRight: 4, whiteSpace: 'nowrap' }}>{text}</span>;
 
 /* A candidate's own title if the drafter produced one, else the headline the
    feed supplied. Never a bare "Undrafted candidate" — that told the reviewer
@@ -58,7 +58,7 @@ function CandidateRow({ item, verdict, selected, checked, onSelect, onCheck }) {
   return <div style={{ display: 'flex', alignItems: 'flex-start', gap: 8, borderBottom: `1px solid ${C.line}`, background: selected ? 'rgba(201,138,63,.1)' : 'transparent', padding: '9px 10px' }}>
     {onCheck && <input type="checkbox" checked={checked} onChange={onCheck} aria-label={`Select ${titleOf(item)}`} style={{ marginTop: 4, accentColor: C.copper, cursor: 'pointer' }} />}
     <button onClick={onSelect} style={{ flex: 1, minWidth: 0, display: 'block', textAlign: 'left', border: 'none', background: 'transparent', color: C.text, cursor: 'pointer', padding: 0 }}>
-      <div style={{ color: C.copper, fontSize: 10 }}>{item.date_iso} · {item.source_feed}</div>
+      <div style={{ color: C.copper, fontSize: 12 }}>{item.date_iso} · {item.source_feed}</div>
       <div style={{ fontSize: 13, fontWeight: 650, margin: '3px 0 5px' }}>{titleOf(item)}</div>
       <div>
         {item.proposal?.relevant && chip(`sev ${item.proposal.proposedSev}`, C.text)}
@@ -69,7 +69,7 @@ function CandidateRow({ item, verdict, selected, checked, onSelect, onCheck }) {
         {item.duplicate_of && chip('possible duplicate', C.amber)}
         {item.status !== 'pending' && chip(item.status, item.status === 'approved' ? C.green : C.red)}
       </div>
-      {verdict?.reason && <div style={{ color: C.faint, fontSize: 11, marginTop: 5, lineHeight: 1.4 }}>{capped(verdict.reason)}</div>}
+      {verdict?.reason && <div style={{ color: C.faint, fontSize: 12, marginTop: 5, lineHeight: 1.4 }}>{capped(verdict.reason)}</div>}
     </button>
   </div>;
 }
@@ -127,10 +127,10 @@ function QueueView({ tab, list, triage, selected, setSelected, selectedIds, setS
         {grouped.map((g) => g.items.length === 0 ? null : <div key={g.key}>
           <div style={{ position: 'sticky', top: 0, background: C.panel2, borderBottom: `1px solid ${C.line}`, padding: '8px 10px', zIndex: 1 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 8 }}>
-              <span style={{ color: g.color, fontSize: 11, fontWeight: 700, letterSpacing: .6 }}>{g.label.toUpperCase()} ({g.items.length})</span>
-              {g.items.some((i) => i.status === 'pending') && <button onClick={() => toggleGroup(g.items.filter((i) => i.status === 'pending'))} style={{ ...button(), padding: '2px 6px', fontSize: 10 }}>Select all</button>}
+              <span style={{ color: g.color, fontSize: 12, fontWeight: 700, letterSpacing: .6 }}>{g.label.toUpperCase()} ({g.items.length})</span>
+              {g.items.some((i) => i.status === 'pending') && <button onClick={() => toggleGroup(g.items.filter((i) => i.status === 'pending'))} style={{ ...button(), padding: '2px 6px', fontSize: 12 }}>Select all</button>}
             </div>
-            {g.blurb && <div style={{ color: C.faint, fontSize: 10, marginTop: 3 }}>{g.blurb}</div>}
+            {g.blurb && <div style={{ color: C.faint, fontSize: 12, marginTop: 3 }}>{g.blurb}</div>}
           </div>
           {g.items.map((item) => <CandidateRow key={item.id} item={item} verdict={verdictById.get(item.id)}
             selected={selected?.id === item.id} checked={selectedIds.has(item.id)}
@@ -142,7 +142,7 @@ function QueueView({ tab, list, triage, selected, setSelected, selectedIds, setS
 
       <article style={{ border: `1px solid ${C.line}`, borderRadius: 9, padding: 20, background: C.panel }}>{selected ? <>
         <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12 }}>
-          <div><div style={{ color: C.copper, fontSize: 11 }}>{selected.date_iso} · {selected.source_feed}</div>
+          <div><div style={{ color: C.copper, fontSize: 12 }}>{selected.date_iso} · {selected.source_feed}</div>
             <h2 style={{ fontSize: 22, margin: '5px 0 10px' }}>{titleOf(selected)}</h2></div>
           {selected.raw?.url && <a href={selected.raw.url} target="_blank" rel="noreferrer" style={{ color: C.copper, fontSize: 12, whiteSpace: 'nowrap' }}>Open source</a>}
         </div>
@@ -159,14 +159,14 @@ function QueueView({ tab, list, triage, selected, setSelected, selectedIds, setS
           {[['Classification', p ? `${p.proposedDirection} / ${p.proposedChannel}` : 'Undrafted'],
             ['Model impact', p?.proposedOperational ? `Scored / ${p.proposedSev}` : 'Excluded from score'],
             ['Confidence', p?.confidence || 'Not assessed']].map(([k, v]) => <div key={k} style={{ border: `1px solid ${C.line}`, borderRadius: 6, padding: 9 }}>
-              <div style={{ fontSize: 10, color: C.dim }}>{k.toUpperCase()}</div><div style={{ fontSize: 13, marginTop: 4 }}>{v}</div></div>)}
+              <div style={{ fontSize: 12, color: C.dim }}>{k.toUpperCase()}</div><div style={{ fontSize: 13, marginTop: 4 }}>{v}</div></div>)}
         </div>
 
         {p?.uncertainty && <p style={{ color: C.amber, fontSize: 12, lineHeight: 1.5 }}><b>Could not establish:</b> {capped(p.uncertainty)}</p>}
         {selected.ai_notes && !p && <p style={{ color: C.faint, fontSize: 12, lineHeight: 1.5, wordBreak: 'break-word' }}>{capped(selected.ai_notes)}</p>}
 
         <details><summary style={{ color: C.dim, cursor: 'pointer' }}>Raw source record</summary>
-          <pre style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word', color: C.dim, fontSize: 11 }}>{JSON.stringify(selected.raw, null, 2)}</pre></details>
+          <pre style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word', color: C.dim, fontSize: 12 }}>{JSON.stringify(selected.raw, null, 2)}</pre></details>
 
         {selected.status === 'pending' && <>
           <textarea value={note} onChange={(e) => setNote(e.target.value)} rows="3" placeholder="Decision rationale or duplicate warning" style={{ width: '100%', marginTop: 14, background: C.bg, color: C.text, border: `1px solid ${C.line}`, borderRadius: 6, padding: 9, resize: 'vertical' }} />
@@ -213,8 +213,8 @@ function EventRow({ event, selected, checked, onSelect, onCheck }) {
     <input type="checkbox" checked={checked} onChange={onCheck} aria-label={`Select ${event.title}`} style={{ marginTop: 4, accentColor: C.copper, cursor: 'pointer' }} />
     <button onClick={onSelect} style={{ flex: 1, minWidth: 0, display: 'block', textAlign: 'left', border: 'none', background: 'transparent', color: C.text, cursor: 'pointer', padding: 0 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', gap: 8 }}>
-        <span style={{ color: C.copper, fontSize: 10 }}>{event.dateISO || event.date} · {event.type}</span>
-        <span style={{ color: deltaColor(d ?? 0), fontSize: 11, fontWeight: 700, whiteSpace: 'nowrap' }}>
+        <span style={{ color: C.copper, fontSize: 12 }}>{event.dateISO || event.date} · {event.type}</span>
+        <span style={{ color: deltaColor(d ?? 0), fontSize: 12, fontWeight: 700, whiteSpace: 'nowrap' }}>
           {event.operational ? signed(-(d ?? 0)) : '—'}
         </span>
       </div>
@@ -244,7 +244,7 @@ function EventsView({ events, eventSel, setEventSel, selectedEvent, setSelectedE
   return <>
     <section style={{ border: `1px solid ${C.line}`, background: C.panel, borderRadius: 9, padding: 14, marginBottom: 12, display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
       <div>
-        <div style={{ fontSize: 10, color: C.dim, letterSpacing: 1 }}>CHAIN INDEX</div>
+        <div style={{ fontSize: 12, color: C.dim }}>CHAIN INDEX</div>
         <div style={{ fontSize: 26, fontWeight: 700, color: C.copper }}>{events.currentIndex?.toFixed(3) ?? '—'}</div>
       </div>
       <div style={{ flex: 1, minWidth: 220, color: C.dim, fontSize: 12, lineHeight: 1.6 }}>
@@ -281,26 +281,26 @@ function EventsView({ events, eventSel, setEventSel, selectedEvent, setSelectedE
           onSelect={() => { setSelectedEvent(item); setDraft(null); }}
           onCheck={() => toggle(item.id)} />)}
         {events.deleted.length > 0 && <div>
-          <div style={{ position: 'sticky', top: 0, background: C.panel2, borderBottom: `1px solid ${C.line}`, padding: '8px 10px', color: C.red, fontSize: 11, fontWeight: 700, letterSpacing: .6 }}>
+          <div style={{ position: 'sticky', top: 0, background: C.panel2, borderBottom: `1px solid ${C.line}`, padding: '8px 10px', color: C.red, fontSize: 12, fontWeight: 700, letterSpacing: .6 }}>
             DELETED ({events.deleted.length})
           </div>
           {events.deleted.map((d) => <div key={d.id} style={{ padding: '9px 10px', borderBottom: `1px solid ${C.line}`, fontSize: 12 }}>
             <div style={{ color: C.dim }}>{d.id}</div>
-            {d.reason && <div style={{ color: C.faint, fontSize: 11, marginTop: 3 }}>{d.reason}</div>}
-            <button disabled={busy} onClick={() => onRestore(d.id)} style={{ ...button(), marginTop: 6, padding: '2px 7px', fontSize: 10 }}>Restore</button>
+            {d.reason && <div style={{ color: C.faint, fontSize: 12, marginTop: 3 }}>{d.reason}</div>}
+            <button disabled={busy} onClick={() => onRestore(d.id)} style={{ ...button(), marginTop: 6, padding: '2px 7px', fontSize: 12 }}>Restore</button>
           </div>)}
         </div>}
       </aside>
 
       <article style={{ border: `1px solid ${C.line}`, borderRadius: 9, padding: 20, background: C.panel }}>{e ? <>
-        <div style={{ color: C.copper, fontSize: 11 }}>{e.dateISO || e.date} · {e.origin}</div>
+        <div style={{ color: C.copper, fontSize: 12 }}>{e.dateISO || e.date} · {e.origin}</div>
         <h2 style={{ fontSize: 20, margin: '5px 0 10px' }}>{e.title}</h2>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,minmax(0,1fr))', gap: 8, margin: '14px 0' }}>
           {[['Δ if removed', e.operational ? signed(-(e.removalDelta ?? 0)) : 'none — not scored'],
             ['Index without it', e.operational ? (e.indexWithout?.toFixed(3) ?? '—') : '—'],
             ['Contributed on its date', e.operational ? signed(e.marginal ?? 0) : '—']].map(([k, v]) => <div key={k} style={{ border: `1px solid ${C.line}`, borderRadius: 6, padding: 9 }}>
-              <div style={{ fontSize: 10, color: C.dim }}>{k.toUpperCase()}</div><div style={{ fontSize: 14, marginTop: 4 }}>{v}</div></div>)}
+              <div style={{ fontSize: 12, color: C.dim }}>{k.toUpperCase()}</div><div style={{ fontSize: 14, marginTop: 4 }}>{v}</div></div>)}
         </div>
 
         {e.classification && <p style={{ color: C.faint, fontSize: 12, lineHeight: 1.5 }}>
@@ -313,14 +313,14 @@ function EventsView({ events, eventSel, setEventSel, selectedEvent, setSelectedE
 
         {e.override && <p style={{ border: `1px solid ${C.amber}`, color: C.amber, borderRadius: 6, padding: 9, fontSize: 12 }}>
           Overridden by {e.override.actor || 'admin'} on {e.override.updated_at}. {e.override.reason || ''}
-          <button disabled={busy} onClick={() => onRestore(e.id)} style={{ ...button(), marginLeft: 8, padding: '2px 7px', fontSize: 10 }}>Undo override</button>
+          <button disabled={busy} onClick={() => onRestore(e.id)} style={{ ...button(), marginLeft: 8, padding: '2px 7px', fontSize: 12 }}>Undo override</button>
         </p>}
 
         <p style={{ color: C.dim, lineHeight: 1.55, fontSize: 13 }}>{capped(e.summary)}</p>
 
         {draft ? <div style={{ borderTop: `1px solid ${C.line}`, marginTop: 14, paddingTop: 14 }}>
           {EDIT_FIELDS.map(([key, label, kind]) => <label key={key} style={{ display: 'block', marginBottom: 8 }}>
-            <span style={{ display: 'block', fontSize: 10, color: C.dim, marginBottom: 3 }}>{label.toUpperCase()}</span>
+            <span style={{ display: 'block', fontSize: 12, color: C.dim, marginBottom: 3 }}>{label.toUpperCase()}</span>
             {kind === 'area'
               ? <textarea rows="3" value={draft[key] ?? ''} onChange={(ev) => setDraft({ ...draft, [key]: ev.target.value })}
                   style={{ width: '100%', background: C.bg, color: C.text, border: `1px solid ${C.line}`, borderRadius: 6, padding: 8, resize: 'vertical' }} />
@@ -504,11 +504,11 @@ function App() {
     } catch (e) { setError(e.message); } finally { setBusy(false); }
   };
 
-  if (!sessionStorage.getItem('sscim-admin-token')) return <main style={{ minHeight: '100vh', display: 'grid', placeItems: 'center', padding: 20 }}><style>{styles}</style><section style={{ width: 390, padding: 25, border: `1px solid ${C.line}`, borderRadius: 12, background: C.panel }}><div style={{ color: C.copper, letterSpacing: 2, fontSize: 10 }}>SSCIM / ADMIN</div><h1 style={{ fontSize: 24, margin: '7px 0' }}>Operations dashboard</h1><p style={{ color: C.dim, fontSize: 13, lineHeight: 1.5 }}>Enter the backend <code>ADMIN_TOKEN</code>. It remains in this browser tab only.</p><input type="password" value={token} onChange={(e) => setToken(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && connect()} placeholder="Admin token" aria-label="Admin token" style={{ width: '100%', padding: 10, border: `1px solid ${C.line}`, borderRadius: 6, background: C.bg, color: C.text, marginBottom: 10 }} /><button onClick={connect} style={button(true)}>Open dashboard</button>{error && <p style={{ color: C.red, fontSize: 12 }}>{error}</p>}</section></main>;
+  if (!sessionStorage.getItem('sscim-admin-token')) return <main style={{ minHeight: '100vh', display: 'grid', placeItems: 'center', padding: 20 }}><style>{styles}</style><section style={{ width: 390, padding: 25, border: `1px solid ${C.line}`, borderRadius: 12, background: C.panel }}><div style={{ color: C.copper, fontSize: 12 }}>SSCIM / ADMIN</div><h1 style={{ fontSize: 24, margin: '7px 0' }}>Operations dashboard</h1><p style={{ color: C.dim, fontSize: 13, lineHeight: 1.5 }}>Enter the backend <code>ADMIN_TOKEN</code>. It remains in this browser tab only.</p><input type="password" value={token} onChange={(e) => setToken(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && connect()} placeholder="Admin token" aria-label="Admin token" style={{ width: '100%', padding: 10, border: `1px solid ${C.line}`, borderRadius: 6, background: C.bg, color: C.text, marginBottom: 10 }} /><button onClick={connect} style={button(true)}>Open dashboard</button>{error && <p style={{ color: C.red, fontSize: 12 }}>{error}</p>}</section></main>;
 
   const pending = summary?.counts?.pending ?? '-';
   const unpublished = summary?.unpublished ?? 0;
-  return <main style={{ minHeight: '100vh', padding: '22px clamp(16px,4vw,54px)' }}><style>{styles}</style><header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'end', gap: 16, paddingBottom: 18, borderBottom: `1px solid ${C.line}` }}><div><div style={{ color: C.copper, letterSpacing: 2, fontSize: 10 }}>SSCIM / ADMIN</div><h1 style={{ margin: '5px 0', fontSize: 26 }}>Operations dashboard</h1><p style={{ color: C.dim, margin: 0, fontSize: 13 }}>Review pipeline candidates, publication status, and current vault health.</p></div><div style={{ display: 'flex', gap: 8 }}><button disabled={busy || !unpublished} onClick={publish} title={unpublished ? `Commit and push ${unpublished} recorded decision(s) now, as one commit — otherwise this happens automatically once you stop reviewing` : 'No decisions awaiting publication'} style={{ ...button(unpublished > 0), opacity: unpublished ? 1 : .45 }}>{busy ? 'Working…' : `Publish${unpublished ? ` (${unpublished})` : ''}`}</button><button onClick={() => load(tab)} style={button()}>Refresh</button><button onClick={() => { sessionStorage.removeItem('sscim-admin-token'); location.reload(); }} style={button()}>End session</button></div></header>
+  return <main style={{ minHeight: '100vh', padding: '22px clamp(16px,4vw,54px)' }}><style>{styles}</style><header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'end', gap: 16, paddingBottom: 18, borderBottom: `1px solid ${C.line}` }}><div><div style={{ color: C.copper, fontSize: 12 }}>SSCIM / ADMIN</div><h1 style={{ margin: '5px 0', fontSize: 26 }}>Operations dashboard</h1><p style={{ color: C.dim, margin: 0, fontSize: 13 }}>Review pipeline candidates, publication status, and current vault health.</p></div><div style={{ display: 'flex', gap: 8 }}><button disabled={busy || !unpublished} onClick={publish} title={unpublished ? `Commit and push ${unpublished} recorded decision(s) now, as one commit — otherwise this happens automatically once you stop reviewing` : 'No decisions awaiting publication'} style={{ ...button(unpublished > 0), opacity: unpublished ? 1 : .45 }}>{busy ? 'Working…' : `Publish${unpublished ? ` (${unpublished})` : ''}`}</button><button onClick={() => load(tab)} style={button()}>Refresh</button><button onClick={() => { sessionStorage.removeItem('sscim-admin-token'); location.reload(); }} style={button()}>End session</button></div></header>
     <section style={{ display: 'grid', gridTemplateColumns: 'repeat(4,minmax(0,1fr))', gap: 10, margin: '18px 0' }}><Metric label="PENDING REVIEW" value={pending} color={C.amber} /><Metric label="APPROVED" value={summary?.counts?.approved ?? '-'} color={C.green} /><Metric label="REJECTED" value={summary?.counts?.rejected ?? '-'} /><Metric label="LIVE EVENTS" value={summary?.events ?? '-'} color={C.copper} /></section>
     <nav style={{ display: 'flex', gap: 4, borderBottom: `1px solid ${C.line}`, marginBottom: 16 }}>{[['queue', `Review queue (${pending})`], ['history', 'Decision history'], ['events', `Events (${summary?.events ?? '-'})`], ['operations', 'Operations']].map(([id, label]) => <button key={id} onClick={() => changeTab(id)} style={{ border: 'none', borderBottom: `2px solid ${tab === id ? C.copper : 'transparent'}`, background: 'transparent', color: tab === id ? C.copper : C.dim, padding: '10px 12px', cursor: 'pointer', fontSize: 12 }}>{label}</button>)}</nav>
     {error && <div style={{ border: `1px solid ${C.red}`, color: C.red, padding: 12, borderRadius: 7, marginBottom: 14, fontSize: 13 }}>{error}<div style={{ color: C.dim, marginTop: 5 }}>Local fix: run <code>npm run api:restart</code> in <code>server/</code>, with <code>ADMIN_TOKEN</code> set in <code>server/.env</code>. Public fix: host the API at an HTTPS URL, set GitHub Actions variable <code>VITE_API_BASE_URL</code>, then rebuild Pages.</div></div>}

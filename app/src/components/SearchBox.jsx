@@ -19,7 +19,7 @@ export default function SearchBox({ setSel }) {
   return (
     <div style={{ position: "relative" }}>
       <input value={q} onChange={(e) => setQ(e.target.value)} placeholder={t("Search…")}
-        style={{ background: C.panel2, border: `1px solid ${C.line}`, borderRadius: 4, color: C.text, padding: "5px 9px", fontSize: 11.5, fontFamily: "inherit", width: 110, outline: "none" }} />
+        style={{ background: C.panel2, border: `1px solid ${C.line}`, borderRadius: 4, color: C.text, padding: "5px 9px", fontSize: 12, fontFamily: "inherit", width: 110, outline: "none" }} />
       {results.length > 0 && (
         <div style={{ position: "absolute", top: "110%", right: 0, zIndex: 100, background: C.panel, border: `1px solid ${C.copper}`, borderRadius: 6, minWidth: 220, overflow: "hidden" }}>
           {results.map((r) => (
@@ -27,7 +27,7 @@ export default function SearchBox({ setSel }) {
               onClick={() => { setSel({ type: r.type, id: r.id }); setQ(""); }}
               onKeyDown={onEnterSpace(() => { setSel({ type: r.type, id: r.id }); setQ(""); })}
               style={{ padding: "6px 10px", fontSize: 12, cursor: "pointer", display: "flex", justifyContent: "space-between", gap: 10, borderBottom: `1px solid ${C.line}` }}>
-              <span>{r.label}</span><span className="mono" style={{ fontSize: 8.5, color: C.copper }}>{r.k}</span>
+              <span>{r.label}</span><span className="mono" style={{ fontSize: 12, color: C.copper }}>{r.k}</span>
             </div>
           ))}
         </div>

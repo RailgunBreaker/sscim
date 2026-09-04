@@ -80,12 +80,12 @@ export default function Briefing({ onClose, model, scenario }) {
 
         {archive.length > 0 && (
           <div style={{ display: 'flex', gap: 6, alignItems: 'center', marginBottom: 10, flexWrap: 'wrap' }}>
-            <label className="mono" style={{ fontSize: 9.5, color: C.faint, letterSpacing: 1 }} htmlFor="briefing-date">ARCHIVE</label>
+            <label className="mono" style={{ fontSize: 12, color: C.faint }} htmlFor="briefing-date">ARCHIVE</label>
             <select
               id="briefing-date"
               value={selected}
               onChange={(e) => setSelected(e.target.value)}
-              style={{ background: C.panel, color: C.text, border: `1px solid ${C.line}`, borderRadius: 4, padding: '4px 8px', fontFamily: 'inherit', fontSize: 11.5, maxWidth: '100%' }}
+              style={{ background: C.panel, color: C.text, border: `1px solid ${C.line}`, borderRadius: 4, padding: '4px 8px', fontFamily: 'inherit', fontSize: 12, maxWidth: '100%' }}
             >
               <option value="today">Today — live model state{scenario?.event ? ' (scenario active)' : ''}</option>
               {archive.map((b) => (
@@ -95,7 +95,7 @@ export default function Briefing({ onClose, model, scenario }) {
               ))}
             </select>
             {showingArchive && (
-              <button onClick={() => setSelected('today')} style={{ background: 'transparent', border: 'none', color: C.copper, cursor: 'pointer', fontFamily: 'inherit', fontSize: 11.5, textDecoration: 'underline' }}>
+              <button onClick={() => setSelected('today')} style={{ background: 'transparent', border: 'none', color: C.copper, cursor: 'pointer', fontFamily: 'inherit', fontSize: 12, textDecoration: 'underline' }}>
                 back to today
               </button>
             )}
@@ -103,20 +103,20 @@ export default function Briefing({ onClose, model, scenario }) {
         )}
 
         {entry && (
-          <div className="mono" style={{ fontSize: 10, color: C.dim, border: `1px solid ${C.line}`, background: C.panel, borderRadius: 6, padding: '8px 10px', marginBottom: 8 }}>
+          <div className="mono" style={{ fontSize: 12, color: C.dim, border: `1px solid ${C.line}`, background: C.panel, borderRadius: 6, padding: '8px 10px', marginBottom: 8 }}>
             <span style={{ color: C.copper }}>{entry.dateISO}</span> · chain index {entry.chainIndex?.toFixed(2)} · {entry.eventCount} events
             <div style={{ color: C.faint, marginTop: 3 }}>{entry.headline}</div>
           </div>
         )}
 
-        {loading && <p className="mono" style={{ fontSize: 11, color: C.dim }}>Loading archived briefing…</p>}
-        {loadError && <p className="mono" style={{ fontSize: 11, color: C.amber, border: `1px solid ${C.amber}`, borderRadius: 6, padding: '8px 10px' }}>{loadError}</p>}
+        {loading && <p className="mono" style={{ fontSize: 12, color: C.dim }}>Loading archived briefing…</p>}
+        {loadError && <p className="mono" style={{ fontSize: 12, color: C.amber, border: `1px solid ${C.amber}`, borderRadius: 6, padding: '8px 10px' }}>{loadError}</p>}
 
         {text && (
-          <pre className="mono" style={{ margin: 0, overflowY: "auto", fontSize: 11, lineHeight: 1.65, color: C.text, whiteSpace: "pre-wrap", background: C.panel, border: `1px solid ${C.line}`, borderRadius: 6, padding: "12px 14px" }}>{text}</pre>
+          <pre className="mono" style={{ margin: 0, overflowY: "auto", fontSize: 12, lineHeight: 1.65, color: C.text, whiteSpace: "pre-wrap", background: C.panel, border: `1px solid ${C.line}`, borderRadius: 6, padding: "12px 14px" }}>{text}</pre>
         )}
 
-        <div className="mono" style={{ fontSize: 9.5, color: C.faint, marginTop: 8 }}>
+        <div className="mono" style={{ fontSize: 12, color: C.faint, marginTop: 8 }}>
           {showingArchive
             ? 'Archived exactly as generated on that date — scenarios are never archived, only the baseline record.'
             : 'Sensitivity/comparison analysis — not a calibrated forecast. Switch scenarios and regenerate to see the scenario delta ranking.'}

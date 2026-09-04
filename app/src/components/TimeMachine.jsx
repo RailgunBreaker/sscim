@@ -80,13 +80,13 @@ export default function TimeMachine({ asOfDaysAgo, setAsOfDaysAgo, setSel, selec
   return (
     <div className="cbar" style={{ padding: '7px 16px', background: live ? C.panel2 : '#161A26', borderBottom: `1px solid ${live ? C.line : C.copperDim}` }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
-        <span className="mono" style={{ fontSize: 9, letterSpacing: 1.5, color: live ? C.faint : C.copper, flexShrink: 0 }}>
+        <span className="mono" style={{ fontSize: 12, color: live ? C.faint : C.copper, flexShrink: 0 }}>
           {live ? 'LIVE' : '⟲ REVIEWING'}
         </span>
         <span className="mono" style={{ fontSize: 12, color: live ? C.dim : C.text, fontWeight: live ? 400 : 700, flexShrink: 0 }}>
           {shownDate}
         </span>
-        <span className="mono" style={{ fontSize: 11, color: C.dim, flexShrink: 0 }}>
+        <span className="mono" style={{ fontSize: 12, color: C.dim, flexShrink: 0 }}>
           index <b style={{ color: riskColor(indexThen), fontSize: 13 }}>{indexThen.toFixed(2)}</b>
         </span>
 
@@ -96,7 +96,7 @@ export default function TimeMachine({ asOfDaysAgo, setAsOfDaysAgo, setSel, selec
           style={{ flex: '1 1 240px', minWidth: 160, accentColor: live ? C.copperDim : C.copper }} />
 
         <button type="button" onClick={() => setAsOfDaysAgo(0)} disabled={live}
-          style={{ fontSize: 10.5, padding: '3px 10px', borderRadius: 4, fontFamily: 'inherit',
+          style={{ fontSize: 12, padding: '3px 10px', borderRadius: 4, fontFamily: 'inherit',
             cursor: live ? 'default' : 'pointer', fontWeight: live ? 400 : 700,
             background: live ? 'transparent' : C.copper, color: live ? C.faint : '#0C111C',
             border: `1px solid ${live ? C.line : C.copper}`, opacity: live ? 0.5 : 1 }}>
@@ -129,7 +129,7 @@ export default function TimeMachine({ asOfDaysAgo, setAsOfDaysAgo, setSel, selec
         })}
       </div>
 
-      <div className="mono" style={{ fontSize: 8.5, color: C.faint, lineHeight: 1.6, marginTop: 2 }}>
+      <div className="mono" style={{ fontSize: 12, color: C.faint, lineHeight: 1.6, marginTop: 2 }}>
         {live
           ? `Drag to review the chain as it stood on any date in the last ${Math.round(spanDays / 30)} months, or click an event marker. Marker height is that event's marginal contribution to the index on its own date — what it added to the published number, not its standalone size.`
           : `Showing the model re-derived for ${shownDate}: ${engine.eventsAsOf(asOfDaysAgo).length} event(s) inside the decay window on that date. This is a past state of the record, not a hypothesis.`}

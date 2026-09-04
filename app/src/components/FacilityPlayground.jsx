@@ -137,7 +137,7 @@ export default function FacilityPlayground({ model, compact = false }) {
         <span style={{ width: 1, height: 18, background: C.line }} aria-hidden />
 
         <div role="group" aria-label="Hop depth" style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
-          <span className="mono" style={{ fontSize: 9, letterSpacing: 1, color: C.faint }}>HOPS</span>
+          <span className="mono" style={{ fontSize: 12, color: C.faint }}>Hops</span>
           {[1, 2, 3].map((h) => (
             <button key={h} type="button" onClick={() => setHops(h)} aria-pressed={fac.hops === h}
               style={{ ...chipStyle, borderColor: fac.hops === h ? C.copper : C.line, color: fac.hops === h ? C.copper : C.dim }}>
@@ -152,7 +152,7 @@ export default function FacilityPlayground({ model, compact = false }) {
       </div>
 
       {showAllWarned && fac.hops !== Infinity && (
-        <div role="alert" className="mono" style={{ fontSize: 10.5, color: C.amber, border: `1px solid ${C.amber}`, borderRadius: 6, padding: '8px 11px', lineHeight: 1.6 }}>
+        <div role="alert" className="mono" style={{ fontSize: 12, color: C.amber, border: `1px solid ${C.amber}`, borderRadius: 6, padding: '8px 11px', lineHeight: 1.6 }}>
           <b>{reachable} facilities</b> are reachable from {focus.name} in the {fac.direction === 'both' ? 'combined' : fac.direction} direction.
           That is more than this graph can lay out legibly — the connection table below stays complete and searchable at any
           depth, and is the better tool for a network this size.
@@ -172,7 +172,7 @@ export default function FacilityPlayground({ model, compact = false }) {
         {/* ---- left: the graph ---- */}
         <div style={{ minWidth: 0 }}>
           {conn.degree === 0 ? (
-            <div className="mono" style={{ fontSize: 11, color: C.faint, lineHeight: 1.7, border: `1px solid ${C.line}`, borderRadius: 6, padding: 14 }}>
+            <div className="mono" style={{ fontSize: 12, color: C.faint, lineHeight: 1.7, border: `1px solid ${C.line}`, borderRadius: 6, padding: 14 }}>
               No modeled link touches {focus.name}. That happens when its operator has no customer edge in the sample, or
               when no stage it feeds reaches a customer&apos;s stage — not that the site is unconnected in reality.
             </div>
@@ -196,7 +196,7 @@ export default function FacilityPlayground({ model, compact = false }) {
           {/* Route highlight between two visible plants */}
           {drawn > 1 && (
             <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', alignItems: 'center', marginTop: 9 }}>
-              <span className="mono" style={{ fontSize: 9, letterSpacing: 1, color: C.faint }}>HIGHLIGHT A ROUTE</span>
+              <span className="mono" style={{ fontSize: 12, color: C.faint }}>Highlight a route</span>
               <select value={routeFrom} onChange={(e) => setRouteFrom(e.target.value)} aria-label="Route start facility" style={selectStyle}>
                 <option value="">from…</option>
                 {visibleIds.map((id) => <option key={id} value={id}>{FACILITY_LAYER.FACILITY_BY_ID[id]?.name || id}</option>)}
@@ -209,10 +209,10 @@ export default function FacilityPlayground({ model, compact = false }) {
                 onClick={() => facSetRoute({ from: routeFrom, to: routeTo })}>Show route</button>
               {fac.route && <button type="button" onClick={() => facSetRoute(null)} style={chipStyle}>Clear route</button>}
               {fac.route && !pg.route && (
-                <span className="mono" style={{ fontSize: 9.5, color: C.amber }}>No modeled path between those two in the current view.</span>
+                <span className="mono" style={{ fontSize: 12, color: C.amber }}>No modeled path between those two in the current view.</span>
               )}
               {pg.route && (
-                <span className="mono" style={{ fontSize: 9.5, color: C.green }}>
+                <span className="mono" style={{ fontSize: 12, color: C.green }}>
                   {pg.route.links.length} modeled hop{pg.route.links.length === 1 ? '' : 's'} — a sequence of modeled
                   relationships, not an observed route.
                 </span>
@@ -222,7 +222,7 @@ export default function FacilityPlayground({ model, compact = false }) {
 
           {/* Expanded / collapsed / hidden bookkeeping, always reversible */}
           {(fac.expanded.length > 0 || fac.collapsed.length > 0 || fac.hidden.length > 0) && (
-            <div className="mono" style={{ fontSize: 9.5, color: C.faint, marginTop: 8, display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center' }}>
+            <div className="mono" style={{ fontSize: 12, color: C.faint, marginTop: 8, display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center' }}>
               {fac.expanded.length > 0 && <span>{fac.expanded.length} branch{fac.expanded.length === 1 ? '' : 'es'} expanded</span>}
               {fac.collapsed.length > 0 && (
                 <>
@@ -251,12 +251,12 @@ export default function FacilityPlayground({ model, compact = false }) {
               <h3 style={{ flex: 1, fontSize: 14, color: C.text, fontWeight: 700, margin: 0, lineHeight: 1.3 }}>{focus.name}</h3>
               <TrackButton type="facility" id={focus.id} />
             </div>
-            <div className="mono" style={{ fontSize: 10, color: C.copper, marginTop: 4, display: 'flex', alignItems: 'center', gap: 5, flexWrap: 'wrap' }}>
+            <div className="mono" style={{ fontSize: 12, color: C.copper, marginTop: 4, display: 'flex', alignItems: 'center', gap: 5, flexWrap: 'wrap' }}>
               <Logo cid={focus.company} size={12} />
               {COMPANY_BY_ID[focus.company]?.name || focus.company}
             </div>
 
-            <dl style={{ margin: '8px 0 0', display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '3px 9px', fontSize: 11 }}>
+            <dl style={{ margin: '8px 0 0', display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '3px 9px', fontSize: 12 }}>
               {field('Location', `${COUNTRY_NAMES[focus.country] || focus.country}`)}
               {field('Type', FACILITY_KIND_LABEL[focus.kind] || focus.kind)}
               {field('Stage / function', stageNames.join(', ') || '—')}
@@ -267,12 +267,12 @@ export default function FacilityPlayground({ model, compact = false }) {
             </dl>
 
             {siteWeight(focus) === 0 && (
-              <div className="mono" style={{ fontSize: 9.5, color: C.amber, marginTop: 6, lineHeight: 1.55 }}>
+              <div className="mono" style={{ fontSize: 12, color: C.amber, marginTop: 6, lineHeight: 1.55 }}>
                 This site carries no exposure weight yet ({statusLabel(focus.status)}), so it has no output to lose and
                 the network builder gives it no links.
               </div>
             )}
-            {focus.output && <div style={{ fontSize: 11, color: C.dim, lineHeight: 1.55, marginTop: 6 }}>{focus.output}</div>}
+            {focus.output && <div style={{ fontSize: 12, color: C.dim, lineHeight: 1.55, marginTop: 6 }}>{focus.output}</div>}
 
             <div style={{ display: 'flex', gap: 5, marginTop: 9, flexWrap: 'wrap' }}>
               <button type="button" onClick={() => setSel({ type: 'facility', id: focus.id })} style={chipStyle}>Full profile</button>
@@ -293,10 +293,10 @@ export default function FacilityPlayground({ model, compact = false }) {
 
             {relatedEvents.length > 0 && (
               <>
-                <div className="mono" style={{ fontSize: 9, letterSpacing: 1.2, color: C.faint, margin: '10px 0 4px' }}>
+                <div className="mono" style={{ fontSize: 12, color: C.faint, margin: '10px 0 4px' }}>
                   EVENTS TOUCHING THIS COUNTRY AND STAGE
                 </div>
-                <div className="mono" style={{ fontSize: 8.5, color: C.faint, lineHeight: 1.5, marginBottom: 4 }}>
+                <div className="mono" style={{ fontSize: 12, color: C.faint, lineHeight: 1.5, marginBottom: 4 }}>
                   Possible relevance only — the events table records stages and countries, never individual plants.
                 </div>
                 <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'grid', gap: 3 }}>
@@ -337,7 +337,7 @@ export default function FacilityPlayground({ model, compact = false }) {
           </section>
 
           <div style={{ border: `1px solid ${C.line}`, borderRadius: 6, padding: '10px 12px', background: C.panel }}>
-            <div className="mono" style={{ fontSize: 9, letterSpacing: 1.2, color: C.faint, marginBottom: 5 }}>CHANGE PLANT</div>
+            <div className="mono" style={{ fontSize: 12, color: C.faint, marginBottom: 5 }}>Change plant</div>
             <FacilitySearch onPick={(id) => facFocus(id, { asRoot: true })} suggestionCount={0} label="Search another facility" />
           </div>
         </div>
@@ -349,7 +349,7 @@ export default function FacilityPlayground({ model, compact = false }) {
 function field(label, value) {
   return (
     <>
-      <dt className="mono" style={{ fontSize: 9, letterSpacing: 0.7, color: C.faint, whiteSpace: 'nowrap' }}>{label}</dt>
+      <dt className="mono" style={{ fontSize: 12, color: C.faint, whiteSpace: 'nowrap' }}>{label}</dt>
       <dd style={{ margin: 0, color: C.text, lineHeight: 1.5 }}>{value}</dd>
     </>
   );
@@ -385,7 +385,7 @@ function PlaygroundFilters({ filters, setFilters, active }) {
 
   const sel = (label, key, options, placeholder) => (
     <label style={{ display: 'grid', gap: 2, minWidth: 0 }}>
-      <span className="mono" style={{ fontSize: 8.5, letterSpacing: 0.9, color: C.faint }}>{label}</span>
+      <span className="mono" style={{ fontSize: 12, color: C.faint }}>{label}</span>
       <select value={filters[key]} onChange={(e) => setFilters({ [key]: e.target.value })} style={selectStyle}>
         <option value={key === 'relClass' || key === 'status' || key === 'evidence' ? 'all' : ''}>{placeholder}</option>
         {options.map((o) => <option key={o.id} value={o.id}>{o.name}</option>)}
@@ -401,20 +401,20 @@ function PlaygroundFilters({ filters, setFilters, active }) {
           {open ? '▾' : '▸'} Filters{active ? ' · active' : ''}
         </button>
         {active && <button type="button" onClick={() => setFilters(null)} style={chipStyle}>Clear all</button>}
-        <span className="mono" style={{ fontSize: 8.5, color: C.faint, marginLeft: 'auto' }}>graph + table</span>
+        <span className="mono" style={{ fontSize: 12, color: C.faint, marginLeft: 'auto' }}>graph + table</span>
       </div>
 
       {open && (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: 7, marginTop: 9 }}>
-          {sel('RELATIONSHIP', 'relClass', Object.values(RELATIONSHIP_CLASSES).map((r) => ({ id: r.id, name: r.label })), 'Any relationship')}
+          {sel('Relationship', 'relClass', Object.values(RELATIONSHIP_CLASSES).map((r) => ({ id: r.id, name: r.label })), 'Any relationship')}
           {sel('COMPANY', 'company', companies, 'Any company')}
           {sel('COUNTRY', 'country', countries, 'Any country')}
           {sel('STAGE', 'stage', stages, 'Any stage')}
-          {sel('FACILITY TYPE', 'kind', kinds.map((k) => ({ id: k, name: FACILITY_KIND_LABEL[k] || k })), 'Any type')}
+          {sel('Facility type', 'kind', kinds.map((k) => ({ id: k, name: FACILITY_KIND_LABEL[k] || k })), 'Any type')}
           {sel('STATUS', 'status', ['operating', 'ramping', 'construction'].map((s) => ({ id: s, name: statusLabel(s) })), 'Any status')}
-          {sel('EVIDENCE', 'evidence', Object.values(EVIDENCE_TIERS).map((e) => ({ id: e.id, name: e.label })), 'Any evidence tier')}
+          {sel('Evidence', 'evidence', Object.values(EVIDENCE_TIERS).map((e) => ({ id: e.id, name: e.label })), 'Any evidence tier')}
           <label style={{ display: 'grid', gap: 2 }}>
-            <span className="mono" style={{ fontSize: 8.5, letterSpacing: 0.9, color: C.faint }}>
+            <span className="mono" style={{ fontSize: 12, color: C.faint }}>
               MIN. STRENGTH — {(Number(filters.minRel) * 100).toFixed(0)}% (snapshot scale)
             </span>
             <input type="range" min="0" max="0.5" step="0.01" value={filters.minRel}
@@ -429,12 +429,12 @@ function PlaygroundFilters({ filters, setFilters, active }) {
 }
 
 const chipStyle = {
-  fontSize: 10, padding: '3px 9px', borderRadius: 4, fontFamily: 'inherit', cursor: 'pointer',
+  fontSize: 12, padding: '3px 9px', borderRadius: 4, fontFamily: 'inherit', cursor: 'pointer',
   background: 'transparent', color: C.dim, border: `1px solid ${C.line}`, minHeight: 0,
 };
 const selectStyle = {
   background: C.panel2, border: `1px solid ${C.line}`, borderRadius: 4, color: C.text,
-  fontFamily: 'inherit', fontSize: 10.5, padding: '4px 6px', minWidth: 0, maxWidth: '100%',
+  fontFamily: 'inherit', fontSize: 12, padding: '4px 6px', minWidth: 0, maxWidth: '100%',
 };
 function btn(enabled) {
   return { ...chipStyle, cursor: enabled ? 'pointer' : 'not-allowed', opacity: enabled ? 1 : 0.45 };

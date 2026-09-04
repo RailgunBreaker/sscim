@@ -10,7 +10,7 @@ import { useInteraction } from '../interaction/InteractionContext.jsx';
 
 function btn(disabled, primary) {
   return {
-    fontSize: 10.5, padding: '4px 9px', borderRadius: 4, fontFamily: 'inherit',
+    fontSize: 12, padding: '4px 9px', borderRadius: 4, fontFamily: 'inherit',
     cursor: disabled ? 'default' : 'pointer', opacity: disabled ? 0.45 : 1,
     background: primary ? 'rgba(201,138,63,.16)' : 'transparent',
     color: primary ? C.copper : C.dim, border: `1px solid ${primary ? C.copper : C.line}`,
@@ -41,7 +41,7 @@ export default function NetworkToolbar() {
   return (
     <div className="cbar" role="toolbar" aria-label="Network playground tools"
       style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', padding: '7px 16px', background: C.panel, borderBottom: `1px solid ${C.line}` }}>
-      <span className="mono" style={{ fontSize: 9.5, letterSpacing: 1.2, color: C.copper }}>⚙ NETWORK TOOLS</span>
+      <span className="mono" style={{ fontSize: 12, color: C.copper }}>⚙ NETWORK TOOLS</span>
 
       {selIsCentre && (
         <button type="button" onClick={() => pgToggleNode(selected.id)} style={btn(false, !centreRemoved)}
@@ -68,7 +68,7 @@ export default function NetworkToolbar() {
         </button>
       )}
       {!selIsCentre && !selIsEdge && (
-        <span className="mono" style={{ fontSize: 10, color: C.faint }}>select a centre or connection to remove it, or multi-select centres to shock…</span>
+        <span className="mono" style={{ fontSize: 12, color: C.faint }}>select a centre or connection to remove it, or multi-select centres to shock…</span>
       )}
 
       <span style={{ width: 1, alignSelf: 'stretch', background: C.line }} aria-hidden="true" />
@@ -78,13 +78,13 @@ export default function NetworkToolbar() {
       <button type="button" onClick={pgReset} disabled={!modified} style={btn(!modified)} aria-label="Reset network to baseline">⟲ Reset to baseline</button>
 
       {modified > 0 && (
-        <span className="mono" style={{ fontSize: 9.5, color: C.amber, border: `1px solid ${C.copperDim}`, borderRadius: 3, padding: '2px 8px' }}>
+        <span className="mono" style={{ fontSize: 12, color: C.amber, border: `1px solid ${C.copperDim}`, borderRadius: 3, padding: '2px 8px' }}>
           PLAYGROUND MODIFIED · {modified} temporary change{modified === 1 ? '' : 's'} · baseline available
         </span>
       )}
 
       {pg.multi.length > 0 && (
-        <span className="mono" style={{ fontSize: 9.5, color: C.dim, display: 'flex', alignItems: 'center', gap: 6 }}>
+        <span className="mono" style={{ fontSize: 12, color: C.dim, display: 'flex', alignItems: 'center', gap: 6 }}>
           {pg.multi.length} centre{pg.multi.length === 1 ? '' : 's'} multi-selected
           <button type="button" onClick={pgClearMulti} style={btn(false)}>Clear</button>
         </span>

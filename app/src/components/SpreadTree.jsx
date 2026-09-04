@@ -18,7 +18,7 @@ export default function SpreadTree({ sourceStages, field, exclude, setSel, title
   const titles = ["HOP 0 · SOURCE", "HOP 1 · DIRECT DOWNSTREAM", "HOP 2 · SECOND ORDER"];
   return (
     <div>
-      <div className="mono" style={{ fontSize: 9, letterSpacing: 2, color: C.copper, margin: "10px 0 5px" }}>
+      <div className="mono" style={{ fontSize: 11, color: C.copper, margin: "10px 0 5px" }}>
         {title || "IMPACT SPREAD · COMPANY → COMPANY (modeled contribution = share × adverse impact × economic weight)"}
       </div>
       <div style={{ display: "flex", gap: 6, overflowX: "auto", alignItems: "stretch" }}>
@@ -26,8 +26,8 @@ export default function SpreadTree({ sourceStages, field, exclude, setSel, title
           <Fragment key={h}>
             {h > 0 && <div style={{ alignSelf: "center", color: C.copper, fontSize: 16, flexShrink: 0 }}>→</div>}
             <div style={{ minWidth: 148, flex: 1 }}>
-              <div className="mono" style={{ fontSize: 8.5, letterSpacing: 1, color: C.faint, marginBottom: 4 }}>{titles[h]}</div>
-              {rows.length === 0 && <div className="mono" style={{ fontSize: 10, color: C.faint }}>—</div>}
+              <div className="mono" style={{ fontSize: 11, color: C.faint, marginBottom: 4 }}>{titles[h]}</div>
+              {rows.length === 0 && <div className="mono" style={{ fontSize: 11, color: C.faint }}>—</div>}
               {rows.map((r) => {
                 const co = COMPANY_BY_ID[r.cid];
                 return (
@@ -36,9 +36,9 @@ export default function SpreadTree({ sourceStages, field, exclude, setSel, title
                     style={{ border: `1px solid ${C.line}`, borderLeft: `3px solid ${riskColor(r.contribution * 10)}`, borderRadius: 4, background: C.panel, padding: "5px 7px", marginBottom: 4 }}>
                     <div style={{ display: "flex", justifyContent: "space-between", gap: 6 }}>
                       <span style={{ fontSize: 11, fontWeight: 600, display: "flex", alignItems: "center", gap: 4 }}><Logo cid={r.cid} size={13} />{co.name}</span>
-                      <span className="mono" style={{ fontSize: 10, color: riskColor(r.contribution * 10), fontWeight: 600 }}>{r.contribution.toFixed(3)}</span>
+                      <span className="mono" style={{ fontSize: 11, color: riskColor(r.contribution * 10), fontWeight: 600 }}>{r.contribution.toFixed(3)}</span>
                     </div>
-                    <div className="mono" style={{ fontSize: 8.5, color: C.faint }}>via {STAGE_BY_ID[r.sid].name}</div>
+                    <div className="mono" style={{ fontSize: 11, color: C.faint }}>via {STAGE_BY_ID[r.sid].name}</div>
                   </div>
                 );
               })}

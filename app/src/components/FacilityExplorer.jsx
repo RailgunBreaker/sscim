@@ -50,7 +50,7 @@ export default function FacilityExplorer({ setSel, model }) {
     return (
       <div>
         <Header onOpenFull={openFull} />
-        <p style={{ fontSize: 11, color: C.faint, lineHeight: 1.6, margin: '0 0 9px' }}>
+        <p style={{ fontSize: 12, color: C.faint, lineHeight: 1.6, margin: '0 0 9px' }}>
           Pick a plant to see the modeled network around it. Connections are{' '}
           <b style={{ color: C.dim }}>modeled stage-mediated relationships</b>, not confirmed shipments or contracts.
         </p>
@@ -82,7 +82,7 @@ export default function FacilityExplorer({ setSel, model }) {
           ))}
         </div>
         <div role="group" aria-label="Hop depth" style={{ display: 'flex', gap: 3, alignItems: 'center' }}>
-          <span className="mono" style={{ fontSize: 8.5, letterSpacing: 0.8, color: C.faint }}>HOPS</span>
+          <span className="mono" style={{ fontSize: 12, color: C.faint }}>Hops</span>
           {[1, 2].map((h) => (
             <button key={h} type="button" onClick={() => facSet({ hops: h })} aria-pressed={fac.hops === h}
               style={{ ...chipStyle, borderColor: fac.hops === h ? C.copper : C.line, color: fac.hops === h ? C.copper : C.dim }}>
@@ -90,7 +90,7 @@ export default function FacilityExplorer({ setSel, model }) {
             </button>
           ))}
           {fac.hops > 2 && (
-            <span className="mono" style={{ fontSize: 8.5, color: C.copper }} title="Set in the full playground">{fac.hops === Infinity ? 'all' : fac.hops}</span>
+            <span className="mono" style={{ fontSize: 12, color: C.copper }} title="Set in the full playground">{fac.hops === Infinity ? 'all' : fac.hops}</span>
           )}
         </div>
       </div>
@@ -102,14 +102,14 @@ export default function FacilityExplorer({ setSel, model }) {
           <span style={{ flex: 1, fontSize: 13, color: C.text, fontWeight: 600 }}>{focus.name}</span>
           <TrackButton type="facility" id={focus.id} />
         </div>
-        <div className="mono" style={{ fontSize: 9.5, color: C.copper, marginTop: 3, display: 'flex', alignItems: 'center', gap: 5, flexWrap: 'wrap' }}>
+        <div className="mono" style={{ fontSize: 12, color: C.copper, marginTop: 3, display: 'flex', alignItems: 'center', gap: 5, flexWrap: 'wrap' }}>
           <Logo cid={focus.company} size={12} />
           {COMPANY_BY_ID[focus.company]?.name || focus.company}
           {' · '}{FACILITY_KIND_LABEL[focus.kind] || focus.kind}
           {' · '}{COUNTRY_NAMES[focus.country] || focus.country}
         </div>
-        <div style={{ fontSize: 10.5, color: C.dim, lineHeight: 1.5, marginTop: 4 }}>{focus.output}</div>
-        <div className="mono" style={{ fontSize: 9.5, color: C.faint, marginTop: 5, display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+        <div style={{ fontSize: 12, color: C.dim, lineHeight: 1.5, marginTop: 4 }}>{focus.output}</div>
+        <div className="mono" style={{ fontSize: 12, color: C.faint, marginTop: 5, display: 'flex', gap: 10, flexWrap: 'wrap' }}>
           <span><b style={{ color: C.text }}>{conn.degree}</b> modeled links</span>
           <span>{edges.outbound.length} out · {edges.inbound.length} in</span>
           <span>{(focus.stages || []).map((s) => STAGE_BY_ID[s]?.name || s).join(', ')}</span>
@@ -167,7 +167,7 @@ export default function FacilityExplorer({ setSel, model }) {
 function Header({ onOpenFull }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8, flexWrap: 'wrap' }}>
-      <span className="mono" style={{ fontSize: 9, letterSpacing: 1.5, color: C.copper }}>⇄ FACILITY PLAYGROUND · COMPACT</span>
+      <span className="mono" style={{ fontSize: 12, color: C.copper }}>⇄ FACILITY PLAYGROUND · COMPACT</span>
       <button type="button" onClick={onOpenFull} style={{ ...chipStyle, marginLeft: 'auto', borderColor: C.copperDim }}>
         Open full view →
       </button>
@@ -176,7 +176,7 @@ function Header({ onOpenFull }) {
 }
 
 const chipStyle = {
-  fontSize: 10, padding: '3px 9px', borderRadius: 4, fontFamily: 'inherit', cursor: 'pointer',
+  fontSize: 12, padding: '3px 9px', borderRadius: 4, fontFamily: 'inherit', cursor: 'pointer',
   background: 'transparent', color: C.dim, border: `1px solid ${C.line}`, minHeight: 0,
 };
 function btn(enabled) {

@@ -35,15 +35,19 @@ export default function Freshness() {
   const color = days > 7 ? C.amber : C.faint;
   const live = source === 'live';
 
+  /* The header states the dataset date beside this, so repeating it here
+     was the same fact twice in one line. What this adds is whether the
+     figures are live or from the bundled snapshot, and how old they are —
+     the part the date alone does not tell you. */
   return (
-    <span className="mono" style={{ fontSize: 9.5, color, letterSpacing: 0.5, whiteSpace: 'nowrap' }}
+    <span
+      style={{ fontSize: 12, color, whiteSpace: 'nowrap', display: 'inline-flex', alignItems: 'center', gap: 5 }}
       title={live
         ? `Live from the vault API. Snapshot date ${meta.snapshotDate ?? 'unknown'}.`
-        : `Latest available dataset. Data as of the last pipeline run${stamp ? ` (${new Date(stamp).toLocaleString()})` : ''}; dataset date ${meta.snapshotDate ?? 'unknown'}.`}>
-      <span style={{ color: live ? C.green : color }}>●</span>{' '}
-      {live ? 'LIVE' : 'DATASET'}
-      {meta.snapshotDate ? ` ${meta.snapshotDate}` : ''}
-      {age && !live ? ` · updated ${age}` : ''}
+        : `Latest available dataset. Data as of the last pipeline run${stamp ? ` (${new Date(stamp).toLocaleString()})` : ''}; dataset date ${meta.snapshotDate ?? 'unknown'}.`}
+    >
+      <span aria-hidden="true" style={{ width: 6, height: 6, borderRadius: '50%', background: live ? C.green : color, flexShrink: 0 }} />
+      {live ? 'Live' : age ? `Updated ${age}` : 'Static snapshot'}
     </span>
   );
 }

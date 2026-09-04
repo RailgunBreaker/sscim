@@ -53,12 +53,12 @@ export default function FacilitySearch({ onPick, suggestionCount = 8, autoFocus 
   const rowFor = (f, right) => (
     <li key={f.id}>
       <button type="button" onClick={() => onPick?.(f.id)} style={rowButtonStyle}>
-        <span aria-hidden style={{ fontSize: 11 }}>{flagEmoji(f.country)}</span>
+        <span aria-hidden style={{ fontSize: 12 }}>{flagEmoji(f.country)}</span>
         <span style={{ flex: 1, minWidth: 0 }}>
-          <span style={{ display: 'block', fontSize: 11.5, color: C.text, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+          <span style={{ display: 'block', fontSize: 12, color: C.text, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
             {f.name}
           </span>
-          <span className="mono" style={{ fontSize: 9, color: C.faint }}>
+          <span className="mono" style={{ fontSize: 12, color: C.faint }}>
             {COMPANY_BY_ID[f.company]?.name || f.company}
             {' · '}{FACILITY_KIND_LABEL[f.kind] || f.kind}
             {' · '}{COUNTRY_NAMES[f.country] || f.country}
@@ -72,7 +72,7 @@ export default function FacilitySearch({ onPick, suggestionCount = 8, autoFocus 
 
   return (
     <div>
-      <label htmlFor={listId} className="mono" style={{ display: 'block', fontSize: 9, letterSpacing: 1.2, color: C.faint, marginBottom: 4 }}>
+      <label htmlFor={listId} className="mono" style={{ display: 'block', fontSize: 12, color: C.faint, marginBottom: 4 }}>
         {label.toUpperCase()} — NAME, OPERATOR, CITY, COUNTRY, STAGE OR TYPE
       </label>
       <input id={listId} type="search" value={query} onChange={(e) => setQuery(e.target.value)}
@@ -82,7 +82,7 @@ export default function FacilitySearch({ onPick, suggestionCount = 8, autoFocus 
         style={inputStyle} />
 
       {query.trim() && (
-        <div className="mono" aria-live="polite" style={{ fontSize: 9.5, color: C.faint, margin: '6px 0 4px' }}>
+        <div className="mono" aria-live="polite" style={{ fontSize: 12, color: C.faint, margin: '6px 0 4px' }}>
           {matches.length === 0
             ? `No facility in this snapshot matches “${query.trim()}”.`
             : `${matches.length} match${matches.length === 1 ? '' : 'es'}${matches.length === 20 ? ' (showing the first 20 — narrow the search)' : ''}.`}
@@ -92,7 +92,7 @@ export default function FacilitySearch({ onPick, suggestionCount = 8, autoFocus 
       {matches.length > 0 && (
         <ul style={listStyle}>
           {matches.map((f) => rowFor(f, (
-            <span className="mono" style={{ fontSize: 9, color: C.copper, whiteSpace: 'nowrap' }}>
+            <span className="mono" style={{ fontSize: 12, color: C.copper, whiteSpace: 'nowrap' }}>
               {facilityConnectivity(FACILITY_NETWORK, f.id).degree} links
             </span>
           )))}
@@ -101,12 +101,12 @@ export default function FacilitySearch({ onPick, suggestionCount = 8, autoFocus 
 
       {!query.trim() && suggestions.length > 0 && (
         <>
-          <div className="mono" style={{ fontSize: 9, letterSpacing: 1.2, color: C.faint, margin: '12px 0 5px' }}>
+          <div className="mono" style={{ fontSize: 12, color: C.faint, margin: '12px 0 5px' }}>
             OR START FROM ONE OF THE MOST CONNECTED PLANTS IN THIS SNAPSHOT
           </div>
           <ul style={listStyle}>
             {suggestions.map(({ f, c }) => rowFor(f, (
-              <span className="mono" style={{ fontSize: 9, color: C.copper, whiteSpace: 'nowrap' }}>{c.degree} links</span>
+              <span className="mono" style={{ fontSize: 12, color: C.copper, whiteSpace: 'nowrap' }}>{c.degree} links</span>
             )))}
           </ul>
         </>
@@ -119,7 +119,7 @@ const listStyle = { listStyle: 'none', margin: 0, padding: 0, display: 'grid', g
 const rowButtonStyle = {
   width: '100%', display: 'flex', alignItems: 'center', gap: 8, textAlign: 'left',
   background: C.panel, border: `1px solid ${C.line}`, borderRadius: 4,
-  padding: '6px 9px', fontFamily: 'inherit', fontSize: 11.5, color: C.text, cursor: 'pointer', minHeight: 0,
+  padding: '6px 9px', fontFamily: 'inherit', fontSize: 12, color: C.text, cursor: 'pointer', minHeight: 0,
 };
 const inputStyle = {
   width: '100%', background: C.panel2, border: `1px solid ${C.line}`, borderRadius: 4,

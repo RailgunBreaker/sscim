@@ -272,7 +272,21 @@ export default function FacilityGraph({
   // leaving the reader looking at empty space where the old graph was.
   useEffect(() => { setView(null); }, [focusId, traversal?.nodes.length]);
 
-  const baseBox = layout ? { x: 0, y: 0, w: layout.width, h: layout.height } : { x: 0, y: 0, w: 760, h: 320 };
+  /* LABEL GUTTER. Node labels on the left column are drawn with
+     textAnchor="end" at x - (NODE/2 + 8), so they run LEFT of the node and
+     out of a viewBox that starts at x=0. Every supplier name in the
+     leftmost column was clipped mid-word — "ASML — Veldhoven, Netherlands"
+     rendered as "dhoven, Netherlands". The names are the content, so the
+     box has to include them.
+
+     A name is truncated at 30 characters at FS_NAME; 30 characters of Inter
+     at 12px is about 200px, plus the 8px offset and the node's half-width.
+     The same gutter is added on the right, where "start"-anchored customer
+     labels have the mirror problem at the widest names. */
+  const LABEL_GUTTER = 30 * FS_NAME * 0.56 + NODE / 2 + 8;
+  const baseBox = layout
+    ? { x: -LABEL_GUTTER, y: 0, w: layout.width + LABEL_GUTTER * 2, h: layout.height }
+    : { x: 0, y: 0, w: 760, h: 320 };
   const box = view || baseBox;
   const viewBox = `${box.x} ${box.y} ${box.w} ${box.h}`;
 
@@ -509,7 +523,7 @@ export default function FacilityGraph({
   return (
     <div>
       <div style={{ display: 'flex', gap: 6, alignItems: 'center', marginBottom: 5, flexWrap: 'wrap' }}>
-        <span className="mono" style={{ fontSize: 9, letterSpacing: 1.2, color: C.faint, marginRight: 'auto' }}>
+        <span className="mono" style={{ fontSize: 11, color: C.faint, marginRight: 'auto' }}>
           ← UPSTREAM · SUPPLIERS &nbsp;|&nbsp; DOWNSTREAM · CUSTOMERS →
         </span>
         <button type="button" onClick={() => zoomBy(1 / 1.3)} style={ctrlStyle} aria-label="Zoom in">＋</button>
@@ -531,7 +545,7 @@ export default function FacilityGraph({
           space. Type size is therefore never a function of hop depth. */}
       <div style={{ overflowX: 'auto', overflowY: 'hidden', maxWidth: '100%' }}>
       <svg ref={svgRef} viewBox={viewBox} width="100%"
-        style={{ display: 'block', minWidth: layout.width, background: C.panel2, border: `1px solid ${C.line}`, borderRadius: 6, touchAction: 'none', maxHeight: compact ? 380 : '62vh' }}
+        style={{ display: 'block', minWidth: baseBox.w, background: C.panel2, border: `1px solid ${C.line}`, borderRadius: 6, touchAction: 'none', maxHeight: compact ? 380 : '62vh' }}
         onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={endDrag} onPointerCancel={endDrag}
         role="img"
         aria-label={a11yLabel}>
@@ -582,18 +596,18 @@ export default function FacilityGraph({
       </svg>
       </div>
 
-      <div className="mono" style={{ display: 'flex', gap: 14, flexWrap: 'wrap', fontSize: 9.5, color: C.faint, marginTop: 6, lineHeight: 1.6 }}>
+      <div className="mono" style={{ display: 'flex', gap: 14, flexWrap: 'wrap', fontSize: 11, color: C.faint, marginTop: 6, lineHeight: 1.6 }}>
         <span style={{ color: FLOW_COLOR.forward }}>——— upstream supply (output flows toward the customer)</span>
         <span style={{ color: FLOW_COLOR.service }}>– – – service (the die flows to the supplier and back)</span>
         <span style={{ color: FLOW_COLOR['co-input'] }}>· · · co-input (both feed a common downstream step)</span>
       </div>
-      <div className="mono" style={{ fontSize: 9.5, color: C.faint, marginTop: 4, lineHeight: 1.6 }}>
+      <div className="mono" style={{ fontSize: 11, color: C.faint, marginTop: 4, lineHeight: 1.6 }}>
         A travelling dot shows which way output moves along a link — one way for supply, back and forth for a service
         relationship. <b style={{ color: C.dim }}>Co-input links carry no dot</b>, because neither end supplies the
         other. Only the strongest {FLOW_PARTICLES} links are animated, to keep the frame rate up on a large network:
         an undotted line is not a weaker relationship, and speed encodes distance on screen, never anything measured.
       </div>
-      <div className="mono" style={{ fontSize: 9.5, color: C.faint, marginTop: 4, lineHeight: 1.6 }}>
+      <div className="mono" style={{ fontSize: 11, color: C.faint, marginTop: 4, lineHeight: 1.6 }}>
         Percentages and line thickness on this graph are relative to <b style={{ color: C.dim }}>{focus.name}</b>&apos;s
         strongest modeled link — a local scale. The connection table uses the snapshot-wide scale and labels it as
         such; the two numbers are not comparable and are never shown as if they were. Positions are fixed, not a
@@ -601,7 +615,7 @@ export default function FacilityGraph({
         stage-mediated relationship</b>, never a confirmed shipment, contract or trade route.
       </div>
       {traversal.truncated && (
-        <div className="mono" style={{ fontSize: 9.5, color: C.amber, marginTop: 4, lineHeight: 1.6 }}>
+        <div className="mono" style={{ fontSize: 11, color: C.amber, marginTop: 4, lineHeight: 1.6 }}>
           The traversal hit its node budget before it finished. {traversal.reachableTotal} facilities are reachable
           from here at this depth and direction; the graph is drawing the first {traversal.nodes.length}. Narrow the
           direction, lower the hop depth, or use the table below, which is not capped.
@@ -612,6 +626,6 @@ export default function FacilityGraph({
 }
 
 const ctrlStyle = {
-  fontSize: 10, padding: '3px 8px', borderRadius: 4, fontFamily: 'inherit', cursor: 'pointer',
+  fontSize: 11, padding: '3px 8px', borderRadius: 4, fontFamily: 'inherit', cursor: 'pointer',
   background: 'transparent', color: C.dim, border: `1px solid ${C.line}`, minHeight: 0, minWidth: 28,
 };

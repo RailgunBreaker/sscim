@@ -24,9 +24,9 @@ const signed = (v) => `${v >= 0 ? '+' : '−'}${Math.abs(v).toFixed(2)}`;
 function Stat({ label, value, sub, tone }) {
   return (
     <div style={{ border: `1px solid ${C.line}`, background: C.panel, borderRadius: 6, padding: '7px 9px', minWidth: 0 }}>
-      <div className="mono" style={{ fontSize: 8.5, letterSpacing: 1.1, color: C.faint, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{label}</div>
+      <div className="mono" style={{ fontSize: 12, color: C.faint, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{label}</div>
       <div style={{ fontSize: 17, fontWeight: 600, color: tone || C.text, lineHeight: 1.25, fontVariantNumeric: 'tabular-nums' }}>{value}</div>
-      {sub && <div className="mono" style={{ fontSize: 8.5, color: C.faint, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{sub}</div>}
+      {sub && <div className="mono" style={{ fontSize: 12, color: C.faint, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{sub}</div>}
     </div>
   );
 }
@@ -37,6 +37,9 @@ export default function DecadeHistory({ onSelectEvent }) {
   const [sort, setSort] = useState('impact');
   const [scoredOnly, setScoredOnly] = useState(true);
   const [hover, setHover] = useState(null);
+  /* How many event rows are rendered. 25 fills a screen; the rest are
+     one click away rather than 167 bordered cards deep. */
+  const [shown, setShown] = useState(25);
 
   /* One replay for the whole panel: ~3,600 index samples plus two more per
      scored event for the marginal attribution. Memoized on the engine, so it
@@ -88,7 +91,7 @@ export default function DecadeHistory({ onSelectEvent }) {
 
   return (
     <div>
-      <div className="mono" style={{ fontSize: 9.5, color: C.faint, marginBottom: 8, lineHeight: 1.5 }}>
+      <div className="mono" style={{ fontSize: 12, color: C.faint, marginBottom: 10, lineHeight: 1.6 }}>
         Every event in the {years}-year window, and what each did to the index. <b style={{ color: C.dim }}>Impact</b> is
         marginal: the index on the event&apos;s own date minus the same date with that event removed. Because
         distinct incidents combine through a bounded, saturating operator, marginal effects are smaller than
@@ -106,9 +109,9 @@ export default function DecadeHistory({ onSelectEvent }) {
       </div>
 
       <div style={{ border: `1px solid ${C.line}`, background: C.panel2, borderRadius: 8, padding: '8px 10px', marginBottom: 10, position: 'relative' }}>
-        <div className="mono" style={{ fontSize: 9, letterSpacing: 1.2, color: C.dim, marginBottom: 4 }}>
-          DECADE REPLAY
-          <span style={{ color: C.faint, letterSpacing: 0.2, marginLeft: 7 }}>daily · 5 neutral · ticks are scored events, sized by severity</span>
+        <div className="mono" style={{ fontSize: 13, fontWeight: 600, color: C.text, marginBottom: 4 }}>
+          Ten-year replay
+          <span style={{ color: C.faint, fontWeight: 400, marginLeft: 8, fontSize: 12 }}>Daily, 5 = neutral. Ticks are scored events, sized by severity.</span>
         </div>
         <svg viewBox={`0 0 ${W} ${H}`} style={{ width: '100%', display: 'block', cursor: 'crosshair' }}
           role="img" aria-label={`Computed chain index over the past ${years} years. Mean ${stats.mean.toFixed(2)}, peak ${stats.max.toFixed(2)}.`}
@@ -135,11 +138,11 @@ export default function DecadeHistory({ onSelectEvent }) {
             </g>
           )}
         </svg>
-        <div className="mono" style={{ fontSize: 8.5, color: C.faint, marginTop: 2 }}>
+        <div className="mono" style={{ fontSize: 12, color: C.faint, marginTop: 4 }}>
           grey line = 91-day centred mean (trend under the spikes)
         </div>
         {hover && (
-          <div className="mono" style={{ position: 'absolute', left: `${Math.min(70, Math.max(2, (chart.x(hover.daysAgo) / W) * 100))}%`, top: 40, background: C.bg, border: `1px solid ${C.line}`, borderRadius: 4, padding: '4px 8px', fontSize: 9.5, color: C.dim, pointerEvents: 'none', maxWidth: 250, zIndex: 5 }}>
+          <div className="mono" style={{ position: 'absolute', left: `${Math.min(70, Math.max(2, (chart.x(hover.daysAgo) / W) * 100))}%`, top: 40, background: C.bg, border: `1px solid ${C.line}`, borderRadius: 4, padding: '6px 10px', fontSize: 12, color: C.dim, pointerEvents: 'none', maxWidth: 280, zIndex: 5 }}>
             <span style={{ color: C.text }}>{fmtDate(asOf - hover.daysAgo * DAY)}</span> — index {hover.index.toFixed(2)}
             {hover.near.map((i) => <div key={i.id} style={{ color: i.marginal < 0 ? C.green : C.red, marginTop: 2 }}>{i.title}</div>)}
           </div>
@@ -147,59 +150,78 @@ export default function DecadeHistory({ onSelectEvent }) {
       </div>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap', marginBottom: 7 }}>
-        <span className="mono" style={{ fontSize: 9, letterSpacing: 1.2, color: C.dim }}>EVENTS BY IMPACT</span>
+        <span style={{ fontSize: 13, fontWeight: 600, color: C.text }}>Events by impact</span>
         <div style={{ display: 'flex', gap: 3, marginLeft: 'auto' }}>
-          {[['impact', 'IMPACT'], ['date', 'DATE']].map(([k, label]) => (
+          {[['impact', 'Impact'], ['date', 'Date']].map(([k, label]) => (
             <button key={k} type="button" aria-pressed={sort === k} onClick={() => setSort(k)} className="mono"
-              style={{ border: `1px solid ${sort === k ? C.copper : C.line}`, background: sort === k ? 'rgba(201,138,63,.14)' : 'transparent', color: sort === k ? C.copper : C.dim, borderRadius: 4, fontSize: 9, padding: '3px 6px', cursor: 'pointer', fontFamily: 'inherit' }}>
+              style={{ border: `1px solid ${sort === k ? C.copper : C.line}`, background: sort === k ? 'rgba(201,138,63,.14)' : 'transparent', color: sort === k ? C.copper : C.dim, borderRadius: 4, fontSize: 12, padding: '5px 10px', cursor: 'pointer', fontFamily: 'inherit' }}>
               {label}
             </button>
           ))}
           <button type="button" aria-pressed={!scoredOnly} onClick={() => setScoredOnly((v) => !v)} className="mono"
-            style={{ border: `1px solid ${!scoredOnly ? C.copper : C.line}`, background: !scoredOnly ? 'rgba(201,138,63,.14)' : 'transparent', color: !scoredOnly ? C.copper : C.dim, borderRadius: 4, fontSize: 9, padding: '3px 6px', cursor: 'pointer', fontFamily: 'inherit' }}>
-            {scoredOnly ? 'SCORED ONLY' : 'ALL EVENTS'}
+            style={{ border: `1px solid ${!scoredOnly ? C.copper : C.line}`, background: !scoredOnly ? 'rgba(201,138,63,.14)' : 'transparent', color: !scoredOnly ? C.copper : C.dim, borderRadius: 4, fontSize: 12, padding: '5px 10px', cursor: 'pointer', fontFamily: 'inherit' }}>
+            {scoredOnly ? 'Scored only' : 'All events'}
           </button>
         </div>
       </div>
 
+      {/* The list used to render every one of the 167 events at once, each
+          in its own bordered card. Two problems in one: the panel grew past
+          9,000px so the page height check failed, and a reader met 167
+          identical boxes with no sense of which mattered. Bounded, with the
+          rest one click away. */}
       <div style={{ marginBottom: 10 }}>
-        {rows.map((i) => {
+        {rows.slice(0, shown).map((i) => {
           const mitigating = i.marginal < -0.005;
           const tone = !i.operational ? C.faint : mitigating ? C.green : C.red;
           return (
             <div key={i.id} role="button" tabIndex={0}
               onClick={() => onSelectEvent?.(i.id)} onKeyDown={onEnterSpace(() => onSelectEvent?.(i.id))}
-              className="evcard"
-              style={{ border: `1px solid ${C.line}`, background: C.panel, borderRadius: 6, padding: '6px 9px', marginBottom: 5 }}>
+              className="evcard row-interactive"
+              style={{ borderBottom: `1px solid ${C.line}`, background: 'transparent', borderRadius: 4, padding: '8px 9px' }}>
               <div style={{ display: 'flex', gap: 7, alignItems: 'center', flexWrap: 'wrap' }}>
-                <span className="mono" style={{ fontSize: 9.5, color: C.faint, minWidth: 74 }}>{fmtDate(asOf - i.daysAgo * DAY)}</span>
-                <span className="mono" style={{ fontSize: 8.5, letterSpacing: 0.8, color: TYPE_COLORS[i.type] || C.copper }}>{i.type.toUpperCase()}</span>
-                <span className="mono" style={{ fontSize: 9, color: C.faint }}>sev {i.sev}</span>
-                <span className="mono" style={{ fontSize: 10.5, color: tone, marginLeft: 'auto', fontVariantNumeric: 'tabular-nums' }}
+                <span className="mono" style={{ fontSize: 12, color: C.faint, minWidth: 84 }}>{fmtDate(asOf - i.daysAgo * DAY)}</span>
+                <span className="mono" style={{ fontSize: 12, color: TYPE_COLORS[i.type] || C.copper }}>{i.type}</span>
+                <span className="mono" style={{ fontSize: 12, color: C.faint }}>severity {i.sev}</span>
+                <span className="mono" style={{ fontSize: 13, fontWeight: 600, color: tone, marginLeft: 'auto', fontVariantNumeric: 'tabular-nums' }}
                   title={i.operational
                     ? `Marginal effect on the index on this date: ${signed(i.marginal)}. Alone it would have moved the index ${signed(i.standalone)}. Index that day: ${i.indexOnDate.toFixed(2)}.`
                     : i.reason}>
                   {i.operational ? `${signed(i.marginal)} index` : 'not scored'}
                 </span>
               </div>
-              <div style={{ fontSize: 12.5, fontWeight: 600, marginTop: 4, lineHeight: 1.35 }}>{i.title}</div>
+              <div style={{ fontSize: 14, fontWeight: 600, marginTop: 5, lineHeight: 1.35 }}>{i.title}</div>
               {i.operational && (
-                <div className="mono" style={{ fontSize: 8.5, color: C.faint, marginTop: 3 }}>
+                <div className="mono" style={{ fontSize: 12, color: C.faint, marginTop: 4 }}>
                   index that day {i.indexOnDate.toFixed(2)} · alone {signed(i.standalone)} · {i.direction}/{i.channel}
                 </div>
               )}
             </div>
           );
         })}
+        {rows.length > shown && (
+          <button
+            type="button"
+            className="ui-button"
+            onClick={() => setShown((n) => n + 50)}
+            style={{
+              marginTop: 10, width: '100%', padding: '10px 12px', fontSize: 13, fontFamily: 'inherit',
+              background: 'transparent', color: C.copper, border: `1px solid ${C.line}`,
+              borderRadius: 5, cursor: 'pointer',
+            }}
+          >
+            Show {Math.min(50, rows.length - shown)} more — {rows.length - shown} of {rows.length} not yet listed
+          </button>
+        )}
       </div>
 
-      <div className="mono" style={{ fontSize: 9, letterSpacing: 1.2, color: C.dim, marginBottom: 6 }}>BY YEAR</div>
+      <div className="mono" style={{ fontSize: 13, fontWeight: 600, color: C.text, marginBottom: 6 }}>By year</div>
       <div style={{ overflowX: 'auto', border: `1px solid ${C.line}`, borderRadius: 6, marginBottom: 10 }}>
-        <table className="mono" style={{ borderCollapse: 'collapse', width: '100%', fontSize: 9.5 }}>
+        <table className="mono" style={{ borderCollapse: 'collapse', width: '100%', fontSize: 12 }}>
           <thead>
             <tr style={{ color: C.faint }}>
               {['YEAR', 'EVENTS', 'SCORED', 'MEAN', 'MAX', 'DAYS >6', 'AT 5.00'].map((h) => (
-                <th key={h} scope="col" style={{ textAlign: h === 'YEAR' ? 'left' : 'right', padding: '5px 8px', borderBottom: `1px solid ${C.line}`, fontWeight: 400, letterSpacing: 0.8, whiteSpace: 'nowrap' }}>{h}</th>
+                <th key={h} scope="col" style={{ textAlign: h === 'YEAR' ? 'left' : 'right', padding: '5px 8px', borderBottom: `1px solid ${C.line}`, fontWeight: 400, whiteSpace: 'nowrap' }}>{h}</th>
               ))}
             </tr>
           </thead>
@@ -219,37 +241,37 @@ export default function DecadeHistory({ onSelectEvent }) {
         </table>
       </div>
 
-      <div className="mono" style={{ fontSize: 9, letterSpacing: 1.2, color: C.dim, marginBottom: 6 }}>WHICH KIND OF SHOCK DROVE IT</div>
+      <div className="mono" style={{ fontSize: 12, color: C.dim, marginBottom: 6 }}>Which kind of shock drove it</div>
       <div style={{ marginBottom: 10 }}>
         {analysis.byType.map((r) => {
           const width = Math.max(1, Math.abs(r.total) / Math.max(...analysis.byType.map((q) => Math.abs(q.total))) * 100);
           return (
             <div key={r.type} style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
-              <span className="mono" style={{ fontSize: 9.5, color: C.dim, width: 132, flex: 'none', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{r.type}</span>
-              <span className="mono" style={{ fontSize: 9, color: C.faint, width: 26, flex: 'none', textAlign: 'right' }}>{r.count}</span>
+              <span className="mono" style={{ fontSize: 12, color: C.dim, width: 132, flex: 'none', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{r.type}</span>
+              <span className="mono" style={{ fontSize: 12, color: C.faint, width: 26, flex: 'none', textAlign: 'right' }}>{r.count}</span>
               <div style={{ flex: 1, minWidth: 40, height: 8, background: C.panel, borderRadius: 2, overflow: 'hidden' }}>
                 <div style={{ width: `${width}%`, height: '100%', background: r.total < 0 ? C.green : C.copper, borderRadius: 2 }} />
               </div>
-              <span className="mono" style={{ fontSize: 9.5, color: C.dim, width: 46, flex: 'none', textAlign: 'right', fontVariantNumeric: 'tabular-nums' }}>{signed(r.total)}</span>
+              <span className="mono" style={{ fontSize: 12, color: C.dim, width: 46, flex: 'none', textAlign: 'right', fontVariantNumeric: 'tabular-nums' }}>{signed(r.total)}</span>
             </div>
           );
         })}
       </div>
 
-      <div className="mono" style={{ fontSize: 9, letterSpacing: 1.2, color: C.dim, marginBottom: 6 }}>LONGEST ELEVATED STRETCHES (INDEX ABOVE 6)</div>
+      <div className="mono" style={{ fontSize: 12, color: C.dim, marginBottom: 6 }}>LONGEST ELEVATED STRETCHES (INDEX ABOVE 6)</div>
       <div style={{ marginBottom: 10 }}>
         {analysis.elevatedRuns.slice(0, 6).map((r) => (
-          <div key={r.fromDaysAgo} className="mono" style={{ fontSize: 9.5, color: C.dim, padding: '3px 0', borderBottom: `1px solid ${C.line}` }}>
+          <div key={r.fromDaysAgo} className="mono" style={{ fontSize: 12, color: C.dim, padding: '3px 0', borderBottom: `1px solid ${C.line}` }}>
             <span style={{ color: C.text }}>{r.samples}d</span>
             {' '}{fmtDate(asOf - r.fromDaysAgo * DAY)} → {fmtDate(asOf - r.toDaysAgo * DAY)}
             <span style={{ color: C.red, marginLeft: 6 }}>peak {r.peak.toFixed(2)}</span>
           </div>
         ))}
-        {!analysis.elevatedRuns.length && <div className="mono" style={{ fontSize: 9.5, color: C.faint }}>The index never exceeded 6 in this window.</div>}
+        {!analysis.elevatedRuns.length && <div className="mono" style={{ fontSize: 12, color: C.faint }}>The index never exceeded 6 in this window.</div>}
       </div>
 
       {analysis.densityCorrelation != null && (
-        <div className="mono" style={{ fontSize: 9, color: C.faint, lineHeight: 1.55, border: `1px solid ${C.line}`, borderRadius: 6, padding: '7px 9px' }}>
+        <div className="mono" style={{ fontSize: 12, color: C.faint, lineHeight: 1.55, border: `1px solid ${C.line}`, borderRadius: 6, padding: '7px 9px' }}>
           <b style={{ color: C.amber }}>Read the density caveat.</b> Correlation between the index and the trailing
           30-day severity mass of scored events is <b style={{ color: C.dim }}>r = {analysis.densityCorrelation.toFixed(2)}</b>.
           The index therefore partly measures how thoroughly each period was curated, not only what happened:

@@ -16,7 +16,7 @@ const fmtPrice = (q) => {
 export default function Quote({ quote, compact = false }) {
   if (!quote) {
     return compact ? null : (
-      <span className="mono" style={{ fontSize: 10, color: C.faint }}>not publicly listed — no market quote</span>
+      <span className="mono" style={{ fontSize: 12, color: C.faint }}>not publicly listed — no market quote</span>
     );
   }
   const chg = quote.changePct;
@@ -24,13 +24,13 @@ export default function Quote({ quote, compact = false }) {
   const pe = quote.trailingPE;
   if (compact) {
     return (
-      <span className="mono" style={{ fontSize: 9.5, color: C.dim, whiteSpace: 'nowrap' }} title={`${quote.ticker} · as of ${new Date(quote.asOf).toLocaleString()}`}>
+      <span className="mono" style={{ fontSize: 12, color: C.dim, whiteSpace: 'nowrap' }} title={`${quote.ticker} · as of ${new Date(quote.asOf).toLocaleString()}`}>
         {fmtPrice(quote)}{pe != null ? ` · PE ${pe.toFixed(1)}` : ''}
       </span>
     );
   }
   return (
-    <span className="mono" style={{ fontSize: 11, color: C.dim }} title={`As of ${new Date(quote.asOf).toLocaleString()} — quotes are display metadata only, never a model input.`}>
+    <span className="mono" style={{ fontSize: 12, color: C.dim }} title={`As of ${new Date(quote.asOf).toLocaleString()} — quotes are display metadata only, never a model input.`}>
       <b style={{ color: C.text }}>{quote.ticker}</b>{' '}
       <b style={{ color: C.text }}>{fmtPrice(quote)}</b>
       {chg != null && <span style={{ color: chgColor }}> {chg >= 0 ? '+' : ''}{chg.toFixed(2)}%</span>}

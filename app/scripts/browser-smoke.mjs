@@ -179,8 +179,8 @@ async function main() {
          it, a failed fetch plus a fallback that never rendered would pass
          as silently as a healthy page. */
       const sourceLabel = await page.locator('body').innerText();
-      const isStatic = /STATIC SNAPSHOT/.test(sourceLabel);
-      const isLive = /LIVE VAULT/.test(sourceLabel);
+      const isStatic = /static snapshot/i.test(sourceLabel);
+      const isLive = /live vault/i.test(sourceLabel);
       check(isStatic || isLive, `${vp.name} states which data source it is reading`,
         isStatic ? 'static snapshot' : isLive ? 'live vault' : 'NEITHER — the page names no data source');
       check(isStatic, `${vp.name} fell back to the bundled snapshot when the vault API was unreachable`,
@@ -247,14 +247,19 @@ async function main() {
       }
 
       /* ---- Facility Playground ---- */
-      const pgBtn = page.locator('[role="radio"]').filter({ hasText: /Playground/i }).first();
+      /* The workspace is now called "Facilities". Scoped to the workspace
+         radiogroup, because the small-viewport pane switcher has a tab with
+         a colliding name and an unscoped lookup finds whichever comes
+         first in the document. */
+      const pgBtn = page.locator('[role="radiogroup"][aria-label="Workspace"] [role="radio"]')
+        .filter({ hasText: /^Facilities$/i }).first();
       if (await pgBtn.count()) {
         await pgBtn.click();
         await page.waitForTimeout(400);
         if (!wide) {
-          // Below 1080px the three layers are one-at-a-time tabs; Layer 1
-          // (which hosts the playground) is behind "Map".
-          const mapTab = page.locator('button', { hasText: /^Map$/ }).first();
+          // Below 1080px the three panes are one-at-a-time tabs, and the
+          // playground lives behind the "Map" pane tab.
+          const mapTab = page.locator('[role="tablist"][aria-label="Panel"] [role="tab"]', { hasText: /^Map$/ }).first();
           if (await mapTab.count()) await mapTab.click();
           await page.waitForTimeout(400);
         }
@@ -265,7 +270,7 @@ async function main() {
         if (vp.name === '1920x1080') await shot(page, 'playground-start-1920x1080');
         if (vp.name === '375x812') await shot(page, 'playground-mobile-375x812');
       } else {
-        fail(`${vp.name} playground view button present`);
+        fail(`${vp.name} Facilities workspace button present`);
       }
 
       await context.close();
@@ -284,7 +289,7 @@ async function main() {
 
     // Static-snapshot labelling.
     const bodyText = await page.locator('body').innerText();
-    check(/STATIC SNAPSHOT/i.test(bodyText), 'static fallback is labelled STATIC SNAPSHOT, not LIVE');
+    check(/static snapshot/i.test(bodyText), 'static fallback is labelled Static snapshot, not live');
     check(!/●\s*LIVE\b(?!\s*VAULT)/.test(bodyText), 'no bare "LIVE" label while on the static snapshot');
 
     // No internal review notes anywhere in the rendered page.
@@ -421,13 +426,18 @@ async function main() {
     vp.on('pageerror', (e) => consoleErrors.push(`views: ${e.message}`));
     await openDashboard(vp, base);
 
+    /* The four view modes used to be four peers in a radiogroup labelled
+       "View mode": Geographic, Topology, Split and "⇄ Facility Playground".
+       They are now a three-option WORKSPACE control, with side-by-side as a
+       modifier on the two graph workspaces rather than a fourth peer. Every
+       mode is still reachable, which is what this asserts; the side-by-side
+       toggle is checked separately below. */
     for (const [label, expect] of [
-      ['Geographic', /WORLD MAP/i],
-      ['Topology', /FUNCTIONAL-CENTRE NETWORK/i],
-      ['Split', /WORLD MAP \+ FUNCTIONAL-CENTRE NETWORK/i],
-      ['Facility Playground', /FACILITY PLAYGROUND/i],
+      ['Map', /World map/i],
+      ['Network', /Functional-centre network/i],
+      ['Facilities', /Facility network/i],
     ]) {
-      const btn = vp.locator('[role="radio"]').filter({ hasText: new RegExp(label, 'i') }).first();
+      const btn = vp.locator('[role="radiogroup"][aria-label="Workspace"] [role="radio"]').filter({ hasText: new RegExp(`^${label}$`, 'i') }).first();
       if (!(await btn.count())) { fail(`view "${label}" is offered`); continue; }
       await btn.click();
       await vp.waitForTimeout(700);
@@ -437,18 +447,37 @@ async function main() {
       check(ov <= 2, `view "${label}": no horizontal overflow`, `${ov}px`);
       /* Scoped to the VIEW radiogroup: the lens bar has a second one, so
          counting checked radios across the page always finds two. */
-      const checkedView = await vp.locator('[role="radiogroup"][aria-label="View mode"] [role="radio"][aria-checked="true"]').count();
-      const checkedLabel = await vp.locator('[role="radiogroup"][aria-label="View mode"] [role="radio"][aria-checked="true"]').first().innerText();
+      const checkedView = await vp.locator('[role="radiogroup"][aria-label="Workspace"] [role="radio"][aria-checked="true"]').count();
+      const checkedLabel = await vp.locator('[role="radiogroup"][aria-label="Workspace"] [role="radio"][aria-checked="true"]').first().innerText();
       check(checkedView === 1 && new RegExp(label, 'i').test(checkedLabel),
         `view "${label}" is announced as selected`, checkedLabel.trim());
     }
 
+    /* Side-by-side is not removed, only demoted from a peer to a modifier.
+       It has to still produce the combined view. */
+    {
+      const mapBtn = vp.locator('[role="radiogroup"][aria-label="Workspace"] [role="radio"]').filter({ hasText: /^Map$/ }).first();
+      await mapBtn.click();
+      await vp.waitForTimeout(400);
+      const sbs = vp.locator('button', { hasText: /^Side by side/ }).first();
+      if (!(await sbs.count())) { fail('side-by-side modifier is offered'); } else {
+        pass('side-by-side modifier is offered');
+        await sbs.click();
+        await vp.waitForTimeout(700);
+        const title = await vp.locator('#pane-map').first().innerText();
+        check(/World map and network/i.test(title), 'side-by-side renders both graphs', title.split('\n')[0].slice(0, 70));
+        check(await sbs.getAttribute('aria-pressed') === 'true', 'side-by-side reports its pressed state');
+        const ov = await vp.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+        check(ov <= 2, 'side-by-side: no horizontal overflow', `${ov}px`);
+      }
+    }
+
     /* History review: a past date, then back to the live reading. The two
        are different claims and must be labelled differently. */
-    await vp.locator('[role="radio"]').filter({ hasText: /Geographic/i }).first().click();
+    await vp.locator('[role="radiogroup"][aria-label="Workspace"] [role="radio"]').filter({ hasText: /^Map$/i }).first().click();
     await vp.waitForTimeout(500);
     const liveLabel = await vp.locator('body').innerText();
-    check(/STATIC SNAPSHOT/.test(liveLabel), 'starts on the current snapshot, labelled as such');
+    check(/static snapshot/i.test(liveLabel), 'starts on the current snapshot, labelled as such');
 
     const timeSlider = vp.locator('input[aria-label="Review the chain as of a past date"]').first();
     if (await timeSlider.count()) {
@@ -459,16 +488,16 @@ async function main() {
       const after = await timeSlider.inputValue();
       check(after !== before, 'history review moves to a past date by keyboard', `${before} -> ${after}`);
       const reviewing = await vp.locator('body').innerText();
-      check(/HISTORY REVIEW/i.test(reviewing), 'a reviewed past date is labelled HISTORY REVIEW, not LIVE');
-      check(/STATIC SNAPSHOT/.test(reviewing), 'the data source is still stated while reviewing the past');
+      check(/history review/i.test(reviewing), 'a reviewed past date is labelled History review, not live');
+      check(/static snapshot/i.test(reviewing), 'the data source is still stated while reviewing the past');
 
       const back = vp.locator('button', { hasText: /Return to live/i }).first();
       if (await back.count()) {
         await back.click();
         await vp.waitForTimeout(700);
         const returned = await vp.locator('body').innerText();
-        check(!/HISTORY REVIEW/i.test(returned), 'returning to live clears the history-review label');
-        check(/STATIC SNAPSHOT/.test(returned), 'and lands back on the current snapshot');
+        check(!/history review/i.test(returned), 'returning to live clears the history-review label');
+        check(/static snapshot/i.test(returned), 'and lands back on the current snapshot');
       } else {
         fail('"Return to live" control not found while reviewing a past date');
       }

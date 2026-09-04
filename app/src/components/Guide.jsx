@@ -69,7 +69,7 @@ export default function Guide({ onClose, onHighlight }) {
 
   const G = ({ n, t: title, children }) => (
     <div style={{ marginBottom: 12, display: "flex", gap: 10 }}>
-      <span className="mono" style={{ color: "#0C111C", background: C.copper, borderRadius: 4, width: 20, height: 20, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 700, flexShrink: 0 }}>{n}</span>
+      <span className="mono" style={{ color: "#0C111C", background: C.copper, borderRadius: 4, width: 20, height: 20, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, flexShrink: 0 }}>{n}</span>
       <div>
         <div style={{ fontSize: 13, fontWeight: 600 }}>{title}</div>
         <div style={{ fontSize: 12, color: C.dim, lineHeight: 1.55 }}>{children}</div>
@@ -81,18 +81,18 @@ export default function Guide({ onClose, onHighlight }) {
     const n = activeStep;
     const navBtn = (disabled) => ({
       background: "transparent", border: `1px solid ${disabled ? C.line : C.copperDim}`, color: disabled ? C.faint : C.copper,
-      borderRadius: 4, padding: "4px 10px", fontSize: 11, cursor: disabled ? "default" : "pointer", fontFamily: "inherit",
+      borderRadius: 4, padding: "4px 10px", fontSize: 12, cursor: disabled ? "default" : "pointer", fontFamily: "inherit",
     });
     return (
       <div ref={cardRef} tabIndex={-1} role="dialog" aria-label={`${stepTitle(n)} (step ${n} of 7)`}
         onKeyDown={(e) => e.key === 'Escape' && exitTour()}
         style={{ position: "fixed", bottom: 20, right: 20, left: "auto", zIndex: 1400, maxWidth: 320, width: "calc(100vw - 40px)", background: C.panel2, border: `1px solid ${C.copper}`, borderRadius: 8, padding: "14px 16px", boxShadow: "0 10px 34px rgba(0,0,0,.55)", color: C.text, outline: "none" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
-          <span className="mono" style={{ fontSize: 9, letterSpacing: 1.3, color: C.copper }}>STEP {n} OF 7 · LOOK FOR THE GLOW</span>
+          <span className="mono" style={{ fontSize: 12, color: C.copper }}>STEP {n} OF 7 · LOOK FOR THE GLOW</span>
           <button onClick={onClose} aria-label="Close guide" style={{ background: "transparent", border: "none", color: C.faint, cursor: "pointer", fontSize: 15, lineHeight: 1 }}>✕</button>
         </div>
         <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 4 }}>{stepTitle(n)}</div>
-        <div style={{ fontSize: 11.5, color: C.dim, lineHeight: 1.55, marginBottom: 10 }}>{stepBody(n)}</div>
+        <div style={{ fontSize: 12, color: C.dim, lineHeight: 1.55, marginBottom: 10 }}>{stepBody(n)}</div>
         <div style={{ display: "flex", gap: 6, justifyContent: "space-between" }}>
           <button disabled={n <= 1} onClick={() => goToStep(n - 1)} style={navBtn(n <= 1)}>← Prev</button>
           <button onClick={exitTour} style={{ ...navBtn(false), color: C.dim, borderColor: C.line }}>Full guide</button>
@@ -109,17 +109,17 @@ export default function Guide({ onClose, onHighlight }) {
           <h3 style={{ margin: 0, fontSize: 16 }}>{LANGV === "en" ? "How to use SSCIM" : t("guideTitle")}</h3>
           <button onClick={onClose} style={{ background: "transparent", border: `1px solid ${C.line}`, color: C.dim, borderRadius: 4, padding: "3px 10px", cursor: "pointer", fontFamily: "inherit" }}>Close</button>
         </div>
-        <div className="mono" style={{ fontSize: 10, color: C.faint, marginBottom: 12, lineHeight: 1.6 }}>
+        <div className="mono" style={{ fontSize: 12, color: C.faint, marginBottom: 12, lineHeight: 1.6 }}>
           {LANGV === "en" ? (<>Three synchronized layers: tap anything in one layer and the other two respond. Colors are structural vulnerability: <span style={{ color: C.green }}>green &lt;5.5 moderate</span> · <span style={{ color: C.amber }}>amber 5.5–7.5 elevated</span> · <span style={{ color: C.red }}>red ≥7.5 high</span>. <span style={{ color: C.copper }}>Click any step below to highlight the exact part of the dashboard it describes.</span></>) : t("g0")}
         </div>
         {[1, 2, 3, 4, 5, 6, 7].map((n) => (
           <div key={n} role="button" tabIndex={0} onClick={() => goToStep(n)} onKeyDown={onEnterSpace(() => goToStep(n))}
             className="evcard" style={{ borderRadius: 6, padding: "6px 8px", margin: "0 -8px 4px", border: "1px solid transparent" }}>
             <G n={String(n)} t={stepTitle(n)}>{stepBody(n)}</G>
-            <div className="mono" style={{ fontSize: 9, color: C.copper, marginLeft: 30, marginTop: -6 }}>▸ tap to highlight on the dashboard</div>
+            <div className="mono" style={{ fontSize: 12, color: C.copper, marginLeft: 30, marginTop: -6 }}>▸ tap to highlight on the dashboard</div>
           </div>
         ))}
-        <div className="mono" style={{ fontSize: 9.5, color: C.faint, marginTop: 4 }}>
+        <div className="mono" style={{ fontSize: 12, color: C.faint, marginTop: 4 }}>
           Supply-chain sensitivity and comparison analysis. Results are not a calibrated, causal, or probabilistic forecast, and are not investment advice.
         </div>
       </div>

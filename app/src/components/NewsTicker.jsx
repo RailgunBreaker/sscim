@@ -41,22 +41,22 @@ const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8787';
    alongside, it left roughly 80px of a 360px screen for the headlines. The
    disclaimer still never scrolls. */
 const STYLE = `
-  .nt{border-bottom:1px solid var(--line);background:var(--panel2);position:relative;font-size:11px;overflow:hidden}
+  .nt{border-bottom:1px solid var(--line);background:var(--panel2);position:relative;font-size:13px;overflow:hidden}
   .nt-inner{display:flex;align-items:center;gap:0;width:100%;min-width:0}
-  .nt-label{flex:none;padding:8px 12px 8px 0;color:var(--copper);letter-spacing:1.5px;font-size:9.5px;white-space:nowrap;z-index:2;background:var(--panel2)}
-  .nt-label b{color:var(--dim);letter-spacing:.5px;font-weight:400}
+  .nt-label{flex:none;padding:8px 14px 8px 0;color:var(--faint);letter-spacing:0;font-size:12px;white-space:nowrap;z-index:2;background:var(--panel2)}
+  .nt-label b{color:var(--faint);letter-spacing:0;font-weight:400}
   .nt-track{flex:1 1 auto;min-width:0;overflow:hidden;position:relative;-webkit-mask-image:linear-gradient(90deg,transparent,#000 28px,#000 calc(100% - 46px),transparent);mask-image:linear-gradient(90deg,transparent,#000 28px,#000 calc(100% - 46px),transparent)}
   .nt-rail{display:flex;width:max-content;align-items:center;white-space:nowrap;will-change:transform;animation:nt-roll linear infinite}
   .nt-copy{display:flex;flex:none;align-items:center}
   .nt:hover .nt-rail,.nt:focus-within .nt-rail{animation-play-state:paused}
   .nt-item{display:inline-flex;flex:none;align-items:center;gap:7px;padding:8px 26px 8px 0;color:var(--dim)}
-  .nt-date{color:var(--faint);font-size:9.5px;letter-spacing:.5px}
-  .nt-mark{font-size:9px;letter-spacing:.5px}
+  .nt-date{color:var(--faint);font-size:12px;letter-spacing:0}
+  .nt-mark{font-size:11px;letter-spacing:0}
   .nt-title{color:var(--text)}
   @keyframes nt-roll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
   @media(max-width:640px){
     .nt-inner{display:block}
-    .nt-label{display:block;padding:7px 0 0;font-size:9px;letter-spacing:1.1px;white-space:normal}
+    .nt-label{display:block;padding:7px 0 0;font-size:12px;letter-spacing:0;white-space:normal}
     .nt-track{width:100%;-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 34px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 34px),transparent)}
     .nt-item{padding:6px 20px 7px 0}
   }
@@ -119,7 +119,7 @@ export default function NewsTicker({ note = 'Not investment advice' }) {
     <div className="nt mono">
       <style>{STYLE}</style>
       <div className="wrap nt-inner">
-        <span className="nt-label">SSCIM INTELLIGENCE <b>· {note}</b></span>
+        <span className="nt-label">Latest events <b>· {note}</b></span>
         <div className="nt-track" role="marquee" aria-label={`Recent supply-chain events, newest first. ${note}.`}>
           {rail}
         </div>

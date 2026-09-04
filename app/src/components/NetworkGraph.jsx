@@ -111,13 +111,13 @@ export default function NetworkGraph({ baseGraph, filters = {}, pb = null }) {
 
   return (
     <div style={{ padding: 10 }}>
-      <div className="mono" style={{ fontSize: 9.5, letterSpacing: 1, color: C.copper, marginBottom: 6 }}>
+      <div className="mono" style={{ fontSize: 11, color: C.copper, marginBottom: 6 }}>
         FUNCTIONAL-CENTRE NETWORK · {analysis.centres.length} CENTRES · {shownEdges.length} SHOWN CONNECTIONS
         <span style={{ color: C.faint }}> · node colour: tier · node size: {sizeLabel}</span>
       </div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 8, marginBottom: 6 }}>
-        <span className="mono" style={{ fontSize: 9, color: C.faint }}>Click a node to inspect it. Click a connection to assess or temporarily remove it. Shift-click nodes to compare shocks.</span>
-        <label className="mono" style={{ fontSize: 9, color: C.faint, whiteSpace: 'nowrap' }}>NETWORK SIZE <input type="range" min="75" max="150" value={zoom} onChange={(e) => setZoom(Number(e.target.value))} aria-label="Network display size" style={{ width: 78, accentColor: C.copper }} /> {zoom}%</label>
+        <span className="mono" style={{ fontSize: 11, color: C.faint }}>Click a node to inspect it. Click a connection to assess or temporarily remove it. Shift-click nodes to compare shocks.</span>
+        <label className="mono" style={{ fontSize: 11, color: C.faint, whiteSpace: 'nowrap' }}>Network size <input type="range" min="75" max="150" value={zoom} onChange={(e) => setZoom(Number(e.target.value))} aria-label="Network display size" style={{ width: 78, accentColor: C.copper }} /> {zoom}%</label>
       </div>
       <div style={{ overflow: 'auto', maxHeight: 760 }}>
         <svg viewBox={`0 0 ${W} ${H}`} style={{ width: `${zoom}%`, minWidth: 900, display: 'block', background: C.panel2, borderRadius: 8, border: `1px solid ${C.line}`, transition: 'width .18s ease' }}

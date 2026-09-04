@@ -102,7 +102,7 @@ export default function FacilityConnectionTable({
 
   if (!all.length) {
     return (
-      <div className="mono" style={{ fontSize: 10.5, color: C.faint, lineHeight: 1.7 }}>
+      <div className="mono" style={{ fontSize: 12, color: C.faint, lineHeight: 1.7 }}>
         No modeled link touches this plant. That happens when its operator has no customer edge in the sample, or when
         no stage it feeds reaches a customer&apos;s stage — not that the site is unconnected in reality.
       </div>
@@ -111,14 +111,14 @@ export default function FacilityConnectionTable({
 
   return (
     <div>
-      <div className="mono" style={{ fontSize: 9, letterSpacing: 1.2, color: C.faint, margin: '0 0 6px' }}>
+      <div className="mono" style={{ fontSize: 12, color: C.faint, margin: '0 0 6px' }}>
         ALL MODELED CONNECTIONS — {totalUp} INBOUND · {totalDown} OUTBOUND
       </div>
 
       <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', alignItems: 'center', marginBottom: 7 }}>
         <input type="search" value={query} onChange={(e) => setQuery(e.target.value)}
           placeholder="Search these connections…" aria-label="Search this facility's connections"
-          style={{ flex: '1 1 160px', minWidth: 120, background: C.panel2, border: `1px solid ${C.line}`, borderRadius: 4, color: C.text, fontFamily: 'inherit', fontSize: 11.5, padding: '5px 8px' }} />
+          style={{ flex: '1 1 160px', minWidth: 120, background: C.panel2, border: `1px solid ${C.line}`, borderRadius: 4, color: C.text, fontFamily: 'inherit', fontSize: 12, padding: '5px 8px' }} />
         <div role="group" aria-label="Filter by direction" style={{ display: 'flex', gap: 4 }}>
           {[['all', 'Both'], ['upstream', 'Inbound'], ['downstream', 'Outbound']].map(([k, label]) => (
             <button key={k} type="button" onClick={() => setDir(k)} aria-pressed={dir === k}
@@ -131,7 +131,7 @@ export default function FacilityConnectionTable({
 
       {/* The count sentence. Never "showing some of them" — always the two
           exact numbers, and the control that closes the gap. */}
-      <div className="mono" aria-live="polite" style={{ fontSize: 9.5, color: hiddenCount ? C.amber : C.faint, marginBottom: 6, lineHeight: 1.6 }}>
+      <div className="mono" aria-live="polite" style={{ fontSize: 12, color: hiddenCount ? C.amber : C.faint, marginBottom: 6, lineHeight: 1.6 }}>
         {hiddenCount > 0
           ? `Showing ${visible.length} of ${filtered.length} matching connections.`
           : `Showing all ${filtered.length} matching connection${filtered.length === 1 ? '' : 's'}${filtered.length !== all.length ? ` of ${all.length} total` : ''}.`}
@@ -158,27 +158,27 @@ export default function FacilityConnectionTable({
                 border: `1px solid ${isSel ? C.copper : C.line}`, background: isSel ? '#1A2132' : C.panel,
                 borderRadius: 4, padding: '5px 8px', display: 'flex', alignItems: 'flex-start', gap: 7, flexWrap: 'wrap',
               }}>
-                <span aria-hidden style={{ fontSize: 11, marginTop: 1 }}>{flagEmoji(r.other.country)}</span>
+                <span aria-hidden style={{ fontSize: 12, marginTop: 1 }}>{flagEmoji(r.other.country)}</span>
                 <button type="button" onClick={() => onFocus?.(r.otherId)}
-                  style={{ flex: '1 1 140px', minWidth: 0, textAlign: 'left', background: 'transparent', border: 'none', padding: 0, color: C.text, fontFamily: 'inherit', fontSize: 11.5, cursor: 'pointer', minHeight: 0 }}
+                  style={{ flex: '1 1 140px', minWidth: 0, textAlign: 'left', background: 'transparent', border: 'none', padding: 0, color: C.text, fontFamily: 'inherit', fontSize: 12, cursor: 'pointer', minHeight: 0 }}
                   aria-label={`Centre the network on ${r.other.name}`}>
                   <span style={{ display: 'block', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{r.other.name}</span>
-                  <span className="mono" style={{ fontSize: 9, color: C.faint, display: 'block', lineHeight: 1.5 }}>
+                  <span className="mono" style={{ fontSize: 12, color: C.faint, display: 'block', lineHeight: 1.5 }}>
                     {COMPANY_BY_ID[r.other.company]?.name || r.other.company}
                     {' · '}{r.dir === 'upstream' ? `${stageFrom} → ${stageTo}` : `${stageFrom} → ${stageTo}`}
                     {' · '}{r.cls.short}
                     {' · '}{r.tier.label.toLowerCase()}
                   </span>
                 </button>
-                <span className="mono" style={{ fontSize: 9, color: r.dir === 'upstream' ? C.copper : C.green, whiteSpace: 'nowrap' }}
+                <span className="mono" style={{ fontSize: 12, color: r.dir === 'upstream' ? C.copper : C.green, whiteSpace: 'nowrap' }}
                   title={r.dir === 'upstream' ? 'This plant is the customer of that one, in the modeled relationship.' : 'This plant is the supplier to that one, in the modeled relationship.'}>
                   {r.dir === 'upstream' ? '← in' : 'out →'}
                 </span>
-                <span className="mono" style={{ fontSize: 9.5, color: C.dim, width: 46, textAlign: 'right' }}
+                <span className="mono" style={{ fontSize: 12, color: C.dim, width: 46, textAlign: 'right' }}
                   title="Strength on the SNAPSHOT-wide scale: share of the strongest modeled link anywhere in the dataset. The graph above uses this plant's own scale — the two numbers are not comparable.">
                   {pct(r.link.rel ?? 0)}
                 </span>
-                <span className="mono" style={{ fontSize: 9.5, color: C.faint, width: 44, textAlign: 'right' }}
+                <span className="mono" style={{ fontSize: 12, color: C.faint, width: 44, textAlign: 'right' }}
                   title={`Strength on the LOCAL scale: share of ${byId[facilityId]?.name || 'this plant'}'s strongest modeled link. This is the number the graph draws.`}>
                   {pct(localRel(r.link, scale))}
                 </span>
@@ -201,13 +201,13 @@ export default function FacilityConnectionTable({
       </ul>
 
       {!filtered.length && (
-        <div className="mono" style={{ fontSize: 10, color: C.faint, lineHeight: 1.7, padding: '6px 0' }}>
+        <div className="mono" style={{ fontSize: 12, color: C.faint, lineHeight: 1.7, padding: '6px 0' }}>
           No connection matches the current search and filters. {all.length} connection{all.length === 1 ? '' : 's'} exist
           for this plant — clear the filters to see them.
         </div>
       )}
 
-      <div className="mono" style={{ fontSize: 8.5, color: C.faint, marginTop: 8, lineHeight: 1.65 }}>
+      <div className="mono" style={{ fontSize: 12, color: C.faint, marginTop: 8, lineHeight: 1.65 }}>
         Two strength columns, two different scales, both labelled: the first is the share of the strongest modeled link
         in the whole snapshot, the second the share of this plant&apos;s own strongest link (the scale the graph draws).
         They are not comparable to each other. Every row is a modeled stage-mediated relationship — company-level
@@ -219,6 +219,6 @@ export default function FacilityConnectionTable({
 }
 
 const chipStyle = {
-  fontSize: 9.5, padding: '2px 7px', borderRadius: 4, fontFamily: 'inherit', cursor: 'pointer',
+  fontSize: 12, padding: '2px 7px', borderRadius: 4, fontFamily: 'inherit', cursor: 'pointer',
   background: 'transparent', color: C.dim, border: `1px solid ${C.line}`, minHeight: 0,
 };

@@ -60,40 +60,40 @@ export default function NetworkRoutePanel({ baseGraph }) {
     return c ? `${COUNTRY_NAMES[c.countryId] || c.countryId}, ${STAGE_BY_ID[c.stageId]?.name || c.stageId}` : id;
   }).join(' to ');
 
-  const selStyle = { background: C.panel, border: `1px solid ${C.line}`, borderRadius: 4, color: C.text, padding: '4px 6px', fontSize: 11, fontFamily: 'inherit', maxWidth: 230 };
+  const selStyle = { background: C.panel, border: `1px solid ${C.line}`, borderRadius: 4, color: C.text, padding: '4px 6px', fontSize: 12, fontFamily: 'inherit', maxWidth: 230 };
   const pinnedKey = selectedRoute?.centres?.join('>');
 
   return (
     <div style={{ padding: 10, borderTop: `1px solid ${C.line}` }}>
-      <div className="mono" style={{ fontSize: 9.5, letterSpacing: 2, color: C.copper, marginBottom: 6 }}>PATHFINDING · TRACE A SUPPLY-CHAIN ROUTE</div>
+      <div className="mono" style={{ fontSize: 12, color: C.copper, marginBottom: 6 }}>Pathfinding</div>
 
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, alignItems: 'center', marginBottom: 8 }}>
-        <label className="mono" style={{ fontSize: 10, color: C.dim, display: 'flex', gap: 4, alignItems: 'center' }}>
+        <label className="mono" style={{ fontSize: 12, color: C.dim, display: 'flex', gap: 4, alignItems: 'center' }}>
           FROM
           <select value={origin} onChange={(e) => setOrigin(e.target.value)} style={selStyle} aria-label="Route origin centre">
             {centreOptions.map((c) => <option key={c.id} value={c.id}>{label(c)}</option>)}
           </select>
         </label>
-        <label className="mono" style={{ fontSize: 10, color: C.dim, display: 'flex', gap: 4, alignItems: 'center' }}>
+        <label className="mono" style={{ fontSize: 12, color: C.dim, display: 'flex', gap: 4, alignItems: 'center' }}>
           TO
           <select value={dest} onChange={(e) => setDest(e.target.value)} style={selStyle} aria-label="Route destination centre">
             <option value="">— select —</option>
             {centreOptions.filter((c) => c.id !== origin).map((c) => <option key={c.id} value={c.id}>{label(c)}</option>)}
           </select>
         </label>
-        <label className="mono" style={{ fontSize: 10, color: C.dim, display: 'flex', gap: 4, alignItems: 'center' }}>
+        <label className="mono" style={{ fontSize: 12, color: C.dim, display: 'flex', gap: 4, alignItems: 'center' }}>
           OBJECTIVE
           <select value={objective} onChange={(e) => setObjective(e.target.value)} style={selStyle} aria-label="Path objective">
             {ROUTE_OBJECTIVES.map((o) => <option key={o.id} value={o.id} title={o.hint}>{o.label}</option>)}
           </select>
         </label>
         {selectedRoute && (
-          <button type="button" onClick={clearRoute} style={{ fontSize: 10, padding: '3px 8px', borderRadius: 4, background: 'transparent', color: C.dim, border: `1px solid ${C.line}`, cursor: 'pointer', fontFamily: 'inherit' }}>Clear route</button>
+          <button type="button" onClick={clearRoute} style={{ fontSize: 12, padding: '3px 8px', borderRadius: 4, background: 'transparent', color: C.dim, border: `1px solid ${C.line}`, cursor: 'pointer', fontFamily: 'inherit' }}>Clear route</button>
         )}
       </div>
 
       {origin && dest && origin !== dest && routes.length === 0 && (
-        <div className="mono" style={{ fontSize: 10, color: C.faint, lineHeight: 1.5 }}>
+        <div className="mono" style={{ fontSize: 12, color: C.faint, lineHeight: 1.5 }}>
           No modeled downstream route connects {labelById(origin)} → {labelById(dest)} in the current graph (try removing a shock, or pick an origin upstream of the destination).
         </div>
       )}
@@ -105,28 +105,28 @@ export default function NetworkRoutePanel({ baseGraph }) {
             aria-label={`Route ${i + 1}: ${routeDescription(r)}. ${r.hops} stage transitions, cumulative modeled weight ${fmt(r.weightProduct)}.`}
             style={{ display: 'block', width: '100%', textAlign: 'left', marginBottom: 6, padding: '6px 8px', borderRadius: 5, cursor: 'pointer', fontFamily: 'inherit', background: on ? 'rgba(201,138,63,.14)' : C.panel, border: `1px solid ${on ? C.copper : C.line}`, color: C.text }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', gap: 8, alignItems: 'center' }}>
-              <span className="mono" style={{ fontSize: 9, color: C.faint }}>ROUTE {i + 1} · {r.hops} hop{r.hops === 1 ? '' : 's'}</span>
-              <span className="mono" style={{ fontSize: 9.5, color: C.copper }} title="Product of edge weights (multiplicative attenuation) · widest-path bottleneck">Π {fmt(r.weightProduct)} · ⌵ {fmt(r.bottleneck)}</span>
+              <span className="mono" style={{ fontSize: 12, color: C.faint }}>ROUTE {i + 1} · {r.hops} hop{r.hops === 1 ? '' : 's'}</span>
+              <span className="mono" style={{ fontSize: 12, color: C.copper }} title="Product of edge weights (multiplicative attenuation) · widest-path bottleneck">Π {fmt(r.weightProduct)} · ⌵ {fmt(r.bottleneck)}</span>
             </div>
-            <div style={{ fontSize: 11.5, fontWeight: 600, margin: '3px 0', lineHeight: 1.4 }}>
+            <div style={{ fontSize: 12, fontWeight: 600, margin: '3px 0', lineHeight: 1.4 }}>
               {r.centres.map((id, j) => {
                 const c = baseGraph.centreById[id];
                 return (
                   <span key={id}>
-                    <span className="mono" style={{ color: C.faint, fontSize: 8.5 }}>{j + 1}.</span> {c ? `${flagEmoji(c.countryId)} ${STAGE_BY_ID[c.stageId]?.name || c.stageId}` : id}
+                    <span className="mono" style={{ color: C.faint, fontSize: 12 }}>{j + 1}.</span> {c ? `${flagEmoji(c.countryId)} ${STAGE_BY_ID[c.stageId]?.name || c.stageId}` : id}
                     {j < r.centres.length - 1 && <span style={{ color: C.copperDim }}> → </span>}
                   </span>
                 );
               })}
             </div>
-            <div className="mono" style={{ fontSize: 8.5, color: C.faint, lineHeight: 1.5 }}>
+            <div className="mono" style={{ fontSize: 12, color: C.faint, lineHeight: 1.5 }}>
               {r.edges.map((e) => `${e.sourceCountry}·${STAGE_BY_ID[e.sourceStage]?.name}→${e.targetCountry}·${STAGE_BY_ID[e.targetStage]?.name} ${fmt(e.rawDisplayWeight)}`).join('  ·  ')}
             </div>
           </button>
         );
       })}
 
-      <div className="mono" style={{ fontSize: 8.5, color: C.faint, lineHeight: 1.6, marginTop: 4 }}>
+      <div className="mono" style={{ fontSize: 12, color: C.faint, lineHeight: 1.6, marginTop: 4 }}>
         Routes rank by the chosen objective over modeled stage-mediated connection weights (share × stage-edge prior × share) — an illustrative supply-chain route / modeled propagation path, <b style={{ color: C.dim }}>not a verified physical shipment itinerary</b>.
       </div>
     </div>

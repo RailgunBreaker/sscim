@@ -51,11 +51,11 @@ export default function NetworkAnalysisPanel({ baseGraph }) {
   return (
     <div style={{ padding: 10, borderTop: `1px solid ${C.line}` }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 8, marginBottom: 6 }}>
-        <div className="mono" style={{ fontSize: 9.5, letterSpacing: 2, color: C.copper }}>NETWORK ANALYSIS</div>
-        <span className="mono" style={{ fontSize: 8.5, color: C.faint }}>{analysis.centres.length} active centres</span>
+        <div className="mono" style={{ fontSize: 12, color: C.copper }}>Network analysis</div>
+        <span className="mono" style={{ fontSize: 12, color: C.faint }}>{analysis.centres.length} active centres</span>
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: 5, marginBottom: 8 }}>
-        {[['1', 'Choose a question', 'Select a metric below; node size updates in the network.'], ['2', 'Inspect a result', 'Click any ranked centre or a visible connection.'], ['3', 'Stress-test safely', 'Remove a selected item; Undo restores baseline.']].map(([n, title, body]) => <div key={n} style={{ padding: '6px 7px', border: `1px solid ${C.line}`, borderRadius: 6, background: C.panel }}><div className="mono" style={{ color: C.copper, fontSize: 8.5 }}>{n} / {title.toUpperCase()}</div><div style={{ color: C.dim, fontSize: 10, lineHeight: 1.35, marginTop: 2 }}>{body}</div></div>)}
+        {[['1', 'Choose a question', 'Select a metric below; node size updates in the network.'], ['2', 'Inspect a result', 'Click any ranked centre or a visible connection.'], ['3', 'Stress-test safely', 'Remove a selected item; Undo restores baseline.']].map(([n, title, body]) => <div key={n} style={{ padding: '6px 7px', border: `1px solid ${C.line}`, borderRadius: 6, background: C.panel }}><div className="mono" style={{ color: C.copper, fontSize: 12 }}>{n} / {title.toUpperCase()}</div><div style={{ color: C.dim, fontSize: 12, lineHeight: 1.35, marginTop: 2 }}>{body}</div></div>)}
       </div>
 
       <div role="radiogroup" aria-label="Analysis metric" style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginBottom: 6 }}>
@@ -64,7 +64,7 @@ export default function NetworkAnalysisPanel({ baseGraph }) {
           return (
             <button key={m.id} type="button" role="radio" aria-checked={on}
               onClick={() => setMetric(on ? null : m.id)}
-              style={{ fontSize: 9.5, padding: '3px 7px', borderRadius: 3, fontFamily: 'inherit', cursor: 'pointer', background: on ? C.copper : 'transparent', color: on ? '#0C111C' : C.dim, border: `1px solid ${on ? C.copper : C.line}`, fontWeight: on ? 700 : 400 }}>
+              style={{ fontSize: 12, padding: '3px 7px', borderRadius: 3, fontFamily: 'inherit', cursor: 'pointer', background: on ? C.copper : 'transparent', color: on ? '#0C111C' : C.dim, border: `1px solid ${on ? C.copper : C.line}`, fontWeight: on ? 700 : 400 }}>
               {m.label.replace(' (topology)', '')}
             </button>
           );
@@ -72,7 +72,7 @@ export default function NetworkAnalysisPanel({ baseGraph }) {
       </div>
 
       {/* §22 guardrails */}
-      <div className="mono" style={{ fontSize: 9.5, color: C.faint, lineHeight: 1.6, marginBottom: 6, border: `1px solid ${C.line}`, borderRadius: 5, padding: '6px 8px' }}>
+      <div className="mono" style={{ fontSize: 12, color: C.faint, lineHeight: 1.6, marginBottom: 6, border: `1px solid ${C.line}`, borderRadius: 5, padding: '6px 8px' }}>
         <div style={{ color: C.dim }}>“{meta.question}”</div>
         <div>Level: functional centre · Weighted: {meta.weighted ? 'yes' : 'no'} · Scope: current analysis graph</div>
         <div style={{ color: C.amber }}>{meta.limitation}</div>
@@ -80,7 +80,7 @@ export default function NetworkAnalysisPanel({ baseGraph }) {
       </div>
 
       {metric === 'removal_impact' ? (
-        <div className="mono" style={{ fontSize: 10.5, color: C.dim, lineHeight: 1.6 }}>
+        <div className="mono" style={{ fontSize: 12, color: C.dim, lineHeight: 1.6 }}>
           Select a centre, then use the ranking below (by betweenness, a bridging proxy) or the toolbar’s “Remove centre” to run a hypothetical node-removal and read the reachability change here.
           {removal && (
             <div style={{ marginTop: 6, color: C.text }}>
@@ -94,7 +94,7 @@ export default function NetworkAnalysisPanel({ baseGraph }) {
           <div key={r.id} role="button" tabIndex={0}
             onClick={() => select({ type: 'centre', id: r.id })}
             onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && (e.preventDefault(), select({ type: 'centre', id: r.id }))}
-            style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 11, cursor: 'pointer', padding: '2px 0' }}>
+            style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, cursor: 'pointer', padding: '2px 0' }}>
             <span className="mono" style={{ color: C.faint, width: 18 }}>#{i + 1}</span>
             <span style={{ flex: 1 }}>{centreName(r.id)}</span>
             <span style={{ width: 70, height: 4, background: C.panel2, borderRadius: 2, overflow: 'hidden' }}>
@@ -106,7 +106,7 @@ export default function NetworkAnalysisPanel({ baseGraph }) {
       )}
 
       {edgeCrit && (
-        <div className="mono" style={{ fontSize: 10.5, color: C.dim, lineHeight: 1.6, marginTop: 8, borderTop: `1px solid ${C.line}`, paddingTop: 6 }}>
+        <div className="mono" style={{ fontSize: 12, color: C.dim, lineHeight: 1.6, marginTop: 8, borderTop: `1px solid ${C.line}`, paddingTop: 6 }}>
           EDGE CRITICALITY · {centreName(edgeCrit.sourceId)} → {centreName(edgeCrit.targetId)}
           <div style={{ color: C.text }}>lost reachable pairs: <b style={{ color: C.red }}>{edgeCrit.lostReachablePairs}</b> · alternative modeled path exists: {edgeCrit.alternativeExists ? 'yes' : 'no'}</div>
           <div style={{ color: C.faint }}>Hypothetical edge-removal sensitivity over modeled connectivity — not a predicted disruption.</div>

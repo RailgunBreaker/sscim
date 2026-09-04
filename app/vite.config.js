@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
+import { readFileSync } from 'node:fs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -12,9 +13,15 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 // and components (Tex, SiteMap, NewsTicker, …).
 // base: './' keeps all built asset paths relative, so the bundle works whether
 // served from a domain root or a GitHub Pages project subpath.
+/* The application version, read from package.json rather than typed
+   into a component. The header used to display a hand-written build
+   label that drifted two model versions out of date. */
+const pkg = JSON.parse(readFileSync(resolve(__dirname, 'package.json'), 'utf8'));
+
 export default defineConfig({
   plugins: [react()],
   base: './',
+  define: { __APP_VERSION__: JSON.stringify(pkg.version) },
   build: {
     // Land the build artifact outside app/ at the repo root, keeping app/ pure source.
     outDir: '../dist-app',

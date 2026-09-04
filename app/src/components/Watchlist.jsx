@@ -95,13 +95,13 @@ export default function Watchlist({ model, setSel }) {
   return (
     <div>
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', marginBottom: 7 }}>
-        <span className="mono" style={{ fontSize: 9, letterSpacing: 1.5, color: C.copper }}>
+        <span className="mono" style={{ fontSize: 12, color: C.copper }}>
           ★ WATCHLIST · 追蹤清單
         </span>
-        <span className="mono" style={{ fontSize: 9.5, color: C.faint }}>{items.length}/{MAX_WATCHED}</span>
+        <span className="mono" style={{ fontSize: 12, color: C.faint }}>{items.length}/{MAX_WATCHED}</span>
         {items.length > 0 && (
           <button type="button" onClick={clearAll}
-            style={{ marginLeft: 'auto', fontSize: 9.5, padding: '2px 8px', borderRadius: 4, fontFamily: 'inherit', cursor: 'pointer', background: 'transparent', color: C.dim, border: `1px solid ${C.line}` }}>
+            style={{ marginLeft: 'auto', fontSize: 12, padding: '2px 8px', borderRadius: 4, fontFamily: 'inherit', cursor: 'pointer', background: 'transparent', color: C.dim, border: `1px solid ${C.line}` }}>
             Clear all
           </button>
         )}
@@ -115,7 +115,7 @@ export default function Watchlist({ model, setSel }) {
             <button key={tp} type="button" disabled={full && !on}
               onClick={() => { setAdding(on ? null : tp); setQuery(''); setRouteFrom(''); }}
               title={full ? `Watchlist is full (${MAX_WATCHED})` : `Track a ${WATCH_TYPE_LABEL[tp].toLowerCase()}`}
-              style={{ fontSize: 10, padding: '3px 9px', borderRadius: 4, fontFamily: 'inherit',
+              style={{ fontSize: 12, padding: '3px 9px', borderRadius: 4, fontFamily: 'inherit',
                 cursor: full && !on ? 'not-allowed' : 'pointer', opacity: full && !on ? 0.45 : 1,
                 background: on ? C.copper : 'transparent', color: on ? '#0C111C' : C.dim,
                 border: `1px solid ${on ? C.copper : C.line}`, fontWeight: on ? 700 : 400 }}>
@@ -128,7 +128,7 @@ export default function Watchlist({ model, setSel }) {
       {adding && (
         <div style={{ border: `1px solid ${C.copperDim}`, borderRadius: 5, padding: 7, marginBottom: 8, background: C.panel }}>
           {adding === 'route' && routeFrom && (
-            <div className="mono" style={{ fontSize: 9.5, color: C.copper, marginBottom: 4 }}>
+            <div className="mono" style={{ fontSize: 12, color: C.copper, marginBottom: 4 }}>
               from {engine.STAGE_BY_ID[routeFrom]?.name} — now pick where it goes
               <button type="button" onClick={() => setRouteFrom('')}
                 style={{ marginLeft: 6, background: 'transparent', border: 'none', color: C.dim, cursor: 'pointer', font: 'inherit' }}>×</button>
@@ -137,17 +137,17 @@ export default function Watchlist({ model, setSel }) {
           <input type="text" value={query} onChange={(e) => setQuery(e.target.value)} autoFocus
             placeholder={adding === 'route' && !routeFrom ? 'Search an origin stage…' : `Search ${WATCH_TYPE_LABEL[adding].toLowerCase()}…`}
             aria-label={`Search ${WATCH_TYPE_LABEL[adding]}`}
-            style={{ width: '100%', background: C.panel2, border: `1px solid ${C.line}`, borderRadius: 4, color: C.text, fontFamily: 'inherit', fontSize: 11, padding: '4px 7px' }} />
+            style={{ width: '100%', background: C.panel2, border: `1px solid ${C.line}`, borderRadius: 4, color: C.text, fontFamily: 'inherit', fontSize: 12, padding: '4px 7px' }} />
           <ul style={{ listStyle: 'none', margin: '5px 0 0', padding: 0, maxHeight: 150, overflowY: 'auto', display: 'grid', gap: 2 }}>
             {candidates.length === 0 && (
-              <li className="mono" style={{ fontSize: 9.5, color: C.faint, padding: '3px 2px' }}>
+              <li className="mono" style={{ fontSize: 12, color: C.faint, padding: '3px 2px' }}>
                 {adding === 'route' && routeFrom ? 'This stage feeds nothing downstream in the graph.' : 'No match.'}
               </li>
             )}
             {candidates.map((cand) => (
               <li key={`${cand.type}:${cand.id}`}>
                 <button type="button" onClick={() => pick(cand)}
-                  style={{ width: '100%', textAlign: 'left', fontSize: 10.5, padding: '3px 7px', borderRadius: 3, fontFamily: 'inherit', cursor: 'pointer', background: 'transparent', color: C.text, border: `1px solid ${C.line}` }}>
+                  style={{ width: '100%', textAlign: 'left', fontSize: 12, padding: '3px 7px', borderRadius: 3, fontFamily: 'inherit', cursor: 'pointer', background: 'transparent', color: C.text, border: `1px solid ${C.line}` }}>
                   {cand.label}
                 </button>
               </li>
@@ -158,7 +158,7 @@ export default function Watchlist({ model, setSel }) {
 
       {/* --- the list --- */}
       {rows.length === 0 ? (
-        <div className="mono" style={{ fontSize: 10, color: C.faint, lineHeight: 1.7 }}>
+        <div className="mono" style={{ fontSize: 12, color: C.faint, lineHeight: 1.7 }}>
           Nothing tracked yet. Add the companies you buy from, the products you depend on, the plants that make them,
           or a route through the chain — and this panel becomes your daily view instead of the whole world.
           The list is kept in this browser only; it is never put in a shared link.
@@ -172,20 +172,20 @@ export default function Watchlist({ model, setSel }) {
               style={{ display: 'flex', alignItems: 'center', gap: 7, padding: '4px 8px', borderRadius: 4,
                 border: `1px solid ${row.missing ? C.red : C.line}`, background: C.panel,
                 cursor: row.missing ? 'default' : 'pointer', opacity: row.missing ? 0.65 : 1 }}>
-              <span aria-hidden className="mono" style={{ fontSize: 11, color: C.copper, width: 12, flexShrink: 0 }}>{TYPE_GLYPH[row.type]}</span>
+              <span aria-hidden className="mono" style={{ fontSize: 12, color: C.copper, width: 12, flexShrink: 0 }}>{TYPE_GLYPH[row.type]}</span>
               {row.type === 'company' && <Logo cid={row.id} size={13} />}
               <span style={{ flex: 1, minWidth: 0 }}>
-                <span style={{ fontSize: 11.5, color: C.text, textDecoration: row.missing ? 'line-through' : 'none', display: 'block', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                <span style={{ fontSize: 12, color: C.text, textDecoration: row.missing ? 'line-through' : 'none', display: 'block', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                   {row.label}
                 </span>
-                <span className="mono" style={{ fontSize: 9, color: row.missing ? C.red : C.faint }}>{row.sublabel}</span>
+                <span className="mono" style={{ fontSize: 12, color: row.missing ? C.red : C.faint }}>{row.sublabel}</span>
               </span>
               {row.value != null && (
-                <span className="mono" style={{ fontSize: 11, color: riskColor(row.value), width: 30, textAlign: 'right' }}>
+                <span className="mono" style={{ fontSize: 12, color: riskColor(row.value), width: 30, textAlign: 'right' }}>
                   {row.value.toFixed(1)}
                 </span>
               )}
-              <span className="mono" style={{ fontSize: 10, width: 46, textAlign: 'right',
+              <span className="mono" style={{ fontSize: 12, width: 46, textAlign: 'right',
                 color: Math.abs(row.signed) < 0.02 ? C.faint : row.signed > 0 ? C.red : C.green }}>
                 {Math.abs(row.signed) < 0.02 ? 'quiet' : fmtSigned(row.signed)}
               </span>
@@ -198,7 +198,7 @@ export default function Watchlist({ model, setSel }) {
       )}
 
       {rows.length > 0 && (
-        <div className="mono" style={{ fontSize: 8.5, color: C.faint, marginTop: 6, lineHeight: 1.6 }}>
+        <div className="mono" style={{ fontSize: 12, color: C.faint, marginTop: 6, lineHeight: 1.6 }}>
           Left figure is the standing structural reading (0–10); right figure is any active operational effect right now.
           A fragile thing with nothing happening to it is not the same as a robust thing currently disrupted, so the two
           are never blended.

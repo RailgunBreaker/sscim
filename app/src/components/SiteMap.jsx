@@ -30,13 +30,13 @@ export default function SiteMap({ current, prefix = '' }) {
       padding: '26px 20px 22px', marginTop: 40,
     }}>
       <div style={{ maxWidth: 980, margin: '0 auto' }}>
-        <div className="mono" style={{ fontSize: 9, letterSpacing: 2, color: C.copper, marginBottom: 14 }}>
+        <div className="mono" style={{ fontSize: 12, color: C.copper, marginBottom: 14 }}>
           SITE MAP
         </div>
         <div style={{ display: 'grid', gap: 22, gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))' }}>
           {SITE_SECTIONS.map((section) => (
             <div key={section.heading}>
-              <div className="mono" style={{ fontSize: 9.5, letterSpacing: 1.4, color: C.dim, marginBottom: 8, fontWeight: 700 }}>
+              <div className="mono" style={{ fontSize: 12, color: C.dim, marginBottom: 8, fontWeight: 700 }}>
                 {section.heading}
               </div>
               <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'grid', gap: 7 }}>
@@ -55,7 +55,7 @@ export default function SiteMap({ current, prefix = '' }) {
                         }}>
                         {link.label}{here ? ' ·' : ''}
                       </a>
-                      <span style={{ display: 'block', fontSize: 10.5, color: C.faint, lineHeight: 1.45 }}>
+                      <span style={{ display: 'block', fontSize: 12, color: C.faint, lineHeight: 1.45 }}>
                         {here ? 'you are here' : link.note}
                       </span>
                     </li>
@@ -66,7 +66,7 @@ export default function SiteMap({ current, prefix = '' }) {
           ))}
         </div>
 
-        <div className="mono" style={{ marginTop: 20, paddingTop: 14, borderTop: `1px solid ${C.line}`, fontSize: 10, color: C.faint, lineHeight: 1.7 }}>
+        <div className="mono" style={{ marginTop: 20, paddingTop: 14, borderTop: `1px solid ${C.line}`, fontSize: 12, color: C.faint, lineHeight: 1.7 }}>
           {SITE_MAP_FOOTNOTE}
         </div>
       </div>

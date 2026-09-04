@@ -61,25 +61,59 @@ export const T = {
   },
 
   heroH1: {
-    en: `Static maps show where the chip supply chain <em>is</em>.<br>SSCIM shows how a shock would <em>move</em> through it.`,
-    zh: '静态地图告诉你芯片供应链<em>在哪里</em>。<br>SSCIM 展示冲击会如何<em>在其中传导</em>。',
-    tw: '靜態地圖告訴你晶片供應鏈<em>在哪裡</em>。<br>SSCIM 展示衝擊會如何<em>在其中傳導</em>。',
-    ja: '静的な地図はチップ供給網が<em>どこにあるか</em>を示す。<br>SSCIMは衝撃がそこを<em>どう伝わるか</em>を示す。',
+    en: 'Trace disruption through the semiconductor supply chain.',
+    zh: '追踪冲击在半导体供应链中的传导。',
+    tw: '追蹤衝擊在半導體供應鏈中的傳導。',
+    ja: '半導体サプライチェーンを伝わる混乱を追跡する。',
   },
   heroP: {
-    en: `A transparent sensitivity-ranking engine across ${n('stages')} stages, ${n('companies')} companies with production shares and customer links, and ${n('countriesScored')} scored countries (plus ${n('countriesHostOnly')} more that host facilities without contributing to any score). Every score separates into structural vulnerability, operational impact, and hazard delta — with the full propagation math shown, never hidden behind one index.`,
-    zh: `一个基于精选快照的透明敏感性排序引擎：${n('stages')} 个环节、${n('companies')} 家公司（含生产份额与客户关系）、${n('countriesScored')} 个计分国家（另有 ${n('countriesHostOnly')} 个国家仅承载厂址、不参与任何分数计算）。每个分数都拆分为结构性脆弱度、运营影响与灾害增量——完整的传导算式全部公开，绝不藏在单一指数背后。`,
-    tw: `一個基於精選快照的透明敏感度排序引擎：${n('stages')} 個環節、${n('companies')} 家公司（含生產份額與客戶關係）、${n('countriesScored')} 個計分國家（另有 ${n('countriesHostOnly')} 個國家僅承載廠址、不參與任何分數計算）。每個分數都拆分為結構性脆弱度、營運影響與災害增量——完整的傳導算式全部公開，絕不藏在單一指數背後。`,
-    ja: `精選されたスナップショットに基づく、透明性の高い感度ランキング・エンジンです：${n('stages')}工程、${n('companies')}社（生産シェアと顧客関係付き）、スコアに寄与する${n('countriesScored')}か国（このほかに、施設を擁するのみでどのスコアにも寄与しない${n('countriesHostOnly')}か国があります）。すべてのスコアは構造的脆弱性・運用インパクト・ハザード差分に分解され、伝播の計算式はすべて公開——単一の指数の裏に隠すことはありません。`,
+    en: `SSCIM connects events, facilities and modeled dependencies across the semiconductor production network. Explore how disruption may propagate, inspect the assumptions behind each result, and compare structural and operational exposure across ${n('stages')} stages, ${n('companies')} companies and ${n('facilities')} facilities.`,
+    zh: `SSCIM 将事件、厂址与建模的依赖关系连接到整个半导体生产网络之中。你可以探索冲击可能如何传导、查看每一项结果背后的假设，并在 ${n('stages')} 个环节、${n('companies')} 家公司与 ${n('facilities')} 处厂址之间比较结构性敞口与运营敞口。`,
+    tw: `SSCIM 將事件、廠址與建模的依賴關係連接到整個半導體生產網路之中。你可以探索衝擊可能如何傳導、查看每一項結果背後的假設，並在 ${n('stages')} 個環節、${n('companies')} 家公司與 ${n('facilities')} 處廠址之間比較結構性曝險與營運曝險。`,
+    ja: `SSCIMは、イベント・生産拠点・モデル化された依存関係を半導体生産ネットワーク全体で結び付けます。混乱がどう伝播しうるかを調べ、各結果の前提を確認し、${n('stages')}工程・${n('companies')}社・${n('facilities')}拠点にわたって構造的エクスポージャーと運用エクスポージャーを比較できます。`,
   },
-  openDashboard: { en: 'Open the dashboard', zh: '打开仪表盘', tw: '開啟儀表板', ja: 'ダッシュボードを開く' },
+  openDashboard: { en: 'Open SSCIM', zh: '打开 SSCIM', tw: '開啟 SSCIM', ja: 'SSCIM を開く' },
+  shotCaption: {
+    en: `The live dashboard, dataset as of ${n('snapshotDate')}. Every figure on this page is read from that snapshot, not written into the copy.`,
+    zh: `实时仪表盘，数据截至 ${n('snapshotDate')}。本页所有数字均取自该快照，而非写死在文案中。`,
+    tw: `即時儀表板，資料截至 ${n('snapshotDate')}。本頁所有數字均取自該快照，而非寫死在文案中。`,
+    ja: `実際のダッシュボード（データは${n('snapshotDate')}時点）。本ページの数値はすべてこのスナップショットから読み出しており、文章に直接書き込んではいません。`,
+  },
+  viewMethodology: { en: 'View methodology', zh: '查看方法论', tw: '查看方法論', ja: '方法論を見る' },
+  productName: {
+    en: 'Semiconductor supply chain intelligence map',
+    zh: '半导体供应链情报图',
+    tw: '半導體供應鏈情報圖',
+    ja: '半導体サプライチェーン・インテリジェンスマップ',
+  },
+  heroShotAlt: {
+    en: 'The SSCIM dashboard: a world map of facilities beside the industry flow graph, with the chain index and the current event above them.',
+    zh: 'SSCIM 仪表盘：左侧为厂址世界地图，右侧为产业流程图，上方显示链指数与当前事件。',
+    tw: 'SSCIM 儀表板：左側為廠址世界地圖，右側為產業流程圖，上方顯示鏈指數與當前事件。',
+    ja: 'SSCIMダッシュボード：拠点の世界地図と産業フローグラフを並べ、その上にチェーン指数と現在のイベントを表示。',
+  },
+  /* Sits beside the first methodological claim on the page, not at the
+     bottom where a reader meets it only after forming an impression. */
+  limitsShort: {
+    en: 'What these numbers are: bounded comparative exposure scores from an uncalibrated research model. No parameter is fitted to observed outcomes. They are not probabilities, monetary losses or forecasts, and not investment advice.',
+    zh: '这些数字是什么：来自未经校准的研究模型的有界比较敞口分数。没有任何参数是依据实际观测结果拟合的。它们不是概率、不是货币损失、不是预测，也不构成投资建议。',
+    tw: '這些數字是什麼：來自未經校準的研究模型的有界比較曝險分數。沒有任何參數是依據實際觀測結果擬合的。它們不是機率、不是貨幣損失、不是預測，也不構成投資建議。',
+    ja: 'これらの数値の性格：較正されていない研究モデルによる、上下限のある相対エクスポージャー・スコアです。観測された結果に当てはめて推定したパラメータは一つもありません。確率でも金額損失でも予測でもなく、投資助言でもありません。',
+  },
+  methodologyPeek: {
+    en: 'Show the core formulas',
+    zh: '展开核心算式',
+    tw: '展開核心算式',
+    ja: '中心となる数式を表示',
+  },
+
 
   h2Ask: { en: 'What you can ask it', zh: '你可以问它什么', tw: '你可以問它什麼', ja: 'できる質問' },
   subAsk: {
-    en: 'Questions that today take an analyst a week of digging — answered visually, with every formula shown.',
-    zh: '分析师需要挖一周才能回答的问题——可视化作答，算式全部公开。',
-    tw: '分析師需要挖一週才能回答的問題——可視化作答，算式全部公開。',
-    ja: 'アナリストが一週間かけて調べる問いに、計算式をすべて公開したまま視覚的に答えます。',
+    en: 'Three questions the product answers directly, with the derivation visible at every step.',
+    zh: '产品可直接回答的三类问题，每一步推导都可查看。',
+    tw: '產品可直接回答的三類問題，每一步推導都可查看。',
+    ja: '本製品が直接答える三つの問い。各ステップの導出を確認できます。',
   },
   card1K: { en: 'EVENT → CHAIN', zh: '事件 → 供应链', tw: '事件 → 供應鏈', ja: 'イベント → チェーン' },
   card1H: {
@@ -167,7 +201,7 @@ export const T = {
     tw: `涵蓋全部 ${n('companies')} 家建模公司的 ${n('facilities')} 座具名廠址——每座工廠生產什麼、供應鏈上的哪些環節。在任意位置畫出災害半徑，讀數即列出圈內的廠址名稱，以及它們在各環節中所佔的份額。重要度是分析師給出的序數，並非產能；所有份額均為建模樣本內的份額。`,
     ja: `モデル化した${n('companies')}社すべてを網羅する${n('facilities')}の実名拠点——各工場が何を作り、チェーンのどの工程を支えているか。任意の地点にハザード半径を描くと、その円内の工場名と各工程に占める比率が一覧表示されます。重要度は生産能力ではなくアナリストの順序尺度であり、比率はすべてモデル化サンプル内の比率です。`,
   },
-  cardN3K: { en: 'NETWORK ANALYSIS', zh: '网络分析', tw: '網路分析', ja: 'ネットワーク分析' },
+  cardN3K: { en: 'Network analysis', zh: '网络分析', tw: '網路分析', ja: 'ネットワーク分析' },
   cardN3H: { en: 'Inspect, remove, compare', zh: '检视、移除、比较', tw: '檢視、移除、比較', ja: '検査・除去・比較' },
   cardN3P: {
     en: 'Weighted degree, reachability, betweenness, and hypothetical node/edge-removal sensitivity — every metric labeled a topology measure, kept separate from network influence and never a calibrated risk score.',

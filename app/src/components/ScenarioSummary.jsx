@@ -40,7 +40,7 @@ export default function ScenarioSummary({ model, scenario, setSel, onReset, onPl
 
   const Row = ({ label, value, color }) => (
     <div style={{ display: 'flex', justifyContent: 'space-between', gap: 10, fontSize: 12, marginBottom: 3 }}>
-      <span className="mono" style={{ color: C.faint, fontSize: 10.5 }}>{label}</span>
+      <span className="mono" style={{ color: C.faint, fontSize: 12 }}>{label}</span>
       <span style={{ color: color || C.text, fontWeight: 600 }}>{value}</span>
     </div>
   );
@@ -48,7 +48,7 @@ export default function ScenarioSummary({ model, scenario, setSel, onReset, onPl
   const Chip = ({ children, onClick }) => (
     <span role={onClick ? 'button' : undefined} tabIndex={onClick ? 0 : undefined}
       onClick={onClick} onKeyDown={onClick ? onEnterSpace(onClick) : undefined}
-      className="mono" style={{ fontSize: 10, padding: '2px 7px', borderRadius: 10, border: `1px solid ${C.line}`, color: C.copper, cursor: onClick ? 'pointer' : 'default' }}>
+      className="mono" style={{ fontSize: 12, padding: '2px 7px', borderRadius: 10, border: `1px solid ${C.line}`, color: C.copper, cursor: onClick ? 'pointer' : 'default' }}>
       {children}
     </span>
   );
@@ -56,9 +56,9 @@ export default function ScenarioSummary({ model, scenario, setSel, onReset, onPl
   return (
     <div>
       <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, flexWrap: 'wrap' }}>
-        <span className="mono" style={{ fontSize: 9, letterSpacing: 1, color: '#0C111C', background: C.copper, borderRadius: 3, padding: '2px 7px', fontWeight: 700 }}>SCENARIO</span>
+        <span className="mono" style={{ fontSize: 12, color: '#0C111C', background: C.copper, borderRadius: 3, padding: '2px 7px', fontWeight: 700 }}>Scenario</span>
         <h3 style={{ margin: 0, fontSize: 15 }}>{scenario.name}</h3>
-        <span className="mono" style={{ fontSize: 10, color: dirColor, border: `1px solid ${dirColor}`, borderRadius: 3, padding: '1px 6px', textTransform: 'uppercase' }}>{direction}</span>
+        <span className="mono" style={{ fontSize: 12, color: dirColor, border: `1px solid ${dirColor}`, borderRadius: 3, padding: '1px 6px', textTransform: 'uppercase' }}>{direction}</span>
       </div>
       <p style={{ margin: '6px 0 8px', fontSize: 12.5, color: C.dim, lineHeight: 1.5 }}>{scenario.desc}</p>
 
@@ -74,8 +74,8 @@ export default function ScenarioSummary({ model, scenario, setSel, onReset, onPl
         <Row label="SIGNED DIFFERENCE" value={`${fmtSigned(model.chainIndexDelta)} vs baseline`} color={model.chainIndexDelta >= 0 ? C.red : C.green} />
       </div>
 
-      <div className="mono" style={{ fontSize: 9, letterSpacing: 1.5, color: C.dim, margin: '8px 0 3px' }}>MOST AFFECTED STAGES (SCENARIO Δ)</div>
-      {topStages.length === 0 && <div className="mono" style={{ fontSize: 11, color: C.faint }}>No stage moved measurably.</div>}
+      <div className="mono" style={{ fontSize: 12, color: C.dim, margin: '8px 0 3px' }}>MOST AFFECTED STAGES (SCENARIO Δ)</div>
+      {topStages.length === 0 && <div className="mono" style={{ fontSize: 12, color: C.faint }}>No stage moved measurably.</div>}
       {topStages.map(([sid, v]) => (
         <div key={sid} role="button" tabIndex={0} onClick={() => setSel({ type: 'stage', id: sid })} onKeyDown={onEnterSpace(() => setSel({ type: 'stage', id: sid }))}
           style={{ display: 'flex', justifyContent: 'space-between', gap: 8, fontSize: 12, cursor: 'pointer', marginBottom: 2 }}>
@@ -84,8 +84,8 @@ export default function ScenarioSummary({ model, scenario, setSel, onReset, onPl
         </div>
       ))}
 
-      <div className="mono" style={{ fontSize: 9, letterSpacing: 1.5, color: C.dim, margin: '8px 0 3px' }}>MOST AFFECTED COUNTRIES (SCENARIO Δ)</div>
-      {topCountries.length === 0 && <div className="mono" style={{ fontSize: 11, color: C.faint }}>No country moved measurably.</div>}
+      <div className="mono" style={{ fontSize: 12, color: C.dim, margin: '8px 0 3px' }}>MOST AFFECTED COUNTRIES (SCENARIO Δ)</div>
+      {topCountries.length === 0 && <div className="mono" style={{ fontSize: 12, color: C.faint }}>No country moved measurably.</div>}
       {topCountries.map(([cid, v]) => (
         <div key={cid} role="button" tabIndex={0} onClick={() => setSel({ type: 'country', id: cid })} onKeyDown={onEnterSpace(() => setSel({ type: 'country', id: cid }))}
           style={{ display: 'flex', justifyContent: 'space-between', gap: 8, fontSize: 12, cursor: 'pointer', marginBottom: 2 }}>
@@ -94,8 +94,8 @@ export default function ScenarioSummary({ model, scenario, setSel, onReset, onPl
         </div>
       ))}
 
-      <div className="mono" style={{ fontSize: 9, letterSpacing: 1.5, color: C.dim, margin: '8px 0 3px' }}>MOST AFFECTED COMPANIES (Δ MODELED CONTRIBUTION)</div>
-      {companyDeltas.length === 0 && <div className="mono" style={{ fontSize: 11, color: C.faint }}>No company contribution moved measurably.</div>}
+      <div className="mono" style={{ fontSize: 12, color: C.dim, margin: '8px 0 3px' }}>MOST AFFECTED COMPANIES (Δ MODELED CONTRIBUTION)</div>
+      {companyDeltas.length === 0 && <div className="mono" style={{ fontSize: 12, color: C.faint }}>No company contribution moved measurably.</div>}
       {companyDeltas.map(([co, d]) => (
         <div key={co.id} role="button" tabIndex={0} onClick={() => setSel({ type: 'company', id: co.id })} onKeyDown={onEnterSpace(() => setSel({ type: 'company', id: co.id }))}
           style={{ display: 'flex', justifyContent: 'space-between', gap: 8, fontSize: 12, cursor: 'pointer', marginBottom: 2 }}>
@@ -106,13 +106,13 @@ export default function ScenarioSummary({ model, scenario, setSel, onReset, onPl
 
       {pathway.length > 1 && (
         <>
-          <div className="mono" style={{ fontSize: 9, letterSpacing: 1.5, color: C.dim, margin: '8px 0 3px' }}>LEADING MODELED PATHWAY</div>
-          <div className="mono" style={{ fontSize: 11, color: C.copper, lineHeight: 1.5 }}>{pathway.join(' → ')}</div>
-          <div className="mono" style={{ fontSize: 9, color: C.faint, marginTop: 2 }}>Graph connectivity + modeled contribution — not a verified physical shipment route. Use “Explain path” for per-edge decomposition.</div>
+          <div className="mono" style={{ fontSize: 12, color: C.dim, margin: '8px 0 3px' }}>Leading modeled pathway</div>
+          <div className="mono" style={{ fontSize: 12, color: C.copper, lineHeight: 1.5 }}>{pathway.join(' → ')}</div>
+          <div className="mono" style={{ fontSize: 12, color: C.faint, marginTop: 2 }}>Graph connectivity + modeled contribution — not a verified physical shipment route. Use “Explain path” for per-edge decomposition.</div>
         </>
       )}
 
-      <div className="mono" style={{ fontSize: 9.5, color: C.amber, background: '#2A1E14', border: `1px solid ${C.copperDim}`, borderRadius: 5, padding: '6px 9px', margin: '10px 0 8px', lineHeight: 1.6 }}>
+      <div className="mono" style={{ fontSize: 12, color: C.amber, background: '#2A1E14', border: `1px solid ${C.copperDim}`, borderRadius: 5, padding: '6px 9px', margin: '10px 0 8px', lineHeight: 1.6 }}>
         MODEL LIMITATIONS — hypothetical scenario over a static curated snapshot with unvalidated propagation priors. Signed differences are modeled sensitivities, not predicted real-world outcomes. History is never rewritten by a scenario.
       </div>
 

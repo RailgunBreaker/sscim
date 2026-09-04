@@ -5,49 +5,66 @@ import NewsTicker from '../components/NewsTicker.jsx';
 import SiteMap from '../components/SiteMap.jsx';
 
 const STYLE = `
-  :root{--bg:#0C111C;--panel:#141B2B;--panel2:#0F1626;--line:#243149;--copper:#C98A3F;--copperDim:#8A6230;--red:#E25C4A;--amber:#DFA83D;--green:#4FA97F;--text:#E9E4D8;--dim:#8C96A8;--faint:#5A6478}
+  :root{--bg:#0C111C;--panel:#141B2B;--panel2:#0F1626;--line:#243149;--copper:#C98A3F;--copperDim:#8A6230;--red:#E25C4A;--amber:#DFA83D;--green:#4FA97F;--text:#E9E4D8;--dim:#8C96A8;--faint:#79849A}
   *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--bg);color:var(--text);font-family:Inter,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
-  .mono{font-family:inherit;font-variant-numeric:tabular-nums}
-  .wrap{max-width:980px;margin:0 auto;padding:0 20px}
+  body{background:var(--bg);color:var(--text);font-family:Inter,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;font-size:15px}
+  .mono{font-variant-numeric:tabular-nums}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
   a{color:var(--copper);text-decoration:none}
-  header{border-bottom:1px solid var(--line);padding:16px 0;position:sticky;top:0;background:rgba(12,17,28,.92);backdrop-filter:blur(6px);z-index:10}
-  header .wrap{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-  .logo{display:flex;align-items:center}.logo img{display:block;width:108px;height:auto;filter:grayscale(1) brightness(0) invert(1)}
-  .tag{font-size:10px;letter-spacing:2px;color:var(--copper)}
-  .badge{font-size:10px;letter-spacing:1.2px;color:var(--amber);border:1px solid var(--amber);border-radius:3px;padding:2px 7px;font-family:inherit;font-weight:600;white-space:nowrap}
-  .btn{display:inline-block;border-radius:5px;padding:9px 18px;font-weight:700;font-size:14px;cursor:pointer;border:1px solid var(--copper);transition:transform .15s ease,box-shadow .15s ease}
-  .btn.solid{background:var(--copper);color:#0C111C}
-  .btn:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(201,138,63,.22)}
-  .hero{padding:72px 0 52px;border-bottom:1px solid var(--line);background:
-    radial-gradient(ellipse 60% 50% at 70% 10%, rgba(201,138,63,.08), transparent),
-    repeating-linear-gradient(90deg, transparent 0 99px, rgba(36,49,73,.35) 99px 100px)}
-  .hero h1{font-size:clamp(30px,5.5vw,52px);line-height:1.12;letter-spacing:-.5px;max-width:760px}
-  .hero h1 em{color:var(--copper);font-style:normal}
-  .hero p{color:var(--dim);max-width:640px;margin:18px 0 26px;font-size:16.5px}
-  .ticker{border-bottom:1px solid var(--line);background:var(--panel2);padding:8px 0;font-size:11px;color:var(--dim);overflow:hidden;white-space:nowrap;position:relative}
-  .ticker::after{content:"";position:absolute;top:0;right:0;bottom:0;width:60px;background:linear-gradient(90deg,transparent,var(--panel2))}
-  section{padding:56px 0;border-bottom:1px solid var(--line)}
-  h2{font-size:24px;margin-bottom:8px}
-  .sub{color:var(--dim);margin-bottom:28px;max-width:640px}
-  .grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
-  .card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:18px;transition:border-color .15s ease,transform .15s ease}
-  .card:hover{border-color:var(--copperDim);transform:translateY(-2px)}
-  .card h3{font-size:15px;margin-bottom:6px}
-  .card .k{font-size:9.5px;letter-spacing:2px;color:var(--copper);display:block;margin-bottom:8px}
-  .card p{font-size:13px;color:var(--dim)}
-  .formula{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:14px 16px;font-size:11.5px;color:var(--text);overflow-x:auto}
-  .formula > div + div{margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}
-  /* Real <button>s. These were clickable <b> elements: not focusable, not
-     announced as controls, and unreachable by keyboard entirely — the
-     language of the whole page could only be changed with a mouse. */
-  .langbar button{cursor:pointer;background:transparent;font-family:inherit;border:1px solid var(--line);border-radius:3px;padding:3px 8px;font-size:10px;color:var(--faint);font-weight:700;transition:background .15s ease,color .15s ease;min-height:24px}
-  .langbar button:hover{color:var(--text);border-color:var(--copperDim)}
-  .langbar button[aria-pressed="true"]{background:var(--copper);color:#0C111C;border-color:var(--copper)}
-  .langbar button:focus-visible{outline:2px solid var(--copper);outline-offset:2px}
-  .disclaimer{border:1px solid var(--copperDim);background:rgba(223,168,61,.06);border-radius:6px;padding:12px 14px;color:var(--amber);font-size:11px;line-height:1.7}
-  footer{padding:28px 0;font-size:10.5px;color:var(--faint);line-height:1.7}
-  @media (max-width:640px){ header .wrap{gap:8px} .badge{display:none} }
+  a:focus-visible,button:focus-visible{outline:2px solid var(--copper);outline-offset:2px;border-radius:3px}
+  header{border-bottom:1px solid var(--line);padding:14px 0;position:sticky;top:0;background:rgba(12,17,28,.94);z-index:10}
+  header .wrap{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .logo{display:flex;align-items:center}.logo img{display:block;width:100px;height:auto;filter:grayscale(1) brightness(0) invert(1)}
+  .productname{font-size:13px;color:var(--faint)}
+  header nav{margin-left:auto;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+  header nav a{font-size:14px;color:var(--dim)}
+  header nav a:hover{color:var(--text)}
+  /* ONE primary action, and it does not lift, glow or slide. A button that
+     animates on hover reads as a marketing page; a button that changes
+     shade reads as a control. */
+  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:40px;border-radius:5px;padding:0 20px;font-weight:600;font-size:15px;cursor:pointer;border:1px solid var(--line);color:var(--text);background:transparent}
+  .btn.solid{background:var(--copper);color:#0C111C;border-color:var(--copper)}
+  .btn:hover{background:rgba(255,255,255,.06)}
+  .btn.solid:hover{filter:brightness(1.06);background:var(--copper)}
+  .hero{padding:64px 0 48px;border-bottom:1px solid var(--line)}
+  .hero .cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:44px;align-items:center}
+  .hero h1{font-size:clamp(28px,3.4vw,40px);line-height:1.2;letter-spacing:-.4px;font-weight:600;max-width:22ch}
+  .hero p{color:var(--dim);margin:18px 0 26px;font-size:16px;max-width:52ch}
+  .cta{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .shot{border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--panel2)}
+  .shot img{display:block;width:100%;height:auto}
+  .shotcap{font-size:13px;color:var(--faint);margin-top:10px;max-width:58ch}
+  @media (max-width:900px){ .hero .cols{grid-template-columns:minmax(0,1fr);gap:28px} .hero h1{max-width:none} }
+  section{padding:52px 0;border-bottom:1px solid var(--line)}
+  h2{font-size:22px;font-weight:600;margin-bottom:6px;letter-spacing:0}
+  .sub{color:var(--dim);margin-bottom:26px;max-width:62ch;font-size:15px}
+  .grid{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+  /* Cards share one boundary and are separated by the grid gap showing the
+     border colour through. Four independent bordered boxes with their own
+     hover lift is what made this read as a template. */
+  .card{background:var(--panel);padding:20px}
+  .card h3{font-size:15px;font-weight:600;margin-bottom:6px;line-height:1.35}
+  .card .k{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);display:block;margin-bottom:10px}
+  .card p{font-size:14px;color:var(--dim)}
+  .formula{background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:16px;font-size:13px;color:var(--text);overflow-x:auto}
+  .formula > div + div{margin-top:10px;padding-top:10px;border-top:1px solid var(--line)}
+  details.peek summary{cursor:pointer;color:var(--copper);font-size:14px;list-style:none;padding:6px 0;display:inline-flex;align-items:center;gap:8px}
+  details.peek summary::-webkit-details-marker{display:none}
+  details.peek summary::before{content:"›";display:inline-block}
+  details.peek[open] summary::before{transform:rotate(90deg)}
+  details.peek > div{padding-top:12px}
+  .langbar button{cursor:pointer;background:transparent;font-family:inherit;border:1px solid var(--line);border-radius:3px;padding:0 9px;min-height:28px;font-size:13px;color:var(--dim);font-weight:500}
+  .langbar button:hover{color:var(--text)}
+  .langbar button[aria-pressed="true"]{background:var(--copper);color:#0C111C;border-color:var(--copper);font-weight:600}
+  .limits{border-left:2px solid var(--copperDim);background:var(--panel2);border-radius:0 6px 6px 0;padding:14px 18px;color:var(--dim);font-size:14px;line-height:1.65;max-width:76ch}
+  .disclaimer{border-left:2px solid var(--copperDim);background:var(--panel2);border-radius:0 6px 6px 0;padding:14px 18px;color:var(--dim);font-size:13px;line-height:1.7}
+  footer{padding:28px 0;font-size:13px;color:var(--faint);line-height:1.7}
+  @media (max-width:640px){
+    header .wrap{gap:10px}
+    header nav{gap:12px;width:100%;margin-left:0}
+    .btn{min-height:44px}
+    .langbar button{min-height:44px}
+  }
 `;
 
 const Html = ({ tag: Tag = 'span', html, ...rest }) => <Tag {...rest} dangerouslySetInnerHTML={{ __html: html }} />;
@@ -65,34 +82,54 @@ export default function Landing() {
     <>
       <style>{STYLE}</style>
 
+      {/* The badge read "SSCIM INTELLIGENCE" next to a logo reading SSCIM,
+          in a header that already carried the full product name in 10px
+          all-caps with 2px of letter-spacing. Three statements of identity
+          and no product state among them. One name, one plain subtitle. */}
       <header>
         <div className="wrap">
           <a className="logo" href="index.html" aria-label="SSCIM home"><img src="sscim-logo.png" alt="SSCIM" /></a>
-          <span className="tag mono">SEMICONDUCTOR SUPPLY CHAIN INTELLIGENCE MAP</span>
-          <span className="badge">SSCIM INTELLIGENCE</span>
-          <div className="langbar mono" role="group" aria-label="Language"
-            style={{ marginLeft: 'auto', display: 'flex', gap: 3 }}>
-            {Object.entries(LANG_LABELS).map(([l, label]) => (
-              <button key={l} type="button" aria-pressed={lang === l}
-                aria-label={LANG_NAMES[l] || label} onClick={() => setLang(l)}>
-                {label}
-              </button>
-            ))}
-          </div>
-          <a href="intro.html" style={{ fontSize: 13 }}>{t('navIntro')}</a>
-          <a href="updates.html" style={{ fontSize: 13 }}>{t('navUpdates')}</a>
-          <a href="docs.html" style={{ fontSize: 13 }}>Documentation</a>
-          <a className="btn solid" href="sscim-app.html">{t('launchDemo')}</a>
+          <span className="productname">{t('productName')}</span>
+          <nav aria-label="Site">
+            <div className="langbar" role="group" aria-label="Language" style={{ display: 'flex', gap: 3 }}>
+              {Object.entries(LANG_LABELS).map(([l, label]) => (
+                <button key={l} type="button" aria-pressed={lang === l}
+                  aria-label={LANG_NAMES[l] || label} onClick={() => setLang(l)}>
+                  {label}
+                </button>
+              ))}
+            </div>
+            <a href="intro.html">{t('navIntro')}</a>
+            <a href="updates.html">{t('navUpdates')}</a>
+            <a href="docs.html">Documentation</a>
+          </nav>
         </div>
       </header>
 
       <NewsTicker />
 
+      {/* The hero used to be a headline, a paragraph and a button on the
+          left with nothing at all on the right — half the fold empty, and
+          the reader had still not seen the product. It now shows the
+          dashboard, captured from the real build by the same run that
+          writes the screenshot record, so the page cannot advertise a
+          product that no longer looks like this. */}
       <div className="hero">
-        <div className="wrap">
-          <Html tag="h1" html={t('heroH1')} />
-          <p>{t('heroP')}</p>
-          <a className="btn solid" href="sscim-app.html">{t('openDashboard')}</a>
+        <div className="wrap cols">
+          <div>
+            <Html tag="h1" html={t('heroH1')} />
+            <p>{t('heroP')}</p>
+            <div className="cta">
+              <a className="btn solid" href="sscim-app.html">{t('openDashboard')}</a>
+              <a className="btn" href="docs/METHODOLOGY.md.html">{t('viewMethodology')}</a>
+            </div>
+          </div>
+          <div>
+            <div className="shot">
+              <img src="product-dashboard.png" alt={t('heroShotAlt')} width="1366" height="936" loading="eager" />
+            </div>
+            <p className="shotcap">{t('shotCaption')}</p>
+          </div>
         </div>
       </div>
 
@@ -100,6 +137,10 @@ export default function Landing() {
         <div className="wrap">
           <h2>{t('h2Ask')}</h2>
           <p className="sub">{t('subAsk')}</p>
+          {/* Placed HERE, beside the first claim the page makes about what
+              the numbers mean, rather than in a footer a reader reaches
+              after they have already formed an impression. */}
+          <p className="limits" style={{ marginBottom: 26 }}>{t('limitsShort')}</p>
           <div className="grid">
             <div className="card"><span className="k mono">{t('card1K')}</span><h3>{t('card1H')}</h3><p>{t('card1P')}</p></div>
             <div className="card"><span className="k mono">{t('card2K')}</span><h3>{t('card2H')}</h3><p>{t('card2P')}</p></div>
@@ -148,13 +189,22 @@ export default function Landing() {
         <div className="wrap">
           <h2>{t('h2Explain')}</h2>
           <p className="sub">{t('subExplain')}</p>
+          {/* The two governing equations used to sit high on the page, open,
+              in 11.5px type. Transparency is the point of this product, so
+              they stay — one click away, at a size that can be read, after
+              the page has said what the product is for. */}
+          <details className="peek">
+            <summary>{t('methodologyPeek')}</summary>
+            <div>
           <div className="formula mono">
             <div><Tex tex={"\\text{struct}_s = w_{\\text{ni}}NI_s + w_{\\text{geo}}GEO_s + w_{\\text{pol}}POL_s + w_{\\nu}(10\\nu_s) + w_{\\text{mkt}}\\,\\text{mkt}_s"} block /></div>
             <div><Tex tex={"z_{e,s}=d_{e,s}\\,g(q_e)\\,\\alpha_{e,s}\\,R_e(t),\\qquad D_{ba}=f_d\\,q_{ba}\\big[\\phi+(1-\\phi)\\nu_a\\big]"} block /></div>
-            <div style={{ marginTop: 6, fontSize: 10.5 }}>
+            <div style={{ marginTop: 10, fontSize: 13, color: 'var(--dim)' }}>
               {t('formulaNote')} <span style={{ color: 'var(--copper)' }}>{t('sourcesTag')}</span>
             </div>
           </div>
+            </div>
+          </details>
         </div>
       </section>
 

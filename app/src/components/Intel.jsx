@@ -55,15 +55,27 @@ import EventFeed from './EventFeed.jsx';
    its labels when there is not enough width.
    ==================================================================== */
 
+/* [key, english label, i18n key]. The third entry is the ALL-CAPS string
+   the translation dictionaries are keyed on; it stays so that the four
+   languages keep working, while English now renders a sentence-case label
+   without a decorative glyph in front of it. A star and a pair of arrows
+   were doing no work that the word beside them was not already doing. */
 const TABS = [
-  ['watch', '★ WATCH'],
-  ['explore', '⇄ EXPLORE'],
-  ['events', 'EVENTS'],
-  ['history', 'HISTORY'],
-  ['companies', 'COMPANIES'],
-  ['movers', 'MOVERS 7D'],
-  ['capital', 'CAPITAL'],
+  ['watch', 'Watchlist', '★ WATCH'],
+  ['explore', 'Explore', '⇄ EXPLORE'],
+  ['events', 'Events', 'EVENTS'],
+  ['history', 'History', 'HISTORY'],
+  ['companies', 'Companies', 'COMPANIES'],
+  ['movers', 'Movers 7d', 'MOVERS 7D'],
+  ['capital', 'Capital', 'CAPITAL'],
 ];
+
+/* English falls through to the plain label; every other language uses the
+   dictionary entry keyed on the original string. */
+const tabLabel = (english, key) => {
+  const translated = t(key);
+  return translated === key ? english : translated;
+};
 
 export default function Intel({ sel, setSel, model, scenario, onResetScenario, onPlayScenario, scenarioActive, horizontal, feedTab, setFeedTab, baseGraph }) {
   const { data, engine } = useVault();
@@ -112,18 +124,21 @@ export default function Intel({ sel, setSel, model, scenario, onResetScenario, o
             // tab reachable without shrinking the type below legibility.
             overflowX: 'auto', scrollbarWidth: 'thin',
           }}>
-          {TABS.map(([k, v]) => [k, t(v)]).map(([k, v]) => (
+          {TABS.map(([k, english, key]) => (
             <button key={k} id={tabId(k)} role="tab" type="button"
               aria-selected={feedTab === k} aria-controls={panelId(k)}
               tabIndex={feedTab === k ? 0 : -1}
-              onClick={() => setFeedTab(k)} className="mono"
+              onClick={() => setFeedTab(k)} className="ui-button"
               style={{
-                flex: '1 0 auto', minWidth: 78, padding: '8px 10px', background: 'transparent', border: 'none',
+                flex: '1 0 auto', minWidth: 84, padding: '10px 14px', background: 'transparent', border: 'none',
                 borderBottom: feedTab === k ? `2px solid ${C.copper}` : '2px solid transparent',
-                color: feedTab === k ? C.copper : C.dim, fontSize: 9.5, letterSpacing: 1.5,
+                color: feedTab === k ? C.text : C.dim,
+                /* Was 9.5px with 1.5px of letter-spacing, which is smaller
+                   than the body text it navigates. */
+                fontSize: 13, fontWeight: feedTab === k ? 600 : 400,
                 cursor: 'pointer', fontFamily: 'inherit', whiteSpace: 'nowrap',
               }}>
-              {v}
+              {tabLabel(english, key)}
             </button>
           ))}
         </div>
@@ -146,20 +161,20 @@ export default function Intel({ sel, setSel, model, scenario, onResetScenario, o
 
           {feedTab === 'capital' && (
             <>
-              <div className="mono" style={{ fontSize: 9.5, color: C.faint, marginBottom: 8, lineHeight: 1.5 }}>
+              <div className="mono" style={{ fontSize: 12, color: C.faint, marginBottom: 8, lineHeight: 1.5 }}>
                 CAPITAL POWER = Σ ownership% × company systemic criticality (§10 in ⓘ Methodology). <b>Not</b> a 0–10 score — it&apos;s an unbounded ranking number, useful only to compare owners against each other. <span style={{ color: C.amber }}>Amber = state-linked capital.</span> Data from public filings.
               </div>
               {CAP_RANK.slice(0, 14).map((r, i) => (
                 <div key={r.o} style={{ border: `1px solid ${C.line}`, background: C.panel, borderRadius: 6, padding: '7px 10px', marginBottom: 6 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                    <span className="mono" style={{ fontSize: 10, color: C.faint, width: 20 }}>#{i + 1}</span>
+                    <span className="mono" style={{ fontSize: 12, color: C.faint, width: 20 }}>#{i + 1}</span>
                     <span style={{ fontSize: 12.5, fontWeight: 600, flex: 1, color: r.gov ? C.amber : C.text }}>{r.o}</span>
-                    <span className="mono" style={{ fontSize: 11, fontWeight: 600, color: C.copper }}
+                    <span className="mono" style={{ fontSize: 12, fontWeight: 600, color: C.copper }}
                       title="Capital Power = Σ (ownership share × that company's systemic criticality, 0–10). Unbounded — compares owners relative to each other, not a 0–10 score.">
                       {r.power.toFixed(2)}
                     </span>
                   </div>
-                  <div className="mono" style={{ fontSize: 8.5, color: C.faint, marginTop: 3, lineHeight: 1.5 }}>
+                  <div className="mono" style={{ fontSize: 12, color: C.faint, marginTop: 3, lineHeight: 1.5 }}>
                     {r.holdings.slice(0, 4).map(([cid, sh]) => `${COMPANY_BY_ID[cid].name} ${(sh * 100).toFixed(1)}%`).join(' · ')}
                   </div>
                 </div>
@@ -169,7 +184,7 @@ export default function Intel({ sel, setSel, model, scenario, onResetScenario, o
 
           {feedTab === 'movers' && (
             <>
-              <div className="mono" style={{ fontSize: 9.5, color: C.faint, marginBottom: 8, lineHeight: 1.5 }}>
+              <div className="mono" style={{ fontSize: 12, color: C.faint, marginBottom: 8, lineHeight: 1.5 }}>
                 Score = each stage&apos;s baseline operational-impact display index (0–10, 5 = neutral), recomputed 7 days ago via engine replay. Δ = today&apos;s score minus that — never the active scenario, which never touches this baseline history.
               </div>
               {MOVERS7D.slice(0, 12).map((m) => {
@@ -181,8 +196,8 @@ export default function Intel({ sel, setSel, model, scenario, onResetScenario, o
                     title={STAGE_INTRO[m.id]}
                     style={{ border: `1px solid ${C.line}`, background: C.panel, borderRadius: 6, padding: '7px 10px', marginBottom: 6, display: 'flex', alignItems: 'center', gap: 8 }}>
                     <span style={{ fontSize: 12.5, fontWeight: 600, flex: 1 }}>{st.name}</span>
-                    <span className="mono" style={{ fontSize: 10, color: C.dim }} title="Baseline operational-impact display index right now: 0–10, 5=neutral, above 5=net adverse, below 5=net mitigating.">{m.now.toFixed(1)} / 10</span>
-                    <span className="mono" style={{ fontSize: 11, fontWeight: 600, color: Math.abs(m.d) < 0.03 ? C.faint : up ? C.red : C.green, width: 52, textAlign: 'right' }}
+                    <span className="mono" style={{ fontSize: 12, color: C.dim }} title="Baseline operational-impact display index right now: 0–10, 5=neutral, above 5=net adverse, below 5=net mitigating.">{m.now.toFixed(1)} / 10</span>
+                    <span className="mono" style={{ fontSize: 12, fontWeight: 600, color: Math.abs(m.d) < 0.03 ? C.faint : up ? C.red : C.green, width: 52, textAlign: 'right' }}
                       title="Change vs. the same baseline score 7 days ago (engine replay, not a live time series).">
                       {Math.abs(m.d) < 0.03 ? '—' : `${up ? '▲' : '▼'} ${Math.abs(m.d).toFixed(2)}`}
                     </span>
@@ -194,7 +209,7 @@ export default function Intel({ sel, setSel, model, scenario, onResetScenario, o
 
           {feedTab === 'companies' && (
             <>
-              <div className="mono" style={{ fontSize: 9.5, color: C.faint, marginBottom: 8, lineHeight: 1.5 }}>
+              <div className="mono" style={{ fontSize: 12, color: C.faint, marginBottom: 8, lineHeight: 1.5 }}>
                 Ranked by systemic criticality (0–10): the modeled chain effect if that company&apos;s production were fully disrupted — see a company&apos;s own detail view for its separate vulnerability/contribution numbers (§9 in ⓘ Methodology).
               </div>
               {COMPANY_RANK.slice(0, 18).map((co, i) => {
@@ -205,12 +220,12 @@ export default function Intel({ sel, setSel, model, scenario, onResetScenario, o
                     role="button" tabIndex={0} onKeyDown={onEnterSpace(() => setSel({ type: 'company', id: co.id }))}
                     title={introForCompany(co, { STAGE_BY_ID, COUNTRY_NAMES, CUSTOMERS, SUPPLIERS })}
                     style={{ border: `1px solid ${active ? C.copper : C.line}`, background: active ? '#1A2132' : C.panel, borderRadius: 6, padding: '7px 10px', marginBottom: 6, display: 'flex', alignItems: 'center', gap: 8 }}>
-                    <span className="mono" style={{ fontSize: 10, color: C.faint, width: 20 }}>#{i + 1}</span>
+                    <span className="mono" style={{ fontSize: 12, color: C.faint, width: 20 }}>#{i + 1}</span>
                     <Logo cid={co.id} />
                     <span style={{ fontSize: 12.5, fontWeight: 600, flex: 1 }}>{co.name}</span>
                     <Quote quote={(QUOTES || {})[co.id]} compact />
-                    <span className="mono" style={{ fontSize: 9.5, color: C.dim }}>HQ: {COUNTRY_NAMES[co.country]}</span>
-                    <span className="mono" style={{ fontSize: 11, fontWeight: 600, color: riskColor(criticality) }}
+                    <span className="mono" style={{ fontSize: 12, color: C.dim }}>HQ: {COUNTRY_NAMES[co.country]}</span>
+                    <span className="mono" style={{ fontSize: 12, fontWeight: 600, color: riskColor(criticality) }}
                       title="Systemic criticality: modeled chain effect if this company's production were fully disrupted. Scale 0–10.">
                       {criticality.toFixed(2)} / 10
                     </span>

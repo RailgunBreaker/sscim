@@ -26,27 +26,39 @@ export default function CountryList({ model }) {
       .sort((a, b) => Math.abs(b.e?.value ?? 0) - Math.abs(a.e?.value ?? 0));
   }, [lens, model, selected, engine, data, COUNTRY_NAMES]);
 
+  /* Sixteen bordered rectangles in a grid, each carrying a full 1px border
+     whether or not it was selected, read as sixteen buttons — and a reader
+     scanning for the highest score had to find it among sixteen equally
+     loud boxes. A border now means SELECTED and nothing else; the rest is a
+     plain ranked list separated by hairlines, which is what it is. */
   return (
-    <div style={{ marginTop: 8 }}>
-      <div className="mono" style={{ fontSize: 9, letterSpacing: 1.5, color: C.faint, marginBottom: 4 }}>
-        COUNTRIES · KEYBOARD LIST (alternative to the map)
-      </div>
-      <ul role="listbox" aria-label="Countries" style={{ listStyle: 'none', margin: 0, padding: 0, maxHeight: 132, overflowY: 'auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', gap: 3 }}>
+    <div style={{ marginTop: 12 }}>
+      <h3 style={{ fontSize: 13, fontWeight: 600, color: C.text, margin: '0 0 2px' }}>Countries by exposure</h3>
+      <p style={{ fontSize: 12, color: C.faint, margin: '0 0 6px' }}>
+        Ranked on the metric currently shaded. A keyboard-reachable alternative to the map markers.
+      </p>
+      <ul role="listbox" aria-label="Countries by exposure" style={{ listStyle: 'none', margin: 0, padding: 0, maxHeight: 168, overflowY: 'auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(190px, 1fr))', gap: 0 }}>
         {rows.map(({ id, name, e }) => {
           const on = selected?.type === 'country' && selected.id === id;
           return (
             <li key={id} role="option" aria-selected={on} tabIndex={0}
+              className="row-interactive"
               onClick={() => setSel({ type: 'country', id })}
               onKeyDown={onEnterSpace(() => setSel({ type: 'country', id }))}
               aria-label={`${name}: ${e?.aria || ''}`}
               style={{
-                display: 'flex', alignItems: 'center', gap: 6, cursor: 'pointer', borderRadius: 4,
-                padding: '3px 7px', fontSize: 11, border: `1px solid ${on ? C.copper : C.line}`,
-                background: on ? '#1A2132' : C.panel, color: C.text,
+                display: 'flex', alignItems: 'center', gap: 8, borderRadius: 4,
+                padding: '6px 8px', fontSize: 13,
+                /* Depth by background, structure by a hairline, border only
+                   for selection. */
+                border: on ? `1px solid ${C.copper}` : '1px solid transparent',
+                borderBottom: on ? `1px solid ${C.copper}` : `1px solid ${C.line}`,
+                background: on ? 'rgba(201,138,63,.12)' : 'transparent',
+                color: C.text,
               }}>
-              <span aria-hidden style={{ fontSize: 12 }}>{flagEmoji(id)}</span>
+              <span aria-hidden style={{ fontSize: 14 }}>{flagEmoji(id)}</span>
               <span style={{ flex: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{name}</span>
-              {e?.badge && <span className="mono" style={{ fontSize: 9.5, color: e.color }}>{e.badge}</span>}
+              {e?.badge && <span className="mono" style={{ fontSize: 13, fontWeight: 600, color: e.color }}>{e.badge}</span>}
             </li>
           );
         })}

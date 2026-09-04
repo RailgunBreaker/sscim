@@ -80,10 +80,32 @@ describe('App smoke (static snapshot, Leaflet mocked)', () => {
     await flush(0);
 
     const text = container.textContent || '';
-    // The interaction lens bar and research-language footer should render
-    // once the vault is ready (snapshot fallback).
-    expect(text).toContain('LENS');
+    // The workspace bar and research-language footer should render once the
+    // vault is ready (snapshot fallback). The lens group used to be labelled
+    // "LENS" in 9px caps; it is now "Shading", subordinate to the workspace
+    // control rather than a peer of it.
+    expect(text).toContain('Shading');
+    expect(text).toContain('Map');
+    expect(text).toContain('Network');
+    expect(text).toContain('Facilities');
     expect(text.toUpperCase()).toContain('SSCIM INTELLIGENCE');
+
+    /* The header carried a hand-written build label reading
+       "v4 · OSM MAP · COMPANY SPREAD" — two model versions and one
+       application version out of date. It must not come back. */
+    expect(text).not.toContain('OSM MAP · COMPANY SPREAD');
+    expect(text).not.toContain('v4 ·');
+
+    /* Primary actions are named, not decorated. */
+    expect(text).not.toContain('GP Briefing');
+    expect(text).not.toContain('? Guide');
+    expect(text).toContain('Generate briefing');
+    expect(text).toContain('Help');
+
+    /* Internal architecture stays in the developer documentation. */
+    expect(text).not.toContain('LAYER 1');
+    expect(text).not.toContain('LAYER 2');
+    expect(text).not.toContain('LAYER 3');
 
     await act(async () => { root.unmount(); });
     container.remove();
@@ -140,16 +162,19 @@ describe('App smoke (static snapshot, Leaflet mocked)', () => {
     // Switch the Layer-3 feed to the HISTORY tab. It replays a decade of the
     // index and attributes every event, so a mount-time crash or a divide-by-
     // zero in the analysis would only ever show up here.
-    const historyTab = [...container.querySelectorAll('button')].find((b) => (b.textContent || '').trim() === 'HISTORY');
+    const historyTab = [...container.querySelectorAll('button')].find((b) => (b.textContent || '').trim() === 'History');
     expect(historyTab).toBeTruthy();
+    /* A tab is a tab, not a styled div: the roving-tabindex contract has to
+       survive the restyling. */
+    expect(historyTab.getAttribute('role')).toBe('tab');
     await act(async () => { historyTab.click(); });
     await flush(0);
 
     const text = container.textContent || '';
-    expect(text).toContain('DECADE REPLAY');
-    expect(text).toContain('EVENTS BY IMPACT');
+    expect(text).toContain('Ten-year replay');
+    expect(text).toContain('Events by impact');
     // The year table should cover more than a single year of history.
-    expect(text).toContain('BY YEAR');
+    expect(text).toContain('By year');
     expect(text).toMatch(/20(1[6-9]|2[0-6])/);
 
     await act(async () => { root.unmount(); });

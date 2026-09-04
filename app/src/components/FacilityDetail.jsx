@@ -28,8 +28,8 @@ import TrackButton from './TrackButton.jsx';
 
 const Row = ({ k, v }) => (
   <div style={{ display: 'flex', gap: 8, padding: '2px 0', borderBottom: `1px solid ${C.line}` }}>
-    <span className="mono" style={{ fontSize: 9.5, letterSpacing: 0.6, color: C.faint, width: 118, flexShrink: 0 }}>{k}</span>
-    <span style={{ fontSize: 11, color: C.text, lineHeight: 1.5 }}>{v}</span>
+    <span className="mono" style={{ fontSize: 12, color: C.faint, width: 118, flexShrink: 0 }}>{k}</span>
+    <span style={{ fontSize: 12, color: C.text, lineHeight: 1.5 }}>{v}</span>
   </div>
 );
 
@@ -47,7 +47,7 @@ export default function FacilityDetail({ facilityId, setSel, model }) {
   const profile = useMemo(() => (facility ? facilityProfile(facility, ctx) : null), [facility, ctx]);
 
   if (!facility || !profile) {
-    return <div className="mono" style={{ fontSize: 11, color: C.faint }}>No modeled facility with id “{facilityId}”.</div>;
+    return <div className="mono" style={{ fontSize: 12, color: C.faint }}>No modeled facility with id “{facilityId}”.</div>;
   }
 
   const conn = facilityConnectivity(FACILITY_NETWORK, facility.id);
@@ -61,16 +61,16 @@ export default function FacilityDetail({ facilityId, setSel, model }) {
     if (!other) return null;
     return (
       <li key={`${dir}:${l.from}:${l.to}`} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '3px 6px', border: `1px solid ${C.line}`, borderRadius: 4, background: C.panel }}>
-        <span aria-hidden style={{ fontSize: 10 }}>{flagEmoji(other.country)}</span>
+        <span aria-hidden style={{ fontSize: 12 }}>{flagEmoji(other.country)}</span>
         <button type="button" onClick={() => setSel({ type: 'facility', id: other.id })}
-          style={{ flex: 1, textAlign: 'left', background: 'transparent', border: 'none', padding: 0, font: 'inherit', fontSize: 10.5, color: C.text, cursor: 'pointer', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+          style={{ flex: 1, textAlign: 'left', background: 'transparent', border: 'none', padding: 0, font: 'inherit', fontSize: 12, color: C.text, cursor: 'pointer', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
           {other.name}
         </button>
-        <span className="mono" style={{ fontSize: 8.5, color: C.faint, whiteSpace: 'nowrap' }}>
+        <span className="mono" style={{ fontSize: 12, color: C.faint, whiteSpace: 'nowrap' }}>
           {/* the stage the OTHER end of the link occupies */}
           {(STAGE_BY_ID[dir === 'out' ? l.toStage : l.fromStage]?.name || '').slice(0, 16)}
         </span>
-        <span className="mono" style={{ fontSize: 9.5, color: C.copper, width: 34, textAlign: 'right' }}
+        <span className="mono" style={{ fontSize: 12, color: C.copper, width: 34, textAlign: 'right' }}
           title="Strength relative to the strongest modeled link in the snapshot">{pct(l.rel ?? 0)}</span>
       </li>
     );
@@ -83,14 +83,14 @@ export default function FacilityDetail({ facilityId, setSel, model }) {
         <h3 style={{ margin: 0, fontSize: 15, lineHeight: 1.3, flex: 1 }}>{facility.name}</h3>
         <TrackButton type="facility" id={facility.id} />
       </div>
-      <div className="mono" style={{ fontSize: 9.5, letterSpacing: 1, color: C.copper, margin: '4px 0 8px' }}>
+      <div className="mono" style={{ fontSize: 12, color: C.copper, margin: '4px 0 8px' }}>
         {profile.headline.toUpperCase()}
       </div>
 
       <p style={{ margin: '0 0 10px', fontSize: 12.5, color: C.dim, lineHeight: 1.6 }}>{profile.intro}</p>
 
       {/* ---- what it is ---- */}
-      <div className="mono" style={{ fontSize: 9, letterSpacing: 2, color: C.dim, margin: '0 0 4px' }}>PROFILE</div>
+      <div className="mono" style={{ fontSize: 12, color: C.dim, margin: '0 0 4px' }}>PROFILE</div>
       <div style={{ marginBottom: 10 }}>
         {profile.facts.map(([k, v]) => (
           <Row key={k} k={k.toUpperCase()} v={k === 'Operator'
@@ -105,20 +105,20 @@ export default function FacilityDetail({ facilityId, setSel, model }) {
       </div>
 
       {/* ---- where it sits ---- */}
-      <div className="mono" style={{ fontSize: 9, letterSpacing: 2, color: C.dim, margin: '0 0 4px' }}>
+      <div className="mono" style={{ fontSize: 12, color: C.dim, margin: '0 0 4px' }}>
         STAGES FED · SHARE OF THAT STAGE&apos;S MODELED SITES
       </div>
       <div style={{ display: 'grid', gap: 2, marginBottom: 10 }}>
         {profile.stageRoles.map((r) => (
           <div key={r.stageId} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <button type="button" onClick={() => setSel({ type: 'stage', id: r.stageId })}
-              style={{ flex: '0 0 150px', textAlign: 'left', background: 'transparent', border: 'none', padding: 0, font: 'inherit', fontSize: 11, color: C.text, cursor: 'pointer' }}>
+              style={{ flex: '0 0 150px', textAlign: 'left', background: 'transparent', border: 'none', padding: 0, font: 'inherit', fontSize: 12, color: C.text, cursor: 'pointer' }}>
               {r.stageName}
             </button>
             <div style={{ flex: 1, height: 5, background: C.panel, borderRadius: 3, overflow: 'hidden' }}>
               <div style={{ width: `${Math.min(100, r.share * 100)}%`, height: '100%', background: C.copper, opacity: 0.8 }} />
             </div>
-            <span className="mono" style={{ fontSize: 10, width: 38, textAlign: 'right', color: live ? C.copper : C.faint }}>
+            <span className="mono" style={{ fontSize: 12, width: 38, textAlign: 'right', color: live ? C.copper : C.faint }}>
               {live ? pct(r.share) : '—'}
             </span>
           </div>
@@ -126,11 +126,11 @@ export default function FacilityDetail({ facilityId, setSel, model }) {
       </div>
 
       {/* ---- network ---- */}
-      <div className="mono" style={{ fontSize: 9, letterSpacing: 2, color: C.dim, margin: '0 0 4px' }}>
+      <div className="mono" style={{ fontSize: 12, color: C.dim, margin: '0 0 4px' }}>
         MODELED SITE-TO-SITE LINKS ({conn.degree})
       </div>
       {conn.degree === 0 ? (
-        <div className="mono" style={{ fontSize: 10, color: C.faint, lineHeight: 1.6, marginBottom: 10 }}>
+        <div className="mono" style={{ fontSize: 12, color: C.faint, lineHeight: 1.6, marginBottom: 10 }}>
           No link in the modeled set touches this site. That happens when its operator has no customer edge in the
           sample, when no stage it feeds directly adjoins a customer&apos;s stage, or when its links fell outside the
           displayed cap — not necessarily that the site is unconnected in reality.
@@ -139,7 +139,7 @@ export default function FacilityDetail({ facilityId, setSel, model }) {
         <div style={{ marginBottom: 10 }}>
           {edges.outbound.length > 0 && (
             <>
-              <div className="mono" style={{ fontSize: 8.5, color: C.faint, margin: '2px 0 3px' }}>SUPPLIES →</div>
+              <div className="mono" style={{ fontSize: 12, color: C.faint, margin: '2px 0 3px' }}>Supplies →</div>
               <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'grid', gap: 2 }}>
                 {edges.outbound.slice(0, 6).map((l) => linkRow(l, 'out'))}
               </ul>
@@ -147,13 +147,13 @@ export default function FacilityDetail({ facilityId, setSel, model }) {
           )}
           {edges.inbound.length > 0 && (
             <>
-              <div className="mono" style={{ fontSize: 8.5, color: C.faint, margin: '6px 0 3px' }}>← SUPPLIED BY</div>
+              <div className="mono" style={{ fontSize: 12, color: C.faint, margin: '6px 0 3px' }}>← Supplied by</div>
               <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'grid', gap: 2 }}>
                 {edges.inbound.slice(0, 6).map((l) => linkRow(l, 'in'))}
               </ul>
             </>
           )}
-          <div className="mono" style={{ fontSize: 8.5, color: C.faint, marginTop: 5, lineHeight: 1.6 }}>
+          <div className="mono" style={{ fontSize: 12, color: C.faint, marginTop: 5, lineHeight: 1.6 }}>
             A modeled link, not a shipment route: company-level supplier-revenue share × each site&apos;s share of its
             stage × the engine&apos;s input-dependence prior. The percentage is strength relative to the strongest
             modeled link in the snapshot — an ordering, not a volume. No dataset here records which plant ships to
@@ -168,12 +168,12 @@ export default function FacilityDetail({ facilityId, setSel, model }) {
         <Chip label={COUNTRY_NAMES[facility.country]} onClick={() => setSel({ type: 'country', id: facility.country })} outline />
       </div>
       {impact !== 0 && (
-        <div className="mono" style={{ fontSize: 10.5, color: C.amber }}>
+        <div className="mono" style={{ fontSize: 12, color: C.amber }}>
           operational effect at this site&apos;s stages {fmtSigned(impact)}
         </div>
       )}
 
-      <div className="mono" style={{ fontSize: 8.5, color: C.faint, marginTop: 8, lineHeight: 1.7 }}>
+      <div className="mono" style={{ fontSize: 12, color: C.faint, marginTop: 8, lineHeight: 1.7 }}>
         {profile.caveats.map((c) => <div key={c} style={{ marginBottom: 2 }}>· {c}</div>)}
       </div>
     </div>
