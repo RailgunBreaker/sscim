@@ -2,7 +2,7 @@
   "modelVersion": "sscim-model-v7-exposure-robustness",
   "datasetAsOf": "2026-09-04",
   "snapshotDate": "2026-09-04",
-  "generatedAt": "2026-09-03T19:37:46.928Z",
+  "generatedAt": "2026-09-04T05:28:58.889Z",
   "design": {
     "method": "Saltelli sampling with Sobol first-order and total-order estimators, over the registry assumption box",
     "generator": "splitmix32, fixed seed — no unseeded randomness anywhere in this path",
@@ -67,7 +67,7 @@
       },
       {
         "name": "minimumDependencyFactor",
-        "symbol": "phi",
+        "symbol": "\\phi",
         "definition": "Floor on the dependency multiplier, so a fully substitutable input (non-substitutability 0) still transmits a residual fraction phi of the downstream coefficient rather than exactly zero.",
         "low": 0.1,
         "base": 0.25,
@@ -157,7 +157,7 @@
       },
       {
         "name": "rampingSiteWeight",
-        "symbol": "w_ramp",
+        "symbol": "w_{\\mathrm{ramp}}",
         "definition": "Operational weight of a site whose status is \"ramping\" when computing the modeled facility footprint. Operating sites are 1; idle and under-construction sites are 0.",
         "low": 0.25,
         "base": 0.5,
@@ -181,7 +181,7 @@
     "structuralWeights": [
       {
         "name": "structuralWeight.networkInfluence",
-        "symbol": "w^struct_NI",
+        "symbol": "w^{\\mathrm{struct}}_{\\mathrm{NI}}",
         "definition": "Raw weight of the network-influence component in the structural vulnerability index.",
         "low": 0.1875,
         "base": 0.25,
@@ -204,7 +204,7 @@
       },
       {
         "name": "structuralWeight.geo",
-        "symbol": "w^struct_geo",
+        "symbol": "w^{\\mathrm{struct}}_{\\mathrm{geo}}",
         "definition": "Raw weight of the geographic-concentration (HHI) component in the structural vulnerability index.",
         "low": 0.15,
         "base": 0.2,
@@ -227,7 +227,7 @@
       },
       {
         "name": "structuralWeight.policy",
-        "symbol": "w^struct_pol",
+        "symbol": "w^{\\mathrm{struct}}_{\\mathrm{pol}}",
         "definition": "Raw weight of the policy-exposure component in the structural vulnerability index.",
         "low": 0.15,
         "base": 0.2,
@@ -250,7 +250,7 @@
       },
       {
         "name": "structuralWeight.nonSubstitutability",
-        "symbol": "w^struct_nu",
+        "symbol": "w^{\\mathrm{struct}}_{\\nu}",
         "definition": "Raw weight of the non-substitutability (specificity) component in the structural vulnerability index.",
         "low": 0.1125,
         "base": 0.15,
@@ -273,7 +273,7 @@
       },
       {
         "name": "structuralWeight.market",
-        "symbol": "w^struct_mkt",
+        "symbol": "w^{\\mathrm{struct}}_{\\mathrm{mkt}}",
         "definition": "Raw weight of the market-importance component in the structural vulnerability index.",
         "low": 0.075,
         "base": 0.1,
@@ -508,7 +508,7 @@
       },
       {
         "key": "minimumDependencyFactor",
-        "symbol": "phi",
+        "symbol": "\\phi",
         "units": "dimensionless",
         "low": 0.1,
         "base": 0.25,
@@ -528,7 +528,7 @@
       },
       {
         "key": "rampingSiteWeight",
-        "symbol": "w_ramp",
+        "symbol": "w_{\\mathrm{ramp}}",
         "units": "dimensionless",
         "low": 0.25,
         "base": 0.5,
@@ -538,7 +538,7 @@
       },
       {
         "key": "structuralWeight.networkInfluence",
-        "symbol": "w^struct_NI",
+        "symbol": "w^{\\mathrm{struct}}_{\\mathrm{NI}}",
         "units": "dimensionless",
         "low": 0.1875,
         "base": 0.25,
@@ -548,7 +548,7 @@
       },
       {
         "key": "structuralWeight.geo",
-        "symbol": "w^struct_geo",
+        "symbol": "w^{\\mathrm{struct}}_{\\mathrm{geo}}",
         "units": "dimensionless",
         "low": 0.15,
         "base": 0.2,
@@ -558,7 +558,7 @@
       },
       {
         "key": "structuralWeight.policy",
-        "symbol": "w^struct_pol",
+        "symbol": "w^{\\mathrm{struct}}_{\\mathrm{pol}}",
         "units": "dimensionless",
         "low": 0.15,
         "base": 0.2,
@@ -568,7 +568,7 @@
       },
       {
         "key": "structuralWeight.nonSubstitutability",
-        "symbol": "w^struct_nu",
+        "symbol": "w^{\\mathrm{struct}}_{\\nu}",
         "units": "dimensionless",
         "low": 0.1125,
         "base": 0.15,
@@ -578,7 +578,7 @@
       },
       {
         "key": "structuralWeight.market",
-        "symbol": "w^struct_mkt",
+        "symbol": "w^{\\mathrm{struct}}_{\\mathrm{mkt}}",
         "units": "dimensionless",
         "low": 0.075,
         "base": 0.1,
@@ -640,7 +640,7 @@
       },
       {
         "key": "minimumDependencyFactor",
-        "symbol": "phi",
+        "symbol": "\\phi",
         "low": 0.1,
         "high": 0.4,
         "atLow": 6.004579611535215,
@@ -664,7 +664,7 @@
       },
       {
         "key": "rampingSiteWeight",
-        "symbol": "w_ramp",
+        "symbol": "w_{\\mathrm{ramp}}",
         "low": 0.25,
         "high": 0.75,
         "atLow": 6.027796984877245,
@@ -676,7 +676,7 @@
       },
       {
         "key": "structuralWeight.networkInfluence",
-        "symbol": "w^struct_NI",
+        "symbol": "w^{\\mathrm{struct}}_{\\mathrm{NI}}",
         "low": 0.1875,
         "high": 0.3125,
         "atLow": 6.027796984877245,
@@ -688,7 +688,7 @@
       },
       {
         "key": "structuralWeight.geo",
-        "symbol": "w^struct_geo",
+        "symbol": "w^{\\mathrm{struct}}_{\\mathrm{geo}}",
         "low": 0.15,
         "high": 0.25,
         "atLow": 6.027796984877245,
@@ -700,7 +700,7 @@
       },
       {
         "key": "structuralWeight.policy",
-        "symbol": "w^struct_pol",
+        "symbol": "w^{\\mathrm{struct}}_{\\mathrm{pol}}",
         "low": 0.15,
         "high": 0.25,
         "atLow": 6.027796984877245,
@@ -712,7 +712,7 @@
       },
       {
         "key": "structuralWeight.nonSubstitutability",
-        "symbol": "w^struct_nu",
+        "symbol": "w^{\\mathrm{struct}}_{\\nu}",
         "low": 0.1125,
         "high": 0.1875,
         "atLow": 6.027796984877245,
@@ -724,7 +724,7 @@
       },
       {
         "key": "structuralWeight.market",
-        "symbol": "w^struct_mkt",
+        "symbol": "w^{\\mathrm{struct}}_{\\mathrm{mkt}}",
         "low": 0.075,
         "high": 0.125,
         "atLow": 6.027796984877245,

@@ -17,7 +17,7 @@
 > | `specificityFloor` | `minimumDependencyFactor` |
 > | `contributionTolerance` truncation | nothing — v7 propagation is exact on a finite DAG |
 > | per-stage propagation combined with a noisy-OR | one joint propagation of the whole incident source vector |
-> | full severity injected at every tagged stage | an explicit stage exposure $lpha_{e,s} \in [0,1]$ per stage |
+> | full severity injected at every tagged stage | an explicit stage exposure $\alpha_{e,s} \in [0,1]$ per stage |
 > | the 5% hazard scoring threshold | continuous exposure from the modeled facility footprint; 5% is a display preference only |
 > | country `directSignals` | removed — an incident reaches a country once, through its stage source |
 > | record-count policy saturation | policy families with a bounded family-level aggregator |

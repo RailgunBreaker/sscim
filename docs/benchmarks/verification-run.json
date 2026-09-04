@@ -1,99 +1,89 @@
 {
-  "recordedAt": "2026-09-03T19:37:47.874Z",
-  "commit": "cf35ab5446d4e54a6eac162d988a9639ccab311d",
+  "recordedAt": "2026-09-04T05:31:16.036Z",
+  "commit": null,
   "modelVersion": "sscim-model-v7-exposure-robustness",
   "datasetAsOf": "2026-09-04",
   "commands": [
     {
       "command": "server: npm ci",
       "result": "pass",
-      "seconds": 11.2,
-      "detail": "added 113 packages, and audited 114 packages in 11s"
+      "seconds": 201.8,
+      "detail": "added 113 packages, and audited 114 packages in 3m"
     },
     {
       "command": "app: npm ci",
       "result": "pass",
-      "seconds": 3.6,
-      "detail": "added 156 packages, and audited 157 packages in 3s"
+      "seconds": 301,
+      "detail": "added 156 packages in 5m"
     },
     {
       "command": "app: npm run snapshot",
-      "result": "pass",
-      "seconds": 0.5,
-      "detail": "(109 companies, 24 stages, 167 events)"
+      "result": "FAIL",
+      "seconds": 0,
+      "detail": "(no summary line)"
     },
     {
       "command": "app: npm run audit:data",
-      "result": "pass",
-      "seconds": 0.4,
-      "detail": "audit:data PASSED — 0 hard failures, 30 warning(s)."
+      "result": "FAIL",
+      "seconds": 0,
+      "detail": "(no summary line)"
     },
     {
       "command": "app: npm run docs:verify",
-      "result": "pass",
-      "seconds": 0.4,
-      "detail": "docs:verify PASSED — documentation and code agree."
+      "result": "FAIL",
+      "seconds": 0,
+      "detail": "(no summary line)"
     },
     {
       "command": "app: npm test",
-      "result": "pass",
-      "seconds": 17.5,
-      "detail": "Test Files  44 passed (44) · Tests  815 passed (815)"
+      "result": "FAIL",
+      "seconds": 0,
+      "detail": " · "
     },
     {
       "command": "app: npm run build",
-      "result": "pass",
-      "seconds": 3.4,
-      "detail": "Published 33 documentation page(s) + /docs/ index · 839 equation(s) rendered · KaTeX css + 20 font(s)."
+      "result": "FAIL",
+      "seconds": 0,
+      "detail": "built"
     },
     {
       "command": "app: npm run smoke",
-      "result": "pass",
-      "seconds": 82,
-      "detail": "172/172 checks passed"
+      "result": "FAIL",
+      "seconds": 0,
+      "detail": "(no summary line)"
     },
     {
       "command": "app: npm run sensitivity -- --samples 1024",
-      "result": "pass",
-      "seconds": 114.5,
-      "detail": "design: 12 continuous dimensions x 1024 samples = 14336 model evaluations"
+      "result": "FAIL",
+      "seconds": 0,
+      "detail": "(no summary line)"
     },
     {
       "command": "app: npm run benchmark",
-      "result": "pass",
-      "seconds": 0.4,
-      "detail": "SKIPPED, and the committed comparison is left untouched."
+      "result": "FAIL",
+      "seconds": 0,
+      "detail": "(no summary line)"
     },
     {
       "command": "app: npm run demo",
-      "result": "pass",
-      "seconds": 0.4,
-      "detail": "headline index 6.027797 · 160 incidents from 167 records"
+      "result": "FAIL",
+      "seconds": 0,
+      "detail": "(no summary line)"
     }
   ],
   "tests": {
-    "files": 44,
+    "files": 0,
     "filesFailed": 0,
-    "passed": 815,
+    "passed": 0,
     "failed": 0,
     "skipped": 0,
     "todo": 0,
-    "total": 815
+    "total": 0
   },
   "browserSmoke": {
-    "passed": 172,
-    "total": 172,
-    "sections": [
-      "375x812",
-      "768x1024",
-      "1366x768",
-      "1366x936",
-      "1920x1080",
-      "deep checks (1920x1080)",
-      "views and history review",
-      "accessibility",
-      "landing page"
-    ]
+    "passed": 0,
+    "total": 0,
+    "sections": []
   },
   "sensitivity": {
     "seed": 20260829,
@@ -149,5 +139,5 @@
       "envelopeNote": "The v6 envelope moved all three coefficients together in the same direction. The v7 in-app envelope moves each parameter one at a time over its declared range; the principal analysis is the global design in docs/benchmarks/v7-sensitivity.json."
     }
   },
-  "allPassed": true
+  "allPassed": false
 }

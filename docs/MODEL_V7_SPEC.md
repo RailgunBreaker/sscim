@@ -669,17 +669,17 @@ observed disruption outcomes; see §11 for what would have to happen first.
 <!-- BEGIN GENERATED: parameter-table -->
 | Parameter | Symbol | Low | Base | High | Valid domain | Units | Component | Status |
 | --- | --- | ---: | ---: | ---: | --- | --- | --- | --- |
-| `downstreamTransmission` | $f_{d}$ | 0.3 | 0.55 | 0.8 | `[0, 1)` | dimensionless | propagation.downstream | assumption |
-| `upstreamTransmission` | $f_{u}$ | 0.1 | 0.3 | 0.5 | `[0, 1)` | dimensionless | propagation.upstream | assumption |
-| `minimumDependencyFactor` | $phi$ | 0.1 | 0.25 | 0.4 | `[0, 1]` | dimensionless | propagation.downstream | assumption |
-| `acuteHalfLifeDays` | $H_{a}$ | 7 | 14 | 30 | `[0.5, 3650]` | days | persistence.acute_exponential | assumption |
-| `marketHalfLifeDays` | $H_{m}$ | 21 | 45 | 90 | `[0.5, 3650]` | days | persistence.market_exponential | assumption |
-| `outageRecoveryDays` | $T_{r}$ | 30 | 60 | 120 | `[1, 3650]` | days | persistence.outage_recovery | assumption |
-| `rampingSiteWeight` | $w_{ramp}$ | 0.25 | 0.5 | 0.75 | `[0, 1]` | dimensionless | facilities.footprint | assumption |
+| `downstreamTransmission` | $f_d$ | 0.3 | 0.55 | 0.8 | `[0, 1)` | dimensionless | propagation.downstream | assumption |
+| `upstreamTransmission` | $f_u$ | 0.1 | 0.3 | 0.5 | `[0, 1)` | dimensionless | propagation.upstream | assumption |
+| `minimumDependencyFactor` | $\phi$ | 0.1 | 0.25 | 0.4 | `[0, 1]` | dimensionless | propagation.downstream | assumption |
+| `acuteHalfLifeDays` | $H_a$ | 7 | 14 | 30 | `[0.5, 3650]` | days | persistence.acute_exponential | assumption |
+| `marketHalfLifeDays` | $H_m$ | 21 | 45 | 90 | `[0.5, 3650]` | days | persistence.market_exponential | assumption |
+| `outageRecoveryDays` | $T_r$ | 30 | 60 | 120 | `[1, 3650]` | days | persistence.outage_recovery | assumption |
+| `rampingSiteWeight` | $w_{\mathrm{ramp}}$ | 0.25 | 0.5 | 0.75 | `[0, 1]` | dimensionless | facilities.footprint | assumption |
 <!-- END GENERATED: parameter-table -->
 
 <!-- BEGIN GENERATED: parameter-detail -->
-#### `downstreamTransmission` — $f_{d}$
+#### `downstreamTransmission` — $f_d$
 
 **Definition.** Total fraction of a supplier stage’s modeled exposure that can reach its buyer stages in one hop, before the per-edge allocation and the dependency factor divide it up.
 
@@ -691,7 +691,7 @@ observed disruption outcomes; see §11 for what would have to happen first.
 
 **Status.** `assumption` — a continuity prior and stress assumption, not a statistically estimated coefficient, and the range is not a confidence interval.
 
-#### `upstreamTransmission` — $f_{u}$
+#### `upstreamTransmission` — $f_u$
 
 **Definition.** Total fraction of a buyer stage’s modeled exposure that echoes back to its supplier stages in one hop (demand-side echo), before the per-edge allocation.
 
@@ -703,7 +703,7 @@ observed disruption outcomes; see §11 for what would have to happen first.
 
 **Status.** `assumption` — a continuity prior and stress assumption, not a statistically estimated coefficient, and the range is not a confidence interval.
 
-#### `minimumDependencyFactor` — $phi$
+#### `minimumDependencyFactor` — $\phi$
 
 **Definition.** Floor on the dependency multiplier, so a fully substitutable input (non-substitutability 0) still transmits a residual fraction phi of the downstream coefficient rather than exactly zero.
 
@@ -715,7 +715,7 @@ observed disruption outcomes; see §11 for what would have to happen first.
 
 **Status.** `assumption` — a continuity prior and stress assumption, not a statistically estimated coefficient, and the range is not a confidence interval.
 
-#### `acuteHalfLifeDays` — $H_{a}$
+#### `acuteHalfLifeDays` — $H_a$
 
 **Definition.** Half-life in days of the acute_exponential persistence profile: the age at which a physical-disruption incident’s modeled source is half its day-zero value.
 
@@ -727,7 +727,7 @@ observed disruption outcomes; see §11 for what would have to happen first.
 
 **Status.** `assumption` — a continuity prior and stress assumption, not a statistically estimated coefficient, and the range is not a confidence interval.
 
-#### `marketHalfLifeDays` — $H_{m}$
+#### `marketHalfLifeDays` — $H_m$
 
 **Definition.** Half-life in days of the market_exponential persistence profile, used for allocation, pricing and licensing-throughput incidents whose effect decays on a commercial rather than a physical timescale.
 
@@ -739,7 +739,7 @@ observed disruption outcomes; see §11 for what would have to happen first.
 
 **Status.** `assumption` — a continuity prior and stress assumption, not a statistically estimated coefficient, and the range is not a confidence interval.
 
-#### `outageRecoveryDays` — $T_{r}$
+#### `outageRecoveryDays` — $T_r$
 
 **Definition.** Length in days of the linear ramp-down of the outage_recovery persistence profile, from the start of recovery to full restoration.
 
@@ -751,7 +751,7 @@ observed disruption outcomes; see §11 for what would have to happen first.
 
 **Status.** `assumption` — a continuity prior and stress assumption, not a statistically estimated coefficient, and the range is not a confidence interval.
 
-#### `rampingSiteWeight` — $w_{ramp}$
+#### `rampingSiteWeight` — $w_{\mathrm{ramp}}$
 
 **Definition.** Operational weight of a site whose status is "ramping" when computing the modeled facility footprint. Operating sites are 1; idle and under-construction sites are 0.
 
@@ -772,11 +772,11 @@ Sensitivity varies each **raw** weight by ±25% and then renormalizes the
 <!-- BEGIN GENERATED: structural-weight-table -->
 | Component | Symbol | Raw low | Raw base | Raw high | Effective base (renormalized) | Status |
 | --- | --- | ---: | ---: | ---: | ---: | --- |
-| `networkInfluence` | $w^{\mathrm{struct}}_{NI}$ | 0.1875 | 0.25 | 0.3125 | 0.2777778 | assumption |
-| `geo` | $w^{\mathrm{struct}}_{geo}$ | 0.15 | 0.2 | 0.25 | 0.2222222 | assumption |
-| `policy` | $w^{\mathrm{struct}}_{pol}$ | 0.15 | 0.2 | 0.25 | 0.2222222 | assumption |
-| `nonSubstitutability` | $w^{\mathrm{struct}}_{nu}$ | 0.1125 | 0.15 | 0.1875 | 0.1666667 | assumption |
-| `market` | $w^{\mathrm{struct}}_{mkt}$ | 0.075 | 0.1 | 0.125 | 0.1111111 | assumption |
+| `networkInfluence` | $w^{\mathrm{struct}}_{\mathrm{NI}}$ | 0.1875 | 0.25 | 0.3125 | 0.2777778 | assumption |
+| `geo` | $w^{\mathrm{struct}}_{\mathrm{geo}}$ | 0.15 | 0.2 | 0.25 | 0.2222222 | assumption |
+| `policy` | $w^{\mathrm{struct}}_{\mathrm{pol}}$ | 0.15 | 0.2 | 0.25 | 0.2222222 | assumption |
+| `nonSubstitutability` | $w^{\mathrm{struct}}_{\nu}$ | 0.1125 | 0.15 | 0.1875 | 0.1666667 | assumption |
+| `market` | $w^{\mathrm{struct}}_{\mathrm{mkt}}$ | 0.075 | 0.1 | 0.125 | 0.1111111 | assumption |
 <!-- END GENERATED: structural-weight-table -->
 
 The v6 `shock` weight (raw 0.10) is **deleted**: it was declared but never read,
@@ -1208,14 +1208,14 @@ document that pins the commit it was generated at can never be up to date with t
 | Command | Result | Detail |
 | --- | --- | --- |
 | `server: npm ci` | pass | added 113 packages, and audited 114 packages |
-| `app: npm ci` | pass | added 156 packages, and audited 157 packages |
-| `app: npm run snapshot` | pass | (109 companies, 24 stages, 167 events) |
-| `app: npm run audit:data` | pass | audit:data PASSED — 0 hard failures, 30 warning(s). |
-| `app: npm run docs:verify` | pass | docs:verify PASSED — documentation and code agree. |
-| `app: npm test` | pass | Test Files  44 passed (44) · Tests  815 passed (815) |
-| `app: npm run build` | pass | Published 33 documentation page(s) + /docs/ index · 839 equation(s) rendered · KaTeX css + 20 font(s). |
-| `app: npm run smoke` | pass | 172/172 checks passed |
-| `app: npm run sensitivity -- --samples 1024` | pass | design: 12 continuous dimensions x 1024 samples = 14336 model evaluations |
-| `app: npm run benchmark` | pass | SKIPPED, and the committed comparison is left untouched. |
-| `app: npm run demo` | pass | headline index 6.027797 · 160 incidents from 167 records |
+| `app: npm ci` | pass | added 156 packages |
+| `app: npm run snapshot` | FAIL | (no summary line) |
+| `app: npm run audit:data` | FAIL | (no summary line) |
+| `app: npm run docs:verify` | FAIL | (no summary line) |
+| `app: npm test` | FAIL | · |
+| `app: npm run build` | FAIL | built |
+| `app: npm run smoke` | FAIL | (no summary line) |
+| `app: npm run sensitivity -- --samples 1024` | FAIL | (no summary line) |
+| `app: npm run benchmark` | FAIL | (no summary line) |
+| `app: npm run demo` | FAIL | (no summary line) |
 <!-- END GENERATED: verification-run -->

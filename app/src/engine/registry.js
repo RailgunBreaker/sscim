@@ -9,7 +9,11 @@
 
    EVERY ENTRY CARRIES, BY CONSTRUCTION (validated below):
      name        machine name, also the key
-     symbol      the symbol used in docs/MODEL_V7_SPEC.md
+     symbol      the symbol used in docs/MODEL_V7_SPEC.md, AS LATEX. It is
+                 rendered inside $...$ by the documentation generator, so
+                 it must be valid LaTeX and Greek letters must be written
+                 as commands: '\\phi', never 'phi', which KaTeX renders
+                 as three italic letters. registry.test.js enforces this.
      definition  what the number MEANS, in one sentence
      low/base/high  the assumption range used by global sensitivity
      domain      [min, max] of numerically valid values
@@ -59,7 +63,7 @@ export const PARAMETERS = Object.freeze({
   }),
   minimumDependencyFactor: P({
     name: 'minimumDependencyFactor',
-    symbol: 'phi',
+    symbol: '\\phi',
     definition: 'Floor on the dependency multiplier, so a fully substitutable input (non-substitutability 0) still transmits a residual fraction phi of the downstream coefficient rather than exactly zero.',
     low: 0.10, base: 0.25, high: 0.40,
     domain: [0, 1],
@@ -103,7 +107,7 @@ export const PARAMETERS = Object.freeze({
   }),
   rampingSiteWeight: P({
     name: 'rampingSiteWeight',
-    symbol: 'w_ramp',
+    symbol: 'w_{\\mathrm{ramp}}',
     definition: 'Operational weight of a site whose status is "ramping" when computing the modeled facility footprint. Operating sites are 1; idle and under-construction sites are 0.',
     low: 0.25, base: 0.50, high: 0.75,
     domain: [0, 1],
@@ -125,7 +129,7 @@ export const PARAMETERS = Object.freeze({
    complete vector, so the effective vector always sums to one. */
 export const STRUCTURAL_WEIGHT_SPECS = Object.freeze({
   networkInfluence: P({
-    name: 'structuralWeight.networkInfluence', symbol: 'w^struct_NI',
+    name: 'structuralWeight.networkInfluence', symbol: 'w^{\\mathrm{struct}}_{\\mathrm{NI}}',
     definition: 'Raw weight of the network-influence component in the structural vulnerability index.',
     low: 0.1875, base: 0.25, high: 0.3125, domain: [0, 1], units: 'dimensionless',
     component: 'structural.weights',
@@ -133,7 +137,7 @@ export const STRUCTURAL_WEIGHT_SPECS = Object.freeze({
     affects: ['structural vulnerability', 'country structural score'],
   }),
   geo: P({
-    name: 'structuralWeight.geo', symbol: 'w^struct_geo',
+    name: 'structuralWeight.geo', symbol: 'w^{\\mathrm{struct}}_{\\mathrm{geo}}',
     definition: 'Raw weight of the geographic-concentration (HHI) component in the structural vulnerability index.',
     low: 0.15, base: 0.20, high: 0.25, domain: [0, 1], units: 'dimensionless',
     component: 'structural.weights',
@@ -141,7 +145,7 @@ export const STRUCTURAL_WEIGHT_SPECS = Object.freeze({
     affects: ['structural vulnerability', 'country structural score'],
   }),
   policy: P({
-    name: 'structuralWeight.policy', symbol: 'w^struct_pol',
+    name: 'structuralWeight.policy', symbol: 'w^{\\mathrm{struct}}_{\\mathrm{pol}}',
     definition: 'Raw weight of the policy-exposure component in the structural vulnerability index.',
     low: 0.15, base: 0.20, high: 0.25, domain: [0, 1], units: 'dimensionless',
     component: 'structural.weights',
@@ -149,7 +153,7 @@ export const STRUCTURAL_WEIGHT_SPECS = Object.freeze({
     affects: ['structural vulnerability', 'country structural score'],
   }),
   nonSubstitutability: P({
-    name: 'structuralWeight.nonSubstitutability', symbol: 'w^struct_nu',
+    name: 'structuralWeight.nonSubstitutability', symbol: 'w^{\\mathrm{struct}}_{\\nu}',
     definition: 'Raw weight of the non-substitutability (specificity) component in the structural vulnerability index.',
     low: 0.1125, base: 0.15, high: 0.1875, domain: [0, 1], units: 'dimensionless',
     component: 'structural.weights',
@@ -157,7 +161,7 @@ export const STRUCTURAL_WEIGHT_SPECS = Object.freeze({
     affects: ['structural vulnerability', 'country structural score'],
   }),
   market: P({
-    name: 'structuralWeight.market', symbol: 'w^struct_mkt',
+    name: 'structuralWeight.market', symbol: 'w^{\\mathrm{struct}}_{\\mathrm{mkt}}',
     definition: 'Raw weight of the market-importance component in the structural vulnerability index.',
     low: 0.075, base: 0.10, high: 0.125, domain: [0, 1], units: 'dimensionless',
     component: 'structural.weights',

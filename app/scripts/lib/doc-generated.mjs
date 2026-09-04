@@ -42,7 +42,7 @@ function modelVersionBlock() {
 function parameterTableBlock() {
   const rows = Object.values(PARAMETERS).map((p) => [
     `\`${p.name}\``,
-    `$${p.symbol.replace(/_(\w+)/, '_{$1}')}$`,
+    `$${p.symbol}$`,
     num(p.low), num(p.base), num(p.high),
     `\`[${p.domain[0]}, ${p.domain[1]}${p.exclusiveMax ? ')' : ']'}\``,
     p.units,
@@ -56,7 +56,7 @@ function parameterTableBlock() {
 
 function parameterDetailBlock() {
   return Object.values(PARAMETERS).map((p) => [
-    `#### \`${p.name}\` — $${p.symbol.replace(/_(\w+)/, '_{$1}')}$`,
+    `#### \`${p.name}\` — $${p.symbol}$`,
     '',
     `**Definition.** ${p.definition}`,
     '',
@@ -73,7 +73,7 @@ function parameterDetailBlock() {
 function structuralWeightTableBlock() {
   const rows = STRUCTURAL_COMPONENTS.map((k) => {
     const s = STRUCTURAL_WEIGHT_SPECS[k];
-    return `| \`${k}\` | $${s.symbol.replace('^struct_', '^{\\mathrm{struct}}_{').replace(/_\{(\w+)$/, '_{$1}')}$ | ${num(s.low)} | ${num(s.base)} | ${num(s.high)} | ${fx(BASE_STRUCTURAL_WEIGHTS[k], 7)} | ${s.status} |`;
+    return `| \`${k}\` | $${s.symbol}$ | ${num(s.low)} | ${num(s.base)} | ${num(s.high)} | ${fx(BASE_STRUCTURAL_WEIGHTS[k], 7)} | ${s.status} |`;
   });
   return [
     '| Component | Symbol | Raw low | Raw base | Raw high | Effective base (renormalized) | Status |',
@@ -281,7 +281,9 @@ function workedExampleBlock() {
    reads "added 113 packages, and audited 114 packages in 11s", and that
    duration differs on every machine and every run. */
 const stableDetail = (detail) => String(detail ?? '')
-  .replace(/\s+in\s+\d+(?:\.\d+)?\s*m?s\b/gi, '')   // "… in 11s" / "… in 1.4s"
+  // "… in 11s", "… in 1.4s", "… in 4m", "… in 1m 30s" — npm reports whichever
+  // unit fits, and all of them differ between machines and between runs.
+  .replace(/\s+in\s+(?:\d+(?:\.\d+)?\s*[hms]\s*)+/gi, '')
   .trim();
 
 function verificationRunBlock() {
