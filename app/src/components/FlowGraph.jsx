@@ -86,7 +86,7 @@ export default function FlowGraph({ sel, setSel, hl, model, scenarioActive, pb, 
 
   return (
     <div style={{ padding: 10 }}>
-      <div className="mono" style={{ fontSize: 11, color: C.copper, marginBottom: 6 }}>{legend.title.toUpperCase()}</div>
+      <h3 style={{ fontSize: 13, fontWeight: 600, color: C.text, margin: '0 0 8px' }}>{legend.title}</h3>
       <div style={{ overflowX: 'auto' }}>
         <svg viewBox="0 0 1220 505" style={{ width: '100%', minWidth: 860, display: 'block', background: C.panel2, borderRadius: 6, border: `1px solid ${C.line}` }}>
           <defs>
@@ -179,7 +179,7 @@ export default function FlowGraph({ sel, setSel, hl, model, scenarioActive, pb, 
       {subStage && (
         <div style={{ marginTop: 8, border: `1px solid ${C.copperDim}`, borderRadius: 6, background: C.panel2, padding: '8px 10px' }}>
           <div className="mono" style={{ fontSize: 11, color: C.copper, marginBottom: 4 }}>
-            SUBSECTION · {subStage.name.toUpperCase()} · MAJOR COMPANIES & MARKET SHARES
+            {subStage.name} — major companies and market shares
             {Math.abs(model.activeField[subStage.id] ?? 0) > 0.05 && <span style={{ color: riskColor((model.activeField[subStage.id] + 1) * 5), marginLeft: 8 }}>· operational impact {model.activeField[subStage.id].toFixed(2)}</span>}
           </div>
           <div style={{ fontSize: 11, color: C.dim, lineHeight: 1.5, marginBottom: 8 }}>{STAGE_INTRO[subStage.id]}</div>

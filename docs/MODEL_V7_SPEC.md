@@ -1304,13 +1304,13 @@ document that pins the commit it was generated at can never be up to date with t
 | Command | Result | Detail |
 | --- | --- | --- |
 | `server: npm ci` | pass | added 113 packages, and audited 114 packages |
-| `app: npm ci` | pass | added 156 packages |
+| `app: npm ci` | pass | added 156 packages, and audited 157 packages |
 | `app: npm run snapshot` | pass | (109 companies, 24 stages, 167 events) |
 | `app: npm run audit:data` | pass | audit:data PASSED — 0 hard failures, 30 warning(s). |
 | `app: npm run docs:verify` | pass | docs:verify PASSED — documentation and code agree. |
-| `app: npm test` | pass | Test Files  47 passed (47) · Tests  888 passed (888) |
-| `app: npm run build` | pass | Published 35 documentation page(s) + /docs/ index · 855 equation(s) rendered · KaTeX css + 20 font(s). |
-| `app: npm run smoke` | pass | 172/172 checks passed |
+| `app: npm test` | pass | Test Files  50 passed (50) · Tests  978 passed (978) |
+| `app: npm run build` | pass | Published 40 documentation page(s) + /docs/ index · 1096 equation(s) rendered · KaTeX css + 20 font(s). |
+| `app: npm run smoke` | pass | 173/173 checks passed |
 | `app: npm run sensitivity -- --samples 1024` | pass | design: 12 continuous dimensions x 1024 samples = 14336 model evaluations |
 | `app: npm run benchmark` | pass | SKIPPED, and the committed comparison is left untouched. |
 | `app: npm run demo` | pass | headline index 6.027797 · 160 incidents from 167 records |

@@ -224,7 +224,10 @@ export function Tabs({ tabs, value, onChange, label, idPrefix = 'tab', panelIdFo
       e.preventDefault();
       const next = tabs[(n + tabs.length) % tabs.length];
       onChange(next.value);
-      ref.current?.querySelector(`#${idPrefix}-${CSS.escape(next.value)}`)?.focus();
+      /* getElementById rather than a CSS selector: CSS.escape is not
+         universally available, and an id is looked up by value, not by
+         parsing it as a selector. */
+      document.getElementById(`${idPrefix}-${next.value}`)?.focus();
     };
     if (e.key === 'ArrowRight' || e.key === 'ArrowDown') go(i + 1);
     else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') go(i - 1);

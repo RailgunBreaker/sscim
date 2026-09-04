@@ -41,7 +41,7 @@ export default function NetworkToolbar() {
   return (
     <div className="cbar" role="toolbar" aria-label="Network playground tools"
       style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', padding: '7px 16px', background: C.panel, borderBottom: `1px solid ${C.line}` }}>
-      <span className="mono" style={{ fontSize: 12, color: C.copper }}>⚙ NETWORK TOOLS</span>
+      <span style={{ fontSize: 13, fontWeight: 600, color: C.text }}>Network tools</span>
 
       {selIsCentre && (
         <button type="button" onClick={() => pgToggleNode(selected.id)} style={btn(false, !centreRemoved)}

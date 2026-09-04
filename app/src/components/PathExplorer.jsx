@@ -45,13 +45,13 @@ export default function PathExplorer({ defaultOrigin, activePath, onPick }) {
 
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, alignItems: 'center', marginBottom: 8 }}>
         <label className="mono" style={{ fontSize: 12, color: C.dim, display: 'flex', gap: 4, alignItems: 'center' }}>
-          FROM
+          From
           <select value={origin} onChange={(e) => setOrigin(e.target.value)} style={selectStyle} aria-label="Path origin stage">
             {STAGES.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
           </select>
         </label>
         <label className="mono" style={{ fontSize: 12, color: C.dim, display: 'flex', gap: 4, alignItems: 'center' }}>
-          TO
+          To
           <select value={dest} onChange={(e) => setDest(e.target.value)} style={selectStyle} aria-label="Path destination stage">
             <option value="">— select —</option>
             {STAGES.filter((s) => s.id !== origin).map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}

@@ -7,6 +7,7 @@ import { STAGE_INTRO, introForCompany, introForCountry } from '../data/glossary.
 import ScenarioSummary from './ScenarioSummary.jsx';
 import CentreDetail from './CentreDetail.jsx';
 import Tex from './Tex.jsx';
+import { Disclosure } from '../ui/primitives.jsx';
 import Logo from './Logo.jsx';
 import Quote from './Quote.jsx';
 import Chip from './Chip.jsx';
@@ -57,19 +58,19 @@ export default function Detail({ sel, setSel, model, scenario, onResetScenario, 
   if (sel.type === "event") {
     const e = EVENTS.find((x) => x.id === sel.id);
     const assumption = getEventAssumption(e.id);
-    const { field, magnitude } = eventField(e);
+    const { field, magnitude, source } = eventField(e);
     const ownIndex = toDisplayIndex(operationalIndex(field));
     return (
       <div>
         <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: 6 }}>
-          <span className="mono" style={{ fontSize: 12, color: TYPE_COLORS[e.type] || C.copper, border: `1px solid ${TYPE_COLORS[e.type] || C.copper}`, borderRadius: 3, padding: "1px 6px" }}>{e.type.toUpperCase()}</span>
+          <span className="mono" style={{ fontSize: 12, color: TYPE_COLORS[e.type] || C.copper, border: `1px solid ${TYPE_COLORS[e.type] || C.copper}`, borderRadius: 3, padding: "2px 7px" }}>{e.type}</span>
           <span className="mono" style={{ fontSize: 12, color: confColor(e.conf) }}>evidence: {e.conf} <span style={{ color: C.faint }}>(metadata, not an impact multiplier)</span></span>
         </div>
         <h3 style={{ margin: "6px 0", fontSize: 15, lineHeight: 1.35 }}>{e.title}</h3>
         <p style={{ margin: "0 0 8px", fontSize: 12.5, color: C.dim, lineHeight: 1.5 }}>{e.summary}</p>
         {!assumption.operational && (
           <div className="mono" style={{ fontSize: 12, color: C.amber, background: "#2A1E14", border: `1px solid ${C.copperDim}`, borderRadius: 5, padding: "6px 9px", marginBottom: 6, lineHeight: 1.5 }}>
-            EXCLUDED FROM OPERATIONAL IMPACT SCORE · {assumption.reason}
+            Excluded from the operational impact score — {assumption.reason}
           </div>
         )}
         {e.detail && (<><div className="mono" style={{ fontSize: 12, color: C.dim, margin: "6px 0 3px" }}>Background</div>
@@ -81,8 +82,63 @@ export default function Detail({ sel, setSel, model, scenario, onResetScenario, 
             <span style={{ color: C.copper, display: "inline-block", width: 58 }}>{d}</span>{txt}
           </div>
         ))}</>)}
-        <div className="mono" style={{ fontSize: 12, color: C.copper, background: C.panel, border: `1px solid ${C.line}`, borderRadius: 5, padding: "6px 9px", margin: "8px 0 4px", lineHeight: 1.7 }}>
-          ENGINE · <Tex tex={`s_0=\\mathrm{clamp}(${e.sev}/10,0,1)\\times 2^{-${e.daysAgo}/12}=${magnitude.toFixed(3)}`} /> · directional all-paths propagation ({assumption.channel}) · <Tex tex={`\\mathrm{index}=${ownIndex.toFixed(2)}`} /><MetricTag kind="operational" />
+        {/* WHAT THIS USED TO SAY, AND WHY IT WAS WRONG.
+
+              ENGINE - s_0 = clamp(sev/10,0,1) x 2^(-age/12) = <value>
+
+            That is the v6 model: ONE universal 12-day half-life for every
+            event. v7 replaced it with five per-incident persistence
+            profiles, and the number printed at the end of the line already
+            came from the v7 engine - so the formula and the value it
+            claimed to produce disagreed on screen. For the Kumamoto
+            earthquake the printed formula evaluates to 0.078 against a
+            printed result of 0.152; for the memory-price event, 0.000024
+            against 0.038. A reader checking our arithmetic would have found
+            that it did not check out.
+
+            It survived the v7.1 documentation sweep because that sweep
+            scans a list of UI text files which did not include this one.
+            This file is now on that list, so docs:verify guards it.
+
+            Below: the profile that actually ran, and the two factors that
+            actually produced the magnitude. Formula-level detail is one
+            click away rather than inlined. */}
+        <div style={{ fontSize: 13, color: C.text, background: C.panel2, border: `1px solid ${C.line}`, borderRadius: 5, padding: "8px 11px", margin: "10px 0 4px", lineHeight: 1.7 }}>
+          <div style={{ display: 'flex', gap: 8, alignItems: 'baseline', flexWrap: 'wrap' }}>
+            <span style={{ color: C.faint }}>Own-field index</span>
+            <b className="mono" style={{ fontSize: 17, color: C.copper }}>{ownIndex.toFixed(2)}</b>
+            <MetricTag kind="operational" />
+            <span style={{ color: C.faint }}>
+              severity {e.sev}/10, {e.daysAgo === 0 ? 'today' : `${e.daysAgo} days ago`}
+            </span>
+          </div>
+          <div style={{ fontSize: 13, color: C.dim, marginTop: 4 }}>
+            Persistence profile <b style={{ color: C.text }}>{(source?.profile?.kind || 'acute_exponential').replace(/_/g, ' ')}</b>
+            {' '}leaves <b className="mono" style={{ color: C.text }}>{((source?.persistence ?? 0) * 100).toFixed(1)}%</b> of the
+            original intensity today, giving a source magnitude of{' '}
+            <b className="mono" style={{ color: C.text }}>{magnitude.toFixed(3)}</b>, propagated by
+            directional all-paths traversal ({assumption.channel}).
+          </div>
+          <Disclosure summary="How this is calculated">
+            <p style={{ margin: '0 0 8px', fontSize: 13, color: C.dim }}>
+              An incident enters the graph as a source vector over the stages it
+              touches. Each stage&rsquo;s entry is the incident&rsquo;s intensity, scaled by
+              how much of that stage the incident is judged to affect, and decayed
+              by the profile assigned to that incident &mdash; not by one universal
+              half-life.
+            </p>
+            <div style={{ overflowX: 'auto' }}>
+              <Tex tex={"z_{e,s}(t)=d_{e,s}\\,g(q_e)\\,\\alpha_{e,s}\\,R_e(t)"} block />
+            </div>
+            <p style={{ margin: '8px 0 0', fontSize: 13, color: C.faint }}>
+              Here <Tex tex={"R_e(t)"} /> is the persistence term for this
+              incident&rsquo;s profile and <Tex tex={"\\alpha_{e,s}"} /> is its curated
+              exposure to each stage. Both are analyst judgements, and their
+              uncertainty is measured separately from parameter and model-form
+              uncertainty. Full definitions:{' '}
+              <a href="docs/MODEL_V7_SPEC.md.html" style={{ color: C.copper }}>model specification</a>.
+            </p>
+          </Disclosure>
         </div>
         {(() => { const topCo = COMPANIES.map((c) => ({ c, contribution: companyContribution(c, field) })).sort((a, b) => b.contribution - a.contribution).slice(0, 6);
           return (<><div className="mono" style={{ fontSize: 12, color: C.dim, margin: "8px 0 4px" }}>Top modeled contribution — companies (share-weighted)</div>
@@ -150,7 +206,7 @@ export default function Detail({ sel, setSel, model, scenario, onResetScenario, 
 
         {(CUSTOMERS[co.id] || []).length > 0 && (
           <>
-            <div className="mono" style={{ fontSize: 12, color: C.dim, margin: "10px 0 4px" }}>CUSTOMERS (SHARE OF {co.name.toUpperCase()} SALES — SUPPLIER-REVENUE SHARE)</div>
+            <div className="mono" style={{ fontSize: 12, color: C.dim, margin: "10px 0 4px" }}>Customers — share of {co.name} sales (supplier-revenue share)</div>
             {(CUSTOMERS[co.id] || []).map(([c2, r]) => (
               <div key={c2} role="button" tabIndex={0} style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 3, cursor: "pointer" }} onClick={() => setSel({ type: "company", id: c2 })} onKeyDown={onEnterSpace(() => setSel({ type: "company", id: c2 }))}>
                 <span className="mono" style={{ fontSize: 12, color: C.text, width: 160, flexShrink: 0 }}>{COMPANY_BY_ID[c2].name}</span>
@@ -164,7 +220,7 @@ export default function Detail({ sel, setSel, model, scenario, onResetScenario, 
         )}
         {(SUPPLIERS[co.id] || []).length > 0 && (
           <>
-            <div className="mono" style={{ fontSize: 12, color: C.dim, margin: "10px 0 4px" }}>KEY SUPPLIERS (THEIR SALES SHARE TO {co.name.toUpperCase()})</div>
+            <div className="mono" style={{ fontSize: 12, color: C.dim, margin: "10px 0 4px" }}>Key suppliers — their sales share to {co.name}</div>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 5 }}>
               {(SUPPLIERS[co.id] || []).slice(0, 8).map(([sup, r]) => (
                 <Chip key={sup} label={`${COMPANY_BY_ID[sup].name} ${(r * 100).toFixed(0)}%`} onClick={() => setSel({ type: "company", id: sup })} />

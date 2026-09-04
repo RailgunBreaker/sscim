@@ -24,7 +24,7 @@ import { facilityConnectivity } from '../engine/facilityNetwork.js';
    the traversal something to demonstrate itself on.
    ==================================================================== */
 
-export default function FacilitySearch({ onPick, suggestionCount = 8, autoFocus = false, label = 'Search a facility' }) {
+export default function FacilitySearch({ onPick, suggestionCount = 8, autoFocus = false, label = 'Search a facility', inputMaxWidth}) {
   const { data, engine } = useVault();
   const { FACILITY_LAYER, FACILITY_NETWORK, COMPANY_BY_ID, COUNTRY_NAMES } = data;
   const { STAGE_BY_ID } = engine;
@@ -52,7 +52,7 @@ export default function FacilitySearch({ onPick, suggestionCount = 8, autoFocus 
 
   const rowFor = (f, right) => (
     <li key={f.id}>
-      <button type="button" onClick={() => onPick?.(f.id)} style={rowButtonStyle}>
+      <button type="button" onClick={() => onPick?.(f.id)} className="ui-button row-interactive" style={rowButtonStyle}>
         <span aria-hidden style={{ fontSize: 12 }}>{flagEmoji(f.country)}</span>
         <span style={{ flex: 1, minWidth: 0 }}>
           <span style={{ display: 'block', fontSize: 12, color: C.text, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
@@ -73,13 +73,13 @@ export default function FacilitySearch({ onPick, suggestionCount = 8, autoFocus 
   return (
     <div>
       <label htmlFor={listId} className="mono" style={{ display: 'block', fontSize: 12, color: C.faint, marginBottom: 4 }}>
-        {label.toUpperCase()} — NAME, OPERATOR, CITY, COUNTRY, STAGE OR TYPE
+        {label} — by name, operator, city, country, stage or type
       </label>
       <input id={listId} type="search" value={query} onChange={(e) => setQuery(e.target.value)}
         // eslint-disable-next-line jsx-a11y/no-autofocus
         autoFocus={autoFocus}
         placeholder="e.g. ASML, Kumamoto, lithography, Taiwan, packaging…"
-        style={inputStyle} />
+        style={{ ...inputStyle, maxWidth: inputMaxWidth ?? '100%' }} />
 
       {query.trim() && (
         <div className="mono" aria-live="polite" style={{ fontSize: 12, color: C.faint, margin: '6px 0 4px' }}>
@@ -102,7 +102,7 @@ export default function FacilitySearch({ onPick, suggestionCount = 8, autoFocus 
       {!query.trim() && suggestions.length > 0 && (
         <>
           <div className="mono" style={{ fontSize: 12, color: C.faint, margin: '12px 0 5px' }}>
-            OR START FROM ONE OF THE MOST CONNECTED PLANTS IN THIS SNAPSHOT
+            Or start from one of the most connected plants in this snapshot
           </div>
           <ul style={listStyle}>
             {suggestions.map(({ f, c }) => rowFor(f, (
@@ -115,13 +115,23 @@ export default function FacilitySearch({ onPick, suggestionCount = 8, autoFocus 
   );
 }
 
-const listStyle = { listStyle: 'none', margin: 0, padding: 0, display: 'grid', gap: 3 };
+/* At 1920px the starting list occupied 620px of a 1900px pane and the rest
+   of the row was empty. The list flows into as many columns as the width
+   allows, which is what a full-width workspace is for. */
+const listStyle = {
+  listStyle: 'none', margin: 0, padding: 0, display: 'grid', gap: '0 24px',
+  gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))',
+};
+/* These ARE interactive, so they keep a pointer cursor and a hover state —
+   but a full border on every row turned a ranked list into eight competing
+   boxes. Structure comes from a divider; the boundary is the list's, not
+   each row's. */
 const rowButtonStyle = {
-  width: '100%', display: 'flex', alignItems: 'center', gap: 8, textAlign: 'left',
-  background: C.panel, border: `1px solid ${C.line}`, borderRadius: 4,
-  padding: '6px 9px', fontFamily: 'inherit', fontSize: 12, color: C.text, cursor: 'pointer', minHeight: 0,
+  width: '100%', display: 'flex', alignItems: 'center', gap: 10, textAlign: 'left',
+  background: 'transparent', border: 'none', borderBottom: `1px solid ${C.line}`, borderRadius: 4,
+  padding: '9px 10px', fontFamily: 'inherit', fontSize: 13, color: C.text, cursor: 'pointer', minHeight: 0,
 };
 const inputStyle = {
-  width: '100%', background: C.panel2, border: `1px solid ${C.line}`, borderRadius: 4,
-  color: C.text, fontFamily: 'inherit', fontSize: 12.5, padding: '7px 10px',
+  width: '100%', background: C.panel2, border: `1px solid ${C.line}`, borderRadius: 5,
+  color: C.text, fontFamily: 'inherit', fontSize: 14, padding: '10px 12px',
 };

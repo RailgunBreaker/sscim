@@ -62,7 +62,11 @@ const SCENES = [
   { id: 'network', page: 'sscim-app.html', hash: '#view=topology', what: 'Network view' },
   { id: 'playground-start', page: 'sscim-app.html', hash: '#view=playground', what: 'Facility Playground, initial state' },
   { id: 'playground-tsmc-3hop', page: 'sscim-app.html', hash: '#view=playground&fac=tsmc_fab18&facd=3', what: 'Facility Playground, TSMC Fab 18 at three hops' },
-  { id: 'mobile-facility-detail', page: 'sscim-app.html', hash: '#view=playground&fac=tsmc_fab18', viewports: ['375x812'], what: 'Mobile facility selection and detail' },
+  /* Below 1080px the three panes collapse to one-at-a-time tabs, and the
+     facility workspace lives behind the Map pane. Without selecting it,
+     this scene captured the flow graph and claimed to be showing a
+     facility detail. */
+  { id: 'mobile-facility-detail', page: 'sscim-app.html', hash: '#view=playground&fac=tsmc_fab18', viewports: ['375x812'], paneTab: 'Map', what: 'Mobile facility selection and detail' },
 ];
 
 /* Anything that moves makes two captures of the same state differ. */
@@ -121,6 +125,11 @@ async function capture(browser, vp, scene) {
   }
   await page.addStyleTag({ content: FREEZE });
 
+  if (scene.paneTab) {
+    await page.locator('[role="tablist"][aria-label="Panel"] [role="tab"]', { hasText: new RegExp(`^${scene.paneTab}$`) })
+      .first().click({ timeout: 5000 }).catch(() => {});
+    await page.waitForTimeout(500);
+  }
   if (scene.tab) {
     await page.getByRole('tab', { name: new RegExp(scene.tab, 'i') }).first().click({ timeout: 5000 }).catch(() => {});
   }

@@ -142,6 +142,12 @@ none has been reviewed.
 - [ ] Trademark position on the name "SSCIM" checked.
 - [ ] The analytical-estimates statement in §6 present on every public surface that displays a score.
 - [ ] Confirm no secrets, credentials, or private commercial data in the repository history.
+      *Checked this pass: no `.env`, key or certificate file is tracked, and no
+      credential literal appears in source. The one opaque literal in the client is
+      the CARTO **public basemap key** — the same class of value as a Mapbox public
+      token. It ships inside the client by necessity, identifies the account for
+      rate limiting, and grants access to nothing of ours. It is deliberate, and it
+      is recorded in `THIRD_PARTY_NOTICES.md` §3.2 rather than treated as a leak.*
 
 ## 8. Relationship to other files
 

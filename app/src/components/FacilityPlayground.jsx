@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { C } from '../theme.js';
+import { Button, SegmentedControl, Disclosure } from '../ui/primitives.jsx';
 import { useVault } from '../data/VaultContext.jsx';
 import { flagEmoji } from '../data/glossary.js';
 import { FACILITY_KIND_LABEL } from '../utils/facilityIcon.js';
@@ -87,8 +88,12 @@ export default function FacilityPlayground({ model, compact = false }) {
           relationship and stage reachability — <b style={{ color: C.text }}>not a confirmed shipment, customer
           contract, or trade route</b>. Nothing in this dataset records which plant ships to which plant.
         </p>
-        <div style={{ maxWidth: 620 }}>
-          <FacilitySearch onPick={(id) => facFocus(id, { asRoot: true })} autoFocus={!compact} />
+        {/* The search FIELD stays a comfortable reading width; the list of
+           starting plants below it does not, and at 1920px it was leaving
+           two thirds of the workspace empty. */}
+        <div>
+          <div style={{ maxWidth: 620 }} />
+          <FacilitySearch onPick={(id) => facFocus(id, { asRoot: true })} autoFocus={!compact} inputMaxWidth={620} />
         </div>
       </div>
     );
@@ -111,43 +116,59 @@ export default function FacilityPlayground({ model, compact = false }) {
 
   return (
     <div style={{ display: 'grid', gap: 12 }}>
-      {/* ---- toolbar: navigation and traversal shape ---- */}
-      <div className="cbar" style={{ display: 'flex', gap: 6, flexWrap: 'wrap', alignItems: 'center' }}>
-        <div role="group" aria-label="Exploration history" style={{ display: 'flex', gap: 4 }}>
-          <button type="button" onClick={facBack} disabled={!fac.trail.length} style={btn(fac.trail.length)}
-            aria-label="Back to the previously centred facility">← Back</button>
-          <button type="button" onClick={facForward} disabled={!fac.forward.length} style={btn(fac.forward.length)}
-            aria-label="Forward to the next facility in the exploration history">Forward →</button>
-          <button type="button" onClick={facHome} disabled={!fac.rootId || fac.rootId === fac.focusId} style={btn(fac.rootId && fac.rootId !== fac.focusId)}
-            aria-label="Return to the facility this exploration started from">⌂ Start</button>
-          <button type="button" onClick={facReset} style={btn(true)} aria-label="Reset the playground and choose another facility">Reset</button>
+      {/* ---- toolbar ----
+          Three groups of controls that do three different things were drawn
+          identically: nine bordered chips in a row, separated only by two
+          hairlines. A reader had to read every label to discover that four
+          of them were history actions, three were an exclusive direction
+          choice, and four were an exclusive depth choice.
+
+          They are now distinguished by FORM rather than by position.
+          History is a row of quiet buttons, because those are actions.
+          Direction and depth are segmented controls, because those are
+          one-of-a-set choices — and each carries a visible name, so the
+          choice being made is stated rather than inferred. */}
+      <div className="cbar" style={{ display: 'flex', gap: 16, flexWrap: 'wrap', alignItems: 'center' }}>
+        <div role="group" aria-label="Exploration history" style={{ display: 'flex', gap: 2, alignItems: 'center' }}>
+          <Button variant="quiet" size="sm" onClick={facBack} disabled={!fac.trail.length}
+            aria-label="Back to the previously centred facility">Back</Button>
+          <Button variant="quiet" size="sm" onClick={facForward} disabled={!fac.forward.length}
+            aria-label="Forward to the next facility in the exploration history">Forward</Button>
+          <Button variant="quiet" size="sm" onClick={facHome} disabled={!fac.rootId || fac.rootId === fac.focusId}
+            aria-label="Return to the facility this exploration started from">Start</Button>
+          <Button variant="quiet" size="sm" onClick={facReset}
+            aria-label="Reset the playground and choose another facility">Reset</Button>
         </div>
 
-        <span style={{ width: 1, height: 18, background: C.line }} aria-hidden />
-
-        <div role="group" aria-label="Traversal direction" style={{ display: 'flex', gap: 4 }}>
-          {[['upstream', '← Upstream only'], ['downstream', 'Downstream only →'], ['both', 'Both directions']].map(([k, label]) => (
-            <button key={k} type="button" onClick={() => facSet({ direction: k })} aria-pressed={fac.direction === k}
-              style={{ ...chipStyle, borderColor: fac.direction === k ? C.copper : C.line, color: fac.direction === k ? C.copper : C.dim }}>
-              {label}
-            </button>
-          ))}
+        <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+          <span style={{ fontSize: 12, color: C.faint, whiteSpace: 'nowrap' }}>Direction</span>
+          <SegmentedControl
+            size="sm"
+            label="Traversal direction"
+            value={fac.direction}
+            onChange={(k) => facSet({ direction: k })}
+            options={[
+              { value: 'upstream', label: 'Upstream', title: 'Follow supply INTO this plant' },
+              { value: 'downstream', label: 'Downstream', title: 'Follow output OUT of this plant' },
+              { value: 'both', label: 'Both', title: 'Follow supply in both directions' },
+            ]}
+          />
         </div>
 
-        <span style={{ width: 1, height: 18, background: C.line }} aria-hidden />
-
-        <div role="group" aria-label="Hop depth" style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
-          <span className="mono" style={{ fontSize: 12, color: C.faint }}>Hops</span>
-          {[1, 2, 3].map((h) => (
-            <button key={h} type="button" onClick={() => setHops(h)} aria-pressed={fac.hops === h}
-              style={{ ...chipStyle, borderColor: fac.hops === h ? C.copper : C.line, color: fac.hops === h ? C.copper : C.dim }}>
-              {h}
-            </button>
-          ))}
-          <button type="button" onClick={() => setHops(Infinity)} aria-pressed={fac.hops === Infinity}
-            style={{ ...chipStyle, borderColor: fac.hops === Infinity ? C.copper : C.line, color: fac.hops === Infinity ? C.copper : C.dim }}>
-            All reachable
-          </button>
+        <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+          <span style={{ fontSize: 12, color: C.faint, whiteSpace: 'nowrap' }}>Depth</span>
+          <SegmentedControl
+            size="sm"
+            label="Hop depth"
+            value={fac.hops === Infinity ? 'all' : fac.hops}
+            onChange={(v) => setHops(v === 'all' ? Infinity : v)}
+            options={[
+              { value: 1, label: '1 hop' },
+              { value: 2, label: '2 hops' },
+              { value: 3, label: '3 hops' },
+              { value: 'all', label: 'All reachable', title: 'Every plant reachable in this direction — may be too many to draw' },
+            ]}
+          />
         </div>
       </div>
 

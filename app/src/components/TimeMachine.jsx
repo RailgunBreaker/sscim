@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { C } from '../theme.js';
+import { Disclosure } from '../ui/primitives.jsx';
 import { useVault } from '../data/VaultContext.jsx';
 import { reviewDateISO } from '../engine/buildModel.js';
 import { eventImpacts } from '../engine/timeseries.js';
@@ -129,11 +130,25 @@ export default function TimeMachine({ asOfDaysAgo, setAsOfDaysAgo, setSel, selec
         })}
       </div>
 
-      <div className="mono" style={{ fontSize: 12, color: C.faint, lineHeight: 1.6, marginTop: 2 }}>
-        {live
-          ? `Drag to review the chain as it stood on any date in the last ${Math.round(spanDays / 30)} months, or click an event marker. Marker height is that event's marginal contribution to the index on its own date — what it added to the published number, not its standalone size.`
-          : `Showing the model re-derived for ${shownDate}: ${engine.eventsAsOf(asOfDaysAgo).length} event(s) inside the decay window on that date. This is a past state of the record, not a hypothesis.`}
-      </div>
+      {/* This paragraph is a methodological caveat, not an instruction, and
+          it was three lines of permanent text above the graph. At 375px the
+          page chrome reached 780 of 812 pixels before any content appeared,
+          and this block was the largest single contributor. The caveat is
+          not hidden — it is one click away, which is where a caveat that a
+          reader has not asked for belongs. The state sentence, which says
+          WHAT IS ON SCREEN rather than how to read it, stays visible. */}
+      {live ? (
+        <Disclosure summary="How to read this timeline" style={{ marginTop: 2 }}>
+          Drag to review the chain as it stood on any date in the last{' '}
+          {Math.round(spanDays / 30)} months, or click an event marker. Marker
+          height is that event&rsquo;s marginal contribution to the index on its own
+          date — what it added to the published number, not its standalone size.
+        </Disclosure>
+      ) : (
+        <div style={{ fontSize: 12, color: C.faint, lineHeight: 1.6, marginTop: 2 }}>
+          {`Showing the model re-derived for ${shownDate}: ${engine.eventsAsOf(asOfDaysAgo).length} event(s) inside the decay window on that date. This is a past state of the record, not a hypothesis.`}
+        </div>
+      )}
     </div>
   );
 }

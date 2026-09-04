@@ -97,6 +97,15 @@ const UI_TEXT_FILES = [
   'app/src/data/releases.js',
   'app/src/data/compMeta.js',
   'app/src/data/glossary.js',
+  /* ADDED AFTER A MISS. Detail.jsx printed the v6 universal 12-day
+     half-life as "the engine's" formula, beside a v7 number that
+     contradicted it, through the whole of the v7.1 documentation pass —
+     because this list did not include the file. A scan is only as wide as
+     its file list, so the panels that explain a score to a reader are on
+     it now. */
+  'app/src/components/Detail.jsx',
+  'app/src/components/FacilityConnectionDetail.jsx',
+  'app/src/components/CentreDetail.jsx',
 ];
 const uiTexts = UI_TEXT_FILES
   .map((rel) => ({ path: rel, full: resolve(repoRoot, rel) }))

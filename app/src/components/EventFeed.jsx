@@ -141,7 +141,7 @@ export default function EventFeed({ sel, setSel, engine, events }) {
             style={{ border: `1px solid ${isActive ? C.copper : C.line}`, background: isActive ? '#1A2132' : C.panel, borderRadius: 6, padding: '8px 10px', marginBottom: 8 }}>
             <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
               <span className="mono" style={{ fontSize: 12, color: TYPE_COLORS[e.type] || C.copper, border: `1px solid ${TYPE_COLORS[e.type] || C.copper}`, borderRadius: 3, padding: '1px 6px' }}>
-                {e.type.toUpperCase()}
+                {e.type}
               </span>
               <span className="mono" style={{ fontSize: 12, color: C.faint }}>{e.date}</span>
               {/* The tooltip is publicClassificationNote(), never assumption.reason:

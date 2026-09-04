@@ -112,7 +112,7 @@ export default function NetworkGraph({ baseGraph, filters = {}, pb = null }) {
   return (
     <div style={{ padding: 10 }}>
       <div className="mono" style={{ fontSize: 11, color: C.copper, marginBottom: 6 }}>
-        FUNCTIONAL-CENTRE NETWORK · {analysis.centres.length} CENTRES · {shownEdges.length} SHOWN CONNECTIONS
+        {analysis.centres.length} centres · {shownEdges.length} connections shown
         <span style={{ color: C.faint }}> · node colour: tier · node size: {sizeLabel}</span>
       </div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 8, marginBottom: 6 }}>

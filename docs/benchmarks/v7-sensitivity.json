@@ -2,7 +2,7 @@
   "modelVersion": "sscim-model-v7.1-exposure-robustness",
   "datasetAsOf": "2026-09-04",
   "snapshotDate": "2026-09-04",
-  "generatedAt": "2026-09-04T06:47:52.712Z",
+  "generatedAt": "2026-09-04T11:42:18.102Z",
   "design": {
     "method": "Saltelli sampling with Sobol first-order and total-order estimators, over the registry assumption box",
     "generator": "splitmix32, fixed seed — no unseeded randomness anywhere in this path",

@@ -26,6 +26,7 @@
     "legacy": "node scripts/build-legacy-fallback.mjs",
     "benchmark": "node scripts/build-v6-v7-benchmark.mjs",
     "shots": "node scripts/screenshots.mjs",
+    "audit:licenses": "node scripts/license-audit.mjs",
     "digest": "node scripts/model-digest.mjs",
     "recovery": "node ../docs/computation-demo/validation/mle-validation.mjs",
     "smoke": "node scripts/browser-smoke.mjs",

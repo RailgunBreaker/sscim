@@ -160,19 +160,38 @@ describe('FacilityPlayground — a focused facility', () => {
     expect(showAll.textContent).toBe('Show all 60');
   });
 
-  it('offers traversal controls for direction and depth', async () => {
+  /* Direction and depth are one-of-a-set choices, so they are segmented
+     controls with radio semantics and a visible group name — not four more
+     chips indistinguishable from the history buttons beside them. The
+     arrows and the house glyph are gone; the words carry the meaning. */
+  it('offers traversal direction as a labelled exclusive choice', async () => {
     const { host } = await focused();
-    const labels = [...host.querySelectorAll('button')].map((b) => b.textContent);
-    expect(labels).toContain('← Upstream only');
-    expect(labels).toContain('Downstream only →');
-    expect(labels).toContain('Both directions');
-    expect(labels).toContain('All reachable');
+    const group = host.querySelector('[role="radiogroup"][aria-label="Traversal direction"]');
+    expect(group).toBeTruthy();
+    const labels = [...group.querySelectorAll('[role="radio"]')].map((b) => b.textContent);
+    expect(labels).toEqual(['Upstream', 'Downstream', 'Both']);
+    expect(group.querySelectorAll('[role="radio"][aria-checked="true"]')).toHaveLength(1);
   });
 
-  it('offers back, forward, start and reset', async () => {
+  it('offers hop depth as a labelled exclusive choice, including all-reachable', async () => {
     const { host } = await focused();
-    const labels = [...host.querySelectorAll('button')].map((b) => b.textContent);
-    ['← Back', 'Forward →', '⌂ Start', 'Reset'].forEach((l) => expect(labels).toContain(l));
+    const group = host.querySelector('[role="radiogroup"][aria-label="Hop depth"]');
+    expect(group).toBeTruthy();
+    const labels = [...group.querySelectorAll('[role="radio"]')].map((b) => b.textContent);
+    expect(labels).toEqual(['1 hop', '2 hops', '3 hops', 'All reachable']);
+    /* The three-hop default must be the one selected on arrival. */
+    const checked = group.querySelector('[role="radio"][aria-checked="true"]');
+    expect(checked.textContent).toBe('3 hops');
+  });
+
+  it('offers back, forward, start and reset as history ACTIONS, grouped apart', async () => {
+    const { host } = await focused();
+    const group = host.querySelector('[role="group"][aria-label="Exploration history"]');
+    expect(group).toBeTruthy();
+    const labels = [...group.querySelectorAll('button')].map((b) => b.textContent);
+    expect(labels).toEqual(['Back', 'Forward', 'Start', 'Reset']);
+    /* They are actions, not choices: none of them is a radio. */
+    expect(group.querySelectorAll('[role="radio"]')).toHaveLength(0);
   });
 
   it('links out to the map, the profile, the operator and the stages', async () => {
