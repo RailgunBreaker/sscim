@@ -53,6 +53,9 @@ header{position:sticky;top:0;z-index:5;border-bottom:1px solid var(--line);backg
 .bar{max-width:1280px;margin:auto;padding:12px 24px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 .brand{display:flex;align-items:center;color:var(--text)}.brand img{display:block;width:92px;height:auto;filter:grayscale(1) brightness(0) invert(1)}
 .eyebrow,.path{font-size:12px;font-weight:600;color:var(--copper);letter-spacing:1.2px}
+/* Document paths are long, slash-joined and unbreakable to the default line
+   breaker; without this they push the page sideways at 375px. */
+.path{display:block;overflow-wrap:anywhere}
 .nav{display:flex;gap:14px;margin-left:auto;font-size:13px}
 .page{max-width:1280px;margin:auto;padding:28px 24px 90px;display:grid;grid-template-columns:250px minmax(0,1fr);gap:40px}
 .doc-tree{position:sticky;top:78px;align-self:start;max-height:calc(100vh - 96px);overflow:auto;border:1px solid var(--line);border-radius:8px;background:var(--panel2);padding:13px 10px}
@@ -79,7 +82,7 @@ header{position:sticky;top:0;z-index:5;border-bottom:1px solid var(--line);backg
 .markdown th,.markdown td{border:1px solid var(--line);padding:9px 10px;text-align:left;vertical-align:top}
 .markdown hr{border:0;border-top:1px solid var(--line);margin:30px 0}
 .markdown img{max-width:100%}
-.foot{margin-top:50px;padding-top:20px;border-top:1px solid var(--line);color:var(--faint);font-size:12.5px}
+.foot{margin-top:50px;padding-top:20px;border-top:1px solid var(--line);color:var(--faint);font-size:12.5px;overflow-wrap:anywhere}
 .sitemap{border-top:1px solid var(--line);background:var(--panel2);padding:26px 24px 22px;margin-top:40px}
 .sitemap-inner{max-width:1280px;margin:auto}
 .sitemap-title{font-size:9px;letter-spacing:2px;color:var(--copper);margin:0 0 14px}
