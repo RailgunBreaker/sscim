@@ -1,0 +1,17 @@
+.docs-header { position: sticky; top: 0; z-index: 10; border-bottom: 1px solid var(--line); background: var(--panel); }
+#doc-header { position: sticky; top: 0; z-index: 10; }
+#doc-header .docs-header { position: static; }
+.docs-bar { max-width: 1280px; margin: auto; padding: 14px 24px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.docs-brand { display: flex; align-items: center; }
+.docs-brand img { display: block; width: 100px; height: auto; filter: var(--logoFilter); }
+.docs-section { color: var(--dim); font-size: 13px; }
+.docs-header nav { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-left: auto; }
+.docs-header nav > a { font-size: 14px; color: var(--dim); }
+.docs-header .button { display: inline-flex; align-items: center; min-height: 36px; padding: 0 14px; border: 1px solid var(--copper); border-radius: 7px; background: var(--copper); color: var(--onAccent); font-weight: 600; }
+.doc-modified { display: block; margin: 10px 0 0; color: var(--faint); font-size: 12px; font-variant-numeric: tabular-nums; }
+.doc-modified time { color: var(--dim); }
+@media(max-width: 700px) {
+  .docs-bar { padding: 12px 18px; gap: 12px; }
+  .docs-header nav { margin-left: 0; width: 100%; gap: 12px; }
+  .docs-header .button { min-height: 44px; }
+}

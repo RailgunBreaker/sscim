@@ -1,6 +1,11 @@
 // English keys are the fallback. Every row supplies Simplified Chinese,
 // Traditional Chinese, and Japanese in that order.
 export const MESSAGES = {
+  'Last modified': ['最后修改', '最後修改', '最終更新'],
+  'All documents': ['全部文档', '全部文件', 'すべての文書'],
+  'Site navigation': ['网站导航', '網站導覽', 'サイトナビゲーション'],
+  '{count} of {total} documents': ['共 {total} 篇文档，显示 {count} 篇', '共 {total} 篇文件，顯示 {count} 篇', '{total} 件中 {count} 件の文書'],
+  'No document matches that combination.': ['没有符合这些条件的文档。', '沒有符合這些條件的文件。', '条件に一致する文書はありません。'],
   'Search a facility': ['搜索设施', '搜尋設施', '施設を検索'],
   'by name, operator, city, country, stage or type': ['按名称、运营商、城市、国家、阶段或类型', '依名稱、營運商、城市、國家、階段或類型', '名前、運営企業、都市、国、工程、種類から検索'],
   'e.g. ASML, Kumamoto, lithography, Taiwan, packaging…': ['例如：ASML、熊本、光刻、台湾、封装…', '例如：ASML、熊本、微影、台灣、封裝…', '例：ASML、熊本、リソグラフィ、台湾、パッケージング…'],

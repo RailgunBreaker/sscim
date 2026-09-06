@@ -1,7 +1,7 @@
 import { useLanguage } from '../i18n/useLanguage.js';
 import { t } from '../i18n/index.js';
-import LanguagePicker from '../components/LanguagePicker.jsx';
-import ThemeControl from '../components/ThemeControl.jsx';
+import DocsHeader from './DocsHeader.jsx';
+import { formatDate } from '../i18n/locale.js';
 import { useEffect, useMemo, useState } from 'react';
 import { DOCUMENT_LIBRARY } from './generated-library.js';
 import { pageFor } from './docLinks.js';
@@ -42,21 +42,21 @@ h1{margin:6px 0 8px;font-size:clamp(28px,4vw,40px);letter-spacing:-.8px}
 .filters{display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin:16px 0 4px}
 .chip{border:1px solid var(--line);background:var(--panel2);color:var(--dim);border-radius:20px;padding:6px 13px;font:12px Inter,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;letter-spacing:.2px;cursor:pointer}
 .chip:hover{border-color:var(--copper);color:var(--text)}
-.chip.on{background:var(--copper);border-color:var(--copper);color:var(--bg);font-weight:700}
+.chip.on{background:var(--copper);border-color:var(--copper);color:var(--onAccent);font-weight:700}
 .chip .n{opacity:.65;margin-left:5px}
 .clear{background:none;border:0;color:var(--faint);font:12px Inter,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;cursor:pointer;text-decoration:underline;padding:6px 4px}
 .count{color:var(--faint);font-size:12px;font-weight:600;letter-spacing:1.1px;margin:22px 0 10px}
 .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(272px,1fr));gap:12px}
-.card{border:1px solid var(--line);background:var(--panel);border-radius:9px;padding:15px;display:block;transition:border-color .15s ease,transform .15s ease}
-.card:hover{border-color:var(--copper);transform:translateY(-1px);text-decoration:none}
+.card{border:1px solid var(--line);background:var(--panel);border-radius:9px;padding:15px;display:block;transition:border-color .15s ease}
+.card:hover{border-color:var(--copper);text-decoration:none}
 .card strong{display:block;font-size:14.5px;color:var(--text);font-weight:600}
 .card small{display:block;margin-top:5px;color:var(--faint);font-size:12px;word-break:break-all}
 .card .tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:9px}
 .card .tag{border:1px solid var(--line);color:var(--dim);border-radius:20px;padding:2px 8px;font-size:12px}
 .group{margin:30px 0 10px;font-size:12px;font-weight:700;letter-spacing:1.3px;color:var(--faint);border-bottom:1px solid var(--line);padding-bottom:7px}
 .empty{color:var(--faint);font-size:13px}
-.note{border:1px solid var(--line);background:rgba(223,168,61,.06);border-radius:7px;padding:12px 14px;margin:0 0 26px;color:var(--dim);font-size:13px}
-.note b{color:var(--amber)}
+.note{border:1px solid var(--line);background:var(--panel2);border-radius:7px;padding:12px 14px;margin:0 0 26px;color:var(--dim);font-size:13px}
+.note b{color:var(--text)}
 @media(max-width:700px){main{padding:26px 18px 60px}.nav{margin-left:0;width:100%;order:3}}
 `;
 
@@ -149,17 +149,7 @@ export default function Docs() {
 
   return <>
     <style>{STYLE}</style>
-    <header><div className="bar">
-      <a className="brand" href="index.html" aria-label="SSCIM home"><img src="sscim-logo.png" alt="SSCIM" /></a>
-      <span className="eyebrow">{t('DOCUMENTATION LIBRARY')}</span>
-      <nav className="nav">
-        <ThemeControl />
-        <LanguagePicker />
-        <a href="index.html">{t('Home')}</a>
-        <a href="intro.html">{t('Guide')}</a>
-        <a className="button fill" href="sscim-app.html">{t('Open dashboard')}</a>
-      </nav>
-    </div></header>
+    <DocsHeader />
     <main>
       <h1>{t('Documentation')}</h1>
       <p className="lede">{t('Every Markdown document in the project, published as its own page with equations rendered. Filter by what you came for, or search by name.')}</p>
@@ -178,14 +168,15 @@ export default function Docs() {
         {active.length > 0 && <button type="button" className="clear" onClick={clear}>{t('Clear')}</button>}
       </div>
 
-      <p className="count">{matched.length} OF {library.length} DOCUMENTS{active.length ? ` · ${active.map(labelFor).join(' + ')}` : ''}</p>
-      {matched.length === 0 && <p className="empty">No document matches that combination.</p>}
+      <p className="count">{t('{count} of {total} documents', { count: matched.length, total: library.length })}{active.length ? ` · ${active.map(labelFor).join(' + ')}` : ''}</p>
+      {matched.length === 0 && <p className="empty">{t('No document matches that combination.')}</p>}
       {[...groups].map(([dir, list]) => <section key={dir}>
         <p className="group">{dir.toUpperCase()}</p>
         <div className="cards">
           {list.map((doc) => <a className="card" key={doc.path} href={pageFor(doc.path)}>
             <strong>{doc.title.replace(/^SSCIM\s*[—-]\s*/, '')}</strong>
             <small>{doc.path}</small>
+            <span className="doc-modified">{t('Last modified')}: <time dateTime={doc.modifiedAt}>{formatDate(doc.modifiedAt)}</time></span>
             <span className="tags">{(doc.tags || []).map((t) => <span className="tag" key={t}>{labelFor(t)}</span>)}</span>
           </a>)}
         </div>

@@ -44,6 +44,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # Document dates come from each file's history, not checkout time.
+          fetch-depth: 0
 
       - name: Setup Node
         uses: actions/setup-node@v4

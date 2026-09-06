@@ -630,6 +630,34 @@ async function main() {
     await shot(lp, 'landing-1366x936');
     await lctx.close();
 
+    const dctx = await browser.newContext({ viewport: { width: 1366, height: 936 } });
+    const dp = await dctx.newPage();
+    dp.on('pageerror', (e) => consoleErrors.push(`documentation: ${e.message}`));
+    for (const mode of ['light', 'dark']) {
+      await dp.goto(`${base}/docs.html`, { waitUntil: 'load' });
+      await dp.waitForSelector('.docs-header select');
+      await dp.locator('.theme-control button').nth(mode === 'light' ? 0 : 1).click();
+      await dp.locator('.docs-header select').selectOption('ja');
+      const cards = await dp.locator('.card').count();
+      check(cards > 0 && await dp.locator('.card time[datetime]').count() === cards, 'every library document has a modified date');
+      const libraryBg = await dp.evaluate(() => getComputedStyle(document.body).backgroundColor);
+      await dp.goto(`${base}/docs/computation-demo/validation/SYNTHETIC_PARAMETER_RECOVERY.md.html`, { waitUntil: 'load' });
+      await dp.waitForSelector('.docs-header select');
+      check(await dp.locator('html').getAttribute('data-theme') === mode, `document preserves ${mode} theme`);
+      check(await dp.evaluate(() => getComputedStyle(document.body).backgroundColor) === libraryBg, `document and library share ${mode} palette`);
+      check(await dp.locator('.docs-header select').inputValue() === 'ja', 'document preserves language preference');
+      check(await dp.locator('.content-header time[datetime]').count() === 1, 'document has a machine-readable modified date');
+      check(await dp.locator('[data-doc-label="Last modified"]').innerText() !== 'Last modified', 'document date label is localized');
+      for (const width of [1366, 375]) {
+        await dp.setViewportSize({ width, height: 936 });
+        const overflow = await dp.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+        check(overflow <= 2, `document ${mode} at ${width}px: no horizontal overflow`, `${overflow}px`);
+        await shot(dp, `document-${mode}-${width}`);
+      }
+      await dp.setViewportSize({ width: 1366, height: 936 });
+    }
+    await dctx.close();
+
     check(consoleErrors.length === 0, 'no SSCIM console errors', consoleErrors.slice(0, 3).join(' | '));
   } finally {
     await browser.close();

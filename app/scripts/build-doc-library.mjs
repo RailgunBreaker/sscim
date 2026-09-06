@@ -16,7 +16,7 @@ import { findMarkdownDocs, appDir } from './lib/find-markdown.mjs';
 
 const output = path.join(appDir, 'src', 'docs', 'generated-library.js');
 const manifestOutput = path.join(appDir, 'public', 'docs-manifest.json');
-const docs = (await findMarkdownDocs()).map(({ path: p, title, tags }) => ({ path: p, title, tags }));
+const docs = (await findMarkdownDocs()).map(({ path: p, title, tags, modifiedAt }) => ({ path: p, title, tags, modifiedAt }));
 
 await mkdir(path.dirname(output), { recursive: true });
 await mkdir(path.dirname(manifestOutput), { recursive: true });
