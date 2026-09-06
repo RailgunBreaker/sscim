@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { C } from './theme.js';
-import { t, setLangV } from './i18n/index.js';
+import { t } from './i18n/index.js';
+import { useLanguage } from './i18n/useLanguage.js';
 import { VaultProvider, useVault } from './data/VaultContext.jsx';
 import { WatchlistProvider } from './interaction/WatchlistContext.jsx';
 import { buildModel, reviewDateISO } from './engine/buildModel.js';
@@ -188,10 +189,9 @@ function DashboardBody() {
   const [wide, setWide] = useState(true);
   const [showBriefing, setShowBriefing] = useState(false);
   const [showGuide, setShowGuide] = useState(false);
-  const [lang, setLang] = useState("en");
+  const [lang, setLang] = useLanguage();
   const [tourTarget, setTourTarget] = useState(null);
   const [guideKey, setGuideKey] = useState(0);
-  setLangV(lang);
 
   /* THE TWO WAYS THE VIEW LEAVES "LIVE", and they are different in kind.
 
@@ -466,8 +466,8 @@ function DashboardBody() {
       />
 
       <div className="dashboard-title">
-        <div><h1>Supply chain overview</h1><p>Explore exposure, trace dependencies, and review the events shaping the semiconductor industry.</p></div>
-        <a href="docs.html">Explore the methodology</a>
+        <div><h1>{t('Supply chain overview')}</h1><p>{t('Explore exposure, trace dependencies, and review the events shaping the semiconductor industry.')}</p></div>
+        <a href="docs.html">{t('Explore the methodology')}</a>
       </div>
 
       <LiveBar model={model} whatChanged={whatChanged} hazard={scenario} onClearHazard={resetScenario} source={source} />

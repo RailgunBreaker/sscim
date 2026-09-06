@@ -1,3 +1,6 @@
+import { t } from '../i18n/index.js';
+import { useLanguage } from '../i18n/useLanguage.js';
+import { formatDate } from '../i18n/locale.js';
 import { useEffect, useMemo, useState } from 'react';
 import snapshot from '../data/vault-snapshot.json';
 import { getEventAssumption } from '../engine/event-assumptions.js';
@@ -77,6 +80,7 @@ function markerFor(event) {
 }
 
 export default function NewsTicker({ note = 'Not investment advice' }) {
+  useLanguage();
   const [events, setEvents] = useState(() => snapshot.events || []);
 
   useEffect(() => {
@@ -107,7 +111,7 @@ export default function NewsTicker({ note = 'Not investment advice' }) {
         <span className="nt-copy" key={copy} aria-hidden={copy === 1}>
           {items.map((e) => (
             <span className="nt-item" key={`${copy}-${e.id}`}>
-              <span className="nt-date">{e.date}</span>
+              <span className="nt-date">{formatDate(e.dateISO || e.date)}</span>
               <span className="nt-mark" style={{ color: e.color }} title={e.label}>{e.mark}</span>
               <span className="nt-title">{e.title}</span>
             </span>
@@ -121,8 +125,8 @@ export default function NewsTicker({ note = 'Not investment advice' }) {
     <div className="nt mono">
       <style>{STYLE}</style>
       <div className="wrap nt-inner">
-        <span className="nt-label">Latest events <b>· {note}</b></span>
-        <div className="nt-track" role="marquee" aria-label={`Recent supply-chain events, newest first. ${note}.`}>
+        <span className="nt-label">{t('Latest events')} <b>· {t(note)}</b></span>
+        <div className="nt-track" role="marquee" aria-label={t('Recent supply-chain events, newest first. {note}.', { note: t(note) })}>
           {rail}
         </div>
       </div>

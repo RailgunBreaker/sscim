@@ -171,7 +171,7 @@ function buildChecks(s) {
   }
 
   if (s.lastRunStatus && s.lastRunStatus !== 'ok') {
-    add('error', 'Last pipeline run did not succeed', s.lastRunStatus,
+    add(s.lastRunStatus.startsWith('partial:') ? 'warn' : 'error', s.lastRunStatus.startsWith('partial:') ? 'Some feeds could not be refreshed' : 'Last pipeline run did not succeed', s.lastRunStatus,
       'Check the run output; the previous good deployment is still live.');
   }
 
@@ -205,7 +205,7 @@ function buildChecks(s) {
       'Install the Claude Code extension, or set ANTHROPIC_API_KEY in server/.env.');
   }
   if (!s.environment.webzToken) {
-    add('info', 'WEBZ_TOKEN is not set', 'The news feed is skipped, and it is where most supply-chain events surface.',
+    add('info', 'WEBZ_TOKEN is not set', 'Optional Webz news is skipped. Key-free RSS discovery remains enabled for English, Chinese, and Japanese.',
       'Set WEBZ_TOKEN in server/.env.');
   }
 

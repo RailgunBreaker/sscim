@@ -45,11 +45,11 @@ export async function fetchEarthquakeCandidates({ since, until, minMagnitude = M
   const params = new URLSearchParams({
     format: 'geojson',
     starttime: since,
-    endtime: until,
+    endtime: `${until}T23:59:59.999Z`,
     minmagnitude: String(minMagnitude),
     orderby: 'time',
   });
-  const res = await fetch(`${FEED}?${params}`, { headers: { 'User-Agent': 'sscim-pipeline/1.0' } });
+  const res = await fetch(`${FEED}?${params}`, { signal: AbortSignal.timeout(20000), headers: { 'User-Agent': 'sscim-pipeline/1.0' } });
   if (!res.ok) throw new Error(`USGS feed returned HTTP ${res.status}`);
   const json = await res.json();
 

@@ -1,3 +1,4 @@
+import { t } from '../i18n/index.js';
 import { useMemo } from 'react';
 import { C } from '../theme.js';
 import { Disclosure } from '../ui/primitives.jsx';
@@ -82,7 +83,7 @@ export default function TimeMachine({ asOfDaysAgo, setAsOfDaysAgo, setSel, selec
     <div className="cbar" style={{ padding: '7px 16px', background: live ? C.panel2 : C.panel2, borderBottom: `1px solid ${live ? C.line : C.copperDim}` }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
         <span className="mono" style={{ fontSize: 12, color: live ? C.faint : C.copper, flexShrink: 0 }}>
-          {live ? 'LIVE' : '⟲ REVIEWING'}
+          {live ? t('LIVE') : '⟲ REVIEWING'}
         </span>
         <span className="mono" style={{ fontSize: 12, color: live ? C.dim : C.text, fontWeight: live ? 400 : 700, flexShrink: 0 }}>
           {shownDate}
@@ -93,16 +94,14 @@ export default function TimeMachine({ asOfDaysAgo, setAsOfDaysAgo, setSel, selec
 
         <input type="range" min="0" max={spanDays} step="1" value={sliderValue}
           onChange={(e) => onSlide(e.target.value)}
-          aria-label="Review the chain as of a past date"
+          aria-label={t('Review the chain as of a past date')}
           style={{ flex: '1 1 240px', minWidth: 160, accentColor: live ? C.copperDim : C.copper }} />
 
         <button type="button" onClick={() => setAsOfDaysAgo(0)} disabled={live}
           style={{ fontSize: 12, padding: '3px 10px', borderRadius: 4, fontFamily: 'inherit',
             cursor: live ? 'default' : 'pointer', fontWeight: live ? 400 : 700,
             background: live ? 'transparent' : C.copper, color: live ? C.faint : C.onAccent,
-            border: `1px solid ${live ? C.line : C.copper}`, opacity: live ? 0.5 : 1 }}>
-          Return to live
-        </button>
+            border: `1px solid ${live ? C.line : C.copper}`, opacity: live ? 0.5 : 1 }}>{t('Return to live')}</button>
       </div>
 
       {/* --- event markers: click to jump to that date --- */}
@@ -138,7 +137,7 @@ export default function TimeMachine({ asOfDaysAgo, setAsOfDaysAgo, setSel, selec
           reader has not asked for belongs. The state sentence, which says
           WHAT IS ON SCREEN rather than how to read it, stays visible. */}
       {live ? (
-        <Disclosure summary="How to read this timeline" style={{ marginTop: 2 }}>
+        <Disclosure summary={t('How to read this timeline')} style={{ marginTop: 2 }}>
           Current-model retrospective replay over the last{' '}
           {Math.round(spanDays / 30)} months, or click an event marker. Marker
           height shows the index difference when the entire incident, including its updates,

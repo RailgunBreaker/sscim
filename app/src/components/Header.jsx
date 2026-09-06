@@ -8,6 +8,7 @@ import { MODEL_VERSION } from '../engine/registry.js';
 import SearchBox from './SearchBox.jsx';
 import Freshness from './Freshness.jsx';
 import ThemeControl from './ThemeControl.jsx';
+import LanguagePicker from './LanguagePicker.jsx';
 
 /* The header used to carry, in order: the logo, a build label reading
    "v4 · OSM MAP · COMPANY SPREAD", the full product name, three unlabelled
@@ -74,20 +75,20 @@ export default function Header({
         />
       </a>
 
-      <div className="dashboard-brand"><strong>Supply chain intelligence</strong><span>Semiconductor research workspace</span></div>
+      <div className="dashboard-brand"><strong>{t('Supply chain intelligence')}</strong><span>{t('Semiconductor research workspace')}</span></div>
 
       {/* One status, not seven fields. The dataset date and how stale it is
           are the two things worth knowing at a glance; the rest is in About. */}
       <div style={{ display: 'flex', alignItems: 'center', gap: space.sm, minWidth: 0 }}>
         <span style={{ ...typeStyle.meta, ...tabular, color: color.text.secondary, whiteSpace: 'nowrap' }}>
-          {datasetAsOf ? `Data to ${datasetAsOf}` : 'Data snapshot'}
+          {datasetAsOf ? t('Data to {date}', { date: datasetAsOf }) : t('Data snapshot')}
         </span>
         <Freshness />
       </div>
 
       <div className="dashboard-actions" style={{ marginLeft: 'auto', display: 'flex', gap: space.sm, alignItems: 'center', flexWrap: 'wrap' }}>
         <ThemeControl />
-        <LanguagePicker lang={lang} setLang={setLang} />
+        <LanguagePicker />
         <SearchBox setSel={setSel} />
         <Button variant="quiet" size="sm" onClick={() => setShowGuide(true)}>
           {t('Help')}
@@ -110,57 +111,6 @@ export default function Header({
         />
       </div>
     </header>
-  );
-}
-
-/* Four languages, as a labelled group rather than four loose buttons. The
-   codes are the language's own name, which is what a reader scanning for
-   their language looks for. */
-function LanguagePicker({ lang, setLang }) {
-  const LANGS = [['en', 'EN', 'English'], ['zh', '简', '简体中文'], ['tw', '繁', '繁體中文'], ['ja', '日', '日本語']];
-  return (
-    <div
-      role="radiogroup"
-      aria-label="Language"
-      style={{
-        display: 'flex',
-        gap: 2,
-        padding: 2,
-        background: color.surface.sunken,
-        border: `1px solid ${color.border.control}`,
-        borderRadius: radius.md,
-      }}
-    >
-      {LANGS.map(([l, short, full]) => {
-        const active = lang === l;
-        return (
-          <button
-            key={l}
-            type="button"
-            role="radio"
-            aria-checked={active}
-            aria-label={full}
-            title={full}
-            onClick={() => setLang(l)}
-            className="ui-button"
-            style={{
-              background: active ? color.state.accent : 'transparent',
-              color: active ? color.text.onAccent : color.text.secondary,
-              border: 'none',
-              borderRadius: radius.sm,
-              padding: `0 ${space.sm}px`,
-              minHeight: 24,
-              fontSize: font.size.meta,
-              fontWeight: active ? font.weight.semibold : font.weight.regular,
-              fontFamily: 'inherit',
-              cursor: 'pointer',
-            }}
-          >
-            {short}
-          </button>
-        );
-      })}
-    </div>
   );
 }
 

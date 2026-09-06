@@ -1,3 +1,5 @@
+import { countryName } from '../i18n/locale.js';
+import { useLanguage } from '../i18n/useLanguage.js';
 import { useState, useMemo } from 'react';
 import { C } from '../theme.js';
 import { t } from '../i18n/index.js';
@@ -5,20 +7,21 @@ import { useVault } from '../data/VaultContext.jsx';
 import { onEnterSpace } from '../utils/a11y.js';
 
 export default function SearchBox({ setSel }) {
+  const [language] = useLanguage();
   const { data } = useVault();
   const [q, setQ] = useState("");
   const results = useMemo(() => {
     if (q.trim().length < 2) return [];
-    const term = q.trim().toLowerCase();
+    const term = q.trim().normalize('NFKC').toLowerCase();
     const out = [];
-    data.STAGES.forEach((s) => s.name.toLowerCase().includes(term) && out.push({ type: "stage", id: s.id, label: s.name, k: "STAGE" }));
+    data.STAGES.forEach((s) => `${s.name} ${t(s.name)}`.toLowerCase().includes(term) && out.push({ type: "stage", id: s.id, label: s.name, k: "STAGE" }));
     data.COMPANIES.forEach((c) => c.name.toLowerCase().includes(term) && out.push({ type: "company", id: c.id, label: c.name, k: "CO" }));
-    Object.entries(data.COUNTRY_NAMES).forEach(([id, n]) => n.toLowerCase().includes(term) && out.push({ type: "country", id, label: n, k: "CTRY" }));
+    Object.entries(data.COUNTRY_NAMES).forEach(([id, n]) => `${n} ${countryName(id, n)}`.toLowerCase().includes(term) && out.push({ type: "country", id, label: countryName(id, n), k: "CTRY" }));
     return out.slice(0, 8);
-  }, [q, data]);
+  }, [q, data, language]);
   return (
     <div style={{ position: "relative" }}>
-      <input value={q} onChange={(e) => setQ(e.target.value)} placeholder={t("Search…")}
+      <input aria-label={t("Search…")} value={q} onChange={(e) => setQ(e.target.value)} placeholder={t("Search…")}
         style={{ background: C.panel2, border: `1px solid ${C.line}`, borderRadius: 4, color: C.text, padding: "5px 9px", fontSize: 12, fontFamily: "inherit", width: 110, outline: "none" }} />
       {results.length > 0 && (
         <div style={{ position: "absolute", top: "110%", right: 0, zIndex: 100, background: C.panel, border: `1px solid ${C.copper}`, borderRadius: 6, minWidth: 220, overflow: "hidden" }}>

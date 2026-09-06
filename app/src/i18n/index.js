@@ -4,9 +4,13 @@
    bindings are read-only live views), so setLangV() is the one addition
    needed to keep this working across module boundaries — the pattern itself
    is unchanged. */
-export let LANGV = "en";
+import { getLanguage, normalizeLanguage, subscribeLanguage } from './locale.js';
+import { MESSAGES } from './messages.js';
+
+export let LANGV = getLanguage();
+subscribeLanguage(() => { LANGV = getLanguage(); });
 export function setLangV(l) {
-  LANGV = l;
+  LANGV = normalizeLanguage(l) || 'en';
 }
 
 export const I18N = {
@@ -75,4 +79,14 @@ export const I18N = {
     gNote: "デモはサンプルデータ。イベント・方法論の本文は現在英語です。記述的分析であり投資助言ではありません。",
   },
 };
-export const t = (k) => (I18N[LANGV] && I18N[LANGV][k]) || k;
+Object.assign(I18N.en, {
+  'Event index explanation': `"index" = this event's own operational-impact display index (0-10, 5 = neutral, >5 net adverse, <5 net mitigating), propagated through the graph alone, not combined with other events.`,
+  'Excluded event explanation': '"excluded from score" = a hazard-signal/mixed/strategic event, shown but not scored; see its card for why.',
+});
+for (const [key, values] of Object.entries(MESSAGES)) {
+  ['zh', 'tw', 'ja'].forEach((language, index) => { I18N[language][key] = values[index]; });
+}
+export const t = (key, params = {}) => {
+  const message = I18N[LANGV]?.[key] || I18N.en[key] || key;
+  return String(message).replace(/\{(\w+)\}/g, (match, name) => params[name] == null ? match : String(params[name]));
+};

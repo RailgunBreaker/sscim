@@ -1,5 +1,7 @@
+import { useLanguage } from '../i18n/useLanguage.js';
+import { t as ui } from '../i18n/index.js';
+import LanguagePicker from '../components/LanguagePicker.jsx';
 import ThemeControl from '../components/ThemeControl.jsx';
-import { useState } from 'react';
 import { RELEASES, KIND_LABEL, KIND_COLOR } from '../data/releases.js';
 import { T, LANG_LABELS } from './i18n.js';
 import SiteMap from '../components/SiteMap.jsx';
@@ -64,7 +66,7 @@ const STYLE = `
 `;
 
 export default function Updates() {
-  const [lang, setLang] = useState('en');
+  const [lang] = useLanguage();
   const t = (key) => T[key][lang] ?? T[key].en;
 
   return (
@@ -76,11 +78,7 @@ export default function Updates() {
           <a className="logo" href="index.html" aria-label="SSCIM home"><img src="sscim-logo.png" alt="SSCIM" /></a>
           <span className="tag mono">{t('tag')}</span>
           <ThemeControl />
-          <span className="langbar mono" style={{ marginLeft: 'auto', display: 'flex', gap: 3 }}>
-            {Object.entries(LANG_LABELS).map(([l, label]) => (
-              <b key={l} className={lang === l ? 'on' : ''} onClick={() => setLang(l)}>{label}</b>
-            ))}
-          </span>
+          <LanguagePicker />
           <a href="intro.html" style={{ fontSize: 13 }}>{t('navGuide')}</a>
           <a href="docs.html" style={{ fontSize: 13 }}>{t('navDocs')}</a>
           <a className="btn solid" href="sscim-app.html">{t('navDashboard')}</a>

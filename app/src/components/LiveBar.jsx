@@ -71,7 +71,7 @@ export default function LiveBar({ model, whatChanged, hazard, onClearHazard, sou
       {/* 1 — the current result, and what KIND of reading it is */}
       <span style={{ display: 'flex', alignItems: 'baseline', gap: 8, flexShrink: 0 }}>
         <span style={{ fontSize: 12, color: C.faint }}>
-          {reviewing || scenarioActive ? tone.label : 'Chain index'}
+          {t(reviewing || scenarioActive ? tone.label : 'Chain index')}
         </span>
         <b className="mono" style={{ fontSize: 32, fontWeight: 600, lineHeight: 1.1, color: riskColor(activeChainIndex) }}>
           {activeChainIndex.toFixed(2)}
@@ -82,7 +82,7 @@ export default function LiveBar({ model, whatChanged, hazard, onClearHazard, sou
           </span>
         ) : (
           <span className="mono" style={{ fontSize: 13, color: C.dim }}>
-            {baselineDelta7d >= 0 ? '+' : ''}{Number.isFinite(baselineDelta7d) ? baselineDelta7d.toFixed(2) : '—'} over 7 days
+            {baselineDelta7d >= 0 ? '+' : ''}{Number.isFinite(baselineDelta7d) ? baselineDelta7d.toFixed(2) : '—'} {t('over 7 days')}
           </span>
         )}
         <Spark data={history} />
@@ -90,12 +90,12 @@ export default function LiveBar({ model, whatChanged, hazard, onClearHazard, sou
 
       {/* 2 — what moved it */}
       <span style={{ flex: 1, minWidth: 240, fontSize: 13 }}>
-        <span style={{ color: C.faint }}>What changed: </span>{whatChanged}
+        <span style={{ color: C.faint }}>{t('What changed:')}</span>{' '}{whatChanged}
       </span>
 
       {/* 3 — where it came from, and the one action */}
       <span style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0, fontSize: 12, color: C.faint }}>
-        <span>{eventsInWindow} event{eventsInWindow === 1 ? '' : 's'} in window</span>
+        <span>{t(eventsInWindow === 1 ? '{count} event in window' : '{count} events in window', { count: eventsInWindow })}</span>
         <span
           title={sourceNote}
           style={{
@@ -104,15 +104,13 @@ export default function LiveBar({ model, whatChanged, hazard, onClearHazard, sou
           }}
         >
           <span aria-hidden="true" style={{ width: 6, height: 6, borderRadius: '50%', background: tone.text }} />
-          {isStatic ? 'Static snapshot' : 'Live vault'}
+          {t(isStatic ? 'Static snapshot' : 'Live vault')}
           {` · ${model.datasetAsOf}`}
         </span>
         {scenarioActive && onClearHazard && (
           <button type="button" onClick={onClearHazard} className="ui-button"
             title={hazard?.desc || 'Remove the hazard overlay and return to the observed reading'}
-            style={{ fontSize: 13, padding: '5px 12px', borderRadius: 5, fontFamily: 'inherit', cursor: 'pointer', fontWeight: 600, background: C.amber, color: C.onAccent, border: `1px solid ${C.amber}` }}>
-            Clear hazard
-          </button>
+            style={{ fontSize: 13, padding: '5px 12px', borderRadius: 5, fontFamily: 'inherit', cursor: 'pointer', fontWeight: 600, background: C.amber, color: C.onAccent, border: `1px solid ${C.amber}` }}>{t('Clear hazard')}</button>
         )}
       </span>
     </div>

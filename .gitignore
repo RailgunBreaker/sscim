@@ -8,6 +8,7 @@ dist/
 server/data/*.db-journal
 server/data/*.db-wal
 server/data/*.db-shm
+server/data/backups/
 # Build artifact — regenerated from the database by app/scripts/build-vault-snapshot.mjs.
 app/src/data/vault-snapshot.json
 app/src/docs/generated-library.js

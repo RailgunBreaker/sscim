@@ -23,12 +23,14 @@
     "sources:sec": "node scripts/resolve-sec-citations.mjs",
     "sources:methods": "node scripts/resolve-method-citations.mjs",
     "evidence": "node scripts/build-evidence-coverage.mjs",
-    "repair:provenance": "node scripts/repair-event-provenance.mjs"
+    "repair:provenance": "node scripts/repair-event-provenance.mjs",
+    "news:update": "node scripts/pipeline.mjs --local-only --no-ai --no-triage --no-quotes"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.115.0",
     "better-sqlite3": "^11.3.0",
     "cors": "^2.8.5",
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "fast-xml-parser": "^5.11.1"
   }
 }

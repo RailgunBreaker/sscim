@@ -1,5 +1,7 @@
+import { useLanguage } from '../i18n/useLanguage.js';
+import { t as ui } from '../i18n/index.js';
+import LanguagePicker from '../components/LanguagePicker.jsx';
 import ThemeControl from '../components/ThemeControl.jsx';
-import { useState } from 'react';
 import { T, LANG_LABELS } from './i18n.js';
 import Tex from '../components/Tex.jsx';
 import NewsTicker from '../components/NewsTicker.jsx';
@@ -62,7 +64,7 @@ function Step({ n, titleKey, tipKey, bodyKey, t }) {
 }
 
 export default function Intro() {
-  const [lang, setLang] = useState('en');
+  const [lang] = useLanguage();
   const t = (key) => T[key][lang] ?? T[key].en;
 
   return (
@@ -78,11 +80,7 @@ export default function Intro() {
           </div>
           <div className="header-actions">
             <ThemeControl />
-            <span className="langbar mono" style={{ display: 'flex', gap: 3 }}>
-              {Object.entries(LANG_LABELS).map(([l, label]) => (
-                <b key={l} className={lang === l ? 'on' : ''} onClick={() => setLang(l)}>{label}</b>
-              ))}
-            </span>
+            <LanguagePicker />
             <a href="index.html">{t('navHome')}</a>
             <a href="docs.html">Docs</a>
             <a className="btn solid" href="sscim-app.html">{t('launchDashboard')}</a>

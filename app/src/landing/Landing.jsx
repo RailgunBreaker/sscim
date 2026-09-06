@@ -1,5 +1,7 @@
+import { useLanguage } from '../i18n/useLanguage.js';
+import { t as ui } from '../i18n/index.js';
+import LanguagePicker from '../components/LanguagePicker.jsx';
 import ThemeControl from '../components/ThemeControl.jsx';
-import { useState } from 'react';
 import { T, LANG_LABELS } from './i18n.js';
 import Tex from '../components/Tex.jsx';
 import NewsTicker from '../components/NewsTicker.jsx';
@@ -75,7 +77,7 @@ const Html = ({ tag: Tag = 'span', html, ...rest }) => <Tag {...rest} dangerousl
 const LANG_NAMES = { en: 'English', zh: '简体中文 — Simplified Chinese', tw: '繁體中文 — Traditional Chinese', ja: '日本語 — Japanese' };
 
 export default function Landing() {
-  const [lang, setLang] = useState('en');
+  const [lang] = useLanguage();
   const t = (key) => T[key][lang] ?? T[key].en;
 
   return (
@@ -92,17 +94,10 @@ export default function Landing() {
           <span className="productname">{t('productName')}</span>
           <nav aria-label="Site">
             <ThemeControl />
-            <div className="langbar" role="group" aria-label="Language" style={{ display: 'flex', gap: 3 }}>
-              {Object.entries(LANG_LABELS).map(([l, label]) => (
-                <button key={l} type="button" aria-pressed={lang === l}
-                  aria-label={LANG_NAMES[l] || label} onClick={() => setLang(l)}>
-                  {label}
-                </button>
-              ))}
-            </div>
+            <LanguagePicker />
             <a href="intro.html">{t('navIntro')}</a>
             <a href="updates.html">{t('navUpdates')}</a>
-            <a href="docs.html">Documentation</a>
+            <a href="docs.html">{ui('Documentation')}</a>
           </nav>
         </div>
       </header>
@@ -118,7 +113,7 @@ export default function Landing() {
       <div className="hero">
         <div className="wrap cols">
           <div>
-            <div className="hero-eyebrow">Semiconductor supply chain intelligence</div>
+            <div className="hero-eyebrow">{ui('Semiconductor supply chain intelligence')}</div>
             <Html tag="h1" html={t('heroH1')} />
             <p>{t('heroP')}</p>
             <div className="cta">

@@ -1,3 +1,6 @@
+import { useLanguage } from '../i18n/useLanguage.js';
+import { t } from '../i18n/index.js';
+import LanguagePicker from '../components/LanguagePicker.jsx';
 import ThemeControl from '../components/ThemeControl.jsx';
 import { useEffect, useMemo, useState } from 'react';
 import { DOCUMENT_LIBRARY } from './generated-library.js';
@@ -64,6 +67,7 @@ const readHash = () => {
 };
 
 export default function Docs() {
+  useLanguage();
   const [query, setQuery] = useState('');
   const [active, setActive] = useState(readHash);
   const [library, setLibrary] = useState(DOCUMENT_LIBRARY);
@@ -147,22 +151,23 @@ export default function Docs() {
     <style>{STYLE}</style>
     <header><div className="bar">
       <a className="brand" href="index.html" aria-label="SSCIM home"><img src="sscim-logo.png" alt="SSCIM" /></a>
-      <span className="eyebrow">DOCUMENTATION LIBRARY</span>
+      <span className="eyebrow">{t('DOCUMENTATION LIBRARY')}</span>
       <nav className="nav">
         <ThemeControl />
-        <a href="index.html">Home</a>
-        <a href="intro.html">Guide</a>
-        <a className="button fill" href="sscim-app.html">Open dashboard</a>
+        <LanguagePicker />
+        <a href="index.html">{t('Home')}</a>
+        <a href="intro.html">{t('Guide')}</a>
+        <a className="button fill" href="sscim-app.html">{t('Open dashboard')}</a>
       </nav>
     </div></header>
     <main>
-      <h1>Documentation</h1>
-      <p className="lede">Every Markdown document in the project, published as its own page with equations rendered. Filter by what you came for, or search by name.</p>
-      <div className="note"><b>Reading note:</b> SSCIM separates evidence, declared assumptions, and computed outputs. Consult each document’s scope and limitations before relying on a result.</div>
+      <h1>{t('Documentation')}</h1>
+      <p className="lede">{t('Every Markdown document in the project, published as its own page with equations rendered. Filter by what you came for, or search by name.')}</p>
+      <div className="note"><b>{t('Reading note:')}</b> {t('SSCIM separates evidence, declared assumptions, and computed outputs. Consult each document’s scope and limitations before relying on a result.')}</div>
 
-      <input className="search" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Filter documents…" aria-label="Filter documents by name" />
+      <input className="search" value={query} onChange={(e) => setQuery(e.target.value)} placeholder={t('Filter documents…')} aria-label={t('Filter documents by name')} />
 
-      <div className="filters" role="group" aria-label="Filter documents by tag">
+      <div className="filters" role="group" aria-label={t('Filter documents by tag')}>
         {tags.map((tag) => <button
           key={tag}
           type="button"
@@ -170,7 +175,7 @@ export default function Docs() {
           aria-pressed={active.includes(tag)}
           onClick={() => toggle(tag)}
         >{labelFor(tag)}<span className="n">{counts.get(tag)}</span></button>)}
-        {active.length > 0 && <button type="button" className="clear" onClick={clear}>clear</button>}
+        {active.length > 0 && <button type="button" className="clear" onClick={clear}>{t('Clear')}</button>}
       </div>
 
       <p className="count">{matched.length} OF {library.length} DOCUMENTS{active.length ? ` · ${active.map(labelFor).join(' + ')}` : ''}</p>

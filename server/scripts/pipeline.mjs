@@ -4,7 +4,7 @@
    Runs unattended on the machine that owns the vault database. GitHub Pages
    stays a pure static frontend; this is the only writer.
 
-     ingest   pull candidates from USGS + Federal Register + webz.io news
+     ingest   pull candidates from USGS + Federal Register + multilingual RSS + optional webz.io news
      analyze  draft/propose each new candidate with Claude (optional):
                 --ai=claude-code  the VS Code extension's bundled binary
                                   (runs on your subscription, gets WebFetch)
@@ -48,6 +48,7 @@ import { setMeta, setSnapshotDate, getSnapshotDate } from '../src/meta.js';
 import { fetchEarthquakeCandidates } from '../src/ingest/usgs.mjs';
 import { fetchPolicyCandidates } from '../src/ingest/federal-register.mjs';
 import { fetchNewsCandidates } from '../src/ingest/webz-news.mjs';
+import { fetchRssNewsCandidates, dateWindow } from '../src/ingest/rss-news.mjs';
 import { findDuplicate, storyKey, WINDOW_DAYS } from '../src/ingest/dedupe.js';
 import { findIncidentMatch, incidentNote } from '../src/ingest/incident.js';
 import { aiAvailable, analyzeCandidate } from '../src/ai/analyze.mjs';
@@ -62,7 +63,7 @@ const args = process.argv.slice(2);
 const flag = (name) => args.includes(`--${name}`);
 const opt = (name, fallback) => args.find((a) => a.startsWith(`--${name}=`))?.split('=')[1] ?? fallback;
 
-const DRY_RUN = flag('dry-run');
+const DRY_RUN = flag('dry-run') || flag('local-only');
 const NO_AI = flag('no-ai');
 const AI_BACKEND = opt('ai', 'auto');   // auto | claude-code | api | none
 const NO_TRIAGE = flag('no-triage');
@@ -80,7 +81,8 @@ const localDate = (d = new Date()) => [
 ].join('-');
 
 const today = localDate();
-const SINCE = opt('since', getSnapshotDate());
+const overlapSince = new Date(Date.parse(`${getSnapshotDate()}T00:00:00Z`) - 7 * 86400000).toISOString().slice(0, 10);
+const SINCE = opt('since', overlapSince);
 const UNTIL = opt('until', today);
 
 const log = (msg) => console.log(`[${new Date().toISOString()}] ${msg}`);
@@ -93,28 +95,41 @@ function run(cmd, cmdArgs, cwd) {
 const nodeScript = (relPath, cwd) => run('node', [relPath], cwd);
 
 async function main() {
-  log(`Pipeline start - window ${SINCE} -> ${UNTIL}${DRY_RUN ? ' (dry run)' : ''}`);
+  log(`Pipeline start - window ${SINCE} -> ${UNTIL}${DRY_RUN ? ' (local update; no publish)' : ''}`);
 
   /* ---- 1. Ingest ------------------------------------------------------- */
+  dateWindow(SINCE, UNTIL);
+  const feedResults = [];
   const feeds = [
     ['usgs', () => fetchEarthquakeCandidates({ since: SINCE, until: UNTIL })],
     ['federal-register', () => fetchPolicyCandidates({ since: SINCE, until: UNTIL })],
     // News is where most real supply-chain events actually surface — the other
     // two feeds report that the ground shook or a rule published, never that a
-    // fab stopped. Skipped silently when WEBZ_TOKEN is unset.
+    // fab stopped. Optional when WEBZ_TOKEN is unset; public RSS remains enabled.
     ['webz-news', () => fetchNewsCandidates({ since: SINCE, until: UNTIL })],
+    ['rss-news', () => fetchRssNewsCandidates({ since: SINCE, until: UNTIL, onFeedResult: (result) => feedResults.push(result) })],
   ];
   const candidates = [];
   for (const [name, fetchFn] of feeds) {
+    if (name === 'webz-news' && !process.env.WEBZ_TOKEN) {
+      log('  ingest webz-news: skipped (WEBZ_TOKEN not configured; RSS news remains enabled)');
+      feedResults.push({ feed: name, status: 'skipped' });
+      continue;
+    }
     try {
       const found = await fetchFn();
       log(`  ingest ${name}: ${found.length} record(s)`);
       candidates.push(...found);
+      feedResults.push({ feed: name, status: 'ok', count: found.length });
     } catch (err) {
       // A dead feed must not block the rest of the run.
       log(`  ingest ${name}: FAILED (${err.message}) - continuing`);
+      feedResults.push({ feed: name, status: 'failed', error: err.message });
     }
   }
+
+  setMeta('last_ingest_report', JSON.stringify({ since: SINCE, until: UNTIL, feeds: feedResults }));
+  if (!feedResults.some((r) => r.status === 'ok')) throw new Error('All configured feeds failed; snapshot date retained');
 
   const insert = db.prepare(`INSERT INTO event_candidates (id, status, source_feed, source_ref, date_iso, raw_json, dedupe_key, duplicate_of)
     VALUES (@id, 'pending', @source_feed, @source_ref, @date_iso, @raw_json, @dedupe_key, NULL)
@@ -266,7 +281,8 @@ async function main() {
 
   /* ---- 4. Quotes (best-effort — never blocks) --------------------------- */
   try {
-    log(run('node', ['scripts/fetch-quotes.mjs'], SERVER_DIR).trim().split('\n')[0]);
+    if (flag('no-quotes')) log('  quote refresh skipped (--no-quotes)');
+    else log(run('node', ['scripts/fetch-quotes.mjs'], SERVER_DIR).trim().split('\n')[0]);
   } catch (err) {
     log(`  quote refresh failed (${err.message.split('\n')[0]}) - keeping committed quotes`);
   }
@@ -274,21 +290,18 @@ async function main() {
   /* ---- 5. Export the snapshot ------------------------------------------ */
   log(nodeScript('scripts/build-vault-snapshot.mjs', APP_DIR).trim().split('\n').pop());
 
-  /* ---- 5b. Archive the day's briefing ----------------------------------
-     After the export, so it describes exactly the snapshot being published,
-     and before the gate, so a run that fails verification does not leave a
-     briefing on record for data that never went out. Best-effort: the
-     briefing is a derived readout, and losing one day of it must not block
-     publishing the data itself. */
-  try {
-    log(run('node', ['scripts/archive-briefing.mjs'], SERVER_DIR).trim());
-  } catch (err) {
-    log(`  briefing archive failed (${err.message.split('\n')[0]}) - continuing`);
-  }
+  // Reviewed inputs can change within one snapshot date, so regenerate every run.
+  log('  refreshing calculation validation for the current snapshot...');
+  log(nodeScript('../docs/computation-demo/validation/mle-validation.mjs', APP_DIR).trim().split('\n').pop());
+
+  // A date advance also changes the replay digest and evidence report.
+  log(nodeScript('scripts/build-evidence-coverage.mjs', SERVER_DIR).trim().split('\n').pop());
+  log(nodeScript('scripts/build-doc-generated.mjs', APP_DIR).trim().split('\n').pop());
 
   /* ---- 6. THE GATE ------------------------------------------------------ */
   try {
     nodeScript('scripts/audit-snapshot.mjs', APP_DIR);
+    nodeScript('scripts/verify-docs.mjs', APP_DIR);
     run('node', ['node_modules/vitest/vitest.mjs', 'run'], APP_DIR);
     log('  verify: audit + tests PASSED');
   } catch (err) {
@@ -300,18 +313,35 @@ async function main() {
     process.exit(1);
   }
 
+  /* ---- 6b. Archive the day's briefing ----------------------------------
+     After the export, so it describes exactly the snapshot being published,
+     and after the gate, so a run that fails verification does not leave a
+     briefing on record for data that never went out. Best-effort: the
+     briefing is a derived readout, and losing one day of it must not block
+     publishing the data itself. */
+  try {
+    log(run('node', ['scripts/archive-briefing.mjs'], SERVER_DIR).trim());
+  } catch (err) {
+    log(`  briefing archive failed (${err.message.split('\n')[0]}) - continuing`);
+  }
+
   setMeta('last_run_at', new Date().toISOString());
-  setMeta('last_run_status', 'ok');
+  setMeta('last_run_status', feedResults.some((r) => r.status === 'failed') ? 'partial: one or more feeds failed' : 'ok');
   db.pragma('wal_checkpoint(TRUNCATE)');
+  log(nodeScript('scripts/build-vault-snapshot.mjs', APP_DIR).trim().split('\n').pop());
+  log(nodeScript('scripts/build-landing-stats.mjs', APP_DIR).trim().split('\n').pop());
 
   /* ---- 7. Publish ------------------------------------------------------- */
-  const dirty = run('git', ['status', '--porcelain', '--', 'server/data/sscim.db'], REPO_DIR).trim();
+  const generatedPaths = ['server/data/sscim.db', 'docs/MODEL_ARCHIVE.md', 'docs/reference/EVIDENCE-COVERAGE.md',
+    'docs/computation-demo/validation/validation-results.json', 'docs/computation-demo/validation/SYNTHETIC_PARAMETER_RECOVERY.md',
+    'docs/computation-demo/validation/mle_replications.csv', 'docs/computation-demo/validation/mc_robustness_draws.csv'];
+  const dirty = run('git', ['status', '--porcelain', '--', ...generatedPaths], REPO_DIR).trim();
   if (!dirty) {
     log('  no database changes to publish');
   } else if (DRY_RUN) {
-    log('  dry run - skipping commit/push');
+    log('  local update - skipping commit/push');
   } else {
-    run('git', ['add', 'server/data/sscim.db'], REPO_DIR);
+    run('git', ['add', '--', ...generatedPaths], REPO_DIR);
     const msg = `Data pipeline: snapshot ${UNTIL}${queued ? `, ${queued} new candidate(s)` : ''}${pending ? `, ${pending} pending review` : ''}`;
     run('git', ['commit', '-m', msg], REPO_DIR);
     try {

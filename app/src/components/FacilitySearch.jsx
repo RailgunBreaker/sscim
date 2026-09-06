@@ -1,3 +1,6 @@
+import { countryName } from '../i18n/locale.js';
+import { useLanguage } from '../i18n/useLanguage.js';
+import { t } from '../i18n/index.js';
 import { useMemo, useState, useId } from 'react';
 import { C } from '../theme.js';
 import { useVault } from '../data/VaultContext.jsx';
@@ -25,6 +28,7 @@ import { facilityConnectivity } from '../engine/facilityNetwork.js';
    ==================================================================== */
 
 export default function FacilitySearch({ onPick, suggestionCount = 8, autoFocus = false, label = 'Search a facility', inputMaxWidth}) {
+  const [language] = useLanguage();
   const { data, engine } = useVault();
   const { FACILITY_LAYER, FACILITY_NETWORK, COMPANY_BY_ID, COUNTRY_NAMES } = data;
   const { STAGE_BY_ID } = engine;
@@ -32,8 +36,8 @@ export default function FacilitySearch({ onPick, suggestionCount = 8, autoFocus 
   const listId = useId();
 
   const ctx = useMemo(
-    () => ({ COMPANY_BY_ID, COUNTRY_NAMES, STAGE_BY_ID, KIND_LABELS: FACILITY_KIND_LABEL }),
-    [COMPANY_BY_ID, COUNTRY_NAMES, STAGE_BY_ID],
+    () => ({ COMPANY_BY_ID, COUNTRY_NAMES: Object.fromEntries(Object.entries(COUNTRY_NAMES).map(([id, name]) => [id, `${name} ${countryName(id, name)}`])), STAGE_BY_ID, KIND_LABELS: FACILITY_KIND_LABEL }),
+    [COMPANY_BY_ID, COUNTRY_NAMES, STAGE_BY_ID, language],
   );
 
   const matches = useMemo(
@@ -60,8 +64,8 @@ export default function FacilitySearch({ onPick, suggestionCount = 8, autoFocus 
           </span>
           <span className="mono" style={{ fontSize: 12, color: C.faint }}>
             {COMPANY_BY_ID[f.company]?.name || f.company}
-            {' · '}{FACILITY_KIND_LABEL[f.kind] || f.kind}
-            {' · '}{COUNTRY_NAMES[f.country] || f.country}
+            {' · '}{t(FACILITY_KIND_LABEL[f.kind] || f.kind)}
+            {' · '}{countryName(f.country, COUNTRY_NAMES[f.country] || f.country)}
             {(f.stages || []).length ? ` · ${(f.stages || []).map((s) => STAGE_BY_ID[s]?.name || s).join(', ')}` : ''}
           </span>
         </span>
@@ -73,12 +77,12 @@ export default function FacilitySearch({ onPick, suggestionCount = 8, autoFocus 
   return (
     <div>
       <label htmlFor={listId} className="mono" style={{ display: 'block', fontSize: 12, color: C.faint, marginBottom: 4 }}>
-        {label} — by name, operator, city, country, stage or type
+        {t(label)} — {t('by name, operator, city, country, stage or type')}
       </label>
       <input id={listId} type="search" value={query} onChange={(e) => setQuery(e.target.value)}
         // eslint-disable-next-line jsx-a11y/no-autofocus
         autoFocus={autoFocus}
-        placeholder="e.g. ASML, Kumamoto, lithography, Taiwan, packaging…"
+        placeholder={t("e.g. ASML, Kumamoto, lithography, Taiwan, packaging…")}
         style={{ ...inputStyle, maxWidth: inputMaxWidth ?? '100%' }} />
 
       {query.trim() && (
@@ -102,7 +106,7 @@ export default function FacilitySearch({ onPick, suggestionCount = 8, autoFocus 
       {!query.trim() && suggestions.length > 0 && (
         <>
           <div className="mono" style={{ fontSize: 12, color: C.faint, margin: '12px 0 5px' }}>
-            Or start from one of the most connected plants in this snapshot
+            {t('Or start from one of the most connected plants in this snapshot')}
           </div>
           <ul style={listStyle}>
             {suggestions.map(({ f, c }) => rowFor(f, (

@@ -598,28 +598,23 @@ async function main() {
     await lp.waitForSelector('footer', { timeout: 20000 });
     await lp.waitForTimeout(400);
 
-    const langButtons = lp.locator('.langbar button');
-    check(await langButtons.count() === 4, 'four language selectors, as real buttons', `${await langButtons.count()}`);
-    check(await lp.locator('.langbar b').count() === 0, 'no clickable <b> elements left in the language bar');
-
-    // Keyboard reachable — the whole point of the conversion.
-    await lp.locator('.langbar button').first().focus();
+    const language = lp.locator('.langbar select');
+    check(await language.locator('option').count() === 4, 'four language options');
+    await language.focus();
     const focused = await lp.evaluate(() => document.activeElement?.tagName);
-    check(focused === 'BUTTON', 'the language control takes keyboard focus', focused);
-
-    for (const i of [0, 1, 2, 3]) {
-      const btn = langButtons.nth(i);
-      const label = (await btn.innerText()).trim();
-      await btn.click();
+    check(focused === 'SELECT', 'the language control takes keyboard focus', focused);
+    for (const [code, locale] of [['en', 'en-US'], ['zh', 'zh-CN'], ['tw', 'zh-TW'], ['ja', 'ja-JP']]) {
+      await language.selectOption(code);
       await lp.waitForTimeout(250);
-      const pressed = await btn.getAttribute('aria-pressed');
       const body = await lp.locator('body').innerText();
-      check(pressed === 'true' && body.length > 500, `language "${label}" renders`, `${body.length} chars`);
+      check(await language.inputValue() === code && body.length > 500, `language "${code}" renders`, `${body.length} chars`);
+      check(await lp.locator('html').getAttribute('lang') === locale, `document language is ${locale}`);
       const ov = await lp.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
-      check(ov <= 2, `language "${label}": no horizontal overflow`, `${ov}px`);
+      check(ov <= 2, `language "${code}": no horizontal overflow`, `${ov}px`);
     }
-
-    await langButtons.first().click();
+    await lp.reload({ waitUntil: 'load' });
+    check(await language.inputValue() === 'ja', 'language persists after reload');
+    await language.selectOption('en');
     await lp.waitForTimeout(250);
     const landing = await lp.locator('body').innerText();
     /* The stale claims. 244 was the count when the vault held 275; the

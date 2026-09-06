@@ -1,3 +1,4 @@
+import { t } from '../i18n/index.js';
 import { useMemo, useState } from 'react';
 import { C } from '../theme.js';
 import { Button, SegmentedControl, Disclosure } from '../ui/primitives.jsx';
@@ -129,37 +130,37 @@ export default function FacilityPlayground({ model, compact = false }) {
           one-of-a-set choices — and each carries a visible name, so the
           choice being made is stated rather than inferred. */}
       <div className="cbar" style={{ display: 'flex', gap: 16, flexWrap: 'wrap', alignItems: 'center' }}>
-        <div role="group" aria-label="Exploration history" style={{ display: 'flex', gap: 2, alignItems: 'center' }}>
+        <div role="group" aria-label={t('Exploration history')} style={{ display: 'flex', gap: 2, alignItems: 'center' }}>
           <Button variant="quiet" size="sm" onClick={facBack} disabled={!fac.trail.length}
-            aria-label="Back to the previously centred facility">Back</Button>
+            aria-label="Back to the previously centred facility">{t('Back')}</Button>
           <Button variant="quiet" size="sm" onClick={facForward} disabled={!fac.forward.length}
-            aria-label="Forward to the next facility in the exploration history">Forward</Button>
+            aria-label="Forward to the next facility in the exploration history">{t('Forward')}</Button>
           <Button variant="quiet" size="sm" onClick={facHome} disabled={!fac.rootId || fac.rootId === fac.focusId}
-            aria-label="Return to the facility this exploration started from">Start</Button>
+            aria-label="Return to the facility this exploration started from">{t('Start')}</Button>
           <Button variant="quiet" size="sm" onClick={facReset}
-            aria-label="Reset the playground and choose another facility">Reset</Button>
+            aria-label="Reset the playground and choose another facility">{t('Reset')}</Button>
         </div>
 
         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-          <span style={{ fontSize: 12, color: C.faint, whiteSpace: 'nowrap' }}>Direction</span>
+          <span style={{ fontSize: 12, color: C.faint, whiteSpace: 'nowrap' }}>{t('Direction')}</span>
           <SegmentedControl
             size="sm"
-            label="Traversal direction"
+            label={t('Traversal direction')}
             value={fac.direction}
             onChange={(k) => facSet({ direction: k })}
             options={[
-              { value: 'upstream', label: 'Upstream', title: 'Follow supply INTO this plant' },
-              { value: 'downstream', label: 'Downstream', title: 'Follow output OUT of this plant' },
-              { value: 'both', label: 'Both', title: 'Follow supply in both directions' },
+              { value: 'upstream', label: t('Upstream'), title: 'Follow supply INTO this plant' },
+              { value: 'downstream', label: t('Downstream'), title: 'Follow output OUT of this plant' },
+              { value: 'both', label: t('Both'), title: 'Follow supply in both directions' },
             ]}
           />
         </div>
 
         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-          <span style={{ fontSize: 12, color: C.faint, whiteSpace: 'nowrap' }}>Depth</span>
+          <span style={{ fontSize: 12, color: C.faint, whiteSpace: 'nowrap' }}>{t('Depth')}</span>
           <SegmentedControl
             size="sm"
-            label="Hop depth"
+            label={t('Hop depth')}
             value={fac.hops === Infinity ? 'all' : fac.hops}
             onChange={(v) => setHops(v === 'all' ? Infinity : v)}
             options={[
@@ -227,8 +228,8 @@ export default function FacilityPlayground({ model, compact = false }) {
                 {visibleIds.map((id) => <option key={id} value={id}>{FACILITY_LAYER.FACILITY_BY_ID[id]?.name || id}</option>)}
               </select>
               <button type="button" disabled={!routeFrom || !routeTo} style={btn(routeFrom && routeTo)}
-                onClick={() => facSetRoute({ from: routeFrom, to: routeTo })}>Show route</button>
-              {fac.route && <button type="button" onClick={() => facSetRoute(null)} style={chipStyle}>Clear route</button>}
+                onClick={() => facSetRoute({ from: routeFrom, to: routeTo })}>{t('Show route')}</button>
+              {fac.route && <button type="button" onClick={() => facSetRoute(null)} style={chipStyle}>{t('Clear route')}</button>}
               {fac.route && !pg.route && (
                 <span className="mono" style={{ fontSize: 12, color: C.amber }}>No modeled path between those two in the current view.</span>
               )}
@@ -248,7 +249,7 @@ export default function FacilityPlayground({ model, compact = false }) {
               {fac.collapsed.length > 0 && (
                 <>
                   <span>{fac.collapsed.length} collapsed</span>
-                  <button type="button" onClick={() => fac.collapsed.forEach(facToggleCollapse)} style={chipStyle}>Expand all</button>
+                  <button type="button" onClick={() => fac.collapsed.forEach(facToggleCollapse)} style={chipStyle}>{t('Expand all')}</button>
                 </>
               )}
               {fac.hidden.length > 0 && (
@@ -257,7 +258,7 @@ export default function FacilityPlayground({ model, compact = false }) {
                     {fac.hidden.length} facility hidden — <b>topology only</b>: this changes what the graph can reach and
                     nothing else. It does not feed the risk model and is not a capacity estimate.
                   </span>
-                  <button type="button" onClick={facClearHidden} style={chipStyle}>Restore all</button>
+                  <button type="button" onClick={facClearHidden} style={chipStyle}>{t('Restore all')}</button>
                 </>
               )}
             </div>
@@ -266,7 +267,7 @@ export default function FacilityPlayground({ model, compact = false }) {
 
         {/* ---- right: the focused plant, filters, connections ---- */}
         <div style={{ display: 'grid', gap: 10, minWidth: 0 }}>
-          <section aria-label="Focused facility" style={{ border: `1px solid ${C.copperDim}`, borderRadius: 6, padding: '10px 12px', background: C.panel }}>
+          <section aria-label={t('Focused facility')} style={{ border: `1px solid ${C.copperDim}`, borderRadius: 6, padding: '10px 12px', background: C.panel }}>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 7, flexWrap: 'wrap' }}>
               <span aria-hidden style={{ fontSize: 14 }}>{flagEmoji(focus.country)}</span>
               <h3 style={{ flex: 1, fontSize: 14, color: C.text, fontWeight: 700, margin: 0, lineHeight: 1.3 }}>{focus.name}</h3>

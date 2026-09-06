@@ -41,6 +41,7 @@
    Run:  node docs/computation-demo/validation/mle-validation.mjs
    ==================================================================== */
 import fs from 'node:fs';
+import { recoverySummary, renderValidationReport } from './report.mjs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -221,6 +222,7 @@ function waldInterval(thetaHat, y) {
   ];
   const sigma2 = rss(thetaHat, y) / (NOBS - 3);
   const se = [0, 1, 2].map((k) => Math.sqrt(Math.max(0, sigma2 * inv[k][k])));
+  if (!se.every(Number.isFinite)) return null;
   return { se, interval: thetaHat.map((v, k) => [v - 1.96 * se[k], v + 1.96 * se[k]]), sigmaHat: Math.sqrt(sigma2) };
 }
 
@@ -250,18 +252,9 @@ for (let r = 0; r < R; r++) {
 
 const mean = (a) => a.reduce((x, y) => x + y, 0) / (a.length || 1);
 const sd = (a) => { const m = mean(a); return Math.sqrt(mean(a.map((v) => (v - m) * (v - m)))); };
-const summaryA = THETA_NAMES.map((nm, k) => ({
-  parameter: nm,
-  truth: THETA_STAR[k],
-  meanEstimate: mean(reps.map((r) => r.thetaHat[k])),
-  bias: mean(reps.map((r) => r.thetaHat[k])) - THETA_STAR[k],
-  sdEstimate: sd(reps.map((r) => r.thetaHat[k])),
-  meanSE: mean(reps.map((r) => r.se[k])),
-  syntheticCoverage95: covered[k] / (reps.length || 1),
-}));
-console.log(`  over ${reps.length} replications:`);
-summaryA.forEach((s) => console.log(
-  `    ${s.parameter.padEnd(24)} mean estimate ${s.meanEstimate.toFixed(4)} (truth ${s.truth}), bias ${s.bias >= 0 ? '+' : ''}${s.bias.toFixed(4)}, empirical SD ${s.sdEstimate.toFixed(4)}, mean SE ${s.meanSE.toFixed(4)}, synthetic coverage ${(s.syntheticCoverage95 * 100).toFixed(1)}%`));
+const summaryA = recoverySummary(THETA_NAMES, THETA_STAR, reps, covered);
+console.log(`  ${reps.length} valid intervals from ${R} attempted replications; ${R - reps.length} unavailable.`);
+summaryA.forEach((s) => console.log(`    ${s.parameter}: mean estimate ${s.meanEstimate ?? 'unavailable'}, synthetic coverage ${s.syntheticCoverage95 ?? 'unavailable'}`));
 console.log('  NOTE: "synthetic coverage" is coverage UNDER THE SIMULATION. It is not evidence about real-world uncertainty,');
 console.log('        and no parameter is promoted to status: calibrated on the strength of it.');
 
@@ -333,13 +326,12 @@ fs.writeFileSync(path.join(OUT, 'mc_robustness_draws.csv'),
     ...draws.map((d, i) => [i + 1, ...d.theta.map((v) => v.toFixed(5)), d.chain.toFixed(5),
       d.companySpearman.toFixed(5), d.structuralSpearman.toFixed(5), d.structuralTop].join(','))].join('\n') + '\n');
 
-fs.writeFileSync(path.join(OUT, 'validation-results.json'), JSON.stringify({
+const report = {
   modelVersion: MODEL_VERSION,
   datasetAsOf,
   generatedAt: new Date().toISOString(),
   whatThisEstablishes: [
-    'Recoverability of three coefficients under a synthetic, correctly specified data-generating process.',
-    'Correctness of the numerical optimization and Wald variance machinery.',
+    'Output ranking stability within the sampled assumption box; this is not a confidence interval.',
     'Pipeline regression: the engine at base parameters still produces these values, and two builds agree bit-for-bit.',
   ],
   whatThisDoesNotEstablish: [
@@ -350,13 +342,17 @@ fs.writeFileSync(path.join(OUT, 'validation-results.json'), JSON.stringify({
   ],
   partC: { chainIndexBase: baseChain, deterministic: true, matchedExplicitBaseParameters: true },
   partA: {
-    design: { stages: stageIds.length, offsets: T_OFFSETS, nObs: NOBS, sigmaTrue: SIGMA_TRUE, replications: reps.length, start: START, estimated: THETA_NAMES, truth: THETA_STAR },
+    status: reps.length === R ? 'completed' : 'inconclusive',
+    unavailableReason: reps.length < R ? 'Singular or non-finite sensitivity covariance; no valid Wald interval for these fits.' : null,
+    design: { attemptedReplications: R, unavailableReplications: R - reps.length, stages: stageIds.length, offsets: T_OFFSETS, nObs: NOBS, sigmaTrue: SIGMA_TRUE, replications: reps.length, start: START, estimated: THETA_NAMES, truth: THETA_STAR },
     summary: summaryA,
     coverageCaveat: 'Coverage is measured under the synthetic DGP. It is not a real-world confidence level.',
   },
   partB: summaryB,
   baseParameters: { ...BASE_PARAMS, structuralWeights: { ...BASE_PARAMS.structuralWeights }, structuralWeightsRaw: { ...BASE_PARAMS.structuralWeightsRaw } },
-}, null, 2) + '\n');
+};
+fs.writeFileSync(path.join(OUT, 'validation-results.json'), JSON.stringify(report, null, 2) + '\n');
+fs.writeFileSync(path.join(OUT, 'SYNTHETIC_PARAMETER_RECOVERY.md'), renderValidationReport(report));
 
 console.log('\nWrote validation-results.json, mle_replications.csv, mc_robustness_draws.csv');
 console.log('Reminder: nothing in this run is evidence about the real world. See SYNTHETIC_PARAMETER_RECOVERY.md.');

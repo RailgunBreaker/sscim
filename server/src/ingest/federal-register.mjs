@@ -35,7 +35,7 @@ async function query(extra, { since, until }) {
     params.delete('conditions[agencies][]');
     params.append('conditions[agencies][]', extra['conditions[agencies][]']);
   }
-  const res = await fetch(`${API}?${params}`, { headers: { 'User-Agent': 'sscim-pipeline/1.0' } });
+  const res = await fetch(`${API}?${params}`, { signal: AbortSignal.timeout(20000), headers: { 'User-Agent': 'sscim-pipeline/1.0' } });
   if (!res.ok) throw new Error(`Federal Register API returned HTTP ${res.status}`);
   return (await res.json()).results ?? [];
 }

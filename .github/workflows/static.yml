@@ -126,18 +126,19 @@ jobs:
           CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
         run: npm run smoke
 
+      # Main pushes and schedules publish; manual runs can opt into build-only.
       - name: Setup Pages
-        if: github.event_name == 'workflow_dispatch' && inputs.deploy
+        if: github.ref == 'refs/heads/main' && (github.event_name != 'workflow_dispatch' || inputs.deploy)
         uses: actions/configure-pages@v5
 
       - name: Upload artifact
-        if: github.event_name == 'workflow_dispatch' && inputs.deploy
+        if: github.ref == 'refs/heads/main' && (github.event_name != 'workflow_dispatch' || inputs.deploy)
         uses: actions/upload-pages-artifact@v3
         with:
           path: dist-app
 
   deploy:
-    if: github.event_name == 'workflow_dispatch' && inputs.deploy
+    if: github.ref == 'refs/heads/main' && (github.event_name != 'workflow_dispatch' || inputs.deploy)
     needs: build
     environment:
       name: github-pages

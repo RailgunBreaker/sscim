@@ -23,6 +23,10 @@ Only the row marked **current** describes what the code does now.
 | **Status** | superseded | superseded | **current** |
 | **Headline chain index** | 5.395609 (dataset `2026-08-29`) | 6.027797 (dataset `2026-09-04`) | Original 6.027797; corrected 5.084617 (data revision public-review-2026-09-06) |
 
+The original pre-review v7.1 recovery experiment is preserved in
+[the pre-review archive](archive/v7.1-pre-review/validation/SYNTHETIC_PARAMETER_RECOVERY.md).
+The current validation artifacts are regenerated from the active database snapshot.
+
 ## Numerical compatibility
 
 | Pair | Comparable? | Why |
@@ -63,8 +67,8 @@ output surface** instead:
 | | |
 | --- | --- |
 | Model | `sscim-model-v7.1-exposure-robustness` |
-| Dataset | `2026-09-04` |
-| Output digest | `sha256:126ac621c0d36cb428fc6bc1db25266290369be2a48a87f8d6307d58bb53451b` |
+| Dataset | `2026-09-06` |
+| Output digest | `sha256:8c1bef8e513fdeac08c7b1ddf976ba3ba9f6a3423aab5c8951e064040019f45d` |
 <!-- END GENERATED: model-digest -->
 
 Recompute it with `npm run digest`. It covers the declared parameter values,

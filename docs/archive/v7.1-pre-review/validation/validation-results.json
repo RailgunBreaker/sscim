@@ -1,9 +1,10 @@
 {
   "modelVersion": "sscim-model-v7.1-exposure-robustness",
-  "datasetAsOf": "2026-09-06",
-  "generatedAt": "2026-09-06T14:05:38.491Z",
+  "datasetAsOf": "2026-09-04",
+  "generatedAt": "2026-09-04T10:01:55.651Z",
   "whatThisEstablishes": [
-    "Output ranking stability within the sampled assumption box; this is not a confidence interval.",
+    "Recoverability of three coefficients under a synthetic, correctly specified data-generating process.",
+    "Correctness of the numerical optimization and Wald variance machinery.",
     "Pipeline regression: the engine at base parameters still produces these values, and two builds agree bit-for-bit."
   ],
   "whatThisDoesNotEstablish": [
@@ -13,16 +14,12 @@
     "An independent implementation — this script imports the engine primitives it checks."
   ],
   "partC": {
-    "chainIndexBase": 5.084616833273462,
+    "chainIndexBase": 6.027796984877245,
     "deterministic": true,
     "matchedExplicitBaseParameters": true
   },
   "partA": {
-    "status": "inconclusive",
-    "unavailableReason": "Singular or non-finite sensitivity covariance; no valid Wald interval for these fits.",
     "design": {
-      "attemptedReplications": 60,
-      "unavailableReplications": 60,
       "stages": 24,
       "offsets": [
         0,
@@ -34,7 +31,7 @@
       ],
       "nObs": 144,
       "sigmaTrue": 0.02,
-      "replications": 0,
+      "replications": 60,
       "start": [
         0.4,
         0.2,
@@ -55,29 +52,29 @@
       {
         "parameter": "downstreamTransmission",
         "truth": 0.55,
-        "meanEstimate": null,
-        "bias": null,
-        "sdEstimate": null,
-        "meanSE": null,
-        "syntheticCoverage95": null
+        "meanEstimate": 0.547610347284967,
+        "bias": -0.002389652715032997,
+        "sdEstimate": 0.01790062957894411,
+        "meanSE": 0.018354269761955075,
+        "syntheticCoverage95": 0.95
       },
       {
         "parameter": "upstreamTransmission",
         "truth": 0.3,
-        "meanEstimate": null,
-        "bias": null,
-        "sdEstimate": null,
-        "meanSE": null,
-        "syntheticCoverage95": null
+        "meanEstimate": 0.300796121526659,
+        "bias": 0.0007961215266590327,
+        "sdEstimate": 0.01623917120973126,
+        "meanSE": 0.013889367315272795,
+        "syntheticCoverage95": 0.9333333333333333
       },
       {
         "parameter": "marketHalfLifeDays",
         "truth": 45,
-        "meanEstimate": null,
-        "bias": null,
-        "sdEstimate": null,
-        "meanSE": null,
-        "syntheticCoverage95": null
+        "meanEstimate": 44.99556344105058,
+        "bias": -0.004436558949421965,
+        "sdEstimate": 0.8682853433287114,
+        "meanSE": 0.8935680638844289,
+        "syntheticCoverage95": 0.95
       }
     ],
     "coverageCaveat": "Coverage is measured under the synthetic DGP. It is not a real-world confidence level."
@@ -90,14 +87,14 @@
       "marketHalfLifeDays"
     ],
     "chainIndex": {
-      "base": 5.084616833273462,
-      "mean": 5.08610869326983,
+      "base": 6.027796984877245,
+      "mean": 6.138225204568149,
       "assumptionEnvelope": {
-        "low": 5.057283952831935,
-        "high": 5.121441317006003
+        "low": 5.594662678490853,
+        "high": 6.684435465338291
       },
-      "p2_5": 5.059726795321115,
-      "p97_5": 5.120241346476389,
+      "p2_5": 5.622135574248437,
+      "p97_5": 6.609495967584989,
       "note": "The envelope is the span over the declared assumption box. It is NOT a confidence interval: the box is a choice, not a distribution over the truth. Percentiles are reported only to describe where the sampled values fell."
     },
     "companyCriticalitySpearman": {

@@ -1,3 +1,4 @@
+import { dateWindow } from './rss-news.mjs';
 /* webz.io news feed → event candidates.
 
    The gap this fills: USGS reports that the ground shook and the Federal
@@ -56,8 +57,9 @@ export async function fetchNewsCandidates({ since, until, token = process.env.WE
   if (!token) return [];
 
   // webz `ts` is a millisecond epoch lower bound.
-  const sinceMs = Date.parse(`${since}T00:00:00Z`);
-  const untilMs = until ? Date.parse(`${until}T23:59:59Z`) : Date.now();
+  const { start: sinceMs, end } = dateWindow(since, until || new Date().toISOString().slice(0, 10));
+  const untilMs = end - 1;
+  let succeeded = 0;
 
   const seen = new Set();
   const out = [];
@@ -65,16 +67,18 @@ export async function fetchNewsCandidates({ since, until, token = process.env.WE
   for (const { id, q } of QUERIES) {
     try {
       const url = `${API}?token=${encodeURIComponent(token)}&q=${encodeURIComponent(`${q} ${LANG}`)}&ts=${sinceMs}`;
-      const res = await fetch(url, { headers: { 'User-Agent': 'sscim-pipeline/1.0' } });
+      const res = await fetch(url, { signal: AbortSignal.timeout(20000), headers: { 'User-Agent': 'sscim-pipeline/1.0' } });
       const body = await res.text();
-      if (!res.ok) throw new Error(`HTTP ${res.status}: ${body.slice(0, 120)}`);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
       let json;
-      try { json = JSON.parse(body); } catch { throw new Error(`non-JSON response: ${body.slice(0, 120)}`); }
+      try { json = JSON.parse(body); } catch { throw new Error('Non-JSON response'); }
 
-      for (const p of json.posts ?? []) {
+      if (!Array.isArray(json.posts)) throw new Error('Response has no posts array');
+      succeeded++;
+      for (const p of json.posts) {
         const publishedMs = Date.parse(p.published);
-        if (Number.isFinite(publishedMs) && publishedMs > untilMs) continue;
+        if (!Number.isFinite(publishedMs) || publishedMs < sinceMs || publishedMs > untilMs || !p.title?.trim()) continue;
 
         // Dedupe on two axes. By id/url, because one story matches several
         // queries. And by normalized title, because wire stories are syndicated
@@ -83,7 +87,7 @@ export async function fetchNewsCandidates({ since, until, token = process.env.WE
         // review queue fills with duplicates of one event.
         const ref = p.uuid || p.url;
         if (!ref || seen.has(ref)) continue;
-        const titleKey = `t:${(p.title || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim().slice(0, 60)}`;
+        const titleKey = `t:${(p.title || '').toLowerCase().normalize('NFKC').replace(/[^\p{L}\p{N}]+/gu, ' ').trim().slice(0, 60)}`;
         if (!titleKey || seen.has(titleKey)) continue;
         seen.add(ref);
         seen.add(titleKey);
@@ -94,6 +98,7 @@ export async function fetchNewsCandidates({ since, until, token = process.env.WE
           dateISO: (p.published || new Date().toISOString()).slice(0, 10),
           raw: {
             title: p.title,
+            language: 'en',
             // Trimmed: the analysis step can WebFetch the URL when the snippet
             // is too thin to judge.
             excerpt: (p.text || '').replace(/\s+/g, ' ').trim().slice(0, 1200),
@@ -112,6 +117,7 @@ export async function fetchNewsCandidates({ since, until, token = process.env.WE
     }
   }
 
+  if (!succeeded) throw new Error('All Webz news queries failed');
   out.sort((a, b) => Date.parse(b.raw.published || 0) - Date.parse(a.raw.published || 0));
   return out.slice(0, MAX_PER_RUN);
 }

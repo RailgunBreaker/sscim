@@ -1,3 +1,4 @@
+import { t } from '../i18n/index.js';
 import { useState, useEffect } from 'react';
 import { color, space, font, radius, typeStyle } from '../ui/tokens.js';
 import { SegmentedControl, Button, StatusBadge } from '../ui/primitives.jsx';
@@ -71,7 +72,7 @@ export default function LensBar({ scenarioName }) {
   return (
     <nav
       className="cbar"
-      aria-label="Workspace"
+      aria-label={t('Workspace')}
       style={{
         display: 'flex', alignItems: 'center', gap: space.md, flexWrap: 'wrap',
         padding: `${space.sm}px ${space.lg}px`,
@@ -80,8 +81,8 @@ export default function LensBar({ scenarioName }) {
       }}
     >
       <SegmentedControl
-        label="Workspace"
-        options={WORKSPACES.map((w) => ({ value: w.value, label: w.label, title: w.title }))}
+        label={t('Workspace')}
+        options={WORKSPACES.map((w) => ({ value: w.value, label: t(w.label), title: w.title }))}
         value={workspace}
         onChange={(v) => setViewMode(v)}
       />
@@ -97,18 +98,18 @@ export default function LensBar({ scenarioName }) {
             : 'Show the world map beside the network graph'}
           style={splitOn ? { color: color.text.accent, background: color.surface.selected } : undefined}
         >
-          {splitOn ? 'Side by side · on' : 'Side by side'}
+          {t(splitOn ? 'Side by side · on' : 'Side by side')}
         </Button>
       )}
 
       <div style={{ display: 'flex', alignItems: 'center', gap: space.sm, minWidth: 0 }}>
-        <span id="lens-label" style={{ ...typeStyle.meta, whiteSpace: 'nowrap' }}>Shading</span>
+        <span id="lens-label" style={{ ...typeStyle.meta, whiteSpace: 'nowrap' }}>{t('Shading')}</span>
         <SegmentedControl
           size="sm"
-          label="Metric shown on the graph"
+          label={t('Metric shown on the graph')}
           options={LENSES.map((l) => ({
             value: l,
-            label: LENS_LABELS[l],
+            label: t(LENS_LABELS[l]),
             disabled: !lensAvailable(l),
             title: !lensAvailable(l)
               ? 'Available only while a hazard is placed on the map'
@@ -126,7 +127,7 @@ export default function LensBar({ scenarioName }) {
           event title. Constraining the group, and letting the readout be
           the part that gives, keeps every control reachable. */}
       <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: space.sm, flexWrap: 'wrap', minWidth: 0, maxWidth: '100%' }}>
-        {scenarioActive && <StatusBadge tone="warning">Hazard applied</StatusBadge>}
+        {scenarioActive && <StatusBadge tone="warning">{t('Hazard applied')}</StatusBadge>}
 
         {/* The selection is announced to assistive technology when it
             changes, because a graph highlight is invisible to a reader who
@@ -141,18 +142,14 @@ export default function LensBar({ scenarioName }) {
         >
           {label ? (
             <>
-              Selected: <span style={{ color: color.text.accent }}>{label.kind}</span>{' '}
+              {t('Selected:')} <span style={{ color: color.text.accent }}>{label.kind}</span>{' '}
               <span style={{ color: color.text.secondary }}>{label.name}</span>
             </>
-          ) : 'Nothing selected'}
+          ) : t('Nothing selected')}
         </span>
 
-        <Button variant="quiet" size="sm" onClick={back} disabled={!history.length} aria-label="Back to previous selection">
-          Back
-        </Button>
-        <Button variant="quiet" size="sm" onClick={clear} disabled={!selected} aria-label="Clear selection">
-          Clear
-        </Button>
+        <Button variant="quiet" size="sm" onClick={back} disabled={!history.length} aria-label={t('Back to previous selection')}>{t('Back')}</Button>
+        <Button variant="quiet" size="sm" onClick={clear} disabled={!selected} aria-label={t('Clear selection')}>{t('Clear')}</Button>
       </div>
     </nav>
   );
