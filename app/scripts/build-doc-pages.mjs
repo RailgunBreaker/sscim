@@ -17,7 +17,7 @@ import { mkdir, writeFile, copyFile, readdir, readFile } from 'node:fs/promises'
 import path from 'node:path';
 import { marked } from 'marked';
 import { findMarkdownDocs, repoDir, appDir } from './lib/find-markdown.mjs';
-import { addHeadingIds, rewriteLinks, pageFor, rootPrefix } from '../src/docs/docLinks.js';
+import { addHeadingIds, rewriteLinks, pageFor, rootPrefix, resolvePath } from '../src/docs/docLinks.js';
 import { extractMath, restoreMath } from '../src/docs/docMath.js';
 import { labelFor } from '../src/docs/docTags.js';
 import { SITE_SECTIONS, SITE_MAP_FOOTNOTE } from '../src/components/siteMapLinks.js';
@@ -226,6 +226,14 @@ function readerLayout({ content, tree, toc = '', indexHref = 'docs.html' }) {
 
 let written = 0;
 let equationCount = 0;
+/* Images a document references. rewriteLinks sends non-document <a href>
+   targets to GitHub, but <img src> is left alone — the picture has to be
+   the real one, at the path the Markdown names. Nothing copied those files
+   into the output, so every screenshot in the published README was a 404
+   while rendering correctly on GitHub, where the file is simply there.
+   Collected during rendering and copied below, so a document cannot
+   reference an image the build forgets to publish. */
+const referencedImages = new Set();
 const fontCount = await copyKatexAssets();
 for (const doc of docs) {
   const { markdown, math } = extractMath(doc.content);
@@ -234,6 +242,10 @@ for (const doc of docs) {
     math,
   );
   equationCount += math.length;
+  for (const [, src] of html.matchAll(/<img[^>]+src="([^"]+)"/g)) {
+    if (/^(https?:|data:|\/\/)/i.test(src)) continue;
+    referencedImages.add(resolvePath(doc.path, src.split(/[?#]/)[0]));
+  }
   const root = rootPrefix(doc.path);
   const content = `<div class="content-header">
   <span class="path">${escape(doc.path)}</span>
@@ -252,6 +264,25 @@ for (const doc of docs) {
   await mkdir(path.dirname(target), { recursive: true });
   await writeFile(target, shell({ title: doc.title, path: pageFor(doc.path), body, root, modifiedAt: doc.modifiedAt }), 'utf8');
   written++;
+}
+
+/* Publish the images the documents actually reference, at the paths they
+   name, so a repo-relative <img src> resolves on the static host exactly as
+   it does on GitHub. Only referenced files are copied — docs/screenshots
+   holds 13MB of before/after records that no page embeds. A reference to a
+   file that is not there is reported rather than shipped as a broken image. */
+let copiedImages = 0;
+const missingImages = [];
+for (const relative of [...referencedImages].sort()) {
+  const from = path.join(repoDir, relative);
+  try {
+    const to = path.join(outDir, relative);
+    await mkdir(path.dirname(to), { recursive: true });
+    await copyFile(from, to);
+    copiedImages++;
+  } catch {
+    missingImages.push(relative);
+  }
 }
 
 /* A directory index at /docs/, so the folder itself is browsable. Grouped by
@@ -276,4 +307,8 @@ const indexBody = readerLayout({ content: indexContent, tree: makeTree(docs, '',
 await mkdir(path.join(outDir, 'docs'), { recursive: true });
 await writeFile(path.join(outDir, 'docs', 'index.html'), shell({ title: 'Documentation', path: 'docs/', body: indexBody, root: '../' }), 'utf8');
 
-console.log(`Published ${written} documentation page(s) + /docs/ index · ${equationCount} equation(s) rendered · KaTeX css + ${fontCount} font(s).`);
+console.log(`Published ${written} documentation page(s) + /docs/ index · ${equationCount} equation(s) rendered · ${copiedImages} referenced image(s) · KaTeX css + ${fontCount} font(s).`);
+if (missingImages.length) {
+  console.warn(`Referenced but missing, published as broken images: ${missingImages.join(', ')}`);
+  process.exitCode = 1;
+}

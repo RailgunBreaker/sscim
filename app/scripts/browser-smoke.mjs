@@ -663,6 +663,19 @@ async function main() {
       }
       await dp.setViewportSize({ width: 1366, height: 936 });
     }
+    /* Markdown <img src> is repo-relative and rewriteLinks does not touch it,
+       so a published page renders its pictures only if the build copied the
+       files. It did not, and every screenshot in the published README was a
+       404 that looked fine on GitHub — where the file simply exists. Assert
+       the pixels, not the markup: naturalWidth is 0 for an image that failed. */
+    const rp = await dctx.newPage();
+    await rp.goto(`${base}/README.md.html`, { waitUntil: 'load' });
+    const images = await rp.evaluate(() => [...document.querySelectorAll('.markdown img')]
+      .map((img) => ({ src: img.getAttribute('src'), ok: img.complete && img.naturalWidth > 0 })));
+    const broken = images.filter((i) => !i.ok).map((i) => i.src);
+    check(images.length > 0 && broken.length === 0, 'every image in the published README loads',
+      broken.length ? `broken: ${broken.join(', ')}` : `${images.length} images`);
+    await rp.close();
     await dctx.close();
 
     check(consoleErrors.length === 0, 'no SSCIM console errors', consoleErrors.slice(0, 3).join(' | '));
