@@ -127,6 +127,17 @@ CREATE TABLE IF NOT EXISTS scenarios (
   event_json TEXT
 );
 
+-- Append-only claim reviews. Original data remain recoverable independently
+-- of corrected public prose and the administrative classification workflow.
+CREATE TABLE IF NOT EXISTS event_evidence (
+  event_id TEXT NOT NULL,
+  revision TEXT NOT NULL,
+  evidence_json TEXT NOT NULL,
+  original_record_json TEXT NOT NULL,
+  recorded_at TEXT NOT NULL DEFAULT (datetime('now')),
+  PRIMARY KEY (event_id, revision)
+);
+
 CREATE TABLE IF NOT EXISTS data_notes (
   id         INTEGER PRIMARY KEY AUTOINCREMENT,
   scope      TEXT NOT NULL,   -- e.g. "company:tsmc", "stage:litho"

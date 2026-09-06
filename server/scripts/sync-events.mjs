@@ -16,6 +16,7 @@ import { HISTORY_EVENTS, daysAgoOf } from '../src/history-events.js';
 import { DECADE_EVENTS } from '../src/decade-events.js';
 import { EVENTS as SEED_EVENTS } from '../src/seed-data.js';
 import { getSnapshotDate } from '../src/meta.js';
+import { syncEventEvidence } from '../src/event-evidence.js';
 import { getEventAssumption, UNCLASSIFIED_ASSUMPTION } from '../../app/src/engine/event-assumptions.js';
 
 // The snapshot date lives in the `meta` table (the pipeline advances it),
@@ -134,6 +135,7 @@ const reaged = db.transaction(() => {
 
 const undated = db.prepare('SELECT COUNT(*) c FROM events WHERE date_iso IS NULL').get().c;
 
+syncEventEvidence();
 db.pragma('wal_checkpoint(TRUNCATE)');
 const total = db.prepare('SELECT COUNT(*) c FROM events').get().c;
 const newest = db.prepare('SELECT id, date, days_ago FROM events ORDER BY days_ago ASC LIMIT 1').get();

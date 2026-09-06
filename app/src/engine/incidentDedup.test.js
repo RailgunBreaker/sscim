@@ -163,7 +163,7 @@ describe('the published index, with the real snapshot', () => {
   });
   const idx = (evs) => engine.toDisplayIndex(engine.operationalIndex(engine.operationalField(evs)));
 
-  const members = Object.keys(EVENT_INCIDENTS);
+  const members = group.map((record) => record.id);
   const withoutIncident = data.EVENTS.filter((e) => !members.includes(e.id));
   const primaryOnly = data.EVENTS.filter((e) => e.id === primary.id);
 
@@ -171,14 +171,20 @@ describe('the published index, with the real snapshot', () => {
     expect(idx(data.EVENTS)).toBeCloseTo(idx([...withoutIncident, ...primaryOnly]), 10);
   });
 
-  it('still records the earthquake — removing it entirely does change the reading', () => {
-    expect(idx(withoutIncident)).not.toBeCloseTo(idx(data.EVENTS), 4);
+  it('preserves the incident record while its verified wafer-input component is restored', () => {
+    expect(primaryOnly).toHaveLength(1);
+    const source = engine.eventField(primaryOnly[0]).source;
+    expect(source.scored).toBe(false);
+    expect(source.persistenceByStage.analog).toBe(0);
+    expect(source.recoveryComponents[0].processStage).toBe('wafer_input');
+    expect(source.recoveryComponents[0].status).toBe('observed_residual_carried_forward');
+    expect(idx(withoutIncident)).toBeCloseTo(idx(data.EVENTS), 12);
   });
 
   it('attributes the whole of the incident’s effect to the primary record', () => {
     const contribution = idx(data.EVENTS) - idx(withoutIncident);
     const primaryContribution = idx([...withoutIncident, ...primaryOnly]) - idx(withoutIncident);
     expect(contribution).toBeCloseTo(primaryContribution, 10);
-    expect(contribution).toBeGreaterThan(0);
+    expect(contribution).toBe(0);
   });
 });

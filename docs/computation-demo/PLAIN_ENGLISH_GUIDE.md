@@ -181,3 +181,6 @@ Seven things, all recomputed from scratch on every data change:
 7. **The GP briefing** — a generated daily text summary ("what changed, who is most exposed, what to watch") composed from items 1–6. This is the intended first commercial product.
 
 The intended user action: an analyst/investor/policy person opens the dashboard (or reads the briefing) and immediately sees *what changed, how far it spreads, and who is exposed* — with every number traceable back through the docs above to a formula, a parameter, and (eventually) a cited source.
+
+
+Public-review correction (application 0.7.2): the current export uses claim-level evidence eligibility and scoped, dated recovery. Original pre-review CSVs remain in `before-public-review-79289b1/` beside the current computation export. Exposure and company coefficients are assumptions with missing or incompatible measurement denominators. Historical values are current-model retrospective replay, not actual archived publications or point-in-time validation. See [current implementation and evidence report](../PUBLIC_RESEARCH_REVIEW.md).

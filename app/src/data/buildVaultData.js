@@ -32,10 +32,11 @@ export function buildVaultData(bundle) {
     COMPANIES: bundle.companies, COMPANY_BY_ID, DOMAINS,
     CUSTOMERS: bundle.customers, SUPPLIERS,
     POLICIES: bundle.policies,
-    EVENTS: bundle.events,
+    EVENTS: bundle.events.map((event) => ({ ...event, recordKind: 'factual' })),
     SCENARIOS: bundle.scenarios,
     OWNERS: bundle.owners,
     DATA_NOTES: bundle.dataNotes,
+    MEASUREMENT_EVIDENCE: bundle.measurementEvidence || [],
     QUOTES: bundle.quotes || {}, // market quotes (price/PE) — display metadata, never an engine input
     META: bundle.meta || {},     // snapshot date + last pipeline run, for the freshness readout
     BRIEFINGS: bundle.briefings || [],           // archive index (no bodies)

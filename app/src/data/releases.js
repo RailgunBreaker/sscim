@@ -25,6 +25,17 @@
 
 export const RELEASES = [
   {
+    id: 'public-research-review', date: '2026-09-06', version: 'v0.7.2',
+    title: 'Evidence and interpretation corrections',
+    lede: 'The factual baseline now requires claim-level evidence. Unresolved records remain visible with their audit trail, while observed recovery applies only to its documented site and production step.',
+    changes: [
+      { kind: 'fixed', text: 'Separated occurrence verification, assumed exposure, operational status and eligibility. Confidence remains metadata. Corrections and source publication dates are explicit.' },
+      { kind: 'added', text: 'Component recovery milestones, opposing-sign curation scenarios, a preserved before-review reproduction, and an inventory of missing or incompatible measurement denominators.' },
+      { kind: 'changed', text: 'Historical calculations are current-model retrospective replay. Company rankings remain illustrative because share denominators are unresolved. Deployment is explicitly manual.' },
+    ],
+    limits: 'Application patch 0.7.2 retains model v7.1 and global parameter defaults. The evidence revision changes the available factual data; it does not establish a decline in real-world risk. Scores are bounded comparisons, not forecasts, probabilities, measured output loss or empirical validation.',
+  },
+  {
     id: 'model-v7',
     date: '2026-09-04',
     version: 'v0.7',

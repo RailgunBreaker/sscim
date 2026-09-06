@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import snapshot from '../data/vault-snapshot.json';
 import { getEventAssumption } from '../engine/event-assumptions.js';
+import { factualEligibility } from '../engine/evidence.js';
 
 /* Rolling headline strip for the landing and intro pages.
 
@@ -67,8 +68,9 @@ const STYLE = `
   }
 `;
 
-function markerFor(id) {
-  const a = getEventAssumption(id);
+function markerFor(event) {
+  const a = getEventAssumption(event.id);
+  if (!factualEligibility({ ...event, recordKind: 'factual' }, snapshot.meta?.snapshotDate).eligible) return { mark: '–', color: 'var(--faint)', label: 'unresolved or excluded context' };
   if (!a?.operational) return { mark: '–', color: 'var(--faint)', label: 'context only' };
   if (a.direction === 'mitigating') return { mark: '▼', color: 'var(--green)', label: 'mitigating' };
   return { mark: '▲', color: 'var(--red)', label: 'adverse' };
@@ -91,7 +93,7 @@ export default function NewsTicker({ note = 'Not investment advice' }) {
     .slice()
     .sort((a, b) => (a.daysAgo ?? 0) - (b.daysAgo ?? 0))
     .slice(0, MAX_ITEMS)
-    .map((e) => ({ ...e, ...markerFor(e.id) })), [events]);
+    .map((e) => ({ ...e, ...markerFor(e) })), [events]);
 
   if (!items.length) return null;
 

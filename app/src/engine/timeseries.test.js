@@ -226,6 +226,49 @@ describe('eventImpacts', () => {
     const subset = engine.EVENTS.filter((e) => e.id === 'e1');
     expect(eventImpacts(engine, getEventAssumption, { events: subset })).toHaveLength(1);
   });
+
+  it('removes the entire incident and assigns no independent influence to recovery records', () => {
+    const data = makeHistoricalData();
+    const primary = { ...data.EVENTS[0], incidentId: 'fixture_incident', incidentRole: 'primary' };
+    const update = { ...primary, id: 'fixture_update', incidentRole: 'recovery', assumption: getEventAssumption('e2'), daysAgo: primary.daysAgo - 2 };
+    const engine = engineFor({ ...data, EVENTS: [primary, update, ...data.EVENTS.slice(1)] });
+    const impacts = eventImpacts(engine, getEventAssumption);
+    const row = impacts.find((i) => i.id === primary.id);
+    const without = engine.indexOf(data.EVENTS.slice(1), primary.daysAgo);
+    expect(row.marginal).toBeCloseTo(row.indexOnDate - without, 12);
+    expect(row.attribution).toBe('leave_one_incident_out_not_additive');
+    expect(impacts.find((i) => i.id === update.id)).toMatchObject({ operational: false, marginal: 0, standalone: 0 });
+  });
+
+  it('does not change the removal comparison when only a subset of rows is displayed', () => {
+    const data = makeHistoricalData();
+    const other = { ...data.EVENTS[0], id: 'independent', daysAgo: 35, assumption: getEventAssumption('e1') };
+    const engine = engineFor({ ...data, EVENTS: [...data.EVENTS, other] });
+    const all = eventImpacts(engine, getEventAssumption).find((i) => i.id === 'e1');
+    const subset = eventImpacts(engine, getEventAssumption, { events: [engine.EVENTS[0]] })[0];
+    expect(subset.marginal).toBe(all.marginal);
+  });
+
+  it('does not label an unresolved factual event as scored based on its operational assumption', () => {
+    const data = makeHistoricalData();
+    const unresolved = { ...data.EVENTS[0], recordKind: 'factual', dateISO: '2026-07-28', evidence: { occurrence: { status: 'unresolved' }, baseline: { eligible: false } } };
+    const engine = engineFor({ ...data, EVENTS: [unresolved] });
+    const row = eventImpacts(engine, getEventAssumption)[0];
+    expect(row).toMatchObject({ declaredOperational: true, operational: false, marginal: 0, standalone: 0 });
+    expect(row.reason).toMatch(/unresolved_factual_claim/);
+  });
+
+  it('respects information availability at the incident date in retrospective markers', () => {
+    const data = makeHistoricalData();
+    const verifiedLater = { ...data.EVENTS[0], recordKind: 'factual', dateISO: '2026-07-28', evidence: {
+      occurrence: { status: 'verified' }, baseline: { eligible: true }, review: { verifiedAt: '2026-09-06', provenance: 'Synthetic test' },
+      sources: [{ claimStatus: 'verified', supports: ['occurrence'], url: 'https://example.test/update', supportingSection: 'Synthetic fixture', publicationDate: '2026-08-24', informationAvailableDate: '2026-08-24' }],
+    } };
+    const engine = engineFor({ ...data, EVENTS: [verifiedLater] });
+    const row = eventImpacts(engine, getEventAssumption)[0];
+    expect(row).toMatchObject({ operational: false, marginal: 0 });
+    expect(row.reason).toBe('evidence_not_available_at_evaluation');
+  });
 });
 
 describe('impactsByType', () => {

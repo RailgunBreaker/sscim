@@ -1,6 +1,6 @@
 # Source register
 
-*Generated from the vault by `server/scripts/build-source-register.mjs`. Last generated: 2026-08-24.*
+*Generated from the vault by `server/scripts/build-source-register.mjs`. Last generated: 2026-09-06.*
 
 Every source behind every event, facility and evidence note in
 `server/data/sscim.db`, in Chicago bibliography style, alphabetised within
@@ -87,7 +87,6 @@ alphabetised. The bracketed date is the event the source supports.
 - Commerce authorisations reported Oct 2022. October 10, 2022. *(short entry)* [event: 2022-10-10]
 - Commerce Department settlement announcement. July 13, 2018. *(short entry)* [event: 2018-07-13]
 - Commerce letter reported Sep 26, 2020; SMIC filings. September 26, 2020. *(short entry)* [event: 2020-09-26]
-- Commerce notice; Al Jazeera (Jun 1, 2026). *(short entry)* [event: 2026-06-01]
 - Company confirmations (Jul 2-3, 2025). *(short entry)* [event: 2025-07-03]
 - Company disclosures; BIS letters (late May 2025). *(short entry)* [event: 2025-05-28]
 - Company disclosures; national COVID policy record; trade press. August 23, 2021. *(short entry)* [event: 2021-08-23]
@@ -103,8 +102,9 @@ alphabetised. The bracketed date is the event the source supports.
 - DOJ indictment (Nov 1, 2018). *(short entry)* [event: 2018-11-01]
 - Executive Office of the President, PCAST (Jan 2017). *(short entry)* [event: 2017-01-06]
 - GlobalFoundries announcement; AMD foundry transition disclosures. August 27, 2018. *(short entry)* [event: 2018-08-27]
+- https://www.bis.gov/media/documents/bis-guidance-may-31-2026.pdf. May 31, 2026. *(short entry)* [event: 2026-05-31]
 - Intel announcement (Jan 21, 2022). *(short entry)* [event: 2022-01-21]
-- investmentmonitor.ai. "SK Hynix eyes Japan chip plant amid global shortage - report." August 21, 2026. https://www.investmentmonitor.ai/news/sk-hynix-eyes-japan-chip-plant/. Accessed 2026-08-24. [event: 2026-08-21]
+- investmentmonitor.ai. "SK Hynix eyes Japan chip plant amid global shortage - report." August 21, 2026. https://www.investmentmonitor.ai/news/sk-hynix-eyes-japan-chip-plant/. [event: 2026-08-21]
 - Japanese cabinet order (Aug 2, 2019). *(short entry)* [event: 2019-08-02]
 - JASM opening ceremony; TSMC disclosures. February 24, 2024. *(short entry)* [event: 2024-02-24]
 - Joint statements; automaker confirmations (Jun 2025). *(short entry)* [event: 2025-06-27]
@@ -132,12 +132,12 @@ alphabetised. The bracketed date is the event the source supports.
 - Taiwan MND daily activity reports; shipping-insurance market data. June 30, 2026. *(short entry)* [event: 2026-06-30]
 - Taiwan supply-chain press; component-order checks (unconfirmed by TSMC IR). July 2, 2026. *(short entry)* [event: 2026-07-02]
 - Taiwan Water Resources Agency; TSMC / UMC statements. April 6, 2021. *(short entry)* [event: 2021-04-06]
-- tech-insider.org. "DDR4 spot price hits record $42.45 as memory capacity shifts to HBM." August 7, 2026. https://tech-insider.org/dram-ram-price-crisis-2026/. Accessed 2026-08-24. [event: 2026-08-07]
+- tech-insider.org. "DDR4 spot price hits record $42.45 as memory capacity shifts to HBM." August 7, 2026. https://tech-insider.org/dram-ram-price-crisis-2026/. [event: 2026-08-07]
 - Toshiba board disclosures; consortium statements. September 20, 2017. *(short entry)* [event: 2017-09-20]
 - Toyota production announcement (Aug 19, 2021). *(short entry)* [event: 2021-08-19]
 - TSMC statements (Aug 3-6, 2018); quarterly disclosure. *(short entry)* [event: 2018-08-03]
 - TSMC/UMC/Micron statements; earnings disclosures. April 3, 2024. *(short entry)* [event: 2024-04-03]
-- U.S. Geological Survey, Earthquake Hazards Program. Event page us6000tgb9, M6.8, 2026 Uto, Japan Earthquake . July 28, 2026. https://earthquake.usgs.gov/earthquakes/eventpage/us6000tgb9. Accessed 2026-08-24. [event: 2026-07-28]
+- U.S. Geological Survey, Earthquake Hazards Program. Event page us6000tgb9, M6.8, 2026 Uto, Japan Earthquake . July 28, 2026. https://earthquake.usgs.gov/earthquakes/eventpage/us6000tgb9. [event: 2026-07-28]
 - Volkswagen / Continental / Bosch statements (Dec 2020). *(short entry)* [event: 2020-12-11]
 - Western Digital / Kioxia disclosures (Jun 2019). *(short entry)* [event: 2019-06-15]
 - White House "Building Resilient Supply Chains" report (Jun 2021). *(short entry)* [event: 2021-06-08]
@@ -145,32 +145,33 @@ alphabetised. The bracketed date is the event the source supports.
 
 ### Government and regulatory bodies
 
-- Advanced Micro Devices, Inc. "Current Report on Form 8-K." *U.S. Securities and Exchange Commission, EDGAR*, accession no. 0001193125-20-277468, October 27, 2020. https://www.sec.gov/Archives/edgar/data/2488/000119312520277468/d67182d8k.htm. Accessed 2026-08-24. [event: 2020-10-27]
-- Apple Inc. "Current Report on Form 8-K." *U.S. Securities and Exchange Commission, EDGAR*, accession no. 0000320193-19-000002, January 2, 2019. https://www.sec.gov/Archives/edgar/data/320193/000032019319000002/a8-kjanuary2019122019.htm. Accessed 2026-08-24. [event: 2019-01-02]
-- ASML Holding N.V. "Report of Foreign Private Issuer on Form 6-K." *U.S. Securities and Exchange Commission, EDGAR*, accession no. 0000937966-17-000017, October 18, 2017. https://www.sec.gov/Archives/edgar/data/937966/000093796617000017/form6kq3resultsoctober1820.htm. Accessed 2026-08-24. [event: 2017-10-18]
-- ASML Holding N.V. "Report of Foreign Private Issuer on Form 6-K." *U.S. Securities and Exchange Commission, EDGAR*, accession no. 0000937966-24-000022, October 15, 2024. https://www.sec.gov/Archives/edgar/data/937966/000093796624000022/form6-kquarterlyfilings.htm. Accessed 2026-08-24. [event: 2024-10-15]
+- Advanced Micro Devices, Inc. "Current Report on Form 8-K." *U.S. Securities and Exchange Commission, EDGAR*, accession no. 0001193125-20-277468, October 27, 2020. https://www.sec.gov/Archives/edgar/data/2488/000119312520277468/d67182d8k.htm. [event: 2020-10-27]
+- Apple Inc. "Current Report on Form 8-K." *U.S. Securities and Exchange Commission, EDGAR*, accession no. 0000320193-19-000002, January 2, 2019. https://www.sec.gov/Archives/edgar/data/320193/000032019319000002/a8-kjanuary2019122019.htm. [event: 2019-01-02]
+- ASML Holding N.V. "Report of Foreign Private Issuer on Form 6-K." *U.S. Securities and Exchange Commission, EDGAR*, accession no. 0000937966-17-000017, October 18, 2017. https://www.sec.gov/Archives/edgar/data/937966/000093796617000017/form6kq3resultsoctober1820.htm. [event: 2017-10-18]
+- ASML Holding N.V. "Report of Foreign Private Issuer on Form 6-K." *U.S. Securities and Exchange Commission, EDGAR*, accession no. 0000937966-24-000022, October 15, 2024. https://www.sec.gov/Archives/edgar/data/937966/000093796624000022/form6-kquarterlyfilings.htm. [event: 2024-10-15]
 - Chinese transport ministry notice (Oct 2025). *(short entry)* [event: 2025-10-14]
 - Company confirmations; administration statements (Aug 2025). *(short entry)* [event: 2025-08-11]
-- Executive Office of the President. "Executive Order 14017: America's Supply Chains." *Federal Register*, 86 Fed. Reg. 11849, March 1, 2021. https://www.federalregister.gov/documents/2021/03/01/2021-04280/americas-supply-chains. Accessed 2026-08-24. [event: 2021-02-24]
-- Executive Office of the President. "Executive Order 14105: Addressing United States Investments in Certain National Security Technologies and Products in Countries of Concern." *Federal Register*, 88 Fed. Reg. 54867, August 11, 2023. https://www.federalregister.gov/documents/2023/08/11/2023-17449/addressing-united-states-investments-in-certain-national-security-technologies-and-products-in. Accessed 2026-08-24. [event: 2023-08-09]
-- Executive Office of the President. "Executive Order 14257: Regulating Imports With a Reciprocal Tariff To Rectify Trade Practices That Contribute to Large and Persistent Annual United States Goods Trade Deficits." *Federal Register*, 90 Fed. Reg. 15041, April 7, 2025. https://www.federalregister.gov/documents/2025/04/07/2025-06063/regulating-imports-with-a-reciprocal-tariff-to-rectify-trade-practices-that-contribute-to-large-and. Accessed 2026-08-24. [event: 2025-04-02]
-- federal-register. "Enhanced Favorable Treatment for the United Arab Emirates Under the Export Administration Regulations." July 14, 2026. https://www.federalregister.gov/documents/2026/07/14/2026-14132/enhanced-favorable-treatment-for-the-united-arab-emirates-under-the-export-administration. Accessed 2026-08-24. [event: 2026-07-14]
+- Executive Office of the President. "Executive Order 14017: America's Supply Chains." *Federal Register*, 86 Fed. Reg. 11849, March 1, 2021. https://www.federalregister.gov/documents/2021/03/01/2021-04280/americas-supply-chains. [event: 2021-02-24]
+- Executive Office of the President. "Executive Order 14105: Addressing United States Investments in Certain National Security Technologies and Products in Countries of Concern." *Federal Register*, 88 Fed. Reg. 54867, August 11, 2023. https://www.federalregister.gov/documents/2023/08/11/2023-17449/addressing-united-states-investments-in-certain-national-security-technologies-and-products-in. [event: 2023-08-09]
+- Executive Office of the President. "Executive Order 14257: Regulating Imports With a Reciprocal Tariff To Rectify Trade Practices That Contribute to Large and Persistent Annual United States Goods Trade Deficits." *Federal Register*, 90 Fed. Reg. 15041, April 7, 2025. https://www.federalregister.gov/documents/2025/04/07/2025-06063/regulating-imports-with-a-reciprocal-tariff-to-rectify-trade-practices-that-contribute-to-large-and. [event: 2025-04-02]
+- federal-register. "Enhanced Favorable Treatment for the United Arab Emirates Under the Export Administration Regulations." July 14, 2026. https://www.federalregister.gov/documents/2026/07/14/2026-14132/enhanced-favorable-treatment-for-the-united-arab-emirates-under-the-export-administration. [event: 2026-07-14]
 - Government of the Netherlands. ASML statement (Jan 1, 2024); Dutch government confirmation. *(short entry)* [event: 2024-01-01]
 - Government of the Netherlands. Dutch government gazette; ASML investor disclosures. September 1, 2023. *(short entry)* [event: 2023-09-01]
 - Government of the Netherlands. Dutch ministry statements; CNBC/Reuters; Honda disclosures. September 30, 2025. *(short entry)* [event: 2025-09-30]
-- Intel Corporation. "Current Report on Form 8-K." *U.S. Securities and Exchange Commission, EDGAR*, accession no. 0001193125-21-091374, March 23, 2021. https://www.sec.gov/Archives/edgar/data/50863/000119312521091374/d153275d8k.htm. Accessed 2026-08-24. [event: 2021-03-23]
+- Intel Corporation. "Current Report on Form 8-K." *U.S. Securities and Exchange Commission, EDGAR*, accession no. 0001193125-21-091374, March 23, 2021. https://www.sec.gov/Archives/edgar/data/50863/000119312521091374/d153275d8k.htm. [event: 2021-03-23]
 - Japan, Ministry of Economy, Trade and Industry (METI). METI announcement (Jul 1, 2019); Korean government response. *(short entry)* [event: 2019-07-01]
 - Japan, Ministry of Economy, Trade and Industry (METI). METI budget announcement; Rapidus press release. June 24, 2026. *(short entry)* [event: 2026-06-24]
 - Japan, Ministry of Economy, Trade and Industry (METI). METI ordinance; company disclosures. July 23, 2023. *(short entry)* [event: 2023-07-23]
 - Japan, Ministry of Economy, Trade and Industry (METI). Rapidus founding announcement; METI. November 11, 2022. *(short entry)* [event: 2022-11-11]
 - Japan, Ministry of Economy, Trade and Industry (METI). TSMC / Sony announcement (Oct 2021); METI subsidy record. *(short entry)* [event: 2021-10-14]
 - Malaysian trade ministry notice (Jul 14, 2025). *(short entry)* [event: 2025-07-14]
-- Micron Technology, Inc. "Current Report on Form 8-K." *U.S. Securities and Exchange Commission, EDGAR*, accession no. 0000723125-23-000028, May 22, 2023. https://www.sec.gov/Archives/edgar/data/723125/000072312523000028/mu-20230522.htm. Accessed 2026-08-24. [event: 2023-05-21]
-- NVIDIA Corporation. "Current Report on Form 8-K." *U.S. Securities and Exchange Commission, EDGAR*, accession no. 0001045810-22-000005, February 8, 2022. https://www.sec.gov/Archives/edgar/data/1045810/000104581022000005/nvda-20220208.htm. Accessed 2026-08-24. [event: 2022-02-08]
-- NVIDIA Corporation. "Current Report on Form 8-K." *U.S. Securities and Exchange Commission, EDGAR*, accession no. 0001045810-22-000146, August 31, 2022. https://www.sec.gov/Archives/edgar/data/1045810/000104581022000146/nvda-20220826.htm. Accessed 2026-08-24. [event: 2022-08-31]
-- NVIDIA Corporation. "Current Report on Form 8-K." *U.S. Securities and Exchange Commission, EDGAR*, accession no. 0001193125-20-244601, September 14, 2020. https://www.sec.gov/Archives/edgar/data/1045810/000119312520244601/d13958d8k.htm. Accessed 2026-08-24. [event: 2020-09-13]
+- Micron Technology, Inc. "Current Report on Form 8-K." *U.S. Securities and Exchange Commission, EDGAR*, accession no. 0000723125-23-000028, May 22, 2023. https://www.sec.gov/Archives/edgar/data/723125/000072312523000028/mu-20230522.htm. [event: 2023-05-21]
+- NVIDIA Corporation. "Current Report on Form 8-K." *U.S. Securities and Exchange Commission, EDGAR*, accession no. 0001045810-22-000005, February 8, 2022. https://www.sec.gov/Archives/edgar/data/1045810/000104581022000005/nvda-20220208.htm. [event: 2022-02-08]
+- NVIDIA Corporation. "Current Report on Form 8-K." *U.S. Securities and Exchange Commission, EDGAR*, accession no. 0001045810-22-000146, August 31, 2022. https://www.sec.gov/Archives/edgar/data/1045810/000104581022000146/nvda-20220826.htm. [event: 2022-08-31]
+- NVIDIA Corporation. "Current Report on Form 8-K." *U.S. Securities and Exchange Commission, EDGAR*, accession no. 0001193125-20-244601, September 14, 2020. https://www.sec.gov/Archives/edgar/data/1045810/000119312520244601/d13958d8k.htm. [event: 2020-09-13]
 - Office of the Federal Register. Federal Register · BIS interim final rule; two trade-press confirmations. July 3, 2026. *(short entry)* [event: 2026-07-03]
-- Office of the United States Trade Representative. "Request for Comments on Proposed Modifications and Machinery Exclusion Process in Four-Year Review of Actions Taken in the Section 301 Investigation: China's Acts, Policies, and Practices Related to Technology Transfer, Intellectual Property, and Innovation." *Federal Register*, 89 Fed. Reg. 46252, May 28, 2024. https://www.federalregister.gov/documents/2024/05/28/2024-11634/request-for-comments-on-proposed-modifications-and-machinery-exclusion-process-in-four-year-review. Accessed 2026-08-24. [event: 2024-05-14]
+- Office of the United States Trade Representative. "Request for Comments on Proposed Modifications and Machinery Exclusion Process in Four-Year Review of Actions Taken in the Section 301 Investigation: China's Acts, Policies, and Practices Related to Technology Transfer, Intellectual Property, and Innovation." *Federal Register*, 89 Fed. Reg. 46252, May 28, 2024. https://www.federalregister.gov/documents/2024/05/28/2024-11634/request-for-comments-on-proposed-modifications-and-machinery-exclusion-process-in-four-year-review. [event: 2024-05-14]
+- People's Republic of China, Ministry of Commerce (MOFCOM). https://www.mofcom.gov.cn/zwgk/zcfb/art/2025/art_b1ec77dd3f0d4762952904df7cdaadec.html. October 30, 2025. *(short entry)* [event: 2025-10-30]
 - People's Republic of China, Ministry of Commerce (MOFCOM). MOFCOM announcement (Feb 4, 2025). *(short entry)* [event: 2025-02-04]
 - People's Republic of China, Ministry of Commerce (MOFCOM). MOFCOM Announcement No. 23; customs statistics. July 3, 2023. *(short entry)* [event: 2023-07-03]
 - People's Republic of China, Ministry of Commerce (MOFCOM). MOFCOM announcement; automaker disclosures. April 4, 2025. *(short entry)* [event: 2025-04-04]
@@ -179,61 +180,60 @@ alphabetised. The bracketed date is the event the source supports.
 - People's Republic of China, Ministry of Commerce (MOFCOM). MOFCOM listing; FDD analysis (Jun 24, 2026). *(short entry)* [event: 2026-06-22]
 - People's Republic of China, Ministry of Commerce (MOFCOM). MOFCOM notices; importer surveys; customs statistics. June 27, 2026. *(short entry)* [event: 2026-06-27]
 - People's Republic of China, National Development and Reform Commission. NDRC statements; Chinese press reporting. December 22, 2017. *(short entry)* [event: 2017-12-22]
-- Qualcomm Incorporated. "Current Report on Form 8-K." *U.S. Securities and Exchange Commission, EDGAR*, accession no. 0001104659-18-047166, July 26, 2018. https://www.sec.gov/Archives/edgar/data/804328/000110465918047166/a18-7900_238k.htm. Accessed 2026-08-24. [event: 2018-07-26]
+- Qualcomm Incorporated. "Current Report on Form 8-K." *U.S. Securities and Exchange Commission, EDGAR*, accession no. 0001104659-18-047166, July 26, 2018. https://www.sec.gov/Archives/edgar/data/804328/000110465918047166/a18-7900_238k.htm. [event: 2018-07-26]
 - State Administration for Market Regulation (China). SAMR announcement (Dec 9, 2024). *(short entry)* [event: 2024-12-09]
-- Taiwan Semiconductor Manufacturing Company Limited. "Report of Foreign Private Issuer on Form 6-K." *U.S. Securities and Exchange Commission, EDGAR*, accession no. 0001046179-25-000024, March 3, 2025. https://www.sec.gov/Archives/edgar/data/1046179/000104617925000024/tsmcexpandinvestmentintheu.htm. Accessed 2026-08-24. [event: 2025-03-03]
-- Taiwan Semiconductor Manufacturing Company Limited. "Report of Foreign Private Issuer on Form 6-K." *U.S. Securities and Exchange Commission, EDGAR*, accession no. 0001564590-20-025607, May 15, 2020. https://www.sec.gov/Archives/edgar/data/1046179/000156459020025607/tsm-6k_20200514.htm. Accessed 2026-08-24. [event: 2020-05-15]
-- Taiwan Semiconductor Manufacturing Company Limited. "Report of Foreign Private Issuer on Form 6-K." *U.S. Securities and Exchange Commission, EDGAR*, accession no. 0001564590-22-039051, December 6, 2022. https://www.sec.gov/Archives/edgar/data/1046179/000156459022039051/tsm-6k_20221206.htm. Accessed 2026-08-24. [event: 2022-12-06]
-- Taiwan Semiconductor Manufacturing Company Limited. "Report of Foreign Private Issuer on Form 6-K." *U.S. Securities and Exchange Commission, EDGAR*, accession no. 0001628280-23-025146, July 20, 2023. https://www.sec.gov/Archives/edgar/data/1046179/000162828023025146/tsm-20230720x6k.htm. Accessed 2026-08-24. [event: 2023-07-20]
-- U.S. Department of Commerce, Bureau of Industry and Security. "Addition of an Entity to the Entity List." *Federal Register*, 83 Fed. Reg. 54519, October 30, 2018. https://www.federalregister.gov/documents/2018/10/30/2018-23693/addition-of-an-entity-to-the-entity-list. Accessed 2026-08-24. [event: 2018-10-29]
-- U.S. Department of Commerce, Bureau of Industry and Security. "Addition of Certain Entities to the Entity List and Revision of Entries on the Entity List." *Federal Register*, 84 Fed. Reg. 43493, August 21, 2019. https://www.federalregister.gov/documents/2019/08/21/2019-17921/addition-of-certain-entities-to-the-entity-list-and-revision-of-entries-on-the-entity-list. Accessed 2026-08-24. [event: 2019-08-19]
-- U.S. Department of Commerce, Bureau of Industry and Security. "Addition of Entities to the Entity List, Revision of Entry on the Entity List, and Removal of Entities From the Entity List." *Federal Register*, 85 Fed. Reg. 83416, December 22, 2020. https://www.federalregister.gov/documents/2020/12/22/2020-28031/addition-of-entities-to-the-entity-list-revision-of-entry-on-the-entity-list-and-removal-of-entities. Accessed 2026-08-24. [event: 2020-12-18]
-- U.S. Department of Commerce, Bureau of Industry and Security. "Addition of Entities to the Entity List." *Federal Register*, 84 Fed. Reg. 22961, May 21, 2019. https://www.federalregister.gov/documents/2019/05/21/2019-10616/addition-of-entities-to-the-entity-list. Accessed 2026-08-24. [event: 2019-05-16]
-- U.S. Department of Commerce, Bureau of Industry and Security. "Addition of Huawei Non-U.S. Affiliates to the Entity List, the Removal of Temporary General License, and Amendments to General Prohibition Three (Foreign-Produced Direct Product Rule)." *Federal Register*, 85 Fed. Reg. 51596, August 20, 2020. https://www.federalregister.gov/documents/2020/08/20/2020-18213/addition-of-huawei-non-us-affiliates-to-the-entity-list-the-removal-of-temporary-general-license-and. Accessed 2026-08-24. [event: 2020-08-17]
-- U.S. Department of Commerce, Bureau of Industry and Security. "Additions and Modifications to the Entity List; Removals From the Validated End-User (VEU) Program." *Federal Register*, 89 Fed. Reg. 96830, December 5, 2024. https://www.federalregister.gov/documents/2024/12/05/2024-28267/additions-and-modifications-to-the-entity-list-removals-from-the-validated-end-user-veu-program. Accessed 2026-08-24. [event: 2024-12-02]
-- U.S. Department of Commerce, Bureau of Industry and Security. "Additions and Revisions to the Entity List and Conforming Removal From the Unverified List." *Federal Register*, 87 Fed. Reg. 77505, December 19, 2022. https://www.federalregister.gov/documents/2022/12/19/2022-27151/additions-and-revisions-to-the-entity-list-and-conforming-removal-from-the-unverified-list. Accessed 2026-08-24. [event: 2022-12-15]
-- U.S. Department of Commerce, Bureau of Industry and Security. "Additions to the Entity List." *Federal Register*, 90 Fed. Reg. 4621, January 16, 2025. https://www.federalregister.gov/documents/2025/01/16/2025-00480/additions-to-the-entity-list. Accessed 2026-08-24. [event: 2025-01-15]
-- U.S. Department of Commerce, Bureau of Industry and Security. "Commerce Control List Additions and Revisions; Implementation of Controls on Advanced Technologies Consistent With Controls Implemented by International Partners." *Federal Register*, 89 Fed. Reg. 72926, September 6, 2024. https://www.federalregister.gov/documents/2024/09/06/2024-19633/commerce-control-list-additions-and-revisions-implementation-of-controls-on-advanced-technologies. Accessed 2026-08-24. [event: 2024-09-05]
-- U.S. Department of Commerce, Bureau of Industry and Security. "Entity List Additions." *Federal Register*, 88 Fed. Reg. 71991, October 19, 2023. https://www.federalregister.gov/documents/2023/10/19/2023-23048/entity-list-additions. Accessed 2026-08-24. [event: 2023-10-17]
-- U.S. Department of Commerce, Bureau of Industry and Security. "Expansion of End-User Controls To Cover Affiliates of Certain Listed Entities." *Federal Register*, 90 Fed. Reg. 47201, September 30, 2025. https://www.federalregister.gov/documents/2025/09/30/2025-19001/expansion-of-end-user-controls-to-cover-affiliates-of-certain-listed-entities. Accessed 2026-08-24. [event: 2025-09-29]
-- U.S. Department of Commerce, Bureau of Industry and Security. "Export Administration Regulations: Amendments to General Prohibition Three (Foreign-Produced Direct Product Rule) and the Entity List." *Federal Register*, 85 Fed. Reg. 29849, May 19, 2020. https://www.federalregister.gov/documents/2020/05/19/2020-10856/export-administration-regulations-amendments-to-general-prohibition-three-foreign-produced-direct. Accessed 2026-08-24. [event: 2020-05-15]
-- U.S. Department of Commerce, Bureau of Industry and Security. "Foreign-Produced Direct Product Rule Additions, and Refinements to Controls for Advanced Computing and Semiconductor Manufacturing Items." *Federal Register*, 89 Fed. Reg. 96790, December 5, 2024. https://www.federalregister.gov/documents/2024/12/05/2024-28270/foreign-produced-direct-product-rule-additions-and-refinements-to-controls-for-advanced-computing. Accessed 2026-08-24. [event: 2024-12-02]
-- U.S. Department of Commerce, Bureau of Industry and Security. "Framework for Artificial Intelligence Diffusion." *Federal Register*, 90 Fed. Reg. 4544, January 15, 2025. https://www.federalregister.gov/documents/2025/01/15/2025-00636/framework-for-artificial-intelligence-diffusion. Accessed 2026-08-24. [event: 2025-01-13]
-- U.S. Department of Commerce, Bureau of Industry and Security. "Implementation of Additional Due Diligence Measures for Advanced Computing Integrated Circuits; Amendments and Clarifications; and Extension of Comment Period." *Federal Register*, 90 Fed. Reg. 5298, January 16, 2025. https://www.federalregister.gov/documents/2025/01/16/2025-00711/implementation-of-additional-due-diligence-measures-for-advanced-computing-integrated-circuits. Accessed 2026-08-24. [event: 2025-01-15]
-- U.S. Department of Commerce, Bureau of Industry and Security. "Implementation of Additional Export Controls: Certain Advanced Computing and Semiconductor Manufacturing Items; Supercomputer and Semiconductor End Use; Entity List Modification." *Federal Register*, 87 Fed. Reg. 62186, October 13, 2022. https://www.federalregister.gov/documents/2022/10/13/2022-21658/implementation-of-additional-export-controls-certain-advanced-computing-and-semiconductor. Accessed 2026-08-24. [event: 2022-10-07]
-- U.S. Department of Commerce, Bureau of Industry and Security. "Implementation of Additional Export Controls: Certain Advanced Computing Items; Supercomputer and Semiconductor End Use; Updates and Corrections." *Federal Register*, 88 Fed. Reg. 73458, October 25, 2023. https://www.federalregister.gov/documents/2023/10/25/2023-23055/implementation-of-additional-export-controls-certain-advanced-computing-items-supercomputer-and. Accessed 2026-08-24. [event: 2023-10-17]
-- U.S. Department of Commerce, Bureau of Industry and Security. "Implementation of Certain 2021 Wassenaar Arrangement Decisions on Four Section 1758 Technologies." *Federal Register*, 87 Fed. Reg. 49979, August 15, 2022. https://www.federalregister.gov/documents/2022/08/15/2022-17125/implementation-of-certain-2021-wassenaar-arrangement-decisions-on-four-section-1758-technologies. Accessed 2026-08-24. [event: 2022-08-12]
-- U.S. Department of Commerce, Bureau of Industry and Security. "In the Matter of: Zhongxing Telecommunications Equipment Corporation ZTE Plaza, Keji Road South Hi-Tech Industrial Park Nanshan District, Shenzhen China; ZTE Kangxun Telecommunications Ltd. 2/3 Floor, Suite A, Zte Communication Mansion Keji (S) Road Hi-New Shenzhen, 518057 China Respondent'; Order Activating Suspended Denial Order Relating to Zhongxing Telecommunications Equipment Corporation and Zte Kangxun Telecommunications Ltd.." *Federal Register*, 83 Fed. Reg. 17644, April 23, 2018. https://www.federalregister.gov/documents/2018/04/23/2018-08354/in-the-matter-of-zhongxing-telecommunications-equipment-corporation-zte-plaza-keji-road-south. Accessed 2026-08-24. [event: 2018-04-16]
-- U.S. Department of Commerce, Bureau of Industry and Security. "Notice of Request for Public Comments on Section 232 National Security Investigation of Imports of Semiconductors and Semiconductor Manufacturing Equipment." *Federal Register*, 90 Fed. Reg. 15950, April 16, 2025. https://www.federalregister.gov/documents/2025/04/16/2025-06591/notice-of-request-for-public-comments-on-section-232-national-security-investigation-of-imports-of. Accessed 2026-08-24. [event: 2025-04-14]
-- U.S. Department of Commerce, Bureau of Industry and Security. "Review of Controls for Certain Emerging Technologies." *Federal Register*, 83 Fed. Reg. 58201, November 19, 2018. https://www.federalregister.gov/documents/2018/11/19/2018-25221/review-of-controls-for-certain-emerging-technologies. Accessed 2026-08-24. [event: 2018-11-19]
-- U.S. Department of Commerce, Bureau of Industry and Security. "Revision to License Review Policy for Advanced Computing Commodities." *Federal Register*, 91 Fed. Reg. 1684, January 15, 2026. https://www.federalregister.gov/documents/2026/01/15/2026-00789/revision-to-license-review-policy-for-advanced-computing-commodities. Accessed 2026-08-24. [event: 2026-01-15]
-- U.S. Department of Commerce, Bureau of Industry and Security. "Revocation of Validated End-User Authorizations in the People's Republic of China." *Federal Register*, 90 Fed. Reg. 42321, September 2, 2025. https://www.federalregister.gov/documents/2025/09/02/2025-16735/revocation-of-validated-end-user-authorizations-in-the-peoples-republic-of-china. Accessed 2026-08-24. [event: 2025-08-29]
-- U.S. Department of Commerce, Bureau of Industry and Security. "Temporary General License: Extension of Validity, Clarifications to Authorized Transactions, and Changes to Certification Statement Requirements." *Federal Register*, 84 Fed. Reg. 43487, August 21, 2019. https://www.federalregister.gov/documents/2019/08/21/2019-17920/temporary-general-license-extension-of-validity-clarifications-to-authorized-transactions-and. Accessed 2026-08-24. [event: 2019-08-19]
+- Taiwan Semiconductor Manufacturing Company Limited. "Report of Foreign Private Issuer on Form 6-K." *U.S. Securities and Exchange Commission, EDGAR*, accession no. 0001046179-25-000024, March 3, 2025. https://www.sec.gov/Archives/edgar/data/1046179/000104617925000024/tsmcexpandinvestmentintheu.htm. [event: 2025-03-03]
+- Taiwan Semiconductor Manufacturing Company Limited. "Report of Foreign Private Issuer on Form 6-K." *U.S. Securities and Exchange Commission, EDGAR*, accession no. 0001564590-20-025607, May 15, 2020. https://www.sec.gov/Archives/edgar/data/1046179/000156459020025607/tsm-6k_20200514.htm. [event: 2020-05-15]
+- Taiwan Semiconductor Manufacturing Company Limited. "Report of Foreign Private Issuer on Form 6-K." *U.S. Securities and Exchange Commission, EDGAR*, accession no. 0001564590-22-039051, December 6, 2022. https://www.sec.gov/Archives/edgar/data/1046179/000156459022039051/tsm-6k_20221206.htm. [event: 2022-12-06]
+- Taiwan Semiconductor Manufacturing Company Limited. "Report of Foreign Private Issuer on Form 6-K." *U.S. Securities and Exchange Commission, EDGAR*, accession no. 0001628280-23-025146, July 20, 2023. https://www.sec.gov/Archives/edgar/data/1046179/000162828023025146/tsm-20230720x6k.htm. [event: 2023-07-20]
+- U.S. Department of Commerce, Bureau of Industry and Security. "Addition of an Entity to the Entity List." *Federal Register*, 83 Fed. Reg. 54519, October 30, 2018. https://www.federalregister.gov/documents/2018/10/30/2018-23693/addition-of-an-entity-to-the-entity-list. [event: 2018-10-29]
+- U.S. Department of Commerce, Bureau of Industry and Security. "Addition of Certain Entities to the Entity List and Revision of Entries on the Entity List." *Federal Register*, 84 Fed. Reg. 43493, August 21, 2019. https://www.federalregister.gov/documents/2019/08/21/2019-17921/addition-of-certain-entities-to-the-entity-list-and-revision-of-entries-on-the-entity-list. [event: 2019-08-19]
+- U.S. Department of Commerce, Bureau of Industry and Security. "Addition of Entities to the Entity List, Revision of Entry on the Entity List, and Removal of Entities From the Entity List." *Federal Register*, 85 Fed. Reg. 83416, December 22, 2020. https://www.federalregister.gov/documents/2020/12/22/2020-28031/addition-of-entities-to-the-entity-list-revision-of-entry-on-the-entity-list-and-removal-of-entities. [event: 2020-12-18]
+- U.S. Department of Commerce, Bureau of Industry and Security. "Addition of Entities to the Entity List." *Federal Register*, 84 Fed. Reg. 22961, May 21, 2019. https://www.federalregister.gov/documents/2019/05/21/2019-10616/addition-of-entities-to-the-entity-list. [event: 2019-05-16]
+- U.S. Department of Commerce, Bureau of Industry and Security. "Addition of Huawei Non-U.S. Affiliates to the Entity List, the Removal of Temporary General License, and Amendments to General Prohibition Three (Foreign-Produced Direct Product Rule)." *Federal Register*, 85 Fed. Reg. 51596, August 20, 2020. https://www.federalregister.gov/documents/2020/08/20/2020-18213/addition-of-huawei-non-us-affiliates-to-the-entity-list-the-removal-of-temporary-general-license-and. [event: 2020-08-17]
+- U.S. Department of Commerce, Bureau of Industry and Security. "Additions and Modifications to the Entity List; Removals From the Validated End-User (VEU) Program." *Federal Register*, 89 Fed. Reg. 96830, December 5, 2024. https://www.federalregister.gov/documents/2024/12/05/2024-28267/additions-and-modifications-to-the-entity-list-removals-from-the-validated-end-user-veu-program. [event: 2024-12-02]
+- U.S. Department of Commerce, Bureau of Industry and Security. "Additions and Revisions to the Entity List and Conforming Removal From the Unverified List." *Federal Register*, 87 Fed. Reg. 77505, December 19, 2022. https://www.federalregister.gov/documents/2022/12/19/2022-27151/additions-and-revisions-to-the-entity-list-and-conforming-removal-from-the-unverified-list. [event: 2022-12-15]
+- U.S. Department of Commerce, Bureau of Industry and Security. "Additions to the Entity List." *Federal Register*, 90 Fed. Reg. 4621, January 16, 2025. https://www.federalregister.gov/documents/2025/01/16/2025-00480/additions-to-the-entity-list. [event: 2025-01-15]
+- U.S. Department of Commerce, Bureau of Industry and Security. "Commerce Control List Additions and Revisions; Implementation of Controls on Advanced Technologies Consistent With Controls Implemented by International Partners." *Federal Register*, 89 Fed. Reg. 72926, September 6, 2024. https://www.federalregister.gov/documents/2024/09/06/2024-19633/commerce-control-list-additions-and-revisions-implementation-of-controls-on-advanced-technologies. [event: 2024-09-05]
+- U.S. Department of Commerce, Bureau of Industry and Security. "Entity List Additions." *Federal Register*, 88 Fed. Reg. 71991, October 19, 2023. https://www.federalregister.gov/documents/2023/10/19/2023-23048/entity-list-additions. [event: 2023-10-17]
+- U.S. Department of Commerce, Bureau of Industry and Security. "Expansion of End-User Controls To Cover Affiliates of Certain Listed Entities." *Federal Register*, 90 Fed. Reg. 47201, September 30, 2025. https://www.federalregister.gov/documents/2025/09/30/2025-19001/expansion-of-end-user-controls-to-cover-affiliates-of-certain-listed-entities. [event: 2025-09-29]
+- U.S. Department of Commerce, Bureau of Industry and Security. "Export Administration Regulations: Amendments to General Prohibition Three (Foreign-Produced Direct Product Rule) and the Entity List." *Federal Register*, 85 Fed. Reg. 29849, May 19, 2020. https://www.federalregister.gov/documents/2020/05/19/2020-10856/export-administration-regulations-amendments-to-general-prohibition-three-foreign-produced-direct. [event: 2020-05-15]
+- U.S. Department of Commerce, Bureau of Industry and Security. "Foreign-Produced Direct Product Rule Additions, and Refinements to Controls for Advanced Computing and Semiconductor Manufacturing Items." *Federal Register*, 89 Fed. Reg. 96790, December 5, 2024. https://www.federalregister.gov/documents/2024/12/05/2024-28270/foreign-produced-direct-product-rule-additions-and-refinements-to-controls-for-advanced-computing. [event: 2024-12-02]
+- U.S. Department of Commerce, Bureau of Industry and Security. "Framework for Artificial Intelligence Diffusion." *Federal Register*, 90 Fed. Reg. 4544, January 15, 2025. https://www.federalregister.gov/documents/2025/01/15/2025-00636/framework-for-artificial-intelligence-diffusion. [event: 2025-01-13]
+- U.S. Department of Commerce, Bureau of Industry and Security. "Implementation of Additional Due Diligence Measures for Advanced Computing Integrated Circuits; Amendments and Clarifications; and Extension of Comment Period." *Federal Register*, 90 Fed. Reg. 5298, January 16, 2025. https://www.federalregister.gov/documents/2025/01/16/2025-00711/implementation-of-additional-due-diligence-measures-for-advanced-computing-integrated-circuits. [event: 2025-01-15]
+- U.S. Department of Commerce, Bureau of Industry and Security. "Implementation of Additional Export Controls: Certain Advanced Computing and Semiconductor Manufacturing Items; Supercomputer and Semiconductor End Use; Entity List Modification." *Federal Register*, 87 Fed. Reg. 62186, October 13, 2022. https://www.federalregister.gov/documents/2022/10/13/2022-21658/implementation-of-additional-export-controls-certain-advanced-computing-and-semiconductor. [event: 2022-10-07]
+- U.S. Department of Commerce, Bureau of Industry and Security. "Implementation of Additional Export Controls: Certain Advanced Computing Items; Supercomputer and Semiconductor End Use; Updates and Corrections." *Federal Register*, 88 Fed. Reg. 73458, October 25, 2023. https://www.federalregister.gov/documents/2023/10/25/2023-23055/implementation-of-additional-export-controls-certain-advanced-computing-items-supercomputer-and. [event: 2023-10-17]
+- U.S. Department of Commerce, Bureau of Industry and Security. "Implementation of Certain 2021 Wassenaar Arrangement Decisions on Four Section 1758 Technologies." *Federal Register*, 87 Fed. Reg. 49979, August 15, 2022. https://www.federalregister.gov/documents/2022/08/15/2022-17125/implementation-of-certain-2021-wassenaar-arrangement-decisions-on-four-section-1758-technologies. [event: 2022-08-12]
+- U.S. Department of Commerce, Bureau of Industry and Security. "In the Matter of: Zhongxing Telecommunications Equipment Corporation ZTE Plaza, Keji Road South Hi-Tech Industrial Park Nanshan District, Shenzhen China; ZTE Kangxun Telecommunications Ltd. 2/3 Floor, Suite A, Zte Communication Mansion Keji (S) Road Hi-New Shenzhen, 518057 China Respondent'; Order Activating Suspended Denial Order Relating to Zhongxing Telecommunications Equipment Corporation and Zte Kangxun Telecommunications Ltd.." *Federal Register*, 83 Fed. Reg. 17644, April 23, 2018. https://www.federalregister.gov/documents/2018/04/23/2018-08354/in-the-matter-of-zhongxing-telecommunications-equipment-corporation-zte-plaza-keji-road-south. [event: 2018-04-16]
+- U.S. Department of Commerce, Bureau of Industry and Security. "Notice of Request for Public Comments on Section 232 National Security Investigation of Imports of Semiconductors and Semiconductor Manufacturing Equipment." *Federal Register*, 90 Fed. Reg. 15950, April 16, 2025. https://www.federalregister.gov/documents/2025/04/16/2025-06591/notice-of-request-for-public-comments-on-section-232-national-security-investigation-of-imports-of. [event: 2025-04-14]
+- U.S. Department of Commerce, Bureau of Industry and Security. "Review of Controls for Certain Emerging Technologies." *Federal Register*, 83 Fed. Reg. 58201, November 19, 2018. https://www.federalregister.gov/documents/2018/11/19/2018-25221/review-of-controls-for-certain-emerging-technologies. [event: 2018-11-19]
+- U.S. Department of Commerce, Bureau of Industry and Security. "Revision to License Review Policy for Advanced Computing Commodities." *Federal Register*, 91 Fed. Reg. 1684, January 15, 2026. https://www.federalregister.gov/documents/2026/01/15/2026-00789/revision-to-license-review-policy-for-advanced-computing-commodities. [event: 2026-01-15]
+- U.S. Department of Commerce, Bureau of Industry and Security. "Revocation of Validated End-User Authorizations in the People's Republic of China." *Federal Register*, 90 Fed. Reg. 42321, September 2, 2025. https://www.federalregister.gov/documents/2025/09/02/2025-16735/revocation-of-validated-end-user-authorizations-in-the-peoples-republic-of-china. [event: 2025-08-29]
+- U.S. Department of Commerce, Bureau of Industry and Security. "Temporary General License: Extension of Validity, Clarifications to Authorized Transactions, and Changes to Certification Statement Requirements." *Federal Register*, 84 Fed. Reg. 43487, August 21, 2019. https://www.federalregister.gov/documents/2019/08/21/2019-17920/temporary-general-license-extension-of-validity-clarifications-to-authorized-transactions-and. [event: 2019-08-19]
 - U.S. Department of Commerce, Bureau of Industry and Security. BIS rescission notice. May 13, 2025. *(short entry)* [event: 2025-05-13]
-- U.S. Department of Commerce, National Institute of Standards and Technology. "Preventing the Improper Use of CHIPS Act Funding." *Federal Register*, 88 Fed. Reg. 17439, March 23, 2023. https://www.federalregister.gov/documents/2023/03/23/2023-05869/preventing-the-improper-use-of-chips-act-funding. Accessed 2026-08-24. [event: 2023-03-21]
+- U.S. Department of Commerce, National Institute of Standards and Technology. "Preventing the Improper Use of CHIPS Act Funding." *Federal Register*, 88 Fed. Reg. 17439, March 23, 2023. https://www.federalregister.gov/documents/2023/03/23/2023-05869/preventing-the-improper-use-of-chips-act-funding. [event: 2023-03-21]
 - U.S. Securities and Exchange Commission. Commerce Department confirmation; company 8-K disclosures. May 7, 2024. *(short entry)* [event: 2024-05-07]
 - U.S. Securities and Exchange Commission. NVIDIA/AMD 8-K filings; Commerce statements. April 9, 2025. *(short entry)* [event: 2025-04-09]
 
 ### News organisations and trade press
 
-- automotivemanufacturingsolutions.com. "Kumamoto earthquake recovery: TSMC/JASM, Sony and Renesas restart Kyushu chip plants; Toyota resumes output." August 7, 2026. https://www.automotivemanufacturingsolutions.com/news/kumamoto-earthquake-halts-japan-car-and-chip-plants/2714617. Accessed 2026-08-24. [event: 2026-08-04]
-- bitnewsbot.com. "Nvidia CEO Huang meets Trump officials amid AI chip export probe." July 28, 2026. https://bitnewsbot.com/nvidia-ceo-huang-meets-trump/. Accessed 2026-08-24. [event: 2026-07-28]
+- automotivemanufacturingsolutions.com. "Kumamoto earthquake recovery: TSMC/JASM, Sony and Renesas restart Kyushu chip plants; Toyota resumes output." August 7, 2026. https://www.automotivemanufacturingsolutions.com/news/kumamoto-earthquake-halts-japan-car-and-chip-plants/2714617. [event: 2026-08-04]
+- bitnewsbot.com. "Nvidia CEO Huang meets Trump officials amid AI chip export probe." July 28, 2026. https://bitnewsbot.com/nvidia-ceo-huang-meets-trump/. [event: 2026-07-28]
 - Bloomberg. Bloomberg report (Jul 17, 2024); market data. *(short entry)* [event: 2024-07-17]
-- Bloomberg. Joint readouts; Bloomberg (Nov 7, 2025 formalization). October 30, 2025. *(short entry)* [event: 2025-10-30]
-- cloudnews.tech. "TSMC Resumes Japan Factory After Magnitude 7.1 Earthquake | Cloud News." July 29, 2026. https://cloudnews.tech/tsmc-resumes-japan-factory-after-magnitude-7-1-earthquake/. Accessed 2026-08-24. [event: 2026-07-29]
+- cloudnews.tech. "TSMC Resumes Japan Factory After Magnitude 7.1 Earthquake | Cloud News." July 29, 2026. https://cloudnews.tech/tsmc-resumes-japan-factory-after-magnitude-7-1-earthquake/. [event: 2026-07-29]
 - CNBC. TSMC investor disclosures; CNBC/Forbes coverage (Jul 13 & 16, 2026). *(short entry)* [event: 2026-07-16]
-- coinalertnews.com. "Samsung Fast-Tracks Texas Fab and Raises Foundry Prices Amid AI Chip Crunch." August 20, 2026. https://coinalertnews.com/news/2026/08/20/samsung-texas-fab-price-hikes. Accessed 2026-08-24. [event: 2026-08-20]
+- coinalertnews.com. "Samsung Fast-Tracks Texas Fab and Raises Foundry Prices Amid AI Chip Crunch." August 20, 2026. https://coinalertnews.com/news/2026/08/20/samsung-texas-fab-price-hikes. [event: 2026-08-20]
 - DigiTimes. ASE / Amkor utilisation disclosures; DigiTimes supply-chain reporting. November 1, 2020. *(short entry)* [event: 2020-11-01]
 - DigiTimes. Ibiden / Unimicron / Shinko guidance; DigiTimes supply reporting. October 1, 2021. *(short entry)* [event: 2021-10-01]
 - DigiTimes. TSMC statement; Tom's Hardware / DigiTimes coverage. December 27, 2025. *(short entry)* [event: 2025-12-27]
-- dzrh.com.ph. "Japan earthquake rocks chip and auto manufacturing supply chain in Kyushu." July 29, 2026. https://www.dzrh.com.ph/post/japan-earthquake-rocks-chip-and-auto-manufacturing-supply-chain-in-kyushu. Accessed 2026-08-24. [event: 2026-07-29]
-- electronicsweekly.com. "TSMC Fab 20 running 20k 2nm wpm." July 29, 2026. https://www.electronicsweekly.com/?p=903469. Accessed 2026-08-24. [event: 2026-07-29]
-- indiatimes.com. "Sony halts Kumamoto chip plant operations after Japan earthquake." July 29, 2026. https://economictimes.indiatimes.com/news/international/business/sony-halts-kumamoto-chip-plant-operations-after-japan-earthquake/articleshow/132698188.cms. Accessed 2026-08-24. [event: 2026-07-29]
-- indiatimes.com. "Thailand's Siam Silica Framework bets on chips to anchor ASEAN's supply chain future." July 29, 2026. http://ciosea.economictimes.indiatimes.com/news/business-analytics/thailands-siam-silica-framework-bets-on-chips-to-anchor-aseans-supply-chain-future/132701417. Accessed 2026-08-24. [event: 2026-07-29]
-- mitrade.com. "Samsung rushes early equipment sign-off for its second Texas chip fab." August 20, 2026. https://www.mitrade.com/insights/news/live-news/article-3-2017654-20260820. Accessed 2026-08-24. [event: 2026-08-20]
-- msn.com. "China's chip tool push shows ASML caught in US-China squeeze." July 28, 2026. https://www.msn.com/en-us/money/markets/chinas-chip-tool-push-shows-asml-caught-in-us-china-squeeze/ar-AA28Shsq. Accessed 2026-08-24. [event: 2026-07-28]
+- dzrh.com.ph. "Japan earthquake rocks chip and auto manufacturing supply chain in Kyushu." July 29, 2026. https://www.dzrh.com.ph/post/japan-earthquake-rocks-chip-and-auto-manufacturing-supply-chain-in-kyushu. [event: 2026-07-29]
+- electronicsweekly.com. "TSMC Fab 20 running 20k 2nm wpm." July 29, 2026. https://www.electronicsweekly.com/?p=903469. [event: 2026-07-29]
+- https://www.renesas.com/en/about/newsroom/update-5-final-impact-2026-kumamoto-earthquake-renesas-operations. July 28, 2026. *(short entry)* [event: 2026-07-28]
+- indiatimes.com. "Sony halts Kumamoto chip plant operations after Japan earthquake." July 29, 2026. https://economictimes.indiatimes.com/news/international/business/sony-halts-kumamoto-chip-plant-operations-after-japan-earthquake/articleshow/132698188.cms. [event: 2026-07-29]
+- indiatimes.com. "Thailand's Siam Silica Framework bets on chips to anchor ASEAN's supply chain future." July 29, 2026. http://ciosea.economictimes.indiatimes.com/news/business-analytics/thailands-siam-silica-framework-bets-on-chips-to-anchor-aseans-supply-chain-future/132701417. [event: 2026-07-29]
+- mitrade.com. "Samsung rushes early equipment sign-off for its second Texas chip fab." August 20, 2026. https://www.mitrade.com/insights/news/live-news/article-3-2017654-20260820. [event: 2026-08-20]
+- msn.com. "China's chip tool push shows ASML caught in US-China squeeze." July 28, 2026. https://www.msn.com/en-us/money/markets/chinas-chip-tool-push-shows-asml-caught-in-us-china-squeeze/ar-AA28Shsq. [event: 2026-07-28]
 - Nikkei. Company statements; Nikkei reporting (Oct 2023). *(short entry)* [event: 2023-10-26]
-- Nikkei. Sony Semiconductor Solutions status notice (Jul 29, 2026); TSMC statements; Nikkei Asia / Japan Times / CNN / DigiTimes reporting. *(short entry)* [event: 2026-07-28]
 - Reuters. BBC / Reuters reporting; company confirmations. May 20, 2019. *(short entry)* [event: 2019-05-20]
 - Reuters. Company notices to customers; Reuters (Oct 2022). *(short entry)* [event: 2022-10-12]
 - Reuters. Renesas recovery updates; Nikkei/Reuters coverage. March 19, 2021. *(short entry)* [event: 2021-03-19]
@@ -241,11 +241,11 @@ alphabetised. The bracketed date is the event the source supports.
 - Reuters. Reuters reporting on the unissued licence; ASML commentary. November 1, 2019. *(short entry)* [event: 2019-11-01]
 - Reuters. Reuters supplier reporting; TECHCET gas-market analysis. February 24, 2022. *(short entry)* [event: 2022-02-24]
 - Reuters. Reuters/Bloomberg reporting on the agreement (no text released). January 27, 2023. *(short entry)* [event: 2023-01-27]
-- technori.com. "Samsung, SK Hynix Eye $950B US Chip Deals." July 29, 2026. https://technori.com/news/samsung-sk-hynix-eye-950b-us-chip-deals/. Accessed 2026-08-24. [event: 2026-07-29]
-- theedgemalaysia.com. "Japan earthquake rocks chip and auto manufacturing supply chain in Kyushu." July 29, 2026. https://theedgemalaysia.com/node/812435. Accessed 2026-08-24. [event: 2026-07-29]
-- thefinancialdistrict.com.ph. "Samsung Lands $200 Billion Broadcom Chip Manufacturing Deal." July 29, 2026. https://www.thefinancialdistrict.com.ph/post/samsung-lands-200-billion-broadcom-chip-manufacturing-deal. Accessed 2026-08-24. [event: 2026-07-29]
-- ts2.tech. "Samsung raises foundry prices 10-15% on 4nm, 5nm and 8nm as TSMC capacity tightens." August 19, 2026. https://ts2.tech/en/tsmc-stock-stalls-as-samsungs-15-price-hikes-expose-an-ai-foundry-bottleneck/. Accessed 2026-08-24. [event: 2026-08-19]
-- yahoo.com. "A $10 billion Reason Why Micron Stock In Focus." August 20, 2026. https://finance.yahoo.com/markets/stocks/articles/10-billion-reason-why-micron-141402858.html. Accessed 2026-08-24. [event: 2026-08-20]
+- technori.com. "Samsung, SK Hynix Eye $950B US Chip Deals." July 29, 2026. https://technori.com/news/samsung-sk-hynix-eye-950b-us-chip-deals/. [event: 2026-07-29]
+- theedgemalaysia.com. "Japan earthquake rocks chip and auto manufacturing supply chain in Kyushu." July 29, 2026. https://theedgemalaysia.com/node/812435. [event: 2026-07-29]
+- thefinancialdistrict.com.ph. "Samsung Lands $200 Billion Broadcom Chip Manufacturing Deal." July 29, 2026. https://www.thefinancialdistrict.com.ph/post/samsung-lands-200-billion-broadcom-chip-manufacturing-deal. [event: 2026-07-29]
+- ts2.tech. "Samsung raises foundry prices 10-15% on 4nm, 5nm and 8nm as TSMC capacity tightens." August 19, 2026. https://ts2.tech/en/tsmc-stock-stalls-as-samsungs-15-price-hikes-expose-an-ai-foundry-bottleneck/. [event: 2026-08-19]
+- yahoo.com. "A $10 billion Reason Why Micron Stock In Focus." August 20, 2026. https://finance.yahoo.com/markets/stocks/articles/10-billion-reason-why-micron-141402858.html. [event: 2026-08-20]
 
 ### Research and analyst houses
 
@@ -257,7 +257,7 @@ alphabetised. The bracketed date is the event the source supports.
 - TrendForce. TrendForce contract data; supplier capex guidance. October 1, 2018. *(short entry)* [event: 2018-10-01]
 - TrendForce. TrendForce/IDC contract data; NAND Research crisis updates. March 10, 2026. *(short entry)* [event: 2026-03-10]
 - TrendForce. Western Digital/Kioxia disclosures; TrendForce pricing data. February 10, 2022. *(short entry)* [event: 2022-02-10]
-- trendforce.com. "[News] 7.1 Kumamoto Earthquake: TSMC Confirms JASM Safe; TEL Halts Plants as Chip Supply Chain Assesses Impact." July 29, 2026. https://www.trendforce.com/news/2026/07/29/news-7-1-kumamoto-earthquake-tsmc-confirms-jasm-safe-tel-halts-plants-as-chip-supply-chain-assesses-impact/. Accessed 2026-08-24. [event: 2026-07-29]
+- trendforce.com. "[News] 7.1 Kumamoto Earthquake: TSMC Confirms JASM Safe; TEL Halts Plants as Chip Supply Chain Assesses Impact." July 29, 2026. https://www.trendforce.com/news/2026/07/29/news-7-1-kumamoto-earthquake-tsmc-confirms-jasm-safe-tel-halts-plants-as-chip-supply-chain-assesses-impact/. [event: 2026-07-29]
 
 ---
 
@@ -268,7 +268,7 @@ Verified against Crossref, Open Library or the issuing body — no DOI here
 was written from memory.
 
 **The declared priors are deliberately absent from this section.** The
-persistence half-lives and durations, the transmission coefficients and the stage weights are
+12-day half-life, the transmission coefficients and the stage weights are
 analyst judgement (Tier D). Attaching a reference to one of them would
 launder an assumption into a finding, which is the opposite of what this
 register is for. What is cited is the *form* of each calculation, never the
@@ -295,18 +295,18 @@ Implemented in `app/src/engine/index.js — severity and structural vulnerabilit
 
 ### Exponential decay of event salience
 
-Implemented in `app/src/engine/persistence.js — the exponential profiles; app/src/engine/registry.js — acuteHalfLifeDays, marketHalfLifeDays`.
+Implemented in `app/src/engine/persistence.js: persistence()`.
 
 - Wu, Fang, and Bernardo A. Huberman. "Novelty and collective attention." *Proceedings of the National Academy of Sciences* 104, no. 45 (2007): 17599–17601. https://doi.org/10.1073/pnas.0704916104.
-  *Why cited:* Empirical basis for treating attention to an event as decaying rather than persisting. The half-life values themselves are declared priors, not fitted values — and v7 applies a decay only to the two exponential profiles, not to standing controls, which are modelled as in force or not.
+  *Why cited:* Empirical basis for treating attention to an event as decaying rather than persisting. The 12-day half-life itself is a declared prior, not a fitted value.
   *Verified against:* Crossref.
 
 ### Herfindahl–Hirschman concentration index
 
-Implemented in `app/src/engine/math.js — hhiBounds()`.
+Implemented in `app/src/engine/math.js: hhiBounds()`.
 
 - Hirschman, Albert Otto. *National Power and the Structure of Foreign Trade*. University of California Press, 1945. https://openlibrary.org/works/OL2745858W.
-  *Why cited:* Where the concentration index originates. Hirschman introduced it here; Herfindahl arrived at it independently in 1950, and the joint name is later usage. v7 publishes the index as a `[lower, upper]` interval, because the concentration of the undisclosed residual is not identified by the observed shares.
+  *Why cited:* Where the concentration index originates. Hirschman introduced it here; Herfindahl arrived at it independently in 1950, and the joint name is later usage.
   *Verified against:* Open Library.
 - U.S. Department of Justice and Federal Trade Commission. *Merger Guidelines*. 2023. https://www.ftc.gov/system/files/ftc_gov/pdf/2023_merger_guidelines_final_12.18.2023.pdf.
   *Why cited:* The concentration thresholds the screening rules are set against. Cited for the thresholds only: this model measures share of a modeled sample, not a legally defined market.
@@ -314,7 +314,7 @@ Implemented in `app/src/engine/math.js — hhiBounds()`.
 
 ### Input-output structure
 
-Implemented in `app/src/engine/propagation.js — stage dependency matrices`.
+Implemented in `app/src/engine/propagation.js: dependency matrices`.
 
 - Miller, Ronald E., and Peter D. Blair. "Input-Output Analysis." Cambridge University Press, 2009. https://doi.org/10.1017/cbo9780511626982.
   *Why cited:* The input-output framework the stage graph approximates. Cited to be explicit that the dependence matrices are equal-allocation priors, not measured technical coefficients.
@@ -328,9 +328,9 @@ Implemented in `app/src/engine/networkAnalysis.js — removal_impact metric`.
   *Why cited:* The attack-tolerance framing: how much connectivity a network loses when a node is removed.
   *Verified against:* Crossref.
 
-### Bounded saturating aggregation (noisy-OR functional form)
+### Noisy-OR combination
 
-Implemented in `app/src/engine/aggregation.js`. Cited for the **functional form only**: v7 uses it as a bounded aggregation operator across distinct incidents, for monotonicity and saturation, and not as a probability calculation — the inputs are bounded exposure scores, not probabilities, and no independence assumption is made.
+Implemented in `app/src/engine/aggregation.js: aggregateNonNegative()`.
 
 - Oniśko, Agnieszka, Marek J. Druzdzel, and Hanna Wasyluk. "Learning Bayesian network parameters from small data sets: application of Noisy-OR gates." *International Journal of Approximate Reasoning* 27, no. 2 (2001): 165–182. https://doi.org/10.1016/s0888-613x(01)00039-1.
   *Why cited:* The noisy-OR gate as a parameter-reduction device, and its behaviour on small samples.
@@ -341,7 +341,7 @@ Implemented in `app/src/engine/aggregation.js`. Cited for the **functional form 
 
 ### One-at-a-time sensitivity bands
 
-Implemented in `app/src/engine/priors.js — low/high prior bands`.
+Implemented in `app/src/engine/registry.js: parameter ranges`.
 
 - Saltelli, Andrea, and Paola Annoni. "How to avoid a perfunctory sensitivity analysis." *Environmental Modelling &amp; Software* 25, no. 12 (2010): 1508–1517. https://doi.org/10.1016/j.envsoft.2010.04.012.
   *Why cited:* Global sensitivity analysis reference, and the standard critique of the one-at-a-time approach this model uses. Cited as a stated limitation, not as endorsement.
@@ -438,128 +438,130 @@ judgement, and each record says so in its own source string.
 
 | Corporate author | Sites cited |
 | --- | --- |
-| Air Liquide. Facility and site listings. Accessed 2026-08-24. | 2 |
-| Air Products. Facility and site listings. Accessed 2026-08-24. | 2 |
-| Alibaba Cloud. Facility and site listings. Accessed 2026-08-24. | 1 |
-| Amazon/Annapurna. Facility and site listings. Accessed 2026-08-24. | 1 |
-| AMD. Facility and site listings. Accessed 2026-08-24. | 4 |
-| AMEC. Facility and site listings. Accessed 2026-08-24. | 1 |
-| Amkor. Facility and site listings. Accessed 2026-08-24. | 4 |
-| Analog Devices. Facility and site listings. Accessed 2026-08-24. | 4 |
-| Ansys. Facility and site listings. Accessed 2026-08-24. | 1 |
-| Apple. Facility and site listings. Accessed 2026-08-24. | 2 |
-| Applied Materials. Facility and site listings. Accessed 2026-08-24. | 5 |
-| Arm. Facility and site listings. Accessed 2026-08-24. | 2 |
-| ASE. Facility and site listings. Accessed 2026-08-24. | 4 |
-| ASM International. Facility and site listings. Accessed 2026-08-24. | 2 |
-| ASML. Facility and site listings. Accessed 2026-08-24. | 2 |
-| ASML/Cymer. Facility and site listings. Accessed 2026-08-24. | 1 |
-| AT&S. Facility and site listings. Accessed 2026-08-24. | 3 |
-| AWS. Facility and site listings. Accessed 2026-08-24. | 1 |
-| Biren. Facility and site listings. Accessed 2026-08-24. | 1 |
-| Bosch. Facility and site listings. Accessed 2026-08-24. | 2 |
-| Broadcom. Facility and site listings. Accessed 2026-08-24. | 2 |
-| Cadence. Facility and site listings. Accessed 2026-08-24. | 1 |
-| Cambricon. Facility and site listings. Accessed 2026-08-24. | 1 |
-| Canon. Facility and site listings. Accessed 2026-08-24. | 1 |
-| CEA-Leti. Facility and site listings. Accessed 2026-08-24. | 1 |
-| CXMT. Facility and site listings. Accessed 2026-08-24. | 2 |
-| Denso. Facility and site listings. Accessed 2026-08-24. | 1 |
-| DuPont. Facility and site listings. Accessed 2026-08-24. | 1 |
-| DuPont Electronics. Facility and site listings. Accessed 2026-08-24. | 1 |
-| Ebara. Facility and site listings. Accessed 2026-08-24. | 1 |
-| Empyrean. Facility and site listings. Accessed 2026-08-24. | 1 |
-| Entegris. Facility and site listings. Accessed 2026-08-24. | 3 |
-| ESMC. Facility and site listings. Accessed 2026-08-24. | 1 |
-| Foxconn. Facility and site listings. Accessed 2026-08-24. | 5 |
-| GlobalFoundries. Facility and site listings. Accessed 2026-08-24. | 4 |
-| GlobalWafers. Facility and site listings. Accessed 2026-08-24. | 2 |
-| Google. Facility and site listings. Accessed 2026-08-24. | 2 |
-| Hitachi High-Tech. Facility and site listings. Accessed 2026-08-24. | 2 |
-| HP. Facility and site listings. Accessed 2026-08-24. | 1 |
-| Hua Hong. Facility and site listings. Accessed 2026-08-24. | 2 |
-| Huawei/HiSilicon. Facility and site listings. Accessed 2026-08-24. | 1 |
-| Ibiden. Facility and site listings. Accessed 2026-08-24. | 2 |
-| IBM. Facility and site listings. Accessed 2026-08-24. | 1 |
-| IBM Research. Facility and site listings. Accessed 2026-08-24. | 1 |
-| IBM Research / NY CREATES. Facility and site listings. Accessed 2026-08-24. | 1 |
-| imec. Facility and site listings. Accessed 2026-08-24. | 1 |
-| Inari. Facility and site listings. Accessed 2026-08-24. | 1 |
-| Infineon. Facility and site listings. Accessed 2026-08-24. | 5 |
-| Intel. Facility and site listings. Accessed 2026-08-24. | 12 |
-| JASM/TSMC. Facility and site listings. Accessed 2026-08-24. | 1 |
-| JCET. Facility and site listings. Accessed 2026-08-24. | 4 |
-| JSR. Facility and site listings. Accessed 2026-08-24. | 1 |
-| JSR/imec joint. Facility and site listings. Accessed 2026-08-24. | 1 |
-| Kioxia. Facility and site listings. Accessed 2026-08-24. | 2 |
-| KLA. Facility and site listings. Accessed 2026-08-24. | 3 |
-| Kokusai Electric. Facility and site listings. Accessed 2026-08-24. | 1 |
-| KYEC. Facility and site listings. Accessed 2026-08-24. | 1 |
-| Lam Research. Facility and site listings. Accessed 2026-08-24. | 3 |
-| Lenovo. Facility and site listings. Accessed 2026-08-24. | 1 |
-| Linde. Facility and site listings. Accessed 2026-08-24. | 2 |
-| Luxshare. Facility and site listings. Accessed 2026-08-24. | 2 |
-| Marvell. Facility and site listings. Accessed 2026-08-24. | 1 |
-| MediaTek. Facility and site listings. Accessed 2026-08-24. | 1 |
-| Meta. Facility and site listings. Accessed 2026-08-24. | 1 |
-| Microchip. Facility and site listings. Accessed 2026-08-24. | 4 |
-| Micron. Facility and site listings. Accessed 2026-08-24. | 8 |
-| Microsoft. Facility and site listings. Accessed 2026-08-24. | 1 |
-| Nanya. Facility and site listings. Accessed 2026-08-24. | 1 |
-| NAURA. Facility and site listings. Accessed 2026-08-24. | 1 |
-| Nexchip. Facility and site listings. Accessed 2026-08-24. | 1 |
-| Nikon. Facility and site listings. Accessed 2026-08-24. | 1 |
-| Nova. Facility and site listings. Accessed 2026-08-24. | 1 |
-| NSIG. Facility and site listings. Accessed 2026-08-24. | 1 |
-| NVIDIA. Facility and site listings. Accessed 2026-08-24. | 2 |
-| NXP. Facility and site listings. Accessed 2026-08-24. | 4 |
-| onsemi. Facility and site listings. Accessed 2026-08-24. | 6 |
-| Onto Innovation. Facility and site listings. Accessed 2026-08-24. | 2 |
-| PTI. Facility and site listings. Accessed 2026-08-24. | 1 |
-| Qualcomm. Facility and site listings. Accessed 2026-08-24. | 3 |
-| Quanta. Facility and site listings. Accessed 2026-08-24. | 1 |
-| Rapidus. Facility and site listings. Accessed 2026-08-24. | 1 |
-| Renesas. Facility and site listings. Accessed 2026-08-24. | 6 |
-| Resonac. Facility and site listings. Accessed 2026-08-24. | 1 |
-| Samsung. Facility and site listings. Accessed 2026-08-24. | 8 |
-| Samsung Electro-Mechanics. Facility and site listings. Accessed 2026-08-24. | 2 |
-| Samsung packaging. Facility and site listings. Accessed 2026-08-24. | 1 |
-| Shin-Etsu. Facility and site listings. Accessed 2026-08-24. | 3 |
-| Shinko Electric. Facility and site listings. Accessed 2026-08-24. | 1 |
-| Siemens EDA. Facility and site listings. Accessed 2026-08-24. | 1 |
-| Siltronic. Facility and site listings. Accessed 2026-08-24. | 3 |
-| SK hynix. Facility and site listings. Accessed 2026-08-24. | 6 |
-| SK Materials. Facility and site listings. Accessed 2026-08-24. | 2 |
-| SK Siltron. Facility and site listings. Accessed 2026-08-24. | 1 |
-| SK Siltron CSS. Facility and site listings. Accessed 2026-08-24. | 1 |
-| SMIC. Facility and site listings. Accessed 2026-08-24. | 4 |
-| Sony Semiconductor Solutions. Facility and site listings. Accessed 2026-08-24. | 4 |
-| SPIL. Facility and site listings. Accessed 2026-08-24. | 2 |
-| STMicroelectronics. Facility and site listings. Accessed 2026-08-24. | 8 |
-| SUMCO. Facility and site listings. Accessed 2026-08-24. | 3 |
-| Sumitomo Chemical. Facility and site listings. Accessed 2026-08-24. | 1 |
-| Supermicro. Facility and site listings. Accessed 2026-08-24. | 2 |
-| Synopsys. Facility and site listings. Accessed 2026-08-24. | 2 |
-| Taiyo Nippon Sanso. Facility and site listings. Accessed 2026-08-24. | 2 |
-| Tesla. Facility and site listings. Accessed 2026-08-24. | 2 |
-| Texas Instruments. Facility and site listings. Accessed 2026-08-24. | 7 |
-| TOK. Facility and site listings. Accessed 2026-08-24. | 2 |
-| Tokyo Electron. Facility and site listings. Accessed 2026-08-24. | 3 |
-| Tower Semiconductor. Facility and site listings. Accessed 2026-08-24. | 1 |
-| Tower/TPSCo. Facility and site listings. Accessed 2026-08-24. | 1 |
-| TSMC. Facility and site listings. Accessed 2026-08-24. | 9 |
-| TSMC advanced-packaging. Facility and site listings. Accessed 2026-08-24. | 1 |
-| UMC. Facility and site listings. Accessed 2026-08-24. | 2 |
-| Unimicron. Facility and site listings. Accessed 2026-08-24. | 2 |
-| UNISOC. Facility and site listings. Accessed 2026-08-24. | 1 |
-| UTAC. Facility and site listings. Accessed 2026-08-24. | 2 |
-| VIS. Facility and site listings. Accessed 2026-08-24. | 2 |
-| VIS/NXP. Facility and site listings. Accessed 2026-08-24. | 1 |
-| Volkswagen. Facility and site listings. Accessed 2026-08-24. | 1 |
-| Winbond. Facility and site listings. Accessed 2026-08-24. | 2 |
-| Wistron. Facility and site listings. Accessed 2026-08-24. | 1 |
-| Xiaomi. Facility and site listings. Accessed 2026-08-24. | 1 |
-| YMTC. Facility and site listings. Accessed 2026-08-24. | 1 |
+| Air Liquide. Facility and site listings. Accessed 2026-09-06. | 2 |
+| Air Products. Facility and site listings. Accessed 2026-09-06. | 2 |
+| Alibaba Cloud. Facility and site listings. Accessed 2026-09-06. | 1 |
+| Amazon/Annapurna. Facility and site listings. Accessed 2026-09-06. | 1 |
+| AMD. Facility and site listings. Accessed 2026-09-06. | 4 |
+| AMEC. Facility and site listings. Accessed 2026-09-06. | 1 |
+| Amkor. Facility and site listings. Accessed 2026-09-06. | 4 |
+| Analog Devices. Facility and site listings. Accessed 2026-09-06. | 4 |
+| Ansys. Facility and site listings. Accessed 2026-09-06. | 1 |
+| Apple. Facility and site listings. Accessed 2026-09-06. | 2 |
+| Applied Materials. Facility and site listings. Accessed 2026-09-06. | 5 |
+| Arm. Facility and site listings. Accessed 2026-09-06. | 2 |
+| ASE. Facility and site listings. Accessed 2026-09-06. | 4 |
+| ASM International. Facility and site listings. Accessed 2026-09-06. | 2 |
+| ASML. Facility and site listings. Accessed 2026-09-06. | 1 |
+| ASML: https://www.asml.com/en/careers/teams/manufacturing; Jobs in our main manufacturing. Facility and site listings. Accessed 2026-09-06. | 1 |
+| ASML/Cymer. Facility and site listings. Accessed 2026-09-06. | 1 |
+| AT&S. Facility and site listings. Accessed 2026-09-06. | 3 |
+| AWS. Facility and site listings. Accessed 2026-09-06. | 1 |
+| Biren. Facility and site listings. Accessed 2026-09-06. | 1 |
+| Bosch. Facility and site listings. Accessed 2026-09-06. | 2 |
+| Broadcom. Facility and site listings. Accessed 2026-09-06. | 2 |
+| Cadence. Facility and site listings. Accessed 2026-09-06. | 1 |
+| Cambricon. Facility and site listings. Accessed 2026-09-06. | 1 |
+| Canon. Facility and site listings. Accessed 2026-09-06. | 1 |
+| CEA-Leti. Facility and site listings. Accessed 2026-09-06. | 1 |
+| CXMT. Facility and site listings. Accessed 2026-09-06. | 2 |
+| Denso. Facility and site listings. Accessed 2026-09-06. | 1 |
+| DuPont. Facility and site listings. Accessed 2026-09-06. | 1 |
+| DuPont Electronics. Facility and site listings. Accessed 2026-09-06. | 1 |
+| Ebara. Facility and site listings. Accessed 2026-09-06. | 1 |
+| Empyrean. Facility and site listings. Accessed 2026-09-06. | 1 |
+| Entegris. Facility and site listings. Accessed 2026-09-06. | 3 |
+| ESMC. Facility and site listings. Accessed 2026-09-06. | 1 |
+| Foxconn. Facility and site listings. Accessed 2026-09-06. | 5 |
+| GlobalFoundries. Facility and site listings. Accessed 2026-09-06. | 4 |
+| GlobalWafers. Facility and site listings. Accessed 2026-09-06. | 2 |
+| Google. Facility and site listings. Accessed 2026-09-06. | 2 |
+| Hitachi High-Tech. Facility and site listings. Accessed 2026-09-06. | 2 |
+| HP. Facility and site listings. Accessed 2026-09-06. | 1 |
+| Hua Hong. Facility and site listings. Accessed 2026-09-06. | 2 |
+| Huawei/HiSilicon. Facility and site listings. Accessed 2026-09-06. | 1 |
+| Ibiden. Facility and site listings. Accessed 2026-09-06. | 2 |
+| IBM. Facility and site listings. Accessed 2026-09-06. | 1 |
+| IBM Research. Facility and site listings. Accessed 2026-09-06. | 1 |
+| IBM Research / NY CREATES. Facility and site listings. Accessed 2026-09-06. | 1 |
+| imec. Facility and site listings. Accessed 2026-09-06. | 1 |
+| Inari. Facility and site listings. Accessed 2026-09-06. | 1 |
+| Infineon. Facility and site listings. Accessed 2026-09-06. | 5 |
+| Intel. Facility and site listings. Accessed 2026-09-06. | 12 |
+| JASM/TSMC. Facility and site listings. Accessed 2026-09-06. | 1 |
+| JCET. Facility and site listings. Accessed 2026-09-06. | 4 |
+| JSR. Facility and site listings. Accessed 2026-09-06. | 1 |
+| JSR/imec joint. Facility and site listings. Accessed 2026-09-06. | 1 |
+| Kioxia. Facility and site listings. Accessed 2026-09-06. | 2 |
+| KLA. Facility and site listings. Accessed 2026-09-06. | 3 |
+| Kokusai Electric. Facility and site listings. Accessed 2026-09-06. | 1 |
+| KYEC. Facility and site listings. Accessed 2026-09-06. | 1 |
+| Lam Research. Facility and site listings. Accessed 2026-09-06. | 3 |
+| Lenovo. Facility and site listings. Accessed 2026-09-06. | 1 |
+| Linde. Facility and site listings. Accessed 2026-09-06. | 2 |
+| Luxshare. Facility and site listings. Accessed 2026-09-06. | 2 |
+| Marvell. Facility and site listings. Accessed 2026-09-06. | 1 |
+| MediaTek. Facility and site listings. Accessed 2026-09-06. | 1 |
+| Meta. Facility and site listings. Accessed 2026-09-06. | 1 |
+| Microchip. Facility and site listings. Accessed 2026-09-06. | 4 |
+| Micron. Facility and site listings. Accessed 2026-09-06. | 8 |
+| Microsoft. Facility and site listings. Accessed 2026-09-06. | 1 |
+| Nanya. Facility and site listings. Accessed 2026-09-06. | 1 |
+| NAURA. Facility and site listings. Accessed 2026-09-06. | 1 |
+| Nexchip. Facility and site listings. Accessed 2026-09-06. | 1 |
+| Nikon. Facility and site listings. Accessed 2026-09-06. | 1 |
+| Nova. Facility and site listings. Accessed 2026-09-06. | 1 |
+| NSIG. Facility and site listings. Accessed 2026-09-06. | 1 |
+| NVIDIA. Facility and site listings. Accessed 2026-09-06. | 2 |
+| NXP. Facility and site listings. Accessed 2026-09-06. | 4 |
+| onsemi. Facility and site listings. Accessed 2026-09-06. | 6 |
+| Onto Innovation. Facility and site listings. Accessed 2026-09-06. | 2 |
+| PTI. Facility and site listings. Accessed 2026-09-06. | 1 |
+| Qualcomm. Facility and site listings. Accessed 2026-09-06. | 3 |
+| Quanta. Facility and site listings. Accessed 2026-09-06. | 1 |
+| Rapidus. Facility and site listings. Accessed 2026-09-06. | 1 |
+| Renesas. Facility and site listings. Accessed 2026-09-06. | 6 |
+| Resonac. Facility and site listings. Accessed 2026-09-06. | 1 |
+| Samsung. Facility and site listings. Accessed 2026-09-06. | 8 |
+| Samsung Electro-Mechanics. Facility and site listings. Accessed 2026-09-06. | 2 |
+| Samsung packaging. Facility and site listings. Accessed 2026-09-06. | 1 |
+| Shin-Etsu. Facility and site listings. Accessed 2026-09-06. | 3 |
+| Shinko Electric. Facility and site listings. Accessed 2026-09-06. | 1 |
+| Siemens EDA. Facility and site listings. Accessed 2026-09-06. | 1 |
+| Siltronic. Facility and site listings. Accessed 2026-09-06. | 3 |
+| SK hynix. Facility and site listings. Accessed 2026-09-06. | 6 |
+| SK Materials. Facility and site listings. Accessed 2026-09-06. | 2 |
+| SK Siltron. Facility and site listings. Accessed 2026-09-06. | 1 |
+| SK Siltron CSS. Facility and site listings. Accessed 2026-09-06. | 1 |
+| SMIC. Facility and site listings. Accessed 2026-09-06. | 4 |
+| Sony Semiconductor Solutions. Facility and site listings. Accessed 2026-09-06. | 4 |
+| SPIL. Facility and site listings. Accessed 2026-09-06. | 2 |
+| STMicroelectronics. Facility and site listings. Accessed 2026-09-06. | 8 |
+| SUMCO. Facility and site listings. Accessed 2026-09-06. | 3 |
+| Sumitomo Chemical. Facility and site listings. Accessed 2026-09-06. | 1 |
+| Supermicro. Facility and site listings. Accessed 2026-09-06. | 2 |
+| Synopsys. Facility and site listings. Accessed 2026-09-06. | 2 |
+| Taiyo Nippon Sanso. Facility and site listings. Accessed 2026-09-06. | 2 |
+| Tesla. Facility and site listings. Accessed 2026-09-06. | 2 |
+| Texas Instruments. Facility and site listings. Accessed 2026-09-06. | 7 |
+| TOK. Facility and site listings. Accessed 2026-09-06. | 2 |
+| Tokyo Electron. Facility and site listings. Accessed 2026-09-06. | 3 |
+| Tower Semiconductor. Facility and site listings. Accessed 2026-09-06. | 1 |
+| Tower/TPSCo. Facility and site listings. Accessed 2026-09-06. | 1 |
+| TSMC. Facility and site listings. Accessed 2026-09-06. | 8 |
+| TSMC advanced-packaging. Facility and site listings. Accessed 2026-09-06. | 1 |
+| TSMC: https://pr.tsmc.com/system/files/newspdf/attachment/e588c2da1b748b4aa734b13128cc330fcbc5ce9d/1229%20TSMC%203nm%20Ceremony%20%28E%29_10_wmn.pdf. Facility and site listings. Accessed 2026-09-06. | 1 |
+| UMC. Facility and site listings. Accessed 2026-09-06. | 2 |
+| Unimicron. Facility and site listings. Accessed 2026-09-06. | 2 |
+| UNISOC. Facility and site listings. Accessed 2026-09-06. | 1 |
+| UTAC. Facility and site listings. Accessed 2026-09-06. | 2 |
+| VIS. Facility and site listings. Accessed 2026-09-06. | 2 |
+| VIS/NXP. Facility and site listings. Accessed 2026-09-06. | 1 |
+| Volkswagen. Facility and site listings. Accessed 2026-09-06. | 1 |
+| Winbond. Facility and site listings. Accessed 2026-09-06. | 2 |
+| Wistron. Facility and site listings. Accessed 2026-09-06. | 1 |
+| Xiaomi. Facility and site listings. Accessed 2026-09-06. | 1 |
+| YMTC. Facility and site listings. Accessed 2026-09-06. | 1 |
 
 ---
 

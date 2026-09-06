@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { C } from '../theme.js';
 import { t } from '../i18n/index.js';
 import { getEventAssumption } from '../engine/event-assumptions.js';
+import { factualEligibility } from '../engine/evidence.js';
 
 const W = 560, PL = 30, PR = 10, PT = 10, PB = 22, DAY = 86400000;
 const RANGES = [['3D', 3], ['7D', 7], ['30D', 30], ['6M', 183], ['1Y', 365], ['5Y', 1826], ['10Y', 3652], ['ALL', Infinity]];
@@ -59,11 +60,14 @@ export default function IndexHistory({ engine, events, onSelectEvent }) {
 
   return <div style={{ border: `1px solid ${C.line}`, background: C.panel2, borderRadius: 8, padding: '10px 12px', marginBottom: 10, position: 'relative' }}>
     <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', marginBottom: 8 }}>
-      <div className="mono" style={{ fontSize: 11, color: C.dim }}>{t('Computed chain-index history')}<span style={{ color: C.faint, marginLeft: 7 }}>baseline replay - 5 neutral</span></div>
+      <div className="mono" style={{ fontSize: 11, color: C.dim }}>Current-model retrospective replay<span style={{ color: C.faint, marginLeft: 7 }}>5 neutral</span></div>
       <div style={{ display: 'flex', gap: 3, marginLeft: 'auto' }} aria-label="History time range">
         {RANGES.map(([id]) => <button key={id} type="button" aria-pressed={range === id} onClick={() => { setRange(id); setHover(null); }} style={{ border: `1px solid ${range === id ? C.copper : C.line}`, background: range === id ? 'rgba(201,138,63,.14)' : 'transparent', color: range === id ? C.copper : C.dim, borderRadius: 4, fontSize: 11, padding: '3px 5px', cursor: 'pointer', fontFamily: 'inherit' }}>{id}</button>)}
       </div>
       <label className="mono" style={{ fontSize: 11, color: C.faint, display: 'flex', alignItems: 'center', gap: 6 }}>Height <input type="range" min="120" max="280" step="10" value={height} onChange={(e) => setHeight(Number(e.target.value))} aria-label="History chart height" style={{ width: 64, accentColor: C.copper }} /></label>
+    </div>
+    <div style={{ fontSize: 11, color: C.amber, marginBottom: 6, lineHeight: 1.4 }}>
+      Factual evidence coverage: {(events || []).filter(e => factualEligibility(e, MODEL_PRIORS.datasetAsOf).eligible).length}/{(events || []).length} records eligible; other records are excluded or context. Lower values after exclusions reflect a data correction, not declining real-world risk. A neutral value with sparse coverage does not establish safety.
     </div>
     <svg viewBox={`0 0 ${W} ${height}`} style={{ width: '100%', display: 'block', cursor: 'crosshair' }} role="img" aria-label="Computed chain index history" onMouseMove={move} onMouseLeave={() => setHover(null)}>
       {chart.ticks.map((tick) => <g key={tick.daysAgo}><line x1={tick.px} y1={PT} x2={tick.px} y2={height - PB} stroke={C.line} strokeWidth="1" /><text x={tick.px} y={height - 7} textAnchor="middle" fill={C.faint} fontSize="8.5">{tick.label}</text></g>)}

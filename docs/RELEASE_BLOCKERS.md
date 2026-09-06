@@ -1,7 +1,7 @@
 # Public-release blockers
 
 *Model version: `sscim-model-v7.1-exposure-robustness`. Application version
-`0.7.1` (pre-release). Canonical model specification:
+`0.7.2` (pre-release). Canonical model specification:
 [`docs/MODEL_V7_SPEC.md`](MODEL_V7_SPEC.md).*
 
 Things that must be decided or completed before this project can be
@@ -25,7 +25,7 @@ What remains open is not *which* licence, but the facts the notice needs:
 | --- | --- |
 | **Legal owner and jurisdiction** | Every ownership claim in the proprietary notice is a `[PLACEHOLDER]`. No company name, entity or address has been invented, because a false ownership record is worse than a blank one. |
 | **Legal review** | The proprietary notice is an engineering draft. It has not been reviewed by a lawyer and must be before any commercial launch. |
-| **Repository visibility** | Recommendation: **keep the source private**. A proprietary product with a public source repository is a decision, not a default, and it has not been made. |
+| **Repository visibility** | The GitHub API reports this repository already **public** (checked 2026-09-06), with no recognized license. This differs from the prior private-source recommendation. Visibility and proprietary notices were left unchanged; the owner must reconcile their intended public-disclosure policy. |
 | **Terms of Use / Privacy Policy** | Not drafted. Required if the application is publicly accessible. |
 | **Third-party data redistribution** | Market quotes, market-share estimates and basemap terms need confirmation for commercial use. See `THIRD_PARTY_NOTICES.md` section 3.3. |
 | **Trademark** | The name "SSCIM" has not been checked. |
@@ -50,15 +50,15 @@ unresolved decision, and so no public claim outruns them.
 | --- | --- |
 | No parameter is calibrated; all are `status: assumption` | [spec section 5](MODEL_V7_SPEC.md#5-parameter-register) |
 | No external validation exists, and none is claimed | [spec section 9](MODEL_V7_SPEC.md#9-validation-status) |
-| **Parameter uncertainty** - headline envelope width about 1.3 index points | `docs/benchmarks/v7-sensitivity.json` |
-| **Model-form uncertainty** - envelope width about 1.1 index points | `docs/benchmarks/v7-sensitivity.json` (reported separately) |
-| **Event-curation uncertainty** - headline width about 0.72, historical peak about 1.01 | `docs/benchmarks/v7-curation-uncertainty.json` |
-| **Legacy fallback dependence** - 49 uncurated incidents; no effect on today, but about 1.03 index points on the pre-curation peak | `docs/benchmarks/v7-legacy-fallback.json` |
+| **Parameter uncertainty** - tested registry ranges | `docs/benchmarks/v7-sensitivity-public-review.json` |
+| **Model-form uncertainty** - tested discrete combinations | same file, separately reported |
+| **Event-curation uncertainty** - baseline, per incident, opposing signs, profile combinations | `docs/benchmarks/v7-curation-uncertainty-public-review.json` |
+| **Data coverage** - unresolved historical claims are excluded, not assumed safe | `docs/benchmarks/v7-legacy-fallback-public-review.json` |
 | No evidence-based edge allocations exist; every one is an equal split | counted by `npm run audit:data` |
 | Facility `scale` is an analyst ordinal, not capacity | [spec section 3.3](MODEL_V7_SPEC.md#33-modeled-facility-footprint--enginefacilitiesjs) |
 | Country shares are partly undisclosed; concentration is an interval | [spec section 3.8](MODEL_V7_SPEC.md#38-structural-components--engineindexjs-enginepolicyjs-enginemathjs) |
 | Evidence-note coverage is thin for most stages and companies | [EVIDENCE-COVERAGE.md](reference/EVIDENCE-COVERAGE.md) |
-| 20 of 30 curated incidents are not individually evidence-graded | `docs/benchmarks/v7-curation-uncertainty.json` |
+| Exposure uncertainty bands are assumed and separate from factual claim verification | `docs/benchmarks/v7-curation-uncertainty-public-review.json` |
 
 **The honest public description remains: an exploratory decision-support
 and research prototype.** Nothing in this pass changes that, and section 3
@@ -99,3 +99,8 @@ Ranked by what each would unlock.
 
 Until step 1 happens, **treat everything in this repository as
 all-rights-reserved**, and do not distribute it.
+
+
+## Research preview decision after this correction
+
+The scope of a research preview is narrower than commercial release above. GO only for the explicitly evidence-limited, assumption-based comparison environment described in [PUBLIC_RESEARCH_REVIEW.md](PUBLIC_RESEARCH_REVIEW.md). Unresolved records are excluded and retained visibly; published numbers must carry coverage and data-revision labels. NO-GO for comprehensive factual risk monitoring, production-loss forecasts, empirical company-capacity rankings or commercial-launch claims. Ownership placeholders and the public/private policy inconsistency remain owner decisions; no visibility or licensing changes were made.

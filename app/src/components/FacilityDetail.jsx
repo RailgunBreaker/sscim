@@ -105,6 +105,9 @@ export default function FacilityDetail({ facilityId, setSel, model }) {
       </div>
 
       {/* ---- where it sits ---- */}
+      <div style={{ fontSize: 12, color: C.dim, lineHeight: 1.5, marginBottom: 8 }}>
+        {facility.evidence ? <><a href={facility.evidence.url} target="_blank" rel="noreferrer" style={{ color: C.copper }}>{facility.evidence.publisher} · scoped site verification</a>: {facility.evidence.claim} {facility.evidence.limitations}</> : 'Site claim not reviewed in this audit. Scale is an analyst ordinal; links are derived relationships, not confirmed shipments.'}
+      </div>
       <div className="mono" style={{ fontSize: 12, color: C.dim, margin: '0 0 4px' }}>
         STAGES FED · SHARE OF THAT STAGE&apos;S MODELED SITES
       </div>

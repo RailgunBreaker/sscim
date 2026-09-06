@@ -126,7 +126,7 @@ export const EVENT_ASSUMPTIONS = Object.freeze({
   h2601_ease:      Object.freeze({ direction: 'mitigating', channel: 'downstream', operational: true,  reason: 'Realized licensing-path easing for near-frontier accelerators.' }),
   h2603_memorypeak: Object.freeze({ direction: 'adverse', channel: 'downstream', operational: true,  reason: 'Realized peak of the memory price/allocation squeeze.' }),
   h2604_match:     Object.freeze({ direction: 'adverse', channel: 'downstream', operational: false, reason: 'Introduced bill — no realized supply change unless enacted.' }),
-  h2606_subs:      Object.freeze({ direction: 'adverse', channel: 'downstream', operational: true,  reason: 'Realized closure of the offshore-subsidiary accelerator channel.' }),
+  h2606_subs: Object.freeze({ direction: 'adverse', channel: 'downstream', operational: false, reason: 'Verified clarification of existing requirements; no independently evidenced new operational disruption.' }),
   h2606_mpban:     Object.freeze({ direction: 'adverse', channel: 'downstream', operational: true,  reason: 'Realized blacklist cutting Chinese inputs to U.S. REE producers.' }),
   h2607_tsmcq2:    Object.freeze({ direction: 'mixed', channel: 'downstream', operational: false, reason: 'Demand-strength/earnings signal, not a change in physical supply; market reaction was mixed.' }),
   h2607_kumamoto:  Object.freeze({ direction: 'adverse', channel: 'both', operational: true,  reason: 'Realized multi-site production halt (Sony CIS, Renesas MCU, JASM) with damage confirmed — an operational loss, not a hazard signal; upstream channel included because Toyota\'s assembly suspension cuts demand back through the auto chip chain.' }),
@@ -239,7 +239,7 @@ export const EVENT_ASSUMPTIONS = Object.freeze({
   x2507_edalift:         Object.freeze({ direction: "mitigating",  channel: "downstream",  operational: true,   reason: "Realized restoration of a design-tool path that had been severed five weeks earlier." }),
   x2507_malaysia:        Object.freeze({ direction: "adverse",     channel: "downstream",  operational: false,  reason: "Administrative requirement targeting diversion; no established effect on legitimate flows." }),
   x2508_revshare:        Object.freeze({ direction: "mixed",       channel: "downstream",  operational: false,  reason: "Enables flows while taxing them; the underlying restoration is already counted at Jul 15, 2025." }),
-  x2508_veurevoke:       Object.freeze({ direction: "adverse",     channel: "both",        operational: true,   reason: "Realized removal of the blanket authorization a large share of global memory capacity depended on for tooling." }),
+  x2508_veurevoke:       Object.freeze({ direction: "adverse",     channel: "both",        operational: true,   reason: "Verified removal of three named VEU authorisations. Equipment procurement exposure is assumed; no measured global capacity fraction." }),
   x2509_affiliates:      Object.freeze({ direction: "adverse",     channel: "both",        operational: true,   reason: "Realized, immediately effective expansion of who cannot be supplied." }),
   x2510_ports:           Object.freeze({ direction: "adverse",     channel: "downstream",  operational: false,  reason: "Logistics cost effect without an established availability change." }),
 
@@ -288,6 +288,9 @@ export const EVENT_ASSUMPTIONS = Object.freeze({
    coming back online was raising the disruption reading.
    ==================================================================== */
 export const EVENT_INCIDENTS = Object.freeze({
+  h2512_memory: Object.freeze({ incident: 'commodity_memory_allocation_2025_2026', role: 'primary' }),
+  h2603_memorypeak: Object.freeze({ incident: 'commodity_memory_allocation_2025_2026', role: 'update' }),
+  p260807_man0807: Object.freeze({ incident: 'commodity_memory_allocation_2025_2026', role: 'update' }),
   h2607_kumamoto:  Object.freeze({ incident: 'kumamoto_m71_2026_07', role: 'primary' }),
   p260728_usgtgb9: Object.freeze({ incident: 'kumamoto_m71_2026_07', role: 'update' }),
   p260729_web3084: Object.freeze({ incident: 'kumamoto_m71_2026_07', role: 'update' }),

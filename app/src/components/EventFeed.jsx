@@ -49,7 +49,7 @@ export default function EventFeed({ sel, setSel, engine, events }) {
   );
 
   const matches = useMemo(
-    () => sortEventsChronologically(filterEvents(list, filters, { assumptionOf: (e) => getEventAssumption(e.id) })),
+    () => sortEventsChronologically(filterEvents(list, filters, { assumptionOf: (e) => ({ ...getEventAssumption(e.id), operational: eventField(e).scored }) })),
     [list, filters],
   );
 
@@ -133,7 +133,8 @@ export default function EventFeed({ sel, setSel, engine, events }) {
       {visible.map((e) => {
         const isActive = sel.type === 'event' && sel.id === e.id;
         const assumption = getEventAssumption(e.id);
-        const ownIndex = toDisplayIndex(operationalIndex(eventField(e).field));
+        const result = eventField(e);
+        const ownIndex = toDisplayIndex(operationalIndex(result.field));
         return (
           <div key={e.id} className="evcard" onClick={() => setSel({ type: 'event', id: e.id })}
             role="button" tabIndex={0} onKeyDown={onEnterSpace(() => setSel({ type: 'event', id: e.id }))}
@@ -146,11 +147,11 @@ export default function EventFeed({ sel, setSel, engine, events }) {
               <span className="mono" style={{ fontSize: 12, color: C.faint }}>{e.date}</span>
               {/* The tooltip is publicClassificationNote(), never assumption.reason:
                   the raw field can hold internal review-workflow text. */}
-              <span className="mono" style={{ fontSize: 12, color: assumption.operational ? C.copper : C.faint, marginLeft: 'auto' }}
-                title={assumption.operational
+              <span className="mono" style={{ fontSize: 12, color: result.scored ? C.copper : C.faint, marginLeft: 'auto' }}
+                title={result.scored
                   ? 'Operational-impact display index for this event alone: 0–10, 5=neutral, above 5=net adverse, below 5=net mitigating.'
-                  : publicClassificationNote(e.id)}>
-                {assumption.operational ? `index ${ownIndex.toFixed(2)} / 10` : 'excluded from score'}
+                  : `Excluded or inactive: ${result.source?.unscoredReason || publicClassificationNote(e.id)}`}>
+                {result.scored ? `index ${ownIndex.toFixed(2)} / 10` : 'excluded or inactive'}
               </span>
             </div>
             <div style={{ fontSize: 13, fontWeight: 600, marginTop: 5, lineHeight: 1.35 }}>{e.title}</div>

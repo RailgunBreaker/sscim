@@ -89,27 +89,52 @@ const E = (exposure, exposureBasis, profile, profileBasis, extra = {}) => Object
 export const EVENT_MODEL = Object.freeze({
   /* ---- 2026 ---- */
   p260807_man0807: E(
-    { memory_fab: 0.80, hbm: 0.30, systems: 0.45, m_consumer: 0.50 },
-    'The record describes commodity-DRAM wafer starts being moved onto HBM, so the memory-fab stage carries most of the footprint. HBM is named as the destination of those wafer starts rather than as a disrupted stage, hence the low exposure. System builders and consumer devices are the price-taking side the record names explicitly.',
+    { memory_fab: 0.80 },
+    'Illustrative commodity-memory availability pressure only. HBM is the allocation destination, not an adverse supplier-output shock. Downstream buyer exposure is propagated; revenue benefit and price changes are not netted against shortages. The 0.80 is an assumed intensity; the exact event remains evidence-excluded.',
     { kind: 'market_exponential' },
     'An allocation and pricing move with no capacity destroyed: it unwinds on a contracting and qualification timescale, not a repair one.',
   
     {
       evidenceStrength: 'moderate',
       altProfile: { kind: 'acute_exponential' },
-      uncertaintyBasis: 'The spot print and the reallocation are sourced; the downstream bill-of-materials effects are explicitly flagged as inference in the record itself.',
+      uncertaintyBasis: 'The exact dated price and allocation claims remain unresolved; this alternative tests only an illustrative operational interpretation.',
     },
   ),
   h2607_kumamoto: E(
-    { mature_fab: 0.30, analog: 0.45, m_auto: 0.35, m_consumer: 0.15 },
-    'Named affected sites are JASM (specialty/mature logic), Sony Kumamoto image sensors and Renesas automotive MCU lines (both analog/sensor), and Toyota and Honda Kyushu assembly. Each is the Kyushu share of a global stage, not the whole stage: analog carries the largest exposure because two of the named operators sit there and one remains shut.',
-    { kind: 'outage_recovery', recoveryStartDays: 7 },
-    'The record and its recovery updates give named plants restarting on named dates from 4 August 2026, seven days after the 28 July quake, with residual loss at Kawashiri into late August — a staged restart, so the decline is linear from day 7 over the registry recovery duration, not an exponential decay.',
+    { analog: 0.45 },
+    'The verified factual component is Kawashiri wafer-input disruption only. The retained 0.45 is an assumed dimensionless intensity within the analog/MCU stage, not a measured site or global capacity share. Broader Sony/JASM/auto consequences in the original record remain unresolved context; downstream exposure is propagated rather than injected again.',
+    {
+      kind: 'outage_recovery', recoveryStartDays: 7,
+      recoveryComponents: [{
+        id: 'kawashiri_wafer_input', stage: 'analog', site: 'Renesas Kawashiri Factory',
+        processStage: 'wafer_input', exposureFraction: 1,
+        exposureBasis: 'All of the narrowed assumed analog source represents this site and production step; no cross-site allocation or measured capacity share is implied.',
+        limitations: 'Finished-chip output, yields and shipment backlog are unobserved here. Their absence is not evidence of recovery, and Kawashiri does not represent the whole earthquake.',
+        milestones: [
+          {
+            processStage: 'restart', effectiveDate: '2026-08-04', publicationDate: '2026-08-24', informationAvailableDate: '2026-08-24',
+            claimStatus: 'verified', residualDisruption: null,
+            sourceUrl: 'https://www.renesas.com/en/about/newsroom/update-5-final-impact-2026-kumamoto-earthquake-renesas-operations',
+            publisher: 'Renesas Electronics Corporation', documentIdentifier: 'Update 5 (FINAL): Impact of the 2026 Kumamoto Earthquake on Renesas Operations',
+            supportingSection: 'Body paragraph 2: phased production resumption on August 4.',
+            verifiedOn: '2026-09-06', reviewerProvenance: 'Codex source review; not a human approval',
+          },
+          {
+            processStage: 'wafer_input', effectiveDate: '2026-08-23', publicationDate: '2026-08-24', informationAvailableDate: '2026-08-24',
+            claimStatus: 'verified', residualDisruption: 0,
+            sourceUrl: 'https://www.renesas.com/en/about/newsroom/update-5-final-impact-2026-kumamoto-earthquake-renesas-operations',
+            publisher: 'Renesas Electronics Corporation', documentIdentifier: 'Update 5 (FINAL): Impact of the 2026 Kumamoto Earthquake on Renesas Operations',
+            supportingSection: 'Body paragraph 2: pre-earthquake wafer-input capacity restored on the evening of August 23.',
+            verifiedOn: '2026-09-06', reviewerProvenance: 'Codex source review; not a human approval',
+          },
+        ],
+      }],
+    },
+    'The original day-7 start and generic 60-day linear recovery remain explicit assumptions until eligible evidence overrides this component. The official Renesas final update published August 24 documents Kawashiri wafer-input restoration on August 23. The observation takes effect in replay on August 24; it says nothing about finished output, shipments or other sites.',
   
     {
-      evidenceStrength: 'strong',
-      altProfile: { kind: 'acute_exponential' },
-      uncertaintyBasis: 'Named operators, named sites and dated restarts, so the scope is unusually well specified for this table. The alternative profile is the honest competing reading: if the staged restart had not been separately reported, this would have been scored as an ordinary acute outage.',
+      evidenceStrength: 'weak',
+      uncertaintyBasis: 'Occurrence and the Kawashiri wafer-input restoration date are verified. The 0.45 exposure intensity is assumed and uncalibrated; output, backlog and other-site coverage remain unknown. Profile alternatives must retain the observed component restoration.',
     },
   ),
   e1: E(
@@ -137,14 +162,14 @@ export const EVENT_MODEL = Object.freeze({
     'A counter-designation whose effect is on procurement routing, which re-forms over a commercial cycle.',
   ),
   h2606_subs: E(
-    { logic_ai: 0.55, m_ai: 0.60 },
-    'Extending the ban to overseas subsidiaries closes a routing path rather than a production line: the AI end-market carries the larger exposure because it is the demand side actually cut off, with AI logic exposed through the share of output routed that way.',
-    { kind: 'market_exponential' },
-    'Scope extension of the standing regime in the structural policy layer; the operational term models the re-routing period.',
+    { logic_ai: 0 },
+    'Verified clarification of an existing licensing requirement, with no separately evidenced new operational disruption.',
+    { kind: 'strategic_context' },
+    'Context only; no independent source or duplicate adjustment shock.',
   ),
   h2603_memorypeak: E(
-    { memory_fab: 0.85, m_consumer: 0.60, m_ai: 0.45 },
-    'A near-doubling of contract DRAM prices is a whole-stage condition for memory fabs. Consumer devices carry the larger downstream exposure because memory is a larger share of their bill of materials than of an AI system.',
+    { memory_fab: 0.85 },
+    'Commodity-memory availability interpretation with assumed intensity. Buyer effects propagate; HBM allocation gains and supplier revenue are outside this adverse operational channel. Exact dated claims unresolved.',
     { kind: 'market_exponential' },
     'A price and allocation peak: the record itself states momentum begins cooling at consumer affordability limits, i.e. a commercial-timescale decay.',
   
@@ -161,14 +186,14 @@ export const EVENT_MODEL = Object.freeze({
     'An easing folded into the standing BIS regime carried structurally; the operational term models the transitional relief.',
   ),
   h2512_memory: E(
-    { memory_fab: 0.75, hbm: 0.50, m_consumer: 0.45 },
-    'The shortage originates in DRAM wafer allocation to HBM, so memory fab carries most of it, HBM is directly implicated as the competing demand, and consumer devices are the named squeezed buyer.',
+    { memory_fab: 0.75 },
+    'Commodity-memory availability interpretation with assumed intensity. Buyer effects propagate; HBM allocation gains and supplier revenue are outside this adverse operational channel. Exact dated claims unresolved.',
     { kind: 'market_exponential' },
     'A shortage that clears as capacity and pricing re-equilibrate, on a commercial timescale.',
   ),
   h2510_truce: E(
-    { gases: 0.60, analog: 0.25 },
-    'The suspension covers the sweeping October materials controls, which are a materials-stage measure; analog is relieved only through the parts that consume them.',
+    { gases: 0.60 },
+    'The specified suspension is mapped to the materials proxy stage with assumed intensity 0.60. Downstream analog consequences are propagated. This is not a measured gas-capacity share.',
     { kind: 'persistent_policy', effectiveAfterDays: 8, expiresAfterDays: 376 },
     'The record carries an explicit dated window: agreed 30 October 2025, formalized 7 November 2025 (day 8), expiring 10 November 2026 (day 376) unless extended. A suspension is either in force or it is not — it does not fade — so it is modelled as in force across that interval and zero outside it.',
   
@@ -202,8 +227,8 @@ export const EVENT_MODEL = Object.freeze({
     'A scope extension of the standing regime carried structurally; the operational term is the compliance and re-sourcing adjustment.',
   ),
   x2508_veurevoke: E(
-    { memory_fab: 0.45, depo: 0.40, etch: 0.40, metro: 0.40, litho: 0.30 },
-    'Revoking validated end-user authorisations for two operators\' China fabs affects those fabs\' tool inflow across every equipment stage named, and the memory-fab stage through the plants themselves. Litho is lower because it was already the most tightly licensed stage before the revocation.',
+    { depo: 0.40, etch: 0.40, metro: 0.40, litho: 0.30 },
+    'Assumed procurement exposure at the directly affected equipment stages only. The rule removes three named VEU authorisations; it supplies no measured capacity fraction. Fab consequences propagate rather than receiving an additional direct source.',
     { kind: 'persistent_policy', effectiveAfterDays: 124 },
     'The record gives an explicit effective date: notice issued 29 August 2025, effective 31 December 2025, i.e. day 124. This is a standing revocation of a named authorisation that is NOT represented in the structural policy register, and it has not been superseded, so it is in force with no expiry.',
   

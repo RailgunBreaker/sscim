@@ -19,6 +19,11 @@ on:
   push:
     branches: ["main"]
   workflow_dispatch:
+    inputs:
+      deploy:
+        description: 'Publish the verified build to Pages'
+        type: boolean
+        default: false
   schedule:
     # Daily rebuild so the bundled stock quotes (price/PE) stay fresh on the
     # static deploy even without a commit — see "Refresh stock quotes" below.
@@ -122,14 +127,17 @@ jobs:
         run: npm run smoke
 
       - name: Setup Pages
+        if: github.event_name == 'workflow_dispatch' && inputs.deploy
         uses: actions/configure-pages@v5
 
       - name: Upload artifact
+        if: github.event_name == 'workflow_dispatch' && inputs.deploy
         uses: actions/upload-pages-artifact@v3
         with:
           path: dist-app
 
   deploy:
+    if: github.event_name == 'workflow_dispatch' && inputs.deploy
     needs: build
     environment:
       name: github-pages

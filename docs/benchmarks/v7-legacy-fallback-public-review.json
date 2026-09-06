@@ -1,0 +1,6139 @@
+{
+  "modelVersion": "sscim-model-v7.1-exposure-robustness",
+  "datasetAsOf": "2026-09-04",
+  "generatedAt": "2026-09-06T03:24:40.147Z",
+  "whatThisMeasures": "Current-model retrospective replay dependence on fallback assumptions, conditional on evidence eligibility. This is not point-in-time validation.",
+  "correctionToEarlierClaim": "Earlier experiments are preserved in v7-legacy-fallback.json. In this data revision unresolved claims are excluded; zero variation caused by exclusion is a coverage limitation, not evidence that historical disruptions were immaterial.",
+  "fallbackPopulation": {
+    "operationalRecordsWithoutCuration": 49,
+    "curatedIncidents": 30,
+    "curatedHorizonDays": 900,
+    "exposureFallback": "equal 1/k across the k unique tagged stages",
+    "profileFallback": "acute_exponential"
+  },
+  "variantsTested": {
+    "halved": "each fallback incident carries half the default exposure",
+    "doubled": "each fallback incident carries twice the default exposure, capped at 1",
+    "concentrated": "the whole unit of exposure placed on one stage instead of split across k",
+    "marketProfile": "the assumed persistence profile swapped from acute to market"
+  },
+  "currentSnapshot": {
+    "base": 5.084617,
+    "variants": {
+      "halved": 5.084617,
+      "doubled": 5.084617,
+      "concentrated": 5.084617,
+      "marketProfile": 5.084617
+    },
+    "spread": 0,
+    "reading": "Conditional on evidence eligibility and the current network. Missing historical claims are excluded; neutral or invariant results do not establish historical safety or empirical validation."
+  },
+  "globalPeak": {
+    "base": 5.084617,
+    "basePeakDaysAgo": 245,
+    "variants": {
+      "halved": 5.084617,
+      "doubled": 5.084617,
+      "concentrated": 5.084617,
+      "marketProfile": 5.084617
+    },
+    "spread": 0,
+    "reading": "Conditional on evidence eligibility and the current network. Missing historical claims are excluded; neutral or invariant results do not establish historical safety or empirical validation."
+  },
+  "legacyEraPeak": {
+    "fromDaysAgo": 900,
+    "base": 5,
+    "basePeakDaysAgo": 3661,
+    "variants": {
+      "halved": 5,
+      "doubled": 5,
+      "concentrated": 5,
+      "marketProfile": 5
+    },
+    "low": 5,
+    "high": 5,
+    "spread": 0,
+    "reading": "Conditional on evidence eligibility and the current network. Missing historical claims are excluded; neutral or invariant results do not establish historical safety or empirical validation."
+  },
+  "periodCuration": {
+    "sampled": 759,
+    "fullyCurated": 759,
+    "legacyAssisted": 0,
+    "maxFallbackShare": 0,
+    "note": "A date is \"legacy-assisted\" when at least one incident contributing to it runs on fallback assumptions. Charts must distinguish these from fully curated dates."
+  },
+  "periods": [
+    {
+      "daysAgo": 3661,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3654,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3651,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3648,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3647,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3640,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3633,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3626,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3619,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3615,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3612,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3605,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3599,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3598,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3596,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3591,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3584,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3577,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3570,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3563,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3560,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3556,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3549,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3542,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3535,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3528,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3525,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3521,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3514,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3507,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3500,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3493,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3486,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3479,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3472,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3465,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3458,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3451,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3444,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3441,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3437,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3430,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3423,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3416,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3409,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3402,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3395,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3388,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3381,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3374,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3367,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3360,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3353,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3346,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3339,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3332,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3325,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3318,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3311,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3307,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3304,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3297,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3290,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3283,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3276,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3271,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3269,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3268,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3262,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3255,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3248,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3243,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3241,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3240,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3234,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3229,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3227,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3226,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3220,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3213,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3206,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3199,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3195,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3192,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3185,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3178,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3175,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3171,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3164,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3157,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3150,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3143,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3136,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3129,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3122,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3115,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3108,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3101,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3098,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3095,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3094,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3087,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3080,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3073,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3066,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3063,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3060,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3059,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3052,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3045,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3038,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3031,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3024,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3017,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3014,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3010,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 3003,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2996,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2989,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2982,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2975,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2972,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2968,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2962,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2961,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2959,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2954,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2951,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2947,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2944,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2941,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2940,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2933,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2930,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2927,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2926,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2919,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2912,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2905,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2898,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2895,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2892,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2891,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2884,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2877,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2870,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2867,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2864,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2863,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2861,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2856,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2849,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2846,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2843,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2842,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2835,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2834,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2831,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2828,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2821,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2814,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2807,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2802,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2800,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2799,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2793,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2786,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2779,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2772,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2765,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2758,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2751,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2744,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2737,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2730,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2723,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2716,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2709,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2702,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2695,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2688,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2684,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2681,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2674,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2668,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2667,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2665,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2664,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2661,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2660,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2653,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2646,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2639,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2638,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2635,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2632,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2625,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2622,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2619,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2618,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2611,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2604,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2597,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2590,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2587,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2583,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2576,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2573,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2570,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2569,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2562,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2555,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2548,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2541,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2534,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2527,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2520,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2513,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2506,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2499,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2496,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2492,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2485,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2478,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2471,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2469,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2466,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2464,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2457,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2450,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2443,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2436,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2429,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2422,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2415,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2408,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2401,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2398,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2395,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2394,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2387,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2380,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2373,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2366,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2361,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2359,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2358,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2352,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2345,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2338,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2331,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2324,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2317,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2310,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2303,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2300,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2296,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2289,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2282,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2275,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2268,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2261,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2254,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2247,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2240,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2233,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2226,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2219,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2212,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2209,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2206,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2205,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2198,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2191,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2184,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2182,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2180,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2179,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2177,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2170,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2169,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2166,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2163,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2156,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2149,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2142,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2138,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2135,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2133,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2130,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2128,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2121,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2114,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2107,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2100,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2093,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2090,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2086,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2083,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2079,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2072,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2065,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2062,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2058,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2051,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2044,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2037,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2030,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2026,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2023,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2018,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2016,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2015,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2009,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 2002,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1995,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1992,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1991,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1988,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1981,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1977,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1974,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1967,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1960,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1953,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1946,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1939,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1932,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1925,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1918,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1914,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1911,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1909,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1906,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1904,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1897,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1890,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1883,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1876,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1869,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1862,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1855,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1848,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1842,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1841,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1839,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1838,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1835,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1834,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1827,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1820,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1813,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1806,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1804,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1801,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1799,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1796,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1792,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1786,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1785,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1783,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1778,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1771,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1764,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1757,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1750,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1743,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1736,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1729,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1722,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1716,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1715,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1713,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1708,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1705,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1702,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1701,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1694,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1687,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1684,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1680,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1673,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1669,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1667,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1666,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1664,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1659,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1653,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1652,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1650,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1645,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1638,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1631,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1624,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1617,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1613,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1610,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1603,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1596,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1589,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1582,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1575,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1568,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1561,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1554,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1547,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1540,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1533,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1527,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1526,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1524,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1519,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1512,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1505,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1498,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1492,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1491,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1489,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1487,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1484,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1481,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1477,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1470,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1465,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1463,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1462,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1456,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1449,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1442,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1435,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1428,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1425,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1423,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1422,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1421,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1420,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1414,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1407,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1400,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1393,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1390,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1389,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1386,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1379,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1372,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1368,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1365,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1359,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1358,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1356,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1351,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1344,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1337,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1330,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1323,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1316,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1313,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1309,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1302,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1295,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1288,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1281,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1274,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1267,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1263,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1260,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1253,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1246,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1243,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1239,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1232,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1225,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1218,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1211,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1204,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1202,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1199,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1197,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1190,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1183,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1176,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1169,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1162,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1159,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1156,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1155,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1148,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1142,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1141,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1139,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1136,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1134,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1127,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1122,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1120,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1119,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1113,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1106,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1102,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1099,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1096,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1092,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1085,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1079,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1078,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1076,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1071,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1064,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1057,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1053,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1050,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1044,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1043,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1041,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1036,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1029,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1022,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1015,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1008,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1005,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 1001,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 994,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 987,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 980,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 977,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 974,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 973,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 966,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 959,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 952,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 945,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 938,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 931,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 924,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 923,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 920,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 917,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 910,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 903,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 898,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 896,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 895,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 889,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 884,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 882,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 881,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 875,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 872,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 869,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 868,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 861,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 854,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 850,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 847,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 843,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 840,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 833,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 826,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 819,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 812,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 805,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 798,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 791,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 784,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 779,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 777,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 776,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 770,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 763,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 756,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 749,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 742,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 735,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 729,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 728,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 726,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 721,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 714,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 707,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 700,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 693,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 689,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 686,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 679,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 672,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 665,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 662,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 659,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 658,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 651,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 644,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 641,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 640,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 638,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 637,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 634,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 631,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 630,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 623,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 616,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 609,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 602,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 599,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 597,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 596,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 595,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 594,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 588,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 585,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 582,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 581,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 577,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 574,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 567,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 560,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 553,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 550,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 547,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 546,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 539,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 532,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 525,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 520,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 518,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 517,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 515,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 513,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 511,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 510,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 508,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 505,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 504,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 497,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 490,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 483,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 479,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 478,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 476,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 475,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 469,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 464,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 462,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 461,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 455,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 448,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 441,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 434,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 431,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 428,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 427,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 425,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 420,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 417,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 416,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 414,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 413,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 406,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 399,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 392,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 389,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 386,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 385,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 378,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 371,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 368,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 364,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 357,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 350,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 343,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 340,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 339,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 337,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 336,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 330,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 329,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 327,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 325,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 322,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 315,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 309,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 308,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 306,
+      "index": 5,
+      "contributingIncidents": 0,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 301,
+      "index": 4.965098,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 294,
+      "index": 4.965098,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 287,
+      "index": 4.965098,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 280,
+      "index": 4.965098,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 273,
+      "index": 4.965098,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 268,
+      "index": 4.965098,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 266,
+      "index": 4.965098,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 265,
+      "index": 4.965098,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 259,
+      "index": 4.965098,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 252,
+      "index": 4.965098,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 251,
+      "index": 4.965098,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 248,
+      "index": 4.965098,
+      "contributingIncidents": 1,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 245,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 238,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 232,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 231,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 229,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 224,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 217,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 210,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 203,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 196,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 189,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 182,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 178,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 175,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 168,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 161,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 155,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 154,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 152,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 147,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 140,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 133,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 126,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 119,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 112,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 105,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 98,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 96,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 93,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 91,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 84,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 77,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 74,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 72,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 71,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 70,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 69,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 68,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 66,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 64,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 63,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 61,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 60,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 56,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 52,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 50,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 49,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 47,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 42,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 38,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 37,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 35,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 34,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 31,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 28,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 25,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 21,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 16,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 15,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 14,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 13,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 12,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 11,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 7,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    },
+    {
+      "daysAgo": 0,
+      "index": 5.084617,
+      "contributingIncidents": 2,
+      "fallbackIncidents": 0,
+      "fallbackShare": 0,
+      "curationStatus": "no-active-fallback-evidence-coverage-limited"
+    }
+  ]
+}

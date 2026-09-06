@@ -117,7 +117,7 @@ export default function TimeMachine({ asOfDaysAgo, setAsOfDaysAgo, setSel, selec
           return (
             <button key={im.id} type="button"
               onClick={() => { setAsOfDaysAgo(im.daysAgo); setSel({ type: 'event', id: im.id }); }}
-              title={`${im.dateISO} · ${im.title}\nmarginal contribution to the index that day: ${(im.marginal ?? 0) >= 0 ? '+' : ''}${(im.marginal ?? 0).toFixed(3)}`}
+              title={`${im.dateISO} · ${im.title}\nincident-removal difference on its date: ${(im.marginal ?? 0) >= 0 ? '+' : ''}${(im.marginal ?? 0).toFixed(3)} (not an additive share)`}
               aria-label={`Review ${im.dateISO}: ${im.title}`}
               style={{
                 position: 'absolute', left: `${pos}%`, transform: 'translateX(-50%)',
@@ -139,14 +139,15 @@ export default function TimeMachine({ asOfDaysAgo, setAsOfDaysAgo, setSel, selec
           WHAT IS ON SCREEN rather than how to read it, stays visible. */}
       {live ? (
         <Disclosure summary="How to read this timeline" style={{ marginTop: 2 }}>
-          Drag to review the chain as it stood on any date in the last{' '}
+          Current-model retrospective replay over the last{' '}
           {Math.round(spanDays / 30)} months, or click an event marker. Marker
-          height is that event&rsquo;s marginal contribution to the index on its own
-          date — what it added to the published number, not its standalone size.
+          height shows the index difference when the entire incident, including its updates,
+          is removed on the primary record&rsquo;s date. These differences are not additive shares.
+          The replay uses the current network and parameters. These are recalculations, not archived outputs or point-in-time validation; source publication dates limit when evidence can apply.
         </Disclosure>
       ) : (
         <div style={{ fontSize: 12, color: C.faint, lineHeight: 1.6, marginTop: 2 }}>
-          {`Showing the model re-derived for ${shownDate}: ${engine.eventsAsOf(asOfDaysAgo).length} event(s) inside the decay window on that date. This is a past state of the record, not a hypothesis.`}
+          {`Current-model retrospective replay for ${shownDate}: ${engine.eventsAsOf(asOfDaysAgo).length} available event record(s). Current network and parameters; sparse coverage and a neutral score do not establish historical safety.`}
         </div>
       )}
     </div>

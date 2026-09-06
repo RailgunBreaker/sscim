@@ -145,7 +145,7 @@ record('app: npm run demo', demo, (strip(demo.stdout).match(/headline index [^\n
 
 /* ---- read back what the artefacts say, so the record is not self-reported ---- */
 const readJson = (p) => (existsSync(p) ? JSON.parse(readFileSync(p, 'utf8')) : null);
-const sensitivityReport = readJson(resolve(OUT_DIR, 'v7-sensitivity.json'));
+const sensitivityReport = readJson(resolve(OUT_DIR, 'v7-sensitivity-public-review.json'));
 const benchmarkReport = readJson(resolve(OUT_DIR, 'v6-to-v7-benchmark.json'));
 
 let commit = null;

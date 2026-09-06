@@ -241,7 +241,8 @@ export default function DecadeHistory({ onSelectEvent }) {
         </table>
       </div>
 
-      <div className="mono" style={{ fontSize: 12, color: C.dim, marginBottom: 6 }}>Which kind of shock drove it</div>
+      <div className="mono" style={{ fontSize: 12, color: C.dim, marginBottom: 6 }}>Tested incident-removal differences by type</div>
+      <div style={{ fontSize: 12, color: C.faint, lineHeight: 1.6, marginBottom: 6 }}>Sums compare removals on different incident dates. They are descriptive totals, not additive shares of one headline or cumulative real-world loss.</div>
       <div style={{ marginBottom: 10 }}>
         {analysis.byType.map((r) => {
           const width = Math.max(1, Math.abs(r.total) / Math.max(...analysis.byType.map((q) => Math.abs(q.total))) * 100);

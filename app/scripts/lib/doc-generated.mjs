@@ -126,6 +126,7 @@ function persistenceTableBlock() {
    audit emits for it. Hand-written prose next to a hand-written code is
    exactly how the two drift apart, so the codes come from the source. */
 export const FALLBACK_RULES = [
+  { code: 'factual_evidence_excluded', rule: 'Unresolved factual evidence', detail: 'Factual records require verified occurrence, explicit eligibility, claim-supporting source location and provenance, with evidence available by the evaluation date. Missing or unresolved claims produce no source. Confidence remains metadata.' },
   { code: 'legacy_equal_stage_exposure', rule: 'Legacy 1/k stage exposure', detail: 'An operational record with no curated exposure vector splits one unit of exposure equally across its k unique stages. Sums to exactly 1 by construction, so splitting or duplicating a scope cannot create source mass.' },
   { code: 'curated_exposure_stage_mismatch', rule: 'Curation disagrees with the record', detail: 'The curated exposure names no stage the record carries. The curation is ignored, the legacy 1/k allocation applies, and the mismatch is reported.' },
   { code: 'curated_exposure_orphan_stage', rule: 'Curation names an extra stage', detail: 'A curated stage absent from the record\'s own tags is dropped and reported; the remaining curated stages are used.' },
@@ -153,7 +154,7 @@ function curationCoverageBlock() {
   return [
     `- Curated horizon: **${ACTIVE_HORIZON_DAYS} days**. Every operational incident within it must carry an explicit stage-exposure vector and an explicit temporal profile, each with a recorded basis; a missing one is a hard audit failure.`,
     `- Explicitly curated incidents in this build: **${Object.keys(EVENT_MODEL).length}**.`,
-    '- Outside the horizon, an operational record falls back to the equal 1/k exposure and the `acute_exponential` legacy profile. Its persistence multiplier at the snapshot date is below 1e-3 under every parameter setting in the registry, so the fallback cannot move a published number materially — but it is counted, not hidden. The live counts are in the model audit (`engine.MODEL_AUDIT.counts`) and are reported by `npm run audit:data`.',
+    '- Factual eligibility is checked before fallback arithmetic. Eligible older records without curation use the equal 1/k exposure and acute_exponential profile; unresolved records remain excluded. Small current persistence says nothing about their potential historical influence. Replay uses the current model and network, with dated evidence availability; zero under missing coverage does not establish safety.',
   ].join('\n');
 }
 
@@ -321,7 +322,25 @@ function modelDigestBlock() {
   ].join('\n');
 }
 
+function publicReviewResultsBlock() {
+  const c = JSON.parse(readFileSync(resolve(repoRoot, 'docs/benchmarks/v7-curation-uncertainty-public-review.json'), 'utf8'));
+  const s = JSON.parse(readFileSync(resolve(repoRoot, 'docs/benchmarks/v7-sensitivity-public-review.json'), 'utf8'));
+  const f = v => Number(v).toFixed(6);
+  const r = c.results.headlineIndex;
+  const range = v => `[${f(v.low ?? v.min)}, ${f(v.high ?? v.max)}]`;
+  return [`Data revision **public-review-2026-09-06**, dataset **${c.datasetAsOf}**, model **${c.modelVersion}**.`, '',
+    `Corrected factual-baseline headline: **${f(r.base)}** (previous audited fixture: **6.027797**). The movement is an evidence/data correction, not evidence of declining real-world risk.`, '',
+    '| Uncertainty class | Current tested headline range | Scope |', '| --- | --- | --- |',
+    `| Numerical parameters | ${range(s.numericalParameters.headlineEnvelope)} | Registry ranges and fixed-seed Saltelli design; bootstrap and convergence retained |`,
+    `| Model form | ${range(s.modelForms.headlineEnvelope)} | Discrete form combinations |`,
+    `| Curation | ${range(r)} | ${r.testedScenarioCount} scenarios including baseline and opposing adverse/mitigating settings |`,
+    '| Data coverage | No scalar interval | Unresolved incidents excluded; missing denominators and site coverage remain explicit |', '',
+    'These ranges are not additive, proven bounds over all allowed inputs, or statistical confidence intervals. Company criticality is structurally unaffected by event curation; this is not empirical validation. Numerical-parameter ranking sensitivity is conditional on fixed company priors and network.', '',
+    'Reproduce with `npm run curation` and `npm run sensitivity -- --samples 1024`. Current artifacts use the `-public-review.json` suffix; earlier benchmark files remain preserved.'].join('\n');
+}
+
 export const GENERATORS = {
+  'public-review-results': publicReviewResultsBlock,
   'model-digest': modelDigestBlock,
   'model-version': modelVersionBlock,
   'parameter-table': parameterTableBlock,

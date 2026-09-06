@@ -11,15 +11,11 @@
       engine's own chainIndexAt / indexOf, so a figure in this analysis and
       the same figure on the history chart cannot disagree.
 
-   2. Attribution is MARGINAL, not standalone. An event's effect is the
-      index on its own date with that event present, minus the same date
-      with only that event removed. Because propagation combines through a
-      bounded, saturating operator (aggregation.js), standalone magnitudes do
-      not add up — two severity-7 events on the same stages do not move the
-      index twice as far as one. Marginal attribution is the honest answer
-      to "what did this event contribute to the number we published", and
-      it is deliberately smaller than the standalone figure whenever other
-      events overlap. Both are reported so the gap is visible.
+   2. Attribution removes one whole INCIDENT, including its update and
+      recovery records, at the primary record's date. This is a leave-one-
+      incident-out comparison of current-model retrospective calculations,
+      not a decomposition of an archived published reading. Differences are
+      not additive contribution shares; interactions and saturation matter.
 
    Everything here is pure: no I/O, no React, no dates beyond arithmetic on
    day offsets. `asOfMs` is only used to label points.
@@ -134,40 +130,46 @@ export function rollingMean(points, window = 91) {
 
 /* ---------------- per-event attribution ---------------- */
 
-/* For each event: the index on its own date, its marginal contribution
-   there, and its standalone effect in isolation. Only events the engine
-   actually scores (assumption.operational) can have a non-zero marginal
-   effect, but every event is reported so the excluded ones are visible as
-   explicit zeros rather than absences. */
+/* Every record remains visible. Only the incident representative can carry
+   influence; updates/recoveries and evidence-ineligible sources are explicit
+   zeros. `events` limits displayed rows, not the comparison baseline. */
 export function eventImpacts(engine, getAssumption, { events = engine.EVENTS } = {}) {
-  const scored = events.filter((e) => getAssumption(e.id).operational);
+  const allEvents = engine.EVENTS;
+  const groups = engine.incidentsOf(allEvents);
+  const groupOf = new Map(groups.flatMap((g) => g.records.map((r) => [r.id, g])));
   return events.map((e) => {
-    const assumption = getAssumption(e.id);
+    const assumption = e.assumption || getAssumption(e.id);
+    const group = groupOf.get(e.id);
     const t = e.daysAgo ?? 0;
     const indexOnDate = engine.chainIndexAt(t);
-    if (!assumption.operational) {
-      return {
-        id: e.id, title: e.title, daysAgo: t, sev: e.sev, type: e.type, conf: e.conf,
-        stages: e.stages || [], direction: assumption.direction, channel: assumption.channel,
-        operational: false, indexOnDate, marginal: 0, standalone: 0, reason: assumption.reason,
-      };
-    }
-    const without = engine.indexOf(scored.filter((x) => x.id !== e.id), t);
-    const alone = engine.indexOf([e], t);
-    return {
+    const row = {
       id: e.id, title: e.title, daysAgo: t, sev: e.sev, type: e.type, conf: e.conf,
       stages: e.stages || [], direction: assumption.direction, channel: assumption.channel,
-      operational: true, indexOnDate,
+      incidentId: group?.incidentId ?? e.id,
+      operational: false, declaredOperational: Boolean(assumption.operational), indexOnDate,
+      marginal: 0, standalone: 0,
+      attribution: 'leave_one_incident_out_not_additive', reason: assumption.reason,
+    };
+    if (!group || group.primary.id !== e.id || group.primaryRole !== 'primary') {
+      return { ...row, reason: 'Incident update or recovery record; influence belongs to its primary and is not scored independently.' };
+    }
+    const ownDate = engine.incidentField({ ...group, primary: { ...group.primary, daysAgo: 0 } });
+    if (!ownDate.scored) return { ...row, reason: ownDate.source.evidenceEligibility?.eligible === false
+      ? ownDate.source.evidenceEligibility.reason : ownDate.source.unscoredReason || assumption.reason };
+    const memberIds = new Set(group.records.map((r) => r.id));
+    const without = engine.indexOf(allEvents.filter((x) => !memberIds.has(x.id)), t);
+    const alone = engine.indexOf(allEvents.filter((x) => memberIds.has(x.id)), t);
+    return {
+      ...row, operational: true,
       marginal: indexOnDate - without,
       standalone: alone - NEUTRAL_INDEX,
-      reason: assumption.reason,
     };
   }).sort((a, b) => a.daysAgo - b.daysAgo);
 }
 
-/* Cumulative marginal effect grouped by event type — answers "which class
-   of shock has actually driven this index", which the per-event list makes
-   you add up by eye. */
+/* Sum of tested incident-removal differences at DIFFERENT incident dates,
+   grouped by type. Descriptive only: not shares of one headline, cumulative
+   real-world damage, or an additive attribution decomposition. */
 export function impactsByType(impacts) {
   const acc = new Map();
   impacts.filter((i) => i.operational).forEach((i) => {

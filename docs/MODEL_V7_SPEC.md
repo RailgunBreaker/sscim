@@ -132,7 +132,7 @@ it after reading a source), **derived** (computed from other quantities), or
 | $q_e$ | displayed severity of incident $e$ | $\{1,\dots,10\}$ | **ordinal rubric** | curated |
 | $g$ | severity-to-intensity mapping | $[0,10] \to [0,1]$ | dimensionless | assumed (model form) |
 | $d_{e,s}$ | signed direction of $e$ at stage $s$ | $[-1,1]$ | sign | curated |
-| $\alpha_{e,s}$ | stage exposure: how much of stage $s$ the incident touches | $[0,1]$ | share of the stage | curated, or derived for hazards |
+| $\alpha_{e,s}$ | stage exposure: how much of stage $s$ the incident touches | $[0,1]$ | dimensionless stage-scope intensity | assumed unless explicitly measured; hazards use ordinal sample footprint |
 | $t$ | evaluation offset in days before the snapshot date | $\ge 0$ | days | derived |
 | $\mathrm{age}$ | incident age in days at the evaluation date | $\mathbb{R}$ | days | derived |
 | $R_e(t)$ | temporal profile (persistence multiplier) | $[0,1]$ | dimensionless | assumed (profile) + curated (dates) |
@@ -218,6 +218,14 @@ $$
 
 A `mixed` or `unclassified` direction with no signed decomposition produces **no
 scalar field at all**. An unknown direction is never treated as adverse.
+
+#### Evidence eligibility and component persistence correction (application 0.7.2)
+
+Before constructing a factual source, require a verified occurrence, explicit baseline eligibility, supporting source location and review provenance. At least one claim-supporting source must be available by the evaluation date. URL existence and an authoritative publisher alone do not pass this gate. Confidence never multiplies exposure. Missing evidence yields an explicit exclusion and coverage diagnostic.
+
+The source equation above uses stage/component persistence when available: each component has a site, process step (restart, wafer_input, finished_output or shipments), exposure fraction, assumed profile and optional observed residual milestones. Fractions partition the existing direct stage source; unspecified fractions retain the assumed profile. An observed residual overrides only the matching component once both its effective and information-available dates are reached. Updates remain attached to the original incident and cannot become independent shocks. See [exact milestone rules](RECOVERY_MILESTONES.md).
+
+Severity is the ordinal-to-intensity mapping; exposure is an assumed affected stage-scope intensity unless documented as measured; persistence is the evolution of that effect. They are distinct. No generic 60-day recovery or 45-day market half-life was changed. Equal incoming allocation remains a sensitivity heuristic: [complementary-input counterexample](COMPLEMENTARY_INPUT_BENCHMARK.md) demonstrates why it is not a physical bottleneck model.
 
 ### 3.2 Severity mappings — `engine/severity.js`
 
@@ -929,6 +937,7 @@ fallback is always counted and never invisible.
 <!-- BEGIN GENERATED: fallback-table -->
 | Fallback rule | Machine-readable diagnostic | What happens |
 | --- | --- | --- |
+| Unresolved factual evidence | `factual_evidence_excluded` | Factual records require verified occurrence, explicit eligibility, claim-supporting source location and provenance, with evidence available by the evaluation date. Missing or unresolved claims produce no source. Confidence remains metadata. |
 | Legacy 1/k stage exposure | `legacy_equal_stage_exposure` | An operational record with no curated exposure vector splits one unit of exposure equally across its k unique stages. Sums to exactly 1 by construction, so splitting or duplicating a scope cannot create source mass. |
 | Curation disagrees with the record | `curated_exposure_stage_mismatch` | The curated exposure names no stage the record carries. The curation is ignored, the legacy 1/k allocation applies, and the mismatch is reported. |
 | Curation names an extra stage | `curated_exposure_orphan_stage` | A curated stage absent from the record's own tags is dropped and reported; the remaining curated stages are used. |
@@ -949,7 +958,7 @@ fallback is always counted and never invisible.
 <!-- BEGIN GENERATED: curation-coverage -->
 - Curated horizon: **900 days**. Every operational incident within it must carry an explicit stage-exposure vector and an explicit temporal profile, each with a recorded basis; a missing one is a hard audit failure.
 - Explicitly curated incidents in this build: **30**.
-- Outside the horizon, an operational record falls back to the equal 1/k exposure and the `acute_exponential` legacy profile. Its persistence multiplier at the snapshot date is below 1e-3 under every parameter setting in the registry, so the fallback cannot move a published number materially — but it is counted, not hidden. The live counts are in the model audit (`engine.MODEL_AUDIT.counts`) and are reported by `npm run audit:data`.
+- Factual eligibility is checked before fallback arithmetic. Eligible older records without curation use the equal 1/k exposure and acute_exponential profile; unresolved records remain excluded. Small current persistence says nothing about their potential historical influence. Replay uses the current model and network, with dated evidence availability; zero under missing coverage does not establish safety.
 <!-- END GENERATED: curation-coverage -->
 
 ### 6.2 The two rules that are hard failures
@@ -1211,33 +1220,24 @@ measures and scenario deltas are identical between v7.0 and v7.1.
 A single "uncertainty" figure would merge four things that behave differently
 and are fixed by different work. They are measured separately and never summed.
 
-| Class | What is varied | Headline width | Interval | Measured by |
-| --- | --- | ---: | --- | --- |
-| **Data** | Inputs that are missing, undisclosed, ordinal or a curated sample | not a single width | see 11.1 | `npm run audit:data` (0 hard failures, 30 warnings) |
-| **Parameter** | The 12 continuous registry parameters over their declared low-high box | **1.363** | [5.446, 6.809] | `npm run sensitivity` |
-| **Model form** | 5 discrete structural choices (severity mapping, facility scale mapping, incident aggregation, HHI residual, stage weighting) | **1.045** | [5.402, 6.446] | `npm run sensitivity`, reported separately |
-| **Curation** | Analyst exposure judgements and persistence classification for the 30 curated incidents | **0.722** | [5.611, 6.334] | `npm run curation` |
+<!-- BEGIN GENERATED: public-review-results -->
+Data revision **public-review-2026-09-06**, dataset **2026-09-04**, model **sscim-model-v7.1-exposure-robustness**.
 
-Base headline index 6.028 on dataset `2026-09-04`.
+Corrected factual-baseline headline: **5.084617** (previous audited fixture: **6.027797**). The movement is an evidence/data correction, not evidence of declining real-world risk.
 
-Four points follow from the table, and each one matters more than the widths:
+| Uncertainty class | Current tested headline range | Scope |
+| --- | --- | --- |
+| Numerical parameters | [5.057073, 5.126671] | Registry ranges and fixed-seed Saltelli design; bootstrap and convergence retained |
+| Model form | [5.054260, 5.174697] | Discrete form combinations |
+| Curation | [5.046012, 5.123222] | 141 scenarios including baseline and opposing adverse/mitigating settings |
+| Data coverage | No scalar interval | Unresolved incidents excluded; missing denominators and site coverage remain explicit |
 
-1. **They are not additive and not independent.** Widening a parameter and
-   re-judging an exposure can move the index the same way or opposite ways.
-   No total uncertainty is published, because none has been derived.
-2. **None is a confidence interval.** Each is an assumption envelope over a
-   declared box. Uniform sampling inside that box is a computational device,
-   not a probability distribution over what is true.
-3. **Curation uncertainty was previously unmeasured**, which amounted to
-   asserting it was zero. It is of the same order as the other two, so
-   analyst judgement is a first-order driver of the headline, not a detail.
-4. **The historical series is more sensitive than the current snapshot.**
-   Curation uncertainty on the historical peak is **1.012** index points
-   against 0.722 on the headline, and 49 archived operational records carry
-   no curated exposure or profile at all. Dates that depend on them are
-   marked **legacy-assisted**; moving those fallback assumptions moves the
-   legacy-era peak by about **1.03** index points while leaving today's
-   reading unchanged. See `docs/benchmarks/v7-legacy-fallback.json`.
+These ranges are not additive, proven bounds over all allowed inputs, or statistical confidence intervals. Company criticality is structurally unaffected by event curation; this is not empirical validation. Numerical-parameter ranking sensitivity is conditional on fixed company priors and network.
+
+Reproduce with `npm run curation` and `npm run sensitivity -- --samples 1024`. Current artifacts use the `-public-review.json` suffix; earlier benchmark files remain preserved.
+<!-- END GENERATED: public-review-results -->
+
+Curation sampling uses a declared shared scope coordinate, with opposing mitigating coordinates tested separately; related policy and memory episodes also have shared-assumption scenarios. No incident independence or empirical probability model is asserted. Sensitivity indices apply only to the specified ranges and design. See [research review](PUBLIC_RESEARCH_REVIEW.md).
 
 ### 11.2 What would have to exist to calibrate each parameter
 
@@ -1306,12 +1306,12 @@ document that pins the commit it was generated at can never be up to date with t
 | `server: npm ci` | pass | added 113 packages, and audited 114 packages |
 | `app: npm ci` | pass | added 156 packages, and audited 157 packages |
 | `app: npm run snapshot` | pass | (109 companies, 24 stages, 167 events) |
-| `app: npm run audit:data` | pass | audit:data PASSED — 0 hard failures, 30 warning(s). |
+| `app: npm run audit:data` | pass | audit:data PASSED — 0 hard failures, 28 warning(s). |
 | `app: npm run docs:verify` | pass | docs:verify PASSED — documentation and code agree. |
-| `app: npm test` | pass | Test Files  50 passed (50) · Tests  978 passed (978) |
-| `app: npm run build` | pass | Published 40 documentation page(s) + /docs/ index · 1096 equation(s) rendered · KaTeX css + 20 font(s). |
+| `app: npm test` | pass | Test Files  55 passed (55) · Tests  1018 passed (1018) |
+| `app: npm run build` | pass | Published 44 documentation page(s) + /docs/ index · 1096 equation(s) rendered · KaTeX css + 20 font(s). |
 | `app: npm run smoke` | pass | 173/173 checks passed |
 | `app: npm run sensitivity -- --samples 1024` | pass | design: 12 continuous dimensions x 1024 samples = 14336 model evaluations |
 | `app: npm run benchmark` | pass | SKIPPED, and the committed comparison is left untouched. |
-| `app: npm run demo` | pass | headline index 6.027797 · 160 incidents from 167 records |
+| `app: npm run demo` | pass | headline index 5.084617 · 158 incidents from 167 records |
 <!-- END GENERATED: verification-run -->

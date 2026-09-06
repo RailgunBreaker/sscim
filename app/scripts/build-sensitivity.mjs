@@ -5,7 +5,7 @@
    path, so two runs over the same snapshot produce byte-identical output
    and the artefact can be diffed like any other build product.
 
-   Writes docs/benchmarks/v7-sensitivity.json and prints a readable
+   Writes docs/benchmarks/v7-sensitivity-public-review.json and prints a readable
    summary. Run:  npm run sensitivity
                   npm run sensitivity -- --samples 512 --seed 7
    ==================================================================== */
@@ -25,7 +25,7 @@ import {
 const here = dirname(fileURLToPath(import.meta.url));
 const SNAPSHOT = resolve(here, '../src/data/vault-snapshot.json');
 const OUT_DIR = resolve(here, '../../docs/benchmarks');
-const OUT = resolve(OUT_DIR, 'v7-sensitivity.json');
+const OUT = resolve(OUT_DIR, 'v7-sensitivity-public-review.json');
 
 const argOf = (name, fallback) => {
   const i = process.argv.indexOf(`--${name}`);

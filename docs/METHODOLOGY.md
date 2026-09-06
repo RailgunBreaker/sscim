@@ -373,31 +373,30 @@ from one that does not exist.
 | **Curated versus legacy-assisted events** | 30 incidents carry a curated stage exposure and persistence profile with a recorded basis. 49 scored incidents do not, and run on an equal 1/k split and a default acute profile. |
 | **Curation grading** | 10 of the 30 curated incidents are individually evidence-graded; the other 20 use a default uncertainty band. |
 
-### The three uncertainties, kept apart
+### Four uncertainty classes and current evidence revision
 
-They are measured separately because they behave differently, and because
-adding them together would imply a precision none of them has:
+<!-- BEGIN GENERATED: public-review-results -->
+Data revision **public-review-2026-09-06**, dataset **2026-09-04**, model **sscim-model-v7.1-exposure-robustness**.
 
-| Class | What varies | Headline effect | Artefact |
-| --- | --- | --- | --- |
-| **Parameter** | the registry coefficients | envelope about 1.3 index points | `docs/benchmarks/v7-sensitivity.json` |
-| **Model form** | the categorical structural choices | envelope about 1.1 index points | same file, reported separately |
-| **Event curation** | per-incident exposure and persistence judgements | envelope about 0.72 index points | `docs/benchmarks/v7-curation-uncertainty.json` |
+Corrected factual-baseline headline: **5.084617** (previous audited fixture: **6.027797**). The movement is an evidence/data correction, not evidence of declining real-world risk.
 
-Curation uncertainty is the newest of the three and was previously
-unmeasured - which meant it was implicitly treated as zero. It is the same
-order of magnitude as the other two.
+| Uncertainty class | Current tested headline range | Scope |
+| --- | --- | --- |
+| Numerical parameters | [5.057073, 5.126671] | Registry ranges and fixed-seed Saltelli design; bootstrap and convergence retained |
+| Model form | [5.054260, 5.174697] | Discrete form combinations |
+| Curation | [5.046012, 5.123222] | 141 scenarios including baseline and opposing adverse/mitigating settings |
+| Data coverage | No scalar interval | Unresolved incidents excluded; missing denominators and site coverage remain explicit |
 
-### Legacy-assisted history
+These ranges are not additive, proven bounds over all allowed inputs, or statistical confidence intervals. Company criticality is structurally unaffected by event curation; this is not empirical validation. Numerical-parameter ranking sensitivity is conditional on fixed company priors and network.
 
-The 49 uncurated incidents move today's reading by **nothing**: they are
-years old, and their persistence multipliers at the snapshot date are
-negligible. They move the **pre-curation historical peak by about one index
-point**. Earlier documentation said fallbacks could not materially affect
-any published number; that was true of the current snapshot and false of the
-historical series, and the claim is withdrawn. The history panel marks
-legacy-assisted periods, and `docs/benchmarks/v7-legacy-fallback.json`
-quantifies them.
+Reproduce with `npm run curation` and `npm run sensitivity -- --samples 1024`. Current artifacts use the `-public-review.json` suffix; earlier benchmark files remain preserved.
+<!-- END GENERATED: public-review-results -->
+
+### Retrospective information and coverage
+
+History is current-model retrospective replay using the current network and current curation, not archived contemporaneous output or point-in-time validation. Evidence can apply only once its information-available date is reached. A later review can check an earlier available document; it cannot backdate a later recovery announcement. Legacy records without reviewed claims are now excluded. Their invariant zero effect is data-coverage uncertainty, not empirical validation. Earlier fallback experiments are preserved in the original benchmark files.
+
+See [research review](PUBLIC_RESEARCH_REVIEW.md), [recovery milestones](RECOVERY_MILESTONES.md), [measurement basis](reference/MEASUREMENT-BASIS.md) and [complementary-input counterexample](COMPLEMENTARY_INPUT_BENCHMARK.md).
 
 ## Reproducibility and limitations
 

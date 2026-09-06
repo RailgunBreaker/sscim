@@ -29,7 +29,7 @@ import { uniqueStages } from '../src/engine/eventSource.js';
 const here = dirname(fileURLToPath(import.meta.url));
 const SNAPSHOT = resolve(here, '../src/data/vault-snapshot.json');
 const OUT_DIR = resolve(here, '../../docs/benchmarks');
-const OUT = resolve(OUT_DIR, 'v7-legacy-fallback.json');
+const OUT = resolve(OUT_DIR, 'v7-legacy-fallback-public-review.json');
 
 const bundle = JSON.parse(readFileSync(SNAPSHOT, 'utf8'));
 const data = buildVaultData(bundle);
@@ -105,7 +105,7 @@ const variants = ['halved', 'doubled', 'concentrated', 'marketProfile'].map((k) 
 const engine = base.engine;
 const periods = base.long.map((point) => {
   const active = engine.eventsAsOf(point.daysAgo);
-  const scored = active.filter((e) => getEventAssumption(e.id).operational && uniqueStages(e).length);
+  const scored = active.filter((e) => engine.eventField(e).scored);
   const fb = scored.filter((e) => fallbackIds.has(e.id));
   return {
     daysAgo: point.daysAgo,
@@ -113,7 +113,7 @@ const periods = base.long.map((point) => {
     contributingIncidents: scored.length,
     fallbackIncidents: fb.length,
     fallbackShare: scored.length ? round(fb.length / scored.length, 4) : 0,
-    curationStatus: fb.length === 0 ? 'fully-curated' : 'legacy-assisted',
+    curationStatus: fb.length === 0 ? 'no-active-fallback-evidence-coverage-limited' : 'legacy-assisted',
   };
 });
 
@@ -125,8 +125,8 @@ const report = {
   modelVersion: MODEL_VERSION,
   datasetAsOf,
   generatedAt: new Date().toISOString(),
-  whatThisMeasures: 'The dependence of published HISTORICAL figures on fallback assumptions for uncurated operational incidents.',
-  correctionToEarlierClaim: 'v7.0 documentation stated that archived fallback incidents "cannot move a published number materially". That holds for the CURRENT snapshot only. Over the historical series those incidents carry the signal, and the peak moves materially when their assumptions move. The claim is withdrawn and replaced by the numbers below.',
+  whatThisMeasures: 'Current-model retrospective replay dependence on fallback assumptions, conditional on evidence eligibility. This is not point-in-time validation.',
+  correctionToEarlierClaim: 'Earlier experiments are preserved in v7-legacy-fallback.json. In this data revision unresolved claims are excluded; zero variation caused by exclusion is a coverage limitation, not evidence that historical disruptions were immaterial.',
   fallbackPopulation: {
     operationalRecordsWithoutCuration: fallbackRecords.length,
     curatedIncidents: Object.keys(EVENT_MODEL).length,
@@ -144,14 +144,14 @@ const report = {
     base: round(base.headline),
     variants: Object.fromEntries(variants.map((v) => [v.kind, round(v.headline)])),
     spread: round(Math.max(...variants.map((v) => v.headline)) - Math.min(...variants.map((v) => v.headline))),
-    reading: 'Small, because every fallback incident is years old and its persistence multiplier at the snapshot date is tiny. This is the part of the original claim that was true.',
+    reading: 'Conditional on evidence eligibility and the current network. Missing historical claims are excluded; neutral or invariant results do not establish historical safety or empirical validation.',
   },
   globalPeak: {
     base: round(base.peak.index),
     basePeakDaysAgo: base.peak.daysAgo,
     variants: Object.fromEntries(variants.map((v) => [v.kind, round(v.peak.index)])),
     spread: round(Math.max(...peakVals, base.peak.index) - Math.min(...peakVals, base.peak.index)),
-    reading: 'The highest point of the whole series. On this snapshot it sits among fully curated incidents, so it is unmoved by fallback assumptions BY CONSTRUCTION — which is exactly why quoting only this number made the fallbacks look immaterial.',
+    reading: 'Conditional on evidence eligibility and the current network. Missing historical claims are excluded; neutral or invariant results do not establish historical safety or empirical validation.',
   },
   legacyEraPeak: {
     fromDaysAgo: LEGACY_ERA_FROM_DAYS,
@@ -161,7 +161,7 @@ const report = {
     low: round(Math.min(...legacyPeakVals, base.legacyPeak.index)),
     high: round(Math.max(...legacyPeakVals, base.legacyPeak.index)),
     spread: round(Math.max(...legacyPeakVals, base.legacyPeak.index) - Math.min(...legacyPeakVals, base.legacyPeak.index)),
-    reading: 'The highest point of the era older than the curated horizon, where every contributing incident runs on fallback assumptions. This is the figure that moves, and it is the one the original claim got wrong.',
+    reading: 'Conditional on evidence eligibility and the current network. Missing historical claims are excluded; neutral or invariant results do not establish historical safety or empirical validation.',
   },
   periodCuration: {
     sampled: periods.length,

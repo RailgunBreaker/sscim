@@ -1,17 +1,47 @@
 record,title,direction,operational,reason
+e1,U.S. expands AI-chip export-control rules,adverse,true,evidence_ineligible
+e2,TSMC accelerates CoWoS capacity expansion,mitigating,true,evidence_ineligible
 e3,Elevated military activity around Taiwan Strait,adverse,false,not_operational
+e4,China tightens gallium / germanium licensing,adverse,true,evidence_ineligible
 e5,Major memory maker trims 2026 capex,mixed,false,not_operational
 e6,Japan approves next Rapidus funding tranche,adverse,false,not_operational
+h2102_uri,Winter Storm Uri shuts Texas fabs,adverse,true,evidence_ineligible
+h2103_renesas,Renesas Naka 300mm fab fire,adverse,true,evidence_ineligible
+h2108_malaysia,Malaysia lockdowns choke backend assembly,adverse,true,evidence_ineligible
+h2202_kioxia,Kioxia/WD NAND contamination incident,adverse,true,evidence_ineligible
+h2202_neon,Ukraine war cuts semiconductor neon supply,adverse,true,evidence_ineligible
+h2204_shanghai,Shanghai COVID lockdown snarls electronics logistics,adverse,true,evidence_ineligible
 h2208_strait22,PLA live-fire exercises encircle Taiwan,adverse,false,not_operational
 h2208_chips,U.S. CHIPS and Science Act signed,mitigating,false,not_operational
+h2210_bis,BIS sweeping China export controls (Oct 7 rules),adverse,true,evidence_ineligible
 h2301_alliance,U.S.–Japan–Netherlands align on tool controls,adverse,false,not_operational
+h2307_gage,China imposes gallium and germanium export licensing,adverse,true,evidence_ineligible
+h2307_jpsme,Japan tool export controls take effect,adverse,true,evidence_ineligible
 h2308_mate60,Huawei Mate 60 Pro ships SMIC 7nm silicon,mixed,false,not_operational
+h2309_duv,Dutch DUV licensing takes effect,adverse,true,evidence_ineligible
+h2310_bisupdate,BIS performance-density rule closes A800/H800 path,adverse,true,evidence_ineligible
+h2401_noto,Noto Peninsula M7.6 earthquake,adverse,true,evidence_ineligible
+h2404_hualien,Taiwan Hualien M7.4 earthquake,adverse,true,evidence_ineligible
+h2405_huawei,U.S. revokes Intel/Qualcomm licenses for Huawei,adverse,true,evidence_ineligible
+h2412_bis3,BIS third package: HBM controls + 140 entities,adverse,true,evidence_ineligible
+h2412_gaban,China bans Ga/Ge/Sb exports to the U.S.,adverse,true,evidence_ineligible
 h2501_diffusion,AI Diffusion rule sets worldwide GPU tiers,adverse,false,not_operational
 h2501_deepseek,DeepSeek R1 efficiency shock,mixed,false,not_operational
-h2509_nexperia,Nexperia seizure triggers auto-chip crisis,adverse,true,zero_persistence_at_evaluation_date
+h2504_ree,China controls seven heavy rare earths + magnets,adverse,true,evidence_ineligible
+h2504_h20,H20/MI308 China sales require licenses,adverse,true,evidence_ineligible
+h2505_rescind,AI Diffusion rule rescinded,mitigating,true,evidence_ineligible
+h2507_h20back,H20 China sales resume under license deal,mitigating,true,evidence_ineligible
+h2509_nexperia,Nexperia seizure triggers auto-chip crisis,adverse,true,evidence_ineligible
+h2510_reemax,China's sweeping rare-earth control expansion,adverse,true,evidence_ineligible
+h2512_memory,Memory shortage ignites as HBM eats DRAM capacity,adverse,true,evidence_ineligible
 h2512_yilan,M7.0 Yilan quake — fabs ride it out,adverse,false,not_operational
+h2601_ease,BIS moves H200-class exports to case-by-case review,mitigating,true,evidence_ineligible
+h2603_memorypeak,Memory price shock peaks: DRAM +90–95% QoQ,adverse,false,not_operational
 h2604_match,MATCH Act introduced in Congress,adverse,false,not_operational
+h2606_subs,BIS clarifies enforcement of existing overseas-entity chip controls,adverse,false,not_operational
+h2606_mpban,China blacklists U.S. rare-earth champions,adverse,true,evidence_ineligible
 h2607_tsmcq2,TSMC Q2 beats as H1 revenue rises 35.6%,mixed,false,not_operational
+h2607_kumamoto,Kumamoto earthquake disrupts Renesas Kawashiri wafer input; restoration reported,adverse,true,zero_persistence_at_evaluation_date
 p260729_web3084,M7.1 Kumamoto earthquake halts multiple Kyushu semiconductor and auto plants,adverse,false,not_operational
 p260729_web57b8,"TSMC's JASM Kumamoto fab resumes operations after M7.1 earthquake, no structural damage found",mitigating,false,not_operational
 p260729_webfdb0,Samsung signs reported $200B five-year Broadcom foundry deal for 2nm AI accelerators,mixed,false,not_operational
@@ -30,60 +60,105 @@ x1610_note7,Samsung discontinues the Galaxy Note7,mixed,false,not_operational
 x1610_qcomnxp,Qualcomm agrees to acquire NXP for $47B,mixed,false,not_operational
 x1612_aixtron,U.S. blocks the Chinese acquisition of Aixtron,adverse,false,not_operational
 x1701_pcast,PCAST report frames Chinese chip ambitions as a U.S. risk,adverse,false,not_operational
+x1703_dramcycle,Memory supercycle: DRAM contract prices up ~40% in two quarters,adverse,true,evidence_ineligible
 x1708_twblackout,"Island-wide Taiwan blackout (the ""815 outage"")",adverse,false,not_operational
 x1709_toshibamem,Toshiba agrees to sell its memory unit to a Bain-led consortium,mixed,false,not_operational
 x1710_euv,EUV moves to volume: ASML books its first production-scale orders,mitigating,false,not_operational
+x1710_dramtight,Passives and substrate lead times stretch past six months,adverse,true,evidence_ineligible
 x1712_micronumc,Micron sues UMC and Fujian Jinhua over DRAM trade secrets,adverse,false,not_operational
 x1712_ndrcdram,China opens pricing scrutiny of DRAM suppliers,adverse,false,not_operational
 x1803_broadcomqcom,U.S. blocks Broadcom's $117B bid for Qualcomm,adverse,false,not_operational
+x1804_zte,BIS denial order cuts ZTE off from U.S. components,adverse,true,evidence_ineligible
+x1806_mlcc,MLCC shortage peaks with automotive lead times beyond a year,adverse,true,evidence_ineligible
+x1807_zteoff,ZTE supply ban lifted under a settlement,mitigating,true,evidence_ineligible
 x1807_qcomnxpfail,Qualcomm abandons the NXP deal as Chinese approval lapses,mixed,false,not_operational
+x1808_tsmcvirus,Malware halts TSMC fabs for three days,adverse,true,evidence_ineligible
 x1808_ndaa,FY2019 NDAA creates ECRA and FIRRMA,adverse,false,not_operational
 x1808_gf7nm,GlobalFoundries abandons 7nm and exits the leading edge,adverse,false,not_operational
+x1810_jinhua,Fujian Jinhua added to the Entity List,adverse,true,evidence_ineligible
 x1810_memdown,Memory downcycle begins as DRAM prices roll over,mixed,false,not_operational
 x1811_micronindict,DOJ indicts Fujian Jinhua and UMC for trade-secret theft,adverse,false,not_operational
 x1811_anprm,Commerce proposes controls on 14 emerging technologies,adverse,false,not_operational
 x1812_meng,Huawei CFO detained in Vancouver,adverse,false,not_operational
 x1901_applewarn,Apple cuts revenue guidance on China demand,mixed,false,not_operational
 x1904_samsungcut,Memory makers cut output and capex into the glut,mixed,false,not_operational
+x1905_huawei_el,Huawei and 68 affiliates added to the Entity List,adverse,true,evidence_ineligible
+x1905_armgoogle,"Arm, Google and U.S. chipmakers suspend Huawei business",adverse,true,evidence_ineligible
+x1906_kioxiaoutage,Yokkaichi power outage destroys about 6 exabytes of NAND,adverse,true,evidence_ineligible
+x1907_jpkr,Japan restricts three chip materials to South Korea,adverse,true,evidence_ineligible
+x1908_whitelist,Japan removes South Korea from its export white list,adverse,true,evidence_ineligible
+x1908_huaweitgl,46 more Huawei affiliates listed as the temporary licence is extended,adverse,true,evidence_ineligible
+x1911_euvlicense,The Dutch EUV licence for China is never issued,adverse,true,evidence_ineligible
 x1912_5gpull,5G handset ramp pulls RF and substrate demand forward,adverse,false,not_operational
+x2002_covidcn,COVID controls delay China's post-holiday restart,adverse,true,evidence_ineligible
+x2003_lockdowns,Global lockdowns idle auto assembly and cancel chip orders,adverse,true,evidence_ineligible
+x2005_fdpr,Foreign Direct Product Rule targets HiSilicon,adverse,true,evidence_ineligible
 x2005_tsmcaz,TSMC announces its first Arizona fab,mitigating,false,not_operational
+x2008_fdpr2,FDPR expanded: any chip made with U.S. tools needs a Huawei licence,adverse,true,evidence_ineligible
 x2009_nvarm,NVIDIA agrees to buy Arm for $40B,mixed,false,not_operational
+x2009_huaweicut,Huawei chip supply cutoff takes effect; Kirin production ends,adverse,true,evidence_ineligible
+x2009_smicrestrict,Commerce imposes licence requirements on SMIC suppliers,adverse,true,evidence_ineligible
 x2010_amdxilinx,AMD agrees to acquire Xilinx for $35B,mixed,false,not_operational
 x2011_asetest,Backend test and packaging capacity sells out,adverse,false,not_operational
+x2012_autoshort,Automotive chip shortage surfaces as foundry capacity is reallocated,adverse,true,evidence_ineligible
+x2012_smicel,SMIC added to the Entity List with a sub-10nm presumption of denial,adverse,true,evidence_ineligible
+x2101_autocuts,Automakers idle plants worldwide over MCU supply,adverse,true,evidence_ineligible
 x2102_eo14017,Executive Order 14017 orders a 100-day supply-chain review,mitigating,false,not_operational
 x2103_intel20b,Intel launches IDM 2.0 with $20B of Arizona capacity,mitigating,false,not_operational
 x2104_twdrought,Taiwan's worst drought in 56 years forces fab water rationing,adverse,false,not_operational
 x2106_review100,100-day review names semiconductors a critical vulnerability,mitigating,false,not_operational
+x2106_kingyuan,COVID outbreak halts King Yuan Electronics test capacity,adverse,true,evidence_ineligible
+x2108_toyota40,Toyota cuts September global output by 40%,adverse,true,evidence_ineligible
+x2109_cnpower,Chinese power rationing halts substrate and packaging plants,adverse,true,evidence_ineligible
+x2110_abf,ABF substrate shortage becomes the binding constraint,adverse,true,evidence_ineligible
 x2110_tsmcjapan,TSMC confirms a Kumamoto fab with Sony (JASM),mitigating,false,not_operational
+x2112_xian,Xi'an lockdown cuts Samsung and Micron memory output,adverse,true,evidence_ineligible
+x2201_asmlfire,Fire at ASML's Berlin plant hits wafer-clamp supply,adverse,true,evidence_ineligible
 x2201_intelohio,Intel announces a $20B Ohio megafab,mitigating,false,not_operational
 x2202_nvarmdead,NVIDIA's Arm acquisition is abandoned,mixed,false,not_operational
 x2206_memoryglut,Post-pandemic demand reversal turns memory and PC chips to glut,mixed,false,not_operational
+x2208_eda,BIS controls GAAFET EDA plus gallium oxide and diamond substrates,adverse,true,evidence_ineligible
+x2208_a100,NVIDIA and AMD disclose A100/H100/MI250 China licence requirements,adverse,true,evidence_ineligible
+x2210_veu,Korean memory makers receive one-year VEU authorisations for their China fabs,mitigating,true,evidence_ineligible
+x2210_uspersons,U.S.-person restrictions strip engineering support from Chinese fabs,adverse,true,evidence_ineligible
 x2211_rapidus,Japan launches Rapidus to build 2nm by 2027,mitigating,false,not_operational
 x2211_capexcut,Memory makers cut 2023 capex by roughly half,mixed,false,not_operational
 x2212_tsmcaz40,TSMC raises Arizona investment to $40B with a second fab,mitigating,false,not_operational
+x2212_ymtc,YMTC and 21 other Chinese entities added to the Entity List,adverse,true,evidence_ineligible
 x2302_chipsguardrails,CHIPS Act guardrails proposed,adverse,false,not_operational
 x2304_samsungcut23,"Samsung announces a ""meaningful"" memory production cut",mixed,false,not_operational
+x2305_micronban,China bars Micron from critical information infrastructure,adverse,true,evidence_ineligible
 x2307_tsmcazdelay,TSMC delays Arizona fab 1 production to 2025,adverse,false,not_operational
 x2308_outbound,Executive order restricts U.S. outbound investment into Chinese chips,adverse,false,not_operational
 x2309_euchips,EU Chips Act enters into force,mitigating,false,not_operational
+x2310_biren,Biren and Moore Threads added to the Entity List,adverse,true,evidence_ineligible
 x2310_kioxiawd,Kioxia-Western Digital merger talks collapse,mixed,false,not_operational
 x2312_hbmturn,HBM demand inflects and memory pricing turns up,mixed,false,not_operational
+x2401_duvrevoke,Dutch revocation of NXT:2050i/2100i licences takes effect,adverse,true,evidence_ineligible
 x2402_jasm,TSMC's JASM Kumamoto fab 1 opens,mitigating,false,not_operational
 x2403_intelaward,Intel receives up to $8.5B in CHIPS direct funding,mitigating,false,not_operational
 x2404_awards,"TSMC, Samsung and Micron CHIPS awards finalise the U.S. build-out",mitigating,false,not_operational
 x2405_301,Section 301 review doubles tariffs on Chinese legacy chips,adverse,false,not_operational
 x2407_fdprleak,Reported FDPR plans for allied toolmakers hit chip equities,adverse,false,not_operational
+x2409_gaafet,"BIS controls quantum, GAAFET and advanced additive technologies",adverse,true,evidence_ineligible
 x2410_asmlbookings,ASML cuts 2025 bookings guidance in an early-released quarter,mixed,false,not_operational
+x2411_tsmcchina7nm,TSMC suspends sub-7nm AI/HPC supply to mainland Chinese designers,adverse,true,evidence_ineligible
 x2412_nvidiaprobe,China opens an antitrust investigation into NVIDIA,adverse,false,not_operational
+x2501_foundryrule,BIS foundry and packaging due-diligence rule plus 16 entity additions,adverse,true,evidence_ineligible
+x2502_tungsten,"China controls tungsten, tellurium, bismuth, indium and molybdenum",adverse,true,evidence_ineligible
 x2503_tsmc100,TSMC commits an additional $100B to U.S. capacity,mitigating,false,not_operational
 x2504_tariffs,Reciprocal tariff package lands with a semiconductor carve-out,mixed,false,not_operational
 x2504_232,Section 232 investigation into semiconductor imports opens,adverse,false,not_operational
 x2505_gulf,U.S. Gulf AI agreements clear large accelerator deployments,mitigating,false,not_operational
-x2505_eda,EDA vendors ordered to halt China sales without licences,adverse,true,zero_persistence_at_evaluation_date
+x2505_eda,EDA vendors ordered to halt China sales without licences,adverse,true,evidence_ineligible
+x2506_reelicense,China agrees to expedite rare-earth licences under the London framework,mitigating,true,evidence_ineligible
+x2507_edalift,EDA restrictions on China are lifted,mitigating,true,evidence_ineligible
 x2507_malaysia,Malaysia requires permits for re-exporting U.S.-origin AI chips,adverse,false,not_operational
 x2508_revshare,NVIDIA and AMD accept a 15% China revenue-share arrangement,mixed,false,not_operational
+x2509_affiliates,BIS extends Entity List restrictions to majority-owned affiliates,adverse,true,evidence_ineligible
 x2510_ports,China imposes special port fees on U.S.-linked vessels,adverse,false,not_operational
 p260804_man0804,"Kyushu fabs restart after M7.1 quake: Sony phases output back from Aug 4, Renesas Kawashiri resumes",mitigating,false,not_operational
+p260807_man0807,DDR4 spot hits record $42.45 as memory makers reallocate capacity to HBM,adverse,false,not_operational
 p260819_man0819,Samsung raises 4/5/8nm foundry prices 10–15% as leading-edge capacity tightens,mixed,false,not_operational
 p260821_web8e15,Report: SK Hynix weighing first memory fab in Japan's Miyagi Prefecture,mitigating,false,not_operational
 p260820_web771c,"Samsung raises 4nm/5nm foundry prices ~15% on new orders amid AI capacity tightness, alongside Taylor fab acceleration",mixed,false,not_operational

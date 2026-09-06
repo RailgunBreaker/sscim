@@ -8,6 +8,8 @@ Produced by `node docs/computation-demo/validation/mle-validation.mjs`
 (`npm run recovery`). Artefacts: `validation-results.json`,
 `mle_replications.csv`, `mc_robustness_draws.csv`, all in this folder.
 
+> **Preserved pre-review experiment.** The numeric artifacts on this page used the original September 4 dataset before the public-review evidence correction. They remain unchanged to preserve that experiment; their operational headline is not the current factual baseline. Current uncertainty is in [the public-review report](../../PUBLIC_RESEARCH_REVIEW.md). Synthetic recoverability does not validate real-world inputs.
+
 ## Provenance
 
 This page and the machine-readable artefacts beside it are recomputed

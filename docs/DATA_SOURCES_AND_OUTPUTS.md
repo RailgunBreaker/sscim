@@ -52,7 +52,7 @@ A country marker cannot answer the question an earthquake asks, because a hazard
 
 A hazard footprint runs through the identical propagation engine every recorded event uses, so its Δ is comparable with the index it modifies. Severity stays the operator's input: the site layer says what is exposed, not how hard it was hit.
 
-**The hazard overlay is now the only hypothesis the dashboard states.** The preset scenario library, the draft composer, the scenario builder modal and the propagation playback controls have been removed. What replaced them is not another way to invent an event but the question the data can actually answer: *history review*, which re-derives the whole model — map, stage fields, country readings, index — as it stood on any past date, using the engine's own back-dating rule. A reviewed date is a real past state of the record; a hazard is a bounded screening hypothesis you place yourself. The interface keeps the three states (live, reviewed, hazard) visually distinct because the worst failure mode of a model like this is a reader quoting a hypothetical number as an observed one.
+**The hazard overlay is now the only hypothesis the dashboard states.** The preset scenario library, the draft composer, the scenario builder modal and the propagation playback controls have been removed. What replaced them is not another way to invent an event but the question the data can actually answer: *history review*, which re-derives the whole model — map, stage fields, country readings, index — using the current network and model for a past date, using the engine's own back-dating rule. A reviewed date is a current-model retrospective replay; a hazard is a bounded screening hypothesis you place yourself. The interface keeps the three states (live, reviewed, hazard) visually distinct because the worst failure mode of a model like this is a reader quoting a hypothetical number as an observed one.
 
 ### Every site has a standardized profile
 
@@ -119,3 +119,8 @@ This is a meaningfully improved snapshot, not a fully sourced production databas
 - [Data pipeline](computation-demo/DATA_PIPELINE.md) — each input's candidate feed and its automation ceiling.
 - [Real-data example](computation-demo/REAL_DATA_EXAMPLE.md) — an end-to-end run on genuinely fetched data.
 - [Model roadmap](MODEL_ROADMAP.md) — the missing data layer.
+
+
+## Public research review correction — 2026-09-06
+
+Application patch 0.7.2 retains the v7.1 model identifier and global defaults; the data revision is `public-review-2026-09-06`. The factual baseline excludes unresolved claims independently of confidence. Exposure magnitudes remain explicit assumptions. Company coefficients have unresolved denominators and rankings are illustrative. Recovery evidence applies only to the documented component after publication. Historical calculations are **current-model retrospective replay**, distinct from archived contemporaneous outputs and genuine point-in-time validation requiring dated input vintages. Missing coverage and neutral scores do not establish safety. See the [implementation report](PUBLIC_RESEARCH_REVIEW.md) and [canonical specification](MODEL_V7_SPEC.md).

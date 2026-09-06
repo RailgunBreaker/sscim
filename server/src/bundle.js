@@ -1,5 +1,6 @@
 import { db } from './db.js';
 import { getMetaBundle } from './meta.js';
+import { getMeasurementLedger } from './measurement-ledger.js';
 
 /* Reads the whole vault out of SQLite in the wire format the dashboard
    consumes. Shared by the live API (routes/public.js) and the static-snapshot
@@ -25,11 +26,15 @@ export function getCountries() {
    because the map needs every site the moment a hazard radius is drawn, and the
    whole table is ~20KB of JSON — smaller than one briefing body. */
 export function getFacilities() {
+  const evidenceRows = db.prepare("SELECT name FROM sqlite_master WHERE name='facility_evidence'").get()
+    ? db.prepare('SELECT facility_id, evidence_json FROM facility_evidence').all() : [];
+  const evidence = Object.fromEntries(evidenceRows.map(r => [r.facility_id, JSON.parse(r.evidence_json)]));
   return db.prepare('SELECT * FROM facilities ORDER BY id').all().map((f) => ({
     id: f.id, name: f.name, company: f.company_id, country: f.country,
     lat: f.lat, lng: f.lng, kind: f.kind, stages: JSON.parse(f.stages_json), scale: f.scale,
     output: f.output, node: f.node, waferSize: f.wafer_size,
     status: f.status, since: f.since, source: f.source,
+    evidence: evidence[f.id] || null, scaleBasis: 'analyst ordinal; not measured capacity', linkBasis: 'derived relationships; not confirmed shipments',
   }));
 }
 export function getCompanies() {
@@ -53,8 +58,11 @@ export function getPolicies() {
   return db.prepare('SELECT * FROM policies').all().map((p) => ({ id: p.id, name: p.name, sev: p.sev, stages: JSON.parse(p.stages_json) }));
 }
 export function getEvents() {
+  const evidence = new Map(db.prepare('SELECT event_id, evidence_json FROM event_evidence ORDER BY recorded_at, revision').all()
+    .map((r) => [r.event_id, JSON.parse(r.evidence_json)]));
   return db.prepare('SELECT * FROM events').all().map((e) => ({
-    id: e.id, date: e.date, daysAgo: e.days_ago, sev: e.sev, type: e.type, conf: e.conf,
+    id: e.id, date: e.date, dateISO: e.date_iso, daysAgo: e.days_ago, sev: e.sev, type: e.type, conf: e.conf,
+    recordKind: 'factual', evidence: evidence.get(e.id) || null,
     title: e.title, summary: e.summary, first: e.first, second: e.second, watch: e.watch,
     detail: e.detail, source: e.source,
     /* Provenance is published, not implied. 'automatic' means triage
@@ -143,6 +151,7 @@ export function buildBundle() {
     events: getEvents(),
     scenarios: getScenarios(),
     dataNotes: getDataNotes(),
+    measurementEvidence: getMeasurementLedger(db),
     quotes: getQuotes(),
     briefings: getBriefingIndex(),
     briefingBodies: getBriefingBodies(),

@@ -1,0 +1,91 @@
+record,title,direction,operational,reason
+e3,Elevated military activity around Taiwan Strait,adverse,false,not_operational
+e5,Major memory maker trims 2026 capex,mixed,false,not_operational
+e6,Japan approves next Rapidus funding tranche,adverse,false,not_operational
+h2208_strait22,PLA live-fire exercises encircle Taiwan,adverse,false,not_operational
+h2208_chips,U.S. CHIPS and Science Act signed,mitigating,false,not_operational
+h2301_alliance,U.S.–Japan–Netherlands align on tool controls,adverse,false,not_operational
+h2308_mate60,Huawei Mate 60 Pro ships SMIC 7nm silicon,mixed,false,not_operational
+h2501_diffusion,AI Diffusion rule sets worldwide GPU tiers,adverse,false,not_operational
+h2501_deepseek,DeepSeek R1 efficiency shock,mixed,false,not_operational
+h2509_nexperia,Nexperia seizure triggers auto-chip crisis,adverse,true,zero_persistence_at_evaluation_date
+h2512_yilan,M7.0 Yilan quake — fabs ride it out,adverse,false,not_operational
+h2604_match,MATCH Act introduced in Congress,adverse,false,not_operational
+h2607_tsmcq2,TSMC Q2 beats as H1 revenue rises 35.6%,mixed,false,not_operational
+p260729_web3084,M7.1 Kumamoto earthquake halts multiple Kyushu semiconductor and auto plants,adverse,false,not_operational
+p260729_web57b8,"TSMC's JASM Kumamoto fab resumes operations after M7.1 earthquake, no structural damage found",mitigating,false,not_operational
+p260729_webfdb0,Samsung signs reported $200B five-year Broadcom foundry deal for 2nm AI accelerators,mixed,false,not_operational
+p260729_web1ae0,"M7.1 Kumamoto earthquake halts Renesas, Sony and Tokyo Electron plants; Toyota and Honda suspend Kyushu output",adverse,false,not_operational
+p260729_webaa64,"Kumamoto M7.1: TSMC JASM confirmed safe, Tokyo Electron suspends both Kumamoto plants for inspection",adverse,false,not_operational
+p260728_usgtgb9,M7.1 Kumamoto earthquake halts multiple Kyushu semiconductor fabs,adverse,false,not_operational
+p260729_web2ef3,TSMC Fab 20 reaches 20k wpm on 2nm as leading-edge capacity ramps,mitigating,false,not_operational
+p260729_web807f,Thailand launches 'Siam Silica' national semiconductor framework targeting 2030 fabs and ASEAN integration,mitigating,false,not_operational
+p260729_web6934,Sony halts Kumamoto image-sensor fab indefinitely after Kyushu earthquake,adverse,false,not_operational
+p260728_web4420,BIS investigating possible Blackwell export violations to China; Huang meets Commerce Secretary,adverse,false,not_operational
+p260728_webef0b,Chinese state-backed firm begins producing domestic immersion DUV lithography tools,mixed,false,not_operational
+p260714_fed4132,"BIS moves UAE to Country Group A:5, granting license-free access to advanced computing items",mitigating,false,not_operational
+p260729_webbe69,"Korea pursues up to $950B in US memory supply partnerships (Samsung, SK hynix) — not yet contracted",mitigating,false,not_operational
+x1609_armsb,SoftBank completes its $32B acquisition of Arm,mixed,false,not_operational
+x1610_note7,Samsung discontinues the Galaxy Note7,mixed,false,not_operational
+x1610_qcomnxp,Qualcomm agrees to acquire NXP for $47B,mixed,false,not_operational
+x1612_aixtron,U.S. blocks the Chinese acquisition of Aixtron,adverse,false,not_operational
+x1701_pcast,PCAST report frames Chinese chip ambitions as a U.S. risk,adverse,false,not_operational
+x1708_twblackout,"Island-wide Taiwan blackout (the ""815 outage"")",adverse,false,not_operational
+x1709_toshibamem,Toshiba agrees to sell its memory unit to a Bain-led consortium,mixed,false,not_operational
+x1710_euv,EUV moves to volume: ASML books its first production-scale orders,mitigating,false,not_operational
+x1712_micronumc,Micron sues UMC and Fujian Jinhua over DRAM trade secrets,adverse,false,not_operational
+x1712_ndrcdram,China opens pricing scrutiny of DRAM suppliers,adverse,false,not_operational
+x1803_broadcomqcom,U.S. blocks Broadcom's $117B bid for Qualcomm,adverse,false,not_operational
+x1807_qcomnxpfail,Qualcomm abandons the NXP deal as Chinese approval lapses,mixed,false,not_operational
+x1808_ndaa,FY2019 NDAA creates ECRA and FIRRMA,adverse,false,not_operational
+x1808_gf7nm,GlobalFoundries abandons 7nm and exits the leading edge,adverse,false,not_operational
+x1810_memdown,Memory downcycle begins as DRAM prices roll over,mixed,false,not_operational
+x1811_micronindict,DOJ indicts Fujian Jinhua and UMC for trade-secret theft,adverse,false,not_operational
+x1811_anprm,Commerce proposes controls on 14 emerging technologies,adverse,false,not_operational
+x1812_meng,Huawei CFO detained in Vancouver,adverse,false,not_operational
+x1901_applewarn,Apple cuts revenue guidance on China demand,mixed,false,not_operational
+x1904_samsungcut,Memory makers cut output and capex into the glut,mixed,false,not_operational
+x1912_5gpull,5G handset ramp pulls RF and substrate demand forward,adverse,false,not_operational
+x2005_tsmcaz,TSMC announces its first Arizona fab,mitigating,false,not_operational
+x2009_nvarm,NVIDIA agrees to buy Arm for $40B,mixed,false,not_operational
+x2010_amdxilinx,AMD agrees to acquire Xilinx for $35B,mixed,false,not_operational
+x2011_asetest,Backend test and packaging capacity sells out,adverse,false,not_operational
+x2102_eo14017,Executive Order 14017 orders a 100-day supply-chain review,mitigating,false,not_operational
+x2103_intel20b,Intel launches IDM 2.0 with $20B of Arizona capacity,mitigating,false,not_operational
+x2104_twdrought,Taiwan's worst drought in 56 years forces fab water rationing,adverse,false,not_operational
+x2106_review100,100-day review names semiconductors a critical vulnerability,mitigating,false,not_operational
+x2110_tsmcjapan,TSMC confirms a Kumamoto fab with Sony (JASM),mitigating,false,not_operational
+x2201_intelohio,Intel announces a $20B Ohio megafab,mitigating,false,not_operational
+x2202_nvarmdead,NVIDIA's Arm acquisition is abandoned,mixed,false,not_operational
+x2206_memoryglut,Post-pandemic demand reversal turns memory and PC chips to glut,mixed,false,not_operational
+x2211_rapidus,Japan launches Rapidus to build 2nm by 2027,mitigating,false,not_operational
+x2211_capexcut,Memory makers cut 2023 capex by roughly half,mixed,false,not_operational
+x2212_tsmcaz40,TSMC raises Arizona investment to $40B with a second fab,mitigating,false,not_operational
+x2302_chipsguardrails,CHIPS Act guardrails proposed,adverse,false,not_operational
+x2304_samsungcut23,"Samsung announces a ""meaningful"" memory production cut",mixed,false,not_operational
+x2307_tsmcazdelay,TSMC delays Arizona fab 1 production to 2025,adverse,false,not_operational
+x2308_outbound,Executive order restricts U.S. outbound investment into Chinese chips,adverse,false,not_operational
+x2309_euchips,EU Chips Act enters into force,mitigating,false,not_operational
+x2310_kioxiawd,Kioxia-Western Digital merger talks collapse,mixed,false,not_operational
+x2312_hbmturn,HBM demand inflects and memory pricing turns up,mixed,false,not_operational
+x2402_jasm,TSMC's JASM Kumamoto fab 1 opens,mitigating,false,not_operational
+x2403_intelaward,Intel receives up to $8.5B in CHIPS direct funding,mitigating,false,not_operational
+x2404_awards,"TSMC, Samsung and Micron CHIPS awards finalise the U.S. build-out",mitigating,false,not_operational
+x2405_301,Section 301 review doubles tariffs on Chinese legacy chips,adverse,false,not_operational
+x2407_fdprleak,Reported FDPR plans for allied toolmakers hit chip equities,adverse,false,not_operational
+x2410_asmlbookings,ASML cuts 2025 bookings guidance in an early-released quarter,mixed,false,not_operational
+x2412_nvidiaprobe,China opens an antitrust investigation into NVIDIA,adverse,false,not_operational
+x2503_tsmc100,TSMC commits an additional $100B to U.S. capacity,mitigating,false,not_operational
+x2504_tariffs,Reciprocal tariff package lands with a semiconductor carve-out,mixed,false,not_operational
+x2504_232,Section 232 investigation into semiconductor imports opens,adverse,false,not_operational
+x2505_gulf,U.S. Gulf AI agreements clear large accelerator deployments,mitigating,false,not_operational
+x2505_eda,EDA vendors ordered to halt China sales without licences,adverse,true,zero_persistence_at_evaluation_date
+x2507_malaysia,Malaysia requires permits for re-exporting U.S.-origin AI chips,adverse,false,not_operational
+x2508_revshare,NVIDIA and AMD accept a 15% China revenue-share arrangement,mixed,false,not_operational
+x2510_ports,China imposes special port fees on U.S.-linked vessels,adverse,false,not_operational
+p260804_man0804,"Kyushu fabs restart after M7.1 quake: Sony phases output back from Aug 4, Renesas Kawashiri resumes",mitigating,false,not_operational
+p260819_man0819,Samsung raises 4/5/8nm foundry prices 10–15% as leading-edge capacity tightens,mixed,false,not_operational
+p260821_web8e15,Report: SK Hynix weighing first memory fab in Japan's Miyagi Prefecture,mitigating,false,not_operational
+p260820_web771c,"Samsung raises 4nm/5nm foundry prices ~15% on new orders amid AI capacity tightness, alongside Taylor fab acceleration",mixed,false,not_operational
+p260820_web17aa,"Samsung pulls forward equipment certification for second Taylor, Texas fab targeting 2030 production",mitigating,false,not_operational
+p260820_web147f,"Micron commits $10B over a decade to a memory/AI research facility in Boise, Idaho",mitigating,false,not_operational

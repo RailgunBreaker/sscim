@@ -39,7 +39,7 @@ fitted to nothing.
 - **Functional-centre topology** — 126 country × stage centres and 1,030
   modeled connections, with routes, reachability, betweenness, and reversible
   node/edge removal.
-- **History review** — the chain as it stood on any past date, recomputed by
+- **History review** — current-model retrospective replay on past dates, recomputed by
   engine replay rather than read from a stored series.
 - **Hazard screening** — which named plants a footprint touches, what share of
   each chain step they carry, and which modeled links it would sever.
@@ -288,3 +288,8 @@ here as all-rights-reserved.
 this blocks, why it was not resolved, the options, the two decisions that travel
 with it (the curated dataset's terms, and inbound contribution terms), and the
 five steps that close it.
+
+
+## Public research review correction — 2026-09-06
+
+Application patch 0.7.2 retains the v7.1 model identifier and global defaults; the data revision is `public-review-2026-09-06`. The factual baseline excludes unresolved claims independently of confidence. Exposure magnitudes remain explicit assumptions. Company coefficients have unresolved denominators and rankings are illustrative. Recovery evidence applies only to the documented component after publication. Historical calculations are **current-model retrospective replay**, distinct from archived contemporaneous outputs and genuine point-in-time validation requiring dated input vintages. Missing coverage and neutral scores do not establish safety. See the [implementation report](docs/PUBLIC_RESEARCH_REVIEW.md) and [canonical specification](docs/MODEL_V7_SPEC.md).

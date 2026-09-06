@@ -93,3 +93,6 @@ Describe SSCIM by repository commit and snapshot date. The commit and date below
 - [Model roadmap](MODEL_ROADMAP.md) — the data layer required before calibration is meaningful.
 - [Data sources, inputs, and outputs](DATA_SOURCES_AND_OUTPUTS.md) — provenance of every input.
 - [v6 archive](archive/v6/README.md) — the superseded model, preserved with a historical warning.
+
+
+Public-review correction (application 0.7.2): the current export uses claim-level evidence eligibility and scoped, dated recovery. Original pre-review CSVs remain in `before-public-review-79289b1/` beside the current computation export. Exposure and company coefficients are assumptions with missing or incompatible measurement denominators. Historical values are current-model retrospective replay, not actual archived publications or point-in-time validation. See [current implementation and evidence report](PUBLIC_RESEARCH_REVIEW.md).

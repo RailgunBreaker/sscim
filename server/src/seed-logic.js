@@ -7,6 +7,7 @@ import { DATA_NOTES } from './data-notes.js';
 import { HISTORY_EVENTS, daysAgoOf } from './history-events.js';
 import { DECADE_EVENTS } from './decade-events.js';
 import { FACILITIES } from './facilities-data.js';
+import { syncEventEvidence } from './event-evidence.js';
 
 const TABLES = ['countries', 'stages', 'flow_edges', 'tier_labels', 'companies', 'facilities', 'customers', 'owners', 'policies', 'events', 'scenarios', 'data_notes'];
 
@@ -88,6 +89,7 @@ export const seedAll = db.transaction(() => {
 
   const insNote = db.prepare('INSERT INTO data_notes (scope, tier, note, source) VALUES (@scope, @tier, @note, @source)');
   for (const n of DATA_NOTES) insNote.run(n);
+  syncEventEvidence();
 });
 
 export function seedCounts() {

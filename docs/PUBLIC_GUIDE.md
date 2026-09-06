@@ -18,7 +18,7 @@ Chips are made through a long chain: research and design, then raw materials, th
 3. **Follow the selection across all three views.** Selecting anything in one view highlights the corresponding elements in the other two.
 4. **Treat a high score as a question to investigate, not an answer.** It tells you where the model thinks you should look.
 5. **Track what you actually care about.** The ★ WATCH tab lets you follow specific companies, products (chain stages), plants, or a route through the chain, so your daily view is your own supply base rather than the whole world. The list is kept in your browser and is never put into a shared link.
-6. **Review the past when a number surprises you.** The history slider re-derives the entire model as it stood on any past date, and each event marker is sized by what that event actually contributed to the index on its own day.
+6. **Review the past when a number surprises you.** The history slider re-derives the entire model using the current network and model for a past date, and each event marker is sized by the nonadditive incident-removal difference in the retrospective calculation.
 
 ## The three views
 
@@ -83,3 +83,8 @@ SSCIM is a research aid. It is not investment, legal, or operational advice.
 - [**Model v7 specification**](MODEL_V7_SPEC.md) — the exact, canonical definition of every number on the screen, including a worked example you can reproduce with a calculator.
 - [Computation demo](computation-demo/COMPUTATION_DEMO.md) — the live engine's own tables, exported as CSV.
 - [Model roadmap](MODEL_ROADMAP.md) — what the model does not yet know, stated plainly.
+
+
+## Public research review correction — 2026-09-06
+
+Application patch 0.7.2 retains the v7.1 model identifier and global defaults; the data revision is `public-review-2026-09-06`. The factual baseline excludes unresolved claims independently of confidence. Exposure magnitudes remain explicit assumptions. Company coefficients have unresolved denominators and rankings are illustrative. Recovery evidence applies only to the documented component after publication. Historical calculations are **current-model retrospective replay**, distinct from archived contemporaneous outputs and genuine point-in-time validation requiring dated input vintages. Missing coverage and neutral scores do not establish safety. See the [implementation report](PUBLIC_RESEARCH_REVIEW.md) and [canonical specification](MODEL_V7_SPEC.md).

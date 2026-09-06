@@ -12,7 +12,7 @@ Only the row marked **current** describes what the code does now.
 | --- | --- | --- | --- |
 | **Public version** | v6 | v7.0 | **v7.1** |
 | **Model identifier** | `sscim-model-v6-client-sensitivity` | `sscim-model-v7-exposure-robustness` | `sscim-model-v7.1-exposure-robustness` |
-| **Application version** | `0.0.0` | `0.0.0` | `0.7.1` |
+| **Application version** | `0.0.0` | `0.0.0` | `0.7.2` |
 | **Dataset as-of** | `2026-08-29` | `2026-09-04` | `2026-09-04` |
 | **Source commit** | `7749dc869d76a70fa1a4c09928c96f4a2c2e14cc` | `a737f6963dbf75d08e9d2f70f4f57c7eff1eabf5` | see [Why v7.1 has no commit here](#why-v71-has-no-commit-in-that-row) |
 | **Specification** | [`archive/v6/CALCULATION-v6.md`](archive/v6/CALCULATION-v6.md) | [`archive/v7.0/MODEL_V7.0_SPEC.md`](archive/v7.0/MODEL_V7.0_SPEC.md) | [`MODEL_V7_SPEC.md`](MODEL_V7_SPEC.md) |
@@ -21,7 +21,7 @@ Only the row marked **current** describes what the code does now.
 | **Validation artefact** | none | [`archive/v7.0/validation/`](archive/v7.0/validation/SYNTHETIC_PARAMETER_RECOVERY.md) | [`computation-demo/validation/`](computation-demo/validation/SYNTHETIC_PARAMETER_RECOVERY.md) |
 | **Worked demonstration** | [`archive/v6/COMPUTATION_DEMO-v6.md`](archive/v6/COMPUTATION_DEMO-v6.md) (dataset `2026-07-29`) | §7 of its specification | [`computation-demo/COMPUTATION_DEMO.md`](computation-demo/COMPUTATION_DEMO.md) |
 | **Status** | superseded | superseded | **current** |
-| **Headline chain index** | 5.395609 (dataset `2026-08-29`) | 6.027797 (dataset `2026-09-04`) | 6.027797 (dataset `2026-09-04`) |
+| **Headline chain index** | 5.395609 (dataset `2026-08-29`) | 6.027797 (dataset `2026-09-04`) | Original 6.027797; corrected 5.084617 (data revision public-review-2026-09-06) |
 
 ## Numerical compatibility
 
@@ -64,7 +64,7 @@ output surface** instead:
 | --- | --- |
 | Model | `sscim-model-v7.1-exposure-robustness` |
 | Dataset | `2026-09-04` |
-| Output digest | `sha256:9b0feb59d61245e85c6f75d9e06b27ae4add86bbfc96eae2b6441d8ff1643c85` |
+| Output digest | `sha256:126ac621c0d36cb428fc6bc1db25266290369be2a48a87f8d6307d58bb53451b` |
 <!-- END GENERATED: model-digest -->
 
 Recompute it with `npm run digest`. It covers the declared parameter values,
@@ -124,3 +124,6 @@ conventions; they are checks.
 9. Every path named in this file exists.
 10. v6-only formulas remain permitted inside clearly marked v6 payloads, and
     nowhere else.
+
+
+Application patch 0.7.2 corrects evidence eligibility, source scope, component recovery and uncertainty reporting while retaining the v7.1 comparative-exposure formulas and global parameter defaults. This is a documented correction with a separate data revision, not a v8 redesign. The original v7.1 output is preserved in [before-review reproduction](benchmarks/public-review-before-79289b1.json). Compatibility claims above refer to the original fixture; corrected operational outputs and replay differ because eligible inputs changed.

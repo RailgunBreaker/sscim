@@ -110,3 +110,6 @@ METI and MOFCOM announcement pages (translation + review), TWSE/KRX/JPX filings 
 2. **Next:** EDGAR full-text extraction for customer-concentration notes and 8-K event discovery, with the review queue.
 3. **Then (budget-dependent):** one tracker license (TrendForce covers foundry/HBM/DRAM/NAND — the highest-value shares) to automate `03`/`08` refresh; SPLC/Revere if `09` coverage becomes a product priority.
 4. **Throughout:** every automated write lands a `data_notes` citation, so `npm run audit:data`'s "uncited figures" count becomes the pipeline's coverage KPI (today: 20/24 stages, 105/109 companies uncited).
+
+
+Public-review correction (application 0.7.2): the current export uses claim-level evidence eligibility and scoped, dated recovery. Original pre-review CSVs remain in `before-public-review-79289b1/` beside the current computation export. Exposure and company coefficients are assumptions with missing or incompatible measurement denominators. Historical values are current-model retrospective replay, not actual archived publications or point-in-time validation. See [current implementation and evidence report](../PUBLIC_RESEARCH_REVIEW.md).

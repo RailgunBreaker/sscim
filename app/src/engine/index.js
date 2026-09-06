@@ -303,11 +303,17 @@ export function buildEngine({ STAGES, FLOW_EDGES, COMPANIES, CUSTOMERS, POLICIES
 
   const assumptionOf = (e) => e?.assumption || getEventAssumption(e?.id);
   const curatedModelOf = (e) => e?.model || EVENT_MODEL[e?.id] || null;
+  const sourceAssumptionOf = (e, role = e?.incidentRole || incidentOf(e?.id)?.role) => {
+    const assumption = assumptionOf(e);
+    return role && role !== 'primary'
+      ? { ...assumption, operational: false, reason: 'Incident update or recovery; source belongs to the primary record.' }
+      : assumption;
+  };
 
   /* Build one incident's source vector + propagated field. */
   function incidentField(incident, params = PARAMS) {
     const e = incident.primary;
-    const assumption = assumptionOf(e);
+    const assumption = sourceAssumptionOf(e, incident.primaryRole);
     const source = incidentSourceVector({
       event: e, assumption, ageDays: e.daysAgo ?? 0, params, curated: curatedModelOf(e),
     });
@@ -327,7 +333,7 @@ export function buildEngine({ STAGES, FLOW_EDGES, COMPANIES, CUSTOMERS, POLICIES
      contributes nothing to the aggregate — that is what deduplication
      means — so its own field is reported as zero with the reason. */
   function eventField(e, params = PARAMS) {
-    const assumption = assumptionOf(e);
+    const assumption = sourceAssumptionOf(e);
     const source = incidentSourceVector({
       event: e, assumption, ageDays: e.daysAgo ?? 0, params, curated: curatedModelOf(e),
     });
@@ -352,7 +358,7 @@ export function buildEngine({ STAGES, FLOW_EDGES, COMPANIES, CUSTOMERS, POLICIES
   /* Playback trace for one record — the companion to eventField(); its
      `field` equals eventField(e).field exactly. */
   function eventTrace(e, params = PARAMS) {
-    const assumption = assumptionOf(e);
+    const assumption = sourceAssumptionOf(e);
     const source = incidentSourceVector({
       event: e, assumption, ageDays: e.daysAgo ?? 0, params, curated: curatedModelOf(e),
     });
@@ -728,7 +734,7 @@ export function buildEngine({ STAGES, FLOW_EDGES, COMPANIES, CUSTOMERS, POLICIES
     let scoredIncidents = 0;
     for (const inc of incidents) {
       const e = inc.primary;
-      const assumption = assumptionOf(e);
+      const assumption = sourceAssumptionOf(e, inc.primaryRole);
       const source = incidentSourceVector({ event: e, assumption, ageDays: e.daysAgo ?? 0, params: PARAMS, curated: curatedModelOf(e) });
       source.diagnostics.forEach((d) => bump(d.code, d.id, d.detail));
       if (source.scored) scoredIncidents += 1;
@@ -761,9 +767,9 @@ export function buildEngine({ STAGES, FLOW_EDGES, COMPANIES, CUSTOMERS, POLICIES
     EVENTS.filter((e) => assumptionOf(e).operational && !curatedModelOf(e) && uniqueStages(e).length > 0).map((e) => e.id),
   );
   /* How many contributing incidents at a past date are running on
-     fallbacks. Zero means the date is fully curated. */
+     fallbacks. Zero does not establish complete historical evidence coverage. */
   const fallbackCountAt = (t) => eventsAsOf(t)
-    .filter((e) => assumptionOf(e).operational && uniqueStages(e).length && LEGACY_FALLBACK_IDS.has(e.id)).length;
+    .filter((e) => LEGACY_FALLBACK_IDS.has(e.id) && eventField(e).scored).length;
 
   /* A missing profile or exposure on an ACTIVE operational incident is a
      hard defect, not a footnote — the audit script fails the build on it. */

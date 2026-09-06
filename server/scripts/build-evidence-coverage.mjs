@@ -50,6 +50,8 @@ import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { db } from '../src/db.js';
 import { MODEL_VERSION } from '../../app/src/engine/registry.js';
+import { getEvents } from '../src/bundle.js';
+import { factualEligibility } from '../../app/src/engine/evidence.js';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const OUT = resolve(HERE, '..', '..', 'docs', 'reference', 'EVIDENCE-COVERAGE.md');
@@ -86,6 +88,12 @@ const eventClasses = {
   short: events.filter((e) => !hasUrl(e.source) && !FR_RE.test(e.source || '') && (e.source || '').trim()),
   none: events.filter((e) => !(e.source || '').trim()),
 };
+const resolved = { ...JSON.parse(readFileSync(resolve(HERE, '../src/resolved-citations.json'), 'utf8')), ...JSON.parse(readFileSync(resolve(HERE, '../src/resolved-citations-sec.json'), 'utf8')) };
+const resolvedRecords = events.filter(e => resolved[e.id]);
+const rawOrResolved = events.filter(e => hasUrl(e.source) || resolved[e.id]);
+const ledgerEvents = getEvents();
+const reviewedClaims = ledgerEvents.filter(e => e.evidence?.occurrence?.status === 'verified');
+const eligibleClaims = ledgerEvents.filter(e => factualEligibility(e, SNAPSHOT_DATE).eligible);
 
 const provenance = events.reduce((a, e) => { a[e.provenance || 'legacy'] = (a[e.provenance || 'legacy'] || 0) + 1; return a; }, {});
 
@@ -146,7 +154,7 @@ each is stated with its own scope.
 | **Graph integrity** | The stage graph is acyclic and connected; declared shares sum sensibly | Enforced on every build; residuals reported as warnings | Nothing about whether any value is correct |
 | **Citation completeness** | Whether each figure carries a source, and how complete that source is | Counted below | Whether the source supports the claim |
 | **Source quality** | Whether the source is authoritative for the claim attached to it | Recorded per entry where a curator has judged it; see the evidence-tier notes | Not inferred from the presence of a URL |
-| **Factual validation** | Whether the number is correct | **Not established.** No figure in this dataset has been checked against an independent measurement | Everything |
+| **Factual validation** | Whether each attached claim is supported | ${reviewedClaims.length} occurrence claims reviewed against original documents; numerical exposure remains assumed | No independent outcome calibration or comprehensive coverage |
 
 A passing data audit means the records are *well-formed and internally
 consistent*. It is a structural audit. It is not factual validation, and
@@ -156,13 +164,25 @@ this project does not claim otherwise.
 
 | Class | Count | Share | What the record carries |
 | --- | ---: | ---: | --- |
-| **Full** | ${eventClasses.full.length} | ${pct(eventClasses.full.length, events.length)} | A resolvable URL, plus the feed or publisher that supplied it |
+| **Full** | ${eventClasses.full.length} | ${pct(eventClasses.full.length, events.length)} | A URL is present; this count does not establish access or claim support |
 | **Legal** | ${eventClasses.legal.length} | ${pct(eventClasses.legal.length, events.length)} | An exact *Federal Register* volume and page — complete by Chicago's convention for government material |
 | **Short** | ${eventClasses.short.length} | ${pct(eventClasses.short.length, events.length)} | Issuing body, document type and date only. Hand-curated historical records for which no published document was found |
 | **Uncited** | ${eventClasses.none.length} | ${pct(eventClasses.none.length, events.length)} | No source recorded |
 
 See the [source register](SOURCE-REGISTER.md) for each entry, and for why a
 short entry stays short rather than acquiring an invented title.
+
+### Resolved citations and factual baseline eligibility
+
+Raw source URLs: **${eventClasses.full.length}/${events.length}**. Separately resolved bibliographic records: **${resolvedRecords.length}/${events.length}**. Union of raw URL or separately resolved citation: **${rawOrResolved.length}/${events.length}**. These overlap and must not be added. The source register uses the resolved entries when available; the raw table above counts only the original source field.
+
+Verified occurrence claims: **${reviewedClaims.length}/${events.length}**. Factual-baseline eligible at ${SNAPSHOT_DATE}: **${eligibleClaims.length}/${events.length}**. Eligibility does not imply nonzero persistence: a recovered site can be eligible and inactive. Other records remain context or unresolved. A lower index after exclusion is a data correction, not evidence of lower real-world risk.
+
+| Record | Occurrence | Operational status | Exposure | Factual eligibility |
+| --- | --- | --- | --- | --- |
+${ledgerEvents.filter(e => e.evidence?.review?.verifiedAt).map(e => `| ${e.id} | ${e.evidence.occurrence.status} | ${e.evidence.operationalStatus.status} | ${e.evidence.exposure.status} | ${factualEligibility(e, SNAPSHOT_DATE).eligible ? 'eligible' : 'excluded'} |`).join('\n')}
+
+Numeric denominators and original values: [measurement basis](MEASUREMENT-BASIS.md). Claim sources, exact locations, information dates and provenance: [event evidence ledger](event-evidence.json). Source existence is distinct from claim verification.
 
 ### How each event was approved
 

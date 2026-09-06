@@ -1,7 +1,7 @@
 [
   {
     "method": "Noisy-OR combination",
-    "implementedIn": "app/src/engine/math.js — combineSigned()",
+    "implementedIn": "app/src/engine/aggregation.js: aggregateNonNegative()",
     "role": "The noisy-OR gate as a parameter-reduction device, and its behaviour on small samples.",
     "doi": "10.1016/s0888-613x(01)00039-1",
     "title": "Learning Bayesian network parameters from small data sets: application of Noisy-OR gates",
@@ -19,7 +19,7 @@
   },
   {
     "method": "Exponential decay of event salience",
-    "implementedIn": "app/src/engine/math.js — decay(); priors.js — halfLifeDays",
+    "implementedIn": "app/src/engine/persistence.js: persistence()",
     "role": "Empirical basis for treating attention to an event as decaying rather than persisting. The 12-day half-life itself is a declared prior, not a fitted value.",
     "doi": "10.1073/pnas.0704916104",
     "title": "Novelty and collective attention",
@@ -127,7 +127,7 @@
   },
   {
     "method": "One-at-a-time sensitivity bands",
-    "implementedIn": "app/src/engine/priors.js — low/high prior bands",
+    "implementedIn": "app/src/engine/registry.js: parameter ranges",
     "role": "Global sensitivity analysis reference, and the standard critique of the one-at-a-time approach this model uses. Cited as a stated limitation, not as endorsement.",
     "doi": "10.1016/j.envsoft.2010.04.012",
     "title": "How to avoid a perfunctory sensitivity analysis",
@@ -235,7 +235,7 @@
   },
   {
     "method": "Input-output structure",
-    "implementedIn": "app/src/engine/graph.js — stage dependence matrices",
+    "implementedIn": "app/src/engine/propagation.js: dependency matrices",
     "role": "The input-output framework the stage graph approximates. Cited to be explicit that the dependence matrices are equal-allocation priors, not measured technical coefficients.",
     "doi": "10.1017/cbo9780511626982",
     "title": "Input-Output Analysis",
@@ -253,7 +253,7 @@
   },
   {
     "method": "Noisy-OR combination",
-    "implementedIn": "app/src/engine/math.js — combineSigned()",
+    "implementedIn": "app/src/engine/aggregation.js: aggregateNonNegative()",
     "role": "Origin of the noisy-OR gate: combining independent causes of an effect without letting the combination exceed its bound.",
     "title": "Probabilistic Reasoning in Intelligent Systems",
     "author": "Pearl, Judea",
@@ -267,7 +267,7 @@
   },
   {
     "method": "Herfindahl–Hirschman concentration index",
-    "implementedIn": "app/src/engine/math.js — hhiWithResidual()",
+    "implementedIn": "app/src/engine/math.js: hhiBounds()",
     "role": "Where the concentration index originates. Hirschman introduced it here; Herfindahl arrived at it independently in 1950, and the joint name is later usage.",
     "title": "National Power and the Structure of Foreign Trade",
     "author": "Hirschman, Albert Otto",

@@ -23,7 +23,7 @@ into prose is a number that can go stale, and this document is checked in CI.
 | --- | --- | --- |
 | [`csv/`](csv/) | `npm run demo` | Every input, intermediate and output table of the live engine |
 | [`docs/MODEL_V7_SPEC.md` §7](../MODEL_V7_SPEC.md#7-worked-numerical-example) | `npm run docs:generate` | A **hand-checkable arithmetic walkthrough** on a four-stage frozen fixture |
-| [`docs/benchmarks/v7-sensitivity.json`](../benchmarks/v7-sensitivity.json) | `npm run sensitivity` | The global sensitivity design and its results |
+| [`docs/benchmarks/v7-sensitivity-public-review.json`](../benchmarks/v7-sensitivity-public-review.json) | `npm run sensitivity` | The global sensitivity design and its results |
 | [`docs/benchmarks/v6-to-v7-benchmark.json`](../benchmarks/v6-to-v7-benchmark.json) | `npm run benchmark` | The measured v6 → v7 differences, with ablations |
 | [`validation/`](validation/) | `node docs/computation-demo/validation/mle-validation.mjs` | Synthetic parameter recovery and reproducibility checks |
 
@@ -185,7 +185,7 @@ equal split rather than on evidence, this file says so and says how often.
 ## 7. Uncertainty
 
 Not on this page. The principal analysis is the fixed-seed global design in
-[`docs/benchmarks/v7-sensitivity.json`](../benchmarks/v7-sensitivity.json), which
+[`docs/benchmarks/v7-sensitivity-public-review.json`](../benchmarks/v7-sensitivity-public-review.json), which
 covers all twelve continuous dimensions and, separately, the categorical model
 forms, and reports first- and total-order influence, one-at-a-time diagnostics,
 rank stability, top-five membership frequency and scenario sign stability.
@@ -204,9 +204,12 @@ cd app
 npm run snapshot      # export the vault to app/src/data/vault-snapshot.json
 npm run audit:data    # read-only diagnostics; fails on malformed data
 npm run demo          # the CSVs referenced above
-npm run sensitivity   # docs/benchmarks/v7-sensitivity.json
+npm run sensitivity   # docs/benchmarks/v7-sensitivity-public-review.json
 npm run benchmark     # docs/benchmarks/v6-to-v7-benchmark.json
 npm run docs:generate # regenerate every generated documentation block
 npm run docs:verify   # fail on any code–documentation drift
 npm test              # the full unit suite
 ```
+
+
+Public-review correction (application 0.7.2): the current export uses claim-level evidence eligibility and scoped, dated recovery. Original pre-review CSVs remain in `before-public-review-79289b1/` beside the current computation export. Exposure and company coefficients are assumptions with missing or incompatible measurement denominators. Historical values are current-model retrospective replay, not actual archived publications or point-in-time validation. See [current implementation and evidence report](../PUBLIC_RESEARCH_REVIEW.md).

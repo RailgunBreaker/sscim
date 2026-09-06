@@ -2,7 +2,7 @@
   "name": "sscim-server",
   "private": true,
   "license": "UNLICENSED",
-  "version": "0.7.1",
+  "version": "0.7.2",
   "type": "module",
   "scripts": {
     "dev": "node src/index.js",

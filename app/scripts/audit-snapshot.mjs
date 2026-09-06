@@ -24,6 +24,7 @@ import { ACTIVE_HORIZON_DAYS } from '../src/engine/event-model.js';
 import { buildFacilityLayer } from '../src/engine/facilities.js';
 import { buildFacilityNetwork } from '../src/engine/facilityNetwork.js';
 import { facilityIntro } from '../src/engine/facilityProfile.js';
+import { factualEligibility } from '../src/engine/evidence.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const SNAPSHOT_PATH = resolve(__dirname, '../src/data/vault-snapshot.json');
@@ -60,6 +61,16 @@ function main() {
   }
 
   const stageIds = new Set(bundle.stages.map((s) => s.id));
+  const excludedEvidence = bundle.events.filter(e => !factualEligibility(e, bundle.meta?.snapshotDate).eligible);
+  if (excludedEvidence.length) warn(`${excludedEvidence.length}/${bundle.events.length} factual records excluded by evidence eligibility; this missing coverage is not evidence of safety`);
+  if (bundle.events.some(e => e.recordKind !== 'factual')) err('canonical event export must mark every record factual');
+  const measurements = bundle.measurementEvidence || [];
+  if (!measurements.length) err('canonical numeric measurement ledger is missing');
+  for (const r of measurements) {
+    if (r.originalValue !== r.modeledValue && !r.transformation) err(`measurement ${r.scope}: missing transformation provenance`);
+    if (!Object.hasOwn(r, 'marketDenominator') || !Object.hasOwn(r, 'referencePeriod')) err(`measurement ${r.scope}: unknown denominator/period must be explicit`);
+  }
+  warn(`${measurements.filter(r => r.denominatorStatus === 'incompatible').length} numeric inputs have incompatible denominators; retained as explicit illustrative priors, not repaired by normalization`);
   const countryIds = new Set(bundle.countries.map((c) => c.id));
   const companyIds = new Set(bundle.companies.map((c) => c.id));
 

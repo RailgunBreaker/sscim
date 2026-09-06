@@ -1,0 +1,2007 @@
+{
+  "kind": "unchanged-audited-revision-reproduction",
+  "revision": "79289b110818b97a313da75c4d3ff3a8e09a9ac0",
+  "modelVersion": "sscim-model-v7.1-exposure-robustness",
+  "datasetAsOf": "2026-09-04",
+  "snapshotSha256": "33937a3ce87cd7b3f7a6962686ef452eea1e2825c0fd82a086b827d885aca381",
+  "reproductionCommand": "node app/scripts/build-review-before.mjs",
+  "interpretation": "Historical model output, not verified real-world risk. Leave-one-incident-out differences remove every update/recovery record with its primary; they are not additive contribution shares.",
+  "curation": {
+    "variants": {
+      "baseline": 6.027796984877245,
+      "allLow": 5.611392954902911,
+      "allHigh": 6.333652530016026,
+      "allAlternativeProfiles": 5.732821366790131,
+      "adverseLowMitigatingHigh": 5.49651630418925,
+      "adverseHighMitigatingLow": 6.448529180729687
+    },
+    "originallyTestedRange": {
+      "low": 5.611392954902911,
+      "high": 6.333652530016026
+    },
+    "opposingSignRange": {
+      "low": 5.49651630418925,
+      "high": 6.448529180729687
+    },
+    "rangeLabel": "Range over named tested scenarios; neither a proven bound nor a statistical confidence interval."
+  },
+  "incidentInfluence": [
+    {
+      "incidentId": "e1",
+      "primaryId": "e1",
+      "records": [
+        {
+          "id": "e1",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 5.694458690317752,
+      "baselineMinusWithout": 0.3333382945594927
+    },
+    {
+      "incidentId": "p260807_man0807",
+      "primaryId": "p260807_man0807",
+      "records": [
+        {
+          "id": "p260807_man0807",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 5.758069740343204,
+      "baselineMinusWithout": 0.2697272445340406
+    },
+    {
+      "incidentId": "x2508_veurevoke",
+      "primaryId": "x2508_veurevoke",
+      "records": [
+        {
+          "id": "x2508_veurevoke",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 5.853954855159618,
+      "baselineMinusWithout": 0.17384212971762736
+    },
+    {
+      "incidentId": "kumamoto_m71_2026_07",
+      "primaryId": "h2607_kumamoto",
+      "records": [
+        {
+          "id": "h2607_kumamoto",
+          "role": "primary"
+        },
+        {
+          "id": "p260729_web3084",
+          "role": "update"
+        },
+        {
+          "id": "p260729_web57b8",
+          "role": "recovery"
+        },
+        {
+          "id": "p260729_web1ae0",
+          "role": "update"
+        },
+        {
+          "id": "p260729_webaa64",
+          "role": "update"
+        },
+        {
+          "id": "p260728_usgtgb9",
+          "role": "update"
+        },
+        {
+          "id": "p260729_web6934",
+          "role": "update"
+        },
+        {
+          "id": "p260804_man0804",
+          "role": "recovery"
+        }
+      ],
+      "headlineWithoutIncident": 5.893381247657435,
+      "baselineMinusWithout": 0.13441573721981026
+    },
+    {
+      "incidentId": "h2606_subs",
+      "primaryId": "h2606_subs",
+      "records": [
+        {
+          "id": "h2606_subs",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 5.940198832697517,
+      "baselineMinusWithout": 0.08759815217972822
+    },
+    {
+      "incidentId": "e2",
+      "primaryId": "e2",
+      "records": [
+        {
+          "id": "e2",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.112766264375329,
+      "baselineMinusWithout": -0.0849692794980843
+    },
+    {
+      "incidentId": "h2510_truce",
+      "primaryId": "h2510_truce",
+      "records": [
+        {
+          "id": "h2510_truce",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.09190038462989,
+      "baselineMinusWithout": -0.06410339975264456
+    },
+    {
+      "incidentId": "h2603_memorypeak",
+      "primaryId": "h2603_memorypeak",
+      "records": [
+        {
+          "id": "h2603_memorypeak",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 5.996321485986778,
+      "baselineMinusWithout": 0.03147549889046708
+    },
+    {
+      "incidentId": "e4",
+      "primaryId": "e4",
+      "records": [
+        {
+          "id": "e4",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 5.999516481209694,
+      "baselineMinusWithout": 0.02828050366755086
+    },
+    {
+      "incidentId": "h2606_mpban",
+      "primaryId": "h2606_mpban",
+      "records": [
+        {
+          "id": "h2606_mpban",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.014882652476562,
+      "baselineMinusWithout": 0.012914332400683293
+    },
+    {
+      "incidentId": "h2601_ease",
+      "primaryId": "h2601_ease",
+      "records": [
+        {
+          "id": "h2601_ease",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.037248094966353,
+      "baselineMinusWithout": -0.009451110089107928
+    },
+    {
+      "incidentId": "h2512_memory",
+      "primaryId": "h2512_memory",
+      "records": [
+        {
+          "id": "h2512_memory",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.024202182287225,
+      "baselineMinusWithout": 0.0035948025900198743
+    },
+    {
+      "incidentId": "h2510_reemax",
+      "primaryId": "h2510_reemax",
+      "records": [
+        {
+          "id": "h2510_reemax",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.026124653105963,
+      "baselineMinusWithout": 0.0016723317712816765
+    },
+    {
+      "incidentId": "h2507_h20back",
+      "primaryId": "h2507_h20back",
+      "records": [
+        {
+          "id": "h2507_h20back",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.028322867947907,
+      "baselineMinusWithout": -0.0005258830706615925
+    },
+    {
+      "incidentId": "x2509_affiliates",
+      "primaryId": "x2509_affiliates",
+      "records": [
+        {
+          "id": "x2509_affiliates",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027284097910471,
+      "baselineMinusWithout": 0.0005128869667743174
+    },
+    {
+      "incidentId": "x2507_edalift",
+      "primaryId": "x2507_edalift",
+      "records": [
+        {
+          "id": "x2507_edalift",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.028049939109426,
+      "baselineMinusWithout": -0.0002529542321809686
+    },
+    {
+      "incidentId": "h2504_h20",
+      "primaryId": "h2504_h20",
+      "records": [
+        {
+          "id": "h2504_h20",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027595744725118,
+      "baselineMinusWithout": 0.00020124015212719115
+    },
+    {
+      "incidentId": "h2505_rescind",
+      "primaryId": "h2505_rescind",
+      "records": [
+        {
+          "id": "h2505_rescind",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027930941667753,
+      "baselineMinusWithout": -0.00013395679050809406
+    },
+    {
+      "incidentId": "x2506_reelicense",
+      "primaryId": "x2506_reelicense",
+      "records": [
+        {
+          "id": "x2506_reelicense",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027874235044601,
+      "baselineMinusWithout": -0.00007725016735626866
+    },
+    {
+      "incidentId": "h2504_ree",
+      "primaryId": "h2504_ree",
+      "records": [
+        {
+          "id": "h2504_ree",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027753874552804,
+      "baselineMinusWithout": 0.000043110324440931436
+    },
+    {
+      "incidentId": "x2501_foundryrule",
+      "primaryId": "x2501_foundryrule",
+      "records": [
+        {
+          "id": "x2501_foundryrule",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027768468388127,
+      "baselineMinusWithout": 0.00002851648911761373
+    },
+    {
+      "incidentId": "h2412_bis3",
+      "primaryId": "h2412_bis3",
+      "records": [
+        {
+          "id": "h2412_bis3",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027787917651361,
+      "baselineMinusWithout": 0.000009067225883896413
+    },
+    {
+      "incidentId": "x2411_tsmcchina7nm",
+      "primaryId": "x2411_tsmcchina7nm",
+      "records": [
+        {
+          "id": "x2411_tsmcchina7nm",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027788016333792,
+      "baselineMinusWithout": 0.000008968543452780864
+    },
+    {
+      "incidentId": "x2502_tungsten",
+      "primaryId": "x2502_tungsten",
+      "records": [
+        {
+          "id": "x2502_tungsten",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027790139974135,
+      "baselineMinusWithout": 0.0000068449031100925595
+    },
+    {
+      "incidentId": "h2412_gaban",
+      "primaryId": "h2412_gaban",
+      "records": [
+        {
+          "id": "h2412_gaban",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027793423361099,
+      "baselineMinusWithout": 0.0000035615161460000877
+    },
+    {
+      "incidentId": "x2409_gaafet",
+      "primaryId": "x2409_gaafet",
+      "records": [
+        {
+          "id": "x2409_gaafet",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796046935753,
+      "baselineMinusWithout": 9.379414915855477e-7
+    },
+    {
+      "incidentId": "h2405_huawei",
+      "primaryId": "h2405_huawei",
+      "records": [
+        {
+          "id": "h2405_huawei",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796785885292,
+      "baselineMinusWithout": 1.9899195269346137e-7
+    },
+    {
+      "incidentId": "e3",
+      "primaryId": "e3",
+      "records": [
+        {
+          "id": "e3",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "e5",
+      "primaryId": "e5",
+      "records": [
+        {
+          "id": "e5",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "e6",
+      "primaryId": "e6",
+      "records": [
+        {
+          "id": "e6",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "h2102_uri",
+      "primaryId": "h2102_uri",
+      "records": [
+        {
+          "id": "h2102_uri",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "h2103_renesas",
+      "primaryId": "h2103_renesas",
+      "records": [
+        {
+          "id": "h2103_renesas",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "h2108_malaysia",
+      "primaryId": "h2108_malaysia",
+      "records": [
+        {
+          "id": "h2108_malaysia",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "h2202_kioxia",
+      "primaryId": "h2202_kioxia",
+      "records": [
+        {
+          "id": "h2202_kioxia",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "h2202_neon",
+      "primaryId": "h2202_neon",
+      "records": [
+        {
+          "id": "h2202_neon",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "h2204_shanghai",
+      "primaryId": "h2204_shanghai",
+      "records": [
+        {
+          "id": "h2204_shanghai",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "h2208_chips",
+      "primaryId": "h2208_chips",
+      "records": [
+        {
+          "id": "h2208_chips",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "h2208_strait22",
+      "primaryId": "h2208_strait22",
+      "records": [
+        {
+          "id": "h2208_strait22",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "h2210_bis",
+      "primaryId": "h2210_bis",
+      "records": [
+        {
+          "id": "h2210_bis",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "h2301_alliance",
+      "primaryId": "h2301_alliance",
+      "records": [
+        {
+          "id": "h2301_alliance",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "h2307_gage",
+      "primaryId": "h2307_gage",
+      "records": [
+        {
+          "id": "h2307_gage",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "h2307_jpsme",
+      "primaryId": "h2307_jpsme",
+      "records": [
+        {
+          "id": "h2307_jpsme",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "h2308_mate60",
+      "primaryId": "h2308_mate60",
+      "records": [
+        {
+          "id": "h2308_mate60",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "h2309_duv",
+      "primaryId": "h2309_duv",
+      "records": [
+        {
+          "id": "h2309_duv",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "h2310_bisupdate",
+      "primaryId": "h2310_bisupdate",
+      "records": [
+        {
+          "id": "h2310_bisupdate",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "h2401_noto",
+      "primaryId": "h2401_noto",
+      "records": [
+        {
+          "id": "h2401_noto",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "h2404_hualien",
+      "primaryId": "h2404_hualien",
+      "records": [
+        {
+          "id": "h2404_hualien",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "h2501_deepseek",
+      "primaryId": "h2501_deepseek",
+      "records": [
+        {
+          "id": "h2501_deepseek",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "h2501_diffusion",
+      "primaryId": "h2501_diffusion",
+      "records": [
+        {
+          "id": "h2501_diffusion",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "h2509_nexperia",
+      "primaryId": "h2509_nexperia",
+      "records": [
+        {
+          "id": "h2509_nexperia",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "h2512_yilan",
+      "primaryId": "h2512_yilan",
+      "records": [
+        {
+          "id": "h2512_yilan",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "h2604_match",
+      "primaryId": "h2604_match",
+      "records": [
+        {
+          "id": "h2604_match",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "h2607_tsmcq2",
+      "primaryId": "h2607_tsmcq2",
+      "records": [
+        {
+          "id": "h2607_tsmcq2",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "p260714_fed4132",
+      "primaryId": "p260714_fed4132",
+      "records": [
+        {
+          "id": "p260714_fed4132",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "p260728_web4420",
+      "primaryId": "p260728_web4420",
+      "records": [
+        {
+          "id": "p260728_web4420",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "p260728_webef0b",
+      "primaryId": "p260728_webef0b",
+      "records": [
+        {
+          "id": "p260728_webef0b",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "p260729_web2ef3",
+      "primaryId": "p260729_web2ef3",
+      "records": [
+        {
+          "id": "p260729_web2ef3",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "p260729_web807f",
+      "primaryId": "p260729_web807f",
+      "records": [
+        {
+          "id": "p260729_web807f",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "p260729_webbe69",
+      "primaryId": "p260729_webbe69",
+      "records": [
+        {
+          "id": "p260729_webbe69",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "p260729_webfdb0",
+      "primaryId": "p260729_webfdb0",
+      "records": [
+        {
+          "id": "p260729_webfdb0",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "p260819_man0819",
+      "primaryId": "p260819_man0819",
+      "records": [
+        {
+          "id": "p260819_man0819",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "p260820_web147f",
+      "primaryId": "p260820_web147f",
+      "records": [
+        {
+          "id": "p260820_web147f",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "p260820_web17aa",
+      "primaryId": "p260820_web17aa",
+      "records": [
+        {
+          "id": "p260820_web17aa",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "p260820_web771c",
+      "primaryId": "p260820_web771c",
+      "records": [
+        {
+          "id": "p260820_web771c",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "p260821_web8e15",
+      "primaryId": "p260821_web8e15",
+      "records": [
+        {
+          "id": "p260821_web8e15",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x1609_armsb",
+      "primaryId": "x1609_armsb",
+      "records": [
+        {
+          "id": "x1609_armsb",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x1610_note7",
+      "primaryId": "x1610_note7",
+      "records": [
+        {
+          "id": "x1610_note7",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x1610_qcomnxp",
+      "primaryId": "x1610_qcomnxp",
+      "records": [
+        {
+          "id": "x1610_qcomnxp",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x1612_aixtron",
+      "primaryId": "x1612_aixtron",
+      "records": [
+        {
+          "id": "x1612_aixtron",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x1701_pcast",
+      "primaryId": "x1701_pcast",
+      "records": [
+        {
+          "id": "x1701_pcast",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x1703_dramcycle",
+      "primaryId": "x1703_dramcycle",
+      "records": [
+        {
+          "id": "x1703_dramcycle",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x1708_twblackout",
+      "primaryId": "x1708_twblackout",
+      "records": [
+        {
+          "id": "x1708_twblackout",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x1709_toshibamem",
+      "primaryId": "x1709_toshibamem",
+      "records": [
+        {
+          "id": "x1709_toshibamem",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x1710_dramtight",
+      "primaryId": "x1710_dramtight",
+      "records": [
+        {
+          "id": "x1710_dramtight",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x1710_euv",
+      "primaryId": "x1710_euv",
+      "records": [
+        {
+          "id": "x1710_euv",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x1712_micronumc",
+      "primaryId": "x1712_micronumc",
+      "records": [
+        {
+          "id": "x1712_micronumc",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x1712_ndrcdram",
+      "primaryId": "x1712_ndrcdram",
+      "records": [
+        {
+          "id": "x1712_ndrcdram",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x1803_broadcomqcom",
+      "primaryId": "x1803_broadcomqcom",
+      "records": [
+        {
+          "id": "x1803_broadcomqcom",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x1804_zte",
+      "primaryId": "x1804_zte",
+      "records": [
+        {
+          "id": "x1804_zte",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x1806_mlcc",
+      "primaryId": "x1806_mlcc",
+      "records": [
+        {
+          "id": "x1806_mlcc",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x1807_qcomnxpfail",
+      "primaryId": "x1807_qcomnxpfail",
+      "records": [
+        {
+          "id": "x1807_qcomnxpfail",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x1807_zteoff",
+      "primaryId": "x1807_zteoff",
+      "records": [
+        {
+          "id": "x1807_zteoff",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x1808_gf7nm",
+      "primaryId": "x1808_gf7nm",
+      "records": [
+        {
+          "id": "x1808_gf7nm",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x1808_ndaa",
+      "primaryId": "x1808_ndaa",
+      "records": [
+        {
+          "id": "x1808_ndaa",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x1808_tsmcvirus",
+      "primaryId": "x1808_tsmcvirus",
+      "records": [
+        {
+          "id": "x1808_tsmcvirus",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x1810_jinhua",
+      "primaryId": "x1810_jinhua",
+      "records": [
+        {
+          "id": "x1810_jinhua",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x1810_memdown",
+      "primaryId": "x1810_memdown",
+      "records": [
+        {
+          "id": "x1810_memdown",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x1811_anprm",
+      "primaryId": "x1811_anprm",
+      "records": [
+        {
+          "id": "x1811_anprm",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x1811_micronindict",
+      "primaryId": "x1811_micronindict",
+      "records": [
+        {
+          "id": "x1811_micronindict",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x1812_meng",
+      "primaryId": "x1812_meng",
+      "records": [
+        {
+          "id": "x1812_meng",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x1901_applewarn",
+      "primaryId": "x1901_applewarn",
+      "records": [
+        {
+          "id": "x1901_applewarn",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x1904_samsungcut",
+      "primaryId": "x1904_samsungcut",
+      "records": [
+        {
+          "id": "x1904_samsungcut",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x1905_armgoogle",
+      "primaryId": "x1905_armgoogle",
+      "records": [
+        {
+          "id": "x1905_armgoogle",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x1905_huawei_el",
+      "primaryId": "x1905_huawei_el",
+      "records": [
+        {
+          "id": "x1905_huawei_el",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x1906_kioxiaoutage",
+      "primaryId": "x1906_kioxiaoutage",
+      "records": [
+        {
+          "id": "x1906_kioxiaoutage",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x1907_jpkr",
+      "primaryId": "x1907_jpkr",
+      "records": [
+        {
+          "id": "x1907_jpkr",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x1908_huaweitgl",
+      "primaryId": "x1908_huaweitgl",
+      "records": [
+        {
+          "id": "x1908_huaweitgl",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x1908_whitelist",
+      "primaryId": "x1908_whitelist",
+      "records": [
+        {
+          "id": "x1908_whitelist",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x1911_euvlicense",
+      "primaryId": "x1911_euvlicense",
+      "records": [
+        {
+          "id": "x1911_euvlicense",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x1912_5gpull",
+      "primaryId": "x1912_5gpull",
+      "records": [
+        {
+          "id": "x1912_5gpull",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2002_covidcn",
+      "primaryId": "x2002_covidcn",
+      "records": [
+        {
+          "id": "x2002_covidcn",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2003_lockdowns",
+      "primaryId": "x2003_lockdowns",
+      "records": [
+        {
+          "id": "x2003_lockdowns",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2005_fdpr",
+      "primaryId": "x2005_fdpr",
+      "records": [
+        {
+          "id": "x2005_fdpr",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2005_tsmcaz",
+      "primaryId": "x2005_tsmcaz",
+      "records": [
+        {
+          "id": "x2005_tsmcaz",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2008_fdpr2",
+      "primaryId": "x2008_fdpr2",
+      "records": [
+        {
+          "id": "x2008_fdpr2",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2009_huaweicut",
+      "primaryId": "x2009_huaweicut",
+      "records": [
+        {
+          "id": "x2009_huaweicut",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2009_nvarm",
+      "primaryId": "x2009_nvarm",
+      "records": [
+        {
+          "id": "x2009_nvarm",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2009_smicrestrict",
+      "primaryId": "x2009_smicrestrict",
+      "records": [
+        {
+          "id": "x2009_smicrestrict",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2010_amdxilinx",
+      "primaryId": "x2010_amdxilinx",
+      "records": [
+        {
+          "id": "x2010_amdxilinx",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2011_asetest",
+      "primaryId": "x2011_asetest",
+      "records": [
+        {
+          "id": "x2011_asetest",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2012_autoshort",
+      "primaryId": "x2012_autoshort",
+      "records": [
+        {
+          "id": "x2012_autoshort",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2012_smicel",
+      "primaryId": "x2012_smicel",
+      "records": [
+        {
+          "id": "x2012_smicel",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2101_autocuts",
+      "primaryId": "x2101_autocuts",
+      "records": [
+        {
+          "id": "x2101_autocuts",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2102_eo14017",
+      "primaryId": "x2102_eo14017",
+      "records": [
+        {
+          "id": "x2102_eo14017",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2103_intel20b",
+      "primaryId": "x2103_intel20b",
+      "records": [
+        {
+          "id": "x2103_intel20b",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2104_twdrought",
+      "primaryId": "x2104_twdrought",
+      "records": [
+        {
+          "id": "x2104_twdrought",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2106_kingyuan",
+      "primaryId": "x2106_kingyuan",
+      "records": [
+        {
+          "id": "x2106_kingyuan",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2106_review100",
+      "primaryId": "x2106_review100",
+      "records": [
+        {
+          "id": "x2106_review100",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2108_toyota40",
+      "primaryId": "x2108_toyota40",
+      "records": [
+        {
+          "id": "x2108_toyota40",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2109_cnpower",
+      "primaryId": "x2109_cnpower",
+      "records": [
+        {
+          "id": "x2109_cnpower",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2110_abf",
+      "primaryId": "x2110_abf",
+      "records": [
+        {
+          "id": "x2110_abf",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2110_tsmcjapan",
+      "primaryId": "x2110_tsmcjapan",
+      "records": [
+        {
+          "id": "x2110_tsmcjapan",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2112_xian",
+      "primaryId": "x2112_xian",
+      "records": [
+        {
+          "id": "x2112_xian",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2201_asmlfire",
+      "primaryId": "x2201_asmlfire",
+      "records": [
+        {
+          "id": "x2201_asmlfire",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2201_intelohio",
+      "primaryId": "x2201_intelohio",
+      "records": [
+        {
+          "id": "x2201_intelohio",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2202_nvarmdead",
+      "primaryId": "x2202_nvarmdead",
+      "records": [
+        {
+          "id": "x2202_nvarmdead",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2206_memoryglut",
+      "primaryId": "x2206_memoryglut",
+      "records": [
+        {
+          "id": "x2206_memoryglut",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2208_a100",
+      "primaryId": "x2208_a100",
+      "records": [
+        {
+          "id": "x2208_a100",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2208_eda",
+      "primaryId": "x2208_eda",
+      "records": [
+        {
+          "id": "x2208_eda",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2210_uspersons",
+      "primaryId": "x2210_uspersons",
+      "records": [
+        {
+          "id": "x2210_uspersons",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2210_veu",
+      "primaryId": "x2210_veu",
+      "records": [
+        {
+          "id": "x2210_veu",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2211_capexcut",
+      "primaryId": "x2211_capexcut",
+      "records": [
+        {
+          "id": "x2211_capexcut",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2211_rapidus",
+      "primaryId": "x2211_rapidus",
+      "records": [
+        {
+          "id": "x2211_rapidus",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2212_tsmcaz40",
+      "primaryId": "x2212_tsmcaz40",
+      "records": [
+        {
+          "id": "x2212_tsmcaz40",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2212_ymtc",
+      "primaryId": "x2212_ymtc",
+      "records": [
+        {
+          "id": "x2212_ymtc",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2302_chipsguardrails",
+      "primaryId": "x2302_chipsguardrails",
+      "records": [
+        {
+          "id": "x2302_chipsguardrails",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2304_samsungcut23",
+      "primaryId": "x2304_samsungcut23",
+      "records": [
+        {
+          "id": "x2304_samsungcut23",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2305_micronban",
+      "primaryId": "x2305_micronban",
+      "records": [
+        {
+          "id": "x2305_micronban",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2307_tsmcazdelay",
+      "primaryId": "x2307_tsmcazdelay",
+      "records": [
+        {
+          "id": "x2307_tsmcazdelay",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2308_outbound",
+      "primaryId": "x2308_outbound",
+      "records": [
+        {
+          "id": "x2308_outbound",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2309_euchips",
+      "primaryId": "x2309_euchips",
+      "records": [
+        {
+          "id": "x2309_euchips",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2310_biren",
+      "primaryId": "x2310_biren",
+      "records": [
+        {
+          "id": "x2310_biren",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2310_kioxiawd",
+      "primaryId": "x2310_kioxiawd",
+      "records": [
+        {
+          "id": "x2310_kioxiawd",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2312_hbmturn",
+      "primaryId": "x2312_hbmturn",
+      "records": [
+        {
+          "id": "x2312_hbmturn",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2401_duvrevoke",
+      "primaryId": "x2401_duvrevoke",
+      "records": [
+        {
+          "id": "x2401_duvrevoke",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2402_jasm",
+      "primaryId": "x2402_jasm",
+      "records": [
+        {
+          "id": "x2402_jasm",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2403_intelaward",
+      "primaryId": "x2403_intelaward",
+      "records": [
+        {
+          "id": "x2403_intelaward",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2404_awards",
+      "primaryId": "x2404_awards",
+      "records": [
+        {
+          "id": "x2404_awards",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2405_301",
+      "primaryId": "x2405_301",
+      "records": [
+        {
+          "id": "x2405_301",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2407_fdprleak",
+      "primaryId": "x2407_fdprleak",
+      "records": [
+        {
+          "id": "x2407_fdprleak",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2410_asmlbookings",
+      "primaryId": "x2410_asmlbookings",
+      "records": [
+        {
+          "id": "x2410_asmlbookings",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2412_nvidiaprobe",
+      "primaryId": "x2412_nvidiaprobe",
+      "records": [
+        {
+          "id": "x2412_nvidiaprobe",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2503_tsmc100",
+      "primaryId": "x2503_tsmc100",
+      "records": [
+        {
+          "id": "x2503_tsmc100",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2504_232",
+      "primaryId": "x2504_232",
+      "records": [
+        {
+          "id": "x2504_232",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2504_tariffs",
+      "primaryId": "x2504_tariffs",
+      "records": [
+        {
+          "id": "x2504_tariffs",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2505_eda",
+      "primaryId": "x2505_eda",
+      "records": [
+        {
+          "id": "x2505_eda",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2505_gulf",
+      "primaryId": "x2505_gulf",
+      "records": [
+        {
+          "id": "x2505_gulf",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2507_malaysia",
+      "primaryId": "x2507_malaysia",
+      "records": [
+        {
+          "id": "x2507_malaysia",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2508_revshare",
+      "primaryId": "x2508_revshare",
+      "records": [
+        {
+          "id": "x2508_revshare",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    },
+    {
+      "incidentId": "x2510_ports",
+      "primaryId": "x2510_ports",
+      "records": [
+        {
+          "id": "x2510_ports",
+          "role": "primary"
+        }
+      ],
+      "headlineWithoutIncident": 6.027796984877245,
+      "baselineMinusWithout": 0
+    }
+  ],
+  "hazardScenarios": [
+    {
+      "id": "kumamoto",
+      "lat": 32.8,
+      "lng": 130.7,
+      "radiusKm": 100,
+      "severity": 7,
+      "headline": 6.128557999407975,
+      "delta": 0.10076101453072983
+    },
+    {
+      "id": "hsinchu",
+      "lat": 24.8,
+      "lng": 121,
+      "radiusKm": 60,
+      "severity": 7,
+      "headline": 6.649024545473595,
+      "delta": 0.62122756059635
+    },
+    {
+      "id": "pyeongtaek",
+      "lat": 37,
+      "lng": 127.1,
+      "radiusKm": 60,
+      "severity": 7,
+      "headline": 6.246111597941635,
+      "delta": 0.21831461306438982
+    }
+  ]
+}
