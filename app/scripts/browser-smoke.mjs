@@ -598,7 +598,7 @@ async function main() {
     await lp.waitForSelector('footer', { timeout: 20000 });
     await lp.waitForTimeout(400);
 
-    const language = lp.locator('.langbar select');
+    const language = lp.locator('header select');
     check(await language.locator('option').count() === 4, 'four language options');
     await language.focus();
     const focused = await lp.evaluate(() => document.activeElement?.tagName);
