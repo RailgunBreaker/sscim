@@ -14,6 +14,10 @@ every country score and the whole computed history.
 
 Captured by `npm run shots`, which drives the built artifact at four viewports
 with animation disabled, so two runs of one build produce the same images.
+The theme is pinned rather than inherited from the harness — these are the
+dark theme, which is what the product falls back to when the operating
+system states no preference; `npm run shots -- --scheme light` captures the
+light record.
 
 | | Before | After |
 | --- | --- | --- |

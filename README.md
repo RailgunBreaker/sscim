@@ -23,6 +23,7 @@ fitted to nothing.
 | **Facility Playground · TSMC Fab 18** — 53 inbound and 7 outbound relationships, with the visible count stated exactly and the table beside it reaching every one | ![TSMC Fab 18](docs/screenshots/playground-tsmc-fab18.png) |
 | **Facility Playground · ASML, two hops** — multi-hop traversal, upstream left, downstream right | ![ASML two hops](docs/screenshots/playground-asml-2hop.png) |
 | **Mobile** — search, graph, filters and details stack | ![Mobile playground](docs/screenshots/playground-mobile-375x812.png) |
+| **Documentation** — every Markdown file in the repository is published as its own page, sharing the app's theme and language, each dated from its own Git history | ![Documentation](docs/screenshots/document-dark-1366.png) |
 
 ---
 

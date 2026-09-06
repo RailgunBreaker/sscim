@@ -45,6 +45,13 @@ const VIEWPORTS = [
   { name: '1920x1080', width: 1920, height: 1080 },
 ];
 
+/* Pinned rather than inherited. Playwright's default context is light, so
+   every --shots capture came out light regardless of the product's own
+   default (theme.js falls back to dark when the OS states no preference),
+   and a Playwright upgrade could have flipped the whole record silently.
+   The document checks below drive both themes explicitly by clicking. */
+const SCHEME = 'dark';
+
 const results = [];
 const pass = (name, detail = '') => { results.push({ ok: true, name, detail }); console.log(`  PASS  ${name}${detail ? ` — ${detail}` : ''}`); };
 const fail = (name, detail = '') => { results.push({ ok: false, name, detail }); console.log(`  FAIL  ${name}${detail ? ` — ${detail}` : ''}`); };
@@ -160,7 +167,7 @@ async function main() {
   try {
     for (const vp of VIEWPORTS) {
       console.log(`\n── ${vp.name} ─────────────────────────────`);
-      const context = await browser.newContext({ viewport: { width: vp.width, height: vp.height } });
+      const context = await browser.newContext({ viewport: { width: vp.width, height: vp.height }, colorScheme: SCHEME });
       const page = await context.newPage();
       page.on('console', (m) => {
         if (m.type() !== 'error') return;
@@ -278,7 +285,7 @@ async function main() {
 
     /* ---- deep checks, one viewport ---- */
     console.log('\n── deep checks (1920x1080) ─────────────');
-    const context = await browser.newContext({ viewport: { width: 1920, height: 1080 } });
+    const context = await browser.newContext({ viewport: { width: 1920, height: 1080 }, colorScheme: SCHEME });
     const page = await context.newPage();
     page.on('pageerror', (e) => consoleErrors.push(`deep: ${e.message}`));
     await openDashboard(page, base);
@@ -421,7 +428,7 @@ async function main() {
 
     /* ---- the four Layer-1 views, and history review ---- */
     console.log('\n── views and history review ────────');
-    const vctx = await browser.newContext({ viewport: { width: 1600, height: 1000 } });
+    const vctx = await browser.newContext({ viewport: { width: 1600, height: 1000 }, colorScheme: SCHEME });
     const vp = await vctx.newPage();
     vp.on('pageerror', (e) => consoleErrors.push(`views: ${e.message}`));
     await openDashboard(vp, base);
@@ -508,7 +515,7 @@ async function main() {
 
     /* ---- accessibility: keyboard reach and announced state ---- */
     console.log('\n── accessibility ──────────────────────');
-    const actx = await browser.newContext({ viewport: { width: 1366, height: 936 } });
+    const actx = await browser.newContext({ viewport: { width: 1366, height: 936 }, colorScheme: SCHEME });
     const ap = await actx.newPage();
     ap.on('pageerror', (e) => consoleErrors.push(`a11y: ${e.message}`));
     await openDashboard(ap, base);
@@ -591,7 +598,7 @@ async function main() {
 
     /* ---- landing page: every language, real buttons, honest figures ---- */
     console.log('\n── landing page ────────────────────────');
-    const lctx = await browser.newContext({ viewport: { width: 1366, height: 936 } });
+    const lctx = await browser.newContext({ viewport: { width: 1366, height: 936 }, colorScheme: SCHEME });
     const lp = await lctx.newPage();
     lp.on('pageerror', (e) => consoleErrors.push(`landing: ${e.message}`));
     await lp.goto(`${base}/index.html`, { waitUntil: 'load' });
@@ -630,7 +637,7 @@ async function main() {
     await shot(lp, 'landing-1366x936');
     await lctx.close();
 
-    const dctx = await browser.newContext({ viewport: { width: 1366, height: 936 } });
+    const dctx = await browser.newContext({ viewport: { width: 1366, height: 936 }, colorScheme: SCHEME });
     const dp = await dctx.newPage();
     dp.on('pageerror', (e) => consoleErrors.push(`documentation: ${e.message}`));
     for (const mode of ['light', 'dark']) {
