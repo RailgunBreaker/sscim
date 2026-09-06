@@ -154,7 +154,7 @@ export default function OsmMap({ model, hl, lensOverride, onApplyHazard }) {
     const cartoKey = import.meta.env?.VITE_CARTO_KEY || CARTO_BASEMAP_KEY;
     const cartoUrl = `https://basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png${cartoKey ? `?key=${encodeURIComponent(cartoKey)}` : ''}`;
     const carto = L.tileLayer(cartoUrl, {
-      attribution: '© OpenStreetMap contributors © CARTO', subdomains: 'abcd', maxZoom: 20,
+      attribution: '© OpenStreetMap contributors © CARTO', subdomains: 'abcd', maxZoom: 20, className: 'carto-dark',
     }).addTo(map);
     carto.on('tileload', () => { loaded = true; setTileStatus('ok'); });
     carto.on('tileerror', () => {
@@ -541,7 +541,7 @@ export default function OsmMap({ model, hl, lensOverride, onApplyHazard }) {
           title={`Show the ${FACILITY_LAYER.FACILITIES.length} modeled plants. Drawn at every zoom; markers grow as you zoom in.`}
           className="ui-button"
           style={{ fontSize: 13, padding: '6px 12px', borderRadius: 5, fontFamily: 'inherit', cursor: 'pointer',
-            background: sitesOn ? C.copper : 'transparent', color: sitesOn ? '#0C111C' : C.dim,
+            background: sitesOn ? C.copper : 'transparent', color: sitesOn ? C.onAccent : C.dim,
             border: `1px solid ${sitesOn ? C.copper : C.line}`, fontWeight: sitesOn ? 700 : 400 }}>
           Sites
         </button>
@@ -549,7 +549,7 @@ export default function OsmMap({ model, hl, lensOverride, onApplyHazard }) {
           title="Draw the modeled site-to-site links. Pin a plant to see only its own links."
           className="ui-button"
           style={{ fontSize: 13, padding: '6px 12px', borderRadius: 5, fontFamily: 'inherit', cursor: 'pointer',
-            background: linksOn ? C.copperDim : 'transparent', color: linksOn ? '#0C111C' : C.dim,
+            background: linksOn ? C.copperDim : 'transparent', color: linksOn ? C.onAccent : C.dim,
             border: `1px solid ${linksOn ? C.copperDim : C.line}`, fontWeight: linksOn ? 700 : 400 }}>
           Links
         </button>
@@ -557,7 +557,7 @@ export default function OsmMap({ model, hl, lensOverride, onApplyHazard }) {
           title="Click the map to place a hazard epicentre and see which plants fall inside the radius"
           className="ui-button"
           style={{ fontSize: 13, padding: '6px 12px', borderRadius: 5, fontFamily: 'inherit', cursor: 'pointer',
-            background: hazardMode ? C.amber : 'transparent', color: hazardMode ? '#0C111C' : C.dim,
+            background: hazardMode ? C.amber : 'transparent', color: hazardMode ? C.onAccent : C.dim,
             border: `1px solid ${hazardMode ? C.amber : C.line}`, fontWeight: hazardMode ? 700 : 400 }}>
           Hazard
         </button>
@@ -579,7 +579,7 @@ export default function OsmMap({ model, hl, lensOverride, onApplyHazard }) {
       <div style={{ position: 'relative' }}>
         <div ref={divRef} className="sscim-map" style={{ height: mapHeight, borderRadius: 8, border: `1px solid ${C.line}`, transition: 'height .2s ease' }} />
         {tileStatus === 'failed' && (
-          <div className="mono" style={{ position: 'absolute', top: 8, left: 8, zIndex: 500, background: 'rgba(20,27,43,.92)', border: `1px solid ${C.amber}`, color: C.amber, borderRadius: 5, padding: '5px 9px', fontSize: 12, maxWidth: 260, lineHeight: 1.5 }}>
+          <div className="mono" style={{ position: 'absolute', top: 8, left: 8, zIndex: 500, background: C.panel, border: `1px solid ${C.amber}`, color: C.amber, borderRadius: 5, padding: '5px 9px', fontSize: 12, maxWidth: 260, lineHeight: 1.5 }}>
             Map tiles blocked in this preview. Nodes & links remain interactive — deploy the HTML to any host to see the full basemap.
           </div>
         )}

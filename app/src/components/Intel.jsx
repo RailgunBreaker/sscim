@@ -219,7 +219,7 @@ export default function Intel({ sel, setSel, model, scenario, onResetScenario, o
                   <div key={co.id} className="evcard" onClick={() => setSel({ type: 'company', id: co.id })}
                     role="button" tabIndex={0} onKeyDown={onEnterSpace(() => setSel({ type: 'company', id: co.id }))}
                     title={introForCompany(co, { STAGE_BY_ID, COUNTRY_NAMES, CUSTOMERS, SUPPLIERS })}
-                    style={{ border: `1px solid ${active ? C.copper : C.line}`, background: active ? '#1A2132' : C.panel, borderRadius: 6, padding: '7px 10px', marginBottom: 6, display: 'flex', alignItems: 'center', gap: 8 }}>
+                    style={{ border: `1px solid ${active ? C.copper : C.line}`, background: active ? C.raised : C.panel, borderRadius: 6, padding: '7px 10px', marginBottom: 6, display: 'flex', alignItems: 'center', gap: 8 }}>
                     <span className="mono" style={{ fontSize: 12, color: C.faint, width: 20 }}>#{i + 1}</span>
                     <Logo cid={co.id} />
                     <span style={{ fontSize: 12.5, fontWeight: 600, flex: 1 }}>{co.name}</span>

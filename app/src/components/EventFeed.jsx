@@ -139,7 +139,7 @@ export default function EventFeed({ sel, setSel, engine, events }) {
           <div key={e.id} className="evcard" onClick={() => setSel({ type: 'event', id: e.id })}
             role="button" tabIndex={0} onKeyDown={onEnterSpace(() => setSel({ type: 'event', id: e.id }))}
             aria-label={`${e.type} event, ${e.date}: ${e.title}`}
-            style={{ border: `1px solid ${isActive ? C.copper : C.line}`, background: isActive ? '#1A2132' : C.panel, borderRadius: 6, padding: '8px 10px', marginBottom: 8 }}>
+            style={{ border: `1px solid ${isActive ? C.copper : C.line}`, background: isActive ? C.raised : C.panel, borderRadius: 6, padding: '8px 10px', marginBottom: 8 }}>
             <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
               <span className="mono" style={{ fontSize: 12, color: TYPE_COLORS[e.type] || C.copper, border: `1px solid ${TYPE_COLORS[e.type] || C.copper}`, borderRadius: 3, padding: '1px 6px' }}>
                 {e.type}

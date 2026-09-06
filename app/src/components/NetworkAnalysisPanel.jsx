@@ -64,7 +64,7 @@ export default function NetworkAnalysisPanel({ baseGraph }) {
           return (
             <button key={m.id} type="button" role="radio" aria-checked={on}
               onClick={() => setMetric(on ? null : m.id)}
-              style={{ fontSize: 12, padding: '3px 7px', borderRadius: 3, fontFamily: 'inherit', cursor: 'pointer', background: on ? C.copper : 'transparent', color: on ? '#0C111C' : C.dim, border: `1px solid ${on ? C.copper : C.line}`, fontWeight: on ? 700 : 400 }}>
+              style={{ fontSize: 12, padding: '3px 7px', borderRadius: 3, fontFamily: 'inherit', cursor: 'pointer', background: on ? C.copper : 'transparent', color: on ? C.onAccent : C.dim, border: `1px solid ${on ? C.copper : C.line}`, fontWeight: on ? 700 : 400 }}>
               {m.label.replace(' (topology)', '')}
             </button>
           );

@@ -69,7 +69,7 @@ export default function Guide({ onClose, onHighlight }) {
 
   const G = ({ n, t: title, children }) => (
     <div style={{ marginBottom: 12, display: "flex", gap: 10 }}>
-      <span className="mono" style={{ color: "#0C111C", background: C.copper, borderRadius: 4, width: 20, height: 20, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, flexShrink: 0 }}>{n}</span>
+      <span className="mono" style={{ color: C.onAccent, background: C.copper, borderRadius: 4, width: 20, height: 20, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, flexShrink: 0 }}>{n}</span>
       <div>
         <div style={{ fontSize: 13, fontWeight: 600 }}>{title}</div>
         <div style={{ fontSize: 12, color: C.dim, lineHeight: 1.55 }}>{children}</div>

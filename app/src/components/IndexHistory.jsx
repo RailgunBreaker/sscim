@@ -62,7 +62,7 @@ export default function IndexHistory({ engine, events, onSelectEvent }) {
     <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', marginBottom: 8 }}>
       <div className="mono" style={{ fontSize: 11, color: C.dim }}>Current-model retrospective replay<span style={{ color: C.faint, marginLeft: 7 }}>5 neutral</span></div>
       <div style={{ display: 'flex', gap: 3, marginLeft: 'auto' }} aria-label="History time range">
-        {RANGES.map(([id]) => <button key={id} type="button" aria-pressed={range === id} onClick={() => { setRange(id); setHover(null); }} style={{ border: `1px solid ${range === id ? C.copper : C.line}`, background: range === id ? 'rgba(201,138,63,.14)' : 'transparent', color: range === id ? C.copper : C.dim, borderRadius: 4, fontSize: 11, padding: '3px 5px', cursor: 'pointer', fontFamily: 'inherit' }}>{id}</button>)}
+        {RANGES.map(([id]) => <button key={id} type="button" aria-pressed={range === id} onClick={() => { setRange(id); setHover(null); }} style={{ border: `1px solid ${range === id ? C.copper : C.line}`, background: range === id ? C.selected : 'transparent', color: range === id ? C.copper : C.dim, borderRadius: 4, fontSize: 11, padding: '3px 5px', cursor: 'pointer', fontFamily: 'inherit' }}>{id}</button>)}
       </div>
       <label className="mono" style={{ fontSize: 11, color: C.faint, display: 'flex', alignItems: 'center', gap: 6 }}>Height <input type="range" min="120" max="280" step="10" value={height} onChange={(e) => setHeight(Number(e.target.value))} aria-label="History chart height" style={{ width: 64, accentColor: C.copper }} /></label>
     </div>

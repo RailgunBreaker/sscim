@@ -1,3 +1,4 @@
+import ThemeControl from '../components/ThemeControl.jsx';
 import { useState } from 'react';
 import { RELEASES, KIND_LABEL, KIND_COLOR } from '../data/releases.js';
 import { T, LANG_LABELS } from './i18n.js';
@@ -21,22 +22,21 @@ import SiteMap from '../components/SiteMap.jsx';
    ==================================================================== */
 
 const STYLE = `
-  :root{--bg:#0C111C;--panel:#141B2B;--panel2:#0F1626;--line:#243149;--copper:#C98A3F;--copperDim:#8A6230;--red:#E25C4A;--amber:#DFA83D;--green:#4FA97F;--text:#E9E4D8;--dim:#8C96A8;--faint:#5A6478}
   *{box-sizing:border-box;margin:0;padding:0}
   body{background:var(--bg);color:var(--text);font-family:Inter,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}
   .mono{font-family:inherit;font-variant-numeric:tabular-nums}
   .wrap{max-width:880px;margin:0 auto;padding:0 20px}
   a{color:var(--copper);text-decoration:none}
   a:hover{text-decoration:underline}
-  header{border-bottom:1px solid var(--line);padding:14px 0;position:sticky;top:0;background:rgba(12,17,28,.92);backdrop-filter:blur(6px);z-index:10}
+  header{border-bottom:1px solid var(--line);padding:14px 0;position:sticky;top:0;background:var(--panel);backdrop-filter:blur(6px);z-index:10}
   header .wrap{display:flex;align-items:center;gap:12px;flex-wrap:wrap;max-width:980px}
   .logo{display:flex;align-items:center}.logo img{display:block;width:104px;height:auto;filter:grayscale(1) brightness(0) invert(1)}
-  .tag{font-size:10px;letter-spacing:2px;color:var(--copper)}
+  .tag{font-size:12px;letter-spacing:2px;color:var(--copper)}
   .btn{display:inline-block;border-radius:5px;padding:8px 16px;font-weight:700;font-size:13.5px;border:1px solid var(--copper);transition:transform .15s ease,box-shadow .15s ease}
-  .btn.solid{background:var(--copper);color:#0C111C}
-  .btn:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(201,138,63,.22);text-decoration:none}
-  .langbar b{cursor:pointer;border:1px solid var(--line);border-radius:3px;padding:2px 7px;font-size:10px;color:var(--faint);font-weight:700}
-  .langbar b.on{background:var(--copper);color:#0C111C;border-color:var(--copper)}
+  .btn.solid{background:var(--copper);color:var(--onAccent)}
+  .btn:hover{background:var(--hover);text-decoration:none}
+  .langbar b{cursor:pointer;border:1px solid var(--line);border-radius:3px;padding:2px 7px;font-size:12px;color:var(--faint);font-weight:700}
+  .langbar b.on{background:var(--copper);color:var(--onAccent);border-color:var(--copper)}
   .hero{padding:46px 0 30px;border-bottom:1px solid var(--line)}
   .hero h1{font-size:clamp(26px,4.5vw,38px);line-height:1.15;margin-bottom:10px}
   .hero h1 em{color:var(--copper);font-style:normal}
@@ -49,9 +49,9 @@ const STYLE = `
   .rel::before{content:"";position:absolute;left:3px;top:6px;width:13px;height:13px;border-radius:50%;background:var(--bg);border:2px solid var(--copperDim)}
   .rel.first::before{border-color:var(--copper);box-shadow:0 0 0 4px rgba(201,138,63,.16)}
   .relhead{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:4px}
-  .date{font-size:11px;letter-spacing:1.2px;color:var(--copper)}
-  .ver{font-size:10px;letter-spacing:1px;color:var(--faint);border:1px solid var(--line);border-radius:3px;padding:1px 6px}
-  .newest{font-size:9.5px;letter-spacing:1.2px;color:#0C111C;background:var(--copper);border-radius:3px;padding:2px 7px;font-weight:700}
+  .date{font-size:12px;letter-spacing:1.2px;color:var(--copper)}
+  .ver{font-size:12px;letter-spacing:1px;color:var(--faint);border:1px solid var(--line);border-radius:3px;padding:1px 6px}
+  .newest{font-size:12px;letter-spacing:1.2px;color:var(--onAccent);background:var(--copper);border-radius:3px;padding:2px 7px;font-weight:700}
   .rel h2{font-size:19px;line-height:1.3;margin:2px 0 6px}
   .rel .relled{color:var(--dim);font-size:14px;margin-bottom:14px;max-width:640px}
   ul.changes{list-style:none;display:grid;gap:9px}
@@ -75,6 +75,7 @@ export default function Updates() {
         <div className="wrap">
           <a className="logo" href="index.html" aria-label="SSCIM home"><img src="sscim-logo.png" alt="SSCIM" /></a>
           <span className="tag mono">{t('tag')}</span>
+          <ThemeControl />
           <span className="langbar mono" style={{ marginLeft: 'auto', display: 'flex', gap: 3 }}>
             {Object.entries(LANG_LABELS).map(([l, label]) => (
               <b key={l} className={lang === l ? 'on' : ''} onClick={() => setLang(l)}>{label}</b>

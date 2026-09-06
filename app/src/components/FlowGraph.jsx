@@ -156,7 +156,7 @@ export default function FlowGraph({ sel, setSel, hl, model, scenarioActive, pb, 
                 {isSel && <rect x={st.x - 51} y={st.y - 24} width={102} height={48} rx={7} fill="none" stroke={C.copper} strokeWidth={2} />}
                 {pbNew && <rect className="pulse" x={st.x - 51} y={st.y - 24} width={102} height={48} rx={7} fill="none" stroke={C.copper} strokeWidth={2} />}
                 <rect x={st.x - 47} y={st.y - 20} width={94} height={40} rx={5}
-                  fill={active || hoverLit ? '#1B2436' : C.panel} stroke={isSel ? C.text : active ? col : hoverLit ? C.copper : C.line} strokeWidth={isSel ? 1.6 : 0.6 + ni / 8} />
+                  fill={active || hoverLit ? C.raised : C.panel} stroke={isSel ? C.text : active ? col : hoverLit ? C.copper : C.line} strokeWidth={isSel ? 1.6 : 0.6 + ni / 8} />
                 <circle cx={st.x - 37} cy={st.y - 10} r={2 + ni / 3.2} fill={col}>
                   {(active || pbNew) && <animate attributeName="opacity" values="1;.4;1" dur="1.6s" repeatCount="indefinite" />}
                 </circle>

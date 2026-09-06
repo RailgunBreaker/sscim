@@ -1,3 +1,4 @@
+import ThemeControl from '../components/ThemeControl.jsx';
 import { useEffect, useMemo, useState } from 'react';
 import { DOCUMENT_LIBRARY } from './generated-library.js';
 import { pageFor } from './docLinks.js';
@@ -21,13 +22,12 @@ import SiteMap from '../components/SiteMap.jsx';
    link back here pre-filtered. */
 
 const STYLE = `
-:root{--bg:#0C111C;--panel:#141B2B;--panel2:#0F1626;--line:#243149;--copper:#C98A3F;--amber:#DFA83D;--text:#E9E4D8;--dim:#A5AEC0;--faint:#6E788B}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;line-height:1.68;-webkit-font-smoothing:antialiased}
 a{color:var(--copper);text-decoration:none}a:hover{text-decoration:underline}
-header{position:sticky;top:0;z-index:5;border-bottom:1px solid var(--line);background:rgba(12,17,28,.94);backdrop-filter:blur(10px)}
+header{position:sticky;top:0;z-index:5;border-bottom:1px solid var(--line);background:var(--panel);backdrop-filter:blur(10px)}
 .bar{max-width:1120px;margin:auto;padding:14px 24px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 .brand{display:flex;align-items:center}.brand img{display:block;width:94px;height:auto;filter:grayscale(1) brightness(0) invert(1)}
-.eyebrow{font-size:10.5px;font-weight:700;color:var(--copper);letter-spacing:1.2px}
+.eyebrow{font-size:12px;font-weight:700;color:var(--copper);letter-spacing:1.2px}
 .nav{display:flex;gap:14px;margin-left:auto;font-size:13px}
 .button{border:1px solid var(--copper);border-radius:5px;padding:7px 12px;font-size:13px;font-weight:700}
 .fill{background:var(--copper);color:var(--bg)}
@@ -42,17 +42,17 @@ h1{margin:6px 0 8px;font-size:clamp(28px,4vw,40px);letter-spacing:-.8px}
 .chip.on{background:var(--copper);border-color:var(--copper);color:var(--bg);font-weight:700}
 .chip .n{opacity:.65;margin-left:5px}
 .clear{background:none;border:0;color:var(--faint);font:12px Inter,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;cursor:pointer;text-decoration:underline;padding:6px 4px}
-.count{color:var(--faint);font-size:11px;font-weight:600;letter-spacing:1.1px;margin:22px 0 10px}
+.count{color:var(--faint);font-size:12px;font-weight:600;letter-spacing:1.1px;margin:22px 0 10px}
 .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(272px,1fr));gap:12px}
 .card{border:1px solid var(--line);background:var(--panel);border-radius:9px;padding:15px;display:block;transition:border-color .15s ease,transform .15s ease}
 .card:hover{border-color:var(--copper);transform:translateY(-1px);text-decoration:none}
 .card strong{display:block;font-size:14.5px;color:var(--text);font-weight:600}
-.card small{display:block;margin-top:5px;color:var(--faint);font-size:11px;word-break:break-all}
+.card small{display:block;margin-top:5px;color:var(--faint);font-size:12px;word-break:break-all}
 .card .tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:9px}
-.card .tag{border:1px solid var(--line);color:var(--dim);border-radius:20px;padding:2px 8px;font-size:10.5px}
-.group{margin:30px 0 10px;font-size:11px;font-weight:700;letter-spacing:1.3px;color:var(--faint);border-bottom:1px solid var(--line);padding-bottom:7px}
+.card .tag{border:1px solid var(--line);color:var(--dim);border-radius:20px;padding:2px 8px;font-size:12px}
+.group{margin:30px 0 10px;font-size:12px;font-weight:700;letter-spacing:1.3px;color:var(--faint);border-bottom:1px solid var(--line);padding-bottom:7px}
 .empty{color:var(--faint);font-size:13px}
-.note{border:1px solid #5b4827;background:rgba(223,168,61,.06);border-radius:7px;padding:12px 14px;margin:0 0 26px;color:var(--dim);font-size:13px}
+.note{border:1px solid var(--line);background:rgba(223,168,61,.06);border-radius:7px;padding:12px 14px;margin:0 0 26px;color:var(--dim);font-size:13px}
 .note b{color:var(--amber)}
 @media(max-width:700px){main{padding:26px 18px 60px}.nav{margin-left:0;width:100%;order:3}}
 `;
@@ -149,6 +149,7 @@ export default function Docs() {
       <a className="brand" href="index.html" aria-label="SSCIM home"><img src="sscim-logo.png" alt="SSCIM" /></a>
       <span className="eyebrow">DOCUMENTATION LIBRARY</span>
       <nav className="nav">
+        <ThemeControl />
         <a href="index.html">Home</a>
         <a href="intro.html">Guide</a>
         <a className="button fill" href="sscim-app.html">Open dashboard</a>

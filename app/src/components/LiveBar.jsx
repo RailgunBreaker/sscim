@@ -47,8 +47,8 @@ export default function LiveBar({ model, whatChanged, hazard, onClearHazard, sou
   const baselineDelta7d = baselineChainIndex - prev7;
   const isStatic = source === 'static';
 
-  const tone = scenarioActive ? { bg: '#2A1E14', border: C.amber, text: C.amber, label: 'Hazard applied' }
-    : reviewing ? { bg: '#161A26', border: C.copperDim, text: C.copper, label: 'History review' }
+  const tone = scenarioActive ? { bg: C.panel2, border: C.amber, text: C.amber, label: 'Hazard applied' }
+    : reviewing ? { bg: C.panel2, border: C.copperDim, text: C.copper, label: 'History review' }
       : isStatic ? { bg: C.panel2, border: C.line, text: C.dim, label: 'Static snapshot' }
         : { bg: C.panel2, border: C.line, text: C.dim, label: 'Live vault' };
 
@@ -65,7 +65,7 @@ export default function LiveBar({ model, whatChanged, hazard, onClearHazard, sou
   return (
     <div style={{
       background: tone.bg, borderBottom: `1px solid ${tone.border}`,
-      padding: '10px 16px', color: tone.text, lineHeight: 1.45,
+      padding: '20px 24px', color: tone.text, lineHeight: 1.45,
       display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap',
     }}>
       {/* 1 — the current result, and what KIND of reading it is */}
@@ -73,7 +73,7 @@ export default function LiveBar({ model, whatChanged, hazard, onClearHazard, sou
         <span style={{ fontSize: 12, color: C.faint }}>
           {reviewing || scenarioActive ? tone.label : 'Chain index'}
         </span>
-        <b className="mono" style={{ fontSize: 26, fontWeight: 600, lineHeight: 1.1, color: riskColor(activeChainIndex) }}>
+        <b className="mono" style={{ fontSize: 32, fontWeight: 600, lineHeight: 1.1, color: riskColor(activeChainIndex) }}>
           {activeChainIndex.toFixed(2)}
         </b>
         {scenarioActive ? (
@@ -110,7 +110,7 @@ export default function LiveBar({ model, whatChanged, hazard, onClearHazard, sou
         {scenarioActive && onClearHazard && (
           <button type="button" onClick={onClearHazard} className="ui-button"
             title={hazard?.desc || 'Remove the hazard overlay and return to the observed reading'}
-            style={{ fontSize: 13, padding: '5px 12px', borderRadius: 5, fontFamily: 'inherit', cursor: 'pointer', fontWeight: 600, background: C.amber, color: '#0C111C', border: `1px solid ${C.amber}` }}>
+            style={{ fontSize: 13, padding: '5px 12px', borderRadius: 5, fontFamily: 'inherit', cursor: 'pointer', fontWeight: 600, background: C.amber, color: C.onAccent, border: `1px solid ${C.amber}` }}>
             Clear hazard
           </button>
         )}

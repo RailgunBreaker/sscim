@@ -7,6 +7,7 @@ import { useVault } from '../data/VaultContext.jsx';
 import { MODEL_VERSION } from '../engine/registry.js';
 import SearchBox from './SearchBox.jsx';
 import Freshness from './Freshness.jsx';
+import ThemeControl from './ThemeControl.jsx';
 
 /* The header used to carry, in order: the logo, a build label reading
    "v4 · OSM MAP · COMPANY SPREAD", the full product name, three unlabelled
@@ -50,6 +51,7 @@ export default function Header({
 
   return (
     <header
+      className="dashboard-header"
       style={{
         borderBottom: `1px solid ${color.border.default}`,
         padding: `${space.sm + 2}px ${space.lg}px`,
@@ -57,7 +59,7 @@ export default function Header({
         flexWrap: 'wrap',
         gap: space.md,
         alignItems: 'center',
-        background: color.surface.page,
+        background: color.surface.panel,
       }}
     >
       <a
@@ -68,9 +70,11 @@ export default function Header({
         <img
           src="sscim-logo.png"
           alt="SSCIM"
-          style={{ display: 'block', width: 88, height: 'auto', filter: 'grayscale(1) brightness(0) invert(1)' }}
+          style={{ display: 'block', width: 88, height: 'auto', filter: C.logoFilter }}
         />
       </a>
+
+      <div className="dashboard-brand"><strong>Supply chain intelligence</strong><span>Semiconductor research workspace</span></div>
 
       {/* One status, not seven fields. The dataset date and how stale it is
           are the two things worth knowing at a glance; the rest is in About. */}
@@ -81,7 +85,8 @@ export default function Header({
         <Freshness />
       </div>
 
-      <div style={{ marginLeft: 'auto', display: 'flex', gap: space.sm, alignItems: 'center', flexWrap: 'wrap' }}>
+      <div className="dashboard-actions" style={{ marginLeft: 'auto', display: 'flex', gap: space.sm, alignItems: 'center', flexWrap: 'wrap' }}>
+        <ThemeControl />
         <LanguagePicker lang={lang} setLang={setLang} />
         <SearchBox setSel={setSel} />
         <Button variant="quiet" size="sm" onClick={() => setShowGuide(true)}>
@@ -209,7 +214,7 @@ function AboutMenu({ open, setOpen, scope, datasetAsOf, tourTarget }) {
             background: color.surface.panel,
             border: `1px solid ${color.border.default}`,
             borderRadius: radius.lg,
-            boxShadow: '0 8px 28px rgba(0,0,0,.45)',
+            boxShadow: C.overlay,
             padding: space.lg,
           }}
         >

@@ -188,7 +188,7 @@ export default function HazardPanel({ footprint, radiusKm, onRadiusChange, onCle
               title={sources.length ? 'Run this hazard through the propagation engine and show its Δ on the index' : 'No stage is exposed enough to shock'}
               style={{ fontSize: 12, padding: '5px 12px', borderRadius: 4, fontFamily: 'inherit',
                 cursor: sources.length ? 'pointer' : 'not-allowed', fontWeight: 700,
-                background: sources.length ? C.amber : 'transparent', color: sources.length ? '#0C111C' : C.faint,
+                background: sources.length ? C.amber : 'transparent', color: sources.length ? C.onAccent : C.faint,
                 border: `1px solid ${sources.length ? C.amber : C.line}`, opacity: sources.length ? 1 : 0.5 }}>
               Apply hazard impact ({sources.length} stage{sources.length === 1 ? '' : 's'})
             </button>

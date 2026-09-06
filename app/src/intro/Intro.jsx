@@ -1,3 +1,4 @@
+import ThemeControl from '../components/ThemeControl.jsx';
 import { useState } from 'react';
 import { T, LANG_LABELS } from './i18n.js';
 import Tex from '../components/Tex.jsx';
@@ -5,21 +6,20 @@ import NewsTicker from '../components/NewsTicker.jsx';
 import SiteMap from '../components/SiteMap.jsx';
 
 const STYLE = `
-  :root{--bg:#0C111C;--panel:#141B2B;--panel2:#0F1626;--line:#243149;--copper:#C98A3F;--copperDim:#8A6230;--red:#E25C4A;--amber:#DFA83D;--green:#4FA97F;--text:#E9E4D8;--dim:#8C96A8;--faint:#5A6478}
   *{box-sizing:border-box;margin:0;padding:0}
   body{background:var(--bg);color:var(--text);font-family:Inter,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}
   .mono{font-family:inherit;font-variant-numeric:tabular-nums}
   .wrap{max-width:820px;margin:0 auto;padding:0 20px}
   a{color:var(--copper);text-decoration:none}
-  header{border-bottom:1px solid var(--line);padding:14px 0;position:sticky;top:0;background:rgba(12,17,28,.92);backdrop-filter:blur(6px);z-index:10}
+  header{border-bottom:1px solid var(--line);padding:14px 0;position:sticky;top:0;background:var(--panel);backdrop-filter:blur(6px);z-index:10}
   header .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;max-width:980px}
   .header-brand,.header-actions{display:flex;align-items:center;gap:10px;min-width:0}.header-actions{margin-left:auto;flex-wrap:wrap;justify-content:flex-end}
   .logo{display:flex;align-items:center}.logo img{display:block;width:104px;height:auto;filter:grayscale(1) brightness(0) invert(1)}
-  .badge{font-size:10px;letter-spacing:1.2px;color:var(--amber);border:1px solid var(--amber);border-radius:3px;padding:2px 7px;font-family:inherit;font-weight:600;white-space:nowrap}
+  .badge{font-size:12px;letter-spacing:1.2px;color:var(--amber);border:1px solid var(--amber);border-radius:3px;padding:2px 7px;font-family:inherit;font-weight:600;white-space:nowrap}
   .btn{display:inline-block;border-radius:5px;padding:8px 16px;font-weight:700;font-size:13.5px;border:1px solid var(--copper);transition:transform .15s ease,box-shadow .15s ease}
-  .btn.solid{background:var(--copper);color:#0C111C}
-  .btn:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(201,138,63,.22)}
-  .intro-hero{position:relative;overflow:hidden;padding:52px 0 34px}.intro-hero::before{content:'';position:absolute;width:340px;height:340px;right:-80px;top:-80px;border:1px solid rgba(201,138,63,.22);border-radius:50%;box-shadow:0 0 0 38px rgba(201,138,63,.035),0 0 0 76px rgba(201,138,63,.02);animation:orbit 12s linear infinite}.intro-hero>*{position:relative}.signal{display:flex;gap:7px;align-items:end;height:32px;margin:20px 0 0}.signal i{width:5px;background:var(--copper);border-radius:8px;opacity:.75;animation:signal 1.6s ease-in-out infinite}.signal i:nth-child(2){height:70%;animation-delay:.15s}.signal i:nth-child(3){height:42%;animation-delay:.3s}.signal i:nth-child(4){height:100%;animation-delay:.45s}.signal i:nth-child(5){height:56%;animation-delay:.6s}.signal i:nth-child(6){height:80%;animation-delay:.75s}@keyframes signal{0%,100%{transform:scaleY(.45);opacity:.3}50%{transform:scaleY(1);opacity:1}}@keyframes orbit{to{transform:rotate(360deg)}}@media(prefers-reduced-motion:reduce){.intro-hero::before,.signal i{animation:none}}
+  .btn.solid{background:var(--copper);color:var(--onAccent)}
+  .btn:hover{background:var(--hover)}
+  .intro-hero{position:relative;overflow:hidden;padding:52px 0 34px}.intro-hero::before{display:none}.intro-hero>*{position:relative}.signal{display:none}.signal i{width:5px;background:var(--copper);border-radius:8px;opacity:.75;animation:signal 1.6s ease-in-out infinite}.signal i:nth-child(2){height:70%;animation-delay:.15s}.signal i:nth-child(3){height:42%;animation-delay:.3s}.signal i:nth-child(4){height:100%;animation-delay:.45s}.signal i:nth-child(5){height:56%;animation-delay:.6s}.signal i:nth-child(6){height:80%;animation-delay:.75s}@keyframes signal{0%,100%{transform:scaleY(.45);opacity:.3}50%{transform:scaleY(1);opacity:1}}@keyframes orbit{to{transform:rotate(360deg)}}@media(prefers-reduced-motion:reduce){.intro-hero::before,.signal i{animation:none}}
   h1{font-size:clamp(26px,4.5vw,38px);line-height:1.15;margin:48px 0 10px}
   h1 em{color:var(--copper);font-style:normal}
   .lede{color:var(--dim);font-size:16px;max-width:640px;margin-bottom:8px}
@@ -27,22 +27,22 @@ const STYLE = `
   h3{font-size:15px;margin:18px 0 4px}
   p{color:var(--dim);font-size:14px;margin-bottom:10px}
   p strong{color:var(--text)}
-  .k{font-size:9.5px;letter-spacing:2px;color:var(--copper)}
+  .k{font-size:12px;letter-spacing:2px;color:var(--copper)}
   .card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:16px 18px;margin:14px 0}
   .step{display:flex;gap:12px;margin:16px 0}
-  .step .n{flex-shrink:0;width:26px;height:26px;border-radius:5px;background:var(--copper);color:#0C111C;font-weight:700;display:flex;align-items:center;justify-content:center;font-size:13px;font-family:inherit}
+  .step .n{flex-shrink:0;width:26px;height:26px;border-radius:5px;background:var(--copper);color:var(--onAccent);font-weight:700;display:flex;align-items:center;justify-content:center;font-size:13px;font-family:inherit}
   .step h3{margin:0 0 3px}
   .step p{margin-bottom:4px}
   .tip{border-left:3px solid var(--copper);background:var(--panel2);padding:8px 12px;font-size:12.5px;color:var(--dim);margin:8px 0;border-radius:0 5px 5px 0}
   .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--dim);margin:10px 0}
   .legend span::before{content:"●";margin-right:5px}
   .g::before{color:var(--green)} .a::before{color:var(--amber)} .r::before{color:var(--red)} .c::before{color:var(--copper)}
-  .formula{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:12px 14px;font-size:11.5px;overflow-x:auto;margin:10px 0}
+  .formula{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:12px 14px;font-size:12px;overflow-x:auto;margin:10px 0}
   .formula > div + div{margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}
-  .langbar b{cursor:pointer;border:1px solid var(--line);border-radius:3px;padding:2px 7px;font-size:10px;color:var(--faint);font-weight:700;transition:background .15s ease,color .15s ease}
-  .langbar b.on{background:var(--copper);color:#0C111C;border-color:var(--copper)}
-  .disclaimer{border:1px solid var(--copperDim);background:rgba(223,168,61,.06);border-radius:6px;padding:12px 14px;color:var(--amber);font-size:11.5px;line-height:1.7;margin:14px 0}
-  footer{margin-top:56px;padding:24px 0;border-top:1px solid var(--line);font-size:10.5px;color:var(--faint);line-height:1.7}
+  .langbar b{cursor:pointer;border:1px solid var(--line);border-radius:3px;padding:2px 7px;font-size:12px;color:var(--faint);font-weight:700;transition:background .15s ease,color .15s ease}
+  .langbar b.on{background:var(--copper);color:var(--onAccent);border-color:var(--copper)}
+  .disclaimer{border:1px solid var(--copperDim);background:rgba(223,168,61,.06);border-radius:6px;padding:12px 14px;color:var(--amber);font-size:12px;line-height:1.7;margin:14px 0}
+  footer{margin-top:56px;padding:24px 0;border-top:1px solid var(--line);font-size:12px;color:var(--faint);line-height:1.7}
   @media (max-width:700px){header .wrap{gap:8px}.header-actions{width:100%;margin-left:0}.badge{display:none}}@media (max-width:440px){.header-actions{gap:7px}.header-actions a{font-size:12px}.header-actions .btn{padding:7px 10px}.langbar b{padding:2px 5px}}
 `;
 
@@ -77,6 +77,7 @@ export default function Intro() {
             <span className="badge">SSCIM INTELLIGENCE</span>
           </div>
           <div className="header-actions">
+            <ThemeControl />
             <span className="langbar mono" style={{ display: 'flex', gap: 3 }}>
               {Object.entries(LANG_LABELS).map(([l, label]) => (
                 <b key={l} className={lang === l ? 'on' : ''} onClick={() => setLang(l)}>{label}</b>

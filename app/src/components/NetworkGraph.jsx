@@ -193,7 +193,7 @@ export default function NetworkGraph({ baseGraph, filters = {}, pb = null }) {
                   <g>
                     <circle r={r + 7} fill="none" stroke={C.copper} strokeWidth={1.6} />
                     <circle cx={r + 4} cy={-r - 4} r={6} fill={C.copper} />
-                    <text x={r + 4} y={-r - 1.5} textAnchor="middle" fill="#0C111C" fontSize="8" fontWeight="700" style={{ pointerEvents: 'none' }}>{routeHopIndex[c.id] + 1}</text>
+                    <text x={r + 4} y={-r - 1.5} textAnchor="middle" fill={C.onAccent} fontSize="8" fontWeight="700" style={{ pointerEvents: 'none' }}>{routeHopIndex[c.id] + 1}</text>
                   </g>
                 )}
                 {(isSel || isHov || isMulti || routeCentreIds.has(c.id) || r > 8) && (

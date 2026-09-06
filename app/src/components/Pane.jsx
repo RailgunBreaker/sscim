@@ -26,13 +26,13 @@ export default function Pane({ title, hint, children, id, highlight }) {
        the document must not. */
     <section
       id={id}
-      className={highlight ? 'tour-target' : undefined}
+      className={highlight ? 'workspace-pane tour-target' : 'workspace-pane'}
       aria-label={t(title)}
-      style={{ background: C.bg, display: 'flex', flexDirection: 'column', minWidth: 0, overflowX: 'hidden' }}
+      style={{ background: C.panel, display: 'flex', flexDirection: 'column', minWidth: 0, overflowX: 'hidden' }}
     >
       <div
         style={{
-          padding: `${space.sm}px ${space.lg - 2}px`,
+          padding: `${space.lg}px ${space.lg}px`,
           borderBottom: `1px solid ${color.border.subtle}`,
           display: 'flex',
           alignItems: 'baseline',

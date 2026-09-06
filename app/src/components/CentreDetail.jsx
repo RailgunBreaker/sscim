@@ -67,7 +67,7 @@ export default function CentreDetail({ centreId, baseGraph, model, setSel }) {
   return (
     <div>
       <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, flexWrap: 'wrap' }}>
-        <span className="mono" style={{ fontSize: 12, color: '#0C111C', background: C.copper, borderRadius: 3, padding: '2px 7px', fontWeight: 700 }}>Functional centre</span>
+        <span className="mono" style={{ fontSize: 12, color: C.onAccent, background: C.copper, borderRadius: 3, padding: '2px 7px', fontWeight: 700 }}>Functional centre</span>
         <h3 style={{ margin: 0, fontSize: 15 }}>{flagEmoji(centre.countryId)} {COUNTRY_NAMES[centre.countryId] || centre.countryId} · {stage?.name || centre.stageId}</h3>
       </div>
       <div className="mono" style={{ fontSize: 12, color: C.faint, margin: '4px 0 8px' }}>{centre.tierLabel} tier · country × stage centre{isRemoved ? ' · TEMPORARILY REMOVED' : ''}</div>
@@ -75,7 +75,7 @@ export default function CentreDetail({ centreId, baseGraph, model, setSel }) {
       {/* Node actions (§25) — also available here in the accessible side panel */}
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 8 }}>
         <button type="button" onClick={() => pgToggleNode(centreId)}
-          style={{ fontSize: 12, padding: '4px 9px', borderRadius: 4, fontFamily: 'inherit', cursor: 'pointer', background: isRemoved ? 'rgba(201,138,63,.16)' : 'transparent', color: isRemoved ? C.copper : C.dim, border: `1px solid ${isRemoved ? C.copper : C.line}` }}>
+          style={{ fontSize: 12, padding: '4px 9px', borderRadius: 4, fontFamily: 'inherit', cursor: 'pointer', background: isRemoved ? C.selected : 'transparent', color: isRemoved ? C.copper : C.dim, border: `1px solid ${isRemoved ? C.copper : C.line}` }}>
           {isRemoved ? '↺ Restore centre' : '✕ Temporarily remove'}
         </button>
         <button type="button" onClick={() => pgToggleMulti({ type: 'centre', id: centreId })}
@@ -89,7 +89,7 @@ export default function CentreDetail({ centreId, baseGraph, model, setSel }) {
         </button>
         <button type="button" onClick={() => cmpToggle({ type: 'centre', id: centreId })}
           title="Add this centre to the comparison workspace (up to 4)"
-          style={{ fontSize: 12, padding: '4px 9px', borderRadius: 4, fontFamily: 'inherit', cursor: 'pointer', background: inComparison ? 'rgba(201,138,63,.16)' : 'transparent', color: inComparison ? C.copper : C.dim, border: `1px solid ${inComparison ? C.copper : C.line}` }}>
+          style={{ fontSize: 12, padding: '4px 9px', borderRadius: 4, fontFamily: 'inherit', cursor: 'pointer', background: inComparison ? C.selected : 'transparent', color: inComparison ? C.copper : C.dim, border: `1px solid ${inComparison ? C.copper : C.line}` }}>
           {inComparison ? '− Remove from comparison' : '⊞ Add to comparison'}
         </button>
       </div>

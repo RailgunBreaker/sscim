@@ -117,7 +117,7 @@ export default function Watchlist({ model, setSel }) {
               title={full ? `Watchlist is full (${MAX_WATCHED})` : `Track a ${WATCH_TYPE_LABEL[tp].toLowerCase()}`}
               style={{ fontSize: 12, padding: '3px 9px', borderRadius: 4, fontFamily: 'inherit',
                 cursor: full && !on ? 'not-allowed' : 'pointer', opacity: full && !on ? 0.45 : 1,
-                background: on ? C.copper : 'transparent', color: on ? '#0C111C' : C.dim,
+                background: on ? C.copper : 'transparent', color: on ? C.onAccent : C.dim,
                 border: `1px solid ${on ? C.copper : C.line}`, fontWeight: on ? 700 : 400 }}>
               ＋ {WATCH_TYPE_LABEL[tp]}
             </button>

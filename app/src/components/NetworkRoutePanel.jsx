@@ -103,7 +103,7 @@ export default function NetworkRoutePanel({ baseGraph }) {
         return (
           <button key={i} type="button" onClick={() => (on ? clearRoute() : pinRoute(r))} aria-pressed={on}
             aria-label={`Route ${i + 1}: ${routeDescription(r)}. ${r.hops} stage transitions, cumulative modeled weight ${fmt(r.weightProduct)}.`}
-            style={{ display: 'block', width: '100%', textAlign: 'left', marginBottom: 6, padding: '6px 8px', borderRadius: 5, cursor: 'pointer', fontFamily: 'inherit', background: on ? 'rgba(201,138,63,.14)' : C.panel, border: `1px solid ${on ? C.copper : C.line}`, color: C.text }}>
+            style={{ display: 'block', width: '100%', textAlign: 'left', marginBottom: 6, padding: '6px 8px', borderRadius: 5, cursor: 'pointer', fontFamily: 'inherit', background: on ? C.selected : C.panel, border: `1px solid ${on ? C.copper : C.line}`, color: C.text }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', gap: 8, alignItems: 'center' }}>
               <span className="mono" style={{ fontSize: 12, color: C.faint }}>ROUTE {i + 1} · {r.hops} hop{r.hops === 1 ? '' : 's'}</span>
               <span className="mono" style={{ fontSize: 12, color: C.copper }} title="Product of edge weights (multiplicative attenuation) · widest-path bottleneck">Π {fmt(r.weightProduct)} · ⌵ {fmt(r.bottleneck)}</span>

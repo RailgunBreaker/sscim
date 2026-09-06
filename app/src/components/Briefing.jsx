@@ -60,7 +60,7 @@ export default function Briefing({ onClose, model, scenario }) {
   const { ref, onKeyDown } = useModalA11y(onClose);
 
   const btn = (primary) => ({
-    background: primary ? C.copper : 'transparent', color: primary ? '#0C111C' : C.copper,
+    background: primary ? C.copper : 'transparent', color: primary ? C.onAccent : C.copper,
     border: `1px solid ${C.copper}`, borderRadius: 4, padding: '4px 12px', cursor: 'pointer',
     fontFamily: 'inherit', fontWeight: primary ? 700 : 400, fontSize: 12,
   });

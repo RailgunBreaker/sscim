@@ -56,7 +56,7 @@ export default function ScenarioSummary({ model, scenario, setSel, onReset, onPl
   return (
     <div>
       <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, flexWrap: 'wrap' }}>
-        <span className="mono" style={{ fontSize: 12, color: '#0C111C', background: C.copper, borderRadius: 3, padding: '2px 7px', fontWeight: 700 }}>Scenario</span>
+        <span className="mono" style={{ fontSize: 12, color: C.onAccent, background: C.copper, borderRadius: 3, padding: '2px 7px', fontWeight: 700 }}>Scenario</span>
         <h3 style={{ margin: 0, fontSize: 15 }}>{scenario.name}</h3>
         <span className="mono" style={{ fontSize: 12, color: dirColor, border: `1px solid ${dirColor}`, borderRadius: 3, padding: '1px 6px', textTransform: 'uppercase' }}>{direction}</span>
       </div>
@@ -112,13 +112,13 @@ export default function ScenarioSummary({ model, scenario, setSel, onReset, onPl
         </>
       )}
 
-      <div className="mono" style={{ fontSize: 12, color: C.amber, background: '#2A1E14', border: `1px solid ${C.copperDim}`, borderRadius: 5, padding: '6px 9px', margin: '10px 0 8px', lineHeight: 1.6 }}>
+      <div className="mono" style={{ fontSize: 12, color: C.amber, background: C.panel2, border: `1px solid ${C.copperDim}`, borderRadius: 5, padding: '6px 9px', margin: '10px 0 8px', lineHeight: 1.6 }}>
         MODEL LIMITATIONS — hypothetical scenario over a static curated snapshot with unvalidated propagation priors. Signed differences are modeled sensitivities, not predicted real-world outcomes. History is never rewritten by a scenario.
       </div>
 
       <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
         {onPlay && (
-          <button type="button" onClick={onPlay} style={{ background: C.copper, color: '#0C111C', border: 'none', borderRadius: 4, padding: '6px 14px', cursor: 'pointer', fontFamily: 'inherit', fontWeight: 700, fontSize: 12 }}>▶ Play propagation</button>
+          <button type="button" onClick={onPlay} style={{ background: C.copper, color: C.onAccent, border: 'none', borderRadius: 4, padding: '6px 14px', cursor: 'pointer', fontFamily: 'inherit', fontWeight: 700, fontSize: 12 }}>▶ Play propagation</button>
         )}
         {onReset && (
           <button type="button" onClick={onReset} style={{ background: 'transparent', border: `1px solid ${C.line}`, color: C.dim, borderRadius: 4, padding: '6px 14px', cursor: 'pointer', fontFamily: 'inherit', fontSize: 12 }}>Reset to baseline</button>

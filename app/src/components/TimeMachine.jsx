@@ -79,7 +79,7 @@ export default function TimeMachine({ asOfDaysAgo, setAsOfDaysAgo, setSel, selec
   const onSlide = (v) => setAsOfDaysAgo(Math.max(0, spanDays - Number(v)));
 
   return (
-    <div className="cbar" style={{ padding: '7px 16px', background: live ? C.panel2 : '#161A26', borderBottom: `1px solid ${live ? C.line : C.copperDim}` }}>
+    <div className="cbar" style={{ padding: '7px 16px', background: live ? C.panel2 : C.panel2, borderBottom: `1px solid ${live ? C.line : C.copperDim}` }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
         <span className="mono" style={{ fontSize: 12, color: live ? C.faint : C.copper, flexShrink: 0 }}>
           {live ? 'LIVE' : '⟲ REVIEWING'}
@@ -99,7 +99,7 @@ export default function TimeMachine({ asOfDaysAgo, setAsOfDaysAgo, setSel, selec
         <button type="button" onClick={() => setAsOfDaysAgo(0)} disabled={live}
           style={{ fontSize: 12, padding: '3px 10px', borderRadius: 4, fontFamily: 'inherit',
             cursor: live ? 'default' : 'pointer', fontWeight: live ? 400 : 700,
-            background: live ? 'transparent' : C.copper, color: live ? C.faint : '#0C111C',
+            background: live ? 'transparent' : C.copper, color: live ? C.faint : C.onAccent,
             border: `1px solid ${live ? C.line : C.copper}`, opacity: live ? 0.5 : 1 }}>
           Return to live
         </button>

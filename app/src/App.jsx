@@ -47,11 +47,11 @@ const GLOBAL_STYLE = `
   /* Interactive things respond to a pointer; non-interactive rows do not.
      Every row looking hoverable was a large part of why the dashboard read
      as a wall of buttons. */
-  .ui-button:hover:not(:disabled) { background: rgba(255,255,255,.06); }
+  .ui-button:hover:not(:disabled) { background: var(--hover); }
   .ui-button[aria-checked="true"]:hover, .ui-button[aria-selected="true"]:hover { filter: brightness(1.06); }
   .ui-button:disabled { cursor: not-allowed; opacity: .45; }
   .row-interactive { cursor: pointer; }
-  .row-interactive:hover { background: rgba(255,255,255,.045); }
+  .row-interactive:hover { background: var(--hover); }
   .row-static { cursor: default; }
   .pulse { animation: pulse 1.4s ease-in-out infinite; }
   @media (prefers-reduced-motion: reduce) { .pulse { animation: none !important; } }
@@ -62,8 +62,8 @@ const GLOBAL_STYLE = `
      fifty files use it; it no longer pretends to be monospace. */
   .mono { font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1; }
   .sscim-map { background: ${C.panel2}; }
-  .sscim-map .osm-soft { filter: brightness(.75) invert(1) contrast(1.1) hue-rotate(200deg) saturate(.3); }
-  .sscim-map .leaflet-control-attribution { background: rgba(12,17,28,.8); color: ${C.faint}; font-size: 9px; }
+  .sscim-map .osm-soft { filter: var(--mapFilter); }
+  .sscim-map .leaflet-control-attribution { background: var(--panel); color: ${C.faint}; font-size: 9px; }
   .sscim-map .leaflet-control-attribution a { color: ${C.copperDim}; }
   .sscim-tip { background: ${C.panel} !important; color: ${C.text} !important; border: 1px solid ${C.line} !important; border-radius: 4px; font-family: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 11px; padding: 3px 7px; box-shadow: none !important; }
   .sscim-tip::before { display: none; }
@@ -72,7 +72,7 @@ const GLOBAL_STYLE = `
   .sscim-tip.leaflet-popup .leaflet-popup-tip { background: ${C.panel}; box-shadow: none; }
   .sscim-tip.leaflet-popup .leaflet-popup-close-button { color: ${C.faint} !important; }
   .sscim-tip.leaflet-popup .leaflet-popup-close-button:hover { color: ${C.copper} !important; }
-  .sscim-label { background: transparent !important; border: none !important; box-shadow: none !important; color: ${C.text}; font-family: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 11px; font-weight: 600; text-shadow: 0 0 4px #000; white-space: nowrap; }
+  .sscim-label { background: transparent !important; border: none !important; box-shadow: none !important; color: ${C.text}; font-family: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 11px; font-weight: 600; text-shadow: var(--labelShadow); white-space: nowrap; }
   /* Facility markers are divIcons carrying an SVG glyph (utils/facilityIcon.js).
      Leaflet's default .leaflet-div-icon paints a white box behind them, which
      would put a paper square under every one of the 244 plants. */
@@ -456,7 +456,7 @@ function DashboardBody() {
         : 'Facilities and country exposure';
 
   return (
-    <div style={{ minHeight: "100vh", background: C.bg, color: C.text, fontFamily: 'Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif' }}>
+    <div className="dashboard-shell" style={{ minHeight: "100vh", background: C.bg, color: C.text, fontFamily: 'Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif' }}>
       <style>{GLOBAL_STYLE}</style>
 
       <Header
@@ -464,6 +464,11 @@ function DashboardBody() {
         setShowGuide={openGuide} setShowBriefing={setShowBriefing}
         tourTarget={tourTarget}
       />
+
+      <div className="dashboard-title">
+        <div><h1>Supply chain overview</h1><p>Explore exposure, trace dependencies, and review the events shaping the semiconductor industry.</p></div>
+        <a href="docs.html">Explore the methodology</a>
+      </div>
 
       <LiveBar model={model} whatChanged={whatChanged} hazard={scenario} onClearHazard={resetScenario} source={source} />
       <TimeMachine asOfDaysAgo={asOfDaysAgo} setAsOfDaysAgo={setAsOfDaysAgo} setSel={setSel}
@@ -475,13 +480,13 @@ function DashboardBody() {
 
       {wide ? (
         <>
-          <div style={{ display: "grid", gridTemplateColumns: viewMode === 'playground' ? "minmax(0, 1fr)" : viewMode === 'geographic' ? "minmax(0, 1fr) minmax(0, 1.9fr)" : "minmax(0, 1.9fr) minmax(0, 1fr)", gap: 1, background: C.line }}>
+          <div className="workspace-grid" style={{ display: "grid", gridTemplateColumns: viewMode === 'playground' ? "minmax(0, 1fr)" : viewMode === 'geographic' ? "minmax(0, 1fr) minmax(0, 1.9fr)" : "minmax(0, 1.9fr) minmax(0, 1fr)", gap: 16, background: C.bg }}>
             <Pane id="pane-map" highlight={tourTarget === "pane-map"} title={workspaceTitle} hint={workspaceHint}>{layer1}</Pane>
             {viewMode !== 'playground' && (
               <Pane id="pane-flow" highlight={tourTarget === "pane-flow"} title="Industry flow" hint="Select a stage to open its subsection"><FlowGraph sel={sel} setSel={setSel} hl={hl} model={displayModel} scenarioActive={model.scenarioActive} /></Pane>
             )}
           </div>
-          <div style={{ borderTop: `1px solid ${C.line}` }}>
+          <div className="intelligence-section">
             <Pane id="pane-intel" highlight={tourTarget === "pane-intel"} title="Intelligence">
               <Intel sel={sel} setSel={setSel} model={model} scenario={scenario} onResetScenario={resetScenario} scenarioActive={model.scenarioActive} feedTab={feedTab} setFeedTab={setFeedTab} baseGraph={baseGraph} horizontal />
             </Pane>

@@ -1,18 +1,4 @@
-/* ====================================================================
-   tokens.js — the semantic vocabulary the interface is built from.
-
-   theme.js holds the raw palette and stays as it is, because fifty files
-   import `C` from it. This adds a layer of MEANING on top: components ask
-   for `text.muted` or `state.adverse`, not for `#8C96A8`. A colour with a
-   name can be reasoned about and audited; a hex literal repeated across
-   forty files cannot.
-
-   The one raw value that changed is `faint`. At #5A6478 it scored 2.89:1
-   on the panel background — below WCAG AA for normal text, and it was
-   being used for 9-10px essential metadata. It is now #79849A: the same
-   hue and saturation, lightened until it passes (4.57:1 on panel, 5.02:1
-   on the page). Nothing else in the palette moved.
-   ==================================================================== */
+// Semantic tokens shared by both color themes.
 import { C } from '../theme.js';
 
 /* ---------------------------------------------------------------- colour */
@@ -24,10 +10,10 @@ export const color = {
     page: C.bg,
     sunken: C.panel2,
     panel: C.panel,
-    raised: '#1A2235',
+    raised: C.raised,
     /* A wash for a selected or active row: readable, and not a box. */
-    selected: 'rgba(201,138,63,.12)',
-    hover: 'rgba(255,255,255,.035)',
+    selected: C.selected,
+    hover: C.hover,
   },
 
   text: {
@@ -36,8 +22,8 @@ export const color = {
     /* Non-essential metadata ONLY. Still AA-compliant, because "muted"
        must never mean "unreadable". */
     muted: C.faint,
-    /* On a copper fill. */
-    onAccent: '#0C111C',
+    /* On the primary action fill. */
+    onAccent: C.onAccent,
     accent: C.copper,
   },
 
@@ -58,7 +44,7 @@ export const color = {
     /* The single boundary of a panel. */
     default: C.line,
     /* An interactive control at rest. */
-    control: '#2E3B54',
+    control: C.control,
     /* Selection, focus, and things the reader is acting on. */
     strong: C.copper,
   },
@@ -111,18 +97,18 @@ export const tabular = { fontVariantNumeric: 'tabular-nums' };
 
 /* ------------------------------------------------------------- shape */
 
-export const radius = { sm: 3, md: 5, lg: 8, pill: 999 };
+export const radius = { sm: 5, md: 7, lg: 10, pill: 999 };
 
 /* One height per control class, so that a row of mixed controls lines up
-   without anyone nudging padding. 32px is the desktop control; 44px is the
+   without anyone nudging padding. 36px is the desktop control; 44px is the
    minimum touch target and is applied at small viewports. */
-export const control = { sm: 26, md: 32, lg: 38, touch: 44 };
+export const control = { sm: 30, md: 36, lg: 40, touch: 44 };
 
 /* Used almost nowhere. A shadow on a dark interface reads as haze, not
    elevation. Reserved for things that genuinely float above the page. */
 export const shadow = {
   none: 'none',
-  overlay: '0 8px 28px rgba(0,0,0,.45)',
+  overlay: C.overlay,
 };
 
 /* A focus ring must be visible against every surface, and must not be

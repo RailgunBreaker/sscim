@@ -76,7 +76,7 @@ export default function PathExplorer({ defaultOrigin, activePath, onPick }) {
           <button key={i} type="button" onClick={() => onPick(on ? null : p)}
             aria-pressed={on}
             style={{ display: 'block', width: '100%', textAlign: 'left', marginBottom: 6, padding: '6px 8px', borderRadius: 5, cursor: 'pointer', fontFamily: 'inherit',
-              background: on ? 'rgba(201,138,63,.14)' : C.panel, border: `1px solid ${on ? C.copper : C.line}`, color: C.text }}>
+              background: on ? C.selected : C.panel, border: `1px solid ${on ? C.copper : C.line}`, color: C.text }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 8 }}>
               <span className="mono" style={{ fontSize: 12, color: C.faint }}>ROUTE {i + 1} · {p.channel === 'upstream' ? 'upstream echo' : 'downstream'}</span>
               <span className="mono" style={{ fontSize: 12, color: C.copper }} title="Product of the per-edge dependence coefficients along the route (multiplicative attenuation).">attenuation {fmtC(p.attenuation)}</span>

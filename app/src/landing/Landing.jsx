@@ -1,3 +1,4 @@
+import ThemeControl from '../components/ThemeControl.jsx';
 import { useState } from 'react';
 import { T, LANG_LABELS } from './i18n.js';
 import Tex from '../components/Tex.jsx';
@@ -5,14 +6,13 @@ import NewsTicker from '../components/NewsTicker.jsx';
 import SiteMap from '../components/SiteMap.jsx';
 
 const STYLE = `
-  :root{--bg:#0C111C;--panel:#141B2B;--panel2:#0F1626;--line:#243149;--copper:#C98A3F;--copperDim:#8A6230;--red:#E25C4A;--amber:#DFA83D;--green:#4FA97F;--text:#E9E4D8;--dim:#8C96A8;--faint:#79849A}
   *{box-sizing:border-box;margin:0;padding:0}
   body{background:var(--bg);color:var(--text);font-family:Inter,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;font-size:15px}
   .mono{font-variant-numeric:tabular-nums}
   .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
   a{color:var(--copper);text-decoration:none}
   a:focus-visible,button:focus-visible{outline:2px solid var(--copper);outline-offset:2px;border-radius:3px}
-  header{border-bottom:1px solid var(--line);padding:14px 0;position:sticky;top:0;background:rgba(12,17,28,.94);z-index:10}
+  header{border-bottom:1px solid var(--line);padding:14px 0;position:sticky;top:0;background:var(--panel);z-index:10}
   header .wrap{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
   .logo{display:flex;align-items:center}.logo img{display:block;width:100px;height:auto;filter:grayscale(1) brightness(0) invert(1)}
   .productname{font-size:13px;color:var(--faint)}
@@ -23,7 +23,7 @@ const STYLE = `
      animates on hover reads as a marketing page; a button that changes
      shade reads as a control. */
   .btn{display:inline-flex;align-items:center;justify-content:center;min-height:40px;border-radius:5px;padding:0 20px;font-weight:600;font-size:15px;cursor:pointer;border:1px solid var(--line);color:var(--text);background:transparent}
-  .btn.solid{background:var(--copper);color:#0C111C;border-color:var(--copper)}
+  .btn.solid{background:var(--copper);color:var(--onAccent);border-color:var(--copper)}
   .btn:hover{background:rgba(255,255,255,.06)}
   .btn.solid:hover{filter:brightness(1.06);background:var(--copper)}
   .hero{padding:64px 0 48px;border-bottom:1px solid var(--line)}
@@ -55,7 +55,7 @@ const STYLE = `
   details.peek > div{padding-top:12px}
   .langbar button{cursor:pointer;background:transparent;font-family:inherit;border:1px solid var(--line);border-radius:3px;padding:0 9px;min-height:28px;font-size:13px;color:var(--dim);font-weight:500}
   .langbar button:hover{color:var(--text)}
-  .langbar button[aria-pressed="true"]{background:var(--copper);color:#0C111C;border-color:var(--copper);font-weight:600}
+  .langbar button[aria-pressed="true"]{background:var(--copper);color:var(--onAccent);border-color:var(--copper);font-weight:600}
   .limits{border-left:2px solid var(--copperDim);background:var(--panel2);border-radius:0 6px 6px 0;padding:14px 18px;color:var(--dim);font-size:14px;line-height:1.65;max-width:76ch}
   .disclaimer{border-left:2px solid var(--copperDim);background:var(--panel2);border-radius:0 6px 6px 0;padding:14px 18px;color:var(--dim);font-size:13px;line-height:1.7}
   footer{padding:28px 0;font-size:13px;color:var(--faint);line-height:1.7}
@@ -79,7 +79,7 @@ export default function Landing() {
   const t = (key) => T[key][lang] ?? T[key].en;
 
   return (
-    <>
+    <div className="landing-page">
       <style>{STYLE}</style>
 
       {/* The badge read "SSCIM INTELLIGENCE" next to a logo reading SSCIM,
@@ -91,6 +91,7 @@ export default function Landing() {
           <a className="logo" href="index.html" aria-label="SSCIM home"><img src="sscim-logo.png" alt="SSCIM" /></a>
           <span className="productname">{t('productName')}</span>
           <nav aria-label="Site">
+            <ThemeControl />
             <div className="langbar" role="group" aria-label="Language" style={{ display: 'flex', gap: 3 }}>
               {Object.entries(LANG_LABELS).map(([l, label]) => (
                 <button key={l} type="button" aria-pressed={lang === l}
@@ -117,6 +118,7 @@ export default function Landing() {
       <div className="hero">
         <div className="wrap cols">
           <div>
+            <div className="hero-eyebrow">Semiconductor supply chain intelligence</div>
             <Html tag="h1" html={t('heroH1')} />
             <p>{t('heroP')}</p>
             <div className="cta">
@@ -231,6 +233,6 @@ export default function Landing() {
       </footer>
 
       <SiteMap current="home" />
-    </>
+    </div>
   );
 }

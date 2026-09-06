@@ -155,7 +155,7 @@ export default function FacilityConnectionTable({
           return (
             <li key={r.key}>
               <div style={{
-                border: `1px solid ${isSel ? C.copper : C.line}`, background: isSel ? '#1A2132' : C.panel,
+                border: `1px solid ${isSel ? C.copper : C.line}`, background: isSel ? C.raised : C.panel,
                 borderRadius: 4, padding: '5px 8px', display: 'flex', alignItems: 'flex-start', gap: 7, flexWrap: 'wrap',
               }}>
                 <span aria-hidden style={{ fontSize: 12, marginTop: 1 }}>{flagEmoji(r.other.country)}</span>

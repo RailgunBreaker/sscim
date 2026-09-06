@@ -12,7 +12,7 @@ function btn(disabled, primary) {
   return {
     fontSize: 12, padding: '4px 9px', borderRadius: 4, fontFamily: 'inherit',
     cursor: disabled ? 'default' : 'pointer', opacity: disabled ? 0.45 : 1,
-    background: primary ? 'rgba(201,138,63,.16)' : 'transparent',
+    background: primary ? C.selected : 'transparent',
     color: primary ? C.copper : C.dim, border: `1px solid ${primary ? C.copper : C.line}`,
   };
 }

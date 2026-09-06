@@ -76,7 +76,7 @@ export default function Detail({ sel, setSel, model, scenario, onResetScenario, 
           {(e.evidence?.sources || []).map((s, i) => <div key={i}><a href={s.url} target="_blank" rel="noreferrer" style={{ color: C.copper }}>{s.publisher || 'Source'} · {s.documentIdentifier || 'identifier unknown'}</a>{' '}— {s.claimStatus}; {s.supportingSection || 'supporting section unknown'}</div>)}
         </div>
         {!assumption.operational && (
-          <div className="mono" style={{ fontSize: 12, color: C.amber, background: "#2A1E14", border: `1px solid ${C.copperDim}`, borderRadius: 5, padding: "6px 9px", marginBottom: 6, lineHeight: 1.5 }}>
+          <div className="mono" style={{ fontSize: 12, color: C.amber, background: C.panel2, border: `1px solid ${C.copperDim}`, borderRadius: 5, padding: "6px 9px", marginBottom: 6, lineHeight: 1.5 }}>
             Excluded from the operational impact score — {assumption.reason}
           </div>
         )}
