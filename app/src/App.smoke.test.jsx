@@ -70,11 +70,49 @@ async function flush(ms = 0) {
 }
 
 describe('App smoke (static snapshot, Leaflet mocked)', () => {
+  it('opens on documented evidence and computes the selected capacity population', async () => {
+    const container = document.createElement('div');
+    document.body.appendChild(container);
+    const root = createRoot(container);
+    await act(async () => { root.render(<App />); });
+    await flush(0);
+    expect(container.textContent).toContain('Documented supply-chain evidence');
+    expect(container.textContent).toContain('1,629,000');
+    expect(container.textContent).toContain('3,131,000');
+    expect(container.textContent).not.toContain('Systemic criticality');
+    await act(async () => {
+      const select = container.querySelector('[aria-label="Capacity year"]');
+      select.value = '2024-12-31';
+      select.dispatchEvent(new Event('change', { bubbles: true }));
+    });
+    expect(container.textContent).toContain('1,556,000');
+    expect(container.textContent).toContain('3,007,000');
+    const financial = container.querySelector('[aria-label="Reported financial outcomes"]');
+    expect(financial.textContent).toContain('-12.6 JPY billion');
+    expect(financial.textContent).toContain('forecast -17');
+    await act(async () => {
+      const select = financial.querySelector('[aria-label="Financial measurement"]');
+      select.value = 'insurance_proceeds';
+      select.dispatchEvent(new Event('change', { bubbles: true }));
+    });
+    expect(financial.textContent).toContain('177 USD million');
+    expect(financial.textContent).not.toContain('forecast -17');
+    expect(container.querySelector('[aria-label="Reported manufacturing routes"]').textContent).toContain('Kulim');
+    const validation = container.querySelector('[aria-label="Historical prediction validation"]');
+    expect(validation.textContent).toContain('22 of 24');
+    expect(validation.textContent).toContain('prospective performance is untested');
+    expect(validation.querySelectorAll('details tbody tr')).toHaveLength(24);
+    await act(async () => root.unmount());
+    container.remove();
+  });
+
   it('mounts the dashboard without throwing and shows the lens control', async () => {
     const container = document.createElement('div');
     document.body.appendChild(container);
     const root = createRoot(container);
     await act(async () => { root.render(<App />); });
+    await flush(0);
+    await act(async () => { container.querySelector('[data-testid="open-research"]').click(); });
     // let the snapshot fallback resolve and effects run
     await flush(0);
     await flush(0);
@@ -127,6 +165,8 @@ describe('App smoke (static snapshot, Leaflet mocked)', () => {
     const root = createRoot(container);
     await act(async () => { root.render(<App />); });
     await flush(0);
+    await act(async () => { container.querySelector('[data-testid="open-research"]').click(); });
+    await flush(0);
     await flush(0);
 
     const { FACILITIES } = snapshot;
@@ -156,6 +196,8 @@ describe('App smoke (static snapshot, Leaflet mocked)', () => {
     document.body.appendChild(container);
     const root = createRoot(container);
     await act(async () => { root.render(<App />); });
+    await flush(0);
+    await act(async () => { container.querySelector('[data-testid="open-research"]').click(); });
     await flush(0);
     await flush(0);
 
@@ -187,6 +229,8 @@ describe('App smoke (static snapshot, Leaflet mocked)', () => {
     document.body.appendChild(container);
     const root = createRoot(container);
     await act(async () => { root.render(<App />); });
+    await flush(0);
+    await act(async () => { container.querySelector('[data-testid="open-research"]').click(); });
     await flush(0);
     await flush(0);
 

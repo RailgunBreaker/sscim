@@ -1,0 +1,46 @@
+{
+  "modelId": "claude-haiku-4-5-20251001",
+  "status": "evaluated",
+  "labels": 18,
+  "independentIncidents": 7,
+  "predictions": 18,
+  "relevance": {
+    "tp": 16,
+    "fp": 0,
+    "tn": 2,
+    "fn": 0,
+    "abstained": 0,
+    "precision": 1,
+    "recall": 1,
+    "accuracyOverAllLabels": 1
+  },
+  "operational": {
+    "tp": 10,
+    "fp": 0,
+    "tn": 8,
+    "fn": 0,
+    "abstained": 0,
+    "precision": 1,
+    "recall": 1,
+    "accuracyOverAllLabels": 1
+  },
+  "latency": {
+    "observed": 0,
+    "medianHours": null,
+    "p95Hours": null
+  },
+  "operationallyValidated": false,
+  "startedAt": "2026-09-07T12:49:54.106Z",
+  "finishedAt": "2026-09-07T12:55:06.489Z",
+  "benchmarkSha256": "65e142b2f37319993db78cdcefa410bc5f9b37dc11ba37cab3a9e0f35ebbbe5d",
+  "backendSha256": "b91f2e2f601cd836fb6a1fadaa47672f0b2ce3bb347295596d5232a0be479b9e",
+  "groundingSha256": "493f3407a8ba739d84398df73c53c1c8f6de1df716cf469cd9c96f055ef6a5c8",
+  "benchmarkLimitations": [
+    "Development challenge set, not a representative held-out news sample.",
+    "No API-model predictions or ingestion timestamps are fabricated.",
+    "Recovery updates belong to their original incident and must not become new mitigating shocks.",
+    "Only two negative controls; specificity estimates will be very imprecise."
+  ],
+  "failures": [],
+  "modelIdentityBasis": "Legacy backend retained only the first modelUsage key. It may name a helper; the primary drafting model was not established. Future runs preserve all reported usage models."
+}

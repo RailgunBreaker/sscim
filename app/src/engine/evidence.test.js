@@ -8,7 +8,7 @@ import { buildEngine } from './index.js';
 
 const verified = () => ({ recordKind: 'factual', id: 'test', dateISO: '2026-07-01', sev: 8, stages: ['x'], conf: 'Low',
   evidence: { occurrence: { status: 'verified' }, exposure: { status: 'assumed' }, baseline: { eligible: true },
-    sources: [{ url: 'https://example.org/document', supportingSection: 'section 1', informationAvailableDate: '2026-07-05', claimStatus: 'verified', supports: ['occurrence'] }],
+    sources: [{ url: 'https://example.org/document', supportingSection: 'section 1', publicationDate: '2026-07-05', informationAvailableDate: '2026-07-05', claimStatus: 'verified', supports: ['occurrence'] }],
     review: { verifiedAt: '2026-09-06', provenance: 'synthetic test fixture' } } });
 const vector = (event) => incidentSourceVector({ event, assumption: { operational: true, direction: 'adverse' }, ageDays: 20,
   params: BASE_PARAMS, curated: { exposure: { x: .5 }, profile: { kind: 'persistent_policy' } } });

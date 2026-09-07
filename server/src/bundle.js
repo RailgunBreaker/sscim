@@ -1,6 +1,7 @@
 import { db } from './db.js';
 import { getMetaBundle } from './meta.js';
 import { getMeasurementLedger } from './measurement-ledger.js';
+import { readFileSync } from 'node:fs';
 
 /* Reads the whole vault out of SQLite in the wire format the dashboard
    consumes. Shared by the live API (routes/public.js) and the static-snapshot
@@ -139,6 +140,8 @@ export function getBriefingBodies(limit = BUNDLED_BRIEFING_BODIES) {
 
 export function buildBundle() {
   return {
+    observedData: JSON.parse(readFileSync(new URL('../../docs/reference/observed-data.json', import.meta.url), 'utf8')),
+    revenueValidation: JSON.parse(readFileSync(new URL('../../docs/benchmarks/revenue-prediction.json', import.meta.url), 'utf8')),
     stages: getStages(),
     flowEdges: getFlowEdges(),
     tierLabels: getTierLabels(),

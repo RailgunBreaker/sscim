@@ -1,0 +1,182 @@
+[
+  {
+    "id": "naka_restart_2021",
+    "modelId": "claude-haiku-4-5-20251001",
+    "relevant": true,
+    "operational": true,
+    "evidenceStatus": "quoted_input_requires_review",
+    "evidenceKind": "observed",
+    "evidenceQuote": "Renesas reports that Naka N3 restarted production on April 17 at less than one tenth of pre-fire capacity.",
+    "classificationReason": "The supplied passage states a realized change in production status (line restarted, running at <10% of pre-fire capacity), so it is an observed operational effect rather than a plan. It is a recovery update on the original Naka fire outage, not a separate beneficial shock, so it is scored as a mitigating step within an ongoing adverse disruption. Severity stays high as review priority because the restarted line is still producing at a small fraction of normal volume."
+  },
+  {
+    "id": "naka_target_2021",
+    "modelId": "claude-haiku-4-5-20251001",
+    "relevant": true,
+    "operational": false,
+    "evidenceStatus": "missing_supporting_input",
+    "evidenceKind": "forecast",
+    "evidenceQuote": null,
+    "classificationReason": "The passage describes a target and an announced plan, with no statement that any capacity change has occurred. Under the rule that announced-but-not-yet-in-effect items are non-operational, proposedOperational is false and no evidenceQuote is offered, since nothing in the supplied input establishes a realized operational effect. It is still worth analyst review as forward guidance on the Naka fire recovery path, hence relevant with low review priority."
+  },
+  {
+    "id": "naka_recovery_2021",
+    "modelId": "claude-haiku-4-5-20251001",
+    "relevant": true,
+    "operational": true,
+    "evidenceStatus": "quoted_input_requires_review",
+    "evidenceKind": "observed",
+    "evidenceQuote": "Renesas reports N3 capacity at 88 percent of its pre-fire level at the end of May.",
+    "classificationReason": "The passage reports a measured capacity level that has been reached, not a target, so it is an observed operational state. It is a recovery update tied to the original Naka fire rather than a new beneficial shock. Review priority is moderate: most capacity is back, but a residual shortfall remains and the recovery trajectory is still the item under review."
+  },
+  {
+    "id": "naka_target_june",
+    "modelId": "claude-haiku-4-5-20251001",
+    "relevant": true,
+    "operational": false,
+    "evidenceStatus": "missing_supporting_input",
+    "evidenceKind": "forecast",
+    "evidenceQuote": null,
+    "classificationReason": "The passage contains an aim and an expected date, with no realized change in production reported. Announced-but-not-yet-in-effect items are non-operational, so proposedOperational is false and evidenceQuote is left empty because the supplied input establishes no realized operational effect. It remains relevant as forward guidance on the Naka fire recovery path, at low review priority."
+  },
+  {
+    "id": "naka_complete_2021",
+    "modelId": "claude-haiku-4-5-20251001",
+    "relevant": true,
+    "operational": true,
+    "evidenceStatus": "quoted_input_requires_review",
+    "evidenceKind": "observed",
+    "evidenceQuote": "Renesas reports N3 production back at its pre-fire level on June 24.",
+    "classificationReason": "The passage reports a restoration that has occurred on a specific date, so it is an observed operational effect and can be operational even though it is a recovery rather than a new outage. It closes out the production-side impact of the original Naka fire and is not a separate beneficial shock. Review priority is moderate-low: it is materially informative for resolving the incident but signals the end of the production constraint rather than a new one."
+  },
+  {
+    "id": "naka_shipments_plan",
+    "modelId": "claude-haiku-4-5-20251001",
+    "relevant": true,
+    "operational": false,
+    "evidenceStatus": "missing_supporting_input",
+    "evidenceKind": "forecast",
+    "evidenceQuote": null,
+    "classificationReason": "The passage is an expectation about a future date, so it establishes no realized operational effect; evidenceQuote is left empty and proposedOperational is false. Expected recovery is a forecast even if the stated date has since passed, and it must not be substituted with outcomes found elsewhere. It is still relevant as forward guidance on when downstream supply from the Naka fire recovery normalizes, at low review priority."
+  },
+  {
+    "id": "tsmc_scrap_2024",
+    "modelId": "claude-haiku-4-5-20251001",
+    "relevant": true,
+    "operational": true,
+    "evidenceStatus": "quoted_input_requires_review",
+    "evidenceKind": "observed",
+    "evidenceQuote": "TSMC reports that some wafers in process were affected by the April 3 earthquake and scrapped.",
+    "classificationReason": "The supplied passage states an observed, already-realized production loss (wafers scrapped), not a hazard signal or a plan, so operational=true. Severity is set mid-range as a review priority: the loss is confirmed but the supplied passage gives no quantity, node, or fab breakdown."
+  },
+  {
+    "id": "tsmc_guidance_2024",
+    "modelId": "claude-haiku-4-5-20251001",
+    "relevant": true,
+    "operational": false,
+    "evidenceStatus": "missing_supporting_input",
+    "evidenceKind": "forecast",
+    "evidenceQuote": null,
+    "classificationReason": "The supplied passage is an expectation about future quarters, so evidenceKind=forecast. No passage in the supplied input establishes a realized operational effect, so proposedOperational=false and evidenceQuote is left empty. Low-mid severity reflects that this is a mitigating guidance signal attached to an already-recorded incident rather than an independent event."
+  },
+  {
+    "id": "tsmc_no_power_outage",
+    "modelId": "claude-haiku-4-5-20251001",
+    "relevant": true,
+    "operational": false,
+    "evidenceStatus": "missing_supporting_input",
+    "evidenceKind": "observed",
+    "evidenceQuote": null,
+    "classificationReason": "This is a hazard signal in which the named disruption modes did not occur. No supplied passage establishes a realized operational effect, so proposedOperational=false and evidenceQuote is empty per the evidence rule. Kept relevant because it is a company damage report on a seismic event affecting a fab cluster and materially informs review of the same incident; severity is minimal as review priority."
+  },
+  {
+    "id": "naka_half_2022",
+    "modelId": "claude-haiku-4-5-20251001",
+    "relevant": true,
+    "operational": true,
+    "evidenceStatus": "quoted_input_requires_review",
+    "evidenceKind": "observed",
+    "evidenceQuote": "Renesas reports that Naka is at approximately half of pre-earthquake capacity on March 23.",
+    "classificationReason": "The passage reports an observed, dated capacity level materially below the pre-event baseline at a named fab — a realized operational shortfall, so operational=true. Severity is set high as review priority because a roughly 50% capacity shortfall at a single named site is a large, specific, confirmed deficit, not because a magnitude has been measured."
+  },
+  {
+    "id": "takasaki_complete_2022",
+    "modelId": "claude-haiku-4-5-20251001",
+    "relevant": true,
+    "operational": true,
+    "evidenceStatus": "quoted_input_requires_review",
+    "evidenceKind": "observed",
+    "evidenceQuote": "Renesas reports full pre-earthquake wafer input capacity at Takasaki on March 23.",
+    "classificationReason": "A reported restoration of wafer input at a named fab is an observed operational fact, so operational=true and direction=mitigating even though no new outage is announced. This is a recovery update on the March 16 earthquake, not a separate beneficial shock. Severity is low as review priority: it closes out exposure at one site rather than opening new risk."
+  },
+  {
+    "id": "naka_complete_2022",
+    "modelId": "claude-haiku-4-5-20251001",
+    "relevant": true,
+    "operational": true,
+    "evidenceStatus": "quoted_input_requires_review",
+    "evidenceKind": "observed",
+    "evidenceQuote": "Renesas reports full wafer input capacity at Naka on March 26, with earlier production losses still outstanding.",
+    "classificationReason": "The passage reports an observed restoration of wafer input at a named fab, which is an operational fact, so operational=true with mitigating direction. Severity is above the Takasaki recovery because the passage simultaneously states that earlier production losses are still outstanding, leaving residual downstream exposure for a reviewer to size. This is a recovery update on the March 16 incident, not a new event."
+  },
+  {
+    "id": "nxp_dividend_2021",
+    "modelId": "claude-haiku-4-5-20251001",
+    "relevant": false,
+    "operational": false,
+    "evidenceStatus": "missing_supporting_input",
+    "evidenceKind": "unknown",
+    "evidenceQuote": null,
+    "classificationReason": "Dividend declarations are shareholder-return items, not supply-chain events; screened out under the conservative relevance rule."
+  },
+  {
+    "id": "tsmc_agm_2025",
+    "modelId": "claude-haiku-4-5-20251001",
+    "relevant": false,
+    "operational": false,
+    "evidenceStatus": "missing_supporting_input",
+    "evidenceKind": "unknown",
+    "evidenceQuote": null,
+    "classificationReason": "AGM resolutions are routine governance filings with no realized change to production or supply; screened out under the conservative relevance rule."
+  },
+  {
+    "id": "tsmc_virus_recovery_2018",
+    "modelId": "claude-haiku-4-5-20251001",
+    "relevant": true,
+    "operational": true,
+    "evidenceStatus": "quoted_input_requires_review",
+    "evidenceKind": "observed",
+    "evidenceQuote": "TSMC reports that about 80 percent of tools affected by the August 3 computer virus had recovered by the afternoon of August 5.",
+    "classificationReason": "This is a recovery update on the original August 3 tool outage, not a separate beneficial shock, so it is scored as part of the adverse incident. The supplied passage reports an observed, realized state of production equipment (tools down, partially restored), which meets the bar for an operational event rather than a hazard signal."
+  },
+  {
+    "id": "tsmc_virus_forecast_2018",
+    "modelId": "claude-haiku-4-5-20251001",
+    "relevant": true,
+    "operational": false,
+    "evidenceStatus": "missing_supporting_input",
+    "evidenceKind": "forecast",
+    "evidenceQuote": null,
+    "classificationReason": "The supplied passage contains only a company expectation and a revenue estimate, not a report of a realized operational state. Under the rule that expected recovery and estimates of future revenue loss are forecasts, no passage here establishes a realized operational effect, so proposedOperational is false and evidenceQuote is left empty. The record remains relevant as a review-priority signal attached to the same August 3 incident; direction is adverse because it quantifies expected loss from that incident, not a benefit. It is not downgraded to a lower severity merely because the effect is stated prospectively."
+  },
+  {
+    "id": "nxp_shutdown_2021",
+    "modelId": "claude-haiku-4-5-20251001",
+    "relevant": true,
+    "operational": true,
+    "evidenceStatus": "quoted_input_requires_review",
+    "evidenceKind": "observed",
+    "evidenceQuote": "NXP reports that its two Austin wafer facilities sustained damage and fully shut down on February 15 due to the winter storm and utility outages.",
+    "classificationReason": "The passage reports a completed, observed event: physical damage plus a full shutdown of two wafer fabs on a specific date. That is a realized production stoppage rather than a hazard signal or an announced-but-not-effective change, so operational is true and direction is adverse. Severity is set high as a review priority because a full shutdown of two wafer fabs is a total loss of front-end output at those sites for an undetermined duration; unknown duration is not treated as low impact."
+  },
+  {
+    "id": "nxp_restart_2021",
+    "modelId": "claude-haiku-4-5-20251001",
+    "relevant": true,
+    "operational": true,
+    "evidenceStatus": "quoted_input_requires_review",
+    "evidenceKind": "observed",
+    "evidenceQuote": "NXP reports it resumed initial operations at the Austin facilities on March 11; this is not a report that full production has recovered.",
+    "classificationReason": "A reported restart is an observed recovery and qualifies as operational even though no new outage occurred. This is a recovery update on the February 15 winter-storm shutdown, describing the original incident rather than a separate beneficial shock, so direction stays adverse. Severity remains elevated because the passage confirms only initial operations, leaving roughly three and a half weeks of lost production and an unquantified gap to full output."
+  }
+]

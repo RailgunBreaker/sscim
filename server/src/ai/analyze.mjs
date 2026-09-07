@@ -18,6 +18,7 @@
    ──────────────────────────────────────────────────────────────────────── */
 import Anthropic from '@anthropic-ai/sdk';
 import { db } from '../db.js';
+import { groundProposal } from './proposal-evidence.js';
 
 const MODEL = process.env.SSCIM_AI_MODEL || 'claude-opus-5';
 
@@ -29,13 +30,15 @@ Ground rules, in order of importance:
 
 1. Be conservative about relevance. Most records are not supply-chain events. An earthquake near a fab cluster is only relevant if it plausibly disrupted production; a proposed rule or a routine notice is usually not a realized change. Set relevant=false rather than manufacturing significance.
 
-2. Severity (1-10) measures REALIZED operational scale — capacity share affected, duration, breadth — not newsworthiness, not market reaction, and not how alarming it sounds. Anchors from the existing dataset: 9 = the Oct 2022 BIS controls (broadest sector-wide export restriction). 7 = M7.1 Kumamoto quake halting several named fabs with confirmed damage; China's Ga/Ge licensing regime. 6 = a multi-week single-site outage. 4 = a single company losing one supply line. If you cannot establish that production was actually affected, the honest severity is low.
+2. Severity (1-10) is an uncalibrated review-priority ordinal, never measured capacity loss. Do not use seed events as factual anchors. Missing evidence means unknown impact, not low impact. Use proposedOperational=false if realized operational effects are not established. Include an evidenceQuote copied exactly from the supplied input for every operational proposal; never invent a passage or infer plant damage from hazard magnitude.
 
 3. operational=false is the right answer more often than people expect. Set it false for: hazard signals where no disruption occurred, mixed/reallocative events with simultaneous winners and losers, long-term strategic or subsidy signals, and anything announced but not yet in effect. Only realized, current-period, signed operational effects belong in the scored index.
 
 4. Distinguish what the source states from what you infer. Put only source-supported facts in summary/detail. Use the uncertainty field to say plainly what you could not establish — especially fab-level impact, which seismic and regulatory feeds never report. A human reads this to decide whether to accept your proposal.
 
-5. Use only stage and country ids from the provided lists. Never invent one.`;
+5. Use only stage and country ids from the provided lists. Never invent one.
+
+6. Set evidenceKind to observed, forecast, or unknown based on the SUPPLIED PASSAGE. Expected recovery, targets, estimates of future revenue loss, and plans are forecasts even if their dates have since passed. Do not replace a forecast passage with facts found elsewhere. A reported restart or restoration of wafer input is an observed recovery and can be operational even without a new outage. Recovery updates describe the original incident, not a separate beneficial shock. Quote observed recoveries as well as outages verbatim; preserve their production step and scope.`;
 
 function vaultIds() {
   return {
@@ -50,6 +53,8 @@ function proposalSchema({ stages, countries }) {
     additionalProperties: false,
     properties: {
       relevant: { type: 'boolean', description: 'False if this record is not a genuine semiconductor-supply-chain event.' },
+      evidenceQuote: { type: 'string', description: 'Exact passage from supplied input supporting a realized operational effect; empty if unavailable.' },
+      evidenceKind: { type: 'string', enum: ['observed', 'forecast', 'unknown'] },
       irrelevantReason: { type: 'string', description: 'If not relevant, one sentence explaining why. Empty string otherwise.' },
       title: { type: 'string', description: 'Headline, under ~80 characters.' },
       summary: { type: 'string', description: 'One or two sentences of what happened, source-supported only.' },
@@ -68,7 +73,7 @@ function proposalSchema({ stages, countries }) {
       detail: { type: 'string', description: 'Background paragraph. State what the source establishes and what it does not.' },
       uncertainty: { type: 'string', description: 'What you could NOT establish from the source. Never leave this empty for a relevant event.' },
     },
-    required: ['relevant', 'irrelevantReason', 'title', 'summary', 'eventType', 'proposedSev', 'proposedDirection',
+    required: ['relevant', 'evidenceQuote', 'evidenceKind', 'irrelevantReason', 'title', 'summary', 'eventType', 'proposedSev', 'proposedDirection',
       'proposedChannel', 'proposedOperational', 'classificationReason', 'confidence', 'stages', 'countries',
       'first', 'second', 'watch', 'detail', 'uncertainty'],
   };
@@ -109,7 +114,7 @@ export async function analyzeCandidate(candidate) {
     const text = response.content.find((b) => b.type === 'text')?.text;
     if (!text) return { proposal: null, model: MODEL, notes: 'Model returned no text block.' };
 
-    const proposal = JSON.parse(text);
+    const proposal = groundProposal(candidate, JSON.parse(text));
     return {
       proposal,
       model: response.model || MODEL,

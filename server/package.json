@@ -24,7 +24,14 @@
     "sources:methods": "node scripts/resolve-method-citations.mjs",
     "evidence": "node scripts/build-evidence-coverage.mjs",
     "repair:provenance": "node scripts/repair-event-provenance.mjs",
-    "news:update": "node scripts/pipeline.mjs --local-only --no-ai --no-triage --no-quotes"
+    "news:update": "node scripts/pipeline.mjs --local-only --no-ai --no-triage --no-quotes",
+    "evaluate:observed": "node scripts/evaluate-observed-data.mjs",
+    "evaluate:revenue": "node scripts/evaluate-revenue-prediction.mjs",
+    "audit:revenue-vintages": "node scripts/audit-revenue-vintages.mjs",
+    "evaluate:news": "node scripts/evaluate-news.mjs",
+    "benchmark:news": "node scripts/run-news-benchmark.mjs",
+    "audit:news-timeliness": "node scripts/audit-news-timeliness.mjs",
+    "check:observed-sources": "node scripts/check-observed-sources.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.115.0",

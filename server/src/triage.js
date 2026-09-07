@@ -38,7 +38,7 @@
    what went in unattended, and untriage() reverses it.
 
    Automatic REJECTION is configured separately and independently
-   (SSCIM_TRIAGE_AUTO_REJECT, default on). The asymmetry is deliberate: a
+   (SSCIM_TRIAGE_AUTO_REJECT, default off). The asymmetry is deliberate: a
    wrongly rejected candidate stays in the queue with its reason attached and
    costs one glance to recover, while a wrongly approved one is already
    published and already moving the index.
@@ -52,12 +52,12 @@ export function autoApproveEnabled(value) {
   return ['on', 'true', '1', 'yes'].includes(String(value ?? '').trim().toLowerCase());
 }
 
-/* Rejection is the mirror image and defaults ON, deliberately. A wrongly
+/* Rejection is opt-in. Self-rated confidence has no measured recall guarantee. A wrongly
    rejected candidate stays in the queue with its reason attached and costs
    one glance to recover; a wrongly approved one is already published and
    already moving the index. The two switches are independent. */
 export function autoRejectEnabled(value) {
-  return !['off', 'false', '0', 'no'].includes(String(value ?? 'on').trim().toLowerCase());
+  return autoApproveEnabled(value);
 }
 
 export const AUTO_APPROVE_ON = autoApproveEnabled(process.env.SSCIM_TRIAGE_AUTO_APPROVE);
@@ -139,6 +139,10 @@ export function classify(candidate, {
 
   if (confidence !== 'High') {
     return { verdict: VERDICTS.REVIEW, reason: `Relevant at ${confidence} confidence — a person decides.` };
+  }
+
+  if (p.proposedOperational && (p.evidenceStatus !== 'quoted_input_requires_review' || p.evidenceKind !== 'observed')) {
+    return { verdict: VERDICTS.REVIEW, reason: 'Operational proposal lacks a matching source passage; human review required.' };
   }
 
   return {

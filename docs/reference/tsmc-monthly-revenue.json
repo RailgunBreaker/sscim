@@ -1,0 +1,1118 @@
+{
+  "schemaVersion": 1,
+  "companyId": "tsmc",
+  "metric": "consolidated_monthly_revenue",
+  "units": "TWD million",
+  "retrievedAt": "2026-09-07",
+  "historicalVintagesVerified": false,
+  "reviewProvenance": "Codex primary-source extraction and annual-sum checks; not independent human adjudication",
+  "sources": [
+    {
+      "year": 2013,
+      "url": "https://investor.tsmc.com/english/monthly-revenue/2013",
+      "retrievedAt": "2026-09-07",
+      "retrievalMethod": "web tool primary-source extraction; direct Node retrieval returned HTTP 403",
+      "units": "TWD million",
+      "basis": "unaudited consolidated monthly revenue under TIFRS",
+      "tableRows": [
+        "Jan.  | 47,439  | 37.1%",
+        "Feb.  | 41,182  | 21.5%",
+        "Mar.  | 44,134  | 18.9%",
+        "Apr.  | 50,071  | 23.5%",
+        "May  | 51,788  | 17.2%",
+        "Jun.  | 54,028  | 24.3%",
+        "Jul.  | 52,103  | 7.3%",
+        "Aug.  | 55,091  | 11.2%",
+        "Sept.  | 55,382  | 27.6%",
+        "Oct.  | 51,795  | 3.6%",
+        "Nov.  | 44,330  | 0.1%",
+        "Dec.  | 49,681  | 33.7%",
+        "Total  | 597,024  | 17.8%"
+      ],
+      "reportedAnnualTotal": 597024,
+      "monthlySumMinusAnnualTotal": 0
+    },
+    {
+      "year": 2014,
+      "url": "https://investor.tsmc.com/english/monthly-revenue/2014",
+      "retrievedAt": "2026-09-07",
+      "retrievalMethod": "web tool primary-source extraction; direct Node retrieval returned HTTP 403",
+      "units": "TWD million",
+      "basis": "unaudited consolidated monthly revenue under TIFRS",
+      "tableRows": [
+        "Jan.  | 51,430  | 8.4%",
+        "Feb.  | 46,829  | 13.7%",
+        "Mar.  | 49,956  | 13.2%",
+        "Apr.  | 61,887  | 23.6%",
+        "May  | 60,789  | 17.4%",
+        "Jun.  | 60,344  | 11.7%",
+        "Jul.  | 64,925  | 24.6%",
+        "Aug.  | 69,279  | 25.8%",
+        "Sept.  | 74,846  | 35.1%",
+        "Oct.  | 80,736  | 55.9%",
+        "Nov.  | 72,275  | 63.0%",
+        "Dec.  | 69,510  | 39.9%",
+        "Total  | 762,806  | 27.8%"
+      ],
+      "reportedAnnualTotal": 762806,
+      "monthlySumMinusAnnualTotal": 0
+    },
+    {
+      "year": 2015,
+      "url": "https://investor.tsmc.com/english/monthly-revenue/2015",
+      "retrievedAt": "2026-09-07",
+      "retrievalMethod": "web tool primary-source extraction; direct Node retrieval returned HTTP 403",
+      "units": "TWD million",
+      "basis": "unaudited consolidated monthly revenue under TIFRS",
+      "tableRows": [
+        "Jan.  | 87,120  | 69.4%",
+        "Feb.  | 62,645  | 33.8%",
+        "Mar.  | 72,269  | 44.7%",
+        "Apr.  | 75,330  | 21.7%",
+        "May  | 70,155  | 15.4%",
+        "Jun.  | 59,955  | -0.6%",
+        "Jul.  | 80,953  | 24.7%",
+        "Aug.  | 67,038  | -3.2%",
+        "Sept.  | 64,514  | -13.8%",
+        "Oct.  | 81,743  | 1.2%",
+        "Nov.  | 63,428  | -12.2%",
+        "Dec.  | 58,347  | -16.1%",
+        "Total  | 843,497  | 10.6%"
+      ],
+      "reportedAnnualTotal": 843497,
+      "monthlySumMinusAnnualTotal": 0
+    },
+    {
+      "year": 2016,
+      "url": "https://investor.tsmc.com/english/monthly-revenue/2016",
+      "retrievedAt": "2026-09-07",
+      "retrievalMethod": "web tool primary-source extraction; direct Node retrieval returned HTTP 403",
+      "units": "TWD million",
+      "basis": "unaudited consolidated monthly revenue under TIFRS",
+      "tableRows": [
+        "Jan.  | 70,855  | -18.7%",
+        "Feb.  | 59,551  | -4.9%",
+        "Mar.  | 73,089  | 1.1%",
+        "Apr.  | 66,843  | -11.3%",
+        "May  | 73,576  | 4.9%",
+        "Jun.  | 81,391  | 35.8%",
+        "Jul.  | 76,392  | -5.6%",
+        "Aug.  | 94,311  | 40.7%",
+        "Sept.  | 89,703  | 39.0%",
+        "Oct.  | 91,085  | 11.4%",
+        "Nov.  | 93,030  | 46.7%",
+        "Dec.  | 78,112  | 33.9%",
+        "Total  | 947,938  | 12.4%"
+      ],
+      "reportedAnnualTotal": 947938,
+      "monthlySumMinusAnnualTotal": 0
+    },
+    {
+      "year": 2017,
+      "url": "https://investor.tsmc.com/english/monthly-revenue/2017",
+      "retrievedAt": "2026-09-07",
+      "retrievalMethod": "web tool primary-source extraction; direct Node retrieval returned HTTP 403",
+      "units": "TWD million",
+      "basis": "unaudited consolidated monthly revenue under TIFRS",
+      "tableRows": [
+        "Jan.  | 76,616  | 8.1%",
+        "Feb.  | 71,423  | 19.9%",
+        "Mar.  | 85,875  | 17.5%",
+        "Apr.  | 56,872  | -14.9%",
+        "May  | 72,796  | -1.1%",
+        "Jun.  | 84,187  | 3.4%",
+        "Jul.  | 71,611  | -6.3%",
+        "Aug.  | 91,917  | -2.5%",
+        "Sept.  | 88,579  | -1.3%",
+        "Oct.  | 94,520  | 3.8%",
+        "Nov.  | 93,153  | 0.1%",
+        "Dec.  | 89,897  | 15.1%",
+        "Total  | 977,447  | 3.1%"
+      ],
+      "reportedAnnualTotal": 977447,
+      "monthlySumMinusAnnualTotal": -1
+    },
+    {
+      "year": 2018,
+      "url": "https://investor.tsmc.com/english/monthly-revenue/2018",
+      "retrievedAt": "2026-09-07",
+      "retrievalMethod": "web tool primary-source extraction; direct Node retrieval returned HTTP 403",
+      "units": "TWD million",
+      "basis": "unaudited consolidated monthly revenue under TIFRS",
+      "tableRows": [
+        "Jan. | 79,741 | 4.1%",
+        "Feb. | 64,641 | -9.5%",
+        "Mar. | 103,697 | 20.8%",
+        "Apr. | 81,870 | 44.0%",
+        "May | 80,969 | 11.2%",
+        "Jun. | 70,438 | -16.3%",
+        "Jul. | 74,371 | 3.9%",
+        "Aug. | 91,055 | -0.9%",
+        "Sept. | 94,922 | 7.2%",
+        "Oct. | 101,550 | 7.4%",
+        "Nov. | 98,389 | 5.6%",
+        "Dec. | 89,831 | -0.1%",
+        "Total | 1,031,474 | 5.5%"
+      ],
+      "reportedAnnualTotal": 1031474,
+      "monthlySumMinusAnnualTotal": 0
+    },
+    {
+      "year": 2019,
+      "url": "https://investor.tsmc.com/english/monthly-revenue/2019",
+      "retrievedAt": "2026-09-07",
+      "retrievalMethod": "web tool primary-source extraction; direct Node retrieval returned HTTP 403",
+      "units": "TWD million",
+      "basis": "unaudited consolidated monthly revenue under TIFRS",
+      "tableRows": [
+        "Jan.  | 78,094  | -2.1%",
+        "Feb.  | 60,889  | -5.8%",
+        "Mar.  | 79,722  | -23.1%",
+        "Apr.  | 74,694  | -8.8%",
+        "May  | 80,437  | -0.7%",
+        "Jun.  | 85,868  | 21.9%",
+        "Jul.  | 84,758  | 14.0%",
+        "Aug.  | 106,118  | 16.5%",
+        "Sept.  | 102,170  | 7.6%",
+        "Oct.  | 106,040  | 4.4%",
+        "Nov.  | 107,884  | 9.7%",
+        "Dec.  | 103,313  | 15.0%",
+        "Total  | 1,069,985  | 3.7%"
+      ],
+      "reportedAnnualTotal": 1069985,
+      "monthlySumMinusAnnualTotal": 2
+    },
+    {
+      "year": 2020,
+      "url": "https://investor.tsmc.com/english/monthly-revenue/2020",
+      "retrievedAt": "2026-09-07",
+      "retrievalMethod": "web tool primary-source extraction; direct Node retrieval returned HTTP 403",
+      "units": "TWD million",
+      "basis": "unaudited consolidated monthly revenue under TIFRS",
+      "tableRows": [
+        "Jan. | 103,683 | 32.8%",
+        "Feb. | 93,394 | 53.4%",
+        "Mar. | 113,520 | 42.4%",
+        "Apr. | 96,002 | 28.5%",
+        "May | 93,819 | 16.6%",
+        "Jun. | 120,878 | 40.8%",
+        "Jul. | 105,963 | 25.0%",
+        "Aug. | 122,878 | 15.8%",
+        "Sept. | 127,585 | 24.9%",
+        "Oct. | 119,303 | 12.5%",
+        "Nov. | 124,865 | 15.7%",
+        "Dec. | 117,365 | 13.6%",
+        "Total | 1,339,255 | 25.2%"
+      ],
+      "reportedAnnualTotal": 1339255,
+      "monthlySumMinusAnnualTotal": 0
+    },
+    {
+      "year": 2021,
+      "url": "https://investor.tsmc.com/english/monthly-revenue/2021",
+      "retrievedAt": "2026-09-07",
+      "retrievalMethod": "web tool primary-source extraction; direct Node retrieval returned HTTP 403",
+      "units": "TWD million",
+      "basis": "unaudited consolidated monthly revenue under TIFRS",
+      "tableRows": [
+        "Jan.  | 126,749  | 22.2%",
+        "Feb.  | 106,534  | 14.1%",
+        "Mar.  | 129,127  | 13.7%",
+        "Apr.  | 111,315  | 16.0%",
+        "May  | 112,360  | 19.8%",
+        "Jun.  | 148,471  | 22.8%",
+        "Jul.  | 124,558  | 17.5%",
+        "Aug.  | 137,427  | 11.8%",
+        "Sept.  | 152,685  | 19.7%",
+        "Oct.  | 134,539  | 12.8%",
+        "Nov.  | 148,268  | 18.7%",
+        "Dec.  | 155,382  | 32.4%",
+        "Total  | 1,587,415  | 18.5%"
+      ],
+      "reportedAnnualTotal": 1587415,
+      "monthlySumMinusAnnualTotal": 0
+    },
+    {
+      "year": 2022,
+      "url": "https://investor.tsmc.com/english/monthly-revenue/2022",
+      "retrievedAt": "2026-09-07",
+      "retrievalMethod": "web tool primary-source extraction; direct Node retrieval returned HTTP 403",
+      "units": "TWD million",
+      "basis": "unaudited consolidated monthly revenue under TIFRS",
+      "tableRows": [
+        "Jan.  | 172,176  | 35.8%",
+        "Feb.  | 146,933  | 37.9%",
+        "Mar.  | 171,967  | 33.2%",
+        "Apr.  | 172,561  | 55.0%",
+        "May  | 185,705  | 65.3%",
+        "Jun.  | 175,874  | 18.5%",
+        "Jul.  | 186,763  | 49.9%",
+        "Aug.  | 218,132  | 58.7%",
+        "Sept.  | 208,248  | 36.4%",
+        "Oct.  | 210,266  | 56.3%",
+        "Nov.  | 222,706  | 50.2%",
+        "Dec.  | 192,560  | 23.9%",
+        "Total  | 2,263,891  | 42.6%"
+      ],
+      "reportedAnnualTotal": 2263891,
+      "monthlySumMinusAnnualTotal": 0
+    },
+    {
+      "year": 2023,
+      "url": "https://investor.tsmc.com/english/monthly-revenue/2023",
+      "retrievedAt": "2026-09-07",
+      "retrievalMethod": "web tool primary-source extraction; direct Node retrieval returned HTTP 403",
+      "units": "TWD million",
+      "basis": "unaudited consolidated monthly revenue under TIFRS",
+      "tableRows": [
+        "Jan.  | 200,051  | 16.2%",
+        "Feb.  | 163,174  | 11.1%",
+        "Mar.  | 145,408  | -15.4%",
+        "Apr.  | 147,900  | -14.3%",
+        "May  | 176,537  | -4.9%",
+        "Jun.  | 156,404  | -11.1%",
+        "Jul.  | 177,616  | -4.9%",
+        "Aug.  | 188,686  | -13.5%",
+        "Sept.  | 180,430  | -13.4%",
+        "Oct.  | 243,203  | 15.7%",
+        "Nov.  | 206,026  | -7.5%",
+        "Dec.  | 176,300  | -8.4%",
+        "Total  | 2,161,736  | -4.5%"
+      ],
+      "reportedAnnualTotal": 2161736,
+      "monthlySumMinusAnnualTotal": -1
+    },
+    {
+      "year": 2024,
+      "url": "https://investor.tsmc.com/english/monthly-revenue/2024",
+      "retrievedAt": "2026-09-07",
+      "retrievalMethod": "web tool primary-source extraction; direct Node retrieval returned HTTP 403",
+      "units": "TWD million",
+      "basis": "unaudited consolidated monthly revenue under TIFRS",
+      "tableRows": [
+        "Jan.  | 215,785  | 7.9%",
+        "Feb.  | 181,648  | 11.3%",
+        "Mar.  | 195,211  | 34.3%",
+        "Apr.  | 236,021  | 59.6%",
+        "May  | 229,620  | 30.1%",
+        "Jun.  | 207,869  | 32.9%",
+        "Jul.  | 256,953  | 44.7%",
+        "Aug.  | 250,866  | 33.0%",
+        "Sept.  | 251,873  | 39.6%",
+        "Oct.  | 314,240  | 29.2%",
+        "Nov.  | 276,058  | 34.0%",
+        "Dec.  | 278,163  | 57.8%",
+        "Total  | 2,894,308  | 33.9%"
+      ],
+      "reportedAnnualTotal": 2894308,
+      "monthlySumMinusAnnualTotal": -1
+    },
+    {
+      "year": 2025,
+      "url": "https://investor.tsmc.com/english/monthly-revenue/2025",
+      "retrievedAt": "2026-09-07",
+      "retrievalMethod": "web tool primary-source extraction; direct Node retrieval returned HTTP 403",
+      "units": "TWD million",
+      "basis": "unaudited consolidated monthly revenue under TIFRS",
+      "tableRows": [
+        "Jan.  | 293,288  | 35.9%",
+        "Feb.  | 260,009  | 43.1%",
+        "Mar.  | 285,957  | 46.5%",
+        "Apr.  | 349,567  | 48.1%",
+        "May  | 320,516  | 39.6%",
+        "Jun.  | 263,709  | 26.9%",
+        "Jul.  | 323,166  | 25.8%",
+        "Aug.  | 335,772  | 33.8%",
+        "Sept.  | 330,980  | 31.4%",
+        "Oct.  | 367,473  | 16.9%",
+        "Nov.  | 343,614  | 24.5%",
+        "Dec.  | 335,003  | 20.4%",
+        "Total  | 3,809,054  | 31.6%"
+      ],
+      "reportedAnnualTotal": 3809054,
+      "monthlySumMinusAnnualTotal": 0
+    }
+  ],
+  "records": [
+    {
+      "period": "2013-01",
+      "amount": 47439,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2013"
+    },
+    {
+      "period": "2013-02",
+      "amount": 41182,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2013"
+    },
+    {
+      "period": "2013-03",
+      "amount": 44134,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2013"
+    },
+    {
+      "period": "2013-04",
+      "amount": 50071,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2013"
+    },
+    {
+      "period": "2013-05",
+      "amount": 51788,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2013"
+    },
+    {
+      "period": "2013-06",
+      "amount": 54028,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2013"
+    },
+    {
+      "period": "2013-07",
+      "amount": 52103,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2013"
+    },
+    {
+      "period": "2013-08",
+      "amount": 55091,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2013"
+    },
+    {
+      "period": "2013-09",
+      "amount": 55382,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2013"
+    },
+    {
+      "period": "2013-10",
+      "amount": 51795,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2013"
+    },
+    {
+      "period": "2013-11",
+      "amount": 44330,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2013"
+    },
+    {
+      "period": "2013-12",
+      "amount": 49681,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2013"
+    },
+    {
+      "period": "2014-01",
+      "amount": 51430,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2014"
+    },
+    {
+      "period": "2014-02",
+      "amount": 46829,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2014"
+    },
+    {
+      "period": "2014-03",
+      "amount": 49956,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2014"
+    },
+    {
+      "period": "2014-04",
+      "amount": 61887,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2014"
+    },
+    {
+      "period": "2014-05",
+      "amount": 60789,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2014"
+    },
+    {
+      "period": "2014-06",
+      "amount": 60344,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2014"
+    },
+    {
+      "period": "2014-07",
+      "amount": 64925,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2014"
+    },
+    {
+      "period": "2014-08",
+      "amount": 69279,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2014"
+    },
+    {
+      "period": "2014-09",
+      "amount": 74846,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2014"
+    },
+    {
+      "period": "2014-10",
+      "amount": 80736,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2014"
+    },
+    {
+      "period": "2014-11",
+      "amount": 72275,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2014"
+    },
+    {
+      "period": "2014-12",
+      "amount": 69510,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2014"
+    },
+    {
+      "period": "2015-01",
+      "amount": 87120,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2015"
+    },
+    {
+      "period": "2015-02",
+      "amount": 62645,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2015"
+    },
+    {
+      "period": "2015-03",
+      "amount": 72269,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2015"
+    },
+    {
+      "period": "2015-04",
+      "amount": 75330,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2015"
+    },
+    {
+      "period": "2015-05",
+      "amount": 70155,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2015"
+    },
+    {
+      "period": "2015-06",
+      "amount": 59955,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2015"
+    },
+    {
+      "period": "2015-07",
+      "amount": 80953,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2015"
+    },
+    {
+      "period": "2015-08",
+      "amount": 67038,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2015"
+    },
+    {
+      "period": "2015-09",
+      "amount": 64514,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2015"
+    },
+    {
+      "period": "2015-10",
+      "amount": 81743,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2015"
+    },
+    {
+      "period": "2015-11",
+      "amount": 63428,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2015"
+    },
+    {
+      "period": "2015-12",
+      "amount": 58347,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2015"
+    },
+    {
+      "period": "2016-01",
+      "amount": 70855,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2016"
+    },
+    {
+      "period": "2016-02",
+      "amount": 59551,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2016"
+    },
+    {
+      "period": "2016-03",
+      "amount": 73089,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2016"
+    },
+    {
+      "period": "2016-04",
+      "amount": 66843,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2016"
+    },
+    {
+      "period": "2016-05",
+      "amount": 73576,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2016"
+    },
+    {
+      "period": "2016-06",
+      "amount": 81391,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2016"
+    },
+    {
+      "period": "2016-07",
+      "amount": 76392,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2016"
+    },
+    {
+      "period": "2016-08",
+      "amount": 94311,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2016"
+    },
+    {
+      "period": "2016-09",
+      "amount": 89703,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2016"
+    },
+    {
+      "period": "2016-10",
+      "amount": 91085,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2016"
+    },
+    {
+      "period": "2016-11",
+      "amount": 93030,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2016"
+    },
+    {
+      "period": "2016-12",
+      "amount": 78112,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2016"
+    },
+    {
+      "period": "2017-01",
+      "amount": 76616,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2017"
+    },
+    {
+      "period": "2017-02",
+      "amount": 71423,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2017"
+    },
+    {
+      "period": "2017-03",
+      "amount": 85875,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2017"
+    },
+    {
+      "period": "2017-04",
+      "amount": 56872,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2017"
+    },
+    {
+      "period": "2017-05",
+      "amount": 72796,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2017"
+    },
+    {
+      "period": "2017-06",
+      "amount": 84187,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2017"
+    },
+    {
+      "period": "2017-07",
+      "amount": 71611,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2017"
+    },
+    {
+      "period": "2017-08",
+      "amount": 91917,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2017"
+    },
+    {
+      "period": "2017-09",
+      "amount": 88579,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2017"
+    },
+    {
+      "period": "2017-10",
+      "amount": 94520,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2017"
+    },
+    {
+      "period": "2017-11",
+      "amount": 93153,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2017"
+    },
+    {
+      "period": "2017-12",
+      "amount": 89897,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2017"
+    },
+    {
+      "period": "2018-01",
+      "amount": 79741,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2018"
+    },
+    {
+      "period": "2018-02",
+      "amount": 64641,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2018"
+    },
+    {
+      "period": "2018-03",
+      "amount": 103697,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2018"
+    },
+    {
+      "period": "2018-04",
+      "amount": 81870,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2018"
+    },
+    {
+      "period": "2018-05",
+      "amount": 80969,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2018"
+    },
+    {
+      "period": "2018-06",
+      "amount": 70438,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2018"
+    },
+    {
+      "period": "2018-07",
+      "amount": 74371,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2018"
+    },
+    {
+      "period": "2018-08",
+      "amount": 91055,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2018"
+    },
+    {
+      "period": "2018-09",
+      "amount": 94922,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2018"
+    },
+    {
+      "period": "2018-10",
+      "amount": 101550,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2018"
+    },
+    {
+      "period": "2018-11",
+      "amount": 98389,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2018"
+    },
+    {
+      "period": "2018-12",
+      "amount": 89831,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2018"
+    },
+    {
+      "period": "2019-01",
+      "amount": 78094,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2019"
+    },
+    {
+      "period": "2019-02",
+      "amount": 60889,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2019"
+    },
+    {
+      "period": "2019-03",
+      "amount": 79722,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2019"
+    },
+    {
+      "period": "2019-04",
+      "amount": 74694,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2019"
+    },
+    {
+      "period": "2019-05",
+      "amount": 80437,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2019"
+    },
+    {
+      "period": "2019-06",
+      "amount": 85868,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2019"
+    },
+    {
+      "period": "2019-07",
+      "amount": 84758,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2019"
+    },
+    {
+      "period": "2019-08",
+      "amount": 106118,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2019"
+    },
+    {
+      "period": "2019-09",
+      "amount": 102170,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2019"
+    },
+    {
+      "period": "2019-10",
+      "amount": 106040,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2019"
+    },
+    {
+      "period": "2019-11",
+      "amount": 107884,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2019"
+    },
+    {
+      "period": "2019-12",
+      "amount": 103313,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2019"
+    },
+    {
+      "period": "2020-01",
+      "amount": 103683,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2020"
+    },
+    {
+      "period": "2020-02",
+      "amount": 93394,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2020"
+    },
+    {
+      "period": "2020-03",
+      "amount": 113520,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2020"
+    },
+    {
+      "period": "2020-04",
+      "amount": 96002,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2020"
+    },
+    {
+      "period": "2020-05",
+      "amount": 93819,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2020"
+    },
+    {
+      "period": "2020-06",
+      "amount": 120878,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2020"
+    },
+    {
+      "period": "2020-07",
+      "amount": 105963,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2020"
+    },
+    {
+      "period": "2020-08",
+      "amount": 122878,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2020"
+    },
+    {
+      "period": "2020-09",
+      "amount": 127585,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2020"
+    },
+    {
+      "period": "2020-10",
+      "amount": 119303,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2020"
+    },
+    {
+      "period": "2020-11",
+      "amount": 124865,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2020"
+    },
+    {
+      "period": "2020-12",
+      "amount": 117365,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2020"
+    },
+    {
+      "period": "2021-01",
+      "amount": 126749,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2021"
+    },
+    {
+      "period": "2021-02",
+      "amount": 106534,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2021"
+    },
+    {
+      "period": "2021-03",
+      "amount": 129127,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2021"
+    },
+    {
+      "period": "2021-04",
+      "amount": 111315,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2021"
+    },
+    {
+      "period": "2021-05",
+      "amount": 112360,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2021"
+    },
+    {
+      "period": "2021-06",
+      "amount": 148471,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2021"
+    },
+    {
+      "period": "2021-07",
+      "amount": 124558,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2021"
+    },
+    {
+      "period": "2021-08",
+      "amount": 137427,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2021"
+    },
+    {
+      "period": "2021-09",
+      "amount": 152685,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2021"
+    },
+    {
+      "period": "2021-10",
+      "amount": 134539,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2021"
+    },
+    {
+      "period": "2021-11",
+      "amount": 148268,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2021"
+    },
+    {
+      "period": "2021-12",
+      "amount": 155382,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2021"
+    },
+    {
+      "period": "2022-01",
+      "amount": 172176,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2022"
+    },
+    {
+      "period": "2022-02",
+      "amount": 146933,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2022"
+    },
+    {
+      "period": "2022-03",
+      "amount": 171967,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2022"
+    },
+    {
+      "period": "2022-04",
+      "amount": 172561,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2022"
+    },
+    {
+      "period": "2022-05",
+      "amount": 185705,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2022"
+    },
+    {
+      "period": "2022-06",
+      "amount": 175874,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2022"
+    },
+    {
+      "period": "2022-07",
+      "amount": 186763,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2022"
+    },
+    {
+      "period": "2022-08",
+      "amount": 218132,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2022"
+    },
+    {
+      "period": "2022-09",
+      "amount": 208248,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2022"
+    },
+    {
+      "period": "2022-10",
+      "amount": 210266,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2022"
+    },
+    {
+      "period": "2022-11",
+      "amount": 222706,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2022"
+    },
+    {
+      "period": "2022-12",
+      "amount": 192560,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2022"
+    },
+    {
+      "period": "2023-01",
+      "amount": 200051,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2023"
+    },
+    {
+      "period": "2023-02",
+      "amount": 163174,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2023"
+    },
+    {
+      "period": "2023-03",
+      "amount": 145408,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2023"
+    },
+    {
+      "period": "2023-04",
+      "amount": 147900,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2023"
+    },
+    {
+      "period": "2023-05",
+      "amount": 176537,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2023"
+    },
+    {
+      "period": "2023-06",
+      "amount": 156404,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2023"
+    },
+    {
+      "period": "2023-07",
+      "amount": 177616,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2023"
+    },
+    {
+      "period": "2023-08",
+      "amount": 188686,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2023"
+    },
+    {
+      "period": "2023-09",
+      "amount": 180430,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2023"
+    },
+    {
+      "period": "2023-10",
+      "amount": 243203,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2023"
+    },
+    {
+      "period": "2023-11",
+      "amount": 206026,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2023"
+    },
+    {
+      "period": "2023-12",
+      "amount": 176300,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2023"
+    },
+    {
+      "period": "2024-01",
+      "amount": 215785,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2024"
+    },
+    {
+      "period": "2024-02",
+      "amount": 181648,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2024"
+    },
+    {
+      "period": "2024-03",
+      "amount": 195211,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2024"
+    },
+    {
+      "period": "2024-04",
+      "amount": 236021,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2024"
+    },
+    {
+      "period": "2024-05",
+      "amount": 229620,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2024"
+    },
+    {
+      "period": "2024-06",
+      "amount": 207869,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2024"
+    },
+    {
+      "period": "2024-07",
+      "amount": 256953,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2024"
+    },
+    {
+      "period": "2024-08",
+      "amount": 250866,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2024"
+    },
+    {
+      "period": "2024-09",
+      "amount": 251873,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2024"
+    },
+    {
+      "period": "2024-10",
+      "amount": 314240,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2024"
+    },
+    {
+      "period": "2024-11",
+      "amount": 276058,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2024"
+    },
+    {
+      "period": "2024-12",
+      "amount": 278163,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2024"
+    },
+    {
+      "period": "2025-01",
+      "amount": 293288,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2025"
+    },
+    {
+      "period": "2025-02",
+      "amount": 260009,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2025"
+    },
+    {
+      "period": "2025-03",
+      "amount": 285957,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2025"
+    },
+    {
+      "period": "2025-04",
+      "amount": 349567,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2025"
+    },
+    {
+      "period": "2025-05",
+      "amount": 320516,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2025"
+    },
+    {
+      "period": "2025-06",
+      "amount": 263709,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2025"
+    },
+    {
+      "period": "2025-07",
+      "amount": 323166,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2025"
+    },
+    {
+      "period": "2025-08",
+      "amount": 335772,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2025"
+    },
+    {
+      "period": "2025-09",
+      "amount": 330980,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2025"
+    },
+    {
+      "period": "2025-10",
+      "amount": 367473,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2025"
+    },
+    {
+      "period": "2025-11",
+      "amount": 343614,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2025"
+    },
+    {
+      "period": "2025-12",
+      "amount": 335003,
+      "sourceUrl": "https://investor.tsmc.com/english/monthly-revenue/2025"
+    }
+  ]
+}

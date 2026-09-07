@@ -1,0 +1,2772 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-09-07",
+  "observations": [
+    {
+      "id": "naka_20210417",
+      "incidentId": "renesas_naka_fire_2021",
+      "incidentDate": "2021-03-19",
+      "facilityId": "renesas_naka",
+      "companyId": "renesas",
+      "scope": "Renesas Naka N3 building, 300mm line",
+      "metric": "production_capacity_restored",
+      "kind": "observed",
+      "observedAt": "2021-04-17",
+      "units": "fraction",
+      "denominator": "N3 line pre-fire production capacity",
+      "value": {
+        "low": 0,
+        "high": 0.1,
+        "highExclusive": true
+      },
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.renesas.com/en/about/press-room/update-6-notice-regarding-semiconductor-manufacturing-factory-naka-factory-fire",
+        "publicationDate": "2021-04-19",
+        "informationAvailableDate": "2021-04-19",
+        "supportingSection": "Overview / Timeline for restarting production",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Reported as just under 10%; upper bound is exclusive. Targets later in the paragraph are not observations."
+    },
+    {
+      "id": "naka_20210531",
+      "incidentId": "renesas_naka_fire_2021",
+      "incidentDate": "2021-03-19",
+      "facilityId": "renesas_naka",
+      "companyId": "renesas",
+      "scope": "Renesas Naka N3 building, 300mm line",
+      "metric": "production_capacity_restored",
+      "kind": "observed",
+      "observedAt": "2021-05-31",
+      "units": "fraction",
+      "denominator": "N3 line pre-fire production capacity",
+      "value": {
+        "low": 0.88,
+        "high": 0.88,
+        "highExclusive": false
+      },
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.renesas.com/en/about/press-room/update-9-notice-regarding-semiconductor-manufacturing-factory-naka-factory-fire-production-capacity",
+        "publicationDate": "2021-06-01",
+        "informationAvailableDate": "2021-06-01",
+        "supportingSection": "Second body paragraph",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Production capacity relative to the pre-fire N3 line. Does not measure customer shipments."
+    },
+    {
+      "id": "naka_20210624",
+      "incidentId": "renesas_naka_fire_2021",
+      "incidentDate": "2021-03-19",
+      "facilityId": "renesas_naka",
+      "companyId": "renesas",
+      "scope": "Renesas Naka N3 building, 300mm line",
+      "metric": "production_level_restored",
+      "kind": "observed",
+      "observedAt": "2021-06-24",
+      "units": "fraction",
+      "denominator": "N3 line pre-fire production level",
+      "value": {
+        "low": 1,
+        "high": 1,
+        "highExclusive": false
+      },
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.renesas.com/en/about/press-room/update-10-notice-regarding-semiconductor-manufacturing-factory-naka-factory-fire-production-capacity",
+        "publicationDate": "2021-06-25",
+        "informationAvailableDate": "2021-06-25",
+        "supportingSection": "Second body paragraph",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Production level restored; July shipment recovery is a forecast, not an observed outcome."
+    },
+    {
+      "id": "tsmc_tools_20240403",
+      "incidentId": "taiwan_earthquake_2024",
+      "incidentDate": "2024-04-03",
+      "facilityId": null,
+      "companyId": "tsmc",
+      "scope": "TSMC fabs overall",
+      "metric": "tools_restored",
+      "kind": "observed",
+      "observedAt": "2024-04-03",
+      "elapsedHoursUpperBound": 10,
+      "units": "fraction",
+      "denominator": "fab tools in the stated scope, not wafer output",
+      "value": {
+        "low": 0.7,
+        "high": 1,
+        "lowExclusive": true
+      },
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617924000050/a20240418.htm",
+        "publicationDate": "2024-04-18",
+        "informationAvailableDate": "2024-04-18",
+        "supportingSection": "TSMC Statement on the Impact of April 3rd Earthquake, second paragraph",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Tool recovery is not production capacity, finished output, or shipments. Earliest source used here is the April 18 filing; not available to an April 3 replay."
+    },
+    {
+      "id": "tsmc_fab18_tools_20240403",
+      "incidentId": "taiwan_earthquake_2024",
+      "incidentDate": "2024-04-03",
+      "facilityId": "tsmc_fab18",
+      "companyId": "tsmc",
+      "scope": "TSMC Fab 18",
+      "metric": "tools_restored",
+      "kind": "observed",
+      "observedAt": "2024-04-03",
+      "elapsedHoursUpperBound": 10,
+      "units": "fraction",
+      "denominator": "fab tools in the stated scope, not wafer output",
+      "value": {
+        "low": 0.8,
+        "high": 1,
+        "lowExclusive": true
+      },
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617924000050/a20240418.htm",
+        "publicationDate": "2024-04-18",
+        "informationAvailableDate": "2024-04-18",
+        "supportingSection": "TSMC Statement on the Impact of April 3rd Earthquake, second paragraph",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Tool recovery is not production capacity, finished output, or shipments. Earliest source used here is the April 18 filing; not available to an April 3 replay."
+    },
+    {
+      "id": "naka_20220326",
+      "incidentId": "fukushima_earthquake_2022",
+      "incidentDate": "2022-03-16",
+      "facilityId": "renesas_naka",
+      "companyId": "renesas",
+      "scope": "Renesas Naka Factory",
+      "metric": "wafer_input_capacity_restored",
+      "kind": "observed",
+      "observedAt": "2022-03-26",
+      "units": "fraction",
+      "denominator": "pre-earthquake wafer input capacity",
+      "value": {
+        "low": 1,
+        "high": 1
+      },
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.renesas.com/en/about/newsroom/update-4-final-impact-march-16-earthquake-coast-fukushima-prefecture-renesas-operation-1",
+        "publicationDate": "2022-03-26",
+        "informationAvailableDate": "2022-03-26",
+        "supportingSection": "Naka Factory, first bullet",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Full wafer-input capacity does not restore the reported two to three weeks of lost production."
+    },
+    {
+      "id": "naka_20220323",
+      "incidentId": "fukushima_earthquake_2022",
+      "incidentDate": "2022-03-16",
+      "facilityId": "renesas_naka",
+      "companyId": "renesas",
+      "scope": "Renesas Naka Factory",
+      "metric": "wafer_input_capacity_restored",
+      "kind": "observed",
+      "observedAt": "2022-03-23",
+      "units": "fraction",
+      "denominator": "pre-earthquake wafer input capacity",
+      "value": {
+        "low": 0.5,
+        "high": 0.5,
+        "approximate": true
+      },
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.renesas.com/en/about/newsroom/update-3-impact-march-16-earthquake-coast-fukushima-prefecture-renesas-operation",
+        "publicationDate": "2022-03-23",
+        "informationAvailableDate": "2022-03-23",
+        "supportingSection": "Naka Factory, first bullet",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Reported capacity recovery; does not establish cleared backlog or recovered cumulative production."
+    },
+    {
+      "id": "takasaki_20220323",
+      "incidentId": "fukushima_earthquake_2022",
+      "incidentDate": "2022-03-16",
+      "facilityId": "renesas_takasaki",
+      "companyId": "renesas",
+      "scope": "Renesas Takasaki Factory",
+      "metric": "wafer_input_capacity_restored",
+      "kind": "observed",
+      "observedAt": "2022-03-23",
+      "units": "fraction",
+      "denominator": "pre-earthquake wafer input capacity",
+      "value": {
+        "low": 1,
+        "high": 1,
+        "approximate": false
+      },
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.renesas.com/en/about/newsroom/update-3-impact-march-16-earthquake-coast-fukushima-prefecture-renesas-operation",
+        "publicationDate": "2022-03-23",
+        "informationAvailableDate": "2022-03-23",
+        "supportingSection": "Takasaki Factory, first bullet",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Reported capacity recovery; does not establish cleared backlog or recovered cumulative production."
+    },
+    {
+      "id": "yonezawa_20220320",
+      "incidentId": "fukushima_earthquake_2022",
+      "incidentDate": "2022-03-16",
+      "facilityId": "renesas_yonezawa",
+      "companyId": "renesas",
+      "scope": "Renesas Yonezawa Factory",
+      "metric": "production_input_capacity_restored",
+      "kind": "observed",
+      "observedAt": "2022-03-20",
+      "units": "fraction",
+      "denominator": "pre-earthquake production input capacity",
+      "value": {
+        "low": 1,
+        "high": 1,
+        "approximate": false
+      },
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.renesas.com/en/about/newsroom/update-3-impact-march-16-earthquake-coast-fukushima-prefecture-renesas-operation",
+        "publicationDate": "2022-03-23",
+        "informationAvailableDate": "2022-03-23",
+        "supportingSection": "Yonezawa Factory, first bullet",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Reported capacity recovery; does not establish cleared backlog or recovered cumulative production."
+    },
+    {
+      "id": "tsmc_virus_tools_20180805",
+      "incidentId": "tsmc_virus_2018",
+      "incidentDate": "2018-08-03",
+      "facilityId": null,
+      "companyId": "tsmc",
+      "scope": "TSMC tools affected by the August 2018 computer virus",
+      "metric": "tools_restored",
+      "kind": "observed",
+      "observedAt": "2018-08-05",
+      "units": "fraction",
+      "denominator": "TSMC tools affected by the August 2018 computer virus",
+      "value": {
+        "low": 0.8,
+        "high": 0.8,
+        "approximate": true
+      },
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://pr.tsmc.com/english/news/1969",
+        "publicationDate": "2018-08-05",
+        "informationAvailableDate": "2018-08-05",
+        "supportingSection": "First body paragraph",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Approximately 80% of affected tools. The next-day full recovery was a forecast, not an observation."
+    },
+    {
+      "id": "nxp_austin_shutdown_20210215",
+      "incidentId": "texas_winter_storm_2021",
+      "incidentDate": "2021-02-15",
+      "facilityId": null,
+      "companyId": "nxp",
+      "scope": "NXP two Austin wafer manufacturing facilities",
+      "metric": "operating_status",
+      "kind": "observed",
+      "observedAt": "2021-02-15",
+      "units": "qualitative",
+      "denominator": "NXP two Austin wafer manufacturing facilities",
+      "value": null,
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.nxp.com/company/about-nxp/newsroom/NW-NXP-RESUMES-OPERATIONS-AUSTIN?lv=true",
+        "publicationDate": "2021-03-11",
+        "informationAvailableDate": "2021-03-11",
+        "supportingSection": "Second body paragraph",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Two facilities collectively; this record does not identify individual shipment destinations.",
+      "observationText": "Full shutdown began"
+    },
+    {
+      "id": "nxp_austin_restart_20210311",
+      "incidentId": "texas_winter_storm_2021",
+      "incidentDate": "2021-02-15",
+      "facilityId": null,
+      "companyId": "nxp",
+      "scope": "NXP two Austin wafer manufacturing facilities",
+      "metric": "operating_status",
+      "kind": "observed",
+      "observedAt": "2021-03-11",
+      "units": "qualitative",
+      "denominator": "NXP two Austin wafer manufacturing facilities",
+      "value": null,
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.nxp.com/company/about-nxp/newsroom/NW-NXP-RESUMES-OPERATIONS-AUSTIN?lv=true",
+        "publicationDate": "2021-03-11",
+        "informationAvailableDate": "2021-03-11",
+        "supportingSection": "First body paragraph",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Partial restart is not full capacity recovery. A one-month cumulative production loss is reported separately; revenue impact is an expectation.",
+      "observationText": "Initial operations resumed by report date"
+    },
+    {
+      "id": "toshiba_kaga_recovery_2024",
+      "incidentId": "noto_earthquake_2024",
+      "incidentDate": "2024-01-01",
+      "facilityId": null,
+      "companyId": "toshiba",
+      "scope": "Kaga Toshiba Electronics, Nomi, main and other lines",
+      "metric": "production_capacity_restored",
+      "kind": "observed",
+      "observedAt": null,
+      "units": "qualitative",
+      "denominator": "Kaga Toshiba Electronics, Nomi, main and other lines",
+      "value": null,
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://toshiba.semicon-storage.com/us/company/news/2024/01/corporate-20240126-1.html",
+        "publicationDate": "2024-03-04",
+        "informationAvailableDate": "2024-03-04",
+        "supportingSection": "Update on March 4",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "No exact recovery percentage or day disclosed. March update is not backdated to the January 26 page header.",
+      "observationText": "Capacity restored close to pre-disaster level",
+      "observationDateText": "By early February 2024; exact day not disclosed"
+    },
+    {
+      "id": "tsmc_virus_tools_complete_2018",
+      "incidentId": "tsmc_virus_2018",
+      "incidentDate": "2018-08-03",
+      "observedAt": "2018-08-06",
+      "companyId": "tsmc",
+      "facilityId": null,
+      "scope": "TSMC Taiwan tools affected by August 2018 virus",
+      "metric": "tools_restored",
+      "denominator": "tools affected by this incident",
+      "value": {
+        "low": 1,
+        "high": 1
+      },
+      "units": "fraction",
+      "kind": "observed",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.sec.gov/Archives/edgar/data/1046179/000119312518328409/d640016d6k.htm",
+        "publicationDate": "2018-11-16",
+        "informationAvailableDate": "2018-11-16",
+        "supportingSection": "Note 38, Significant losses from disasters; filing signature dated November 16",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex primary-document review, including rendered financial tables; not independent human adjudication"
+      },
+      "limitations": "Confirmed retrospectively in November filing. The August 5 forecast cannot be used as August 6 outcome evidence. Tools are not shipments."
+    },
+    {
+      "id": "kawashiri_lightning_20220711",
+      "incidentId": "kawashiri_voltage_drop_2022",
+      "incidentDate": "2022-07-05",
+      "observedAt": "2022-07-11",
+      "companyId": "renesas",
+      "facilityId": "renesas_kawashiri",
+      "scope": "Renesas Kawashiri factory",
+      "metric": "wafer_input_capacity_restored",
+      "denominator": "pre-voltage-drop wafer input capacity",
+      "value": {
+        "low": 1,
+        "high": 1
+      },
+      "units": "fraction",
+      "kind": "observed",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.renesas.com/en/document/ppt/2022-2q-presentation-material",
+        "publicationDate": "2022-07-28",
+        "informationAvailableDate": "2022-07-28",
+        "supportingSection": "Page 22, Financial impact: result and forecast; actual and forecast columns kept separate",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex primary-document review, including rendered financial tables; not independent human adjudication"
+      },
+      "limitations": "Wafer input capacity restored; does not recover previously lost output or quantify customer consequences."
+    },
+    {
+      "id": "renesas_kumamoto_recovery_20160522",
+      "incidentId": "kumamoto_earthquake_2016",
+      "incidentDate": "2016-04-14",
+      "observedAt": "2016-05-22",
+      "companyId": "renesas",
+      "facilityId": null,
+      "scope": "Renesas manufacturing operations affected by April 2016 Kumamoto earthquakes",
+      "metric": "wafer_input_capacity_restored",
+      "denominator": "pre-earthquake wafer input capacity",
+      "value": {
+        "low": 1,
+        "high": 1
+      },
+      "units": "fraction",
+      "kind": "observed",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.renesas.com/en/about/newsroom/update-8-final-impact-2016-kumamoto-earthquake-renesas-electronics-operations",
+        "publicationDate": "2016-05-23",
+        "informationAvailableDate": "2016-05-23",
+        "supportingSection": "Final update, restoration completed May 22; overall supplier-chain recovery still ongoing",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex primary-document review, including rendered financial tables; not independent human adjudication"
+      },
+      "limitations": "Group manufacturing scope as worded by final notice. Supplier-chain recovery explicitly remained incomplete. Incident begins April 14, including subsequent earthquakes."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "tsmc_amd_2024_1",
+      "level": "company",
+      "supplier": "tsmc",
+      "customer": "amd",
+      "productScope": "AMD microprocessor and GPU wafers at 7nm or smaller nodes",
+      "periodEnd": "2024-12-28",
+      "claimStatus": "verified",
+      "inputShare": 1,
+      "shareBasis": "all wafers in this specific product/node scope",
+      "supplierRevenueShare": null,
+      "source": {
+        "url": "https://ir.amd.com/financial-information/sec-filings/content/0001193125-25-067185/0001193125-25-067185.pdf",
+        "publicationDate": "2025-03-28",
+        "informationAvailableDate": "2025-03-28",
+        "supportingSection": "Printed page 23 (PDF page 39), Operational and Technology Risks",
+        "claimStatus": "verified",
+        "publicationDateEvidence": "https://www.sec.gov/Archives/edgar/data/2488/000119312525067185/0001193125-25-067185-index.html"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Historical company-level disclosure. Does not establish a particular supplying plant, buyer-wide capacity share, current allocation or propagation magnitude."
+    },
+    {
+      "id": "gf_amd_2024_2",
+      "level": "company",
+      "supplier": "gf",
+      "customer": "amd",
+      "productScope": "AMD microprocessor and GPU wafers at nodes larger than 7nm",
+      "periodEnd": "2024-12-28",
+      "claimStatus": "verified",
+      "inputShare": null,
+      "shareBasis": "not quantified",
+      "supplierRevenueShare": null,
+      "source": {
+        "url": "https://ir.amd.com/financial-information/sec-filings/content/0001193125-25-067185/0001193125-25-067185.pdf",
+        "publicationDate": "2025-03-28",
+        "informationAvailableDate": "2025-03-28",
+        "supportingSection": "Printed page 23 (PDF page 39), Operational and Technology Risks",
+        "claimStatus": "verified",
+        "publicationDateEvidence": "https://www.sec.gov/Archives/edgar/data/2488/000119312525067185/0001193125-25-067185-index.html"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Historical company-level disclosure. Does not establish a particular supplying plant, buyer-wide capacity share, current allocation or propagation magnitude."
+    },
+    {
+      "id": "tsmc_amd_2024_3",
+      "level": "company",
+      "supplier": "tsmc",
+      "customer": "amd",
+      "productScope": "AMD programmable logic IC wafers",
+      "periodEnd": "2024-12-28",
+      "claimStatus": "verified",
+      "inputShare": null,
+      "shareBasis": "not quantified",
+      "supplierRevenueShare": null,
+      "source": {
+        "url": "https://ir.amd.com/financial-information/sec-filings/content/0001193125-25-067185/0001193125-25-067185.pdf",
+        "publicationDate": "2025-03-28",
+        "informationAvailableDate": "2025-03-28",
+        "supportingSection": "Printed page 23 (PDF page 39), Operational and Technology Risks",
+        "claimStatus": "verified",
+        "publicationDateEvidence": "https://www.sec.gov/Archives/edgar/data/2488/000119312525067185/0001193125-25-067185-index.html"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Historical company-level disclosure. Does not establish a particular supplying plant, buyer-wide capacity share, current allocation or propagation magnitude."
+    },
+    {
+      "id": "umc_amd_2024_4",
+      "level": "company",
+      "supplier": "umc",
+      "customer": "amd",
+      "productScope": "AMD programmable logic IC wafers",
+      "periodEnd": "2024-12-28",
+      "claimStatus": "verified",
+      "inputShare": null,
+      "shareBasis": "not quantified",
+      "supplierRevenueShare": null,
+      "source": {
+        "url": "https://ir.amd.com/financial-information/sec-filings/content/0001193125-25-067185/0001193125-25-067185.pdf",
+        "publicationDate": "2025-03-28",
+        "informationAvailableDate": "2025-03-28",
+        "supportingSection": "Printed page 23 (PDF page 39), Operational and Technology Risks",
+        "claimStatus": "verified",
+        "publicationDateEvidence": "https://www.sec.gov/Archives/edgar/data/2488/000119312525067185/0001193125-25-067185-index.html"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Historical company-level disclosure. Does not establish a particular supplying plant, buyer-wide capacity share, current allocation or propagation magnitude."
+    },
+    {
+      "id": "samsung_amd_2024_5",
+      "level": "company",
+      "supplier": "samsung",
+      "customer": "amd",
+      "productScope": "AMD programmable logic IC wafers",
+      "periodEnd": "2024-12-28",
+      "claimStatus": "verified",
+      "inputShare": null,
+      "shareBasis": "not quantified",
+      "supplierRevenueShare": null,
+      "source": {
+        "url": "https://ir.amd.com/financial-information/sec-filings/content/0001193125-25-067185/0001193125-25-067185.pdf",
+        "publicationDate": "2025-03-28",
+        "informationAvailableDate": "2025-03-28",
+        "supportingSection": "Printed page 23 (PDF page 39), Operational and Technology Risks",
+        "claimStatus": "verified",
+        "publicationDateEvidence": "https://www.sec.gov/Archives/edgar/data/2488/000119312525067185/0001193125-25-067185-index.html"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Historical company-level disclosure. Does not establish a particular supplying plant, buyer-wide capacity share, current allocation or propagation magnitude."
+    },
+    {
+      "id": "tsmc_nvidia_fy2025_6",
+      "level": "company",
+      "supplier": "tsmc",
+      "customer": "nvidia",
+      "productScope": "NVIDIA semiconductor wafers",
+      "periodEnd": "2025-01-26",
+      "claimStatus": "verified",
+      "inputShare": null,
+      "shareBasis": "not quantified",
+      "supplierRevenueShare": null,
+      "source": {
+        "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000023/nvda-20250126.htm",
+        "publicationDate": "2025-02-26",
+        "informationAvailableDate": "2025-02-26",
+        "supportingSection": "Item 1, Manufacturing, printed page 9",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Company disclosure only; supplier share, individual plant and shipment routes not identified."
+    },
+    {
+      "id": "samsung_nvidia_fy2025_7",
+      "level": "company",
+      "supplier": "samsung",
+      "customer": "nvidia",
+      "productScope": "NVIDIA semiconductor wafers",
+      "periodEnd": "2025-01-26",
+      "claimStatus": "verified",
+      "inputShare": null,
+      "shareBasis": "not quantified",
+      "supplierRevenueShare": null,
+      "source": {
+        "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000023/nvda-20250126.htm",
+        "publicationDate": "2025-02-26",
+        "informationAvailableDate": "2025-02-26",
+        "supportingSection": "Item 1, Manufacturing, printed page 9",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Company disclosure only; supplier share, individual plant and shipment routes not identified."
+    },
+    {
+      "id": "sk_nvidia_fy2025_8",
+      "level": "company",
+      "supplier": "skhynix",
+      "customer": "nvidia",
+      "productScope": "NVIDIA memory",
+      "periodEnd": "2025-01-26",
+      "claimStatus": "verified",
+      "inputShare": null,
+      "shareBasis": "not quantified",
+      "supplierRevenueShare": null,
+      "source": {
+        "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000023/nvda-20250126.htm",
+        "publicationDate": "2025-02-26",
+        "informationAvailableDate": "2025-02-26",
+        "supportingSection": "Item 1, Manufacturing, printed page 9",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Company disclosure only; supplier share, individual plant and shipment routes not identified."
+    },
+    {
+      "id": "micron_nvidia_fy2025_9",
+      "level": "company",
+      "supplier": "micron",
+      "customer": "nvidia",
+      "productScope": "NVIDIA memory",
+      "periodEnd": "2025-01-26",
+      "claimStatus": "verified",
+      "inputShare": null,
+      "shareBasis": "not quantified",
+      "supplierRevenueShare": null,
+      "source": {
+        "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000023/nvda-20250126.htm",
+        "publicationDate": "2025-02-26",
+        "informationAvailableDate": "2025-02-26",
+        "supportingSection": "Item 1, Manufacturing, printed page 9",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Company disclosure only; supplier share, individual plant and shipment routes not identified."
+    },
+    {
+      "id": "samsung_nvidia_fy2025_10",
+      "level": "company",
+      "supplier": "samsung",
+      "customer": "nvidia",
+      "productScope": "NVIDIA memory",
+      "periodEnd": "2025-01-26",
+      "claimStatus": "verified",
+      "inputShare": null,
+      "shareBasis": "not quantified",
+      "supplierRevenueShare": null,
+      "source": {
+        "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000023/nvda-20250126.htm",
+        "publicationDate": "2025-02-26",
+        "informationAvailableDate": "2025-02-26",
+        "supportingSection": "Item 1, Manufacturing, printed page 9",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Company disclosure only; supplier share, individual plant and shipment routes not identified."
+    },
+    {
+      "id": "foxconn_nvidia_fy2025_11",
+      "level": "company",
+      "supplier": "foxconn",
+      "customer": "nvidia",
+      "productScope": "NVIDIA final-product assembly, testing and packaging",
+      "periodEnd": "2025-01-26",
+      "claimStatus": "verified",
+      "inputShare": null,
+      "shareBasis": "not quantified",
+      "supplierRevenueShare": null,
+      "source": {
+        "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000023/nvda-20250126.htm",
+        "publicationDate": "2025-02-26",
+        "informationAvailableDate": "2025-02-26",
+        "supportingSection": "Item 1, Manufacturing, printed page 9",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Company disclosure only; supplier share, individual plant and shipment routes not identified."
+    },
+    {
+      "id": "wistron_nvidia_fy2025_12",
+      "level": "company",
+      "supplier": "wistron",
+      "customer": "nvidia",
+      "productScope": "NVIDIA final-product assembly, testing and packaging",
+      "periodEnd": "2025-01-26",
+      "claimStatus": "verified",
+      "inputShare": null,
+      "shareBasis": "not quantified",
+      "supplierRevenueShare": null,
+      "source": {
+        "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000023/nvda-20250126.htm",
+        "publicationDate": "2025-02-26",
+        "informationAvailableDate": "2025-02-26",
+        "supportingSection": "Item 1, Manufacturing, printed page 9",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Company disclosure only; supplier share, individual plant and shipment routes not identified."
+    },
+    {
+      "id": "fabrinet_nvidia_fy2025_13",
+      "level": "company",
+      "supplier": "fabrinet",
+      "customer": "nvidia",
+      "productScope": "NVIDIA final-product assembly, testing and packaging",
+      "periodEnd": "2025-01-26",
+      "claimStatus": "verified",
+      "inputShare": null,
+      "shareBasis": "not quantified",
+      "supplierRevenueShare": null,
+      "source": {
+        "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000023/nvda-20250126.htm",
+        "publicationDate": "2025-02-26",
+        "informationAvailableDate": "2025-02-26",
+        "supportingSection": "Item 1, Manufacturing, printed page 9",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Company disclosure only; supplier share, individual plant and shipment routes not identified."
+    },
+    {
+      "id": "soitec_gf_soi_2024",
+      "level": "company",
+      "supplier": "soitec",
+      "customer": "gf",
+      "productScope": "GlobalFoundries silicon-on-insulator (SOI) wafer inputs",
+      "periodEnd": "2024-12-31",
+      "claimStatus": "verified",
+      "inputShare": 0.61,
+      "shareBasis": "Reported share of SOI wafers supplied to GlobalFoundries in 2024; not all silicon wafers or revenue",
+      "supplierRevenueShare": null,
+      "source": {
+        "url": "https://www.sec.gov/Archives/edgar/data/1709048/000170904825000024/gfs-20241231.htm",
+        "publicationDate": "2025-03-20",
+        "informationAvailableDate": "2025-03-20",
+        "supportingSection": "Item 3.D Risk Factors, silicon supply chain (printed page 9): Soitec supplied 61% of SOI wafers in 2024",
+        "claimStatus": "verified",
+        "publicationDateEvidence": "https://www.sec.gov/Archives/edgar/data/1709048/000170904825000024/0001709048-25-000024-index.html"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Historical aggregate SOI input share, reported at whole-percent precision. No allocation to a particular fab or downstream product is disclosed. Remaining 39% and inventory/substitution are unquantified."
+    }
+  ],
+  "capacities": [
+    {
+      "id": "umc_wtk_2025",
+      "facilityId": "umc_fabwtk",
+      "facilityName": "UMC WTK",
+      "companyId": "umc",
+      "scope": "UMC 6-inch reported fab population",
+      "units": "6-inch wafers per year",
+      "period": "2025-12-31",
+      "capacity": 317000,
+      "reportedThousands": 317,
+      "waferDiameterInches": 6,
+      "basis": "issuer_reported_maximum",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://event-prod.zucast.com/attach/52d41749702efeb443f2539fd74e4c14/10561/UMC25Q4_report.pdf",
+        "publicationDate": "2026-01-28",
+        "informationAvailableDate": "2026-01-28",
+        "supportingSection": "Page 9, Annual Capacity table; notes 1 and 4",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Issuer-reported calculated maximum output; not measured actual production, product-specific interchangeability, or current availability. Values rounded to thousands."
+    },
+    {
+      "id": "umc_wtk_2024",
+      "facilityId": "umc_fabwtk",
+      "facilityName": "UMC WTK",
+      "companyId": "umc",
+      "scope": "UMC 6-inch reported fab population",
+      "units": "6-inch wafers per year",
+      "period": "2024-12-31",
+      "capacity": 331000,
+      "reportedThousands": 331,
+      "waferDiameterInches": 6,
+      "basis": "issuer_reported_maximum",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://event-prod.zucast.com/attach/52d41749702efeb443f2539fd74e4c14/10561/UMC25Q4_report.pdf",
+        "publicationDate": "2026-01-28",
+        "informationAvailableDate": "2026-01-28",
+        "supportingSection": "Page 9, Annual Capacity table; notes 1 and 4",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Issuer-reported calculated maximum output; not measured actual production, product-specific interchangeability, or current availability. Values rounded to thousands."
+    },
+    {
+      "id": "umc_wtk_2023",
+      "facilityId": "umc_fabwtk",
+      "facilityName": "UMC WTK",
+      "companyId": "umc",
+      "scope": "UMC 6-inch reported fab population",
+      "units": "6-inch wafers per year",
+      "period": "2023-12-31",
+      "capacity": 328000,
+      "reportedThousands": 328,
+      "waferDiameterInches": 6,
+      "basis": "issuer_reported_maximum",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://event-prod.zucast.com/attach/52d41749702efeb443f2539fd74e4c14/10561/UMC25Q4_report.pdf",
+        "publicationDate": "2026-01-28",
+        "informationAvailableDate": "2026-01-28",
+        "supportingSection": "Page 9, Annual Capacity table; notes 1 and 4",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Issuer-reported calculated maximum output; not measured actual production, product-specific interchangeability, or current availability. Values rounded to thousands."
+    },
+    {
+      "id": "umc_wtk_2022",
+      "facilityId": "umc_fabwtk",
+      "facilityName": "UMC WTK",
+      "companyId": "umc",
+      "scope": "UMC 6-inch reported fab population",
+      "units": "6-inch wafers per year",
+      "period": "2022-12-31",
+      "capacity": 335000,
+      "reportedThousands": 335,
+      "waferDiameterInches": 6,
+      "basis": "issuer_reported_maximum",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://event-prod.zucast.com/attach/52d41749702efeb443f2539fd74e4c14/10561/UMC25Q4_report.pdf",
+        "publicationDate": "2026-01-28",
+        "informationAvailableDate": "2026-01-28",
+        "supportingSection": "Page 9, Annual Capacity table; notes 1 and 4",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Issuer-reported calculated maximum output; not measured actual production, product-specific interchangeability, or current availability. Values rounded to thousands."
+    },
+    {
+      "id": "umc_8a_2025",
+      "facilityId": "umc_fab8a",
+      "facilityName": "UMC 8A",
+      "companyId": "umc",
+      "scope": "UMC 8-inch reported fab population",
+      "units": "8-inch wafers per year",
+      "period": "2025-12-31",
+      "capacity": 857000,
+      "reportedThousands": 857,
+      "waferDiameterInches": 8,
+      "basis": "issuer_reported_maximum",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://event-prod.zucast.com/attach/52d41749702efeb443f2539fd74e4c14/10561/UMC25Q4_report.pdf",
+        "publicationDate": "2026-01-28",
+        "informationAvailableDate": "2026-01-28",
+        "supportingSection": "Page 9, Annual Capacity table; notes 1 and 4",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Issuer-reported calculated maximum output; not measured actual production, product-specific interchangeability, or current availability. Values rounded to thousands."
+    },
+    {
+      "id": "umc_8a_2024",
+      "facilityId": "umc_fab8a",
+      "facilityName": "UMC 8A",
+      "companyId": "umc",
+      "scope": "UMC 8-inch reported fab population",
+      "units": "8-inch wafers per year",
+      "period": "2024-12-31",
+      "capacity": 829000,
+      "reportedThousands": 829,
+      "waferDiameterInches": 8,
+      "basis": "issuer_reported_maximum",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://event-prod.zucast.com/attach/52d41749702efeb443f2539fd74e4c14/10561/UMC25Q4_report.pdf",
+        "publicationDate": "2026-01-28",
+        "informationAvailableDate": "2026-01-28",
+        "supportingSection": "Page 9, Annual Capacity table; notes 1 and 4",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Issuer-reported calculated maximum output; not measured actual production, product-specific interchangeability, or current availability. Values rounded to thousands."
+    },
+    {
+      "id": "umc_8a_2023",
+      "facilityId": "umc_fab8a",
+      "facilityName": "UMC 8A",
+      "companyId": "umc",
+      "scope": "UMC 8-inch reported fab population",
+      "units": "8-inch wafers per year",
+      "period": "2023-12-31",
+      "capacity": 811000,
+      "reportedThousands": 811,
+      "waferDiameterInches": 8,
+      "basis": "issuer_reported_maximum",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://event-prod.zucast.com/attach/52d41749702efeb443f2539fd74e4c14/10561/UMC25Q4_report.pdf",
+        "publicationDate": "2026-01-28",
+        "informationAvailableDate": "2026-01-28",
+        "supportingSection": "Page 9, Annual Capacity table; notes 1 and 4",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Issuer-reported calculated maximum output; not measured actual production, product-specific interchangeability, or current availability. Values rounded to thousands."
+    },
+    {
+      "id": "umc_8a_2022",
+      "facilityId": "umc_fab8a",
+      "facilityName": "UMC 8A",
+      "companyId": "umc",
+      "scope": "UMC 8-inch reported fab population",
+      "units": "8-inch wafers per year",
+      "period": "2022-12-31",
+      "capacity": 765000,
+      "reportedThousands": 765,
+      "waferDiameterInches": 8,
+      "basis": "issuer_reported_maximum",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://event-prod.zucast.com/attach/52d41749702efeb443f2539fd74e4c14/10561/UMC25Q4_report.pdf",
+        "publicationDate": "2026-01-28",
+        "informationAvailableDate": "2026-01-28",
+        "supportingSection": "Page 9, Annual Capacity table; notes 1 and 4",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Issuer-reported calculated maximum output; not measured actual production, product-specific interchangeability, or current availability. Values rounded to thousands."
+    },
+    {
+      "id": "umc_8c_2025",
+      "facilityId": "umc_fab8c",
+      "facilityName": "UMC 8C",
+      "companyId": "umc",
+      "scope": "UMC 8-inch reported fab population",
+      "units": "8-inch wafers per year",
+      "period": "2025-12-31",
+      "capacity": 500000,
+      "reportedThousands": 500,
+      "waferDiameterInches": 8,
+      "basis": "issuer_reported_maximum",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://event-prod.zucast.com/attach/52d41749702efeb443f2539fd74e4c14/10561/UMC25Q4_report.pdf",
+        "publicationDate": "2026-01-28",
+        "informationAvailableDate": "2026-01-28",
+        "supportingSection": "Page 9, Annual Capacity table; notes 1 and 4",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Issuer-reported calculated maximum output; not measured actual production, product-specific interchangeability, or current availability. Values rounded to thousands."
+    },
+    {
+      "id": "umc_8c_2024",
+      "facilityId": "umc_fab8c",
+      "facilityName": "UMC 8C",
+      "companyId": "umc",
+      "scope": "UMC 8-inch reported fab population",
+      "units": "8-inch wafers per year",
+      "period": "2024-12-31",
+      "capacity": 477000,
+      "reportedThousands": 477,
+      "waferDiameterInches": 8,
+      "basis": "issuer_reported_maximum",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://event-prod.zucast.com/attach/52d41749702efeb443f2539fd74e4c14/10561/UMC25Q4_report.pdf",
+        "publicationDate": "2026-01-28",
+        "informationAvailableDate": "2026-01-28",
+        "supportingSection": "Page 9, Annual Capacity table; notes 1 and 4",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Issuer-reported calculated maximum output; not measured actual production, product-specific interchangeability, or current availability. Values rounded to thousands."
+    },
+    {
+      "id": "umc_8c_2023",
+      "facilityId": "umc_fab8c",
+      "facilityName": "UMC 8C",
+      "companyId": "umc",
+      "scope": "UMC 8-inch reported fab population",
+      "units": "8-inch wafers per year",
+      "period": "2023-12-31",
+      "capacity": 473000,
+      "reportedThousands": 473,
+      "waferDiameterInches": 8,
+      "basis": "issuer_reported_maximum",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://event-prod.zucast.com/attach/52d41749702efeb443f2539fd74e4c14/10561/UMC25Q4_report.pdf",
+        "publicationDate": "2026-01-28",
+        "informationAvailableDate": "2026-01-28",
+        "supportingSection": "Page 9, Annual Capacity table; notes 1 and 4",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Issuer-reported calculated maximum output; not measured actual production, product-specific interchangeability, or current availability. Values rounded to thousands."
+    },
+    {
+      "id": "umc_8c_2022",
+      "facilityId": "umc_fab8c",
+      "facilityName": "UMC 8C",
+      "companyId": "umc",
+      "scope": "UMC 8-inch reported fab population",
+      "units": "8-inch wafers per year",
+      "period": "2022-12-31",
+      "capacity": 459000,
+      "reportedThousands": 459,
+      "waferDiameterInches": 8,
+      "basis": "issuer_reported_maximum",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://event-prod.zucast.com/attach/52d41749702efeb443f2539fd74e4c14/10561/UMC25Q4_report.pdf",
+        "publicationDate": "2026-01-28",
+        "informationAvailableDate": "2026-01-28",
+        "supportingSection": "Page 9, Annual Capacity table; notes 1 and 4",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Issuer-reported calculated maximum output; not measured actual production, product-specific interchangeability, or current availability. Values rounded to thousands."
+    },
+    {
+      "id": "umc_8d_2025",
+      "facilityId": "umc_fab8d",
+      "facilityName": "UMC 8D",
+      "companyId": "umc",
+      "scope": "UMC 8-inch reported fab population",
+      "units": "8-inch wafers per year",
+      "period": "2025-12-31",
+      "capacity": 471000,
+      "reportedThousands": 471,
+      "waferDiameterInches": 8,
+      "basis": "issuer_reported_maximum",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://event-prod.zucast.com/attach/52d41749702efeb443f2539fd74e4c14/10561/UMC25Q4_report.pdf",
+        "publicationDate": "2026-01-28",
+        "informationAvailableDate": "2026-01-28",
+        "supportingSection": "Page 9, Annual Capacity table; notes 1 and 4",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Issuer-reported calculated maximum output; not measured actual production, product-specific interchangeability, or current availability. Values rounded to thousands."
+    },
+    {
+      "id": "umc_8d_2024",
+      "facilityId": "umc_fab8d",
+      "facilityName": "UMC 8D",
+      "companyId": "umc",
+      "scope": "UMC 8-inch reported fab population",
+      "units": "8-inch wafers per year",
+      "period": "2024-12-31",
+      "capacity": 473000,
+      "reportedThousands": 473,
+      "waferDiameterInches": 8,
+      "basis": "issuer_reported_maximum",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://event-prod.zucast.com/attach/52d41749702efeb443f2539fd74e4c14/10561/UMC25Q4_report.pdf",
+        "publicationDate": "2026-01-28",
+        "informationAvailableDate": "2026-01-28",
+        "supportingSection": "Page 9, Annual Capacity table; notes 1 and 4",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Issuer-reported calculated maximum output; not measured actual production, product-specific interchangeability, or current availability. Values rounded to thousands."
+    },
+    {
+      "id": "umc_8d_2023",
+      "facilityId": "umc_fab8d",
+      "facilityName": "UMC 8D",
+      "companyId": "umc",
+      "scope": "UMC 8-inch reported fab population",
+      "units": "8-inch wafers per year",
+      "period": "2023-12-31",
+      "capacity": 440000,
+      "reportedThousands": 440,
+      "waferDiameterInches": 8,
+      "basis": "issuer_reported_maximum",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://event-prod.zucast.com/attach/52d41749702efeb443f2539fd74e4c14/10561/UMC25Q4_report.pdf",
+        "publicationDate": "2026-01-28",
+        "informationAvailableDate": "2026-01-28",
+        "supportingSection": "Page 9, Annual Capacity table; notes 1 and 4",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Issuer-reported calculated maximum output; not measured actual production, product-specific interchangeability, or current availability. Values rounded to thousands."
+    },
+    {
+      "id": "umc_8d_2022",
+      "facilityId": "umc_fab8d",
+      "facilityName": "UMC 8D",
+      "companyId": "umc",
+      "scope": "UMC 8-inch reported fab population",
+      "units": "8-inch wafers per year",
+      "period": "2022-12-31",
+      "capacity": 410000,
+      "reportedThousands": 410,
+      "waferDiameterInches": 8,
+      "basis": "issuer_reported_maximum",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://event-prod.zucast.com/attach/52d41749702efeb443f2539fd74e4c14/10561/UMC25Q4_report.pdf",
+        "publicationDate": "2026-01-28",
+        "informationAvailableDate": "2026-01-28",
+        "supportingSection": "Page 9, Annual Capacity table; notes 1 and 4",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Issuer-reported calculated maximum output; not measured actual production, product-specific interchangeability, or current availability. Values rounded to thousands."
+    },
+    {
+      "id": "umc_8e_2025",
+      "facilityId": "umc_fab8e",
+      "facilityName": "UMC 8E",
+      "companyId": "umc",
+      "scope": "UMC 8-inch reported fab population",
+      "units": "8-inch wafers per year",
+      "period": "2025-12-31",
+      "capacity": 522000,
+      "reportedThousands": 522,
+      "waferDiameterInches": 8,
+      "basis": "issuer_reported_maximum",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://event-prod.zucast.com/attach/52d41749702efeb443f2539fd74e4c14/10561/UMC25Q4_report.pdf",
+        "publicationDate": "2026-01-28",
+        "informationAvailableDate": "2026-01-28",
+        "supportingSection": "Page 9, Annual Capacity table; notes 1 and 4",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Issuer-reported calculated maximum output; not measured actual production, product-specific interchangeability, or current availability. Values rounded to thousands."
+    },
+    {
+      "id": "umc_8e_2024",
+      "facilityId": "umc_fab8e",
+      "facilityName": "UMC 8E",
+      "companyId": "umc",
+      "scope": "UMC 8-inch reported fab population",
+      "units": "8-inch wafers per year",
+      "period": "2024-12-31",
+      "capacity": 524000,
+      "reportedThousands": 524,
+      "waferDiameterInches": 8,
+      "basis": "issuer_reported_maximum",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://event-prod.zucast.com/attach/52d41749702efeb443f2539fd74e4c14/10561/UMC25Q4_report.pdf",
+        "publicationDate": "2026-01-28",
+        "informationAvailableDate": "2026-01-28",
+        "supportingSection": "Page 9, Annual Capacity table; notes 1 and 4",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Issuer-reported calculated maximum output; not measured actual production, product-specific interchangeability, or current availability. Values rounded to thousands."
+    },
+    {
+      "id": "umc_8e_2023",
+      "facilityId": "umc_fab8e",
+      "facilityName": "UMC 8E",
+      "companyId": "umc",
+      "scope": "UMC 8-inch reported fab population",
+      "units": "8-inch wafers per year",
+      "period": "2023-12-31",
+      "capacity": 490000,
+      "reportedThousands": 490,
+      "waferDiameterInches": 8,
+      "basis": "issuer_reported_maximum",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://event-prod.zucast.com/attach/52d41749702efeb443f2539fd74e4c14/10561/UMC25Q4_report.pdf",
+        "publicationDate": "2026-01-28",
+        "informationAvailableDate": "2026-01-28",
+        "supportingSection": "Page 9, Annual Capacity table; notes 1 and 4",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Issuer-reported calculated maximum output; not measured actual production, product-specific interchangeability, or current availability. Values rounded to thousands."
+    },
+    {
+      "id": "umc_8e_2022",
+      "facilityId": "umc_fab8e",
+      "facilityName": "UMC 8E",
+      "companyId": "umc",
+      "scope": "UMC 8-inch reported fab population",
+      "units": "8-inch wafers per year",
+      "period": "2022-12-31",
+      "capacity": 469000,
+      "reportedThousands": 469,
+      "waferDiameterInches": 8,
+      "basis": "issuer_reported_maximum",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://event-prod.zucast.com/attach/52d41749702efeb443f2539fd74e4c14/10561/UMC25Q4_report.pdf",
+        "publicationDate": "2026-01-28",
+        "informationAvailableDate": "2026-01-28",
+        "supportingSection": "Page 9, Annual Capacity table; notes 1 and 4",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Issuer-reported calculated maximum output; not measured actual production, product-specific interchangeability, or current availability. Values rounded to thousands."
+    },
+    {
+      "id": "umc_8f_2025",
+      "facilityId": "umc_fab8f",
+      "facilityName": "UMC 8F",
+      "companyId": "umc",
+      "scope": "UMC 8-inch reported fab population",
+      "units": "8-inch wafers per year",
+      "period": "2025-12-31",
+      "capacity": 583000,
+      "reportedThousands": 583,
+      "waferDiameterInches": 8,
+      "basis": "issuer_reported_maximum",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://event-prod.zucast.com/attach/52d41749702efeb443f2539fd74e4c14/10561/UMC25Q4_report.pdf",
+        "publicationDate": "2026-01-28",
+        "informationAvailableDate": "2026-01-28",
+        "supportingSection": "Page 9, Annual Capacity table; notes 1 and 4",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Issuer-reported calculated maximum output; not measured actual production, product-specific interchangeability, or current availability. Values rounded to thousands."
+    },
+    {
+      "id": "umc_8f_2024",
+      "facilityId": "umc_fab8f",
+      "facilityName": "UMC 8F",
+      "companyId": "umc",
+      "scope": "UMC 8-inch reported fab population",
+      "units": "8-inch wafers per year",
+      "period": "2024-12-31",
+      "capacity": 578000,
+      "reportedThousands": 578,
+      "waferDiameterInches": 8,
+      "basis": "issuer_reported_maximum",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://event-prod.zucast.com/attach/52d41749702efeb443f2539fd74e4c14/10561/UMC25Q4_report.pdf",
+        "publicationDate": "2026-01-28",
+        "informationAvailableDate": "2026-01-28",
+        "supportingSection": "Page 9, Annual Capacity table; notes 1 and 4",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Issuer-reported calculated maximum output; not measured actual production, product-specific interchangeability, or current availability. Values rounded to thousands."
+    },
+    {
+      "id": "umc_8f_2023",
+      "facilityId": "umc_fab8f",
+      "facilityName": "UMC 8F",
+      "companyId": "umc",
+      "scope": "UMC 8-inch reported fab population",
+      "units": "8-inch wafers per year",
+      "period": "2023-12-31",
+      "capacity": 570000,
+      "reportedThousands": 570,
+      "waferDiameterInches": 8,
+      "basis": "issuer_reported_maximum",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://event-prod.zucast.com/attach/52d41749702efeb443f2539fd74e4c14/10561/UMC25Q4_report.pdf",
+        "publicationDate": "2026-01-28",
+        "informationAvailableDate": "2026-01-28",
+        "supportingSection": "Page 9, Annual Capacity table; notes 1 and 4",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Issuer-reported calculated maximum output; not measured actual production, product-specific interchangeability, or current availability. Values rounded to thousands."
+    },
+    {
+      "id": "umc_8f_2022",
+      "facilityId": "umc_fab8f",
+      "facilityName": "UMC 8F",
+      "companyId": "umc",
+      "scope": "UMC 8-inch reported fab population",
+      "units": "8-inch wafers per year",
+      "period": "2022-12-31",
+      "capacity": 550000,
+      "reportedThousands": 550,
+      "waferDiameterInches": 8,
+      "basis": "issuer_reported_maximum",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://event-prod.zucast.com/attach/52d41749702efeb443f2539fd74e4c14/10561/UMC25Q4_report.pdf",
+        "publicationDate": "2026-01-28",
+        "informationAvailableDate": "2026-01-28",
+        "supportingSection": "Page 9, Annual Capacity table; notes 1 and 4",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Issuer-reported calculated maximum output; not measured actual production, product-specific interchangeability, or current availability. Values rounded to thousands."
+    },
+    {
+      "id": "umc_8s_2025",
+      "facilityId": "umc_fab8s",
+      "facilityName": "UMC 8S",
+      "companyId": "umc",
+      "scope": "UMC 8-inch reported fab population",
+      "units": "8-inch wafers per year",
+      "period": "2025-12-31",
+      "capacity": 466000,
+      "reportedThousands": 466,
+      "waferDiameterInches": 8,
+      "basis": "issuer_reported_maximum",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://event-prod.zucast.com/attach/52d41749702efeb443f2539fd74e4c14/10561/UMC25Q4_report.pdf",
+        "publicationDate": "2026-01-28",
+        "informationAvailableDate": "2026-01-28",
+        "supportingSection": "Page 9, Annual Capacity table; notes 1 and 4",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Issuer-reported calculated maximum output; not measured actual production, product-specific interchangeability, or current availability. Values rounded to thousands."
+    },
+    {
+      "id": "umc_8s_2024",
+      "facilityId": "umc_fab8s",
+      "facilityName": "UMC 8S",
+      "companyId": "umc",
+      "scope": "UMC 8-inch reported fab population",
+      "units": "8-inch wafers per year",
+      "period": "2024-12-31",
+      "capacity": 455000,
+      "reportedThousands": 455,
+      "waferDiameterInches": 8,
+      "basis": "issuer_reported_maximum",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://event-prod.zucast.com/attach/52d41749702efeb443f2539fd74e4c14/10561/UMC25Q4_report.pdf",
+        "publicationDate": "2026-01-28",
+        "informationAvailableDate": "2026-01-28",
+        "supportingSection": "Page 9, Annual Capacity table; notes 1 and 4",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Issuer-reported calculated maximum output; not measured actual production, product-specific interchangeability, or current availability. Values rounded to thousands."
+    },
+    {
+      "id": "umc_8s_2023",
+      "facilityId": "umc_fab8s",
+      "facilityName": "UMC 8S",
+      "companyId": "umc",
+      "scope": "UMC 8-inch reported fab population",
+      "units": "8-inch wafers per year",
+      "period": "2023-12-31",
+      "capacity": 447000,
+      "reportedThousands": 447,
+      "waferDiameterInches": 8,
+      "basis": "issuer_reported_maximum",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://event-prod.zucast.com/attach/52d41749702efeb443f2539fd74e4c14/10561/UMC25Q4_report.pdf",
+        "publicationDate": "2026-01-28",
+        "informationAvailableDate": "2026-01-28",
+        "supportingSection": "Page 9, Annual Capacity table; notes 1 and 4",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Issuer-reported calculated maximum output; not measured actual production, product-specific interchangeability, or current availability. Values rounded to thousands."
+    },
+    {
+      "id": "umc_8s_2022",
+      "facilityId": "umc_fab8s",
+      "facilityName": "UMC 8S",
+      "companyId": "umc",
+      "scope": "UMC 8-inch reported fab population",
+      "units": "8-inch wafers per year",
+      "period": "2022-12-31",
+      "capacity": 443000,
+      "reportedThousands": 443,
+      "waferDiameterInches": 8,
+      "basis": "issuer_reported_maximum",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://event-prod.zucast.com/attach/52d41749702efeb443f2539fd74e4c14/10561/UMC25Q4_report.pdf",
+        "publicationDate": "2026-01-28",
+        "informationAvailableDate": "2026-01-28",
+        "supportingSection": "Page 9, Annual Capacity table; notes 1 and 4",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Issuer-reported calculated maximum output; not measured actual production, product-specific interchangeability, or current availability. Values rounded to thousands."
+    },
+    {
+      "id": "umc_8n_2025",
+      "facilityId": "umc_fab8n",
+      "facilityName": "UMC 8N",
+      "companyId": "umc",
+      "scope": "UMC 8-inch reported fab population",
+      "units": "8-inch wafers per year",
+      "period": "2025-12-31",
+      "capacity": 996000,
+      "reportedThousands": 996,
+      "waferDiameterInches": 8,
+      "basis": "issuer_reported_maximum",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://event-prod.zucast.com/attach/52d41749702efeb443f2539fd74e4c14/10561/UMC25Q4_report.pdf",
+        "publicationDate": "2026-01-28",
+        "informationAvailableDate": "2026-01-28",
+        "supportingSection": "Page 9, Annual Capacity table; notes 1 and 4",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Issuer-reported calculated maximum output; not measured actual production, product-specific interchangeability, or current availability. Values rounded to thousands."
+    },
+    {
+      "id": "umc_8n_2024",
+      "facilityId": "umc_fab8n",
+      "facilityName": "UMC 8N",
+      "companyId": "umc",
+      "scope": "UMC 8-inch reported fab population",
+      "units": "8-inch wafers per year",
+      "period": "2024-12-31",
+      "capacity": 1013000,
+      "reportedThousands": 1013,
+      "waferDiameterInches": 8,
+      "basis": "issuer_reported_maximum",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://event-prod.zucast.com/attach/52d41749702efeb443f2539fd74e4c14/10561/UMC25Q4_report.pdf",
+        "publicationDate": "2026-01-28",
+        "informationAvailableDate": "2026-01-28",
+        "supportingSection": "Page 9, Annual Capacity table; notes 1 and 4",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Issuer-reported calculated maximum output; not measured actual production, product-specific interchangeability, or current availability. Values rounded to thousands."
+    },
+    {
+      "id": "umc_8n_2023",
+      "facilityId": "umc_fab8n",
+      "facilityName": "UMC 8N",
+      "companyId": "umc",
+      "scope": "UMC 8-inch reported fab population",
+      "units": "8-inch wafers per year",
+      "period": "2023-12-31",
+      "capacity": 996000,
+      "reportedThousands": 996,
+      "waferDiameterInches": 8,
+      "basis": "issuer_reported_maximum",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://event-prod.zucast.com/attach/52d41749702efeb443f2539fd74e4c14/10561/UMC25Q4_report.pdf",
+        "publicationDate": "2026-01-28",
+        "informationAvailableDate": "2026-01-28",
+        "supportingSection": "Page 9, Annual Capacity table; notes 1 and 4",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Issuer-reported calculated maximum output; not measured actual production, product-specific interchangeability, or current availability. Values rounded to thousands."
+    },
+    {
+      "id": "umc_8n_2022",
+      "facilityId": "umc_fab8n",
+      "facilityName": "UMC 8N",
+      "companyId": "umc",
+      "scope": "UMC 8-inch reported fab population",
+      "units": "8-inch wafers per year",
+      "period": "2022-12-31",
+      "capacity": 952000,
+      "reportedThousands": 952,
+      "waferDiameterInches": 8,
+      "basis": "issuer_reported_maximum",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://event-prod.zucast.com/attach/52d41749702efeb443f2539fd74e4c14/10561/UMC25Q4_report.pdf",
+        "publicationDate": "2026-01-28",
+        "informationAvailableDate": "2026-01-28",
+        "supportingSection": "Page 9, Annual Capacity table; notes 1 and 4",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Issuer-reported calculated maximum output; not measured actual production, product-specific interchangeability, or current availability. Values rounded to thousands."
+    },
+    {
+      "id": "umc_12a_2025",
+      "facilityId": "umc_fab12a",
+      "facilityName": "UMC 12A",
+      "companyId": "umc",
+      "scope": "UMC 12-inch reported fab population",
+      "units": "12-inch wafers per year",
+      "period": "2025-12-31",
+      "capacity": 1629000,
+      "reportedThousands": 1629,
+      "waferDiameterInches": 12,
+      "basis": "issuer_reported_maximum",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://event-prod.zucast.com/attach/52d41749702efeb443f2539fd74e4c14/10561/UMC25Q4_report.pdf",
+        "publicationDate": "2026-01-28",
+        "informationAvailableDate": "2026-01-28",
+        "supportingSection": "Page 9, Annual Capacity table; notes 1 and 4",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Issuer-reported calculated maximum output; not measured actual production, product-specific interchangeability, or current availability. Values rounded to thousands."
+    },
+    {
+      "id": "umc_12a_2024",
+      "facilityId": "umc_fab12a",
+      "facilityName": "UMC 12A",
+      "companyId": "umc",
+      "scope": "UMC 12-inch reported fab population",
+      "units": "12-inch wafers per year",
+      "period": "2024-12-31",
+      "capacity": 1556000,
+      "reportedThousands": 1556,
+      "waferDiameterInches": 12,
+      "basis": "issuer_reported_maximum",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://event-prod.zucast.com/attach/52d41749702efeb443f2539fd74e4c14/10561/UMC25Q4_report.pdf",
+        "publicationDate": "2026-01-28",
+        "informationAvailableDate": "2026-01-28",
+        "supportingSection": "Page 9, Annual Capacity table; notes 1 and 4",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Issuer-reported calculated maximum output; not measured actual production, product-specific interchangeability, or current availability. Values rounded to thousands."
+    },
+    {
+      "id": "umc_12a_2023",
+      "facilityId": "umc_fab12a",
+      "facilityName": "UMC 12A",
+      "companyId": "umc",
+      "scope": "UMC 12-inch reported fab population",
+      "units": "12-inch wafers per year",
+      "period": "2023-12-31",
+      "capacity": 1305000,
+      "reportedThousands": 1305,
+      "waferDiameterInches": 12,
+      "basis": "issuer_reported_maximum",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://event-prod.zucast.com/attach/52d41749702efeb443f2539fd74e4c14/10561/UMC25Q4_report.pdf",
+        "publicationDate": "2026-01-28",
+        "informationAvailableDate": "2026-01-28",
+        "supportingSection": "Page 9, Annual Capacity table; notes 1 and 4",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Issuer-reported calculated maximum output; not measured actual production, product-specific interchangeability, or current availability. Values rounded to thousands."
+    },
+    {
+      "id": "umc_12a_2022",
+      "facilityId": "umc_fab12a",
+      "facilityName": "UMC 12A",
+      "companyId": "umc",
+      "scope": "UMC 12-inch reported fab population",
+      "units": "12-inch wafers per year",
+      "period": "2022-12-31",
+      "capacity": 1170000,
+      "reportedThousands": 1170,
+      "waferDiameterInches": 12,
+      "basis": "issuer_reported_maximum",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://event-prod.zucast.com/attach/52d41749702efeb443f2539fd74e4c14/10561/UMC25Q4_report.pdf",
+        "publicationDate": "2026-01-28",
+        "informationAvailableDate": "2026-01-28",
+        "supportingSection": "Page 9, Annual Capacity table; notes 1 and 4",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Issuer-reported calculated maximum output; not measured actual production, product-specific interchangeability, or current availability. Values rounded to thousands."
+    },
+    {
+      "id": "umc_12i_2025",
+      "facilityId": "umc_fab12i",
+      "facilityName": "UMC 12i",
+      "companyId": "umc",
+      "scope": "UMC 12-inch reported fab population",
+      "units": "12-inch wafers per year",
+      "period": "2025-12-31",
+      "capacity": 684000,
+      "reportedThousands": 684,
+      "waferDiameterInches": 12,
+      "basis": "issuer_reported_maximum",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://event-prod.zucast.com/attach/52d41749702efeb443f2539fd74e4c14/10561/UMC25Q4_report.pdf",
+        "publicationDate": "2026-01-28",
+        "informationAvailableDate": "2026-01-28",
+        "supportingSection": "Page 9, Annual Capacity table; notes 1 and 4",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Issuer-reported calculated maximum output; not measured actual production, product-specific interchangeability, or current availability. Values rounded to thousands."
+    },
+    {
+      "id": "umc_12i_2024",
+      "facilityId": "umc_fab12i",
+      "facilityName": "UMC 12i",
+      "companyId": "umc",
+      "scope": "UMC 12-inch reported fab population",
+      "units": "12-inch wafers per year",
+      "period": "2024-12-31",
+      "capacity": 678000,
+      "reportedThousands": 678,
+      "waferDiameterInches": 12,
+      "basis": "issuer_reported_maximum",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://event-prod.zucast.com/attach/52d41749702efeb443f2539fd74e4c14/10561/UMC25Q4_report.pdf",
+        "publicationDate": "2026-01-28",
+        "informationAvailableDate": "2026-01-28",
+        "supportingSection": "Page 9, Annual Capacity table; notes 1 and 4",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Issuer-reported calculated maximum output; not measured actual production, product-specific interchangeability, or current availability. Values rounded to thousands."
+    },
+    {
+      "id": "umc_12i_2023",
+      "facilityId": "umc_fab12i",
+      "facilityName": "UMC 12i",
+      "companyId": "umc",
+      "scope": "UMC 12-inch reported fab population",
+      "units": "12-inch wafers per year",
+      "period": "2023-12-31",
+      "capacity": 655000,
+      "reportedThousands": 655,
+      "waferDiameterInches": 12,
+      "basis": "issuer_reported_maximum",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://event-prod.zucast.com/attach/52d41749702efeb443f2539fd74e4c14/10561/UMC25Q4_report.pdf",
+        "publicationDate": "2026-01-28",
+        "informationAvailableDate": "2026-01-28",
+        "supportingSection": "Page 9, Annual Capacity table; notes 1 and 4",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Issuer-reported calculated maximum output; not measured actual production, product-specific interchangeability, or current availability. Values rounded to thousands."
+    },
+    {
+      "id": "umc_12i_2022",
+      "facilityId": "umc_fab12i",
+      "facilityName": "UMC 12i",
+      "companyId": "umc",
+      "scope": "UMC 12-inch reported fab population",
+      "units": "12-inch wafers per year",
+      "period": "2022-12-31",
+      "capacity": 655000,
+      "reportedThousands": 655,
+      "waferDiameterInches": 12,
+      "basis": "issuer_reported_maximum",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://event-prod.zucast.com/attach/52d41749702efeb443f2539fd74e4c14/10561/UMC25Q4_report.pdf",
+        "publicationDate": "2026-01-28",
+        "informationAvailableDate": "2026-01-28",
+        "supportingSection": "Page 9, Annual Capacity table; notes 1 and 4",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Issuer-reported calculated maximum output; not measured actual production, product-specific interchangeability, or current availability. Values rounded to thousands."
+    },
+    {
+      "id": "umc_12x_2025",
+      "facilityId": "umc_xiamen",
+      "facilityName": "UMC 12X",
+      "companyId": "umc",
+      "scope": "UMC 12-inch reported fab population",
+      "units": "12-inch wafers per year",
+      "period": "2025-12-31",
+      "capacity": 347000,
+      "reportedThousands": 347,
+      "waferDiameterInches": 12,
+      "basis": "issuer_reported_maximum",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://event-prod.zucast.com/attach/52d41749702efeb443f2539fd74e4c14/10561/UMC25Q4_report.pdf",
+        "publicationDate": "2026-01-28",
+        "informationAvailableDate": "2026-01-28",
+        "supportingSection": "Page 9, Annual Capacity table; notes 1 and 4",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Issuer-reported calculated maximum output; not measured actual production, product-specific interchangeability, or current availability. Values rounded to thousands."
+    },
+    {
+      "id": "umc_12x_2024",
+      "facilityId": "umc_xiamen",
+      "facilityName": "UMC 12X",
+      "companyId": "umc",
+      "scope": "UMC 12-inch reported fab population",
+      "units": "12-inch wafers per year",
+      "period": "2024-12-31",
+      "capacity": 318000,
+      "reportedThousands": 318,
+      "waferDiameterInches": 12,
+      "basis": "issuer_reported_maximum",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://event-prod.zucast.com/attach/52d41749702efeb443f2539fd74e4c14/10561/UMC25Q4_report.pdf",
+        "publicationDate": "2026-01-28",
+        "informationAvailableDate": "2026-01-28",
+        "supportingSection": "Page 9, Annual Capacity table; notes 1 and 4",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Issuer-reported calculated maximum output; not measured actual production, product-specific interchangeability, or current availability. Values rounded to thousands."
+    },
+    {
+      "id": "umc_12x_2023",
+      "facilityId": "umc_xiamen",
+      "facilityName": "UMC 12X",
+      "companyId": "umc",
+      "scope": "UMC 12-inch reported fab population",
+      "units": "12-inch wafers per year",
+      "period": "2023-12-31",
+      "capacity": 317000,
+      "reportedThousands": 317,
+      "waferDiameterInches": 12,
+      "basis": "issuer_reported_maximum",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://event-prod.zucast.com/attach/52d41749702efeb443f2539fd74e4c14/10561/UMC25Q4_report.pdf",
+        "publicationDate": "2026-01-28",
+        "informationAvailableDate": "2026-01-28",
+        "supportingSection": "Page 9, Annual Capacity table; notes 1 and 4",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Issuer-reported calculated maximum output; not measured actual production, product-specific interchangeability, or current availability. Values rounded to thousands."
+    },
+    {
+      "id": "umc_12x_2022",
+      "facilityId": "umc_xiamen",
+      "facilityName": "UMC 12X",
+      "companyId": "umc",
+      "scope": "UMC 12-inch reported fab population",
+      "units": "12-inch wafers per year",
+      "period": "2022-12-31",
+      "capacity": 314000,
+      "reportedThousands": 314,
+      "waferDiameterInches": 12,
+      "basis": "issuer_reported_maximum",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://event-prod.zucast.com/attach/52d41749702efeb443f2539fd74e4c14/10561/UMC25Q4_report.pdf",
+        "publicationDate": "2026-01-28",
+        "informationAvailableDate": "2026-01-28",
+        "supportingSection": "Page 9, Annual Capacity table; notes 1 and 4",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Issuer-reported calculated maximum output; not measured actual production, product-specific interchangeability, or current availability. Values rounded to thousands."
+    },
+    {
+      "id": "umc_12m_2025",
+      "facilityId": "umc_fab12m",
+      "facilityName": "UMC 12M",
+      "companyId": "umc",
+      "scope": "UMC 12-inch reported fab population",
+      "units": "12-inch wafers per year",
+      "period": "2025-12-31",
+      "capacity": 471000,
+      "reportedThousands": 471,
+      "waferDiameterInches": 12,
+      "basis": "issuer_reported_maximum",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://event-prod.zucast.com/attach/52d41749702efeb443f2539fd74e4c14/10561/UMC25Q4_report.pdf",
+        "publicationDate": "2026-01-28",
+        "informationAvailableDate": "2026-01-28",
+        "supportingSection": "Page 9, Annual Capacity table; notes 1 and 4",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Issuer-reported calculated maximum output; not measured actual production, product-specific interchangeability, or current availability. Values rounded to thousands."
+    },
+    {
+      "id": "umc_12m_2024",
+      "facilityId": "umc_fab12m",
+      "facilityName": "UMC 12M",
+      "companyId": "umc",
+      "scope": "UMC 12-inch reported fab population",
+      "units": "12-inch wafers per year",
+      "period": "2024-12-31",
+      "capacity": 455000,
+      "reportedThousands": 455,
+      "waferDiameterInches": 12,
+      "basis": "issuer_reported_maximum",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://event-prod.zucast.com/attach/52d41749702efeb443f2539fd74e4c14/10561/UMC25Q4_report.pdf",
+        "publicationDate": "2026-01-28",
+        "informationAvailableDate": "2026-01-28",
+        "supportingSection": "Page 9, Annual Capacity table; notes 1 and 4",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Issuer-reported calculated maximum output; not measured actual production, product-specific interchangeability, or current availability. Values rounded to thousands."
+    },
+    {
+      "id": "umc_12m_2023",
+      "facilityId": "umc_fab12m",
+      "facilityName": "UMC 12M",
+      "companyId": "umc",
+      "scope": "UMC 12-inch reported fab population",
+      "units": "12-inch wafers per year",
+      "period": "2023-12-31",
+      "capacity": 438000,
+      "reportedThousands": 438,
+      "waferDiameterInches": 12,
+      "basis": "issuer_reported_maximum",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://event-prod.zucast.com/attach/52d41749702efeb443f2539fd74e4c14/10561/UMC25Q4_report.pdf",
+        "publicationDate": "2026-01-28",
+        "informationAvailableDate": "2026-01-28",
+        "supportingSection": "Page 9, Annual Capacity table; notes 1 and 4",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Issuer-reported calculated maximum output; not measured actual production, product-specific interchangeability, or current availability. Values rounded to thousands."
+    },
+    {
+      "id": "umc_12m_2022",
+      "facilityId": "umc_fab12m",
+      "facilityName": "UMC 12M",
+      "companyId": "umc",
+      "scope": "UMC 12-inch reported fab population",
+      "units": "12-inch wafers per year",
+      "period": "2022-12-31",
+      "capacity": 436000,
+      "reportedThousands": 436,
+      "waferDiameterInches": 12,
+      "basis": "issuer_reported_maximum",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://event-prod.zucast.com/attach/52d41749702efeb443f2539fd74e4c14/10561/UMC25Q4_report.pdf",
+        "publicationDate": "2026-01-28",
+        "informationAvailableDate": "2026-01-28",
+        "supportingSection": "Page 9, Annual Capacity table; notes 1 and 4",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex review of primary documents; not independent human adjudication"
+      },
+      "limitations": "Issuer-reported calculated maximum output; not measured actual production, product-specific interchangeability, or current availability. Values rounded to thousands."
+    }
+  ],
+  "limitations": [
+    "Small purposive primary-source sample; incomplete industry coverage.",
+    "No global parameter is calibrated by these observations.",
+    "A source-supported historical record does not establish current status."
+  ],
+  "capacityPopulations": [
+    {
+      "scope": "UMC 6-inch reported fab population",
+      "units": "6-inch wafers per year",
+      "expectedFacilityIds": [
+        "umc_fabwtk"
+      ]
+    },
+    {
+      "scope": "UMC 8-inch reported fab population",
+      "units": "8-inch wafers per year",
+      "expectedFacilityIds": [
+        "umc_fab8a",
+        "umc_fab8c",
+        "umc_fab8d",
+        "umc_fab8e",
+        "umc_fab8f",
+        "umc_fab8s",
+        "umc_fab8n"
+      ]
+    },
+    {
+      "scope": "UMC 12-inch reported fab population",
+      "units": "12-inch wafers per year",
+      "expectedFacilityIds": [
+        "umc_fab12a",
+        "umc_fab12i",
+        "umc_xiamen",
+        "umc_fab12m"
+      ]
+    }
+  ],
+  "sourceArtifacts": [
+    {
+      "url": "https://event-prod.zucast.com/attach/52d41749702efeb443f2539fd74e4c14/10561/UMC25Q4_report.pdf",
+      "sha256": "687802d709e74cd9b7923a7096bf9e3f0f1b3ee414862c6beef7441aa25f27bf",
+      "retrievedAt": "2026-09-07",
+      "tableVisuallyChecked": true,
+      "page": 9
+    },
+    {
+      "id": "r21q2",
+      "url": "https://www.renesas.com/en/document/ppt/2021-2q-presentation-material",
+      "sha256": "46896a990f838aa5a6af9a2ff7731a2c85b45c4d320f1277d85973aacd80569d",
+      "reviewedAt": "2026-09-07",
+      "review": "Rendered relevant table checked against source header, columns and units"
+    },
+    {
+      "id": "r22q2",
+      "url": "https://www.renesas.com/en/document/ppt/2022-2q-presentation-material",
+      "sha256": "389589fbefb305ca3b737f849475f98f1c731a528bf9e4813df7cd36e992ba70",
+      "reviewedAt": "2026-09-07",
+      "review": "Rendered relevant table checked against source header, columns and units"
+    },
+    {
+      "id": "r21q1",
+      "url": "https://www.renesas.com/en/document/ppt/2021-1q-presentation-material",
+      "sha256": "5a96ac1f94efcd7c2f5c79305158c15e5848ad779182945ec2af66611b3ea237",
+      "reviewedAt": "2026-09-07",
+      "review": "Rendered relevant table checked against source header, columns and units"
+    },
+    {
+      "id": "r22q1",
+      "url": "https://www.renesas.com/en/document/ppt/2022-1q-presentation-material",
+      "sha256": "250a200ff5dcfc4a11af5e260a0a7a3a1bc4d9f4909d0fa1eeca6b3585545db8",
+      "reviewedAt": "2026-09-07",
+      "review": "Rendered relevant table checked against source header, columns and units"
+    }
+  ],
+  "financialOutcomes": [
+    {
+      "id": "fukushima_earthquake_2021_2021-03-31_revenue_impact_reported_outcome",
+      "incidentId": "fukushima_earthquake_2021",
+      "companyId": "renesas",
+      "periodStart": "2021-01-01",
+      "periodEnd": "2021-03-31",
+      "metric": "revenue_impact",
+      "amount": -2.4,
+      "units": "JPY billion",
+      "kind": "reported_outcome",
+      "measurementBasis": "issuer_attributed_impact",
+      "roundingUnit": 0.1,
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.renesas.com/en/document/ppt/2021-1q-presentation-material",
+        "publicationDate": "2021-04-28",
+        "informationAvailableDate": "2021-04-28",
+        "supportingSection": "Page 15, Impact from disasters: actual and outlook; billions of yen",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex primary-document review, including rendered financial tables; not independent human adjudication"
+      },
+      "limitations": "Company-attributed effect for the specified quarter, not an independently identified causal effect. GAAP and non-GAAP are separate outcomes; do not add them together."
+    },
+    {
+      "id": "fukushima_earthquake_2021_2021-03-31_operating_profit_impact_non_gaap_reported_outcome",
+      "incidentId": "fukushima_earthquake_2021",
+      "companyId": "renesas",
+      "periodStart": "2021-01-01",
+      "periodEnd": "2021-03-31",
+      "metric": "operating_profit_impact_non_gaap",
+      "amount": -2.4,
+      "units": "JPY billion",
+      "kind": "reported_outcome",
+      "measurementBasis": "issuer_attributed_impact",
+      "roundingUnit": 0.1,
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.renesas.com/en/document/ppt/2021-1q-presentation-material",
+        "publicationDate": "2021-04-28",
+        "informationAvailableDate": "2021-04-28",
+        "supportingSection": "Page 15, Impact from disasters: actual and outlook; billions of yen",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex primary-document review, including rendered financial tables; not independent human adjudication"
+      },
+      "limitations": "Company-attributed effect for the specified quarter, not an independently identified causal effect. GAAP and non-GAAP are separate outcomes; do not add them together."
+    },
+    {
+      "id": "fukushima_earthquake_2021_2021-03-31_operating_profit_impact_gaap_reported_outcome",
+      "incidentId": "fukushima_earthquake_2021",
+      "companyId": "renesas",
+      "periodStart": "2021-01-01",
+      "periodEnd": "2021-03-31",
+      "metric": "operating_profit_impact_gaap",
+      "amount": -3,
+      "units": "JPY billion",
+      "kind": "reported_outcome",
+      "measurementBasis": "issuer_attributed_impact",
+      "roundingUnit": 0.1,
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.renesas.com/en/document/ppt/2021-1q-presentation-material",
+        "publicationDate": "2021-04-28",
+        "informationAvailableDate": "2021-04-28",
+        "supportingSection": "Page 15, Impact from disasters: actual and outlook; billions of yen",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex primary-document review, including rendered financial tables; not independent human adjudication"
+      },
+      "limitations": "Company-attributed effect for the specified quarter, not an independently identified causal effect. GAAP and non-GAAP are separate outcomes; do not add them together."
+    },
+    {
+      "id": "renesas_naka_fire_2021_2021-06-30_revenue_impact_reported_outcome",
+      "incidentId": "renesas_naka_fire_2021",
+      "companyId": "renesas",
+      "periodStart": "2021-04-01",
+      "periodEnd": "2021-06-30",
+      "metric": "revenue_impact",
+      "amount": -12.6,
+      "units": "JPY billion",
+      "kind": "reported_outcome",
+      "measurementBasis": "issuer_attributed_impact",
+      "roundingUnit": 0.1,
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.renesas.com/en/document/ppt/2021-2q-presentation-material",
+        "publicationDate": "2021-07-29",
+        "informationAvailableDate": "2021-07-29",
+        "supportingSection": "Page 15, Fire impact, 2Q Actual column; units confirmed by Q1 table and Q2 transcript",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex primary-document review, including rendered financial tables; not independent human adjudication"
+      },
+      "limitations": "Company-attributed effect for the specified quarter, not an independently identified causal effect. GAAP and non-GAAP are separate outcomes; do not add them together."
+    },
+    {
+      "id": "renesas_naka_fire_2021_2021-06-30_operating_profit_impact_non_gaap_reported_outcome",
+      "incidentId": "renesas_naka_fire_2021",
+      "companyId": "renesas",
+      "periodStart": "2021-04-01",
+      "periodEnd": "2021-06-30",
+      "metric": "operating_profit_impact_non_gaap",
+      "amount": -11.4,
+      "units": "JPY billion",
+      "kind": "reported_outcome",
+      "measurementBasis": "issuer_attributed_impact",
+      "roundingUnit": 0.1,
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.renesas.com/en/document/ppt/2021-2q-presentation-material",
+        "publicationDate": "2021-07-29",
+        "informationAvailableDate": "2021-07-29",
+        "supportingSection": "Page 15, Fire impact, 2Q Actual column; units confirmed by Q1 table and Q2 transcript",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex primary-document review, including rendered financial tables; not independent human adjudication"
+      },
+      "limitations": "Company-attributed effect for the specified quarter, not an independently identified causal effect. GAAP and non-GAAP are separate outcomes; do not add them together."
+    },
+    {
+      "id": "renesas_naka_fire_2021_2021-06-30_operating_profit_impact_gaap_reported_outcome",
+      "incidentId": "renesas_naka_fire_2021",
+      "companyId": "renesas",
+      "periodStart": "2021-04-01",
+      "periodEnd": "2021-06-30",
+      "metric": "operating_profit_impact_gaap",
+      "amount": -19.3,
+      "units": "JPY billion",
+      "kind": "reported_outcome",
+      "measurementBasis": "issuer_attributed_impact",
+      "roundingUnit": 0.1,
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.renesas.com/en/document/ppt/2021-2q-presentation-material",
+        "publicationDate": "2021-07-29",
+        "informationAvailableDate": "2021-07-29",
+        "supportingSection": "Page 15, Fire impact, 2Q Actual column; units confirmed by Q1 table and Q2 transcript",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex primary-document review, including rendered financial tables; not independent human adjudication"
+      },
+      "limitations": "Company-attributed effect for the specified quarter, not an independently identified causal effect. GAAP and non-GAAP are separate outcomes; do not add them together."
+    },
+    {
+      "id": "renesas_naka_fire_2021_2021-06-30_revenue_impact_issuer_forecast",
+      "incidentId": "renesas_naka_fire_2021",
+      "companyId": "renesas",
+      "periodStart": "2021-04-01",
+      "periodEnd": "2021-06-30",
+      "metric": "revenue_impact",
+      "amount": -17,
+      "units": "JPY billion",
+      "kind": "issuer_forecast",
+      "measurementBasis": "issuer_attributed_impact",
+      "roundingUnit": 0.1,
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.renesas.com/en/document/ppt/2021-1q-presentation-material",
+        "publicationDate": "2021-04-28",
+        "informationAvailableDate": "2021-04-28",
+        "supportingSection": "Page 15, Impact from disasters: actual and outlook; billions of yen",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex primary-document review, including rendered financial tables; not independent human adjudication"
+      },
+      "limitations": "Company-attributed effect for the specified quarter, not an independently identified causal effect. GAAP and non-GAAP are separate outcomes; do not add them together."
+    },
+    {
+      "id": "renesas_naka_fire_2021_2021-06-30_operating_profit_impact_non_gaap_issuer_forecast",
+      "incidentId": "renesas_naka_fire_2021",
+      "companyId": "renesas",
+      "periodStart": "2021-04-01",
+      "periodEnd": "2021-06-30",
+      "metric": "operating_profit_impact_non_gaap",
+      "amount": -14,
+      "units": "JPY billion",
+      "kind": "issuer_forecast",
+      "measurementBasis": "issuer_attributed_impact",
+      "roundingUnit": 0.1,
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.renesas.com/en/document/ppt/2021-1q-presentation-material",
+        "publicationDate": "2021-04-28",
+        "informationAvailableDate": "2021-04-28",
+        "supportingSection": "Page 15, Impact from disasters: actual and outlook; billions of yen",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex primary-document review, including rendered financial tables; not independent human adjudication"
+      },
+      "limitations": "Company-attributed effect for the specified quarter, not an independently identified causal effect. GAAP and non-GAAP are separate outcomes; do not add them together."
+    },
+    {
+      "id": "renesas_naka_fire_2021_2021-06-30_operating_profit_impact_gaap_issuer_forecast",
+      "incidentId": "renesas_naka_fire_2021",
+      "companyId": "renesas",
+      "periodStart": "2021-04-01",
+      "periodEnd": "2021-06-30",
+      "metric": "operating_profit_impact_gaap",
+      "amount": -21.5,
+      "units": "JPY billion",
+      "kind": "issuer_forecast",
+      "measurementBasis": "issuer_attributed_impact",
+      "roundingUnit": 0.1,
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.renesas.com/en/document/ppt/2021-1q-presentation-material",
+        "publicationDate": "2021-04-28",
+        "informationAvailableDate": "2021-04-28",
+        "supportingSection": "Page 15, Impact from disasters: actual and outlook; billions of yen",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex primary-document review, including rendered financial tables; not independent human adjudication"
+      },
+      "limitations": "Company-attributed effect for the specified quarter, not an independently identified causal effect. GAAP and non-GAAP are separate outcomes; do not add them together."
+    },
+    {
+      "id": "fukushima_earthquake_2022_2022-03-31_revenue_impact_reported_outcome",
+      "incidentId": "fukushima_earthquake_2022",
+      "companyId": "renesas",
+      "periodStart": "2022-01-01",
+      "periodEnd": "2022-03-31",
+      "metric": "revenue_impact",
+      "amount": -0.7,
+      "units": "JPY billion",
+      "kind": "reported_outcome",
+      "measurementBasis": "issuer_attributed_impact",
+      "roundingUnit": 0.1,
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.renesas.com/en/document/ppt/2022-1q-presentation-material",
+        "publicationDate": "2022-04-27",
+        "informationAvailableDate": "2022-04-27",
+        "supportingSection": "Page 13, Earthquake impact; billions of yen",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex primary-document review, including rendered financial tables; not independent human adjudication"
+      },
+      "limitations": "Company-attributed effect for the specified quarter, not an independently identified causal effect. GAAP and non-GAAP are separate outcomes; do not add them together."
+    },
+    {
+      "id": "fukushima_earthquake_2022_2022-03-31_operating_profit_impact_non_gaap_reported_outcome",
+      "incidentId": "fukushima_earthquake_2022",
+      "companyId": "renesas",
+      "periodStart": "2022-01-01",
+      "periodEnd": "2022-03-31",
+      "metric": "operating_profit_impact_non_gaap",
+      "amount": -1.2,
+      "units": "JPY billion",
+      "kind": "reported_outcome",
+      "measurementBasis": "issuer_attributed_impact",
+      "roundingUnit": 0.1,
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.renesas.com/en/document/ppt/2022-1q-presentation-material",
+        "publicationDate": "2022-04-27",
+        "informationAvailableDate": "2022-04-27",
+        "supportingSection": "Page 13, Earthquake impact; billions of yen",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex primary-document review, including rendered financial tables; not independent human adjudication"
+      },
+      "limitations": "Company-attributed effect for the specified quarter, not an independently identified causal effect. GAAP and non-GAAP are separate outcomes; do not add them together."
+    },
+    {
+      "id": "fukushima_earthquake_2022_2022-03-31_operating_profit_impact_gaap_reported_outcome",
+      "incidentId": "fukushima_earthquake_2022",
+      "companyId": "renesas",
+      "periodStart": "2022-01-01",
+      "periodEnd": "2022-03-31",
+      "metric": "operating_profit_impact_gaap",
+      "amount": -2.1,
+      "units": "JPY billion",
+      "kind": "reported_outcome",
+      "measurementBasis": "issuer_attributed_impact",
+      "roundingUnit": 0.1,
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.renesas.com/en/document/ppt/2022-1q-presentation-material",
+        "publicationDate": "2022-04-27",
+        "informationAvailableDate": "2022-04-27",
+        "supportingSection": "Page 13, Earthquake impact; billions of yen",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex primary-document review, including rendered financial tables; not independent human adjudication"
+      },
+      "limitations": "Company-attributed effect for the specified quarter, not an independently identified causal effect. GAAP and non-GAAP are separate outcomes; do not add them together."
+    },
+    {
+      "id": "fukushima_earthquake_2022_2022-06-30_revenue_impact_reported_outcome",
+      "incidentId": "fukushima_earthquake_2022",
+      "companyId": "renesas",
+      "periodStart": "2022-04-01",
+      "periodEnd": "2022-06-30",
+      "metric": "revenue_impact",
+      "amount": -2.2,
+      "units": "JPY billion",
+      "kind": "reported_outcome",
+      "measurementBasis": "issuer_attributed_impact",
+      "roundingUnit": 0.1,
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.renesas.com/en/document/ppt/2022-2q-presentation-material",
+        "publicationDate": "2022-07-28",
+        "informationAvailableDate": "2022-07-28",
+        "supportingSection": "Page 22, Financial impact: result and forecast; actual and forecast columns kept separate",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex primary-document review, including rendered financial tables; not independent human adjudication"
+      },
+      "limitations": "Company-attributed effect for the specified quarter, not an independently identified causal effect. GAAP and non-GAAP are separate outcomes; do not add them together."
+    },
+    {
+      "id": "fukushima_earthquake_2022_2022-06-30_operating_profit_impact_non_gaap_reported_outcome",
+      "incidentId": "fukushima_earthquake_2022",
+      "companyId": "renesas",
+      "periodStart": "2022-04-01",
+      "periodEnd": "2022-06-30",
+      "metric": "operating_profit_impact_non_gaap",
+      "amount": -1.4,
+      "units": "JPY billion",
+      "kind": "reported_outcome",
+      "measurementBasis": "issuer_attributed_impact",
+      "roundingUnit": 0.1,
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.renesas.com/en/document/ppt/2022-2q-presentation-material",
+        "publicationDate": "2022-07-28",
+        "informationAvailableDate": "2022-07-28",
+        "supportingSection": "Page 22, Financial impact: result and forecast; actual and forecast columns kept separate",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex primary-document review, including rendered financial tables; not independent human adjudication"
+      },
+      "limitations": "Company-attributed effect for the specified quarter, not an independently identified causal effect. GAAP and non-GAAP are separate outcomes; do not add them together."
+    },
+    {
+      "id": "fukushima_earthquake_2022_2022-06-30_operating_profit_impact_gaap_reported_outcome",
+      "incidentId": "fukushima_earthquake_2022",
+      "companyId": "renesas",
+      "periodStart": "2022-04-01",
+      "periodEnd": "2022-06-30",
+      "metric": "operating_profit_impact_gaap",
+      "amount": -2.1,
+      "units": "JPY billion",
+      "kind": "reported_outcome",
+      "measurementBasis": "issuer_attributed_impact",
+      "roundingUnit": 0.1,
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.renesas.com/en/document/ppt/2022-2q-presentation-material",
+        "publicationDate": "2022-07-28",
+        "informationAvailableDate": "2022-07-28",
+        "supportingSection": "Page 22, Financial impact: result and forecast; actual and forecast columns kept separate",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex primary-document review, including rendered financial tables; not independent human adjudication"
+      },
+      "limitations": "Company-attributed effect for the specified quarter, not an independently identified causal effect. GAAP and non-GAAP are separate outcomes; do not add them together."
+    },
+    {
+      "id": "fukushima_earthquake_2022_2022-06-30_revenue_impact_issuer_forecast",
+      "incidentId": "fukushima_earthquake_2022",
+      "companyId": "renesas",
+      "periodStart": "2022-04-01",
+      "periodEnd": "2022-06-30",
+      "metric": "revenue_impact",
+      "amount": -2.6,
+      "units": "JPY billion",
+      "kind": "issuer_forecast",
+      "measurementBasis": "issuer_attributed_impact",
+      "roundingUnit": 0.1,
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.renesas.com/en/document/ppt/2022-1q-presentation-material",
+        "publicationDate": "2022-04-27",
+        "informationAvailableDate": "2022-04-27",
+        "supportingSection": "Page 13, Earthquake impact; billions of yen",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex primary-document review, including rendered financial tables; not independent human adjudication"
+      },
+      "limitations": "Company-attributed effect for the specified quarter, not an independently identified causal effect. GAAP and non-GAAP are separate outcomes; do not add them together."
+    },
+    {
+      "id": "fukushima_earthquake_2022_2022-06-30_operating_profit_impact_non_gaap_issuer_forecast",
+      "incidentId": "fukushima_earthquake_2022",
+      "companyId": "renesas",
+      "periodStart": "2022-04-01",
+      "periodEnd": "2022-06-30",
+      "metric": "operating_profit_impact_non_gaap",
+      "amount": -1.6,
+      "units": "JPY billion",
+      "kind": "issuer_forecast",
+      "measurementBasis": "issuer_attributed_impact",
+      "roundingUnit": 0.1,
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.renesas.com/en/document/ppt/2022-1q-presentation-material",
+        "publicationDate": "2022-04-27",
+        "informationAvailableDate": "2022-04-27",
+        "supportingSection": "Page 13, Earthquake impact; billions of yen",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex primary-document review, including rendered financial tables; not independent human adjudication"
+      },
+      "limitations": "Company-attributed effect for the specified quarter, not an independently identified causal effect. GAAP and non-GAAP are separate outcomes; do not add them together."
+    },
+    {
+      "id": "fukushima_earthquake_2022_2022-06-30_operating_profit_impact_gaap_issuer_forecast",
+      "incidentId": "fukushima_earthquake_2022",
+      "companyId": "renesas",
+      "periodStart": "2022-04-01",
+      "periodEnd": "2022-06-30",
+      "metric": "operating_profit_impact_gaap",
+      "amount": -2.5,
+      "units": "JPY billion",
+      "kind": "issuer_forecast",
+      "measurementBasis": "issuer_attributed_impact",
+      "roundingUnit": 0.1,
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.renesas.com/en/document/ppt/2022-1q-presentation-material",
+        "publicationDate": "2022-04-27",
+        "informationAvailableDate": "2022-04-27",
+        "supportingSection": "Page 13, Earthquake impact; billions of yen",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex primary-document review, including rendered financial tables; not independent human adjudication"
+      },
+      "limitations": "Company-attributed effect for the specified quarter, not an independently identified causal effect. GAAP and non-GAAP are separate outcomes; do not add them together."
+    },
+    {
+      "id": "renesas_naka_fire_2021_2021-06-30_gross_shipment_revenue_impact_reported_outcome",
+      "incidentId": "renesas_naka_fire_2021",
+      "companyId": "renesas",
+      "periodStart": "2021-04-01",
+      "periodEnd": "2021-06-30",
+      "metric": "gross_shipment_revenue_impact",
+      "amount": -18.7,
+      "units": "JPY billion",
+      "kind": "reported_outcome",
+      "measurementBasis": "issuer_attributed_impact",
+      "roundingUnit": 0.1,
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.renesas.com/en/document/ppt/2021-2q-presentation-material",
+        "publicationDate": "2021-07-29",
+        "informationAvailableDate": "2021-07-29",
+        "supportingSection": "Page 15, Fire impact, 2Q Actual column; units confirmed by Q1 table and Q2 transcript",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex primary-document review, including rendered financial tables; not independent human adjudication"
+      },
+      "limitations": "Gross shipment-reduction impact before recovery measures; not the net revenue effect."
+    },
+    {
+      "id": "renesas_naka_fire_2021_2021-06-30_revenue_recovered_by_countermeasures_reported_outcome",
+      "incidentId": "renesas_naka_fire_2021",
+      "companyId": "renesas",
+      "periodStart": "2021-04-01",
+      "periodEnd": "2021-06-30",
+      "metric": "revenue_recovered_by_countermeasures",
+      "amount": 6,
+      "units": "JPY billion",
+      "kind": "reported_outcome",
+      "measurementBasis": "issuer_attributed_impact",
+      "roundingUnit": 0.1,
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.renesas.com/en/document/ppt/2021-2q-presentation-material",
+        "publicationDate": "2021-07-29",
+        "informationAvailableDate": "2021-07-29",
+        "supportingSection": "Page 15, Fire impact, 2Q Actual column; units confirmed by Q1 table and Q2 transcript",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex primary-document review, including rendered financial tables; not independent human adjudication"
+      },
+      "limitations": "Inventory shipments, alternate production and procurement measures combined. Not a measured inventory-only effect. Published rounded figures do not exactly reconcile to net revenue."
+    },
+    {
+      "id": "tsmc_virus_2018_2018-09-30_recognized_disaster_cost_reported_outcome",
+      "incidentId": "tsmc_virus_2018",
+      "companyId": "tsmc",
+      "periodStart": "2018-07-01",
+      "periodEnd": "2018-09-30",
+      "metric": "recognized_disaster_cost",
+      "amount": 2.596046,
+      "units": "TWD billion",
+      "kind": "reported_outcome",
+      "measurementBasis": "reported_accounting_amount",
+      "roundingUnit": 0.000001,
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.sec.gov/Archives/edgar/data/1046179/000119312518328409/d640016d6k.htm",
+        "publicationDate": "2018-11-16",
+        "informationAvailableDate": "2018-11-16",
+        "supportingSection": "Note 38, Significant losses from disasters; filing signature dated November 16",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex primary-document review, including rendered financial tables; not independent human adjudication"
+      },
+      "limitations": "NT$2,596,046 thousand converted to billions. Cost of revenue, not lost revenue; do not equate it with the earlier percentage revenue forecast."
+    },
+    {
+      "id": "texas_winter_storm_2021_2021-12-31_insurance_proceeds_reported_outcome",
+      "incidentId": "texas_winter_storm_2021",
+      "companyId": "nxp",
+      "periodStart": "2021-01-01",
+      "periodEnd": "2021-12-31",
+      "metric": "insurance_proceeds",
+      "amount": 177,
+      "units": "USD million",
+      "kind": "reported_outcome",
+      "measurementBasis": "reported_accounting_amount",
+      "roundingUnit": 1,
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.sec.gov/Archives/edgar/data/1413447/000141344723000006/nxpi-20221231.htm",
+        "publicationDate": "2023-03-01",
+        "informationAvailableDate": "2023-03-01",
+        "supportingSection": "Commitments and contingencies, winter weather insurance proceeds; 2021 recognized amount",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex primary-document review, including rendered financial tables; not independent human adjudication"
+      },
+      "limitations": "Recognized insurance proceeds offsetting operational losses; not an independently measured gross loss or cash receipt date."
+    }
+  ],
+  "manufacturingRoutes": [
+    {
+      "id": "intel_kulim_diesort_to_penang_assembly_2023",
+      "kind": "reported_manufacturing_route",
+      "from": {
+        "id": "intel_kulim_diesort",
+        "name": "Intel Kulim Die Sort and Die Preparation (KMDSDP)",
+        "companyId": "intel"
+      },
+      "to": {
+        "id": "intel_penang_assembly",
+        "name": "Intel Penang Assembly and Test (PGAT)",
+        "companyId": "intel"
+      },
+      "productScope": "Tested processor dies on reels sent for package assembly and testing",
+      "reportedAt": "2023-09-18",
+      "allocationShare": null,
+      "shipmentVolume": null,
+      "shipmentUnits": null,
+      "evidenceBasis": "firsthand_factory_tour_reporting",
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex primary-document review, including rendered financial tables; not independent human adjudication"
+      },
+      "source": {
+        "url": "https://www.tomshardware.com/news/inside-intel-packaging-factory/3",
+        "publicationDate": "2023-09-18",
+        "informationAvailableDate": "2023-09-18",
+        "supportingSection": "Paul Alcorn factory visit, pages 2-3: tested dies leave Kulim on reels; the next section identifies arrival at PGAT",
+        "claimStatus": "verified",
+        "supportingUrls": [
+          "https://www.tomshardware.com/news/inside-intel-packaging-factory/2"
+        ]
+      },
+      "limitations": "A reported manufacturing transfer route, not a shipment ledger, exclusive dependency, allocation percentage or current capacity claim. The older map combines Penang and Kulim; these precise process-site identities are not assigned invented coordinates."
+    }
+  ]
+}

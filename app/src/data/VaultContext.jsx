@@ -65,11 +65,8 @@ function buildVaultState(rawBundle, source) {
   return { status: 'ready', data, engine, source, error: null };
 }
 
-/* Only quotes are polled. Everything else in the vault changes when a human or
-   the pipeline changes it, so re-fetching it on a timer would be churn; market
-   prices move on their own. Quotes are display metadata and never an engine
-   input, so refreshing them cannot alter a score — the engine is deliberately
-   left untouched here rather than rebuilt. */
+/* Quotes and the evidence bundle refresh independently every minute. A failed
+   bundle refresh retains the last successful data and exposes its status. */
 const QUOTE_POLL_MS = 60_000;
 
 export function VaultProvider({ children }) {
@@ -77,7 +74,7 @@ export function VaultProvider({ children }) {
 
   useEffect(() => {
     let cancelled = false;
-    fetch(`${API_BASE}/api/bundle`)
+    fetch(`${API_BASE}/api/bundle`, { signal: AbortSignal.timeout(15000) })
       .then((r) => {
         if (!r.ok) throw new Error(`Vault API returned ${r.status}`);
         return r.json();
@@ -92,6 +89,27 @@ export function VaultProvider({ children }) {
         setState(buildVaultState(snapshot, 'static'));
       });
     return () => { cancelled = true; };
+  }, []);
+
+  // Refresh reviewed incidents as well as quotes. An API connection alone did
+  // not previously refresh the news dataset after the initial page load.
+  useEffect(() => {
+    let cancelled = false, pending = false;
+    const poll = async () => {
+      if (pending) return;
+      pending = true;
+      try {
+        const response = await fetch(`${API_BASE}/api/bundle`, { signal: AbortSignal.timeout(15000) });
+        if (!response.ok) throw new Error(`bundle ${response.status}`);
+        const bundle = await response.json();
+        if (!cancelled) setState(buildVaultState(bundle, 'live'));
+      } catch {
+        if (!cancelled) setState(previous => previous.data ? { ...previous,
+          data: { ...previous.data, REFRESH_FAILED: true } } : previous);
+      } finally { pending = false; }
+    };
+    const timer = setInterval(poll, 60_000);
+    return () => { cancelled = true; clearInterval(timer); };
   }, []);
 
   useEffect(() => {

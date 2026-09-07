@@ -18,6 +18,7 @@ import CustomerSpreadTree from './CustomerSpreadTree.jsx';
 import EventSites from './EventSites.jsx';
 import FacilityDetail from './FacilityDetail.jsx';
 import TrackButton from './TrackButton.jsx';
+import { ReportedCompanyEvidence } from './ReportedEvidence.jsx';
 
 const Field = ({ k, v, copper }) => (
   <div style={{ marginBottom: 6 }}>
@@ -191,6 +192,8 @@ export default function Detail({ sel, setSel, model, scenario, onResetScenario, 
         </div>
         <div style={{ margin: "5px 0 0" }}><Quote quote={(QUOTES || {})[co.id]} /></div>
         <p style={{ margin: "6px 0 4px", fontSize: 12.5, color: C.dim, lineHeight: 1.55 }}>{introForCompany(co, { STAGE_BY_ID, COUNTRY_NAMES, CUSTOMERS, SUPPLIERS })}</p>
+        <ReportedCompanyEvidence companyId={co.id} />
+        <p style={{ fontSize: 12, color: C.amber }}>The research scores below use assumed stage shares and stage propagation. They do not use the documented company graph above and do not estimate observed company losses.</p>
         <div className="mono" style={{ margin: "8px 0", fontSize: 12, display: "flex", flexWrap: "wrap", gap: 14 }}>
           <span>Systemic criticality <b style={{ fontSize: 16, color: riskColor(criticality) }}>{criticality.toFixed(2)}</b><span style={{ color: C.faint }}>/10</span></span>
           <span>Vulnerability <b style={{ fontSize: 16, color: riskColor(vulnerability) }}>{vulnerability.toFixed(2)}</b><span style={{ color: C.faint }}>/10 (share-independent)</span></span>

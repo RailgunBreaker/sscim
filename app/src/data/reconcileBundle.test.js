@@ -22,6 +22,14 @@ const staleLive = {
 };
 
 describe('reconcileBundle — a live vault older than the build', () => {
+  it('fills missing observed data with provenance but honors explicit withdrawal', () => {
+    const reference = { ...snapshot, observedData: { observations: [{ id: 'reference' }] } };
+    expect(reconcileBundle(staleLive, reference).filled).toContain('observedData');
+    const empty = { observations: [], relationships: [], capacities: [] };
+    const result = reconcileBundle({ ...staleLive, observedData: empty }, reference);
+    expect(result.bundle.observedData).toEqual(empty);
+    expect(result.filled).not.toContain('observedData');
+  });
   it('fills a section the live API omits entirely, and reports it', () => {
     const { bundle, filled, stale } = reconcileBundle(staleLive, snapshot);
     expect(stale).toBe(true);
@@ -83,6 +91,13 @@ describe('reconcileBundle — a live vault older than the build', () => {
 });
 
 describe('staleLiveMessage', () => {
+  it('labels a missing prediction report fallback and preserves an explicit withdrawal', () => {
+    const reference = { ...snapshot, revenueValidation: { status: 'historical_benchmark_pass' } };
+    const fallback = reconcileBundle(staleLive, reference);
+    expect(fallback.filled).toContain('revenueValidation');
+    expect(fallback.bundle.revenueValidation).toEqual(reference.revenueValidation);
+    expect(reconcileBundle({ ...staleLive, revenueValidation: {} }, reference).bundle.revenueValidation).toEqual({});
+  });
   it('says what was filled and how to clear it', () => {
     const msg = staleLiveMessage({ filled: ['facilities'], dropped: 0 });
     expect(msg).toContain('facilities');

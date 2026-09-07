@@ -1,0 +1,210 @@
+{
+  "schemaVersion": 1,
+  "trainingIncidentIds": [],
+  "records": [
+    {
+      "id": "naka_restart_2021",
+      "incidentId": "renesas_naka_fire_2021",
+      "sourceUrl": "https://www.renesas.com/en/about/press-room/update-6-notice-regarding-semiconductor-manufacturing-factory-naka-factory-fire",
+      "text": "Renesas reports that Naka N3 restarted production on April 17 at less than one tenth of pre-fire capacity.",
+      "inputKind": "source-grounded paraphrase",
+      "relevant": true,
+      "operational": true,
+      "labelProvenance": "Codex primary-source review; development label, not independent human adjudication",
+      "availableAt": null
+    },
+    {
+      "id": "naka_target_2021",
+      "incidentId": "renesas_naka_fire_2021",
+      "sourceUrl": "https://www.renesas.com/en/about/press-room/update-6-notice-regarding-semiconductor-manufacturing-factory-naka-factory-fire",
+      "text": "Renesas targets a return to full N3 capacity at the end of May; this is its announced plan.",
+      "inputKind": "source-grounded paraphrase",
+      "relevant": true,
+      "operational": false,
+      "labelProvenance": "Codex primary-source review; development label, not independent human adjudication",
+      "availableAt": null
+    },
+    {
+      "id": "naka_recovery_2021",
+      "incidentId": "renesas_naka_fire_2021",
+      "sourceUrl": "https://www.renesas.com/en/about/press-room/update-9-notice-regarding-semiconductor-manufacturing-factory-naka-factory-fire-production-capacity",
+      "text": "Renesas reports N3 capacity at 88 percent of its pre-fire level at the end of May.",
+      "inputKind": "source-grounded paraphrase",
+      "relevant": true,
+      "operational": true,
+      "labelProvenance": "Codex primary-source review; development label, not independent human adjudication",
+      "availableAt": null
+    },
+    {
+      "id": "naka_target_june",
+      "incidentId": "renesas_naka_fire_2021",
+      "sourceUrl": "https://www.renesas.com/en/about/press-room/update-9-notice-regarding-semiconductor-manufacturing-factory-naka-factory-fire-production-capacity",
+      "text": "Renesas aims to reach full capacity after equipment startup expected in mid-June.",
+      "inputKind": "source-grounded paraphrase",
+      "relevant": true,
+      "operational": false,
+      "labelProvenance": "Codex primary-source review; development label, not independent human adjudication",
+      "availableAt": null
+    },
+    {
+      "id": "naka_complete_2021",
+      "incidentId": "renesas_naka_fire_2021",
+      "sourceUrl": "https://www.renesas.com/en/about/press-room/update-10-notice-regarding-semiconductor-manufacturing-factory-naka-factory-fire-production-capacity",
+      "text": "Renesas reports N3 production back at its pre-fire level on June 24.",
+      "inputKind": "source-grounded paraphrase",
+      "relevant": true,
+      "operational": true,
+      "labelProvenance": "Codex primary-source review; development label, not independent human adjudication",
+      "availableAt": null
+    },
+    {
+      "id": "naka_shipments_plan",
+      "incidentId": "renesas_naka_fire_2021",
+      "sourceUrl": "https://www.renesas.com/en/about/press-room/update-10-notice-regarding-semiconductor-manufacturing-factory-naka-factory-fire-production-capacity",
+      "text": "Renesas expects N3 product shipments to recover around the third week of July.",
+      "inputKind": "source-grounded paraphrase",
+      "relevant": true,
+      "operational": false,
+      "labelProvenance": "Codex primary-source review; development label, not independent human adjudication",
+      "availableAt": null
+    },
+    {
+      "id": "tsmc_scrap_2024",
+      "incidentId": "taiwan_earthquake_2024",
+      "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1046179/000104617924000050/a20240418.htm",
+      "text": "TSMC reports that some wafers in process were affected by the April 3 earthquake and scrapped.",
+      "inputKind": "source-grounded paraphrase",
+      "relevant": true,
+      "operational": true,
+      "labelProvenance": "Codex primary-source review; development label, not independent human adjudication",
+      "availableAt": null
+    },
+    {
+      "id": "tsmc_guidance_2024",
+      "incidentId": "taiwan_earthquake_2024",
+      "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1046179/000104617924000050/a20240418.htm",
+      "text": "TSMC expects to recover most lost production in the second quarter.",
+      "inputKind": "source-grounded paraphrase",
+      "relevant": true,
+      "operational": false,
+      "labelProvenance": "Codex primary-source review; development label, not independent human adjudication",
+      "availableAt": null
+    },
+    {
+      "id": "tsmc_no_power_outage",
+      "incidentId": "taiwan_earthquake_2024",
+      "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1046179/000104617924000050/a20240418.htm",
+      "text": "TSMC reports that the earthquake caused no power outages or structural damage to its fabs.",
+      "inputKind": "source-grounded paraphrase",
+      "relevant": true,
+      "operational": false,
+      "labelProvenance": "Codex primary-source review; development label, not independent human adjudication",
+      "availableAt": null
+    },
+    {
+      "id": "naka_half_2022",
+      "incidentId": "fukushima_earthquake_2022",
+      "sourceUrl": "https://www.renesas.com/en/about/newsroom/update-3-impact-march-16-earthquake-coast-fukushima-prefecture-renesas-operation",
+      "text": "Renesas reports that Naka is at approximately half of pre-earthquake capacity on March 23.",
+      "inputKind": "source-grounded paraphrase",
+      "relevant": true,
+      "operational": true,
+      "labelProvenance": "Codex primary-source review; development label, not independent human adjudication",
+      "availableAt": null
+    },
+    {
+      "id": "takasaki_complete_2022",
+      "incidentId": "fukushima_earthquake_2022",
+      "sourceUrl": "https://www.renesas.com/en/about/newsroom/update-3-impact-march-16-earthquake-coast-fukushima-prefecture-renesas-operation",
+      "text": "Renesas reports full pre-earthquake wafer input capacity at Takasaki on March 23.",
+      "inputKind": "source-grounded paraphrase",
+      "relevant": true,
+      "operational": true,
+      "labelProvenance": "Codex primary-source review; development label, not independent human adjudication",
+      "availableAt": null
+    },
+    {
+      "id": "naka_complete_2022",
+      "incidentId": "fukushima_earthquake_2022",
+      "sourceUrl": "https://www.renesas.com/en/about/newsroom/update-4-final-impact-march-16-earthquake-coast-fukushima-prefecture-renesas-operation-1",
+      "text": "Renesas reports full wafer input capacity at Naka on March 26, with earlier production losses still outstanding.",
+      "inputKind": "source-grounded paraphrase",
+      "relevant": true,
+      "operational": true,
+      "labelProvenance": "Codex primary-source review; development label, not independent human adjudication",
+      "availableAt": null
+    },
+    {
+      "id": "nxp_dividend_2021",
+      "incidentId": "nxp_dividend_2021",
+      "sourceUrl": "https://media.nxp.com/news-releases/news-release-details/nxp-semiconductors-reports-fourth-quarter-and-full-year-2021/",
+      "text": "NXP reports that its board approved an interim quarterly dividend in November 2021.",
+      "inputKind": "source-grounded paraphrase",
+      "relevant": false,
+      "operational": false,
+      "labelProvenance": "Codex primary-source review; development label, not independent human adjudication",
+      "availableAt": null
+    },
+    {
+      "id": "tsmc_agm_2025",
+      "incidentId": "tsmc_agm_2025",
+      "sourceUrl": "https://pr.tsmc.com/system/files/newspdf/attachment/25780c488e9a1bde0cd09afb0a336edf1abc6be4/0603%20AGM%20%28E%29_final_wmn.pdf",
+      "text": "TSMC held its annual shareholder meeting on June 3, 2025 and passed meeting resolutions.",
+      "inputKind": "source-grounded paraphrase",
+      "relevant": false,
+      "operational": false,
+      "labelProvenance": "Codex primary-source review; development label, not independent human adjudication",
+      "availableAt": null
+    },
+    {
+      "id": "tsmc_virus_recovery_2018",
+      "incidentId": "tsmc_virus_2018",
+      "sourceUrl": "https://pr.tsmc.com/english/news/1969",
+      "text": "TSMC reports that about 80 percent of tools affected by the August 3 computer virus had recovered by the afternoon of August 5.",
+      "inputKind": "source-grounded paraphrase",
+      "relevant": true,
+      "operational": true,
+      "labelProvenance": "Codex primary-source review; development label, not independent human adjudication",
+      "availableAt": null
+    },
+    {
+      "id": "tsmc_virus_forecast_2018",
+      "incidentId": "tsmc_virus_2018",
+      "sourceUrl": "https://pr.tsmc.com/english/news/1969",
+      "text": "TSMC expects full recovery on August 6 and estimates an impact to third-quarter revenue of about three percent.",
+      "inputKind": "source-grounded paraphrase",
+      "relevant": true,
+      "operational": false,
+      "labelProvenance": "Codex primary-source review; development label, not independent human adjudication",
+      "availableAt": null
+    },
+    {
+      "id": "nxp_shutdown_2021",
+      "incidentId": "texas_winter_storm_2021",
+      "sourceUrl": "https://www.nxp.com/company/about-nxp/newsroom/NW-NXP-RESUMES-OPERATIONS-AUSTIN?lv=true",
+      "text": "NXP reports that its two Austin wafer facilities sustained damage and fully shut down on February 15 due to the winter storm and utility outages.",
+      "inputKind": "source-grounded paraphrase",
+      "relevant": true,
+      "operational": true,
+      "labelProvenance": "Codex primary-source review; development label, not independent human adjudication",
+      "availableAt": null
+    },
+    {
+      "id": "nxp_restart_2021",
+      "incidentId": "texas_winter_storm_2021",
+      "sourceUrl": "https://www.nxp.com/company/about-nxp/newsroom/NW-NXP-RESUMES-OPERATIONS-AUSTIN?lv=true",
+      "text": "NXP reports it resumed initial operations at the Austin facilities on March 11; this is not a report that full production has recovered.",
+      "inputKind": "source-grounded paraphrase",
+      "relevant": true,
+      "operational": true,
+      "labelProvenance": "Codex primary-source review; development label, not independent human adjudication",
+      "availableAt": null
+    }
+  ],
+  "limitations": [
+    "Development challenge set, not a representative held-out news sample.",
+    "No API-model predictions or ingestion timestamps are fabricated.",
+    "Recovery updates belong to their original incident and must not become new mitigating shocks.",
+    "Only two negative controls; specificity estimates will be very imprecise."
+  ]
+}

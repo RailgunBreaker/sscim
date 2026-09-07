@@ -31,7 +31,7 @@ import {
 const candidate = (proposal, extra = {}) => ({ id: 'cand_x', duplicate_of: null, proposal, ...extra });
 
 const relevant = (over = {}) => ({
-  relevant: true, confidence: 'High', proposedSev: 6, proposedDirection: 'adverse',
+  relevant: true, confidence: 'High', evidenceStatus: 'quoted_input_requires_review', evidenceKind: 'observed', proposedSev: 6, proposedDirection: 'adverse',
   proposedChannel: 'downstream', proposedOperational: true, irrelevantReason: '', ...over,
 });
 
@@ -81,9 +81,9 @@ describe('automatic approval is opt-in', () => {
 });
 
 describe('automatic rejection is configured separately', () => {
-  it('defaults on, and stays on when approval is off', () => {
-    expect(autoRejectEnabled(undefined)).toBe(true);
-    expect(AUTO_REJECT_ON).toBe(true);
+  it('defaults off, but can be enabled independently', () => {
+    expect(autoRejectEnabled(undefined)).toBe(false);
+    expect(AUTO_REJECT_ON).toBe(autoRejectEnabled(process.env.SSCIM_TRIAGE_AUTO_REJECT));
     expect(classify(candidate(irrelevant()), { autoApprove: false, autoReject: true }).verdict)
       .toBe(VERDICTS.AUTO_REJECT);
   });
@@ -114,6 +114,11 @@ describe('triage provenance', () => {
 });
 
 describe('triage.classify (with auto-approval enabled)', () => {
+  it('keeps stored legacy and forecast drafts out of automatic operational approval', () => {
+    for (const evidenceKind of [undefined, 'forecast', 'unknown']) {
+      expect(classify(candidate(relevant({ evidenceKind })), ON).verdict).toBe(VERDICTS.REVIEW);
+    }
+  });
   it('auto-approves a relevant, High-confidence, unflagged candidate', () => {
     expect(classify(candidate(relevant()), ON).verdict).toBe(VERDICTS.AUTO_APPROVE);
   });

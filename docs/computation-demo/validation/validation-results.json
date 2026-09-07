@@ -1,7 +1,7 @@
 {
   "modelVersion": "sscim-model-v7.1-exposure-robustness",
   "datasetAsOf": "2026-09-06",
-  "generatedAt": "2026-09-06T14:05:38.491Z",
+  "generatedAt": "2026-09-07T11:50:35.581Z",
   "whatThisEstablishes": [
     "Output ranking stability within the sampled assumption box; this is not a confidence interval.",
     "Pipeline regression: the engine at base parameters still produces these values, and two builds agree bit-for-bit."
@@ -18,11 +18,39 @@
     "matchedExplicitBaseParameters": true
   },
   "partA": {
-    "status": "inconclusive",
-    "unavailableReason": "Singular or non-finite sensitivity covariance; no valid Wald interval for these fits.",
+    "status": "completed",
+    "unavailableReason": null,
+    "snapshotDesign": {
+      "rank": 2,
+      "parameters": 3,
+      "observations": 144,
+      "columnNorms": {
+        "downstreamTransmission": 0.9145351220577743,
+        "upstreamTransmission": 0.7348469228346005,
+        "marketHalfLifeDays": 0
+      },
+      "unexcitedParameters": [
+        "marketHalfLifeDays"
+      ],
+      "identifiableLocally": false
+    },
+    "controlledDesign": {
+      "rank": 3,
+      "parameters": 3,
+      "observations": 3456,
+      "columnNorms": {
+        "downstreamTransmission": 2.0318408974117563,
+        "upstreamTransmission": 3.200188300267045,
+        "marketHalfLifeDays": 0.02194601510256991
+      },
+      "unexcitedParameters": [],
+      "identifiableLocally": true
+    },
     "design": {
+      "source": "controlled synthetic single-stage experiments; not the factual snapshot",
+      "experiments": 24,
       "attemptedReplications": 60,
-      "unavailableReplications": 60,
+      "unavailableReplications": 0,
       "stages": 24,
       "offsets": [
         0,
@@ -32,9 +60,9 @@
         28,
         35
       ],
-      "nObs": 144,
+      "nObs": 3456,
       "sigmaTrue": 0.02,
-      "replications": 0,
+      "replications": 60,
       "start": [
         0.4,
         0.2,
@@ -55,29 +83,29 @@
       {
         "parameter": "downstreamTransmission",
         "truth": 0.55,
-        "meanEstimate": null,
-        "bias": null,
-        "sdEstimate": null,
-        "meanSE": null,
-        "syntheticCoverage95": null
+        "meanEstimate": 0.5514990178298894,
+        "bias": 0.0014990178298893708,
+        "sdEstimate": 0.011006864949272643,
+        "meanSE": 0.010064655218306042,
+        "syntheticCoverage95": 0.9333333333333333
       },
       {
         "parameter": "upstreamTransmission",
         "truth": 0.3,
-        "meanEstimate": null,
-        "bias": null,
-        "sdEstimate": null,
-        "meanSE": null,
-        "syntheticCoverage95": null
+        "meanEstimate": 0.2995332123077213,
+        "bias": -0.00046678769227870287,
+        "sdEstimate": 0.006134046482548985,
+        "meanSE": 0.006351532533067879,
+        "syntheticCoverage95": 0.9833333333333333
       },
       {
         "parameter": "marketHalfLifeDays",
         "truth": 45,
-        "meanEstimate": null,
-        "bias": null,
-        "sdEstimate": null,
-        "meanSE": null,
-        "syntheticCoverage95": null
+        "meanEstimate": 44.74478556777751,
+        "bias": -0.25521443222248763,
+        "sdEstimate": 0.9446549927395811,
+        "meanSE": 0.9367959895324517,
+        "syntheticCoverage95": 0.95
       }
     ],
     "coverageCaveat": "Coverage is measured under the synthetic DGP. It is not a real-world confidence level."

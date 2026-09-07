@@ -2,7 +2,9 @@
 
 SSCIM is an explainable research tool for exploring how a semiconductor disruption may move through a modeled supply chain. It combines a world map, a directed stage graph, a facility network, company footprints, and reviewed historical events over a single computational engine.
 
-**SSCIM is not** a live trading signal, a prediction engine, a measured trade-flow model, or investment advice.
+The application now opens with [documented observations and supplier disclosures](OBSERVED_DATA.md), including a public-source fab-capacity dataset. The assumption model is available through **Explore assumption model**. Observed data, conditional input-exposure calculations, and research scores have separate evidence requirements.
+
+SSCIM includes a [historically tested TSMC revenue nowcast](PREDICTIVE_VALIDATION.md). The supply-chain research model remains uncalibrated. SSCIM does not provide a live trading signal, measured trade-flow model or investment advice.
 
 ## What it is for
 
@@ -86,7 +88,7 @@ Country coverage has two tiers and the interface distinguishes them: some countr
 
 Facility significance is an **analyst ordinal (1–5), not measured capacity**, so every share derived from it is a share of the modeled sample rather than of world output.
 
-The model has no facility-level capacity, inventory, bill-of-materials, qualification, or recovery-time data. A real capacity-constrained shock, such as a fab physically destroyed, would propagate differently than this model predicts. See the [project roadmap](MODEL_ROADMAP.md) for the full list of what calibration would require, [spec §9](MODEL_V7_SPEC.md#9-validation-status) for the status of each validation activity separately, and the [synthetic parameter recovery note](computation-demo/validation/SYNTHETIC_PARAMETER_RECOVERY.md) for what that test does and does not establish.
+The research model does not consume measured inventory, bills of materials or qualification constraints. The separate [observed-data workspace](OBSERVED_DATA.md) contains 48 UMC capacity records, 16 recovery observations, 16 reported financial outcomes, six earlier issuer forecasts, 14 company relationships and one reported manufacturing route. This remains incomplete coverage and does not establish chain-wide predictive accuracy. See [spec §9](MODEL_V7_SPEC.md#9-validation-status) and the [synthetic parameter recovery note](computation-demo/validation/SYNTHETIC_PARAMETER_RECOVERY.md) for the limits of model validation.
 
 ## Contributing
 
@@ -94,7 +96,7 @@ Submit evidence with a stable source, a date, a bounded claim, the affected stag
 
 **Automatic approval is opt-in and off by default.** With `SSCIM_TRIAGE_AUTO_APPROVE` unset, every relevant candidate waits for a person. Setting it to `on` enables bounded unattended approval (High confidence only, no duplicate flag, never without a draft); anything approved that way is recorded with `provenance='automatic'` and its source line says *"AI-drafted, automatically approved by triage — not human-reviewed"*. No reviewer identity is ever invented for an unattended approval. `SELECT * FROM events WHERE provenance='automatic'` is the complete list of what went in that way.
 
-Automatic **rejection** is configured separately (`SSCIM_TRIAGE_AUTO_REJECT`, default on). The asymmetry is deliberate: a wrongly rejected candidate stays in the queue with its reason attached and costs one glance to recover, while a wrongly approved one is already published and already moving the index.
+Automatic **rejection** is configured separately (`SSCIM_TRIAGE_AUTO_REJECT`) and also defaults off. Relevant and irrelevant proposals wait for review unless their respective automatic action is explicitly enabled. Automatic operational approval additionally requires a matching source passage classified as observed evidence.
 
 Internal review notes — candidate identifiers, approve/reject commands, the publication log — stay in the `event_candidates` table behind the admin token and never reach a public field. A test over the generated snapshot fails the build if one does.
 

@@ -1,0 +1,182 @@
+[
+  {
+    "id": "kumamoto_complete",
+    "modelId": "claude-code[claude-haiku-4-5-20251001,claude-opus-5]",
+    "relevant": true,
+    "operational": true,
+    "evidenceStatus": "quoted_input_requires_review",
+    "evidenceKind": "observed",
+    "evidenceQuote": "Renesas confirms that it restored pre-earthquake wafer input capacity on May 22, 2016.",
+    "classificationReason": "Reported restoration of wafer input capacity is an observed operational change at the production step, not a plan or target. It is a recovery update on the original Kumamoto earthquake disruption rather than a new beneficial shock, so it is scored as mitigating on the same incident. Severity is set as moderate review priority because the underlying incident was a multi-week fab disruption whose downstream effects were still unwinding via suppliers.",
+    "modelIds": [
+      "claude-haiku-4-5-20251001",
+      "claude-opus-5"
+    ],
+    "modelIdentityBasis": "all_reported_usage_models; primary_drafter_unspecified"
+  },
+  {
+    "id": "kumamoto_target",
+    "modelId": "claude-code[claude-haiku-4-5-20251001,claude-opus-5]",
+    "relevant": true,
+    "operational": false,
+    "evidenceStatus": "quoted_input_requires_review",
+    "evidenceKind": "forecast",
+    "evidenceQuote": "Renesas has decided to start some manufacturing processes on April 22.",
+    "classificationReason": "The supplied passage describes a scheduled, explicitly conditional restart — announced but not yet in effect — so it is a forecast rather than an observed operational change and operational is set false. It remains relevant as a status update on a real, ongoing earthquake disruption, but it should not move an operational signal on its own; a later update reporting actual restart would.",
+    "modelIds": [
+      "claude-haiku-4-5-20251001",
+      "claude-opus-5"
+    ],
+    "modelIdentityBasis": "all_reported_usage_models; primary_drafter_unspecified"
+  },
+  {
+    "id": "lightning_stop",
+    "modelId": "claude-code[claude-haiku-4-5-20251001,claude-opus-5]",
+    "relevant": true,
+    "operational": true,
+    "evidenceStatus": "quoted_input_requires_review",
+    "evidenceKind": "observed",
+    "evidenceQuote": "Renesas reports that approximately 90 percent of production equipment at Kawashiri temporarily stopped after lightning caused a voltage drop on July 5.",
+    "classificationReason": "The passage reports a realized, site-wide equipment stoppage — roughly 90 percent of production equipment — attributable to a specific dated power event, which is an observed operational disruption rather than a hazard signal. Classified as Industrial Accident because the mechanism is a plant power/utility failure, though the initiating cause was lightning. Severity reflects the high share of equipment affected at a single site, tempered by the source's own 'temporarily' framing.",
+    "modelIds": [
+      "claude-haiku-4-5-20251001",
+      "claude-opus-5"
+    ],
+    "modelIdentityBasis": "all_reported_usage_models; primary_drafter_unspecified"
+  },
+  {
+    "id": "lightning_recovery",
+    "modelId": "claude-code[claude-haiku-4-5-20251001,claude-opus-5]",
+    "relevant": true,
+    "operational": true,
+    "evidenceStatus": "quoted_input_requires_review",
+    "evidenceKind": "observed",
+    "evidenceQuote": "Renesas reports that Kawashiri regained its pre-incident wafer input capacity on July 11.",
+    "classificationReason": "A reported restoration of wafer input capacity is an observed operational change at a named production step, so it is operational and mitigating even though no new outage occurred. It is a recovery update on the July 5 voltage-drop incident, not an independent favorable shock, and should be linked to that event rather than scored as new upside. Severity is moderate review priority: it closes out a short but site-wide stoppage.",
+    "modelIds": [
+      "claude-haiku-4-5-20251001",
+      "claude-opus-5"
+    ],
+    "modelIdentityBasis": "all_reported_usage_models; primary_drafter_unspecified"
+  },
+  {
+    "id": "lightning_forecast",
+    "modelId": "claude-code[claude-haiku-4-5-20251001,claude-opus-5]",
+    "relevant": true,
+    "operational": false,
+    "evidenceStatus": "quoted_input_requires_review",
+    "evidenceKind": "forecast",
+    "evidenceQuote": "Renesas forecasts a 0.4 billion yen reduction in third-quarter revenue from the July voltage drop.",
+    "classificationReason": "The passage is a forward-looking revenue estimate tied to an already-captured incident, not a report of a realized operational change, so operational is false and evidenceKind is forecast. It is retained as relevant because it is company quantification of a genuine disruption's expected financial tail rather than an analyst or share-price item, but it should be treated as sizing information for the July 5 event, not as a separate shock.",
+    "modelIds": [
+      "claude-haiku-4-5-20251001",
+      "claude-opus-5"
+    ],
+    "modelIdentityBasis": "all_reported_usage_models; primary_drafter_unspecified"
+  },
+  {
+    "id": "sony_restart_target",
+    "modelId": "claude-code[claude-haiku-4-5-20251001,claude-opus-5]",
+    "relevant": true,
+    "operational": false,
+    "evidenceStatus": "quoted_input_requires_review",
+    "evidenceKind": "forecast",
+    "evidenceQuote": "Sony plans staged resumption at Kumamoto from August 4, 2026 and expects pre-earthquake operating levels by mid-August.",
+    "classificationReason": "The passage is a plan plus a target date, announced but not yet in effect, so evidenceKind is forecast and operational is false regardless of how plausible the schedule looks. It is relevant as a status update on a real earthquake disruption affecting a named production site, and would become operational only when a later source reports actual resumption or restored output.",
+    "modelIds": [
+      "claude-haiku-4-5-20251001",
+      "claude-opus-5"
+    ],
+    "modelIdentityBasis": "all_reported_usage_models; primary_drafter_unspecified"
+  },
+  {
+    "id": "sony_halted",
+    "modelId": "claude-code[claude-haiku-4-5-20251001,claude-opus-5]",
+    "relevant": true,
+    "operational": true,
+    "evidenceStatus": "quoted_input_requires_review",
+    "evidenceKind": "observed",
+    "evidenceQuote": "its Kumamoto Technology Center halted operations after the July 28 earthquake; safety inspections were completed and recovery work was underway.",
+    "classificationReason": "The supplied passage states an observed, realized production halt at a named semiconductor site attributable to a specific seismic event, not a hazard signal or a forecast. Recovery work being underway does not negate the realized stoppage; it bounds it as ongoing at report time.",
+    "modelIds": [
+      "claude-haiku-4-5-20251001",
+      "claude-opus-5"
+    ],
+    "modelIdentityBasis": "all_reported_usage_models; primary_drafter_unspecified"
+  },
+  {
+    "id": "sony_other_sites",
+    "modelId": "claude-code[claude-haiku-4-5-20251001,claude-opus-5]",
+    "relevant": true,
+    "operational": false,
+    "evidenceStatus": "quoted_input_requires_review",
+    "evidenceKind": "observed",
+    "evidenceQuote": "its Nagasaki, Oita and Kagoshima production sites had no significant building or equipment damage and had resumed production.",
+    "classificationReason": "This is a scoping/negative finding on the same seismic event: the passage affirms absence of material damage at three sites and that production had resumed. No realized disruption is established for these sites, so it is a hazard signal without a disruption rather than an operational shock. It is an update on the original incident, not a separate beneficial event.",
+    "modelIds": [
+      "claude-haiku-4-5-20251001",
+      "claude-opus-5"
+    ],
+    "modelIdentityBasis": "all_reported_usage_models; primary_drafter_unspecified"
+  },
+  {
+    "id": "fukushima2021_actual",
+    "modelId": "claude-code[claude-haiku-4-5-20251001,claude-opus-5]",
+    "relevant": true,
+    "operational": true,
+    "evidenceStatus": "quoted_input_requires_review",
+    "evidenceKind": "observed",
+    "evidenceQuote": "Renesas attributes a 2.4 billion yen reduction in first-quarter 2021 revenue to shipment reductions following the February 13 earthquake.",
+    "classificationReason": "The passage reports a realized, quantified shortfall for a completed quarter and explicitly attributes it to shipment reductions — a delivered-volume effect, not a price or demand effect — caused by a named seismic event. Reported after quarter close, so observed rather than forecast.",
+    "modelIds": [
+      "claude-haiku-4-5-20251001",
+      "claude-opus-5"
+    ],
+    "modelIdentityBasis": "all_reported_usage_models; primary_drafter_unspecified"
+  },
+  {
+    "id": "fukushima2021_forecast",
+    "modelId": "claude-code[claude-haiku-4-5-20251001,claude-opus-5]",
+    "relevant": true,
+    "operational": false,
+    "evidenceStatus": "quoted_input_requires_review",
+    "evidenceKind": "forecast",
+    "evidenceQuote": "Renesas forecasts a 1.5 billion yen reduction in second-quarter revenue from the February 13 earthquake.",
+    "classificationReason": "The supplied passage is explicitly an outlook figure for an unclosed quarter, so it establishes no realized operational effect — announced/expected but not yet in effect. It is a forward-looking extension of the same February 13 incident rather than a new shock, so it is tracked as guidance with operational=false.",
+    "modelIds": [
+      "claude-haiku-4-5-20251001",
+      "claude-opus-5"
+    ],
+    "modelIdentityBasis": "all_reported_usage_models; primary_drafter_unspecified"
+  },
+  {
+    "id": "renesas_earnings_control",
+    "modelId": "claude-code[claude-haiku-4-5-20251001,claude-opus-5]",
+    "relevant": false,
+    "operational": false,
+    "evidenceStatus": "missing_supporting_input",
+    "evidenceKind": "unknown",
+    "evidenceQuote": null,
+    "classificationReason": "Earnings-result record with no operational content; excluded under the relevance rule covering earnings and financial-performance items.",
+    "modelIds": [
+      "claude-haiku-4-5-20251001",
+      "claude-opus-5"
+    ],
+    "modelIdentityBasis": "all_reported_usage_models; primary_drafter_unspecified"
+  },
+  {
+    "id": "ti_long_term",
+    "modelId": "claude-code[claude-haiku-4-5-20251001,claude-opus-5]",
+    "relevant": true,
+    "operational": false,
+    "evidenceStatus": "quoted_input_requires_review",
+    "evidenceKind": "forecast",
+    "evidenceQuote": "Texas Instruments plans to increase internal assembly and test operations to more than 90 percent by 2030 as part of a long-term expansion strategy.",
+    "classificationReason": "A stated 2030 target is a plan, not a realized change — nothing is in effect at the record date. It is also reallocative: capacity shifts from outsourced OSAT partners to TI-owned back-end, creating simultaneous winners and losers rather than a net supply shock. Both conditions point to operational=false.",
+    "modelIds": [
+      "claude-haiku-4-5-20251001",
+      "claude-opus-5"
+    ],
+    "modelIdentityBasis": "all_reported_usage_models; primary_drafter_unspecified"
+  }
+]

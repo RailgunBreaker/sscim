@@ -1,3 +1,4 @@
+import { validDate, sourceAvailable } from './evidenceContract.js';
 /* Claim verification is an eligibility decision, never an impact multiplier.
    Canonical vault adapters mark every incident as factual. Unmarked inputs to
    the mathematical primitive are retained for synthetic fixtures; they must
@@ -22,7 +23,7 @@ export function factualEligibility(event, evaluationDate) {
   const claimSources = (e.sources || []).filter((s) => s.claimStatus === 'verified' && s.supports?.includes('occurrence') && s.url && s.supportingSection);
   if (!claimSources.length) return deny('source_exists_but_claim_unverified');
   if (!e.review?.verifiedAt || !e.review?.provenance) return deny('missing_claim_review_provenance');
-  if (!evaluationDate) return deny('missing_evaluation_date');
-  if (!claimSources.some((s) => s.informationAvailableDate && s.informationAvailableDate <= evaluationDate)) return deny('evidence_not_available_at_evaluation');
+  if (!validDate(evaluationDate)) return deny('missing_evaluation_date');
+  if (!claimSources.some((s) => sourceAvailable(s, evaluationDate))) return deny('evidence_not_available_at_evaluation');
   return { eligible: true, reason: e.baseline.reason, factual: true };
 }

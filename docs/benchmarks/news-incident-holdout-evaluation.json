@@ -1,0 +1,47 @@
+{
+  "modelId": "claude-code[claude-haiku-4-5-20251001,claude-opus-5]",
+  "status": "evaluated",
+  "labels": 12,
+  "independentIncidents": 6,
+  "predictions": 12,
+  "relevance": {
+    "tp": 11,
+    "fp": 0,
+    "tn": 1,
+    "fn": 0,
+    "abstained": 0,
+    "precision": 1,
+    "recall": 1,
+    "accuracyOverAllLabels": 1
+  },
+  "operational": {
+    "tp": 5,
+    "fp": 0,
+    "tn": 6,
+    "fn": 1,
+    "abstained": 0,
+    "precision": 1,
+    "recall": 0.8333333333333334,
+    "accuracyOverAllLabels": 0.9166666666666666
+  },
+  "latency": {
+    "observed": 0,
+    "medianHours": null,
+    "p95Hours": null
+  },
+  "operationallyValidated": false,
+  "startedAt": "2026-09-07T14:03:36.561Z",
+  "finishedAt": "2026-09-07T14:07:13.757Z",
+  "benchmarkSha256": "aa529c4610aba9697fde4607b32d88f441d3b5609cf9c5e9a43d0fdb830992dd",
+  "backendSha256": "2838da6b9e6b0596e2c5913fbb9769e5623be81699dfaaaa0da42bd5bafe1784",
+  "groundingSha256": "493f3407a8ba739d84398df73c53c1c8f6de1df716cf469cd9c96f055ef6a5c8",
+  "identitySha256": "9d43096cbcfce3da3d3048b436132366ae0fc9e13178fc7bc01d4aaab150868a",
+  "benchmarkLimitations": [
+    "Purposive paraphrases, not a random sample of raw feed traffic.",
+    "One irrelevant control; specificity is not established.",
+    "AI-assisted labels, without independent human adjudication.",
+    "Historical replay, not measured detection latency.",
+    "Incidents held out from prompt development; pretraining exposure unknown."
+  ],
+  "failures": []
+}

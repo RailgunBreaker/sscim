@@ -53,7 +53,7 @@ export default function LiveBar({ model, whatChanged, hazard, onClearHazard, sou
         : { bg: C.panel2, border: C.line, text: C.dim, label: 'Live vault' };
 
   const sourceNote = isStatic
-    ? `Static snapshot — the vault API is not reachable from here, so this is the dataset frozen into the build (data as of ${model.datasetAsOf}). Figures are real and complete; they do not update until the site is rebuilt.`
+    ? `Static snapshot — the vault API is not reachable from here, so this is the dataset frozen into the build (data as of ${model.datasetAsOf}). These research scores use incomplete evidence and assumed coefficients; they update when the site is rebuilt.`
     : `Live vault — figures are read from the vault API (data as of ${model.datasetAsOf}).`;
 
   /* HIERARCHY. This row answers, in order: what is the current reading,
@@ -71,7 +71,7 @@ export default function LiveBar({ model, whatChanged, hazard, onClearHazard, sou
       {/* 1 — the current result, and what KIND of reading it is */}
       <span style={{ display: 'flex', alignItems: 'baseline', gap: 8, flexShrink: 0 }}>
         <span style={{ fontSize: 12, color: C.faint }}>
-          {t(reviewing || scenarioActive ? tone.label : 'Chain index')}
+          {t(reviewing || scenarioActive ? tone.label : 'Research chain index')}
         </span>
         <b className="mono" style={{ fontSize: 32, fontWeight: 600, lineHeight: 1.1, color: riskColor(activeChainIndex) }}>
           {activeChainIndex.toFixed(2)}

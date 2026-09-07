@@ -9,6 +9,7 @@ import { flagEmoji } from '../data/glossary.js';
 import Logo from './Logo.jsx';
 import Chip from './Chip.jsx';
 import TrackButton from './TrackButton.jsx';
+import { ReportedFacilityEvidence } from './ReportedEvidence.jsx';
 
 /* ====================================================================
    FacilityDetail — the profile panel for one plant.
@@ -88,6 +89,7 @@ export default function FacilityDetail({ facilityId, setSel, model }) {
       </div>
 
       <p style={{ margin: '0 0 10px', fontSize: 12.5, color: C.dim, lineHeight: 1.6 }}>{profile.intro}</p>
+      <ReportedFacilityEvidence facilityId={facility.id} />
 
       {/* ---- what it is ---- */}
       <div className="mono" style={{ fontSize: 12, color: C.dim, margin: '0 0 4px' }}>PROFILE</div>

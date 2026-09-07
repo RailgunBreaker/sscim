@@ -1,5 +1,7 @@
 import { COMP_META } from './compMeta.js';
 import { buildFacilityLayer } from '../engine/facilities.js';
+import { buildObservedAnalysis } from '../engine/observedAnalysis.js';
+import { buildFinancialEvidence } from '../engine/financialEvidence.js';
 
 /* Shapes a raw vault bundle into the object the engine and the UI consume.
 
@@ -23,6 +25,10 @@ export function buildVaultData(bundle) {
   const FACILITY_LAYER = buildFacilityLayer(bundle.facilities || []);
 
   const data = {
+    OBSERVED_DATA: bundle.observedData || { observations: [], relationships: [], capacities: [] },
+    OBSERVED_ANALYSIS: buildObservedAnalysis({ ...bundle.observedData, asOf: bundle.meta?.snapshotDate }),
+    FINANCIAL_EVIDENCE: buildFinancialEvidence(bundle.observedData?.financialOutcomes, bundle.meta?.snapshotDate),
+    REVENUE_VALIDATION: bundle.revenueValidation || null,
     STAGES: bundle.stages,
     FLOW_EDGES: bundle.flowEdges,
     TIER_LABELS: bundle.tierLabels,

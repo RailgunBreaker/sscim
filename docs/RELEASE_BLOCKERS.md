@@ -40,21 +40,22 @@ What remains open is not *which* licence, but the facts the notice needs:
 
 ---
 
-## 2. Scientific limitations - not blockers, but they bound the claims
+## 2. Analytical limitations - blockers for operational deployment
 
-These are **documented properties of the model**, not defects to fix before
-release. They are listed so an honest limitation is never mistaken for an
-unresolved decision, and so no public claim outruns them.
+These limitations block dependable operational risk claims. Documenting them
+does not resolve them. The source-backed dataset, calculation changes and actual
+validation results are tracked in [Observed data](OBSERVED_DATA.md); unresolved
+coverage and predictive validity remain release blockers for operational use.
 
 | Limitation | Where it is documented and quantified |
 | --- | --- |
 | No parameter is calibrated; all are `status: assumption` | [spec section 5](MODEL_V7_SPEC.md#5-parameter-register) |
-| No external validation exists, and none is claimed | [spec section 9](MODEL_V7_SPEC.md#9-validation-status) |
+| Revenue nowcast passes its historical benchmark; chain-wide loss and prospective operational validation remain absent | [Predictive validation](PREDICTIVE_VALIDATION.md) |
 | **Parameter uncertainty** - tested registry ranges | `docs/benchmarks/v7-sensitivity-public-review.json` |
 | **Model-form uncertainty** - tested discrete combinations | same file, separately reported |
 | **Event-curation uncertainty** - baseline, per incident, opposing signs, profile combinations | `docs/benchmarks/v7-curation-uncertainty-public-review.json` |
 | **Data coverage** - unresolved historical claims are excluded, not assumed safe | `docs/benchmarks/v7-legacy-fallback-public-review.json` |
-| No evidence-based edge allocations exist; every one is an equal split | counted by `npm run audit:data` |
+| Research stage-edge allocations remain assumed; documented company input shares are a separate calculation | [Observed data](OBSERVED_DATA.md#calculation-changes) |
 | Facility `scale` is an analyst ordinal, not capacity | [spec section 3.3](MODEL_V7_SPEC.md#33-modeled-facility-footprint--enginefacilitiesjs) |
 | Country shares are partly undisclosed; concentration is an interval | [spec section 3.8](MODEL_V7_SPEC.md#38-structural-components--engineindexjs-enginepolicyjs-enginemathjs) |
 | Evidence-note coverage is thin for most stages and companies | [EVIDENCE-COVERAGE.md](reference/EVIDENCE-COVERAGE.md) |
@@ -70,20 +71,27 @@ says what would.
 
 Ranked by what each would unlock.
 
-1. **Real incident outcomes** - a dated, attributed dataset of observed
-   disruption outcomes. Without it no parameter can leave
-   `status: assumption`, and every envelope stays an assumption envelope
-   rather than a confidence interval.
-2. **Evidence-based edge allocations** - bills of materials or qualified
-   supplier lists. Every dependency coefficient currently rests on an equal
-   split.
+1. **Representative, matching incident outcomes** - the public ledger now
+   contains 16 recovery observations and 16 financial outcomes. The external
+   recovery fit fails its baseline comparison; the financial records represent
+   five incidents with distinct accounting targets. More data and a defensible
+   matching-target model are needed before promoting a global parameter.
+2. **Measured edge allocations** - 14 disclosed company relationships, two
+   product-scoped input shares and one reported manufacturing route now support
+   separate evidence-based calculations. Complete plant shipment allocations,
+   inventories, qualification constraints and substitution remain unavailable.
 3. **Curation of the 49 legacy incidents** - would remove the largest
    single source of uncertainty in the historical series.
 4. **Individual evidence grading for the remaining 20 curated incidents** -
    would narrow curation uncertainty and replace a default band with a
    judgement.
-5. **Out-of-sample validation on held-out incidents** - the only thing that
-   would justify the word "validated", which is currently used nowhere.
+5. **Representative held-out and prospective validation** - the frozen news
+   incident holdout achieved 11/12 operational classifications (5/6 recall).
+   Its narrow paraphrased inputs and AI-assisted labels do not establish feed
+   accuracy. Historical queue lags do not establish a prospective latency SLA.
+   The separate TSMC revenue nowcast passes a 24-month chronological test with
+   verified original disclosure vintages; this does not close the chain-wide
+   disruption or prospective performance requirements.
 
 ---
 

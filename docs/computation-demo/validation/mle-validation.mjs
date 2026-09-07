@@ -42,6 +42,7 @@
    ==================================================================== */
 import fs from 'node:fs';
 import { recoverySummary, renderValidationReport } from './report.mjs';
+import { recoveryExperiments, sensitivityDesign } from './recovery-design.mjs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -127,7 +128,17 @@ const gauss = (rng) => Math.sqrt(-2 * Math.log(1 - rng())) * Math.cos(2 * Math.P
    the residual sum of squares; sigma is profiled out. */
 const T_OFFSETS = [0, 7, 14, 21, 28, 35];
 const SIGMA_TRUE = 0.02;
-const shifted = (t) => EVENTS.map((e) => ({ ...e, daysAgo: (e.daysAgo ?? 0) + t }));
+const experiments = recoveryExperiments(stageIds);
+const shifted = (events, t) => events.map((e) => ({ ...e, daysAgo: (e.daysAgo ?? 0) + t }));
+
+function vectorFor(eng, groups) {
+  return groups.flatMap(events => T_OFFSETS.flatMap(t => {
+    const f = eng.operationalField(shifted(events, t));
+    return stageIds.map(id => f[id] ?? 0);
+  }));
+}
+const snapshotDesign = sensitivityDesign(theta => vectorFor(engineAt(overridesOf(theta)), [EVENTS]), THETA_STAR, THETA_NAMES);
+console.log('Snapshot observation design:', JSON.stringify(snapshotDesign));
 
 const modelCache = new Map();
 function modelVector(theta) {
@@ -138,17 +149,16 @@ function modelVector(theta) {
   const key = theta.map((v) => v.toFixed(8)).join('|');
   if (modelCache.has(key)) return modelCache.get(key);
   const eng = engineAt(overridesOf(theta));
-  const v = [];
-  for (const t of T_OFFSETS) {
-    const f = eng.operationalField(shifted(t));
-    for (const id of stageIds) v.push(f[id] ?? 0);
-  }
-  if (modelCache.size < 40000) modelCache.set(key, v);
+  const v = vectorFor(eng, experiments);
+  if (modelCache.size >= 2000) modelCache.delete(modelCache.keys().next().value);
+  modelCache.set(key, v);
   return v;
 }
 
 const Y_TRUE = modelVector(THETA_STAR);
 const NOBS = Y_TRUE.length;
+const controlledDesign = sensitivityDesign(modelVector, THETA_STAR, THETA_NAMES);
+if (!controlledDesign.identifiableLocally) throw new Error('Controlled recovery design is rank deficient. No interval fits attempted.');
 
 const rss = (theta, y) => {
   const m = modelVector(theta);
@@ -190,11 +200,9 @@ function nelderMead(f, x0, { step = [0.08, 0.06, 8], maxIter = 400, tol = 1e-12 
 
 /* Wald interval from the Jacobian: Var(theta_hat) = sigma_hat^2 (J'J)^-1.
 
-   VALID ONLY UNDER THE SIMULATION. The asymptotic normal approximation
-   holds here because the noise really is Gaussian, the model really is
-   correctly specified, and the truth really is interior — three conditions
-   that are true of this simulation and are not known to be true of
-   anything else. */
+   VALID ONLY UNDER THE SIMULATION. Gaussian noise and an interior truth
+   are not sufficient: the sensitivity design must also have full rank,
+   and the local normal approximation still needs a coverage check. */
 function waldInterval(thetaHat, y) {
   const m0 = modelVector(thetaHat);
   if (!m0) return null;
@@ -221,7 +229,8 @@ function waldInterval(thetaHat, y) {
     [(A[1][0] * A[2][1] - A[1][1] * A[2][0]) / det, (A[0][1] * A[2][0] - A[0][0] * A[2][1]) / det, (A[0][0] * A[1][1] - A[0][1] * A[1][0]) / det],
   ];
   const sigma2 = rss(thetaHat, y) / (NOBS - 3);
-  const se = [0, 1, 2].map((k) => Math.sqrt(Math.max(0, sigma2 * inv[k][k])));
+  if (![0, 1, 2].every(k => inv[k][k] > 0 && Number.isFinite(inv[k][k]))) return null;
+  const se = [0, 1, 2].map((k) => Math.sqrt(sigma2 * inv[k][k]));
   if (!se.every(Number.isFinite)) return null;
   return { se, interval: thetaHat.map((v, k) => [v - 1.96 * se[k], v + 1.96 * se[k]]), sigmaHat: Math.sqrt(sigma2) };
 }
@@ -344,7 +353,9 @@ const report = {
   partA: {
     status: reps.length === R ? 'completed' : 'inconclusive',
     unavailableReason: reps.length < R ? 'Singular or non-finite sensitivity covariance; no valid Wald interval for these fits.' : null,
-    design: { attemptedReplications: R, unavailableReplications: R - reps.length, stages: stageIds.length, offsets: T_OFFSETS, nObs: NOBS, sigmaTrue: SIGMA_TRUE, replications: reps.length, start: START, estimated: THETA_NAMES, truth: THETA_STAR },
+    snapshotDesign,
+    controlledDesign,
+    design: { source: 'controlled synthetic single-stage experiments; not the factual snapshot', experiments: experiments.length, attemptedReplications: R, unavailableReplications: R - reps.length, stages: stageIds.length, offsets: T_OFFSETS, nObs: NOBS, sigmaTrue: SIGMA_TRUE, replications: reps.length, start: START, estimated: THETA_NAMES, truth: THETA_STAR },
     summary: summaryA,
     coverageCaveat: 'Coverage is measured under the synthetic DGP. It is not a real-world confidence level.',
   },

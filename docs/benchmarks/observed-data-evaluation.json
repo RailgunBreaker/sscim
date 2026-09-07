@@ -1,0 +1,961 @@
+{
+  "asOf": "2026-09-07",
+  "records": {
+    "capacity": 48,
+    "observations": 16,
+    "companyRelationships": 14,
+    "financialOutcomes": 16,
+    "issuerForecasts": 6,
+    "reportedManufacturingRoutes": 1
+  },
+  "capacityChecks": [
+    {
+      "status": "issuer_reported_maximum",
+      "total": 335000,
+      "scope": "UMC 6-inch reported fab population",
+      "units": "6-inch wafers per year",
+      "period": "2022-12-31",
+      "shares": {
+        "umc_fabwtk": 1
+      }
+    },
+    {
+      "status": "issuer_reported_maximum",
+      "total": 328000,
+      "scope": "UMC 6-inch reported fab population",
+      "units": "6-inch wafers per year",
+      "period": "2023-12-31",
+      "shares": {
+        "umc_fabwtk": 1
+      }
+    },
+    {
+      "status": "issuer_reported_maximum",
+      "total": 331000,
+      "scope": "UMC 6-inch reported fab population",
+      "units": "6-inch wafers per year",
+      "period": "2024-12-31",
+      "shares": {
+        "umc_fabwtk": 1
+      }
+    },
+    {
+      "status": "issuer_reported_maximum",
+      "total": 317000,
+      "scope": "UMC 6-inch reported fab population",
+      "units": "6-inch wafers per year",
+      "period": "2025-12-31",
+      "shares": {
+        "umc_fabwtk": 1
+      }
+    },
+    {
+      "status": "issuer_reported_maximum",
+      "total": 4048000,
+      "scope": "UMC 8-inch reported fab population",
+      "units": "8-inch wafers per year",
+      "period": "2022-12-31",
+      "shares": {
+        "umc_fab8a": 0.18898221343873517,
+        "umc_fab8c": 0.1133893280632411,
+        "umc_fab8d": 0.10128458498023715,
+        "umc_fab8e": 0.1158596837944664,
+        "umc_fab8f": 0.1358695652173913,
+        "umc_fab8s": 0.10943675889328064,
+        "umc_fab8n": 0.23517786561264822
+      }
+    },
+    {
+      "status": "issuer_reported_maximum",
+      "total": 4227000,
+      "scope": "UMC 8-inch reported fab population",
+      "units": "8-inch wafers per year",
+      "period": "2023-12-31",
+      "shares": {
+        "umc_fab8a": 0.1918618405488526,
+        "umc_fab8c": 0.11189969245327655,
+        "umc_fab8d": 0.10409273716583865,
+        "umc_fab8e": 0.11592145729832032,
+        "umc_fab8f": 0.13484740951029098,
+        "umc_fab8s": 0.10574875798438609,
+        "umc_fab8n": 0.23562810503903478
+      }
+    },
+    {
+      "status": "issuer_reported_maximum",
+      "total": 4349000,
+      "scope": "UMC 8-inch reported fab population",
+      "units": "8-inch wafers per year",
+      "period": "2024-12-31",
+      "shares": {
+        "umc_fab8a": 0.19061853299609105,
+        "umc_fab8c": 0.10968038629570016,
+        "umc_fab8d": 0.10876063462865027,
+        "umc_fab8e": 0.12048746838353644,
+        "umc_fab8f": 0.13290411588871004,
+        "umc_fab8s": 0.10462175212692573,
+        "umc_fab8n": 0.2329271096803863
+      }
+    },
+    {
+      "status": "issuer_reported_maximum",
+      "total": 4395000,
+      "scope": "UMC 8-inch reported fab population",
+      "units": "8-inch wafers per year",
+      "period": "2025-12-31",
+      "shares": {
+        "umc_fab8a": 0.19499431171786122,
+        "umc_fab8c": 0.11376564277588168,
+        "umc_fab8d": 0.10716723549488055,
+        "umc_fab8e": 0.11877133105802047,
+        "umc_fab8f": 0.13265073947667805,
+        "umc_fab8s": 0.10602957906712172,
+        "umc_fab8n": 0.22662116040955632
+      }
+    },
+    {
+      "status": "issuer_reported_maximum",
+      "total": 2575000,
+      "scope": "UMC 12-inch reported fab population",
+      "units": "12-inch wafers per year",
+      "period": "2022-12-31",
+      "shares": {
+        "umc_fab12a": 0.45436893203883494,
+        "umc_fab12i": 0.2543689320388349,
+        "umc_xiamen": 0.12194174757281553,
+        "umc_fab12m": 0.16932038834951457
+      }
+    },
+    {
+      "status": "issuer_reported_maximum",
+      "total": 2715000,
+      "scope": "UMC 12-inch reported fab population",
+      "units": "12-inch wafers per year",
+      "period": "2023-12-31",
+      "shares": {
+        "umc_fab12a": 0.48066298342541436,
+        "umc_fab12i": 0.24125230202578268,
+        "umc_xiamen": 0.11675874769797422,
+        "umc_fab12m": 0.16132596685082873
+      }
+    },
+    {
+      "status": "issuer_reported_maximum",
+      "total": 3007000,
+      "scope": "UMC 12-inch reported fab population",
+      "units": "12-inch wafers per year",
+      "period": "2024-12-31",
+      "shares": {
+        "umc_fab12a": 0.5174592617226471,
+        "umc_fab12i": 0.22547389424675757,
+        "umc_xiamen": 0.10575324243431992,
+        "umc_fab12m": 0.15131360159627535
+      }
+    },
+    {
+      "status": "issuer_reported_maximum",
+      "total": 3131000,
+      "scope": "UMC 12-inch reported fab population",
+      "units": "12-inch wafers per year",
+      "period": "2025-12-31",
+      "shares": {
+        "umc_fab12a": 0.5202810603641009,
+        "umc_fab12i": 0.21846055573299267,
+        "umc_xiamen": 0.11082721175343341,
+        "umc_fab12m": 0.15043117214947302
+      }
+    }
+  ],
+  "graphAblation": {
+    "tsmcReach": 2,
+    "withoutLinks": 0,
+    "stageAssumptionsUsed": false,
+    "synthesizedPlantLinks": 0
+  },
+  "recovery": {
+    "status": "exploratory_external_evaluation",
+    "candidateHalfLifeDays": 44.90000000000037,
+    "baseHalfLifeDays": 14,
+    "trainingRecords": 2,
+    "trainingIncidentIds": [
+      "renesas_naka_fire_2021"
+    ],
+    "holdoutRecords": 3,
+    "holdoutIncidentIds": [
+      "fukushima_earthquake_2022"
+    ],
+    "trainingSSE": 0.10969234761917794,
+    "baselineMAE": 0.5079067964917776,
+    "candidateMAE": 0.7173639941147467,
+    "predictions": [
+      {
+        "id": "naka_20220326",
+        "incidentId": "fukushima_earthquake_2022",
+        "scope": "Renesas Naka Factory",
+        "metric": "wafer_input_capacity_restored",
+        "ageDays": 10,
+        "observed": {
+          "low": 1,
+          "high": 1
+        },
+        "baseline": 0.3904931728977623,
+        "candidate": 0.14305005047518837,
+        "baselineError": 0.6095068271022377,
+        "candidateError": 0.8569499495248116,
+        "sourceUrl": "https://www.renesas.com/en/about/newsroom/update-4-final-impact-march-16-earthquake-coast-fukushima-prefecture-renesas-operation-1"
+      },
+      {
+        "id": "naka_20220323",
+        "incidentId": "fukushima_earthquake_2022",
+        "scope": "Renesas Naka Factory",
+        "metric": "wafer_input_capacity_restored",
+        "ageDays": 7,
+        "observed": {
+          "low": 0.5,
+          "high": 0.5,
+          "approximate": true
+        },
+        "baseline": 0.2928932188134524,
+        "candidate": 0.10242898359028574,
+        "baselineError": 0.20710678118654757,
+        "candidateError": 0.39757101640971426,
+        "sourceUrl": "https://www.renesas.com/en/about/newsroom/update-3-impact-march-16-earthquake-coast-fukushima-prefecture-renesas-operation"
+      },
+      {
+        "id": "takasaki_20220323",
+        "incidentId": "fukushima_earthquake_2022",
+        "scope": "Renesas Takasaki Factory",
+        "metric": "wafer_input_capacity_restored",
+        "ageDays": 7,
+        "observed": {
+          "low": 1,
+          "high": 1,
+          "approximate": false
+        },
+        "baseline": 0.2928932188134524,
+        "candidate": 0.10242898359028574,
+        "baselineError": 0.7071067811865476,
+        "candidateError": 0.8975710164097143,
+        "sourceUrl": "https://www.renesas.com/en/about/newsroom/update-3-impact-march-16-earthquake-coast-fukushima-prefecture-renesas-operation"
+      }
+    ],
+    "calibratedParameters": [],
+    "limitation": "Purposive, tiny cross-incident sample. Capacity definitions and hazards differ; errors challenge the universal curve, not validate chain impact. No registry parameter is promoted."
+  },
+  "financialEvidence": {
+    "outcomes": [
+      {
+        "id": "fukushima_earthquake_2021_2021-03-31_revenue_impact_reported_outcome",
+        "incidentId": "fukushima_earthquake_2021",
+        "companyId": "renesas",
+        "periodStart": "2021-01-01",
+        "periodEnd": "2021-03-31",
+        "metric": "revenue_impact",
+        "amount": -2.4,
+        "units": "JPY billion",
+        "kind": "reported_outcome",
+        "measurementBasis": "issuer_attributed_impact",
+        "roundingUnit": 0.1,
+        "claimStatus": "verified",
+        "source": {
+          "url": "https://www.renesas.com/en/document/ppt/2021-1q-presentation-material",
+          "publicationDate": "2021-04-28",
+          "informationAvailableDate": "2021-04-28",
+          "supportingSection": "Page 15, Impact from disasters: actual and outlook; billions of yen",
+          "claimStatus": "verified"
+        },
+        "review": {
+          "verifiedAt": "2026-09-07",
+          "provenance": "Codex primary-document review, including rendered financial tables; not independent human adjudication"
+        },
+        "limitations": "Company-attributed effect for the specified quarter, not an independently identified causal effect. GAAP and non-GAAP are separate outcomes; do not add them together."
+      },
+      {
+        "id": "fukushima_earthquake_2021_2021-03-31_operating_profit_impact_non_gaap_reported_outcome",
+        "incidentId": "fukushima_earthquake_2021",
+        "companyId": "renesas",
+        "periodStart": "2021-01-01",
+        "periodEnd": "2021-03-31",
+        "metric": "operating_profit_impact_non_gaap",
+        "amount": -2.4,
+        "units": "JPY billion",
+        "kind": "reported_outcome",
+        "measurementBasis": "issuer_attributed_impact",
+        "roundingUnit": 0.1,
+        "claimStatus": "verified",
+        "source": {
+          "url": "https://www.renesas.com/en/document/ppt/2021-1q-presentation-material",
+          "publicationDate": "2021-04-28",
+          "informationAvailableDate": "2021-04-28",
+          "supportingSection": "Page 15, Impact from disasters: actual and outlook; billions of yen",
+          "claimStatus": "verified"
+        },
+        "review": {
+          "verifiedAt": "2026-09-07",
+          "provenance": "Codex primary-document review, including rendered financial tables; not independent human adjudication"
+        },
+        "limitations": "Company-attributed effect for the specified quarter, not an independently identified causal effect. GAAP and non-GAAP are separate outcomes; do not add them together."
+      },
+      {
+        "id": "fukushima_earthquake_2021_2021-03-31_operating_profit_impact_gaap_reported_outcome",
+        "incidentId": "fukushima_earthquake_2021",
+        "companyId": "renesas",
+        "periodStart": "2021-01-01",
+        "periodEnd": "2021-03-31",
+        "metric": "operating_profit_impact_gaap",
+        "amount": -3,
+        "units": "JPY billion",
+        "kind": "reported_outcome",
+        "measurementBasis": "issuer_attributed_impact",
+        "roundingUnit": 0.1,
+        "claimStatus": "verified",
+        "source": {
+          "url": "https://www.renesas.com/en/document/ppt/2021-1q-presentation-material",
+          "publicationDate": "2021-04-28",
+          "informationAvailableDate": "2021-04-28",
+          "supportingSection": "Page 15, Impact from disasters: actual and outlook; billions of yen",
+          "claimStatus": "verified"
+        },
+        "review": {
+          "verifiedAt": "2026-09-07",
+          "provenance": "Codex primary-document review, including rendered financial tables; not independent human adjudication"
+        },
+        "limitations": "Company-attributed effect for the specified quarter, not an independently identified causal effect. GAAP and non-GAAP are separate outcomes; do not add them together."
+      },
+      {
+        "id": "renesas_naka_fire_2021_2021-06-30_revenue_impact_reported_outcome",
+        "incidentId": "renesas_naka_fire_2021",
+        "companyId": "renesas",
+        "periodStart": "2021-04-01",
+        "periodEnd": "2021-06-30",
+        "metric": "revenue_impact",
+        "amount": -12.6,
+        "units": "JPY billion",
+        "kind": "reported_outcome",
+        "measurementBasis": "issuer_attributed_impact",
+        "roundingUnit": 0.1,
+        "claimStatus": "verified",
+        "source": {
+          "url": "https://www.renesas.com/en/document/ppt/2021-2q-presentation-material",
+          "publicationDate": "2021-07-29",
+          "informationAvailableDate": "2021-07-29",
+          "supportingSection": "Page 15, Fire impact, 2Q Actual column; units confirmed by Q1 table and Q2 transcript",
+          "claimStatus": "verified"
+        },
+        "review": {
+          "verifiedAt": "2026-09-07",
+          "provenance": "Codex primary-document review, including rendered financial tables; not independent human adjudication"
+        },
+        "limitations": "Company-attributed effect for the specified quarter, not an independently identified causal effect. GAAP and non-GAAP are separate outcomes; do not add them together."
+      },
+      {
+        "id": "renesas_naka_fire_2021_2021-06-30_operating_profit_impact_non_gaap_reported_outcome",
+        "incidentId": "renesas_naka_fire_2021",
+        "companyId": "renesas",
+        "periodStart": "2021-04-01",
+        "periodEnd": "2021-06-30",
+        "metric": "operating_profit_impact_non_gaap",
+        "amount": -11.4,
+        "units": "JPY billion",
+        "kind": "reported_outcome",
+        "measurementBasis": "issuer_attributed_impact",
+        "roundingUnit": 0.1,
+        "claimStatus": "verified",
+        "source": {
+          "url": "https://www.renesas.com/en/document/ppt/2021-2q-presentation-material",
+          "publicationDate": "2021-07-29",
+          "informationAvailableDate": "2021-07-29",
+          "supportingSection": "Page 15, Fire impact, 2Q Actual column; units confirmed by Q1 table and Q2 transcript",
+          "claimStatus": "verified"
+        },
+        "review": {
+          "verifiedAt": "2026-09-07",
+          "provenance": "Codex primary-document review, including rendered financial tables; not independent human adjudication"
+        },
+        "limitations": "Company-attributed effect for the specified quarter, not an independently identified causal effect. GAAP and non-GAAP are separate outcomes; do not add them together."
+      },
+      {
+        "id": "renesas_naka_fire_2021_2021-06-30_operating_profit_impact_gaap_reported_outcome",
+        "incidentId": "renesas_naka_fire_2021",
+        "companyId": "renesas",
+        "periodStart": "2021-04-01",
+        "periodEnd": "2021-06-30",
+        "metric": "operating_profit_impact_gaap",
+        "amount": -19.3,
+        "units": "JPY billion",
+        "kind": "reported_outcome",
+        "measurementBasis": "issuer_attributed_impact",
+        "roundingUnit": 0.1,
+        "claimStatus": "verified",
+        "source": {
+          "url": "https://www.renesas.com/en/document/ppt/2021-2q-presentation-material",
+          "publicationDate": "2021-07-29",
+          "informationAvailableDate": "2021-07-29",
+          "supportingSection": "Page 15, Fire impact, 2Q Actual column; units confirmed by Q1 table and Q2 transcript",
+          "claimStatus": "verified"
+        },
+        "review": {
+          "verifiedAt": "2026-09-07",
+          "provenance": "Codex primary-document review, including rendered financial tables; not independent human adjudication"
+        },
+        "limitations": "Company-attributed effect for the specified quarter, not an independently identified causal effect. GAAP and non-GAAP are separate outcomes; do not add them together."
+      },
+      {
+        "id": "fukushima_earthquake_2022_2022-03-31_revenue_impact_reported_outcome",
+        "incidentId": "fukushima_earthquake_2022",
+        "companyId": "renesas",
+        "periodStart": "2022-01-01",
+        "periodEnd": "2022-03-31",
+        "metric": "revenue_impact",
+        "amount": -0.7,
+        "units": "JPY billion",
+        "kind": "reported_outcome",
+        "measurementBasis": "issuer_attributed_impact",
+        "roundingUnit": 0.1,
+        "claimStatus": "verified",
+        "source": {
+          "url": "https://www.renesas.com/en/document/ppt/2022-1q-presentation-material",
+          "publicationDate": "2022-04-27",
+          "informationAvailableDate": "2022-04-27",
+          "supportingSection": "Page 13, Earthquake impact; billions of yen",
+          "claimStatus": "verified"
+        },
+        "review": {
+          "verifiedAt": "2026-09-07",
+          "provenance": "Codex primary-document review, including rendered financial tables; not independent human adjudication"
+        },
+        "limitations": "Company-attributed effect for the specified quarter, not an independently identified causal effect. GAAP and non-GAAP are separate outcomes; do not add them together."
+      },
+      {
+        "id": "fukushima_earthquake_2022_2022-03-31_operating_profit_impact_non_gaap_reported_outcome",
+        "incidentId": "fukushima_earthquake_2022",
+        "companyId": "renesas",
+        "periodStart": "2022-01-01",
+        "periodEnd": "2022-03-31",
+        "metric": "operating_profit_impact_non_gaap",
+        "amount": -1.2,
+        "units": "JPY billion",
+        "kind": "reported_outcome",
+        "measurementBasis": "issuer_attributed_impact",
+        "roundingUnit": 0.1,
+        "claimStatus": "verified",
+        "source": {
+          "url": "https://www.renesas.com/en/document/ppt/2022-1q-presentation-material",
+          "publicationDate": "2022-04-27",
+          "informationAvailableDate": "2022-04-27",
+          "supportingSection": "Page 13, Earthquake impact; billions of yen",
+          "claimStatus": "verified"
+        },
+        "review": {
+          "verifiedAt": "2026-09-07",
+          "provenance": "Codex primary-document review, including rendered financial tables; not independent human adjudication"
+        },
+        "limitations": "Company-attributed effect for the specified quarter, not an independently identified causal effect. GAAP and non-GAAP are separate outcomes; do not add them together."
+      },
+      {
+        "id": "fukushima_earthquake_2022_2022-03-31_operating_profit_impact_gaap_reported_outcome",
+        "incidentId": "fukushima_earthquake_2022",
+        "companyId": "renesas",
+        "periodStart": "2022-01-01",
+        "periodEnd": "2022-03-31",
+        "metric": "operating_profit_impact_gaap",
+        "amount": -2.1,
+        "units": "JPY billion",
+        "kind": "reported_outcome",
+        "measurementBasis": "issuer_attributed_impact",
+        "roundingUnit": 0.1,
+        "claimStatus": "verified",
+        "source": {
+          "url": "https://www.renesas.com/en/document/ppt/2022-1q-presentation-material",
+          "publicationDate": "2022-04-27",
+          "informationAvailableDate": "2022-04-27",
+          "supportingSection": "Page 13, Earthquake impact; billions of yen",
+          "claimStatus": "verified"
+        },
+        "review": {
+          "verifiedAt": "2026-09-07",
+          "provenance": "Codex primary-document review, including rendered financial tables; not independent human adjudication"
+        },
+        "limitations": "Company-attributed effect for the specified quarter, not an independently identified causal effect. GAAP and non-GAAP are separate outcomes; do not add them together."
+      },
+      {
+        "id": "fukushima_earthquake_2022_2022-06-30_revenue_impact_reported_outcome",
+        "incidentId": "fukushima_earthquake_2022",
+        "companyId": "renesas",
+        "periodStart": "2022-04-01",
+        "periodEnd": "2022-06-30",
+        "metric": "revenue_impact",
+        "amount": -2.2,
+        "units": "JPY billion",
+        "kind": "reported_outcome",
+        "measurementBasis": "issuer_attributed_impact",
+        "roundingUnit": 0.1,
+        "claimStatus": "verified",
+        "source": {
+          "url": "https://www.renesas.com/en/document/ppt/2022-2q-presentation-material",
+          "publicationDate": "2022-07-28",
+          "informationAvailableDate": "2022-07-28",
+          "supportingSection": "Page 22, Financial impact: result and forecast; actual and forecast columns kept separate",
+          "claimStatus": "verified"
+        },
+        "review": {
+          "verifiedAt": "2026-09-07",
+          "provenance": "Codex primary-document review, including rendered financial tables; not independent human adjudication"
+        },
+        "limitations": "Company-attributed effect for the specified quarter, not an independently identified causal effect. GAAP and non-GAAP are separate outcomes; do not add them together."
+      },
+      {
+        "id": "fukushima_earthquake_2022_2022-06-30_operating_profit_impact_non_gaap_reported_outcome",
+        "incidentId": "fukushima_earthquake_2022",
+        "companyId": "renesas",
+        "periodStart": "2022-04-01",
+        "periodEnd": "2022-06-30",
+        "metric": "operating_profit_impact_non_gaap",
+        "amount": -1.4,
+        "units": "JPY billion",
+        "kind": "reported_outcome",
+        "measurementBasis": "issuer_attributed_impact",
+        "roundingUnit": 0.1,
+        "claimStatus": "verified",
+        "source": {
+          "url": "https://www.renesas.com/en/document/ppt/2022-2q-presentation-material",
+          "publicationDate": "2022-07-28",
+          "informationAvailableDate": "2022-07-28",
+          "supportingSection": "Page 22, Financial impact: result and forecast; actual and forecast columns kept separate",
+          "claimStatus": "verified"
+        },
+        "review": {
+          "verifiedAt": "2026-09-07",
+          "provenance": "Codex primary-document review, including rendered financial tables; not independent human adjudication"
+        },
+        "limitations": "Company-attributed effect for the specified quarter, not an independently identified causal effect. GAAP and non-GAAP are separate outcomes; do not add them together."
+      },
+      {
+        "id": "fukushima_earthquake_2022_2022-06-30_operating_profit_impact_gaap_reported_outcome",
+        "incidentId": "fukushima_earthquake_2022",
+        "companyId": "renesas",
+        "periodStart": "2022-04-01",
+        "periodEnd": "2022-06-30",
+        "metric": "operating_profit_impact_gaap",
+        "amount": -2.1,
+        "units": "JPY billion",
+        "kind": "reported_outcome",
+        "measurementBasis": "issuer_attributed_impact",
+        "roundingUnit": 0.1,
+        "claimStatus": "verified",
+        "source": {
+          "url": "https://www.renesas.com/en/document/ppt/2022-2q-presentation-material",
+          "publicationDate": "2022-07-28",
+          "informationAvailableDate": "2022-07-28",
+          "supportingSection": "Page 22, Financial impact: result and forecast; actual and forecast columns kept separate",
+          "claimStatus": "verified"
+        },
+        "review": {
+          "verifiedAt": "2026-09-07",
+          "provenance": "Codex primary-document review, including rendered financial tables; not independent human adjudication"
+        },
+        "limitations": "Company-attributed effect for the specified quarter, not an independently identified causal effect. GAAP and non-GAAP are separate outcomes; do not add them together."
+      },
+      {
+        "id": "renesas_naka_fire_2021_2021-06-30_gross_shipment_revenue_impact_reported_outcome",
+        "incidentId": "renesas_naka_fire_2021",
+        "companyId": "renesas",
+        "periodStart": "2021-04-01",
+        "periodEnd": "2021-06-30",
+        "metric": "gross_shipment_revenue_impact",
+        "amount": -18.7,
+        "units": "JPY billion",
+        "kind": "reported_outcome",
+        "measurementBasis": "issuer_attributed_impact",
+        "roundingUnit": 0.1,
+        "claimStatus": "verified",
+        "source": {
+          "url": "https://www.renesas.com/en/document/ppt/2021-2q-presentation-material",
+          "publicationDate": "2021-07-29",
+          "informationAvailableDate": "2021-07-29",
+          "supportingSection": "Page 15, Fire impact, 2Q Actual column; units confirmed by Q1 table and Q2 transcript",
+          "claimStatus": "verified"
+        },
+        "review": {
+          "verifiedAt": "2026-09-07",
+          "provenance": "Codex primary-document review, including rendered financial tables; not independent human adjudication"
+        },
+        "limitations": "Gross shipment-reduction impact before recovery measures; not the net revenue effect."
+      },
+      {
+        "id": "renesas_naka_fire_2021_2021-06-30_revenue_recovered_by_countermeasures_reported_outcome",
+        "incidentId": "renesas_naka_fire_2021",
+        "companyId": "renesas",
+        "periodStart": "2021-04-01",
+        "periodEnd": "2021-06-30",
+        "metric": "revenue_recovered_by_countermeasures",
+        "amount": 6,
+        "units": "JPY billion",
+        "kind": "reported_outcome",
+        "measurementBasis": "issuer_attributed_impact",
+        "roundingUnit": 0.1,
+        "claimStatus": "verified",
+        "source": {
+          "url": "https://www.renesas.com/en/document/ppt/2021-2q-presentation-material",
+          "publicationDate": "2021-07-29",
+          "informationAvailableDate": "2021-07-29",
+          "supportingSection": "Page 15, Fire impact, 2Q Actual column; units confirmed by Q1 table and Q2 transcript",
+          "claimStatus": "verified"
+        },
+        "review": {
+          "verifiedAt": "2026-09-07",
+          "provenance": "Codex primary-document review, including rendered financial tables; not independent human adjudication"
+        },
+        "limitations": "Inventory shipments, alternate production and procurement measures combined. Not a measured inventory-only effect. Published rounded figures do not exactly reconcile to net revenue."
+      },
+      {
+        "id": "tsmc_virus_2018_2018-09-30_recognized_disaster_cost_reported_outcome",
+        "incidentId": "tsmc_virus_2018",
+        "companyId": "tsmc",
+        "periodStart": "2018-07-01",
+        "periodEnd": "2018-09-30",
+        "metric": "recognized_disaster_cost",
+        "amount": 2.596046,
+        "units": "TWD billion",
+        "kind": "reported_outcome",
+        "measurementBasis": "reported_accounting_amount",
+        "roundingUnit": 0.000001,
+        "claimStatus": "verified",
+        "source": {
+          "url": "https://www.sec.gov/Archives/edgar/data/1046179/000119312518328409/d640016d6k.htm",
+          "publicationDate": "2018-11-16",
+          "informationAvailableDate": "2018-11-16",
+          "supportingSection": "Note 38, Significant losses from disasters; filing signature dated November 16",
+          "claimStatus": "verified"
+        },
+        "review": {
+          "verifiedAt": "2026-09-07",
+          "provenance": "Codex primary-document review, including rendered financial tables; not independent human adjudication"
+        },
+        "limitations": "NT$2,596,046 thousand converted to billions. Cost of revenue, not lost revenue; do not equate it with the earlier percentage revenue forecast."
+      },
+      {
+        "id": "texas_winter_storm_2021_2021-12-31_insurance_proceeds_reported_outcome",
+        "incidentId": "texas_winter_storm_2021",
+        "companyId": "nxp",
+        "periodStart": "2021-01-01",
+        "periodEnd": "2021-12-31",
+        "metric": "insurance_proceeds",
+        "amount": 177,
+        "units": "USD million",
+        "kind": "reported_outcome",
+        "measurementBasis": "reported_accounting_amount",
+        "roundingUnit": 1,
+        "claimStatus": "verified",
+        "source": {
+          "url": "https://www.sec.gov/Archives/edgar/data/1413447/000141344723000006/nxpi-20221231.htm",
+          "publicationDate": "2023-03-01",
+          "informationAvailableDate": "2023-03-01",
+          "supportingSection": "Commitments and contingencies, winter weather insurance proceeds; 2021 recognized amount",
+          "claimStatus": "verified"
+        },
+        "review": {
+          "verifiedAt": "2026-09-07",
+          "provenance": "Codex primary-document review, including rendered financial tables; not independent human adjudication"
+        },
+        "limitations": "Recognized insurance proceeds offsetting operational losses; not an independently measured gross loss or cash receipt date."
+      }
+    ],
+    "forecasts": [
+      {
+        "id": "renesas_naka_fire_2021_2021-06-30_revenue_impact_issuer_forecast",
+        "incidentId": "renesas_naka_fire_2021",
+        "companyId": "renesas",
+        "periodStart": "2021-04-01",
+        "periodEnd": "2021-06-30",
+        "metric": "revenue_impact",
+        "amount": -17,
+        "units": "JPY billion",
+        "kind": "issuer_forecast",
+        "measurementBasis": "issuer_attributed_impact",
+        "roundingUnit": 0.1,
+        "claimStatus": "verified",
+        "source": {
+          "url": "https://www.renesas.com/en/document/ppt/2021-1q-presentation-material",
+          "publicationDate": "2021-04-28",
+          "informationAvailableDate": "2021-04-28",
+          "supportingSection": "Page 15, Impact from disasters: actual and outlook; billions of yen",
+          "claimStatus": "verified"
+        },
+        "review": {
+          "verifiedAt": "2026-09-07",
+          "provenance": "Codex primary-document review, including rendered financial tables; not independent human adjudication"
+        },
+        "limitations": "Company-attributed effect for the specified quarter, not an independently identified causal effect. GAAP and non-GAAP are separate outcomes; do not add them together."
+      },
+      {
+        "id": "renesas_naka_fire_2021_2021-06-30_operating_profit_impact_non_gaap_issuer_forecast",
+        "incidentId": "renesas_naka_fire_2021",
+        "companyId": "renesas",
+        "periodStart": "2021-04-01",
+        "periodEnd": "2021-06-30",
+        "metric": "operating_profit_impact_non_gaap",
+        "amount": -14,
+        "units": "JPY billion",
+        "kind": "issuer_forecast",
+        "measurementBasis": "issuer_attributed_impact",
+        "roundingUnit": 0.1,
+        "claimStatus": "verified",
+        "source": {
+          "url": "https://www.renesas.com/en/document/ppt/2021-1q-presentation-material",
+          "publicationDate": "2021-04-28",
+          "informationAvailableDate": "2021-04-28",
+          "supportingSection": "Page 15, Impact from disasters: actual and outlook; billions of yen",
+          "claimStatus": "verified"
+        },
+        "review": {
+          "verifiedAt": "2026-09-07",
+          "provenance": "Codex primary-document review, including rendered financial tables; not independent human adjudication"
+        },
+        "limitations": "Company-attributed effect for the specified quarter, not an independently identified causal effect. GAAP and non-GAAP are separate outcomes; do not add them together."
+      },
+      {
+        "id": "renesas_naka_fire_2021_2021-06-30_operating_profit_impact_gaap_issuer_forecast",
+        "incidentId": "renesas_naka_fire_2021",
+        "companyId": "renesas",
+        "periodStart": "2021-04-01",
+        "periodEnd": "2021-06-30",
+        "metric": "operating_profit_impact_gaap",
+        "amount": -21.5,
+        "units": "JPY billion",
+        "kind": "issuer_forecast",
+        "measurementBasis": "issuer_attributed_impact",
+        "roundingUnit": 0.1,
+        "claimStatus": "verified",
+        "source": {
+          "url": "https://www.renesas.com/en/document/ppt/2021-1q-presentation-material",
+          "publicationDate": "2021-04-28",
+          "informationAvailableDate": "2021-04-28",
+          "supportingSection": "Page 15, Impact from disasters: actual and outlook; billions of yen",
+          "claimStatus": "verified"
+        },
+        "review": {
+          "verifiedAt": "2026-09-07",
+          "provenance": "Codex primary-document review, including rendered financial tables; not independent human adjudication"
+        },
+        "limitations": "Company-attributed effect for the specified quarter, not an independently identified causal effect. GAAP and non-GAAP are separate outcomes; do not add them together."
+      },
+      {
+        "id": "fukushima_earthquake_2022_2022-06-30_revenue_impact_issuer_forecast",
+        "incidentId": "fukushima_earthquake_2022",
+        "companyId": "renesas",
+        "periodStart": "2022-04-01",
+        "periodEnd": "2022-06-30",
+        "metric": "revenue_impact",
+        "amount": -2.6,
+        "units": "JPY billion",
+        "kind": "issuer_forecast",
+        "measurementBasis": "issuer_attributed_impact",
+        "roundingUnit": 0.1,
+        "claimStatus": "verified",
+        "source": {
+          "url": "https://www.renesas.com/en/document/ppt/2022-1q-presentation-material",
+          "publicationDate": "2022-04-27",
+          "informationAvailableDate": "2022-04-27",
+          "supportingSection": "Page 13, Earthquake impact; billions of yen",
+          "claimStatus": "verified"
+        },
+        "review": {
+          "verifiedAt": "2026-09-07",
+          "provenance": "Codex primary-document review, including rendered financial tables; not independent human adjudication"
+        },
+        "limitations": "Company-attributed effect for the specified quarter, not an independently identified causal effect. GAAP and non-GAAP are separate outcomes; do not add them together."
+      },
+      {
+        "id": "fukushima_earthquake_2022_2022-06-30_operating_profit_impact_non_gaap_issuer_forecast",
+        "incidentId": "fukushima_earthquake_2022",
+        "companyId": "renesas",
+        "periodStart": "2022-04-01",
+        "periodEnd": "2022-06-30",
+        "metric": "operating_profit_impact_non_gaap",
+        "amount": -1.6,
+        "units": "JPY billion",
+        "kind": "issuer_forecast",
+        "measurementBasis": "issuer_attributed_impact",
+        "roundingUnit": 0.1,
+        "claimStatus": "verified",
+        "source": {
+          "url": "https://www.renesas.com/en/document/ppt/2022-1q-presentation-material",
+          "publicationDate": "2022-04-27",
+          "informationAvailableDate": "2022-04-27",
+          "supportingSection": "Page 13, Earthquake impact; billions of yen",
+          "claimStatus": "verified"
+        },
+        "review": {
+          "verifiedAt": "2026-09-07",
+          "provenance": "Codex primary-document review, including rendered financial tables; not independent human adjudication"
+        },
+        "limitations": "Company-attributed effect for the specified quarter, not an independently identified causal effect. GAAP and non-GAAP are separate outcomes; do not add them together."
+      },
+      {
+        "id": "fukushima_earthquake_2022_2022-06-30_operating_profit_impact_gaap_issuer_forecast",
+        "incidentId": "fukushima_earthquake_2022",
+        "companyId": "renesas",
+        "periodStart": "2022-04-01",
+        "periodEnd": "2022-06-30",
+        "metric": "operating_profit_impact_gaap",
+        "amount": -2.5,
+        "units": "JPY billion",
+        "kind": "issuer_forecast",
+        "measurementBasis": "issuer_attributed_impact",
+        "roundingUnit": 0.1,
+        "claimStatus": "verified",
+        "source": {
+          "url": "https://www.renesas.com/en/document/ppt/2022-1q-presentation-material",
+          "publicationDate": "2022-04-27",
+          "informationAvailableDate": "2022-04-27",
+          "supportingSection": "Page 13, Earthquake impact; billions of yen",
+          "claimStatus": "verified"
+        },
+        "review": {
+          "verifiedAt": "2026-09-07",
+          "provenance": "Codex primary-document review, including rendered financial tables; not independent human adjudication"
+        },
+        "limitations": "Company-attributed effect for the specified quarter, not an independently identified causal effect. GAAP and non-GAAP are separate outcomes; do not add them together."
+      }
+    ],
+    "comparisons": [
+      {
+        "forecastId": "renesas_naka_fire_2021_2021-06-30_revenue_impact_issuer_forecast",
+        "outcomeId": "renesas_naka_fire_2021_2021-06-30_revenue_impact_reported_outcome",
+        "incidentId": "renesas_naka_fire_2021",
+        "companyId": "renesas",
+        "metric": "revenue_impact",
+        "units": "JPY billion",
+        "periodEnd": "2021-06-30",
+        "forecast": -17,
+        "actual": -12.6,
+        "error": -4.4,
+        "absoluteError": 4.4,
+        "absoluteErrorRoundingBounds": {
+          "low": 4.300000000000001,
+          "high": 4.5
+        },
+        "forecastPublishedAt": "2021-04-28",
+        "outcomePublishedAt": "2021-07-29",
+        "forecastSource": "https://www.renesas.com/en/document/ppt/2021-1q-presentation-material",
+        "outcomeSource": "https://www.renesas.com/en/document/ppt/2021-2q-presentation-material"
+      },
+      {
+        "forecastId": "renesas_naka_fire_2021_2021-06-30_operating_profit_impact_non_gaap_issuer_forecast",
+        "outcomeId": "renesas_naka_fire_2021_2021-06-30_operating_profit_impact_non_gaap_reported_outcome",
+        "incidentId": "renesas_naka_fire_2021",
+        "companyId": "renesas",
+        "metric": "operating_profit_impact_non_gaap",
+        "units": "JPY billion",
+        "periodEnd": "2021-06-30",
+        "forecast": -14,
+        "actual": -11.4,
+        "error": -2.5999999999999996,
+        "absoluteError": 2.5999999999999996,
+        "absoluteErrorRoundingBounds": {
+          "low": 2.4999999999999996,
+          "high": 2.6999999999999997
+        },
+        "forecastPublishedAt": "2021-04-28",
+        "outcomePublishedAt": "2021-07-29",
+        "forecastSource": "https://www.renesas.com/en/document/ppt/2021-1q-presentation-material",
+        "outcomeSource": "https://www.renesas.com/en/document/ppt/2021-2q-presentation-material"
+      },
+      {
+        "forecastId": "renesas_naka_fire_2021_2021-06-30_operating_profit_impact_gaap_issuer_forecast",
+        "outcomeId": "renesas_naka_fire_2021_2021-06-30_operating_profit_impact_gaap_reported_outcome",
+        "incidentId": "renesas_naka_fire_2021",
+        "companyId": "renesas",
+        "metric": "operating_profit_impact_gaap",
+        "units": "JPY billion",
+        "periodEnd": "2021-06-30",
+        "forecast": -21.5,
+        "actual": -19.3,
+        "error": -2.1999999999999993,
+        "absoluteError": 2.1999999999999993,
+        "absoluteErrorRoundingBounds": {
+          "low": 2.099999999999999,
+          "high": 2.2999999999999994
+        },
+        "forecastPublishedAt": "2021-04-28",
+        "outcomePublishedAt": "2021-07-29",
+        "forecastSource": "https://www.renesas.com/en/document/ppt/2021-1q-presentation-material",
+        "outcomeSource": "https://www.renesas.com/en/document/ppt/2021-2q-presentation-material"
+      },
+      {
+        "forecastId": "fukushima_earthquake_2022_2022-06-30_revenue_impact_issuer_forecast",
+        "outcomeId": "fukushima_earthquake_2022_2022-06-30_revenue_impact_reported_outcome",
+        "incidentId": "fukushima_earthquake_2022",
+        "companyId": "renesas",
+        "metric": "revenue_impact",
+        "units": "JPY billion",
+        "periodEnd": "2022-06-30",
+        "forecast": -2.6,
+        "actual": -2.2,
+        "error": -0.3999999999999999,
+        "absoluteError": 0.3999999999999999,
+        "absoluteErrorRoundingBounds": {
+          "low": 0.29999999999999993,
+          "high": 0.4999999999999999
+        },
+        "forecastPublishedAt": "2022-04-27",
+        "outcomePublishedAt": "2022-07-28",
+        "forecastSource": "https://www.renesas.com/en/document/ppt/2022-1q-presentation-material",
+        "outcomeSource": "https://www.renesas.com/en/document/ppt/2022-2q-presentation-material"
+      },
+      {
+        "forecastId": "fukushima_earthquake_2022_2022-06-30_operating_profit_impact_non_gaap_issuer_forecast",
+        "outcomeId": "fukushima_earthquake_2022_2022-06-30_operating_profit_impact_non_gaap_reported_outcome",
+        "incidentId": "fukushima_earthquake_2022",
+        "companyId": "renesas",
+        "metric": "operating_profit_impact_non_gaap",
+        "units": "JPY billion",
+        "periodEnd": "2022-06-30",
+        "forecast": -1.6,
+        "actual": -1.4,
+        "error": -0.20000000000000018,
+        "absoluteError": 0.20000000000000018,
+        "absoluteErrorRoundingBounds": {
+          "low": 0.10000000000000017,
+          "high": 0.30000000000000016
+        },
+        "forecastPublishedAt": "2022-04-27",
+        "outcomePublishedAt": "2022-07-28",
+        "forecastSource": "https://www.renesas.com/en/document/ppt/2022-1q-presentation-material",
+        "outcomeSource": "https://www.renesas.com/en/document/ppt/2022-2q-presentation-material"
+      },
+      {
+        "forecastId": "fukushima_earthquake_2022_2022-06-30_operating_profit_impact_gaap_issuer_forecast",
+        "outcomeId": "fukushima_earthquake_2022_2022-06-30_operating_profit_impact_gaap_reported_outcome",
+        "incidentId": "fukushima_earthquake_2022",
+        "companyId": "renesas",
+        "metric": "operating_profit_impact_gaap",
+        "units": "JPY billion",
+        "periodEnd": "2022-06-30",
+        "forecast": -2.5,
+        "actual": -2.1,
+        "error": -0.3999999999999999,
+        "absoluteError": 0.3999999999999999,
+        "absoluteErrorRoundingBounds": {
+          "low": 0.29999999999999993,
+          "high": 0.4999999999999999
+        },
+        "forecastPublishedAt": "2022-04-27",
+        "outcomePublishedAt": "2022-07-28",
+        "forecastSource": "https://www.renesas.com/en/document/ppt/2022-1q-presentation-material",
+        "outcomeSource": "https://www.renesas.com/en/document/ppt/2022-2q-presentation-material"
+      }
+    ],
+    "rejected": [],
+    "independentOutcomeIncidents": 5,
+    "comparedIncidents": 2,
+    "modelValidated": false,
+    "reason": "Historical issuer forecasts versus reported outcomes; these are not SSCIM model predictions. Currency, metric and accounting basis are never pooled."
+  },
+  "routeAblation": {
+    "withRoute": 1,
+    "withoutRoute": 0,
+    "productionLossEstimated": false
+  }
+}

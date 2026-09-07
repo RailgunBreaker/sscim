@@ -30,6 +30,7 @@ import Guide from './components/Guide.jsx';
 import Briefing from './components/Briefing.jsx';
 import SiteMap from './components/SiteMap.jsx';
 import FacilityPlayground from './components/FacilityPlayground.jsx';
+import ObservedWorkspace from './components/ObservedWorkspace.jsx';
 
 const GLOBAL_STYLE = `
   * { box-sizing: border-box; }
@@ -117,6 +118,7 @@ export default function App() {
    once data actually exists. */
 function VaultGate() {
   const { status, error } = useVault();
+  const [research, setResearch] = useState(false);
   if (status === 'error') {
     return (
       <div style={{ minHeight: "100vh", background: C.bg, color: C.text, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: 'Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif', padding: 24, textAlign: "center" }}>
@@ -136,7 +138,11 @@ function VaultGate() {
       </div>
     );
   }
-  return <Dashboard />;
+  if (!research) return <><style>{GLOBAL_STYLE}</style><ObservedWorkspace onResearch={() => setResearch(true)} /></>;
+  return <><div style={{ padding: '10px 24px', background: C.panel2, color: C.amber, fontFamily: 'Segoe UI, sans-serif' }}>
+    Research mode · Scores and inferred plant connections use uncalibrated assumptions.{' '}
+    <button onClick={() => setResearch(false)}>Return to documented evidence</button>
+  </div><Dashboard /></>;
 }
 
 /* Provides the shared interaction controller, then renders the real
@@ -513,7 +519,7 @@ function DashboardBody() {
         SSCIM INTELLIGENCE · Supply-chain sensitivity and comparison analysis (data as of {model.datasetAsOf}) — not a calibrated, causal, or probabilistic forecast, and not investment advice.
         Map data © OpenStreetMap contributors · model {model.modelVersion}.
         {source === 'static'
-          ? <span style={{ color: C.amber }}> · STATIC SNAPSHOT — the vault API is not reachable from here, so this page is reading the dataset frozen into the build. Complete and real, but not continuously updated.</span>
+          ? <span style={{ color: C.amber }}> · STATIC SNAPSHOT — the vault API is not reachable from here, so this page is reading the dataset frozen into the build. Evidence coverage is incomplete and research inputs include assumptions.</span>
           : <span style={{ color: C.dim }}> · LIVE VAULT — figures read from the vault API.</span>}
         {/* A live vault older than this build answers 200 with a section
             simply missing, which is how the map once drew 0 of 275 plants

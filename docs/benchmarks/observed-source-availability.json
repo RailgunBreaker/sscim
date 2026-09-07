@@ -1,0 +1,241 @@
+{
+  "checkedAt": "2026-09-07T14:09:21.541Z",
+  "results": [
+    {
+      "url": "https://www.renesas.com/en/about/press-room/update-6-notice-regarding-semiconductor-manufacturing-factory-naka-factory-fire",
+      "status": "retrieved",
+      "finalUrl": "https://www.renesas.com/en/about/press-room/update-6-notice-regarding-semiconductor-manufacturing-factory-naka-factory-fire",
+      "httpStatus": 200,
+      "contentType": "text/html; charset=UTF-8",
+      "bytes": 230247,
+      "sha256": "84a2b467e638fdac08ba53bc3464e030b47ea44de6f7c3dd7e84563bde788956",
+      "matchesReviewedArtifact": null,
+      "claimVerification": "not_performed_by_this_script"
+    },
+    {
+      "url": "https://www.renesas.com/en/about/press-room/update-9-notice-regarding-semiconductor-manufacturing-factory-naka-factory-fire-production-capacity",
+      "status": "retrieved",
+      "finalUrl": "https://www.renesas.com/en/about/press-room/update-9-notice-regarding-semiconductor-manufacturing-factory-naka-factory-fire-production-capacity",
+      "httpStatus": 200,
+      "contentType": "text/html; charset=UTF-8",
+      "bytes": 222861,
+      "sha256": "cc2c4297db58491b1a4a1e7293ba8970b7c42df1d4c725dfd0c38807b571ea83",
+      "matchesReviewedArtifact": null,
+      "claimVerification": "not_performed_by_this_script"
+    },
+    {
+      "url": "https://www.renesas.com/en/about/press-room/update-10-notice-regarding-semiconductor-manufacturing-factory-naka-factory-fire-production-capacity",
+      "status": "retrieved",
+      "finalUrl": "https://www.renesas.com/en/about/press-room/update-10-notice-regarding-semiconductor-manufacturing-factory-naka-factory-fire-production-capacity",
+      "httpStatus": 200,
+      "contentType": "text/html; charset=UTF-8",
+      "bytes": 223482,
+      "sha256": "1e7f67b56fd709360f040eef10be6023310b71a927377da1f51bca2eeec2b6d5",
+      "matchesReviewedArtifact": null,
+      "claimVerification": "not_performed_by_this_script"
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617924000050/a20240418.htm",
+      "status": "retrieved",
+      "finalUrl": "https://www.sec.gov/Archives/edgar/data/1046179/000104617924000050/a20240418.htm",
+      "httpStatus": 200,
+      "contentType": "text/html",
+      "bytes": 17807,
+      "sha256": "dc8d02f3700ddf9c471871eacf1e12d14048f0726cde7117726ae2808084508b",
+      "matchesReviewedArtifact": null,
+      "claimVerification": "not_performed_by_this_script"
+    },
+    {
+      "url": "https://www.renesas.com/en/about/newsroom/update-4-final-impact-march-16-earthquake-coast-fukushima-prefecture-renesas-operation-1",
+      "status": "retrieved",
+      "finalUrl": "https://www.renesas.com/en/about/newsroom/update-4-final-impact-march-16-earthquake-coast-fukushima-prefecture-renesas-operation-1",
+      "httpStatus": 200,
+      "contentType": "text/html; charset=UTF-8",
+      "bytes": 222444,
+      "sha256": "edc12c6582957f5b8c2e62e3a3926a8c87bcc1ae9ad5d52e8da2138b6992df61",
+      "matchesReviewedArtifact": null,
+      "claimVerification": "not_performed_by_this_script"
+    },
+    {
+      "url": "https://www.renesas.com/en/about/newsroom/update-3-impact-march-16-earthquake-coast-fukushima-prefecture-renesas-operation",
+      "status": "retrieved",
+      "finalUrl": "https://www.renesas.com/en/about/newsroom/update-3-impact-march-16-earthquake-coast-fukushima-prefecture-renesas-operation",
+      "httpStatus": 200,
+      "contentType": "text/html; charset=UTF-8",
+      "bytes": 228459,
+      "sha256": "0412610da92e942067a5ffe04bab647f7f1c6cd621d46b9a0f80b51b00ab5f73",
+      "matchesReviewedArtifact": null,
+      "claimVerification": "not_performed_by_this_script"
+    },
+    {
+      "url": "https://pr.tsmc.com/english/news/1969",
+      "status": "unavailable",
+      "httpStatus": 403
+    },
+    {
+      "url": "https://www.nxp.com/company/about-nxp/newsroom/NW-NXP-RESUMES-OPERATIONS-AUSTIN?lv=true",
+      "status": "retrieved",
+      "finalUrl": "https://www.nxp.com/company/about-nxp/newsroom/NW-NXP-RESUMES-OPERATIONS-AUSTIN?lv=true",
+      "httpStatus": 200,
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 54634,
+      "sha256": "9f32d074c171dd411ffa2d71fd76e3eae9ef2137c0102abf3ab1bba3860ea731",
+      "matchesReviewedArtifact": null,
+      "claimVerification": "not_performed_by_this_script"
+    },
+    {
+      "url": "https://toshiba.semicon-storage.com/us/company/news/2024/01/corporate-20240126-1.html",
+      "status": "retrieved",
+      "finalUrl": "https://toshiba.semicon-storage.com/us/company/news/2024/01/corporate-20240126-1.html",
+      "httpStatus": 200,
+      "contentType": "text/html",
+      "bytes": 90155,
+      "sha256": "a1339f41045ac35ab4b66d6b2ee3535bc0848ca646644e92d4634808c02d0657",
+      "matchesReviewedArtifact": null,
+      "claimVerification": "not_performed_by_this_script"
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1046179/000119312518328409/d640016d6k.htm",
+      "status": "retrieved",
+      "finalUrl": "https://www.sec.gov/Archives/edgar/data/1046179/000119312518328409/d640016d6k.htm",
+      "httpStatus": 200,
+      "contentType": "text/html",
+      "bytes": 2813866,
+      "sha256": "5135ff41fc436e346dbd26be07e33ab0b6cb93ab253bc5cb3548eefd9a6db82d",
+      "matchesReviewedArtifact": null,
+      "claimVerification": "not_performed_by_this_script"
+    },
+    {
+      "url": "https://www.renesas.com/en/document/ppt/2022-2q-presentation-material",
+      "status": "retrieved",
+      "finalUrl": "https://www.renesas.com/en/document/ppt/2022-2q-presentation-material",
+      "httpStatus": 200,
+      "contentType": "application/pdf",
+      "bytes": 820747,
+      "sha256": "389589fbefb305ca3b737f849475f98f1c731a528bf9e4813df7cd36e992ba70",
+      "matchesReviewedArtifact": true,
+      "claimVerification": "not_performed_by_this_script"
+    },
+    {
+      "url": "https://www.renesas.com/en/about/newsroom/update-8-final-impact-2016-kumamoto-earthquake-renesas-electronics-operations",
+      "status": "retrieved",
+      "finalUrl": "https://www.renesas.com/en/about/newsroom/update-8-final-impact-2016-kumamoto-earthquake-renesas-electronics-operations",
+      "httpStatus": 200,
+      "contentType": "text/html; charset=UTF-8",
+      "bytes": 220256,
+      "sha256": "efac5017330c163c4fa92e452fa8191012612a1b63dafd9e8640b6e758af5126",
+      "matchesReviewedArtifact": null,
+      "claimVerification": "not_performed_by_this_script"
+    },
+    {
+      "url": "https://ir.amd.com/financial-information/sec-filings/content/0001193125-25-067185/0001193125-25-067185.pdf",
+      "status": "retrieved",
+      "finalUrl": "https://ir.amd.com/financial-information/sec-filings/content/0001193125-25-067185/0001193125-25-067185.pdf",
+      "httpStatus": 200,
+      "contentType": "application/pdf",
+      "bytes": 2778205,
+      "sha256": "28f3911e60546f90e4d98496f2f111179179ee760602ac2d1e71a313c1334567",
+      "matchesReviewedArtifact": null,
+      "claimVerification": "not_performed_by_this_script"
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000023/nvda-20250126.htm",
+      "status": "retrieved",
+      "finalUrl": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000023/nvda-20250126.htm",
+      "httpStatus": 200,
+      "contentType": "text/html",
+      "bytes": 2067884,
+      "sha256": "a92fbf660ac48d690017894c455066bc84872633335cf2f02f93cedba5de0f05",
+      "matchesReviewedArtifact": null,
+      "claimVerification": "not_performed_by_this_script"
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1709048/000170904825000024/gfs-20241231.htm",
+      "status": "retrieved",
+      "finalUrl": "https://www.sec.gov/Archives/edgar/data/1709048/000170904825000024/gfs-20241231.htm",
+      "httpStatus": 200,
+      "contentType": "text/html",
+      "bytes": 3533051,
+      "sha256": "96a4e4a41a209b7e3f5ef77d078e96bf741eecb90bb55ee8c215cba9ffb57da0",
+      "matchesReviewedArtifact": null,
+      "claimVerification": "not_performed_by_this_script"
+    },
+    {
+      "url": "https://event-prod.zucast.com/attach/52d41749702efeb443f2539fd74e4c14/10561/UMC25Q4_report.pdf",
+      "status": "retrieved",
+      "finalUrl": "https://event-prod.zucast.com/attach/52d41749702efeb443f2539fd74e4c14/10561/UMC25Q4_report.pdf",
+      "httpStatus": 200,
+      "contentType": "application/pdf",
+      "bytes": 477372,
+      "sha256": "687802d709e74cd9b7923a7096bf9e3f0f1b3ee414862c6beef7441aa25f27bf",
+      "matchesReviewedArtifact": true,
+      "claimVerification": "not_performed_by_this_script"
+    },
+    {
+      "url": "https://www.renesas.com/en/document/ppt/2021-1q-presentation-material",
+      "status": "retrieved",
+      "finalUrl": "https://www.renesas.com/en/document/ppt/2021-1q-presentation-material",
+      "httpStatus": 200,
+      "contentType": "application/pdf",
+      "bytes": 510777,
+      "sha256": "5a96ac1f94efcd7c2f5c79305158c15e5848ad779182945ec2af66611b3ea237",
+      "matchesReviewedArtifact": true,
+      "claimVerification": "not_performed_by_this_script"
+    },
+    {
+      "url": "https://www.renesas.com/en/document/ppt/2021-2q-presentation-material",
+      "status": "retrieved",
+      "finalUrl": "https://www.renesas.com/en/document/ppt/2021-2q-presentation-material",
+      "httpStatus": 200,
+      "contentType": "application/pdf",
+      "bytes": 499446,
+      "sha256": "46896a990f838aa5a6af9a2ff7731a2c85b45c4d320f1277d85973aacd80569d",
+      "matchesReviewedArtifact": true,
+      "claimVerification": "not_performed_by_this_script"
+    },
+    {
+      "url": "https://www.renesas.com/en/document/ppt/2022-1q-presentation-material",
+      "status": "retrieved",
+      "finalUrl": "https://www.renesas.com/en/document/ppt/2022-1q-presentation-material",
+      "httpStatus": 200,
+      "contentType": "application/pdf",
+      "bytes": 834780,
+      "sha256": "250a200ff5dcfc4a11af5e260a0a7a3a1bc4d9f4909d0fa1eeca6b3585545db8",
+      "matchesReviewedArtifact": true,
+      "claimVerification": "not_performed_by_this_script"
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1413447/000141344723000006/nxpi-20221231.htm",
+      "status": "retrieved",
+      "finalUrl": "https://www.sec.gov/Archives/edgar/data/1413447/000141344723000006/nxpi-20221231.htm",
+      "httpStatus": 200,
+      "contentType": "text/html",
+      "bytes": 3106997,
+      "sha256": "a4104f1f1a6ffcc7f7234abc5f5381831e724cb377e23ed680cbb97d7abb4462",
+      "matchesReviewedArtifact": null,
+      "claimVerification": "not_performed_by_this_script"
+    },
+    {
+      "url": "https://www.tomshardware.com/news/inside-intel-packaging-factory/3",
+      "status": "retrieved",
+      "finalUrl": "https://www.tomshardware.com/news/inside-intel-packaging-factory/3",
+      "httpStatus": 200,
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 2186318,
+      "sha256": "719e7bba0da600442dd34d5285b50dc1aa4f2b4a0d66ea6ea99b3dd81fcc7619",
+      "matchesReviewedArtifact": null,
+      "claimVerification": "not_performed_by_this_script"
+    },
+    {
+      "url": "https://www.tomshardware.com/news/inside-intel-packaging-factory/2",
+      "status": "retrieved",
+      "finalUrl": "https://www.tomshardware.com/news/inside-intel-packaging-factory/2",
+      "httpStatus": 200,
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 2177149,
+      "sha256": "d0d3afa1a3c3471eab615db37771d7a38dfca7101a08be8e6a6a6513f762c4e1",
+      "matchesReviewedArtifact": null,
+      "claimVerification": "not_performed_by_this_script"
+    }
+  ]
+}

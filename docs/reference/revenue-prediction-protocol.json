@@ -1,0 +1,34 @@
+{
+  "version": "tsmc-revenue-v1",
+  "recordedAt": "2026-09-07",
+  "target": "TSMC monthly consolidated revenue, TWD million, nominal, unaudited issuer series from 2013 onward",
+  "scope": "Historical revenue nowcasting; not disruption attribution, physical output or chain-wide production loss",
+  "developmentEnd": "2018-12",
+  "selectionStart": "2019-01",
+  "selectionEnd": "2021-12",
+  "calibrationStart": "2022-01",
+  "calibrationEnd": "2023-12",
+  "testStart": "2024-01",
+  "testEnd": "2025-12",
+  "informationSet": "Prior calendar months only. Retrospective current-month nowcast after preceding-month disclosure, not a forecast issued before target month began. Historical release dates and unrevised vintages are not available in the annual tables.",
+  "candidateFamily": "Seasonal revenue multiplied by exp(mean(log year-on-year growth over trailing k months))), k in [1,3,6,12]. Select k on selection-period MAE only. No parameter selection on calibration or test errors.",
+  "baselineModels": ["last_month", "same_month_last_year", "trailing_12_month_mean"],
+  "interval": "Fixed symmetric log-error radius at ceil((n+1)*0.8) order statistic of 2022-2023 absolute log errors. Target coverage 80%; time-series exchangeability is not assumed or guaranteed.",
+  "metrics": ["MAE_TWD_million", "WAPE", "RMSE_TWD_million", "interval_coverage", "mean_interval_width_divided_by_actual"],
+  "comparison": "Report all baselines. Paired circular moving-block bootstrap of candidate minus each baseline absolute error; block length 3, 5000 resamples, seed 20260907; 90% percentile intervals. Also report each calendar year separately.",
+  "qualificationGates": {
+    "testMonths": 24,
+    "maeRatioToEveryBaselineAtMost": 0.95,
+    "bootstrapUpperDifferenceBelow": 0,
+    "testIntervalCoverageAtLeast": 0.75,
+    "meanRelativeIntervalWidthAtMost": 0.6
+  },
+  "policy": "Criteria fixed before candidate scoring. Retain failed results; no tuning or selecting test periods after evaluation. A pass supports only this historical target and horizon. Operational and causal validation remain false.",
+  "limitations": [
+    "Retrospective protocol, not an independently preregistered experiment; public outcome tables were accessible and 2013/2024 source tables inspected before protocol recording.",
+    "One company, 24 serially dependent test months, not 24 independent disruptions.",
+    "Annual tables may contain revisions; historical first-release vintages and exact historical availability are unverified.",
+    "Nominal revenue mixes volume, prices, currency, demand and product mix; forecast errors cannot be attributed to disruptions.",
+    "Any successful historical test requires prospective monitoring before operational qualification."
+  ]
+}

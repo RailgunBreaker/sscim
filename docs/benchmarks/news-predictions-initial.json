@@ -1,0 +1,128 @@
+[
+  {
+    "id": "naka_restart_2021",
+    "modelId": "claude-haiku-4-5-20251001",
+    "relevant": true,
+    "operational": true,
+    "evidenceStatus": "quoted_input_requires_review"
+  },
+  {
+    "id": "naka_target_2021",
+    "modelId": "claude-haiku-4-5-20251001",
+    "relevant": true,
+    "operational": false,
+    "evidenceStatus": "missing_supporting_input"
+  },
+  {
+    "id": "naka_recovery_2021",
+    "modelId": "claude-haiku-4-5-20251001",
+    "relevant": true,
+    "operational": true,
+    "evidenceStatus": "quoted_input_requires_review"
+  },
+  {
+    "id": "naka_target_june",
+    "modelId": "claude-haiku-4-5-20251001",
+    "relevant": true,
+    "operational": false,
+    "evidenceStatus": "missing_supporting_input"
+  },
+  {
+    "id": "naka_complete_2021",
+    "modelId": "claude-haiku-4-5-20251001",
+    "relevant": true,
+    "operational": true,
+    "evidenceStatus": "quoted_input_requires_review"
+  },
+  {
+    "id": "naka_shipments_plan",
+    "modelId": "claude-haiku-4-5-20251001",
+    "relevant": true,
+    "operational": false,
+    "evidenceStatus": "missing_supporting_input"
+  },
+  {
+    "id": "tsmc_scrap_2024",
+    "modelId": "claude-haiku-4-5-20251001",
+    "relevant": true,
+    "operational": true,
+    "evidenceStatus": "quoted_input_requires_review"
+  },
+  {
+    "id": "tsmc_guidance_2024",
+    "modelId": "claude-haiku-4-5-20251001",
+    "relevant": true,
+    "operational": false,
+    "evidenceStatus": "missing_supporting_input"
+  },
+  {
+    "id": "tsmc_no_power_outage",
+    "modelId": "claude-haiku-4-5-20251001",
+    "relevant": true,
+    "operational": false,
+    "evidenceStatus": "missing_supporting_input"
+  },
+  {
+    "id": "naka_half_2022",
+    "modelId": "claude-haiku-4-5-20251001",
+    "relevant": true,
+    "operational": true,
+    "evidenceStatus": "quoted_input_requires_review"
+  },
+  {
+    "id": "takasaki_complete_2022",
+    "modelId": "claude-haiku-4-5-20251001",
+    "relevant": true,
+    "operational": false,
+    "evidenceStatus": "missing_supporting_input"
+  },
+  {
+    "id": "naka_complete_2022",
+    "modelId": "claude-haiku-4-5-20251001",
+    "relevant": true,
+    "operational": true,
+    "evidenceStatus": "quoted_input_requires_review"
+  },
+  {
+    "id": "nxp_dividend_2021",
+    "modelId": "claude-haiku-4-5-20251001",
+    "relevant": false,
+    "operational": false,
+    "evidenceStatus": "missing_supporting_input"
+  },
+  {
+    "id": "tsmc_agm_2025",
+    "modelId": "claude-haiku-4-5-20251001",
+    "relevant": false,
+    "operational": false,
+    "evidenceStatus": "missing_supporting_input"
+  },
+  {
+    "id": "tsmc_virus_recovery_2018",
+    "modelId": "claude-haiku-4-5-20251001",
+    "relevant": true,
+    "operational": true,
+    "evidenceStatus": "quoted_input_requires_review"
+  },
+  {
+    "id": "tsmc_virus_forecast_2018",
+    "modelId": "claude-haiku-4-5-20251001",
+    "relevant": true,
+    "operational": true,
+    "evidenceStatus": "quoted_input_requires_review"
+  },
+  {
+    "id": "nxp_shutdown_2021",
+    "modelId": "claude-haiku-4-5-20251001",
+    "relevant": true,
+    "operational": true,
+    "evidenceStatus": "quoted_input_requires_review"
+  },
+  {
+    "id": "nxp_restart_2021",
+    "modelId": "claude-haiku-4-5-20251001",
+    "relevant": true,
+    "operational": true,
+    "evidenceStatus": "quoted_input_requires_review"
+  }
+]

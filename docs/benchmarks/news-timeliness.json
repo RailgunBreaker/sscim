@@ -1,0 +1,43 @@
+{
+  "asOf": "2026-09-07T12:57:26.214Z",
+  "measurement": "source-publication-to-first-queue-insertion",
+  "feeds": {
+    "webz-news": {
+      "records": 72,
+      "missingPublication": 0,
+      "invalidTiming": 0,
+      "latestInsertedAt": "2026-08-21T23:03:04.000Z",
+      "ingestionLag": {
+        "count": 72,
+        "medianHours": 6.075555555555556,
+        "p95Hours": 14.282777777777778,
+        "maximumHours": 15.382777777777777
+      },
+      "pendingAge": {
+        "count": 0,
+        "medianHours": null,
+        "p95Hours": null,
+        "maximumHours": null
+      }
+    },
+    "rss-news": {
+      "records": 88,
+      "missingPublication": 0,
+      "invalidTiming": 0,
+      "latestInsertedAt": "2026-09-06T14:06:14.000Z",
+      "ingestionLag": {
+        "count": 88,
+        "medianHours": 25.749166666666667,
+        "p95Hours": 54.82694444444444,
+        "maximumHours": 59.243611111111115
+      },
+      "pendingAge": {
+        "count": 84,
+        "medianHours": 26.130337222222224,
+        "p95Hours": 26.130337222222224,
+        "maximumHours": 26.130337222222224
+      }
+    }
+  },
+  "limitation": "Historical queue sample, potentially backfilled. Does not measure source coverage, incident detection recall, classifier latency, or a prospective service-level guarantee."
+}

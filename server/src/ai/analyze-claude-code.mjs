@@ -25,6 +25,8 @@ import { existsSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { homedir, tmpdir } from 'node:os';
 import { db } from '../db.js';
+import { groundProposal } from './proposal-evidence.js';
+import { modelIdentity } from './model-identity.js';
 
 /* Resolve the newest installed extension rather than pinning a version — the
    path contains the version number and VS Code updates it silently, which
@@ -71,7 +73,7 @@ RULES, in order of importance:
 
 1. Be conservative about relevance. Most records are not supply-chain events. Stock-price moves, analyst ratings, earnings-reaction pieces, and product announcements are NOT supply-chain events — set relevant=false. An earthquake matters only if it plausibly disrupted production. A proposed rule or routine notice is not a realized change.
 
-2. Severity (1-10) measures REALIZED operational scale — capacity share affected, duration, breadth — never newsworthiness or market reaction. Anchors from the existing dataset: 9 = the Oct 2022 BIS export controls (broadest sector-wide restriction). 7 = the M7.1 Kumamoto quake halting several named fabs with confirmed damage; China's Ga/Ge licensing regime. 6 = a multi-week single-site outage. 4 = one company losing one supply line. If you cannot establish that production was actually affected, the honest severity is low.
+2. Severity is an uncalibrated review-priority ordinal, not a measured disruption magnitude. Do not treat seed events as factual anchors. Unknown impact is not low impact. Include evidenceQuote as an exact passage from the supplied input establishing the proposed realized operational effect. If that passage is unavailable, set proposedOperational=false and leave evidenceQuote empty. Web research may inform the review notes, but cannot fabricate evidence in the supplied input.
 
 3. operational=false is right more often than people expect. Use it for: hazard signals where no disruption occurred, mixed/reallocative events with simultaneous winners and losers, long-term strategic or subsidy signals, and anything announced but not yet in effect.
 
@@ -79,7 +81,9 @@ RULES, in order of importance:
 
 5. Separate what the source states from what you infer. Put only source-supported facts in summary/detail. Use \`uncertainty\` to say plainly what you could NOT establish — especially fab-level impact, which no feed reliably reports. A human reads that field to decide whether to trust your proposal.
 
-6. Use ONLY these ids. Never invent one.
+6. Set evidenceKind to observed, forecast, or unknown based on the SUPPLIED PASSAGE. Expected recovery, targets, estimates of future revenue loss, and plans are forecasts even if their dates have since passed. Do not replace a forecast passage with facts found elsewhere. A reported restart or restoration of wafer input is an observed recovery and can be operational even without a new outage. Recovery updates describe the original incident, not a separate beneficial shock. Quote observed recoveries as well as outages verbatim; preserve their production step and scope.
+
+7. Use ONLY these ids. Never invent one.
    stages: ${stages.join(', ')}
    countries: ${countries.join(', ')}
 
@@ -87,7 +91,7 @@ RECORDS:
 ${JSON.stringify(candidates, null, 2)}
 
 OUTPUT: reply with ONLY a JSON array, no prose and no markdown fence. One object per record, in the same order, each shaped exactly:
-{"candidateId":"<the id given>","relevant":true|false,"irrelevantReason":"","title":"","summary":"","eventType":"Export Control|Policy Signal|Natural Disaster|Industrial Accident|Critical Material Risk|Geopolitical Risk|Company Guidance|Technology Update|Market Shock|Pandemic Disruption","proposedSev":1-10,"proposedDirection":"adverse|mitigating|mixed","proposedChannel":"downstream|upstream|both","proposedOperational":true|false,"classificationReason":"","confidence":"High|Medium|Low","stages":[],"countries":[],"first":"","second":"","watch":"","detail":"","uncertainty":""}`;
+{"candidateId":"<the id given>","evidenceQuote":"","evidenceKind":"observed|forecast|unknown","relevant":true|false,"irrelevantReason":"","title":"","summary":"","eventType":"Export Control|Policy Signal|Natural Disaster|Industrial Accident|Critical Material Risk|Geopolitical Risk|Company Guidance|Technology Update|Market Shock|Pandemic Disruption","proposedSev":1-10,"proposedDirection":"adverse|mitigating|mixed","proposedChannel":"downstream|upstream|both","proposedOperational":true|false,"classificationReason":"","confidence":"High|Medium|Low","stages":[],"countries":[],"first":"","second":"","watch":"","detail":"","uncertainty":""}`;
 }
 
 /* Models wrap JSON in fences or prose often enough that strict JSON.parse on
@@ -206,15 +210,16 @@ export async function analyzeBatchWithClaudeCode(candidates, {
     const list = Array.isArray(parsed) ? parsed : parsed ? [parsed] : [];
     const byId = new Map(list.filter((p) => p?.candidateId).map((p) => [p.candidateId, p]));
 
-    const model = envelope.modelUsage ? Object.keys(envelope.modelUsage)[0] : 'claude-code';
+    const identity = modelIdentity(envelope);
+    const { model } = identity;
     const costNote = envelope.total_cost_usd != null ? ` (batch cost ~$${Number(envelope.total_cost_usd).toFixed(3)})` : '';
     const chunkResults = chunk.map((c) => {
       const p = byId.get(c.id);
       return p
-        ? { id: c.id, proposal: p, model, notes: p.relevant ? p.uncertainty : `Judged not relevant: ${p.irrelevantReason}` }
+        ? { id: c.id, proposal: groundProposal(c, p), ...identity, notes: p.relevant ? p.uncertainty : `Judged not relevant: ${p.irrelevantReason}` }
         : { id: c.id, proposal: null, model, notes: `No proposal returned for this record${costNote}.` };
     });
-    for (const r of chunkResults) results.set(r.id, { proposal: r.proposal, model: r.model, notes: r.notes });
+    for (const r of chunkResults) results.set(r.id, { proposal: r.proposal, model: r.model, modelIds: r.modelIds, modelIdentityBasis: r.modelIdentityBasis, notes: r.notes });
 
     /* Results are handed over per chunk, not just returned at the end. A caller
        that persists them here keeps the work a completed chunk already paid

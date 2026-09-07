@@ -49,6 +49,17 @@ export function reconcileBundle(live, snapshot) {
   const out = { ...live };
   const filled = [];
 
+  // Explicitly empty observed data can represent a withdrawal. Only a missing
+  // section may use the snapshot, and that provenance remains visible.
+  if (out.observedData == null && snapshot.observedData != null) {
+    out.observedData = snapshot.observedData;
+    filled.push('observedData');
+  }
+  if (out.revenueValidation == null && snapshot.revenueValidation != null) {
+    out.revenueValidation = snapshot.revenueValidation;
+    filled.push('revenueValidation');
+  }
+
   for (const key of FILLABLE) {
     if (isEmpty(out[key]) && !isEmpty(snapshot[key])) {
       out[key] = snapshot[key];
