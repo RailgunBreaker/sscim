@@ -13,33 +13,32 @@ export const db = new Database(DB_PATH);
 db.pragma('journal_mode = WAL');
 db.pragma('foreign_keys = ON');
 
-/* CLOSE THE DATABASE ON EXIT — AND WHY THAT IS NOT THE WHOLE STORY.
+/* CLOSE THE DATABASE ON EXIT.
 
-   No consumer of this module ever closed the vault, so closing it here is
-   correct hygiene: it checkpoints the WAL and drops the -wal/-shm sidecars,
-   leaving the committed .db file complete.
+   No consumer of this module ever closed the vault. Closing it here checkpoints
+   the WAL and drops the -wal/-shm sidecars, so the committed .db file is
+   complete. This is hygiene, not a crash fix — see the note below.
 
-   It does NOT prevent the teardown abort that took down `npm run snapshot`
-   on CI:
+   WHAT CRASHED CI, AND WHAT ACTUALLY FIXED IT. `npm run snapshot` aborted on
+   the runner with:
 
      Assertion failed: (env) != nullptr   at ../src/api/hooks.cc:142
      Statement::~Statement() [better_sqlite3.node]
      Aborted (core dumped)                exit code 134
 
-   better-sqlite3's Statement is a node::ObjectWrap, and close() only runs
-   CloseHandles() — it finalizes the sqlite3_stmt handles and leaves the JS
-   wrapper objects on the heap. Their C++ destructors therefore still run when
-   V8 disposes the heap at teardown, by which point the Environment is gone
-   and the cleanup-hook removal in that path asserts. Closing the database
-   cannot reach those objects, which is why adding this hook alone did not fix
-   the crash.
+   better-sqlite3 11.x registered its addon cleanup through the raw
+   node::AddEnvironmentCleanupHook(isolate, ...) API. When V8 collects a
+   discarded Statement wrapper, the destructor runs inside a GC callback with
+   no entered context, node::Environment::GetCurrent(isolate) returns null, and
+   the matching RemoveEnvironmentCleanupHook asserts. Any garbage Statement can
+   trigger it, so it depends purely on when a GC happens to run — which is why
+   the runner hit it and the same Node major never did locally.
 
-   What does fix it: an entry-point script that finishes its work must end with
-   an explicit `process.exit(0)`, which runs these 'exit' listeners and then
-   terminates via reallyExit, skipping the graceful teardown entirely so those
-   destructors never run. Write the last line with fs.writeSync(1, ...) first —
-   stdout on a pipe is asynchronous, and that is why CI showed a bare abort
-   with none of the script's output. See app/scripts/build-vault-snapshot.mjs. */
+   Neither closing the database nor exiting explicitly can prevent that: the
+   crash happens mid-run, at a GC we do not control. The fix was upgrading to
+   better-sqlite3 13, which registers through node-addon-api
+   (env.AddCleanupHook) and no longer calls the asserting API at all. It also
+   ships Node-API prebuilds, so CI stops rebuilding the addon from source. */
 process.once('exit', () => { try { if (db.open) db.close(); } catch { /* already closed */ } });
 
 /* Core entity tables use a *_json column for naturally nested per-entity

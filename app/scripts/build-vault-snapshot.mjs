@@ -33,19 +33,18 @@ db.pragma('wal_checkpoint(TRUNCATE)');
 const outPath = resolve(__dirname, '../src/data/vault-snapshot.json');
 writeFileSync(outPath, JSON.stringify(bundle), 'utf8');
 
-/* SYNCHRONOUS WRITE, THEN AN EXPLICIT EXIT. Both halves matter, and both were
-   learned from a CI failure that reported a bare SIGABRT with no output at all
-   from a run that had already written this file.
+/* SYNCHRONOUS WRITE, THEN AN EXPLICIT EXIT. Neither is the fix for the CI
+   abort that used to kill this step — that was better-sqlite3 11 asserting in
+   a GC callback, and the cure was upgrading it (see server/src/db.js). Both
+   are kept because they are worth having anyway:
 
-   The exit: leaving normally lets V8 dispose the heap, which destroys the
-   better-sqlite3 Statement wrappers left over from building the bundle. Their
-   destructors reach node::RemoveEnvironmentCleanupHook after the Environment
-   is gone, and it aborts (exit 134). Closing the database does not help — see
-   the note in server/src/db.js. process.exit runs the 'exit' listeners, which
-   close the vault cleanly, and then terminates without that teardown.
+   writeSync, because stdout on a pipe is asynchronous, so a crash anywhere
+   after console.log would discard the line and leave a failed CI step with no
+   record of what it had done — exactly how that abort first presented.
 
-   The write: stdout on a pipe is asynchronous, so console.log here would be
-   buffered and lost by the exit. writeSync puts it out before we leave. */
+   process.exit(0), because it runs the 'exit' listeners, which close the vault
+   and checkpoint the WAL, and then leaves without a heap teardown that has to
+   destroy native objects correctly. */
 writeSync(1, `Wrote static vault snapshot from database: ${outPath} (${bundle.companies.length} companies, ${bundle.stages.length} stages, ${bundle.events.length} events)
 `);
 process.exit(0);

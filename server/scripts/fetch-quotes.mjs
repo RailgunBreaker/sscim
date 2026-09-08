@@ -18,9 +18,8 @@ writeSync(1, `Quotes refreshed: ${ok}/${total} listed companies (${unlisted} unl
 if (missing.length) writeSync(2, `No quote returned for: ${missing.join(', ')}
 `);
 
-/* Exits explicitly for the same reason build-vault-snapshot.mjs does: this
-   script writes to the vault, and letting V8 tear the heap down destroys
-   leftover better-sqlite3 statement wrappers, which aborts the process. Here
-   the CI step is `|| echo ::warning::`, so that abort would have been reported
-   as a failed quote refresh rather than as the addon crash it is. */
+/* Writes its output synchronously and exits explicitly, for the same reasons
+   as build-vault-snapshot.mjs. It matters a little more here: this step is
+   `|| echo ::warning::` in CI, so a native crash would have been reported as a
+   failed quote refresh rather than as the addon crash it was. */
 process.exit(0);
