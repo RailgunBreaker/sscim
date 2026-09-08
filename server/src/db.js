@@ -13,27 +13,33 @@ export const db = new Database(DB_PATH);
 db.pragma('journal_mode = WAL');
 db.pragma('foreign_keys = ON');
 
-/* CLOSE THE DATABASE WHILE THE ENVIRONMENT IS STILL ALIVE.
+/* CLOSE THE DATABASE ON EXIT — AND WHY THAT IS NOT THE WHOLE STORY.
 
-   No consumer of this module ever closed it, so every prepared Statement
-   stayed reachable until the process ended. Node then tears the Environment
-   down and finalizes the leftovers, and better-sqlite3's ~Statement calls
-   node::RemoveEnvironmentCleanupHook, which asserts the Environment is not
-   null — it is, by then — and aborts:
+   No consumer of this module ever closed the vault, so closing it here is
+   correct hygiene: it checkpoints the WAL and drops the -wal/-shm sidecars,
+   leaving the committed .db file complete.
+
+   It does NOT prevent the teardown abort that took down `npm run snapshot`
+   on CI:
 
      Assertion failed: (env) != nullptr   at ../src/api/hooks.cc:142
      Statement::~Statement() [better_sqlite3.node]
      Aborted (core dumped)                exit code 134
 
-   That abort lands AFTER the script has done its work, and with stdout on a
-   pipe it takes the unflushed success line with it, so CI reported a crash
-   with no output from a step that had actually succeeded. Whether it fires
-   depends on teardown GC timing, which is why it hit GitHub's runner and not
-   a local run on the same Node major.
+   better-sqlite3's Statement is a node::ObjectWrap, and close() only runs
+   CloseHandles() — it finalizes the sqlite3_stmt handles and leaves the JS
+   wrapper objects on the heap. Their C++ destructors therefore still run when
+   V8 disposes the heap at teardown, by which point the Environment is gone
+   and the cleanup-hook removal in that path asserts. Closing the database
+   cannot reach those objects, which is why adding this hook alone did not fix
+   the crash.
 
-   Closing here finalizes every statement in time, leaving teardown nothing to
-   collect. It also checkpoints the WAL and removes the -wal/-shm sidecars, so
-   the committed .db file is complete. */
+   What does fix it: an entry-point script that finishes its work must end with
+   an explicit `process.exit(0)`, which runs these 'exit' listeners and then
+   terminates via reallyExit, skipping the graceful teardown entirely so those
+   destructors never run. Write the last line with fs.writeSync(1, ...) first —
+   stdout on a pipe is asynchronous, and that is why CI showed a bare abort
+   with none of the script's output. See app/scripts/build-vault-snapshot.mjs. */
 process.once('exit', () => { try { if (db.open) db.close(); } catch { /* already closed */ } });
 
 /* Core entity tables use a *_json column for naturally nested per-entity

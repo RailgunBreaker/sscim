@@ -11,7 +11,7 @@
    is missing or empty (e.g. a fresh clone before the .db was ever committed),
    it is bootstrapped once from server/src/seed-data.js. Also checkpoints the
    WAL so the .db file on disk is complete and safe to commit. */
-import { writeFileSync } from 'node:fs';
+import { writeFileSync, writeSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 import { db } from '../../server/src/db.js';
@@ -32,4 +32,20 @@ db.pragma('wal_checkpoint(TRUNCATE)');
 
 const outPath = resolve(__dirname, '../src/data/vault-snapshot.json');
 writeFileSync(outPath, JSON.stringify(bundle), 'utf8');
-console.log(`Wrote static vault snapshot from database: ${outPath} (${bundle.companies.length} companies, ${bundle.stages.length} stages, ${bundle.events.length} events)`);
+
+/* SYNCHRONOUS WRITE, THEN AN EXPLICIT EXIT. Both halves matter, and both were
+   learned from a CI failure that reported a bare SIGABRT with no output at all
+   from a run that had already written this file.
+
+   The exit: leaving normally lets V8 dispose the heap, which destroys the
+   better-sqlite3 Statement wrappers left over from building the bundle. Their
+   destructors reach node::RemoveEnvironmentCleanupHook after the Environment
+   is gone, and it aborts (exit 134). Closing the database does not help — see
+   the note in server/src/db.js. process.exit runs the 'exit' listeners, which
+   close the vault cleanly, and then terminates without that teardown.
+
+   The write: stdout on a pipe is asynchronous, so console.log here would be
+   buffered and lost by the exit. writeSync puts it out before we leave. */
+writeSync(1, `Wrote static vault snapshot from database: ${outPath} (${bundle.companies.length} companies, ${bundle.stages.length} stages, ${bundle.events.length} events)
+`);
+process.exit(0);
