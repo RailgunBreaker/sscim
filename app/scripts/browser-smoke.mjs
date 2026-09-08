@@ -141,6 +141,25 @@ async function openDashboard(page, base, hash = '') {
      a real navigation to exercise the restore path at all. */
   nav += 1;
   await page.goto(`${base}/sscim-app.html?nav=${nav}${hash}`, { waitUntil: 'load' });
+
+  /* THE APP NO LONGER OPENS ON THE DASHBOARD. It opens on the observed-evidence
+     workspace, and the dashboard — with the footer, the lens bar and every
+     Layer 3 tab this file goes on to check — mounts only when the reader asks
+     for the assumption model. Waiting for the footer straight after the
+     navigation therefore timed out at the first viewport for as long as that
+     opening view has existed.
+
+     Waiting for this control before clicking it is also the assertion that the
+     opening view rendered at all: if the workspace is broken, this throws here
+     rather than somewhere further down in a dashboard check.
+
+     The click does not cost us the shareable-state tests. The dashboard reads
+     the URL hash once on ITS mount, which is this click and not the page load,
+     so a ?nav=N#fac=... navigation still restores exactly as it did before. */
+  const openResearch = page.locator('[data-testid="open-research"]');
+  await openResearch.waitFor({ state: 'visible', timeout: 30000 });
+  await openResearch.click();
+
   /* The footer only renders once the vault has resolved (live or static
      fallback), so it is the one selector that means "the dashboard is up"
      at every viewport — Layer 3 itself is behind a tab below 1080px. */

@@ -69,7 +69,17 @@ export default function LiveBar({ model, whatChanged, hazard, onClearHazard, sou
       display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap',
     }}>
       {/* 1 — the current result, and what KIND of reading it is */}
-      <span style={{ display: 'flex', alignItems: 'baseline', gap: 8, flexShrink: 0 }}>
+      {/* WRAPS RATHER THAN OVERFLOWS. This group was flexShrink: 0, so it held
+          its max-content width whatever the viewport. That was invisible while
+          the label read "Chain index"; renaming it "Research chain index" took
+          the group to 387px, wider than the 327px a 375px screen leaves after
+          this row's 24px padding, and the whole page gained 36px of horizontal
+          scroll. Wrapping is the fix rather than shrinking: the 32px reading is
+          the number the reader came for and must never be compressed, so the
+          group keeps its intrinsic sizing and simply takes a second line when
+          one will not do. Above ~435px nothing moves — group 2 grows into the
+          free space, so this one is never squeezed. */}
+      <span style={{ display: 'flex', alignItems: 'baseline', gap: 8, flexWrap: 'wrap', minWidth: 0 }}>
         <span style={{ fontSize: 12, color: C.faint }}>
           {t(reviewing || scenarioActive ? tone.label : 'Research chain index')}
         </span>
