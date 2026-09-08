@@ -59,6 +59,9 @@ export function reconcileBundle(live, snapshot) {
     out.revenueValidation = snapshot.revenueValidation;
     filled.push('revenueValidation');
   }
+  for (const key of ['chainLossEvidence','lossReconciliations','supplierLossAllocations','semiconductorLossFollowup','recoveryCalibration','physicalLosses','lagTwoValidation','lossFilingMonitor','prospectivePerformance','prospectiveNewsPerformance','structuredCatalog','prospectiveNowcasts']) {
+    if (out[key] == null && snapshot[key] != null) { out[key] = snapshot[key]; filled.push(key); }
+  }
 
   for (const key of FILLABLE) {
     if (isEmpty(out[key]) && !isEmpty(snapshot[key])) {

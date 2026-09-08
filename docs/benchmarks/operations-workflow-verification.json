@@ -1,0 +1,81 @@
+{
+  "verifiedAt": "2026-09-08T02:47:51.186Z",
+  "schedulerTask": "SSCIM evidence operations sscim-1",
+  "schedulerExitCode": 0,
+  "run": {
+    "runId": "2026-09-08T02-45-41.530Z-af374f58-b2b1-424d-8f8c-755bd3557794",
+    "startedAt": "2026-09-08T02:45:41.530Z",
+    "status": "succeeded",
+    "localOnly": true,
+    "steps": [
+      {
+        "id": "revenue_collection",
+        "startedAt": "2026-09-08T02:45:41.531Z",
+        "attempts": 1,
+        "status": "succeeded",
+        "completedAt": "2026-09-08T02:45:43.864Z"
+      },
+      {
+        "id": "prospective_capture",
+        "status": "already_captured"
+      },
+      {
+        "id": "prospective_scoring",
+        "startedAt": "2026-09-08T02:45:43.864Z",
+        "attempts": 1,
+        "status": "succeeded",
+        "completedAt": "2026-09-08T02:45:43.914Z"
+      },
+      {
+        "id": "loss_source_collection",
+        "startedAt": "2026-09-08T02:45:43.914Z",
+        "attempts": 1,
+        "status": "succeeded",
+        "completedAt": "2026-09-08T02:45:47.162Z"
+      },
+      {
+        "id": "loss_accounting",
+        "startedAt": "2026-09-08T02:45:47.162Z",
+        "attempts": 1,
+        "status": "succeeded",
+        "completedAt": "2026-09-08T02:45:47.207Z"
+      },
+      {
+        "id": "news_collection",
+        "startedAt": "2026-09-08T02:45:47.207Z",
+        "attempts": 1,
+        "status": "succeeded",
+        "completedAt": "2026-09-08T02:46:50.981Z"
+      },
+      {
+        "id": "news_scoring",
+        "startedAt": "2026-09-08T02:46:50.981Z",
+        "attempts": 1,
+        "status": "succeeded",
+        "completedAt": "2026-09-08T02:46:51.043Z"
+      },
+      {
+        "id": "structured_export",
+        "startedAt": "2026-09-08T02:46:51.043Z",
+        "attempts": 1,
+        "status": "succeeded",
+        "completedAt": "2026-09-08T02:46:51.914Z"
+      },
+      {
+        "id": "snapshot",
+        "startedAt": "2026-09-08T02:46:51.914Z",
+        "attempts": 1,
+        "status": "succeeded",
+        "completedAt": "2026-09-08T02:46:51.991Z"
+      }
+    ],
+    "completedAt": "2026-09-08T02:46:51.992Z"
+  },
+  "existingForecast": {
+    "modelId": "tsmc-revenue-lag2-prospective-v1",
+    "targetPeriod": "2026-09",
+    "capturedAt": "2026-09-07T23:52:46.734Z",
+    "sha256": "9e01155c4dd8dc3b1b4d31a44c1f8cc1d6d70b0d7d1c69d1ccb44bb487231785"
+  },
+  "scope": "Actual local scheduled execution; collection and scoring execution success does not establish predictive accuracy."
+}

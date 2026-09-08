@@ -7,6 +7,31 @@ hidden behind a single risk score.
 
 **Live deployment:** <https://railgunbreaker.github.io/sscim/>
 
+The current local evidence workspace includes primary-source observations,
+reported downstream shortage losses, a scoped historical revenue benchmark and
+the first pending prospective forecast. All current analytical datasets are
+exported to a queryable JSON/SQLite catalog. See
+[structured evidence and prospective operations](docs/STRUCTURED_EVIDENCE.md)
+for scope, source links, files and reproduction commands. Prospective accuracy
+and complete chain-wide loss remain unestablished.
+
+An hourly Windows task now collects and scores local evidence. Automotive
+sector-wide losses are available as explicitly labeled external estimates;
+overlapping issuer and sector losses cannot be added together. Run the full
+workflow manually with `node server/scripts/run-operations.mjs`.
+
+[Chain loss accounting](docs/CHAIN_LOSS_ACCOUNTING.md) holds the four scopes
+built on that ledger: reconciliation of disclosed issuer scopes, supplier
+allocation across recall and contamination costs, physical production losses
+that survive a recovery date, and semiconductor reimbursement follow-up with a
+filing-discovery queue. Unknown supplier attribution stays explicit, and the
+four scopes are never added together.
+
+[Recovery duration calibration](docs/RECOVERY_CALIBRATION.md) fits six reported
+factory recoveries across five incidents. It beats the 60-day global default in
+the one 2026 temporal test and loses to the issuer's own target; **no global
+parameter is promoted.**
+
 **SSCIM is not** a live trading signal, a prediction engine, a measured
 trade-flow model, or investment advice. Every propagation coefficient is a
 **declared prior**, chosen to be directionally sensible and inspectable, and

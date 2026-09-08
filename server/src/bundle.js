@@ -1,7 +1,15 @@
 import { db } from './db.js';
 import { getMetaBundle } from './meta.js';
 import { getMeasurementLedger } from './measurement-ledger.js';
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync, existsSync } from 'node:fs';
+const optionalEvidence = path => { const url = new URL(`../../${path}`, import.meta.url); return existsSync(url) ? JSON.parse(readFileSync(url, 'utf8')) : null; };
+function publicProspectiveNews() {
+  const report = optionalEvidence('docs/benchmarks/prospective-news-performance.json');
+  if (!report) return null;
+  // Candidate IDs remain in the local audit report, outside the public bundle.
+  const { eligibleIds, backfillIds, invalidIds, ...summary } = report;
+  return summary;
+}
 
 /* Reads the whole vault out of SQLite in the wire format the dashboard
    consumes. Shared by the live API (routes/public.js) and the static-snapshot
@@ -142,6 +150,20 @@ export function buildBundle() {
   return {
     observedData: JSON.parse(readFileSync(new URL('../../docs/reference/observed-data.json', import.meta.url), 'utf8')),
     revenueValidation: JSON.parse(readFileSync(new URL('../../docs/benchmarks/revenue-prediction.json', import.meta.url), 'utf8')),
+    chainLossEvidence: optionalEvidence('docs/reference/chain-loss-evidence.json'),
+    lossReconciliations: optionalEvidence('docs/reference/loss-reconciliations.json'),
+    supplierLossAllocations: optionalEvidence('docs/reference/supplier-loss-allocations.json'),
+    semiconductorLossFollowup: optionalEvidence('docs/reference/semiconductor-loss-followup.json'),
+    recoveryCalibration: optionalEvidence('docs/benchmarks/recovery-calibration.json'),
+    physicalLosses: optionalEvidence('docs/benchmarks/physical-loss-evaluation.json'),
+    lagTwoValidation: optionalEvidence('docs/benchmarks/lag-two-validation.json'),
+    lossFilingMonitor: optionalEvidence('docs/operational-monitor/loss-filing-candidates.json'),
+    prospectivePerformance: optionalEvidence('docs/benchmarks/prospective-performance.json'),
+    prospectiveNewsPerformance: publicProspectiveNews(),
+    structuredCatalog: optionalEvidence('artifacts/structured/manifest.json'),
+    prospectiveNowcasts: existsSync(new URL('../../docs/prospective/', import.meta.url))
+      ? readdirSync(new URL('../../docs/prospective/', import.meta.url)).filter(f => f.endsWith('.json'))
+        .map(f => optionalEvidence(`docs/prospective/${f}`)?.record).filter(Boolean) : [],
     stages: getStages(),
     flowEdges: getFlowEdges(),
     tierLabels: getTierLabels(),

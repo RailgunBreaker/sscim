@@ -2,6 +2,11 @@ import { COMP_META } from './compMeta.js';
 import { buildFacilityLayer } from '../engine/facilities.js';
 import { buildObservedAnalysis } from '../engine/observedAnalysis.js';
 import { buildFinancialEvidence } from '../engine/financialEvidence.js';
+import { chainLossEvidence } from '../engine/chainLossEvidence.js';
+import { chainLossAccounts } from '../engine/chainLossAccounts.js';
+import { lossReconciliation } from '../engine/lossReconciliation.js';
+import { supplierLossAllocation } from '../engine/supplierLossAllocation.js';
+import { semiconductorLossFollowup } from '../engine/semiconductorLossFollowup.js';
 
 /* Shapes a raw vault bundle into the object the engine and the UI consume.
 
@@ -29,6 +34,19 @@ export function buildVaultData(bundle) {
     OBSERVED_ANALYSIS: buildObservedAnalysis({ ...bundle.observedData, asOf: bundle.meta?.snapshotDate }),
     FINANCIAL_EVIDENCE: buildFinancialEvidence(bundle.observedData?.financialOutcomes, bundle.meta?.snapshotDate),
     REVENUE_VALIDATION: bundle.revenueValidation || null,
+    CHAIN_LOSS: chainLossEvidence(bundle.chainLossEvidence || {}, bundle.meta?.snapshotDate),
+    CHAIN_ACCOUNTS: chainLossAccounts(bundle.chainLossEvidence || {}, bundle.meta?.snapshotDate),
+    LOSS_RECONCILIATION: lossReconciliation(bundle.lossReconciliations || {}, bundle.meta?.snapshotDate),
+    SUPPLIER_LOSS_ALLOCATION: supplierLossAllocation(bundle.supplierLossAllocations || {}, bundle.meta?.snapshotDate),
+    SEMICONDUCTOR_LOSS_FOLLOWUP: semiconductorLossFollowup(bundle.semiconductorLossFollowup || {}, bundle.meta?.snapshotDate),
+    LOSS_FILING_MONITOR: Array.isArray(bundle.lossFilingMonitor?.checks) && Array.isArray(bundle.lossFilingMonitor?.candidates) ? bundle.lossFilingMonitor : null,
+    RECOVERY_CALIBRATION: bundle.recoveryCalibration?.status === 'exploratory_empirical_fit' ? bundle.recoveryCalibration : null,
+    PHYSICAL_LOSSES: Array.isArray(bundle.physicalLosses?.records) ? bundle.physicalLosses : null,
+    LAG_TWO_VALIDATION: bundle.lagTwoValidation?.status === 'retrospective_horizon_diagnostic' ? bundle.lagTwoValidation : null,
+    PROSPECTIVE_PERFORMANCE: bundle.prospectivePerformance || null,
+    PROSPECTIVE_NEWS: bundle.prospectiveNewsPerformance || null,
+    PROSPECTIVE_NOWCASTS: bundle.prospectiveNowcasts || [],
+    STRUCTURED_CATALOG: bundle.structuredCatalog || null,
     STAGES: bundle.stages,
     FLOW_EDGES: bundle.flowEdges,
     TIER_LABELS: bundle.tierLabels,

@@ -1,0 +1,247 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-09-08",
+  "bases": [
+    {
+      "id": "wdc_contamination_charge",
+      "value": 207,
+      "companyId": "wdc",
+      "incidentId": "nand_contamination_2022",
+      "periodStart": "2021-07-03",
+      "periodEnd": "2022-07-01",
+      "units": "USD million",
+      "metric": "recognized_disaster_cost",
+      "kind": "reported_outcome",
+      "source": {
+        "url": "https://www.sec.gov/Archives/edgar/data/106040/000010604022000055/wdc-20220701.htm",
+        "publicationDate": "2022-08-25",
+        "informationAvailableDate": "2022-08-25",
+        "supportingSection": "Flash Ventures contamination incident and Note 10: fiscal-year charges and recovery from the June 2019 power outage",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-08",
+        "provenance": "Codex primary-source review; Sony table visually checked; not independent adjudication of counterfactual losses"
+      },
+      "claimStatus": "verified",
+      "roundingUnit": 1,
+      "atoms": [
+        "wdc_contamination_fy2022"
+      ],
+      "accountingBasis": "reported_accounting_amount",
+      "permanentEconomicLoss": null,
+      "label": "Contamination charges in cost of revenue",
+      "causeScope": "manufacturing_contamination",
+      "limitations": "Western Digital reported charges; not total Flash Ventures or downstream-customer losses. No doubling by its generally 50% wafer share.",
+      "recordReference": "docs/reference/loss-reconciliations.json#wdc_contamination_fy2022"
+    },
+    {
+      "id": "tsmc_photoresist_charge",
+      "companyId": "tsmc",
+      "incidentId": "photoresist_contamination_2019",
+      "value": 3400,
+      "units": "TWD million",
+      "metric": "cost_of_revenue_charge",
+      "accountingBasis": "IFRS_cost_of_revenue",
+      "periodStart": "2019-01-01",
+      "periodEnd": "2019-03-31",
+      "kind": "reported_outcome",
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-08",
+        "provenance": "Primary issuer disclosures reviewed; Nikon slide visually checked. Disclosure verification does not establish independent causal attribution."
+      },
+      "source": {
+        "url": "https://www.sec.gov/Archives/edgar/data/1046179/000119312522104891/R40.htm",
+        "publicationDate": "2022-04-14",
+        "informationAvailableDate": "2022-04-14",
+        "supportingSection": "Significant Operation Losses: Q1 2019 photoresist charge",
+        "claimStatus": "verified",
+        "filingIndexUrl": "https://www.sec.gov/Archives/edgar/data/1046179/000119312522104891/0001193125-22-104891-index.html"
+      },
+      "label": "TSMC photoresist charge recognized in Q1 2019",
+      "measurementQualification": "Estimated loss recognized in cost of revenue; disclosed here again in the 2021 annual filing."
+    }
+  ],
+  "recoveries": [
+    {
+      "baseId": "wdc_contamination_charge",
+      "companyId": "wdc",
+      "incidentId": "nand_contamination_2022",
+      "units": "USD million",
+      "metric": "recognized_disaster_cost",
+      "accountingBasis": "reported_accounting_amount",
+      "periodStart": "2023-07-01",
+      "periodEnd": "2024-06-28",
+      "kind": "reported_outcome",
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-08",
+        "provenance": "Primary issuer disclosures reviewed; Nikon slide visually checked. Disclosure verification does not establish independent causal attribution."
+      },
+      "source": {
+        "url": "https://www.sec.gov/Archives/edgar/data/106040/000010604024000031/wdc-20240628.htm",
+        "publicationDate": "2024-08-20",
+        "informationAvailableDate": "2024-08-20",
+        "supportingSection": "Note 3 segment gross-profit reconciliation and Note 10 Flash Ventures: 37 total recovery; 36 received from insurers",
+        "claimStatus": "verified",
+        "filingIndexUrl": "https://www.sec.gov/Archives/edgar/data/106040/0000106040-24-000031-index.htm"
+      },
+      "id": "wdc_contamination_recovery_fy2024",
+      "value": 37,
+      "measure": "recognized_recovery",
+      "counterpartyClass": "mixed_or_unspecified",
+      "counterpartyId": null,
+      "includesIds": [
+        "wdc_contamination_insurer_cash_fy2024"
+      ],
+      "label": "FY2024 total recognized recovery"
+    },
+    {
+      "baseId": "wdc_contamination_charge",
+      "companyId": "wdc",
+      "incidentId": "nand_contamination_2022",
+      "units": "USD million",
+      "metric": "recognized_disaster_cost",
+      "accountingBasis": "reported_accounting_amount",
+      "periodStart": "2023-07-01",
+      "periodEnd": "2024-06-28",
+      "kind": "reported_outcome",
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-08",
+        "provenance": "Primary issuer disclosures reviewed; Nikon slide visually checked. Disclosure verification does not establish independent causal attribution."
+      },
+      "source": {
+        "url": "https://www.sec.gov/Archives/edgar/data/106040/000010604024000031/wdc-20240628.htm",
+        "publicationDate": "2024-08-20",
+        "informationAvailableDate": "2024-08-20",
+        "supportingSection": "Note 3 segment gross-profit reconciliation and Note 10 Flash Ventures: 37 total recovery; 36 received from insurers",
+        "claimStatus": "verified",
+        "filingIndexUrl": "https://www.sec.gov/Archives/edgar/data/106040/0000106040-24-000031-index.htm"
+      },
+      "id": "wdc_contamination_insurer_cash_fy2024",
+      "value": 36,
+      "measure": "cash_received",
+      "counterpartyClass": "insurer",
+      "counterpartyId": null,
+      "includesIds": [],
+      "label": "Insurer cash recovery included in the total"
+    }
+  ],
+  "downstream": [
+    {
+      "id": "nikon_imaging_sales_decline_fy2017",
+      "companyId": "nikon",
+      "incidentId": "kumamoto_earthquake_2016",
+      "value": 137.4,
+      "units": "JPY billion",
+      "metric": "year_over_year_sales_decrease",
+      "periodStart": "2016-04-01",
+      "periodEnd": "2017-03-31",
+      "kind": "reported_outcome",
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-08",
+        "provenance": "Primary issuer disclosures reviewed; Nikon slide visually checked. Disclosure verification does not establish independent causal attribution."
+      },
+      "source": {
+        "url": "https://www.nikon.com/company/ir/ir_library/result/pdf/2017/17_all_e.pdf",
+        "publicationDate": "2017-05-11",
+        "informationAvailableDate": "2017-05-11",
+        "supportingSection": "Slide 14: imaging business actual results and multiple drivers of change",
+        "claimStatus": "verified",
+        "sha256": "3f05998279e3526642cede7c92aaaa31c90695616f479a134e04fb34cdf49ed9",
+        "hashBasis": "raw_bytes"
+      },
+      "causalStatus": "multiple_drivers_unseparated",
+      "drivers": [
+        "market_decline",
+        "earthquake_supply_disruption",
+        "foreign_exchange",
+        "product_mix"
+      ],
+      "supplierCompanyId": null,
+      "label": "Imaging sales decline; earthquake contribution not isolated"
+    },
+    {
+      "id": "nikon_imaging_income_decline_fy2017",
+      "companyId": "nikon",
+      "incidentId": "kumamoto_earthquake_2016",
+      "value": 18,
+      "units": "JPY billion",
+      "metric": "year_over_year_operating_income_decrease",
+      "periodStart": "2016-04-01",
+      "periodEnd": "2017-03-31",
+      "kind": "reported_outcome",
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-08",
+        "provenance": "Primary issuer disclosures reviewed; Nikon slide visually checked. Disclosure verification does not establish independent causal attribution."
+      },
+      "source": {
+        "url": "https://www.nikon.com/company/ir/ir_library/result/pdf/2017/17_all_e.pdf",
+        "publicationDate": "2017-05-11",
+        "informationAvailableDate": "2017-05-11",
+        "supportingSection": "Slide 14: imaging business actual results and multiple drivers of change",
+        "claimStatus": "verified",
+        "sha256": "3f05998279e3526642cede7c92aaaa31c90695616f479a134e04fb34cdf49ed9",
+        "hashBasis": "raw_bytes"
+      },
+      "causalStatus": "multiple_drivers_unseparated",
+      "drivers": [
+        "market_decline",
+        "earthquake_supply_disruption",
+        "foreign_exchange",
+        "product_mix",
+        "cost_controls"
+      ],
+      "supplierCompanyId": null,
+      "label": "Imaging operating-income decline; earthquake contribution not isolated"
+    }
+  ],
+  "questions": [
+    {
+      "id": "nand_supplier_reimbursement",
+      "incidentId": "nand_contamination_2022",
+      "status": "not_identified_in_reviewed_sources",
+      "needed": "Named material supplier, incident-specific payment or liability, currency and settlement scope",
+      "reviewedSourceUrls": [
+        "https://www.sec.gov/Archives/edgar/data/106040/000010604024000031/wdc-20240628.htm"
+      ],
+      "nextAction": "Review subsequent WDC and Sandisk filings; do not relabel insurers as material suppliers."
+    },
+    {
+      "id": "photoresist_supplier_reimbursement",
+      "incidentId": "photoresist_contamination_2019",
+      "status": "not_identified_in_reviewed_sources",
+      "needed": "Material supplier identity and disclosed reimbursement amount",
+      "reviewedSourceUrls": [
+        "https://www.sec.gov/Archives/edgar/data/1046179/000119312522104891/R40.htm"
+      ],
+      "nextAction": "Review later TSMC filings and original settlement disclosures; supplier names in unconfirmed press reports are insufficient."
+    },
+    {
+      "id": "nikon_supplier_loss",
+      "incidentId": "kumamoto_earthquake_2016",
+      "status": "causal_component_not_identified",
+      "needed": "Supplier-specific lost deliveries, inventory substitutions, sales deferrals and unrecovered margin",
+      "reviewedSourceUrls": [
+        "https://www.nikon.com/company/ir/ir_library/result/pdf/2017/17_all_e.pdf"
+      ],
+      "nextAction": "Obtain an issuer bridge isolating the earthquake from demand, currency and mitigation effects."
+    }
+  ],
+  "entities": [
+    {
+      "id": "nikon",
+      "type": "company",
+      "name": "Nikon"
+    }
+  ],
+  "limitations": [
+    "Search coverage is not proof that undisclosed compensation does not exist.",
+    "A selected charge less disclosed recoveries is not final cash loss or social damage.",
+    "Year-over-year declines are not causal disruption-loss estimates."
+  ]
+}

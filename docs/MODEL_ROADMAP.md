@@ -31,6 +31,31 @@ stated alongside it — is published at [updates.html](../updates.html). Both ar
 generated from the same entries in `app/src/data/releases.js`, so the page and
 this document cannot drift apart.
 
+### Evidence operations — delivered 9 September 2026
+
+Collection became continuous rather than occasional, and every new claim landed
+with the boundary that keeps it honest.
+
+- an **hourly local workflow** that refreshes original disclosures, captures and
+  scores the prospective forecast, checks source availability and document
+  hashes, ingests news, reruns every evidence evaluator and exports the catalog,
+  under a lock, with per-step status and a degraded-run marker;
+- one **prospective revenue forecast** captured before its outcome, with input
+  dataset, protocol and engine archived by content hash — one captured, zero
+  scored, one pending;
+- **four disclosed-loss accounting scopes** — reconciliation, supplier
+  allocation, physical production losses and reimbursement follow-up — which
+  are never added together and leave unknown attribution null;
+- a **recovery-duration fit** over six reported factory recoveries that beats
+  the 60-day default in one temporal test, loses to simpler predictors overall,
+  and promotes no global parameter;
+- a **queryable JSON/SQLite catalog** of every analytical dataset, with
+  per-record evidence status, sources and typed scalar leaves.
+
+None of it establishes prospective accuracy or chain-wide loss: the captured
+forecast has no outcome yet, the historical tests reuse inspected samples, and
+the loss ledgers cover selected issuers rather than the chain.
+
 ### Live-first release — delivered, current as of 22 August 2026
 
 The dashboard stopped offering ways to invent events and started offering the
@@ -161,6 +186,17 @@ operate and diagnose:
 - evaluate an optional managed always-on API without removing the static
   fallback.
 
+**In progress as of 9 September 2026.** An hourly local workflow
+(`node server/scripts/run-operations.mjs`) refreshes original disclosures,
+captures and scores the prospective forecast, checks source availability and
+document hashes, ingests news, reruns every evidence evaluator and exports the
+structured catalog. It records per-step status, attempts and timestamps, marks
+a run degraded when a required step fails, and holds a workflow lock so two
+copies cannot write at once. This is a local scheduled task on one machine, not
+a managed service: it does not publish, approve events, or deploy, and the
+machine's own task status is the authoritative execution state. See
+[structured evidence and prospective operations](STRUCTURED_EVIDENCE.md).
+
 ### 2. Historical and research access — planned
 
 - retain longer, denser Chain Index and event histories;
@@ -271,6 +307,24 @@ A defensible calibration programme would:
 Until that work succeeds, SSCIM outputs remain comparative modeled
 sensitivities—not probabilities, forecasts, realized losses, or investment
 signals.
+
+**Where this stands on 9 September 2026.** Steps 1, 3, 4 and 5 have been
+carried out for two scoped targets, and neither promoted a model parameter:
+
+- a historical TSMC revenue nowcast that beats its declared baselines on
+  original source vintages, with one prospective forecast captured, pending and
+  unscored — [predictive validation](PREDICTIVE_VALIDATION.md);
+- a recovery-duration fit over six reported factory recoveries across five
+  incidents, which beats the 60-day global default on the one 2026 temporal
+  test and loses to both the issuer's own target and a simple empirical median
+  overall — [recovery calibration](RECOVERY_CALIBRATION.md).
+
+Every parameter in `app/src/engine/registry.js` therefore still reads
+`status: assumption`. Reported disruption losses are accumulating in four
+separate accounting scopes that cannot be added together
+([chain loss accounting](CHAIN_LOSS_ACCOUNTING.md)), which is evidence about
+the outcomes step 2 would need — not the held-out chain-wide outcome set that
+calibration requires.
 
 ## Release gates
 

@@ -1,0 +1,807 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-09-08",
+  "records": [
+    {
+      "id": "sony_fy16_consolidated",
+      "value": 52.8,
+      "atoms": [
+        "semiconductor_damage",
+        "semiconductor_recovery",
+        "semiconductor_opportunity",
+        "imaging_opportunity",
+        "corporate_opportunity"
+      ],
+      "companyId": "sony",
+      "incidentId": "kumamoto_earthquake_2016",
+      "periodStart": "2016-04-01",
+      "periodEnd": "2017-03-31",
+      "units": "JPY billion",
+      "roundingUnit": 0.1,
+      "metric": "operating_income_reduction",
+      "causeScope": "earthquake",
+      "accountingBasis": "issuer_estimate_before_insurance",
+      "kind": "issuer_retrospective_estimate",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.sony.com/SonyInfo/IR/library/presen/er/16q4_sonypre.pdf",
+        "publicationDate": "2017-04-28",
+        "informationAvailableDate": "2017-04-28",
+        "supportingSection": "PDF page 3, slide 5: FY16 earthquake impact table, annual and quarterly columns; excludes insurance recoveries",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-08",
+        "provenance": "Codex primary-source review; Sony table visually checked; not independent adjudication of counterfactual losses"
+      },
+      "sourceSignedAmount": -52.8,
+      "permanentEconomicLoss": null,
+      "label": "Consolidated operating-income impact"
+    },
+    {
+      "id": "sony_fy16_semiconductors",
+      "value": 38.8,
+      "atoms": [
+        "semiconductor_damage",
+        "semiconductor_recovery",
+        "semiconductor_opportunity"
+      ],
+      "companyId": "sony",
+      "incidentId": "kumamoto_earthquake_2016",
+      "periodStart": "2016-04-01",
+      "periodEnd": "2017-03-31",
+      "units": "JPY billion",
+      "roundingUnit": 0.1,
+      "metric": "operating_income_reduction",
+      "causeScope": "earthquake",
+      "accountingBasis": "issuer_estimate_before_insurance",
+      "kind": "issuer_retrospective_estimate",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.sony.com/SonyInfo/IR/library/presen/er/16q4_sonypre.pdf",
+        "publicationDate": "2017-04-28",
+        "informationAvailableDate": "2017-04-28",
+        "supportingSection": "PDF page 3, slide 5: FY16 earthquake impact table, annual and quarterly columns; excludes insurance recoveries",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-08",
+        "provenance": "Codex primary-source review; Sony table visually checked; not independent adjudication of counterfactual losses"
+      },
+      "sourceSignedAmount": -38.8,
+      "permanentEconomicLoss": null,
+      "label": "Semiconductors total"
+    },
+    {
+      "id": "sony_fy16_imaging",
+      "value": 10.5,
+      "atoms": [
+        "imaging_opportunity"
+      ],
+      "companyId": "sony",
+      "incidentId": "kumamoto_earthquake_2016",
+      "periodStart": "2016-04-01",
+      "periodEnd": "2017-03-31",
+      "units": "JPY billion",
+      "roundingUnit": 0.1,
+      "metric": "operating_income_reduction",
+      "causeScope": "earthquake",
+      "accountingBasis": "issuer_estimate_before_insurance",
+      "kind": "issuer_retrospective_estimate",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.sony.com/SonyInfo/IR/library/presen/er/16q4_sonypre.pdf",
+        "publicationDate": "2017-04-28",
+        "informationAvailableDate": "2017-04-28",
+        "supportingSection": "PDF page 3, slide 5: FY16 earthquake impact table, annual and quarterly columns; excludes insurance recoveries",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-08",
+        "provenance": "Codex primary-source review; Sony table visually checked; not independent adjudication of counterfactual losses"
+      },
+      "sourceSignedAmount": -10.5,
+      "permanentEconomicLoss": null,
+      "label": "Imaging opportunity losses"
+    },
+    {
+      "id": "sony_fy16_corporate",
+      "value": 3.5,
+      "atoms": [
+        "corporate_opportunity"
+      ],
+      "companyId": "sony",
+      "incidentId": "kumamoto_earthquake_2016",
+      "periodStart": "2016-04-01",
+      "periodEnd": "2017-03-31",
+      "units": "JPY billion",
+      "roundingUnit": 0.1,
+      "metric": "operating_income_reduction",
+      "causeScope": "earthquake",
+      "accountingBasis": "issuer_estimate_before_insurance",
+      "kind": "issuer_retrospective_estimate",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.sony.com/SonyInfo/IR/library/presen/er/16q4_sonypre.pdf",
+        "publicationDate": "2017-04-28",
+        "informationAvailableDate": "2017-04-28",
+        "supportingSection": "PDF page 3, slide 5: FY16 earthquake impact table, annual and quarterly columns; excludes insurance recoveries",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-08",
+        "provenance": "Codex primary-source review; Sony table visually checked; not independent adjudication of counterfactual losses"
+      },
+      "sourceSignedAmount": -3.5,
+      "permanentEconomicLoss": null,
+      "label": "Corporate unallocated fixed costs"
+    },
+    {
+      "id": "sony_fy16_damage",
+      "value": 16.7,
+      "atoms": [
+        "semiconductor_damage"
+      ],
+      "companyId": "sony",
+      "incidentId": "kumamoto_earthquake_2016",
+      "periodStart": "2016-04-01",
+      "periodEnd": "2017-03-31",
+      "units": "JPY billion",
+      "roundingUnit": 0.1,
+      "metric": "operating_income_reduction",
+      "causeScope": "earthquake",
+      "accountingBasis": "issuer_estimate_before_insurance",
+      "kind": "issuer_retrospective_estimate",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.sony.com/SonyInfo/IR/library/presen/er/16q4_sonypre.pdf",
+        "publicationDate": "2017-04-28",
+        "informationAvailableDate": "2017-04-28",
+        "supportingSection": "PDF page 3, slide 5: FY16 earthquake impact table, annual and quarterly columns; excludes insurance recoveries",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-08",
+        "provenance": "Codex primary-source review; Sony table visually checked; not independent adjudication of counterfactual losses"
+      },
+      "sourceSignedAmount": -16.7,
+      "permanentEconomicLoss": null,
+      "label": "Physical damage"
+    },
+    {
+      "id": "sony_fy16_recovery",
+      "value": 1.8,
+      "atoms": [
+        "semiconductor_recovery"
+      ],
+      "companyId": "sony",
+      "incidentId": "kumamoto_earthquake_2016",
+      "periodStart": "2016-04-01",
+      "periodEnd": "2017-03-31",
+      "units": "JPY billion",
+      "roundingUnit": 0.1,
+      "metric": "operating_income_reduction",
+      "causeScope": "earthquake",
+      "accountingBasis": "issuer_estimate_before_insurance",
+      "kind": "issuer_retrospective_estimate",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.sony.com/SonyInfo/IR/library/presen/er/16q4_sonypre.pdf",
+        "publicationDate": "2017-04-28",
+        "informationAvailableDate": "2017-04-28",
+        "supportingSection": "PDF page 3, slide 5: FY16 earthquake impact table, annual and quarterly columns; excludes insurance recoveries",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-08",
+        "provenance": "Codex primary-source review; Sony table visually checked; not independent adjudication of counterfactual losses"
+      },
+      "sourceSignedAmount": -1.8,
+      "permanentEconomicLoss": null,
+      "label": "Recovery expenses and others"
+    },
+    {
+      "id": "sony_fy16_semiconductor_opportunity",
+      "value": 20.3,
+      "atoms": [
+        "semiconductor_opportunity"
+      ],
+      "companyId": "sony",
+      "incidentId": "kumamoto_earthquake_2016",
+      "periodStart": "2016-04-01",
+      "periodEnd": "2017-03-31",
+      "units": "JPY billion",
+      "roundingUnit": 0.1,
+      "metric": "operating_income_reduction",
+      "causeScope": "earthquake",
+      "accountingBasis": "issuer_estimate_before_insurance",
+      "kind": "issuer_retrospective_estimate",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.sony.com/SonyInfo/IR/library/presen/er/16q4_sonypre.pdf",
+        "publicationDate": "2017-04-28",
+        "informationAvailableDate": "2017-04-28",
+        "supportingSection": "PDF page 3, slide 5: FY16 earthquake impact table, annual and quarterly columns; excludes insurance recoveries",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-08",
+        "provenance": "Codex primary-source review; Sony table visually checked; not independent adjudication of counterfactual losses"
+      },
+      "sourceSignedAmount": -20.3,
+      "permanentEconomicLoss": null,
+      "label": "Semiconductor opportunity losses"
+    },
+    {
+      "id": "sony_fy16_all_opportunity",
+      "value": 34.3,
+      "atoms": [
+        "semiconductor_opportunity",
+        "imaging_opportunity",
+        "corporate_opportunity"
+      ],
+      "companyId": "sony",
+      "incidentId": "kumamoto_earthquake_2016",
+      "periodStart": "2016-04-01",
+      "periodEnd": "2017-03-31",
+      "units": "JPY billion",
+      "roundingUnit": 0.1,
+      "metric": "operating_income_reduction",
+      "causeScope": "earthquake",
+      "accountingBasis": "issuer_estimate_before_insurance",
+      "kind": "issuer_retrospective_estimate",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.sony.com/SonyInfo/IR/library/presen/er/16q4_sonypre.pdf",
+        "publicationDate": "2017-04-28",
+        "informationAvailableDate": "2017-04-28",
+        "supportingSection": "PDF page 3, slide 5: FY16 earthquake impact table, annual and quarterly columns; excludes insurance recoveries",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-08",
+        "provenance": "Codex primary-source review; Sony table visually checked; not independent adjudication of counterfactual losses"
+      },
+      "sourceSignedAmount": -34.3,
+      "permanentEconomicLoss": null,
+      "label": "Consolidated opportunity losses"
+    },
+    {
+      "id": "sony_fy16_q1",
+      "value": 34.2,
+      "atoms": [
+        "semiconductor_damage",
+        "semiconductor_recovery",
+        "semiconductor_opportunity",
+        "imaging_opportunity",
+        "corporate_opportunity"
+      ],
+      "companyId": "sony",
+      "incidentId": "kumamoto_earthquake_2016",
+      "periodStart": "2016-04-01",
+      "periodEnd": "2016-06-30",
+      "units": "JPY billion",
+      "roundingUnit": 0.1,
+      "metric": "operating_income_reduction",
+      "causeScope": "earthquake",
+      "accountingBasis": "issuer_estimate_before_insurance",
+      "kind": "issuer_retrospective_estimate",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.sony.com/SonyInfo/IR/library/presen/er/16q4_sonypre.pdf",
+        "publicationDate": "2017-04-28",
+        "informationAvailableDate": "2017-04-28",
+        "supportingSection": "PDF page 3, slide 5: FY16 earthquake impact table, annual and quarterly columns; excludes insurance recoveries",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-08",
+        "provenance": "Codex primary-source review; Sony table visually checked; not independent adjudication of counterfactual losses"
+      },
+      "sourceSignedAmount": -34.2,
+      "permanentEconomicLoss": null,
+      "label": "Q1 consolidated impact"
+    },
+    {
+      "id": "sony_fy16_q2",
+      "value": 13.7,
+      "atoms": [
+        "semiconductor_damage",
+        "semiconductor_recovery",
+        "semiconductor_opportunity",
+        "imaging_opportunity",
+        "corporate_opportunity"
+      ],
+      "companyId": "sony",
+      "incidentId": "kumamoto_earthquake_2016",
+      "periodStart": "2016-07-01",
+      "periodEnd": "2016-09-30",
+      "units": "JPY billion",
+      "roundingUnit": 0.1,
+      "metric": "operating_income_reduction",
+      "causeScope": "earthquake",
+      "accountingBasis": "issuer_estimate_before_insurance",
+      "kind": "issuer_retrospective_estimate",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.sony.com/SonyInfo/IR/library/presen/er/16q4_sonypre.pdf",
+        "publicationDate": "2017-04-28",
+        "informationAvailableDate": "2017-04-28",
+        "supportingSection": "PDF page 3, slide 5: FY16 earthquake impact table, annual and quarterly columns; excludes insurance recoveries",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-08",
+        "provenance": "Codex primary-source review; Sony table visually checked; not independent adjudication of counterfactual losses"
+      },
+      "sourceSignedAmount": -13.7,
+      "permanentEconomicLoss": null,
+      "label": "Q2 consolidated impact"
+    },
+    {
+      "id": "sony_fy16_q3",
+      "value": 3.8,
+      "atoms": [
+        "semiconductor_damage",
+        "semiconductor_recovery",
+        "semiconductor_opportunity",
+        "imaging_opportunity",
+        "corporate_opportunity"
+      ],
+      "companyId": "sony",
+      "incidentId": "kumamoto_earthquake_2016",
+      "periodStart": "2016-10-01",
+      "periodEnd": "2016-12-31",
+      "units": "JPY billion",
+      "roundingUnit": 0.1,
+      "metric": "operating_income_reduction",
+      "causeScope": "earthquake",
+      "accountingBasis": "issuer_estimate_before_insurance",
+      "kind": "issuer_retrospective_estimate",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.sony.com/SonyInfo/IR/library/presen/er/16q4_sonypre.pdf",
+        "publicationDate": "2017-04-28",
+        "informationAvailableDate": "2017-04-28",
+        "supportingSection": "PDF page 3, slide 5: FY16 earthquake impact table, annual and quarterly columns; excludes insurance recoveries",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-08",
+        "provenance": "Codex primary-source review; Sony table visually checked; not independent adjudication of counterfactual losses"
+      },
+      "sourceSignedAmount": -3.8,
+      "permanentEconomicLoss": null,
+      "label": "Q3 consolidated impact"
+    },
+    {
+      "id": "sony_fy16_q4",
+      "value": 1.1,
+      "atoms": [
+        "semiconductor_damage",
+        "semiconductor_recovery",
+        "semiconductor_opportunity",
+        "imaging_opportunity",
+        "corporate_opportunity"
+      ],
+      "companyId": "sony",
+      "incidentId": "kumamoto_earthquake_2016",
+      "periodStart": "2017-01-01",
+      "periodEnd": "2017-03-31",
+      "units": "JPY billion",
+      "roundingUnit": 0.1,
+      "metric": "operating_income_reduction",
+      "causeScope": "earthquake",
+      "accountingBasis": "issuer_estimate_before_insurance",
+      "kind": "issuer_retrospective_estimate",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.sony.com/SonyInfo/IR/library/presen/er/16q4_sonypre.pdf",
+        "publicationDate": "2017-04-28",
+        "informationAvailableDate": "2017-04-28",
+        "supportingSection": "PDF page 3, slide 5: FY16 earthquake impact table, annual and quarterly columns; excludes insurance recoveries",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-08",
+        "provenance": "Codex primary-source review; Sony table visually checked; not independent adjudication of counterfactual losses"
+      },
+      "sourceSignedAmount": -1.1,
+      "permanentEconomicLoss": null,
+      "label": "Q4 consolidated impact"
+    },
+    {
+      "id": "wdc_contamination_fy2022",
+      "value": 207,
+      "companyId": "wdc",
+      "incidentId": "flash_ventures_contamination_2022",
+      "periodStart": "2021-07-03",
+      "periodEnd": "2022-07-01",
+      "units": "USD million",
+      "metric": "recognized_disaster_cost",
+      "kind": "reported_outcome",
+      "source": {
+        "url": "https://www.sec.gov/Archives/edgar/data/106040/000010604022000055/wdc-20220701.htm",
+        "publicationDate": "2022-08-25",
+        "informationAvailableDate": "2022-08-25",
+        "supportingSection": "Flash Ventures contamination incident and Note 10: fiscal-year charges and recovery from the June 2019 power outage",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-08",
+        "provenance": "Codex primary-source review; Sony table visually checked; not independent adjudication of counterfactual losses"
+      },
+      "claimStatus": "verified",
+      "roundingUnit": 1,
+      "atoms": [
+        "wdc_contamination_fy2022"
+      ],
+      "accountingBasis": "reported_accounting_amount",
+      "permanentEconomicLoss": null,
+      "label": "Contamination charges in cost of revenue",
+      "causeScope": "manufacturing_contamination",
+      "limitations": "Western Digital reported charges; not total Flash Ventures or downstream-customer losses. No doubling by its generally 50% wafer share."
+    },
+    {
+      "id": "wdc_power_cost_fy2020",
+      "value": 68,
+      "companyId": "wdc",
+      "incidentId": "flash_ventures_power_outage_2019",
+      "periodStart": "2019-06-29",
+      "periodEnd": "2020-07-03",
+      "units": "USD million",
+      "metric": "net_recognized_incident_cost",
+      "kind": "reported_outcome",
+      "source": {
+        "url": "https://www.sec.gov/Archives/edgar/data/106040/000010604022000055/wdc-20220701.htm",
+        "publicationDate": "2022-08-25",
+        "informationAvailableDate": "2022-08-25",
+        "supportingSection": "Flash Ventures contamination incident and Note 10: fiscal-year charges and recovery from the June 2019 power outage",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-08",
+        "provenance": "Codex primary-source review; Sony table visually checked; not independent adjudication of counterfactual losses"
+      },
+      "claimStatus": "verified",
+      "roundingUnit": 1,
+      "atoms": [
+        "wdc_power_cost_fy2020"
+      ],
+      "accountingBasis": "reported_accounting_amount",
+      "permanentEconomicLoss": null,
+      "label": "Power-outage charges",
+      "causeScope": "power_outage",
+      "accountingRole": "charge",
+      "limitations": "Recognized in cost of revenue. Recovery is a transfer; net company expense is not society-wide resource loss."
+    },
+    {
+      "id": "wdc_power_recovery_fy2021",
+      "value": -75,
+      "companyId": "wdc",
+      "incidentId": "flash_ventures_power_outage_2019",
+      "periodStart": "2020-07-04",
+      "periodEnd": "2021-07-02",
+      "units": "USD million",
+      "metric": "net_recognized_incident_cost",
+      "kind": "reported_outcome",
+      "source": {
+        "url": "https://www.sec.gov/Archives/edgar/data/106040/000010604022000055/wdc-20220701.htm",
+        "publicationDate": "2022-08-25",
+        "informationAvailableDate": "2022-08-25",
+        "supportingSection": "Flash Ventures contamination incident and Note 10: fiscal-year charges and recovery from the June 2019 power outage",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-08",
+        "provenance": "Codex primary-source review; Sony table visually checked; not independent adjudication of counterfactual losses"
+      },
+      "claimStatus": "verified",
+      "roundingUnit": 1,
+      "atoms": [
+        "wdc_power_recovery_fy2021"
+      ],
+      "accountingBasis": "reported_accounting_amount",
+      "permanentEconomicLoss": null,
+      "label": "Utility/insurance recovery",
+      "causeScope": "power_outage",
+      "accountingRole": "recovery_transfer",
+      "limitations": "Recognized in cost of revenue. Recovery is a transfer; net company expense is not society-wide resource loss."
+    },
+    {
+      "id": "wdc_power_recovery_fy2022",
+      "value": -7,
+      "companyId": "wdc",
+      "incidentId": "flash_ventures_power_outage_2019",
+      "periodStart": "2021-07-03",
+      "periodEnd": "2022-07-01",
+      "units": "USD million",
+      "metric": "net_recognized_incident_cost",
+      "kind": "reported_outcome",
+      "source": {
+        "url": "https://www.sec.gov/Archives/edgar/data/106040/000010604022000055/wdc-20220701.htm",
+        "publicationDate": "2022-08-25",
+        "informationAvailableDate": "2022-08-25",
+        "supportingSection": "Flash Ventures contamination incident and Note 10: fiscal-year charges and recovery from the June 2019 power outage",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-08",
+        "provenance": "Codex primary-source review; Sony table visually checked; not independent adjudication of counterfactual losses"
+      },
+      "claimStatus": "verified",
+      "roundingUnit": 1,
+      "atoms": [
+        "wdc_power_recovery_fy2022"
+      ],
+      "accountingBasis": "reported_accounting_amount",
+      "permanentEconomicLoss": null,
+      "label": "Utility/insurance recovery",
+      "causeScope": "power_outage",
+      "accountingRole": "recovery_transfer",
+      "limitations": "Recognized in cost of revenue. Recovery is a transfer; net company expense is not society-wide resource loss."
+    },
+    {
+      "id": "nokia_factory_closures_2020",
+      "value": 200,
+      "companyId": "nokia",
+      "incidentId": "nokia_factory_closures_2020",
+      "periodStart": "2020-01-01",
+      "periodEnd": "2020-12-31",
+      "units": "EUR million",
+      "metric": "revenue_timing_impact",
+      "kind": "issuer_retrospective_estimate",
+      "source": {
+        "url": "https://www.nokia.com/newsroom/nokia-corporation-financial-report-for-q4-and-full-year-2020/",
+        "publicationDate": "2021-02-04",
+        "informationAvailableDate": "2021-02-04",
+        "supportingSection": "COVID-19 factory-closure net sales effect; most sales expected to shift to future periods",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-08",
+        "provenance": "Codex primary-source review; Sony table visually checked; not independent adjudication of counterfactual losses"
+      },
+      "claimStatus": "verified",
+      "roundingUnit": 1,
+      "atoms": [
+        "nokia_factory_closures_2020"
+      ],
+      "accountingBasis": "issuer_estimated_net_sales_timing",
+      "permanentEconomicLoss": null,
+      "label": "Factory-closure sales impact, primarily Alcatel Submarine Networks",
+      "causeScope": "covid_factory_closures",
+      "majorityExpectedDeferred": true,
+      "recoveryObserved": false,
+      "limitations": "Issuer expects most sales to shift to later periods. Not evidence of EUR 200 million permanently lost sales, or a semiconductor-only cause."
+    },
+    {
+      "id": "renesas_naka_q2_net",
+      "incidentId": "renesas_naka_fire_2021",
+      "companyId": "renesas",
+      "periodStart": "2021-04-01",
+      "periodEnd": "2021-06-30",
+      "metric": "net_revenue_shortfall",
+      "amount": -12.6,
+      "units": "JPY billion",
+      "kind": "issuer_retrospective_estimate",
+      "measurementBasis": "issuer_attributed_impact",
+      "roundingUnit": 0.1,
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.renesas.com/en/document/ppt/2021-2q-presentation-material",
+        "publicationDate": "2021-07-29",
+        "informationAvailableDate": "2021-07-29",
+        "supportingSection": "Page 15, Fire impact, 2Q Actual column; units confirmed by Q1 table and Q2 transcript",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex primary-document review, including rendered financial tables; not independent human adjudication"
+      },
+      "limitations": "Company-attributed effect for the specified quarter, not an independently identified causal effect. GAAP and non-GAAP are separate outcomes; do not add them together.",
+      "originalRecordId": "renesas_naka_fire_2021_2021-06-30_revenue_impact_reported_outcome",
+      "originDataset": "docs/reference/observed-data.json",
+      "label": "Naka Q2 net revenue effect",
+      "value": 12.6,
+      "atoms": [
+        "shipment_loss",
+        "countermeasures"
+      ],
+      "causeScope": "fire",
+      "accountingBasis": "issuer_attributed_revenue_after_countermeasures",
+      "permanentEconomicLoss": null
+    },
+    {
+      "id": "renesas_naka_q2_gross",
+      "incidentId": "renesas_naka_fire_2021",
+      "companyId": "renesas",
+      "periodStart": "2021-04-01",
+      "periodEnd": "2021-06-30",
+      "metric": "net_revenue_shortfall",
+      "amount": -18.7,
+      "units": "JPY billion",
+      "kind": "issuer_retrospective_estimate",
+      "measurementBasis": "issuer_attributed_impact",
+      "roundingUnit": 0.1,
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.renesas.com/en/document/ppt/2021-2q-presentation-material",
+        "publicationDate": "2021-07-29",
+        "informationAvailableDate": "2021-07-29",
+        "supportingSection": "Page 15, Fire impact, 2Q Actual column; units confirmed by Q1 table and Q2 transcript",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex primary-document review, including rendered financial tables; not independent human adjudication"
+      },
+      "limitations": "Gross shipment-reduction impact before recovery measures; not the net revenue effect.",
+      "originalRecordId": "renesas_naka_fire_2021_2021-06-30_gross_shipment_revenue_impact_reported_outcome",
+      "originDataset": "docs/reference/observed-data.json",
+      "label": "Naka Q2 gross revenue effect",
+      "value": 18.7,
+      "atoms": [
+        "shipment_loss"
+      ],
+      "causeScope": "fire",
+      "accountingBasis": "issuer_attributed_revenue_after_countermeasures",
+      "permanentEconomicLoss": null
+    },
+    {
+      "id": "renesas_naka_q2_recovered",
+      "incidentId": "renesas_naka_fire_2021",
+      "companyId": "renesas",
+      "periodStart": "2021-04-01",
+      "periodEnd": "2021-06-30",
+      "metric": "net_revenue_shortfall",
+      "amount": 6,
+      "units": "JPY billion",
+      "kind": "issuer_retrospective_estimate",
+      "measurementBasis": "issuer_attributed_impact",
+      "roundingUnit": 0.1,
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.renesas.com/en/document/ppt/2021-2q-presentation-material",
+        "publicationDate": "2021-07-29",
+        "informationAvailableDate": "2021-07-29",
+        "supportingSection": "Page 15, Fire impact, 2Q Actual column; units confirmed by Q1 table and Q2 transcript",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-07",
+        "provenance": "Codex primary-document review, including rendered financial tables; not independent human adjudication"
+      },
+      "limitations": "Inventory shipments, alternate production and procurement measures combined. Not a measured inventory-only effect. Published rounded figures do not exactly reconcile to net revenue.",
+      "originalRecordId": "renesas_naka_fire_2021_2021-06-30_revenue_recovered_by_countermeasures_reported_outcome",
+      "originDataset": "docs/reference/observed-data.json",
+      "label": "Naka Q2 recovered revenue effect",
+      "value": -6,
+      "atoms": [
+        "countermeasures"
+      ],
+      "causeScope": "fire",
+      "accountingBasis": "issuer_attributed_revenue_after_countermeasures",
+      "permanentEconomicLoss": null
+    }
+  ],
+  "bridges": [
+    {
+      "id": "sony_segments",
+      "parentId": "sony_fy16_consolidated",
+      "childIds": [
+        "sony_fy16_semiconductors",
+        "sony_fy16_imaging",
+        "sony_fy16_corporate"
+      ],
+      "dimension": "segments"
+    },
+    {
+      "id": "sony_cost_categories",
+      "parentId": "sony_fy16_consolidated",
+      "childIds": [
+        "sony_fy16_damage",
+        "sony_fy16_recovery",
+        "sony_fy16_all_opportunity"
+      ],
+      "dimension": "cost_categories"
+    },
+    {
+      "id": "sony_semiconductor_categories",
+      "parentId": "sony_fy16_semiconductors",
+      "childIds": [
+        "sony_fy16_damage",
+        "sony_fy16_recovery",
+        "sony_fy16_semiconductor_opportunity"
+      ],
+      "dimension": "cost_categories"
+    },
+    {
+      "id": "sony_quarters",
+      "parentId": "sony_fy16_consolidated",
+      "childIds": [
+        "sony_fy16_q1",
+        "sony_fy16_q2",
+        "sony_fy16_q3",
+        "sony_fy16_q4"
+      ],
+      "dimension": "time"
+    },
+    {
+      "id": "renesas_countermeasures",
+      "parentId": "renesas_naka_q2_net",
+      "childIds": [
+        "renesas_naka_q2_gross",
+        "renesas_naka_q2_recovered"
+      ],
+      "dimension": "cost_categories"
+    }
+  ],
+  "sourceArtifacts": [
+    {
+      "url": "https://www.sony.com/SonyInfo/IR/library/presen/er/16q4_sonypre.pdf",
+      "sha256": "504d8788cecec743920442bcb375dcb62c85166878112d4ea7d6ccf1d0a078ed",
+      "inspectedPage": 3,
+      "inspectedSlide": 5,
+      "type": "primary_pdf",
+      "publicationDate": "2017-04-28"
+    }
+  ],
+  "entities": [
+    {
+      "id": "flash_ventures",
+      "type": "company_group",
+      "name": "Flash Ventures joint business ventures"
+    }
+  ],
+  "relationships": [
+    {
+      "id": "flash_ventures_wdc_wafer_contract_2022",
+      "supplier": "flash_ventures",
+      "customer": "wdc",
+      "level": "company_group",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.sec.gov/Archives/edgar/data/106040/000010604022000055/wdc-20220701.htm",
+        "publicationDate": "2022-08-25",
+        "informationAvailableDate": "2022-08-25",
+        "supportingSection": "Flash Ventures contamination incident and Note 10: fiscal-year charges and recovery from the June 2019 power outage",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-08",
+        "provenance": "Codex primary-source review; Sony table visually checked; not independent adjudication of counterfactual losses"
+      },
+      "periodEnd": "2022-07-01",
+      "inputShare": 0.5,
+      "shareQualifier": "generally",
+      "scope": "Western Digital rolling three-month forecast generally equals 50% of Flash Ventures output; half of fixed costs is payable regardless of output purchased.",
+      "relationshipKind": "contractual_wafer_supply",
+      "allocatedIncidentLoss": null,
+      "limitations": "Historical contractual relationship, not plant-to-plant shipment data or proof that incident costs should be doubled."
+    }
+  ],
+  "coverage": [
+    {
+      "scope": "Sony FY2016 disclosed consolidated earthquake operating-income estimate",
+      "status": "reconciliation_available"
+    },
+    {
+      "scope": "Western Digital recognized incident costs and recoveries",
+      "status": "company_accounting_available"
+    },
+    {
+      "scope": "Nokia factory-closure sales timing",
+      "status": "issuer_estimate_available"
+    },
+    {
+      "scope": "Other firms and semiconductor end markets",
+      "status": "not_exhaustively_covered"
+    }
+  ],
+  "limitations": [
+    "A reconciled disclosure is not independent causal validation.",
+    "No cross-company or cross-currency economic-loss total is inferred.",
+    "Revenue deferrals and insurer/utility transfers are not permanent social losses."
+  ]
+}

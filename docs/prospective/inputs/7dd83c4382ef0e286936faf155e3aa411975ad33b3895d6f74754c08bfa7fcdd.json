@@ -1,0 +1,17 @@
+{
+  "version": "tsmc-revenue-lag2-prospective-v1",
+  "recordedOn": "2026-09-08",
+  "target": "Current calendar month TSMC consolidated nominal revenue, TWD million",
+  "informationLagMonths": 2,
+  "growthWindow": 3,
+  "calibrationStart": "2022-01",
+  "calibrationEnd": "2023-12",
+  "nominalCoverage": 0.8,
+  "rule": "Same target month a year earlier times the geometric mean of the latest three available year-over-year revenue ratios. Required last input is target minus two months. No imputation of the missing preceding month.",
+  "modelStatus": "experimental_horizon_extension; the previous lag-one benchmark does not validate this horizon",
+  "prospectiveStart": "2026-09",
+  "recording": "Actual system UTC capture time; target month must be ongoing; every input disclosure must precede capture. Exclusive file creation; no backdating, overwriting or replacement of a forecast for the same model and target.",
+  "evaluation": "Score every captured record against matching original SEC outcome, retain pending cases; report absolute error, baseline error and interval coverage. Never label unobserved future outcomes as successful.",
+  "minimumScoredMonthsForAssessment": 12,
+  "limitations": ["Local hashes detect later modifications but are not independent timestamp attestation.", "Monthly revenue performance is not disruption-loss or chain-wide causal validation.", "Prospective performance cannot be known before the outcomes occur."]
+}

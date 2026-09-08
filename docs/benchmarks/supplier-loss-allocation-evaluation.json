@@ -1,0 +1,478 @@
+{
+  "asOf": "2026-09-08",
+  "accounts": [
+    {
+      "id": "gm_bolt_2021",
+      "companyId": "gm",
+      "incidentId": "bolt_battery_recall",
+      "value": 2000,
+      "units": "USD million",
+      "boundaryLabel": "GM recall charges disclosed October 2021",
+      "costBoundaryId": "gm_bolt_2021",
+      "perspectiveId": "gm",
+      "accountingBasis": "reported_charges_with_estimated_recovery",
+      "metric": "recall_cost",
+      "scopeType": "recall_population",
+      "snapshotDate": "2021-10-12",
+      "periodStart": null,
+      "periodEnd": null,
+      "sector": "batteries_and_vehicles",
+      "causeScope": "battery_defect_recall",
+      "kind": "reported_outcome",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://news.gm.com/home.detail.html/Pages/news/us/en/2021/oct/1012-boltev.html",
+        "publicationDate": "2021-10-12",
+        "informationAvailableDate": "2021-10-12",
+        "supportingSection": "Opening two paragraphs: recall charges and estimated recovery",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-08",
+        "provenance": "Primary-source review; Kioxia table and LG circular page visually checked. Verification concerns disclosure, not causal accuracy."
+      },
+      "valueTiming": "Charges disclosed by October 12, 2021; recovery announced for Q3 earnings.",
+      "status": "allocated_for_disclosed_base",
+      "reason": null,
+      "allocations": [
+        {
+          "ruleId": "gm_lg_recovery",
+          "supplierCompanyId": "lg_electronics",
+          "amount": 1900,
+          "units": "USD million",
+          "method": "fixed_amount",
+          "qualifier": null,
+          "settlementStatus": "estimated_recovery",
+          "derived": false,
+          "source": {
+            "url": "https://news.gm.com/home.detail.html/Pages/news/us/en/2021/oct/1012-boltev.html",
+            "publicationDate": "2021-10-12",
+            "informationAvailableDate": "2021-10-12",
+            "supportingSection": "Opening two paragraphs: recall charges and estimated recovery",
+            "claimStatus": "verified"
+          },
+          "cashPaid": null
+        }
+      ],
+      "allocatedAmount": 1900,
+      "remainder": 100,
+      "remainderMeaning": "Portion of the disclosed base outside the named supplier allocation; not a measured final cash burden.",
+      "conservationResidual": 0,
+      "allocationIsEstimate": true,
+      "finalCashLoss": null,
+      "allIndustryLoss": null
+    },
+    {
+      "id": "lg_bolt_estimate",
+      "companyId": "lg_electronics",
+      "incidentId": "bolt_battery_recall",
+      "value": 1400,
+      "units": "KRW billion",
+      "boundaryLabel": "Combined LG reimbursement estimate, as described in June 2024",
+      "costBoundaryId": "lg_bolt_estimate",
+      "perspectiveId": "lg_combined",
+      "accountingBasis": "disclosed_recall_cost_estimate",
+      "metric": "recall_cost",
+      "scopeType": "recall_population",
+      "snapshotDate": "2024-06-24",
+      "periodStart": null,
+      "periodEnd": null,
+      "sector": "batteries_and_vehicles",
+      "causeScope": "battery_defect_recall",
+      "kind": "issuer_retrospective_estimate",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://links.sgx.com/FileOpen/LGES%202024%20-%20Final%20Offering%20Circular%20%28dd%2024.06.24%29.ashx?App=Prospectus&FileID=63194",
+        "publicationDate": "2024-06-24",
+        "informationAvailableDate": "2024-06-24",
+        "supportingSection": "PDF pages 22–23, printed pages 13–14: Hyundai replacement agreement and Bolt cost sharing",
+        "claimStatus": "verified",
+        "sha256": "36436f4b51c12bafc2f8cd939054390b4b6b262e80e4719bd42a9bc832d2428d",
+        "hashBasis": "raw_bytes"
+      },
+      "review": {
+        "verifiedAt": "2026-09-08",
+        "provenance": "Primary-source review; Kioxia table and LG circular page visually checked. Verification concerns disclosure, not causal accuracy."
+      },
+      "valueTiming": "Historical October 2021 estimate; July 2022 sharing agreement. Not a refreshed final cost.",
+      "status": "allocated_for_disclosed_base",
+      "reason": null,
+      "allocations": [
+        {
+          "ruleId": "lg_equal_sharing",
+          "supplierCompanyId": "lg_energy_solution",
+          "amount": 700,
+          "units": "KRW billion",
+          "method": "cost_share",
+          "qualifier": null,
+          "settlementStatus": "agreed_cost_share",
+          "derived": true,
+          "source": {
+            "url": "https://links.sgx.com/FileOpen/LGES%202024%20-%20Final%20Offering%20Circular%20%28dd%2024.06.24%29.ashx?App=Prospectus&FileID=63194",
+            "publicationDate": "2024-06-24",
+            "informationAvailableDate": "2024-06-24",
+            "supportingSection": "PDF pages 22–23, printed pages 13–14: Hyundai replacement agreement and Bolt cost sharing",
+            "claimStatus": "verified",
+            "sha256": "36436f4b51c12bafc2f8cd939054390b4b6b262e80e4719bd42a9bc832d2428d",
+            "hashBasis": "raw_bytes"
+          },
+          "cashPaid": null
+        }
+      ],
+      "allocatedAmount": 700,
+      "remainder": 700,
+      "remainderMeaning": "Portion of the disclosed base outside the named supplier allocation; not a measured final cash burden.",
+      "conservationResidual": 0,
+      "allocationIsEstimate": true,
+      "finalCashLoss": null,
+      "allIndustryLoss": null
+    },
+    {
+      "id": "hyundai_replacement_estimate",
+      "companyId": "hyundai",
+      "incidentId": "hyundai_battery_recall",
+      "value": 1000,
+      "units": "KRW billion",
+      "boundaryLabel": "Hyundai battery-system replacement estimate",
+      "costBoundaryId": "hyundai_replacement_estimate",
+      "perspectiveId": "lges_disclosure",
+      "accountingBasis": "disclosed_recall_cost_estimate",
+      "metric": "recall_cost",
+      "scopeType": "recall_population",
+      "snapshotDate": "2024-06-24",
+      "periodStart": null,
+      "periodEnd": null,
+      "sector": "batteries_and_vehicles",
+      "causeScope": "battery_defect_recall",
+      "kind": "issuer_retrospective_estimate",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://links.sgx.com/FileOpen/LGES%202024%20-%20Final%20Offering%20Circular%20%28dd%2024.06.24%29.ashx?App=Prospectus&FileID=63194",
+        "publicationDate": "2024-06-24",
+        "informationAvailableDate": "2024-06-24",
+        "supportingSection": "PDF pages 22–23, printed pages 13–14: Hyundai replacement agreement and Bolt cost sharing",
+        "claimStatus": "verified",
+        "sha256": "36436f4b51c12bafc2f8cd939054390b4b6b262e80e4719bd42a9bc832d2428d",
+        "hashBasis": "raw_bytes"
+      },
+      "review": {
+        "verifiedAt": "2026-09-08",
+        "provenance": "Primary-source review; Kioxia table and LG circular page visually checked. Verification concerns disclosure, not causal accuracy."
+      },
+      "qualifier": "approximately",
+      "valueTiming": "March 2021 agreement described in June 2024; cumulative cash paid not disclosed here.",
+      "status": "allocated_for_disclosed_base",
+      "reason": null,
+      "allocations": [
+        {
+          "ruleId": "hyundai_lges_sharing",
+          "supplierCompanyId": "lg_energy_solution",
+          "amount": 700,
+          "units": "KRW billion",
+          "method": "cost_share",
+          "qualifier": "approximately",
+          "settlementStatus": "monthly_payments_reported_amount_unknown",
+          "derived": true,
+          "source": {
+            "url": "https://links.sgx.com/FileOpen/LGES%202024%20-%20Final%20Offering%20Circular%20%28dd%2024.06.24%29.ashx?App=Prospectus&FileID=63194",
+            "publicationDate": "2024-06-24",
+            "informationAvailableDate": "2024-06-24",
+            "supportingSection": "PDF pages 22–23, printed pages 13–14: Hyundai replacement agreement and Bolt cost sharing",
+            "claimStatus": "verified",
+            "sha256": "36436f4b51c12bafc2f8cd939054390b4b6b262e80e4719bd42a9bc832d2428d",
+            "hashBasis": "raw_bytes"
+          },
+          "cashPaid": null
+        }
+      ],
+      "allocatedAmount": 700,
+      "remainder": 300,
+      "remainderMeaning": "Portion of the disclosed base outside the named supplier allocation; not a measured final cash burden.",
+      "conservationResidual": 0,
+      "allocationIsEstimate": true,
+      "finalCashLoss": null,
+      "allIndustryLoss": null
+    },
+    {
+      "id": "kioxia_contamination_fy2021",
+      "companyId": "kioxia",
+      "incidentId": "nand_contamination_2022",
+      "value": 33.2,
+      "units": "JPY billion",
+      "boundaryLabel": "Kioxia FY2021 contamination charge",
+      "costBoundaryId": "kioxia_contamination_fy2021",
+      "perspectiveId": "kioxia",
+      "accountingBasis": "IFRS_operating_income_charge",
+      "metric": "operating_income_reduction",
+      "scopeType": "accounting_period",
+      "snapshotDate": "2022-05-13",
+      "periodStart": "2021-04-01",
+      "periodEnd": "2022-03-31",
+      "sector": "semiconductors",
+      "causeScope": "material_contamination",
+      "kind": "reported_outcome",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.kioxia-holdings.com/content/dam/kioxia-hd/en-jp/about/asset/Financial-Results-FY2021-4Q-en.pdf",
+        "publicationDate": "2022-05-13",
+        "informationAvailableDate": "2022-05-13",
+        "supportingSection": "Page 3, FY21 contamination-related charges and footnote 3",
+        "claimStatus": "verified",
+        "sha256": "c0e6c289db7b48708e14e194774cc784db437360832d24fa95530681aa42e54f",
+        "hashBasis": "raw_bytes"
+      },
+      "review": {
+        "verifiedAt": "2026-09-08",
+        "provenance": "Primary-source review; Kioxia table and LG circular page visually checked. Verification concerns disclosure, not causal accuracy."
+      },
+      "sourceSignedAmount": -33.2,
+      "status": "supplier_allocation_unknown",
+      "reason": null,
+      "allocations": [],
+      "allocatedAmount": null,
+      "remainder": null,
+      "remainderMeaning": "Portion of the disclosed base outside the named supplier allocation; not a measured final cash burden.",
+      "conservationResidual": null,
+      "allocationIsEstimate": null,
+      "finalCashLoss": null,
+      "allIndustryLoss": null
+    },
+    {
+      "id": "wdc_contamination_linked",
+      "companyId": "wdc",
+      "incidentId": "nand_contamination_2022",
+      "value": 207,
+      "units": "USD million",
+      "boundaryLabel": "Western Digital FY2022 contamination charge",
+      "costBoundaryId": "wdc_contamination_linked",
+      "perspectiveId": "wdc",
+      "accountingBasis": "reported_accounting_amount",
+      "metric": "recognized_disaster_cost",
+      "scopeType": "accounting_period",
+      "snapshotDate": "2022-08-25",
+      "periodStart": "2021-07-03",
+      "periodEnd": "2022-07-01",
+      "sector": "semiconductors",
+      "causeScope": "material_contamination",
+      "kind": "reported_outcome",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.sec.gov/Archives/edgar/data/106040/000010604022000055/wdc-20220701.htm",
+        "publicationDate": "2022-08-25",
+        "informationAvailableDate": "2022-08-25",
+        "supportingSection": "Flash Ventures contamination incident and Note 10: fiscal-year charges and recovery from the June 2019 power outage",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-08",
+        "provenance": "Primary-source review; Kioxia table and LG circular page visually checked. Verification concerns disclosure, not causal accuracy."
+      },
+      "recordReference": "docs/reference/loss-reconciliations.json#wdc_contamination_fy2022",
+      "status": "supplier_allocation_unknown",
+      "reason": null,
+      "allocations": [],
+      "allocatedAmount": null,
+      "remainder": null,
+      "remainderMeaning": "Portion of the disclosed base outside the named supplier allocation; not a measured final cash burden.",
+      "conservationResidual": null,
+      "allocationIsEstimate": null,
+      "finalCashLoss": null,
+      "allIndustryLoss": null
+    }
+  ],
+  "rules": [
+    {
+      "id": "gm_lg_recovery",
+      "baseId": "gm_bolt_2021",
+      "supplierCompanyId": "lg_electronics",
+      "customerCompanyId": "gm",
+      "relationshipKind": "incident_cost_reimbursement",
+      "costBoundaryId": "gm_bolt_2021",
+      "incidentId": "bolt_battery_recall",
+      "units": "USD million",
+      "accountingBasis": "reported_charges_with_estimated_recovery",
+      "metric": "recall_cost",
+      "causeScope": "battery_defect_recall",
+      "scopeType": "recall_population",
+      "perspectiveId": "gm",
+      "snapshotDate": "2021-10-12",
+      "periodStart": null,
+      "periodEnd": null,
+      "type": "fixed_amount",
+      "value": 1900,
+      "kind": "issuer_retrospective_estimate",
+      "effectiveMonth": "2021-10",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://news.gm.com/home.detail.html/Pages/news/us/en/2021/oct/1012-boltev.html",
+        "publicationDate": "2021-10-12",
+        "informationAvailableDate": "2021-10-12",
+        "supportingSection": "Opening two paragraphs: recall charges and estimated recovery",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-08",
+        "provenance": "Primary-source review; Kioxia table and LG circular page visually checked. Verification concerns disclosure, not causal accuracy."
+      },
+      "settlementStatus": "estimated_recovery",
+      "amountMeaning": "GM estimated recovery from LG; cash receipt not established."
+    },
+    {
+      "id": "lg_equal_sharing",
+      "baseId": "lg_bolt_estimate",
+      "supplierCompanyId": "lg_energy_solution",
+      "customerCompanyId": "lg_electronics",
+      "relationshipKind": "incident_cost_reimbursement",
+      "costBoundaryId": "lg_bolt_estimate",
+      "incidentId": "bolt_battery_recall",
+      "units": "KRW billion",
+      "accountingBasis": "disclosed_recall_cost_estimate",
+      "metric": "recall_cost",
+      "causeScope": "battery_defect_recall",
+      "scopeType": "recall_population",
+      "perspectiveId": "lg_combined",
+      "snapshotDate": "2024-06-24",
+      "periodStart": null,
+      "periodEnd": null,
+      "type": "cost_share",
+      "value": 0.5,
+      "kind": "disclosed_contract",
+      "effectiveMonth": "2022-07",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://links.sgx.com/FileOpen/LGES%202024%20-%20Final%20Offering%20Circular%20%28dd%2024.06.24%29.ashx?App=Prospectus&FileID=63194",
+        "publicationDate": "2024-06-24",
+        "informationAvailableDate": "2024-06-24",
+        "supportingSection": "PDF pages 22–23, printed pages 13–14: Hyundai replacement agreement and Bolt cost sharing",
+        "claimStatus": "verified",
+        "sha256": "36436f4b51c12bafc2f8cd939054390b4b6b262e80e4719bd42a9bc832d2428d",
+        "hashBasis": "raw_bytes"
+      },
+      "review": {
+        "verifiedAt": "2026-09-08",
+        "provenance": "Primary-source review; Kioxia table and LG circular page visually checked. Verification concerns disclosure, not causal accuracy."
+      },
+      "settlementStatus": "agreed_cost_share",
+      "amountMeaning": "Application to the historical combined estimate; not a final payment."
+    },
+    {
+      "id": "hyundai_lges_sharing",
+      "baseId": "hyundai_replacement_estimate",
+      "supplierCompanyId": "lg_energy_solution",
+      "customerCompanyId": "hyundai",
+      "relationshipKind": "incident_cost_reimbursement",
+      "costBoundaryId": "hyundai_replacement_estimate",
+      "incidentId": "hyundai_battery_recall",
+      "units": "KRW billion",
+      "accountingBasis": "disclosed_recall_cost_estimate",
+      "metric": "recall_cost",
+      "causeScope": "battery_defect_recall",
+      "scopeType": "recall_population",
+      "perspectiveId": "lges_disclosure",
+      "snapshotDate": "2024-06-24",
+      "periodStart": null,
+      "periodEnd": null,
+      "type": "cost_share",
+      "value": 0.7,
+      "kind": "disclosed_contract",
+      "effectiveMonth": "2021-03",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://links.sgx.com/FileOpen/LGES%202024%20-%20Final%20Offering%20Circular%20%28dd%2024.06.24%29.ashx?App=Prospectus&FileID=63194",
+        "publicationDate": "2024-06-24",
+        "informationAvailableDate": "2024-06-24",
+        "supportingSection": "PDF pages 22–23, printed pages 13–14: Hyundai replacement agreement and Bolt cost sharing",
+        "claimStatus": "verified",
+        "sha256": "36436f4b51c12bafc2f8cd939054390b4b6b262e80e4719bd42a9bc832d2428d",
+        "hashBasis": "raw_bytes"
+      },
+      "review": {
+        "verifiedAt": "2026-09-08",
+        "provenance": "Primary-source review; Kioxia table and LG circular page visually checked. Verification concerns disclosure, not causal accuracy."
+      },
+      "qualifier": "approximately",
+      "settlementStatus": "monthly_payments_reported_amount_unknown",
+      "amountMeaning": "Approximate share; monthly payments reported, cumulative paid amount absent."
+    }
+  ],
+  "rejected": [],
+  "scopeGaps": [
+    {
+      "incidentId": "bolt_battery_recall",
+      "sectors": [
+        "batteries_and_vehicles"
+      ],
+      "unmeasured": [
+        "final cash settlement",
+        "consumer losses",
+        "production interruption",
+        "legal costs outside each disclosed base"
+      ],
+      "reason": "GM and LG estimates have different perspectives and currencies; they are overlapping views."
+    },
+    {
+      "incidentId": "hyundai_battery_recall",
+      "sectors": [
+        "batteries_and_vehicles"
+      ],
+      "unmeasured": [
+        "cumulative payments",
+        "losses outside battery replacement"
+      ],
+      "reason": "Replacement estimate covers one disclosed cost boundary."
+    },
+    {
+      "incidentId": "nand_contamination_2022",
+      "sectors": [
+        "semiconductors"
+      ],
+      "unmeasured": [
+        "material supplier identity and reimbursement",
+        "downstream customer losses",
+        "intercompany overlap"
+      ],
+      "reason": "Company charges do not establish supplier responsibility or an additive chain total."
+    }
+  ],
+  "entities": [
+    {
+      "id": "gm",
+      "name": "General Motors",
+      "type": "company"
+    },
+    {
+      "id": "lg_electronics",
+      "name": "LG Electronics",
+      "type": "company"
+    },
+    {
+      "id": "lg_energy_solution",
+      "name": "LG Energy Solution",
+      "type": "company"
+    },
+    {
+      "id": "hyundai",
+      "name": "Hyundai Motor",
+      "type": "company"
+    },
+    {
+      "id": "kioxia",
+      "name": "Kioxia",
+      "type": "company"
+    },
+    {
+      "id": "wdc",
+      "name": "Western Digital",
+      "type": "company"
+    }
+  ],
+  "coverage": {
+    "disclosedBases": 5,
+    "allocatedBases": 3,
+    "unknownSupplierBases": 2,
+    "invalidBases": 0
+  },
+  "allIndustryLoss": null,
+  "crossAccountTotal": null,
+  "limitation": "Different perspectives may describe the same cost. No cross-account total or extrapolation from ownership, output or purchasing shares is computed."
+}

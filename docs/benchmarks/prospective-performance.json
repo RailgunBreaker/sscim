@@ -1,0 +1,52 @@
+{
+  "asOf": "2026-09-08T15:45:18.548Z",
+  "captured": 1,
+  "scored": 0,
+  "pending": 1,
+  "mae": null,
+  "coverage": null,
+  "byModel": [
+    {
+      "modelId": "tsmc-revenue-lag2-prospective-v1",
+      "scored": 0,
+      "mae": null,
+      "coverage": null
+    }
+  ],
+  "operationallyValidated": false,
+  "status": "collecting_prospective_outcomes",
+  "results": [
+    {
+      "modelId": "tsmc-revenue-lag2-prospective-v1",
+      "targetPeriod": "2026-09",
+      "state": "pending_outcome"
+    }
+  ],
+  "metrics": [
+    {
+      "modelId": "tsmc-revenue-lag2-prospective-v1",
+      "captured": 1,
+      "scored": 0,
+      "pending": 1,
+      "mae": null,
+      "baselineMae": null,
+      "wape": null,
+      "improvementOverBaseline": null,
+      "intervalCoverage": null,
+      "meanRelativeIntervalWidth": null,
+      "missingCaptureMonths": [],
+      "assessmentStatus": "collecting_outcomes",
+      "operationallyValidated": false
+    }
+  ],
+  "releaseStatus": [
+    {
+      "modelId": "tsmc-revenue-lag2-prospective-v1",
+      "targetPeriod": "2026-09",
+      "scheduledAt": "2026-10-08T05:30:00Z",
+      "status": "awaiting_scheduled_release",
+      "sourceUrl": "https://investor.tsmc.com/english/financial-calendar",
+      "limitation": "Scheduled press-release time is not an observed outcome or a guaranteed SEC availability time."
+    }
+  ]
+}

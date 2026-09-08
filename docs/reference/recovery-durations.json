@@ -1,0 +1,392 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-09-09",
+  "scope": "Renesas disclosed wafer-input restoration after partial restart, selected Japanese physical outages",
+  "records": [
+    {
+      "id": "kawashiri_2016_duration",
+      "incidentId": "kumamoto_earthquake_2016",
+      "incidentDate": "2016-04-14",
+      "companyId": "renesas",
+      "facilityId": "renesas_kawashiri",
+      "scope": "renesas kawashiri",
+      "metric": "wafer_input_capacity_recovery_duration",
+      "units": "days",
+      "kind": "observed",
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-09",
+        "provenance": "Codex primary-source reading of actual milestones; not independent human adjudication."
+      },
+      "restart": {
+        "date": "2016-04-22",
+        "definition": "partial_manufacturing_process_resumption",
+        "source": {
+          "id": "kumamoto2016_restart",
+          "url": "https://www.renesas.com/en/about/press-room/update-7-impact-2016-kumamoto-earthquake-renesas-electronics-operations-0",
+          "publicationDate": "2016-05-10",
+          "informationAvailableDate": "2016-05-10",
+          "supportingSection": "Kawashiri Factory: actual partial resumption April 22; May 22 is a target here.",
+          "claimStatus": "verified"
+        }
+      },
+      "completion": {
+        "date": "2016-05-22",
+        "definition": "Full pre-incident wafer-input capacity",
+        "source": {
+          "id": "kumamoto2016_complete",
+          "url": "https://www.renesas.com/en/about/newsroom/update-8-final-impact-2016-kumamoto-earthquake-renesas-electronics-operations",
+          "publicationDate": "2016-05-23",
+          "informationAvailableDate": "2016-05-23",
+          "supportingSection": "Restoration completed May 22; overall supplier-chain recovery remains incomplete.",
+          "claimStatus": "verified"
+        }
+      },
+      "source": {
+        "id": "kumamoto2016_complete",
+        "url": "https://www.renesas.com/en/about/newsroom/update-8-final-impact-2016-kumamoto-earthquake-renesas-electronics-operations",
+        "publicationDate": "2016-05-23",
+        "informationAvailableDate": "2016-05-23",
+        "supportingSection": "Restoration completed May 22; overall supplier-chain recovery remains incomplete.",
+        "claimStatus": "verified"
+      },
+      "datePrecision": "calendar_day",
+      "issuerTarget": {
+        "kind": "issuer_forecast",
+        "durationDays": 30,
+        "qualifier": "scheduled_date",
+        "source": {
+          "id": "kumamoto2016_restart",
+          "url": "https://www.renesas.com/en/about/press-room/update-7-impact-2016-kumamoto-earthquake-renesas-electronics-operations-0",
+          "publicationDate": "2016-05-10",
+          "informationAvailableDate": "2016-05-10",
+          "supportingSection": "Kawashiri Factory: actual partial resumption April 22; May 22 is a target here.",
+          "claimStatus": "verified"
+        }
+      },
+      "limitations": "Elapsed calendar dates, not exact timestamps. Partial restart is not zero production. Endpoint restoration does not recover accumulated lost output or establish a linear trajectory."
+    },
+    {
+      "id": "naka_2021_quake_duration",
+      "incidentId": "fukushima_earthquake_2021",
+      "incidentDate": "2021-02-13",
+      "companyId": "renesas",
+      "facilityId": "renesas_naka",
+      "scope": "renesas naka",
+      "metric": "wafer_input_capacity_recovery_duration",
+      "units": "days",
+      "kind": "observed",
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-09",
+        "provenance": "Codex primary-source reading of actual milestones; not independent human adjudication."
+      },
+      "restart": {
+        "date": "2021-02-15",
+        "definition": "wafer_supply_restart",
+        "source": {
+          "id": "fukushima2021_restart",
+          "url": "https://www.renesas.com/en/about/newsroom/update-2-impact-february-13-earthquake-coast-fukushima-prefecture-renesas-electronics-operation",
+          "publicationDate": "2021-02-15",
+          "informationAvailableDate": "2021-02-15",
+          "supportingSection": "Wafer supply restarted February 15; front-end processes planned for February 16.",
+          "claimStatus": "verified"
+        }
+      },
+      "completion": {
+        "date": "2021-02-21",
+        "definition": "Full pre-incident wafer-input capacity",
+        "source": {
+          "id": "fukushima2021_complete",
+          "url": "https://www.renesas.com/en/about/newsroom/final-update-impact-february-13-earthquake-coast-fukushima-prefecture-renesas-electronics-operation",
+          "publicationDate": "2021-02-22",
+          "informationAvailableDate": "2021-02-22",
+          "supportingSection": "Actual restoration of pre-earthquake wafer-input capacity February 21.",
+          "claimStatus": "verified"
+        }
+      },
+      "source": {
+        "id": "fukushima2021_complete",
+        "url": "https://www.renesas.com/en/about/newsroom/final-update-impact-february-13-earthquake-coast-fukushima-prefecture-renesas-electronics-operation",
+        "publicationDate": "2021-02-22",
+        "informationAvailableDate": "2021-02-22",
+        "supportingSection": "Actual restoration of pre-earthquake wafer-input capacity February 21.",
+        "claimStatus": "verified"
+      },
+      "datePrecision": "calendar_day",
+      "issuerTarget": null,
+      "limitations": "Elapsed calendar dates, not exact timestamps. Partial restart is not zero production. Endpoint restoration does not recover accumulated lost output or establish a linear trajectory."
+    },
+    {
+      "id": "naka_2022_quake_duration",
+      "incidentId": "fukushima_earthquake_2022",
+      "incidentDate": "2022-03-16",
+      "companyId": "renesas",
+      "facilityId": "renesas_naka",
+      "scope": "renesas naka",
+      "metric": "wafer_input_capacity_recovery_duration",
+      "units": "days",
+      "kind": "observed",
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-09",
+        "provenance": "Codex primary-source reading of actual milestones; not independent human adjudication."
+      },
+      "restart": {
+        "date": "2022-03-17",
+        "definition": "partial_test_line_resumption",
+        "source": {
+          "id": "fukushima2022_restart",
+          "url": "https://www.renesas.com/en/about/newsroom/update-2-impact-march-16-earthquake-coast-fukushima-prefecture-renesas-operation",
+          "publicationDate": "2022-03-18",
+          "informationAvailableDate": "2022-03-18",
+          "supportingSection": "Naka and Takasaki: partial test-line production March 17; March 23 full capacity is a forecast.",
+          "claimStatus": "verified"
+        }
+      },
+      "completion": {
+        "date": "2022-03-26",
+        "definition": "Full pre-incident wafer-input capacity",
+        "source": {
+          "id": "fukushima2022_naka_complete",
+          "url": "https://www.renesas.com/en/about/newsroom/update-4-final-impact-march-16-earthquake-coast-fukushima-prefecture-renesas-operation-1",
+          "publicationDate": "2022-03-26",
+          "informationAvailableDate": "2022-03-26",
+          "supportingSection": "Naka actual full wafer-input capacity March 26; lost production still outstanding.",
+          "claimStatus": "verified"
+        }
+      },
+      "source": {
+        "id": "fukushima2022_naka_complete",
+        "url": "https://www.renesas.com/en/about/newsroom/update-4-final-impact-march-16-earthquake-coast-fukushima-prefecture-renesas-operation-1",
+        "publicationDate": "2022-03-26",
+        "informationAvailableDate": "2022-03-26",
+        "supportingSection": "Naka actual full wafer-input capacity March 26; lost production still outstanding.",
+        "claimStatus": "verified"
+      },
+      "datePrecision": "calendar_day",
+      "issuerTarget": {
+        "kind": "issuer_forecast",
+        "durationDays": 6,
+        "qualifier": "scheduled_date",
+        "source": {
+          "id": "fukushima2022_restart",
+          "url": "https://www.renesas.com/en/about/newsroom/update-2-impact-march-16-earthquake-coast-fukushima-prefecture-renesas-operation",
+          "publicationDate": "2022-03-18",
+          "informationAvailableDate": "2022-03-18",
+          "supportingSection": "Naka and Takasaki: partial test-line production March 17; March 23 full capacity is a forecast.",
+          "claimStatus": "verified"
+        }
+      },
+      "limitations": "Elapsed calendar dates, not exact timestamps. Partial restart is not zero production. Endpoint restoration does not recover accumulated lost output or establish a linear trajectory."
+    },
+    {
+      "id": "takasaki_2022_quake_duration",
+      "incidentId": "fukushima_earthquake_2022",
+      "incidentDate": "2022-03-16",
+      "companyId": "renesas",
+      "facilityId": "renesas_takasaki",
+      "scope": "renesas takasaki",
+      "metric": "wafer_input_capacity_recovery_duration",
+      "units": "days",
+      "kind": "observed",
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-09",
+        "provenance": "Codex primary-source reading of actual milestones; not independent human adjudication."
+      },
+      "restart": {
+        "date": "2022-03-17",
+        "definition": "partial_test_line_resumption",
+        "source": {
+          "id": "fukushima2022_restart",
+          "url": "https://www.renesas.com/en/about/newsroom/update-2-impact-march-16-earthquake-coast-fukushima-prefecture-renesas-operation",
+          "publicationDate": "2022-03-18",
+          "informationAvailableDate": "2022-03-18",
+          "supportingSection": "Naka and Takasaki: partial test-line production March 17; March 23 full capacity is a forecast.",
+          "claimStatus": "verified"
+        }
+      },
+      "completion": {
+        "date": "2022-03-23",
+        "definition": "Full pre-incident wafer-input capacity",
+        "source": {
+          "id": "fukushima2022_takasaki_complete",
+          "url": "https://www.renesas.com/en/about/newsroom/update-3-impact-march-16-earthquake-coast-fukushima-prefecture-renesas-operation",
+          "publicationDate": "2022-03-23",
+          "informationAvailableDate": "2022-03-23",
+          "supportingSection": "Takasaki actual full wafer-input capacity March 23; Naka only approximately 50%.",
+          "claimStatus": "verified"
+        }
+      },
+      "source": {
+        "id": "fukushima2022_takasaki_complete",
+        "url": "https://www.renesas.com/en/about/newsroom/update-3-impact-march-16-earthquake-coast-fukushima-prefecture-renesas-operation",
+        "publicationDate": "2022-03-23",
+        "informationAvailableDate": "2022-03-23",
+        "supportingSection": "Takasaki actual full wafer-input capacity March 23; Naka only approximately 50%.",
+        "claimStatus": "verified"
+      },
+      "datePrecision": "calendar_day",
+      "issuerTarget": {
+        "kind": "issuer_forecast",
+        "durationDays": 6,
+        "qualifier": "scheduled_date",
+        "source": {
+          "id": "fukushima2022_restart",
+          "url": "https://www.renesas.com/en/about/newsroom/update-2-impact-march-16-earthquake-coast-fukushima-prefecture-renesas-operation",
+          "publicationDate": "2022-03-18",
+          "informationAvailableDate": "2022-03-18",
+          "supportingSection": "Naka and Takasaki: partial test-line production March 17; March 23 full capacity is a forecast.",
+          "claimStatus": "verified"
+        }
+      },
+      "limitations": "Elapsed calendar dates, not exact timestamps. Partial restart is not zero production. Endpoint restoration does not recover accumulated lost output or establish a linear trajectory."
+    },
+    {
+      "id": "kawashiri_2022_lightning_duration",
+      "incidentId": "kawashiri_voltage_drop_2022",
+      "incidentDate": "2022-07-05",
+      "companyId": "renesas",
+      "facilityId": "renesas_kawashiri",
+      "scope": "renesas kawashiri",
+      "metric": "wafer_input_capacity_recovery_duration",
+      "units": "days",
+      "kind": "observed",
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-09",
+        "provenance": "Codex primary-source reading of actual milestones; not independent human adjudication."
+      },
+      "restart": {
+        "date": "2022-07-06",
+        "definition": "partial_manufacturing_process_resumption",
+        "source": {
+          "id": "lightning2022_restart",
+          "url": "https://www.renesas.com/en/about/newsroom/impact-instantaneous-voltage-drop-operation-kawashiri-factory",
+          "publicationDate": "2022-07-06",
+          "informationAvailableDate": "2022-07-06",
+          "supportingSection": "Actual partial process resumption July 6; July 11 full capacity is a target.",
+          "claimStatus": "verified"
+        }
+      },
+      "completion": {
+        "date": "2022-07-11",
+        "definition": "Full pre-incident wafer-input capacity",
+        "source": {
+          "id": "lightning2022_complete",
+          "url": "https://www.renesas.com/en/about/newsroom/update-2-final-impact-instantaneous-voltage-drop-operation-kawashiri-factory",
+          "publicationDate": "2022-07-11",
+          "informationAvailableDate": "2022-07-11",
+          "supportingSection": "Actual full wafer-input capacity July 11; lost work-in-process and production remain.",
+          "claimStatus": "verified"
+        }
+      },
+      "source": {
+        "id": "lightning2022_complete",
+        "url": "https://www.renesas.com/en/about/newsroom/update-2-final-impact-instantaneous-voltage-drop-operation-kawashiri-factory",
+        "publicationDate": "2022-07-11",
+        "informationAvailableDate": "2022-07-11",
+        "supportingSection": "Actual full wafer-input capacity July 11; lost work-in-process and production remain.",
+        "claimStatus": "verified"
+      },
+      "datePrecision": "calendar_day",
+      "issuerTarget": {
+        "kind": "issuer_forecast",
+        "durationDays": 5,
+        "qualifier": "scheduled_date",
+        "source": {
+          "id": "lightning2022_restart",
+          "url": "https://www.renesas.com/en/about/newsroom/impact-instantaneous-voltage-drop-operation-kawashiri-factory",
+          "publicationDate": "2022-07-06",
+          "informationAvailableDate": "2022-07-06",
+          "supportingSection": "Actual partial process resumption July 6; July 11 full capacity is a target.",
+          "claimStatus": "verified"
+        }
+      },
+      "limitations": "Elapsed calendar dates, not exact timestamps. Partial restart is not zero production. Endpoint restoration does not recover accumulated lost output or establish a linear trajectory."
+    },
+    {
+      "id": "kawashiri_2026_duration",
+      "incidentId": "kumamoto_earthquake_2026",
+      "incidentDate": "2026-07-28",
+      "companyId": "renesas",
+      "facilityId": "renesas_kawashiri",
+      "scope": "renesas kawashiri",
+      "metric": "wafer_input_capacity_recovery_duration",
+      "units": "days",
+      "kind": "observed",
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-09",
+        "provenance": "Codex primary-source reading of actual milestones; not independent human adjudication."
+      },
+      "restart": {
+        "date": "2026-08-04",
+        "definition": "phased_production_resumption",
+        "source": {
+          "id": "kumamoto2026_restart",
+          "url": "https://www.renesas.com/en/about/newsroom/impact-26-earthquake-kumamoto-4",
+          "publicationDate": "2026-08-04",
+          "informationAvailableDate": "2026-08-04",
+          "supportingSection": "Actual phased production restart August 4; approximately three weeks to full wafer-input capacity is a target.",
+          "claimStatus": "verified"
+        }
+      },
+      "completion": {
+        "date": "2026-08-23",
+        "definition": "Full pre-incident wafer-input capacity",
+        "source": {
+          "id": "kumamoto2026_complete",
+          "url": "https://www.renesas.com/en/about/newsroom/update-5-final-impact-2026-kumamoto-earthquake-renesas-operations",
+          "publicationDate": "2026-08-24",
+          "informationAvailableDate": "2026-08-24",
+          "supportingSection": "Actual pre-earthquake wafer-input capacity restored evening August 23 after August 4 restart.",
+          "claimStatus": "verified"
+        }
+      },
+      "source": {
+        "id": "kumamoto2026_complete",
+        "url": "https://www.renesas.com/en/about/newsroom/update-5-final-impact-2026-kumamoto-earthquake-renesas-operations",
+        "publicationDate": "2026-08-24",
+        "informationAvailableDate": "2026-08-24",
+        "supportingSection": "Actual pre-earthquake wafer-input capacity restored evening August 23 after August 4 restart.",
+        "claimStatus": "verified"
+      },
+      "datePrecision": "calendar_day",
+      "issuerTarget": {
+        "kind": "issuer_forecast",
+        "durationDays": 21,
+        "qualifier": "approximate_target_horizon",
+        "source": {
+          "id": "kumamoto2026_restart",
+          "url": "https://www.renesas.com/en/about/newsroom/impact-26-earthquake-kumamoto-4",
+          "publicationDate": "2026-08-04",
+          "informationAvailableDate": "2026-08-04",
+          "supportingSection": "Actual phased production restart August 4; approximately three weeks to full wafer-input capacity is a target.",
+          "claimStatus": "verified"
+        }
+      },
+      "limitations": "Elapsed calendar dates, not exact timestamps. Partial restart is not zero production. Endpoint restoration does not recover accumulated lost output or establish a linear trajectory."
+    }
+  ],
+  "exclusions": [
+    {
+      "id": "naka_fire_2021",
+      "reason": "Published production capacity/production level endpoints do not explicitly establish the same wafer-input target."
+    },
+    {
+      "id": "tools_and_shipments",
+      "reason": "Tool availability, shipping recovery, generic production input and qualitative restart are distinct targets."
+    },
+    {
+      "id": "nishiki_2026",
+      "reason": "Full production capacity disclosure does not explicitly identify wafer-input capacity."
+    }
+  ],
+  "limitations": [
+    "Purposive single-company sample; not a census of disruptions.",
+    "Restart definitions differ and are recorded explicitly; endpoint comparability does not imply identical processes.",
+    "Dates verified by the coding agent; source statements are issuer reports, not independent factory measurements."
+  ]
+}

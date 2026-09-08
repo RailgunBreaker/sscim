@@ -88,6 +88,43 @@ npm run api:restart  # API on :8787 (reads server/.env)
 
 The public site remains static. The local API is the only writer, and is needed only for administration, review, and live quotes.
 
+### Evidence collection and evaluation
+
+The evidence workspace is collected and scored by `server` scripts rather than
+by the application. Each evaluator is offline, refuses inputs it cannot verify,
+and writes one report under `docs/benchmarks/`.
+
+```powershell
+cd ..\server
+npm run operations           # the whole local cycle, under a workflow lock
+npm run operations:install   # hourly Windows task (-Remove to uninstall)
+
+npm run revenue:refresh      # original SEC revenue disclosures
+npm run prospective:capture  # capture one forecast, once, before its outcome
+npm run prospective:score    # score outcomes that have since been disclosed
+npm run prospective:news     # news-monitoring timing
+npm run evaluate:revenue     # historical revenue benchmark
+npm run evaluate:lag-two     # two-month-lag rule over the historical sample
+npm run calibrate:recovery   # recovery-duration fit and its temporal tests
+
+npm run evaluate:chain-loss  # automotive shortage ledger
+npm run losses:reconcile     # disclosed-scope reconciliation
+npm run losses:allocate      # supplier allocation
+npm run losses:physical      # physical production losses
+npm run losses:followup      # reimbursement follow-up
+npm run losses:collect       # source availability and document hashes
+npm run losses:discover      # SEC filing-candidate queue
+npm run data:structured      # JSON/SQLite catalog under artifacts/structured/
+```
+
+`npm run operations` runs the cycle above in dependency order and marks the
+whole run degraded if a required step fails; its reports are in
+`server/data/operations/`, which is local runtime state and is not committed.
+What each evaluator establishes — and what it does not — is documented in
+[structured evidence](STRUCTURED_EVIDENCE.md), [chain loss accounting](CHAIN_LOSS_ACCOUNTING.md),
+[recovery calibration](RECOVERY_CALIBRATION.md) and
+[predictive validation](PREDICTIVE_VALIDATION.md).
+
 ## How data flows
 
 ```

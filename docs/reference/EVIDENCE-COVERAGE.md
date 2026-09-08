@@ -1,7 +1,7 @@
 # Evidence coverage
 
-*Generated from the vault by `server/scripts/build-evidence-coverage.mjs`. Last generated: 2026-09-06.*
-*Model version: `sscim-model-v7.1-exposure-robustness` · snapshot date: 2026-09-06 · canonical specification: [MODEL_V7_SPEC.md](../MODEL_V7_SPEC.md).*
+*Generated from the vault by `server/scripts/build-evidence-coverage.mjs`. Last generated: 2026-09-08.*
+*Model version: `sscim-model-v7.1-exposure-robustness` · snapshot date: 2026-09-09 · canonical specification: [MODEL_V7_SPEC.md](../MODEL_V7_SPEC.md).*
 
 How much of this dataset carries a source, counted from
 `server/data/sscim.db` rather than asserted. The companion
@@ -42,7 +42,7 @@ short entry stays short rather than acquiring an invented title.
 
 Raw source URLs: **24/167**. Separately resolved bibliographic records: **40/167**. Union of raw URL or separately resolved citation: **63/167**. These overlap and must not be added. The source register uses the resolved entries when available; the raw table above counts only the original source field.
 
-Verified occurrence claims: **4/167**. Factual-baseline eligible at 2026-09-06: **3/167**. Eligibility does not imply nonzero persistence: a recovered site can be eligible and inactive. Other records remain context or unresolved. A lower index after exclusion is a data correction, not evidence of lower real-world risk.
+Verified occurrence claims: **4/167**. Factual-baseline eligible at 2026-09-09: **3/167**. Eligibility does not imply nonzero persistence: a recovered site can be eligible and inactive. Other records remain context or unresolved. A lower index after exclusion is a data correction, not evidence of lower real-world risk.
 
 | Record | Occurrence | Operational status | Exposure | Factual eligibility |
 | --- | --- | --- | --- | --- |

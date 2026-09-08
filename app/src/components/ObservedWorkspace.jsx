@@ -5,6 +5,7 @@ import { measuredCapacityShares } from '../engine/observedAnalysis.js';
 import { reviewedClaim } from '../engine/evidenceContract.js';
 import FinancialEvidence from './FinancialEvidence.jsx';
 import PredictionValidation from './PredictionValidation.jsx';
+import OperationalEvidence from './OperationalEvidence.jsx';
 
 function fraction(value) {
   if (value.low === value.high) return `${Math.round(value.low * 100)}%`;
@@ -57,6 +58,7 @@ export default function ObservedWorkspace({ onResearch }) {
       {!analysis.observations.length && <p>No source-verified observations are available in this bundle.</p>}
       <FinancialEvidence evidence={data.FINANCIAL_EVIDENCE} />
       <PredictionValidation report={data.REVENUE_VALIDATION} snapshotFallback={data.LIVE_GAPS?.filled?.includes('revenueValidation')} />
+      <OperationalEvidence data={data} />
       <h2>Reported fab capacity</h2>
       <p>UMC reports calculated maximum output by fab. The figures below preserve wafer size and reporting period. They are capacity estimates published by the operator, not actual wafer shipments.</p>
       <label>Year <select aria-label="Capacity year" value={period} onChange={e => setPeriod(e.target.value)}>{[2025, 2024, 2023, 2022].map(y => <option key={y} value={`${y}-12-31`}>{y}</option>)}</select></label>{' '}

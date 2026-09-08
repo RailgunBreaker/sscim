@@ -25,6 +25,22 @@
 
 export const RELEASES = [
   {
+    id: 'evidence-operations', date: '2026-09-09', version: 'v0.7.2',
+    title: 'Collected evidence, a captured forecast, and four loss ledgers',
+    lede: 'The workspace stopped being a one-off analysis and started being a running collection. An hourly local task refreshes original disclosures, scores what has become checkable, evaluates every ledger and exports the whole catalog in a queryable form.',
+    changes: [
+      { kind: 'added', text: 'One prospective TSMC revenue forecast recorded before its outcome, with its input dataset, protocol and engine archived by content hash. One captured, zero scored, one pending — a pending outcome contributes neither error nor interval coverage.' },
+      { kind: 'added', text: 'Four disclosed-loss accounting scopes: reconciliation of Sony, Western Digital, Nokia and Renesas scopes; supplier allocation across five cost bases and three named cost-sharing rules; four physical production-loss estimates that survive a reported recovery date; and semiconductor reimbursement follow-up with an SEC filing-candidate queue. The scopes use different currencies, periods and accounting targets and are never added together; unknown attribution stays null rather than zero.' },
+      { kind: 'added', text: 'A recovery-duration fit over six reported factory recoveries across five incidents, with an exact incident-cluster bootstrap and a chronological test. It beats the 60-day global default in the 2026 test, loses to the approximate three-week target the issuer gave at the time, and loses to a simple empirical median across the expanding-history tests. No global parameter is promoted.' },
+      { kind: 'added', text: 'The two-month-lag revenue rule replayed over 24 historical months: MAE 20.93 billion TWD, 22 of 24 intervals covering, lower error than all four available-information baselines. This is a retrospective horizon diagnostic on a reused sample, not a prospective qualification.' },
+      { kind: 'added', text: 'A queryable JSON/SQLite catalog of every analytical dataset, with per-record evidence status, JSON pointers, deduplicated sources and typed scalar leaves. Record counts include repeat representations and are not counts of independent evidence.' },
+      { kind: 'added', text: 'An hourly local workflow that runs the whole cycle under a lock, records per-step status and attempts, and marks a run degraded when a required step fails. It does not publish, approve events or deploy.' },
+      { kind: 'data', text: 'Original SEC revenue disclosures extended through July 2026 (163 monthly observations), plus reviewed recovery-duration, physical-loss, supplier-allocation, reconciliation and follow-up datasets with source hashes.' },
+      { kind: 'changed', text: 'Documentation consolidated: the four loss pages became one chain-loss accounting page, the lag-two evaluation moved into predictive validation, and the completed 0.7.1 interface pass moved to the archive.' },
+    ],
+    limits: 'The application version and model v7.1 are unchanged, and every registry parameter still reads status: assumption. Nothing here establishes prospective accuracy: the one captured forecast has no outcome yet, and the historical tests reuse samples that were already inspected. Revenue is not disruption loss, the four loss ledgers cover selected issuers rather than the chain, and no cross-account total is emitted because independence between them has not been established. The hourly task is a local scheduled job on one machine, not a managed service.',
+  },
+  {
     id: 'public-research-review', date: '2026-09-06', version: 'v0.7.2',
     title: 'Evidence and interpretation corrections',
     lede: 'The factual baseline now requires claim-level evidence. Unresolved records remain visible with their audit trail, while observed recovery applies only to its documented site and production step.',

@@ -16,6 +16,11 @@ Use this index when you need the right document quickly.
 | See an example calculation | [Computation demo](computation-demo/COMPUTATION_DEMO.md) |
 | See known model gaps | [Model roadmap](MODEL_ROADMAP.md) |
 | Read the validation boundary | [Validation status](MODEL_V7_SPEC.md#9-validation-status), then [synthetic parameter recovery](computation-demo/validation/SYNTHETIC_PARAMETER_RECOVERY.md) |
+| See the historical revenue test and the pending prospective forecast | [Predictive validation](PREDICTIVE_VALIDATION.md) |
+| See what the hourly workflow collects, scores and exports | [Structured evidence and prospective operations](STRUCTURED_EVIDENCE.md) |
+| Trace a disclosed loss through its accounting scope | [Chain loss accounting](CHAIN_LOSS_ACCOUNTING.md) |
+| Check the recovery-duration fit against the global default | [Recovery duration calibration](RECOVERY_CALIBRATION.md) |
+| See what blocks operational use | [Release blockers](RELEASE_BLOCKERS.md) |
 
 ## Terms used consistently
 

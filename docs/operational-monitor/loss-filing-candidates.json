@@ -1,0 +1,166 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-09-08T15:45:30.233Z",
+  "startedAt": "2026-09-08T11:54:24.638Z",
+  "issuers": [
+    {
+      "companyId": "wdc",
+      "cik": "106040",
+      "forms": [
+        "10-K",
+        "10-Q"
+      ],
+      "limit": 4
+    },
+    {
+      "companyId": "sandisk",
+      "cik": "2023554",
+      "forms": [
+        "10-K",
+        "10-Q"
+      ],
+      "limit": 4
+    },
+    {
+      "companyId": "tsmc",
+      "cik": "1046179",
+      "forms": [
+        "20-F"
+      ],
+      "limit": 3
+    }
+  ],
+  "checks": [
+    {
+      "companyId": "wdc",
+      "url": "https://www.sec.gov/Archives/edgar/data/106040/000162828026057139/wdc-20260703.htm",
+      "publicationDate": "2026-08-14",
+      "status": "retrieved",
+      "candidateId": null
+    },
+    {
+      "companyId": "wdc",
+      "url": "https://www.sec.gov/Archives/edgar/data/106040/000162828026029054/wdc-20260403.htm",
+      "publicationDate": "2026-05-01",
+      "status": "retrieved",
+      "candidateId": null
+    },
+    {
+      "companyId": "wdc",
+      "url": "https://www.sec.gov/Archives/edgar/data/106040/000162828026004207/wdc-20260102.htm",
+      "publicationDate": "2026-01-30",
+      "status": "retrieved",
+      "candidateId": null
+    },
+    {
+      "companyId": "wdc",
+      "url": "https://www.sec.gov/Archives/edgar/data/106040/000162828025047613/wdc-20251003.htm",
+      "publicationDate": "2025-10-31",
+      "status": "retrieved",
+      "candidateId": null
+    },
+    {
+      "companyId": "sandisk",
+      "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026057406/sndk-20260703.htm",
+      "publicationDate": "2026-08-17",
+      "status": "retrieved",
+      "candidateId": null
+    },
+    {
+      "companyId": "sandisk",
+      "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026029401/sndk-20260403.htm",
+      "publicationDate": "2026-05-01",
+      "status": "retrieved",
+      "candidateId": null
+    },
+    {
+      "companyId": "sandisk",
+      "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026004407/sndk-20260102.htm",
+      "publicationDate": "2026-01-30",
+      "status": "retrieved",
+      "candidateId": null
+    },
+    {
+      "companyId": "sandisk",
+      "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828025050698/sndk-20251003.htm",
+      "publicationDate": "2025-11-07",
+      "status": "retrieved",
+      "candidateId": null
+    },
+    {
+      "companyId": "tsmc",
+      "url": "https://www.sec.gov/Archives/edgar/data/1046179/000162828026025362/tsm-20251231.htm",
+      "publicationDate": "2026-04-16",
+      "status": "retrieved",
+      "candidateId": null
+    },
+    {
+      "companyId": "tsmc",
+      "url": "https://www.sec.gov/Archives/edgar/data/1046179/000119312525083423/d896993d20f.htm",
+      "publicationDate": "2025-04-17",
+      "status": "retrieved",
+      "candidateId": null
+    },
+    {
+      "companyId": "tsmc",
+      "url": "https://www.sec.gov/Archives/edgar/data/1046179/000119312524099840/d592628d20f.htm",
+      "publicationDate": "2024-04-18",
+      "status": "retrieved",
+      "candidateId": null
+    },
+    {
+      "companyId": "wdc",
+      "url": "https://www.sec.gov/Archives/edgar/data/106040/000010604024000031/wdc-20240628.htm",
+      "status": "retrieved",
+      "discoveryKind": "historical_reference",
+      "candidateId": "loss_filing_2c67a2d7802668fbfd1f1a7d"
+    }
+  ],
+  "candidates": [
+    {
+      "id": "loss_filing_2c67a2d7802668fbfd1f1a7d",
+      "companyId": "wdc",
+      "publicationDate": "2024-08-20",
+      "form": "10-K",
+      "sourceUrl": "https://www.sec.gov/Archives/edgar/data/106040/000010604024000031/wdc-20240628.htm",
+      "sourceSha256": "daab7d668c8ab920376821ad29ebd8165f840c24f26290963f5be5955df0513d",
+      "hashBasis": "utf8_decoded_text",
+      "evidenceSha256": "890f3bda356fe3738c8970745e62940ebbe53a63904bd742d411945a90798ae9",
+      "evidenceHashBasis": "normalized_visible_text_v1",
+      "topics": [
+        "material_incident",
+        "recovery"
+      ],
+      "matchingParagraphs": 3,
+      "excerpt": "Recovery from contamination incident",
+      "firstSeenAt": "2026-09-08T11:57:34.598Z",
+      "lastSeenAt": "2026-09-08T15:45:30.233Z",
+      "claimStatus": "unreviewed",
+      "reviewState": "reviewed",
+      "numericLoss": null,
+      "counterpartyId": null,
+      "independentOutcomeLabel": false,
+      "discoveryKind": "historical_reference",
+      "reviewedClaimIds": [
+        "wdc_contamination_recovery_fy2024",
+        "wdc_contamination_insurer_cash_fy2024"
+      ],
+      "review": {
+        "reviewedAt": "2026-09-08T12:02:38.324Z",
+        "reason": "Verified FY2024 table total 37 and note identifying insurer cash 36; neither establishes material-supplier liability.",
+        "sourceSha256": "391af5f579ab36e6228631b416676234518e29ced5611ecb7bd94f34385c9283",
+        "evidenceSha256": "890f3bda356fe3738c8970745e62940ebbe53a63904bd742d411945a90798ae9"
+      },
+      "sourceChangedSincePreviousCheck": true,
+      "previousSourceSha256": "c1f4594e57ccaf2604923637e1e191ea937de1704dccfd1d634686c1d072770d"
+    }
+  ],
+  "newCandidates": 0,
+  "unavailable": 0,
+  "scope": "Latest four WDC and Sandisk quarterly/annual primary documents, latest three TSMC annual primary documents in SEC recent submissions, and one known historical recovery reference. Not all historical filings or exhibits.",
+  "limitations": [
+    "Keyword co-occurrence creates review candidates, not verified losses or supplier attribution.",
+    "A filing without a match is not evidence of zero loss or no reimbursement.",
+    "Amounts and counterparty identities require source review before analytical use."
+  ]
+}

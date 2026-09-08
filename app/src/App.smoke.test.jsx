@@ -102,6 +102,26 @@ describe('App smoke (static snapshot, Leaflet mocked)', () => {
     expect(validation.textContent).toContain('22 of 24');
     expect(validation.textContent).toContain('prospective performance is untested');
     expect(validation.querySelectorAll('details tbody tr')).toHaveLength(24);
+    expect(container.querySelector('[aria-label="Downstream disruption losses"]').textContent).toContain('200,000 vehicles');
+    expect(container.querySelector('[aria-label="Prospective performance"]').textContent).toContain(`${snapshotBundle.prospectivePerformance.pending} awaiting an outcome`);
+    expect(container.querySelector('[aria-label="Sector-wide loss estimates"]').textContent).toContain('More than 9,500,000');
+    expect(container.querySelector('[aria-label="Reconciled incident accounts"]').textContent).toContain('52.8 JPY billion');
+    const allocations = container.querySelector('[aria-label="Supplier loss allocation"]');
+    const followup = container.querySelector('[aria-label="Semiconductor loss follow-up"]');
+    expect(followup.textContent).toContain('170 USD million');
+    expect(followup.textContent).toContain('3,400 TWD million');
+    expect(followup.textContent).toContain('137.4 JPY billion');
+    expect(followup.textContent).toContain('Neither zero loss');
+    expect(allocations.textContent).toContain('1,900 USD million');
+    await act(async () => {
+      const select = allocations.querySelector('select');
+      select.value = 'semiconductors';
+      select.dispatchEvent(new Event('change', {bubbles:true}));
+    });
+    expect(allocations.textContent).toContain('33.2 JPY billion');
+    expect(allocations.textContent).toContain('207 USD million');
+    expect(allocations.textContent).not.toContain('1,900 USD million');
+    expect(container.querySelector('[aria-label="Structured data coverage"]')).not.toBeNull();
     await act(async () => root.unmount());
     container.remove();
   });

@@ -24,7 +24,10 @@
      modelVersion
 
    STATUS DISCIPLINE. Every parameter here is `assumption`. None has been
-   estimated from observed disruption outcomes. low/base/high are STRESS
+   estimated from observed disruption outcomes as deployed defaults. A
+   separate, scoped endpoint-duration fit is documented in
+   docs/RECOVERY_CALIBRATION.md; it does not validate this global curve.
+   low/base/high are STRESS
    BOUNDS chosen to span the range a reasonable analyst might defend —
    they are NOT confidence intervals, NOT posterior quantiles, and NOT a
    probability distribution over the true value. A parameter may only be

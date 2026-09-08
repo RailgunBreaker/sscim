@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "version": "renesas-wafer-input-duration-v1",
+  "asOf": "2026-09-09",
+  "holdoutFrom": "2026-01-01",
+  "registeredProspectively": false,
+  "designStatus": "retrospective development benchmark; sources inspected before protocol creation",
+  "target": "Calendar days between disclosed partial restart and full pre-incident wafer-input capacity",
+  "estimator": "Incident-balanced lognormal weighted maximum likelihood; median used for absolute-error scoring",
+  "baselines": ["registry outageRecoveryDays", "incident-weighted empirical median", "mean duration of latest earlier incident", "contemporaneous issuer target on paired records"],
+  "uncertainty": "Exact incident-cluster percentile bootstrap of fitted median; not prediction interval coverage",
+  "rollingMinimumTrainingIncidents": 2,
+  "deployment": "research_only; no automatic registry promotion"
+}

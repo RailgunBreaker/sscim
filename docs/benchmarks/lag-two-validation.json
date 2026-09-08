@@ -1,0 +1,532 @@
+{
+  "schemaVersion": 1,
+  "status": "retrospective_horizon_diagnostic",
+  "modelId": "tsmc-revenue-lag2-prospective-v1",
+  "target": "consolidated_monthly_revenue",
+  "units": "TWD million",
+  "informationLagMonths": 2,
+  "growthWindow": 3,
+  "calibration": {
+    "start": "2022-01",
+    "end": "2023-12",
+    "months": 24,
+    "logErrorRadius": 0.2378458909272595,
+    "availableBy": "2024-01-10"
+  },
+  "test": {
+    "start": "2024-01",
+    "end": "2025-12",
+    "months": 24,
+    "mae": 20927.854123165293,
+    "rmse": 28818.083639946246,
+    "wape": 0.074927860659148,
+    "covered": 22,
+    "nominalCoverage": 0.8,
+    "coverage": 0.9166666666666666
+  },
+  "comparisons": [
+    {
+      "model": "latest_available_month",
+      "months": 24,
+      "mae": 33058.708333333336,
+      "rmse": 40934.41510259634,
+      "wape": 0.1183598794694184
+    },
+    {
+      "model": "same_month_last_year",
+      "months": 24,
+      "mae": 68638.29166666667,
+      "rmse": 72176.55102622781,
+      "wape": 0.24574523138467405
+    },
+    {
+      "model": "trailing_12_available_mean",
+      "months": 24,
+      "mae": 44654.2638888889,
+      "rmse": 50550.03633058761,
+      "wape": 0.15987537197136384
+    },
+    {
+      "model": "two_month_lag_value",
+      "months": 24,
+      "mae": 31820.125,
+      "rmse": 40182.50293504624,
+      "wape": 0.11392538757796275
+    }
+  ],
+  "predictions": [
+    {
+      "period": "2024-01",
+      "actual": 215785,
+      "prediction": 195065.3026740552,
+      "lastInputPeriod": "2023-11",
+      "latestInputDisclosure": "2023-12-08",
+      "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1046179/000104617924000014/tsm-revenue20240207x6k.htm",
+      "outcomeAvailableBy": "2024-02-07",
+      "baselines": {
+        "latest_available_month": 176300,
+        "same_month_last_year": 200051,
+        "trailing_12_available_mean": 180144.58333333334,
+        "two_month_lag_value": 206026
+      },
+      "originDate": "2024-01-11",
+      "baselineLastInputPeriod": "2023-12",
+      "lower": 153774.69275607233,
+      "upper": 247443.00655296352
+    },
+    {
+      "period": "2024-02",
+      "actual": 181648,
+      "prediction": 162060.19886479303,
+      "lastInputPeriod": "2023-12",
+      "latestInputDisclosure": "2024-01-10",
+      "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1046179/000104617924000026/tsm-revenue20240308x6k.htm",
+      "outcomeAvailableBy": "2024-03-08",
+      "baselines": {
+        "latest_available_month": 176300,
+        "same_month_last_year": 163174,
+        "trailing_12_available_mean": 180144.58333333334,
+        "two_month_lag_value": 176300
+      },
+      "originDate": "2024-02-01",
+      "baselineLastInputPeriod": "2023-12",
+      "lower": 127755.97170175839,
+      "upper": 205575.5805873987
+    },
+    {
+      "period": "2024-03",
+      "actual": 195211,
+      "prediction": 141093.58188388482,
+      "lastInputPeriod": "2024-01",
+      "latestInputDisclosure": "2024-02-07",
+      "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1046179/000104617924000042/tsm-revenue20240410x6k.htm",
+      "outcomeAvailableBy": "2024-04-10",
+      "baselines": {
+        "latest_available_month": 215785,
+        "same_month_last_year": 145408,
+        "trailing_12_available_mean": 181455.75,
+        "two_month_lag_value": 215785
+      },
+      "originDate": "2024-03-01",
+      "baselineLastInputPeriod": "2024-01",
+      "lower": 111227.48078012696,
+      "upper": 178979.13994993016
+    },
+    {
+      "period": "2024-04",
+      "actual": 236021,
+      "prediction": 152645.37413440587,
+      "lastInputPeriod": "2024-02",
+      "latestInputDisclosure": "2024-03-08",
+      "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1046179/000104617924000056/tsm-revenue20240510x6k.htm",
+      "outcomeAvailableBy": "2024-05-10",
+      "baselines": {
+        "latest_available_month": 181648,
+        "same_month_last_year": 147900,
+        "trailing_12_available_mean": 182995.25,
+        "two_month_lag_value": 181648
+      },
+      "originDate": "2024-04-01",
+      "baselineLastInputPeriod": "2024-02",
+      "lower": 120334.03781387112,
+      "upper": 193632.7465440276
+    },
+    {
+      "period": "2024-05",
+      "actual": 229620,
+      "prediction": 206995.60882467724,
+      "lastInputPeriod": "2024-03",
+      "latestInputDisclosure": "2024-04-10",
+      "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1046179/000104617924000076/tsm-revenue20240607x6k.htm",
+      "outcomeAvailableBy": "2024-06-07",
+      "baselines": {
+        "latest_available_month": 195211,
+        "same_month_last_year": 176537,
+        "trailing_12_available_mean": 187145.5,
+        "two_month_lag_value": 195211
+      },
+      "originDate": "2024-05-01",
+      "baselineLastInputPeriod": "2024-03",
+      "lower": 163179.64144581076,
+      "upper": 262576.7632105481
+    },
+    {
+      "period": "2024-06",
+      "actual": 207869,
+      "prediction": 208965.16546958516,
+      "lastInputPeriod": "2024-04",
+      "latestInputDisclosure": "2024-05-10",
+      "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1046179/000104617924000081/tsm-revenue20240710x6k.htm",
+      "outcomeAvailableBy": "2024-07-10",
+      "baselines": {
+        "latest_available_month": 236021,
+        "same_month_last_year": 156404,
+        "trailing_12_available_mean": 194488.91666666666,
+        "two_month_lag_value": 236021
+      },
+      "originDate": "2024-06-01",
+      "baselineLastInputPeriod": "2024-04",
+      "lower": 164732.29055246647,
+      "upper": 265075.1727744813
+    },
+    {
+      "period": "2024-07",
+      "actual": 256953,
+      "prediction": 249942.18449885375,
+      "lastInputPeriod": "2024-05",
+      "latestInputDisclosure": "2024-06-07",
+      "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1046179/000104617924000090/tsm-revenue20240809x6k.htm",
+      "outcomeAvailableBy": "2024-08-09",
+      "baselines": {
+        "latest_available_month": 229620,
+        "same_month_last_year": 177616,
+        "trailing_12_available_mean": 198912.5,
+        "two_month_lag_value": 229620
+      },
+      "originDate": "2024-07-01",
+      "baselineLastInputPeriod": "2024-05",
+      "lower": 197035.46505303134,
+      "upper": 317055.0823185318
+    },
+    {
+      "period": "2024-08",
+      "actual": 250866,
+      "prediction": 264630.0237137942,
+      "lastInputPeriod": "2024-06",
+      "latestInputDisclosure": "2024-07-10",
+      "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1046179/000104617924000106/tsm-revenue20240910.htm",
+      "outcomeAvailableBy": "2024-09-10",
+      "baselines": {
+        "latest_available_month": 207869,
+        "same_month_last_year": 188686,
+        "trailing_12_available_mean": 203201.25,
+        "two_month_lag_value": 207869
+      },
+      "originDate": "2024-08-01",
+      "baselineLastInputPeriod": "2024-06",
+      "lower": 208614.243705953,
+      "upper": 335686.8074141235
+    },
+    {
+      "period": "2024-09",
+      "actual": 251873,
+      "prediction": 244908.89868384614,
+      "lastInputPeriod": "2024-07",
+      "latestInputDisclosure": "2024-08-09",
+      "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1046179/000104617924000114/tsm-revenue20241009.htm",
+      "outcomeAvailableBy": "2024-10-09",
+      "baselines": {
+        "latest_available_month": 256953,
+        "same_month_last_year": 180430,
+        "trailing_12_available_mean": 209812.66666666666,
+        "two_month_lag_value": 256953
+      },
+      "originDate": "2024-09-01",
+      "baselineLastInputPeriod": "2024-07",
+      "lower": 193067.6041923554,
+      "upper": 310670.290365106
+    },
+    {
+      "period": "2024-10",
+      "actual": 314240,
+      "prediction": 332537.6292873876,
+      "lastInputPeriod": "2024-08",
+      "latestInputDisclosure": "2024-09-10",
+      "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1046179/000104617924000122/tsm-revenue20241108.htm",
+      "outcomeAvailableBy": "2024-11-08",
+      "baselines": {
+        "latest_available_month": 250866,
+        "same_month_last_year": 243203,
+        "trailing_12_available_mean": 214994.33333333334,
+        "two_month_lag_value": 250866
+      },
+      "originDate": "2024-10-01",
+      "baselineLastInputPeriod": "2024-08",
+      "lower": 262147.4504819871,
+      "upper": 421828.53462339647
+    },
+    {
+      "period": "2024-11",
+      "actual": 276058,
+      "prediction": 286354.6441086265,
+      "lastInputPeriod": "2024-09",
+      "latestInputDisclosure": "2024-10-09",
+      "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1046179/000104617924000132/tsm-revenue20241210.htm",
+      "outcomeAvailableBy": "2024-12-10",
+      "baselines": {
+        "latest_available_month": 251873,
+        "same_month_last_year": 206026,
+        "trailing_12_available_mean": 220947.91666666666,
+        "two_month_lag_value": 251873
+      },
+      "originDate": "2024-11-01",
+      "baselineLastInputPeriod": "2024-09",
+      "lower": 225740.28703945037,
+      "upper": 363244.7857579273
+    },
+    {
+      "period": "2024-12",
+      "actual": 278163,
+      "prediction": 235979.79677197634,
+      "lastInputPeriod": "2024-10",
+      "latestInputDisclosure": "2024-11-08",
+      "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1046179/000104617925000002/tsm-revenue20250110.htm",
+      "outcomeAvailableBy": "2025-01-10",
+      "baselines": {
+        "latest_available_month": 314240,
+        "same_month_last_year": 176300,
+        "trailing_12_available_mean": 226867.66666666666,
+        "two_month_lag_value": 314240
+      },
+      "originDate": "2024-12-01",
+      "baselineLastInputPeriod": "2024-10",
+      "lower": 186028.57734205094,
+      "upper": 299343.6023657402
+    },
+    {
+      "period": "2025-01",
+      "actual": 293288,
+      "prediction": 289580.39458463993,
+      "lastInputPeriod": "2024-11",
+      "latestInputDisclosure": "2024-12-10",
+      "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1046179/000104617925000013/tsm-revenue20250210.htm",
+      "outcomeAvailableBy": "2025-02-10",
+      "baselines": {
+        "latest_available_month": 276058,
+        "same_month_last_year": 215785,
+        "trailing_12_available_mean": 232703.66666666666,
+        "two_month_lag_value": 276058
+      },
+      "originDate": "2025-01-01",
+      "baselineLastInputPeriod": "2024-11",
+      "lower": 228283.224104919,
+      "upper": 367336.6943917664
+    },
+    {
+      "period": "2025-02",
+      "actual": 260009,
+      "prediction": 253923.70828348593,
+      "lastInputPeriod": "2024-12",
+      "latestInputDisclosure": "2025-01-10",
+      "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1046179/000104617925000026/tsm-revenue20250310.htm",
+      "outcomeAvailableBy": "2025-03-10",
+      "baselines": {
+        "latest_available_month": 278163,
+        "same_month_last_year": 181648,
+        "trailing_12_available_mean": 241192.25,
+        "two_month_lag_value": 278163
+      },
+      "originDate": "2025-02-01",
+      "baselineLastInputPeriod": "2024-12",
+      "lower": 200174.19648445284,
+      "upper": 322105.69973959995
+    },
+    {
+      "period": "2025-03",
+      "actual": 285957,
+      "prediction": 277526.04851401947,
+      "lastInputPeriod": "2025-01",
+      "latestInputDisclosure": "2025-02-10",
+      "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1046179/000104617925000033/tsm-revenue20250410.htm",
+      "outcomeAvailableBy": "2025-04-10",
+      "baselines": {
+        "latest_available_month": 293288,
+        "same_month_last_year": 195211,
+        "trailing_12_available_mean": 247650.83333333334,
+        "two_month_lag_value": 293288
+      },
+      "originDate": "2025-03-01",
+      "baselineLastInputPeriod": "2025-01",
+      "lower": 218780.49174824564,
+      "upper": 352045.5913977691
+    },
+    {
+      "period": "2025-04",
+      "actual": 349567,
+      "prediction": 343012.4867345537,
+      "lastInputPeriod": "2025-02",
+      "latestInputDisclosure": "2025-03-10",
+      "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1046179/000104617925000052/tsm-revenue20250509.htm",
+      "outcomeAvailableBy": "2025-05-09",
+      "baselines": {
+        "latest_available_month": 260009,
+        "same_month_last_year": 236021,
+        "trailing_12_available_mean": 254180.91666666666,
+        "two_month_lag_value": 260009
+      },
+      "originDate": "2025-04-01",
+      "baselineLastInputPeriod": "2025-02",
+      "lower": 270405.0337811202,
+      "upper": 435116.0346780396
+    },
+    {
+      "period": "2025-05",
+      "actual": 320516,
+      "prediction": 325550.8213794564,
+      "lastInputPeriod": "2025-03",
+      "latestInputDisclosure": "2025-04-10",
+      "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1046179/000104617925000070/tsm-revenue20250610.htm",
+      "outcomeAvailableBy": "2025-06-10",
+      "baselines": {
+        "latest_available_month": 285957,
+        "same_month_last_year": 229620,
+        "trailing_12_available_mean": 261743.08333333334,
+        "two_month_lag_value": 285957
+      },
+      "originDate": "2025-05-01",
+      "baselineLastInputPeriod": "2025-03",
+      "lower": 256639.58093953403,
+      "upper": 412965.6731547153
+    },
+    {
+      "period": "2025-06",
+      "actual": 263709,
+      "prediction": 303273.4483307576,
+      "lastInputPeriod": "2025-04",
+      "latestInputDisclosure": "2025-05-09",
+      "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1046179/000104617925000080/tsm-revenue20250710.htm",
+      "outcomeAvailableBy": "2025-07-10",
+      "baselines": {
+        "latest_available_month": 349567,
+        "same_month_last_year": 207869,
+        "trailing_12_available_mean": 271205.25,
+        "two_month_lag_value": 349567
+      },
+      "originDate": "2025-06-01",
+      "baselineLastInputPeriod": "2025-04",
+      "lower": 239077.7893291612,
+      "upper": 384706.5205032419
+    },
+    {
+      "period": "2025-07",
+      "actual": 323166,
+      "prediction": 371756.9549420358,
+      "lastInputPeriod": "2025-05",
+      "latestInputDisclosure": "2025-06-10",
+      "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1046179/000104617925000091/tsm-revenue20250808.htm",
+      "outcomeAvailableBy": "2025-08-08",
+      "baselines": {
+        "latest_available_month": 320516,
+        "same_month_last_year": 256953,
+        "trailing_12_available_mean": 278779.9166666667,
+        "two_month_lag_value": 320516
+      },
+      "originDate": "2025-07-01",
+      "baselineLastInputPeriod": "2025-05",
+      "lower": 293064.99281252286,
+      "upper": 471578.78606191993
+    },
+    {
+      "period": "2025-08",
+      "actual": 335772,
+      "prediction": 345960.7323658099,
+      "lastInputPeriod": "2025-06",
+      "latestInputDisclosure": "2025-07-10",
+      "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1046179/000104617925000105/tsm-revenue20250910.htm",
+      "outcomeAvailableBy": "2025-09-10",
+      "baselines": {
+        "latest_available_month": 263709,
+        "same_month_last_year": 250866,
+        "trailing_12_available_mean": 283433.25,
+        "two_month_lag_value": 263709
+      },
+      "originDate": "2025-08-01",
+      "baselineLastInputPeriod": "2025-06",
+      "lower": 272729.2070702746,
+      "upper": 438855.9246177367
+    },
+    {
+      "period": "2025-09",
+      "actual": 330980,
+      "prediction": 328925.35135035624,
+      "lastInputPeriod": "2025-07",
+      "latestInputDisclosure": "2025-08-08",
+      "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1046179/000104617925000113/tsm-revenue20251009.htm",
+      "outcomeAvailableBy": "2025-10-09",
+      "baselines": {
+        "latest_available_month": 323166,
+        "same_month_last_year": 251873,
+        "trailing_12_available_mean": 288951,
+        "two_month_lag_value": 323166
+      },
+      "originDate": "2025-09-01",
+      "baselineLastInputPeriod": "2025-07",
+      "lower": 259299.80447676848,
+      "upper": 417246.31061435514
+    },
+    {
+      "period": "2025-10",
+      "actual": 367473,
+      "prediction": 404667.27852104645,
+      "lastInputPeriod": "2025-08",
+      "latestInputDisclosure": "2025-09-10",
+      "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1046179/000104617925000124/tsm-revenue20251110.htm",
+      "outcomeAvailableBy": "2025-11-10",
+      "baselines": {
+        "latest_available_month": 335772,
+        "same_month_last_year": 314240,
+        "trailing_12_available_mean": 296026.5,
+        "two_month_lag_value": 335772
+      },
+      "originDate": "2025-10-01",
+      "baselineLastInputPeriod": "2025-08",
+      "lower": 319008.99632052553,
+      "upper": 513325.9820080312
+    },
+    {
+      "period": "2025-11",
+      "actual": 343614,
+      "prediction": 359692.953837697,
+      "lastInputPeriod": "2025-09",
+      "latestInputDisclosure": "2025-10-09",
+      "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1046179/000104617925000137/tsm-revenue20251210.htm",
+      "outcomeAvailableBy": "2025-12-10",
+      "baselines": {
+        "latest_available_month": 330980,
+        "same_month_last_year": 276058,
+        "trailing_12_available_mean": 302618.75,
+        "two_month_lag_value": 330980
+      },
+      "originDate": "2025-11-01",
+      "baselineLastInputPeriod": "2025-09",
+      "lower": 283554.6491594106,
+      "upper": 456275.43552549003
+    },
+    {
+      "period": "2025-12",
+      "actual": 335003,
+      "prediction": 353748.7828033181,
+      "lastInputPeriod": "2025-10",
+      "latestInputDisclosure": "2025-11-10",
+      "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000005/tsm-revenue20260109.htm",
+      "outcomeAvailableBy": "2026-01-09",
+      "baselines": {
+        "latest_available_month": 367473,
+        "same_month_last_year": 278163,
+        "trailing_12_available_mean": 307054.8333333333,
+        "two_month_lag_value": 367473
+      },
+      "originDate": "2025-12-01",
+      "baselineLastInputPeriod": "2025-10",
+      "lower": 278868.7154645366,
+      "upper": 448735.17320282845
+    }
+  ],
+  "beatsEveryBaseline": true,
+  "prospectiveValidated": false,
+  "globalParametersCalibrated": [],
+  "limitations": [
+    "Uses the exact existing lag-two point rule and fixed interval calibration; no tuning on the test outcomes.",
+    "Historical outcomes were already examined in prior work. This is a retrospective horizon diagnostic, not a fresh untouched holdout.",
+    "Historical origin waits for every required disclosure; it is not an actual forecast capture.",
+    "Nominal revenue accuracy does not identify physical disruption losses or supplier transmission."
+  ],
+  "inputHashes": {
+    "docs/reference/tsmc-monthly-revenue.json": "a2701b3e6ccb62b455bbb2e7ac6257824613a7c51a533d54ae20ca567eeec2d8",
+    "docs/benchmarks/revenue-vintage-audit.json": "9b643acbfb3c10131e739788a3bfff50fbaebaced4ab1404787c499ab44d96e3",
+    "docs/reference/prospective-protocol.json": "7dd83c4382ef0e286936faf155e3aa411975ad33b3895d6f74754c08bfa7fcdd",
+    "app/src/engine/lagTwoValidation.js": "18cb00f8d07c469fa15deb09a7e8725244f546199680b0a8c4ad358449e2029a",
+    "app/src/engine/prospectivePerformance.js": "91a2112ac4a4b6a505c82dfd179ce00045ea67b7e9c09a218a4d046c108f643c",
+    "app/src/engine/revenuePrediction.js": "cf586fc3dc7875f5ae831bd285e2921280f603d30fb5e4bcd75d0d9f91696807"
+  }
+}

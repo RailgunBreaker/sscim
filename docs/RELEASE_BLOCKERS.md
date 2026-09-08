@@ -42,15 +42,29 @@ What remains open is not *which* licence, but the facts the notice needs:
 
 ## 2. Analytical limitations - blockers for operational deployment
 
+September 9: [a scoped recovery-duration fit](RECOVERY_CALIBRATION.md) now
+uses six reported factory recoveries across five incidents. It beats the
+60-day default in the latest retrospective test but loses to the issuer's
+target. Global curve validity and prospective operational accuracy remain
+open; the fitted coefficient is restricted to research use.
+
 These limitations block dependable operational risk claims. Documenting them
 does not resolve them. The source-backed dataset, calculation changes and actual
 validation results are tracked in [Observed data](OBSERVED_DATA.md); unresolved
 coverage and predictive validity remain release blockers for operational use.
 
+[Chain loss accounting](CHAIN_LOSS_ACCOUNTING.md) now holds four separate
+scopes: disclosed-scope reconciliation, supplier allocation, physical production
+losses and reimbursement follow-up with a filing-discovery queue. They cannot be
+added together. Named material supplier reimbursement and causally isolated
+customer losses remain open, and the new accounting evidence does not calibrate
+global propagation parameters.
+
 | Limitation | Where it is documented and quantified |
 | --- | --- |
 | No parameter is calibrated; all are `status: assumption` | [spec section 5](MODEL_V7_SPEC.md#5-parameter-register) |
-| Revenue nowcast passes its historical benchmark; chain-wide loss and prospective operational validation remain absent | [Predictive validation](PREDICTIVE_VALIDATION.md) |
+| Revenue historical benchmark passes; hourly collection/scoring is running, and published automotive sector-loss estimates are available. Prospective accuracy, other end markets and upstream loss allocation remain unresolved | [Structured evidence](STRUCTURED_EVIDENCE.md), [Predictive validation](PREDICTIVE_VALIDATION.md) |
+| Reported losses exist in four non-additive accounting scopes; no chain-wide total is identified | [Chain loss accounting](CHAIN_LOSS_ACCOUNTING.md) |
 | **Parameter uncertainty** - tested registry ranges | `docs/benchmarks/v7-sensitivity-public-review.json` |
 | **Model-form uncertainty** - tested discrete combinations | same file, separately reported |
 | **Event-curation uncertainty** - baseline, per incident, opposing signs, profile combinations | `docs/benchmarks/v7-curation-uncertainty-public-review.json` |

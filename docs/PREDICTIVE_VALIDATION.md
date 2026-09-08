@@ -6,6 +6,18 @@ target from plant recovery or chain-wide disruption loss. The seven global
 v7 parameters remain assumptions; no revenue coefficient is substituted for
 physical transmission, inventory or recovery parameters.
 
+September 9 update: [recovery-duration calibration](RECOVERY_CALIBRATION.md)
+now fits six factory outcomes across five incidents. The 2026 temporal test
+has 9.98 days of error versus 41 for the global default and 2 for the issuer
+target. This retrospective, single-issuer result does not promote a global
+parameter or establish prospective performance.
+
+The exact lag-two rule has also been evaluated on the reused 24-month
+historical sample: MAE TWD 20.93 billion, 22/24 interval coverage, and lower
+error than all four available-information baselines. That evaluation is
+[below](#the-captured-two-month-lag-rule-on-historical-data). The stored
+September 2026 prospective forecast still awaits its outcome.
+
 ## Data and historical availability
 
 The dataset contains 156 monthly observations, January 2013 through December
@@ -100,7 +112,86 @@ see [Conformal prediction beyond exchangeability](https://arxiv.org/abs/2202.134
 The observed coverage here is reported empirically without an exchangeability
 or future-coverage guarantee.
 
+## The captured two-month-lag rule on historical data
+
+Evaluated September 9, 2026. The exact point rule and interval calibration
+used by the captured September 2026 forecast have now been replayed over
+January 2024 through December 2025. No coefficient, interval radius or stored
+forecast was changed to obtain these results.
+
+| Predictor | Mean absolute error, TWD billion |
+| --- | ---: |
+| Captured lag-two rule | 20.93 |
+| Latest month publicly available at origin | 33.06 |
+| Fixed two-month-lag value | 31.82 |
+| Same month last year | 68.64 |
+| Mean of latest 12 available months | 44.65 |
+
+Across 24 months, weighted absolute percentage error is **7.49%**. The fixed
+nominal 80% intervals cover **22/24 outcomes (91.7%)**. Historical error is
+34.2% below the best of these four baselines. This is a retrospective horizon
+diagnostic; there is no new independent significance test or prospective
+qualification claim.
+
+### Information available at prediction time
+
+The point rule is the same target month a year earlier multiplied by the
+geometric mean of the latest three available year-over-year growth ratios,
+with the input history ending two months before the target. Baselines receive
+all observations public at the reconstructed origin; the fixed lag-two value
+is also retained as a separate comparator. No unavailable preceding-month
+figure is imputed.
+
+The fixed interval is calibrated on January 2022 through December 2023. The
+test cannot start before those calibration outcomes were disclosed. Each
+reconstructed origin is the later of the target month's first day and one
+day after the latest required input or interval-calibration disclosure. In
+particular, January 2024 waits for December 2023's disclosure. Every origin
+must remain within the target month and precede its outcome disclosure.
+
+That January wait gives the latest-available and trailing-mean baselines
+December revenue, even though the captured candidate rule still uses November
+as its last predictor. The fixed two-month-lag comparator retains November.
+This avoids withholding information from a baseline to favor the candidate.
+
+The dataset uses the previously audited 156 original SEC revenue vintages.
+That verifies historical information availability, not actual historical
+forecast issuance. These test outcomes had already been inspected for other
+models. The reused historical sample is not described as an untouched
+holdout. Revenue is also a different target from physical disruption losses.
+
+### Prospective scoring and publication schedule
+
+The September 2026 forecast remains its original captured record, with its
+original input, protocol and engine snapshots. A regression test verifies
+that this replay uses the same interval radius. Pending outcomes contribute
+no error or coverage score.
+
+TSMC's calendar, checked September 9, schedules August revenue for September
+10 and September revenue for October 8, both at 13:30 Taipei time.
+[Issuer financial calendar](https://investor.tsmc.com/english/financial-calendar).
+The structured schedule also includes the remaining 2026 monthly releases.
+The monitor distinguishes waiting for a scheduled release from waiting for a
+verified outcome after that scheduled time. A calendar entry never creates
+an actual revenue amount or a successful score. The SEC filing may arrive
+later than the scheduled press release; the current collector and scorer
+conservatively wait until the next UTC day for a date-only filing.
+
+Run `npm --prefix server run evaluate:lag-two` to reproduce
+[lag-two-validation.json](benchmarks/lag-two-validation.json). Input and engine
+hashes, origin dates, source links, every prediction, baseline and interval
+are retained. The hourly workflow now runs this evaluation alongside actual
+prospective scoring, and exports both as separate structured datasets.
+
 ## What this establishes
+
+September 8 update: [Structured evidence and prospective operations](STRUCTURED_EVIDENCE.md)
+records the first actual September forecast, with archived inputs and a separate
+experimental two-month input horizon. It has one pending outcome and zero scored
+outcomes. Downstream issuer-reported shortage losses and the first news-monitoring
+cycle are also available, and the disclosed losses are accounted for in
+[chain loss accounting](CHAIN_LOSS_ACCOUNTING.md); none of it closes chain-wide
+causal validation.
 
 The repository now has a reproducible historical prediction test that beats
 its declared baselines on a consistently defined, independently reported

@@ -1,0 +1,366 @@
+{
+  "asOf": "2026-09-08T15:45:30.186Z",
+  "sources": [
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/37996/000003799621000026/f-20210331.htm",
+      "checkedAt": "2026-09-08T15:45:18.596Z",
+      "recordIds": [
+        "ford_2021q1_lost_units",
+        "ford_2021q1_lost_fraction",
+        "ford_2021q2_loss_forecast",
+        "ford_2021_wholesale_forecast",
+        "ford_2021_ebit_forecast"
+      ],
+      "status": "retrieved",
+      "sha256": "f453f64cb331d9352ef87c1be00a300e5f4102e4d72d3c5b04e6f688f2bd1045",
+      "hashBasis": "raw_bytes",
+      "baselineSha256": "14c702ea3ae5b60e1066de68cd2036b4f06a5d4acb6e5a6894d201204b76c4c0",
+      "baselineHashBasis": "legacy_unspecified",
+      "contentChangedSinceBaseline": true,
+      "reviewRequired": true,
+      "finalUrl": "https://www.sec.gov/Archives/edgar/data/37996/000003799621000026/f-20210331.htm",
+      "documentType": "html",
+      "bytes": 3221026,
+      "lastSuccessfulAt": "2026-09-08T15:45:18.596Z"
+    },
+    {
+      "url": "https://www.stellantis.com/en/news/press-releases/2021/october/third-quarter-2021-shipments-and-revenues",
+      "checkedAt": "2026-09-08T15:45:19.036Z",
+      "recordIds": [
+        "stellantis_2021q3_lost_units",
+        "stellantis_2021q3_lost_fraction"
+      ],
+      "status": "retrieved",
+      "sha256": "348129338a2ed2ea35a763811bcab3f3239f951e823c8af903a2fa7b4a95b6b5",
+      "hashBasis": "raw_bytes",
+      "baselineSha256": "759ca627fb1dd4f59db1359ae7ad48266febbd97b900cee866dc9494ab4b46fe",
+      "baselineHashBasis": "raw_bytes",
+      "contentChangedSinceBaseline": true,
+      "reviewRequired": true,
+      "finalUrl": "https://www.stellantis.com/en/news/press-releases/2021/october/third-quarter-2021-shipments-and-revenues",
+      "documentType": "html",
+      "bytes": 93431,
+      "lastSuccessfulAt": "2026-09-08T15:45:19.036Z"
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1605484/000160548423000020/stellantis-20221231.htm",
+      "checkedAt": "2026-09-08T15:45:19.721Z",
+      "recordIds": [
+        "stellantis_2021_lost_fraction"
+      ],
+      "status": "retrieved",
+      "sha256": "8a4078bb0bbce605d74992052c0f118de4539ad036a8f55f69fe37624ef4e7bd",
+      "hashBasis": "raw_bytes",
+      "baselineSha256": "f1cee3eee26cbacd08586bd6be76833a5ab7c84a88fa99b8f06b1d45bb85dd1e",
+      "baselineHashBasis": "legacy_unspecified",
+      "contentChangedSinceBaseline": true,
+      "reviewRequired": true,
+      "finalUrl": "https://www.sec.gov/Archives/edgar/data/1605484/000160548423000020/stellantis-20221231.htm",
+      "documentType": "html",
+      "bytes": 12007498,
+      "lastSuccessfulAt": "2026-09-08T15:45:19.721Z"
+    },
+    {
+      "url": "https://media.renaultgroup.com/third-quarter-2021-priority-given-to-value-over-volume-optimized-revenues-in-a-context-strongly-marked-by-the-semiconductor-crisis/?lang=fra",
+      "checkedAt": "2026-09-08T15:45:20.268Z",
+      "recordIds": [
+        "renault_2021q3_lost_units",
+        "renault_2021_loss_forecast"
+      ],
+      "status": "retrieved",
+      "sha256": "31056273978438f3e0e37dd720e1957a1e16864ee0c30467910e85b52e2dff74",
+      "hashBasis": "raw_bytes",
+      "baselineSha256": "31056273978438f3e0e37dd720e1957a1e16864ee0c30467910e85b52e2dff74",
+      "baselineHashBasis": "raw_bytes",
+      "contentChangedSinceBaseline": false,
+      "reviewRequired": false,
+      "finalUrl": "https://media.renaultgroup.com/third-quarter-2021-priority-given-to-value-over-volume-optimized-revenues-in-a-context-strongly-marked-by-the-semiconductor-crisis/?lang=fra",
+      "documentType": "html",
+      "bytes": 209261,
+      "lastSuccessfulAt": "2026-09-08T15:45:20.268Z"
+    },
+    {
+      "url": "https://press.spglobal.com/2023-07-13-S-P-Global-Mobility-The-semiconductor-shortage-is-mostly-over-for-the-auto-industry",
+      "checkedAt": "2026-09-08T15:45:21.606Z",
+      "recordIds": [
+        "spglobal_2021_light_vehicle_loss",
+        "spglobal_2021q3_light_vehicle_loss",
+        "spglobal_2022_light_vehicle_loss",
+        "spglobal_2023h1_light_vehicle_loss"
+      ],
+      "status": "retrieved",
+      "sha256": "09fa805d1e5d89141ee76ad6a5c5a7bb40b3b4799f6804fff182ab535426d95e",
+      "hashBasis": "raw_bytes",
+      "baselineSha256": "94b56aa0ea331e51b86aed7ae919ccc06b4bc695c61642dd3398b01a4e5c996b",
+      "baselineHashBasis": "legacy_unspecified",
+      "contentChangedSinceBaseline": true,
+      "reviewRequired": true,
+      "finalUrl": "https://press.spglobal.com/2023-07-13-S-P-Global-Mobility-The-semiconductor-shortage-is-mostly-over-for-the-auto-industry",
+      "documentType": "html",
+      "bytes": 55255,
+      "lastSuccessfulAt": "2026-09-08T15:45:21.606Z"
+    },
+    {
+      "url": "https://www.sony.com/SonyInfo/IR/library/presen/er/16q4_sonypre.pdf",
+      "checkedAt": "2026-09-08T15:45:21.994Z",
+      "recordIds": [
+        "sony_fy16_consolidated",
+        "sony_fy16_semiconductors",
+        "sony_fy16_imaging",
+        "sony_fy16_corporate",
+        "sony_fy16_damage",
+        "sony_fy16_recovery",
+        "sony_fy16_semiconductor_opportunity",
+        "sony_fy16_all_opportunity",
+        "sony_fy16_q1",
+        "sony_fy16_q2",
+        "sony_fy16_q3",
+        "sony_fy16_q4"
+      ],
+      "status": "retrieved",
+      "sha256": "504d8788cecec743920442bcb375dcb62c85166878112d4ea7d6ccf1d0a078ed",
+      "hashBasis": "raw_bytes",
+      "baselineSha256": "504d8788cecec743920442bcb375dcb62c85166878112d4ea7d6ccf1d0a078ed",
+      "baselineHashBasis": "raw_bytes",
+      "contentChangedSinceBaseline": false,
+      "reviewRequired": false,
+      "finalUrl": "https://www.sony.com/en/SonyInfo/IR/library/presen/er/16q4_sonypre.pdf",
+      "documentType": "pdf",
+      "bytes": 227126,
+      "lastSuccessfulAt": "2026-09-08T15:45:21.994Z"
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/106040/000010604022000055/wdc-20220701.htm",
+      "checkedAt": "2026-09-08T15:45:22.770Z",
+      "recordIds": [
+        "wdc_contamination_fy2022",
+        "wdc_power_cost_fy2020",
+        "wdc_power_recovery_fy2021",
+        "wdc_power_recovery_fy2022",
+        "wdc_contamination_linked",
+        "wdc_contamination_charge"
+      ],
+      "status": "retrieved",
+      "sha256": "ebca716b17e99ff174bd87c00c36f58bcfc7a7065f84c7a1ffd9773f8e0b9d20",
+      "hashBasis": "raw_bytes",
+      "baselineSha256": "545e2d9532f071cf71511d1988104633e289dd7daa4a2d988b7cd0d99dd8d568",
+      "baselineHashBasis": "raw_bytes",
+      "contentChangedSinceBaseline": true,
+      "reviewRequired": true,
+      "finalUrl": "https://www.sec.gov/Archives/edgar/data/106040/000010604022000055/wdc-20220701.htm",
+      "documentType": "html",
+      "bytes": 3067277,
+      "lastSuccessfulAt": "2026-09-08T15:45:22.770Z"
+    },
+    {
+      "url": "https://www.nokia.com/newsroom/nokia-corporation-financial-report-for-q4-and-full-year-2020/",
+      "checkedAt": "2026-09-08T15:45:23.127Z",
+      "recordIds": [
+        "nokia_factory_closures_2020"
+      ],
+      "status": "retrieved",
+      "sha256": "f37687612ba6fd04ad99e6cde77f164ddd826a358d09cf3a90eef1cc4831f8c5",
+      "hashBasis": "raw_bytes",
+      "baselineSha256": "c76afc1a38f54692842e727541857ddb54d89a57845858ab171adc50a1b2fbfa",
+      "baselineHashBasis": "legacy_unspecified",
+      "contentChangedSinceBaseline": true,
+      "reviewRequired": true,
+      "finalUrl": "https://www.nokia.com/newsroom/nokia-corporation-financial-report-for-q4-and-full-year-2020/",
+      "documentType": "html",
+      "bytes": 199468,
+      "lastSuccessfulAt": "2026-09-08T15:45:23.127Z"
+    },
+    {
+      "url": "https://www.renesas.com/en/document/ppt/2021-2q-presentation-material",
+      "checkedAt": "2026-09-08T15:45:23.907Z",
+      "recordIds": [
+        "renesas_naka_q2_net",
+        "renesas_naka_q2_gross",
+        "renesas_naka_q2_recovered"
+      ],
+      "status": "retrieved",
+      "sha256": "46896a990f838aa5a6af9a2ff7731a2c85b45c4d320f1277d85973aacd80569d",
+      "hashBasis": "raw_bytes",
+      "baselineSha256": "46896a990f838aa5a6af9a2ff7731a2c85b45c4d320f1277d85973aacd80569d",
+      "baselineHashBasis": "raw_bytes",
+      "contentChangedSinceBaseline": false,
+      "reviewRequired": false,
+      "finalUrl": "https://www.renesas.com/en/document/ppt/2021-2q-presentation-material",
+      "documentType": "pdf",
+      "bytes": 499446,
+      "lastSuccessfulAt": "2026-09-08T15:45:23.907Z"
+    },
+    {
+      "url": "https://news.gm.com/home.detail.html/Pages/news/us/en/2021/oct/1012-boltev.html",
+      "checkedAt": "2026-09-08T15:45:24.915Z",
+      "recordIds": [
+        "gm_bolt_2021",
+        "gm_lg_recovery"
+      ],
+      "status": "retrieved",
+      "sha256": "2a602cee29909b3b35fcd8daf06d96d67698065ba207a7860573ed3322fa7d1b",
+      "hashBasis": "raw_bytes",
+      "baselineSha256": "554df643fdb014cab15634b3bcb94c9fd8a70fdb92273f2c446a2e037ddd5eef",
+      "baselineHashBasis": "raw_bytes",
+      "contentChangedSinceBaseline": true,
+      "reviewRequired": true,
+      "finalUrl": "https://news.gm.com/home.detail.html/Pages/news/us/en/2021/oct/1012-boltev.html",
+      "documentType": "html",
+      "bytes": 62036,
+      "lastSuccessfulAt": "2026-09-08T15:45:24.915Z"
+    },
+    {
+      "url": "https://links.sgx.com/FileOpen/LGES%202024%20-%20Final%20Offering%20Circular%20%28dd%2024.06.24%29.ashx?App=Prospectus&FileID=63194",
+      "checkedAt": "2026-09-08T15:45:26.267Z",
+      "recordIds": [
+        "lg_bolt_estimate",
+        "hyundai_replacement_estimate",
+        "lg_equal_sharing",
+        "hyundai_lges_sharing"
+      ],
+      "status": "retrieved",
+      "sha256": "36436f4b51c12bafc2f8cd939054390b4b6b262e80e4719bd42a9bc832d2428d",
+      "hashBasis": "raw_bytes",
+      "baselineSha256": "36436f4b51c12bafc2f8cd939054390b4b6b262e80e4719bd42a9bc832d2428d",
+      "baselineHashBasis": "raw_bytes",
+      "contentChangedSinceBaseline": false,
+      "reviewRequired": false,
+      "finalUrl": "https://links.sgx.com/FileOpen/LGES%202024%20-%20Final%20Offering%20Circular%20%28dd%2024.06.24%29.ashx?App=Prospectus&FileID=63194",
+      "documentType": "pdf",
+      "bytes": 6085575,
+      "lastSuccessfulAt": "2026-09-08T15:45:26.267Z"
+    },
+    {
+      "url": "https://www.kioxia-holdings.com/content/dam/kioxia-hd/en-jp/about/asset/Financial-Results-FY2021-4Q-en.pdf",
+      "checkedAt": "2026-09-08T15:45:27.636Z",
+      "recordIds": [
+        "kioxia_contamination_fy2021"
+      ],
+      "status": "retrieved",
+      "sha256": "c0e6c289db7b48708e14e194774cc784db437360832d24fa95530681aa42e54f",
+      "hashBasis": "raw_bytes",
+      "baselineSha256": "c0e6c289db7b48708e14e194774cc784db437360832d24fa95530681aa42e54f",
+      "baselineHashBasis": "raw_bytes",
+      "contentChangedSinceBaseline": false,
+      "reviewRequired": false,
+      "finalUrl": "https://www.kioxia-holdings.com/content/dam/kioxia-hd/en-jp/about/asset/Financial-Results-FY2021-4Q-en.pdf",
+      "documentType": "pdf",
+      "bytes": 166818,
+      "lastSuccessfulAt": "2026-09-08T15:45:27.636Z"
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1046179/000119312522104891/R40.htm",
+      "checkedAt": "2026-09-08T15:45:28.040Z",
+      "recordIds": [
+        "tsmc_photoresist_charge"
+      ],
+      "status": "retrieved",
+      "sha256": "7cb31c6015759c3ef3917093583193e36124cb16476d0fc596b7006cbb7c5e17",
+      "hashBasis": "raw_bytes",
+      "baselineSha256": "a8499706563d38a8aacc92894c1abd5e83dc339555c17518fedca3318a3a2977",
+      "baselineHashBasis": "raw_bytes",
+      "contentChangedSinceBaseline": true,
+      "reviewRequired": true,
+      "finalUrl": "https://www.sec.gov/Archives/edgar/data/1046179/000119312522104891/R40.htm",
+      "documentType": "html",
+      "bytes": 6296,
+      "lastSuccessfulAt": "2026-09-08T15:45:28.040Z"
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/106040/000010604024000031/wdc-20240628.htm",
+      "checkedAt": "2026-09-08T15:45:28.367Z",
+      "recordIds": [
+        "wdc_contamination_recovery_fy2024",
+        "wdc_contamination_insurer_cash_fy2024"
+      ],
+      "status": "retrieved",
+      "sha256": "daab7d668c8ab920376821ad29ebd8165f840c24f26290963f5be5955df0513d",
+      "hashBasis": "raw_bytes",
+      "baselineSha256": "391af5f579ab36e6228631b416676234518e29ced5611ecb7bd94f34385c9283",
+      "baselineHashBasis": "raw_bytes",
+      "contentChangedSinceBaseline": true,
+      "reviewRequired": true,
+      "finalUrl": "https://www.sec.gov/Archives/edgar/data/106040/000010604024000031/wdc-20240628.htm",
+      "documentType": "html",
+      "bytes": 2685383,
+      "lastSuccessfulAt": "2026-09-08T15:45:28.367Z"
+    },
+    {
+      "url": "https://www.nikon.com/company/ir/ir_library/result/pdf/2017/17_all_e.pdf",
+      "checkedAt": "2026-09-08T15:45:28.725Z",
+      "recordIds": [
+        "nikon_imaging_sales_decline_fy2017",
+        "nikon_imaging_income_decline_fy2017"
+      ],
+      "status": "retrieved",
+      "sha256": "3f05998279e3526642cede7c92aaaa31c90695616f479a134e04fb34cdf49ed9",
+      "hashBasis": "raw_bytes",
+      "baselineSha256": "3f05998279e3526642cede7c92aaaa31c90695616f479a134e04fb34cdf49ed9",
+      "baselineHashBasis": "raw_bytes",
+      "contentChangedSinceBaseline": false,
+      "reviewRequired": false,
+      "finalUrl": "https://www.nikon.com/content/dam/web-assets/nikoncom/company/local/global/en/ir/ir_library/result/pdf/2017/17_all_e.pdf",
+      "documentType": "pdf",
+      "bytes": 539410,
+      "lastSuccessfulAt": "2026-09-08T15:45:28.725Z"
+    },
+    {
+      "url": "https://www.renesas.com/en/about/newsroom/update-4-final-impact-march-16-earthquake-coast-fukushima-prefecture-renesas-operation-1",
+      "checkedAt": "2026-09-08T15:45:29.145Z",
+      "recordIds": [
+        "naka_2022_200mm_loss",
+        "naka_2022_300mm_loss"
+      ],
+      "status": "retrieved",
+      "sha256": "41cd74e56501b07f8610f1ceee1f524b3752a38e5bdce74d76cfa04c1a9d04b1",
+      "hashBasis": "raw_bytes",
+      "baselineSha256": "6d9ca9144f6535304f1a3c88873d7cd50926ed37e5041ad11f33318b18be857e",
+      "baselineHashBasis": "raw_bytes",
+      "contentChangedSinceBaseline": true,
+      "reviewRequired": true,
+      "finalUrl": "https://www.renesas.com/en/about/newsroom/update-4-final-impact-march-16-earthquake-coast-fukushima-prefecture-renesas-operation-1",
+      "documentType": "html",
+      "bytes": 222444,
+      "lastSuccessfulAt": "2026-09-08T15:45:29.145Z"
+    },
+    {
+      "url": "https://www.renesas.com/en/about/newsroom/update-3-impact-march-16-earthquake-coast-fukushima-prefecture-renesas-operation",
+      "checkedAt": "2026-09-08T15:45:29.471Z",
+      "recordIds": [
+        "takasaki_2022_loss"
+      ],
+      "status": "retrieved",
+      "sha256": "3596a4f6e5aec03fae59e3fd1007994ecf1a4f405a81e97897f8ff4028e1da0c",
+      "hashBasis": "raw_bytes",
+      "baselineSha256": "a12415a126097b1a75c87ba1bf3d9d7a4adbab1d83659127d28157e95b73a18c",
+      "baselineHashBasis": "raw_bytes",
+      "contentChangedSinceBaseline": true,
+      "reviewRequired": true,
+      "finalUrl": "https://www.renesas.com/en/about/newsroom/update-3-impact-march-16-earthquake-coast-fukushima-prefecture-renesas-operation",
+      "documentType": "html",
+      "bytes": 228459,
+      "lastSuccessfulAt": "2026-09-08T15:45:29.471Z"
+    },
+    {
+      "url": "https://www.renesas.com/en/about/newsroom/update-2-final-impact-instantaneous-voltage-drop-operation-kawashiri-factory",
+      "checkedAt": "2026-09-08T15:45:29.875Z",
+      "recordIds": [
+        "kawashiri_2022_loss"
+      ],
+      "status": "retrieved",
+      "sha256": "57c52ef01b6ec1f0fb5d10d1712fde982d19fb35ca1c2dffc397fa926abf753b",
+      "hashBasis": "raw_bytes",
+      "baselineSha256": "d8174cbe76f62cf8c7e164226d9527c9900f463e1b8e0d6c766002eb91b90576",
+      "baselineHashBasis": "raw_bytes",
+      "contentChangedSinceBaseline": true,
+      "reviewRequired": true,
+      "finalUrl": "https://www.renesas.com/en/about/newsroom/update-2-final-impact-instantaneous-voltage-drop-operation-kawashiri-factory",
+      "documentType": "html",
+      "bytes": 220023,
+      "lastSuccessfulAt": "2026-09-08T15:45:29.875Z"
+    }
+  ],
+  "unavailable": 0,
+  "reviewRequired": 12,
+  "limitation": "Retrieval and byte-change monitoring, not automatic claim verification. Dynamic page changes can trigger review. Newly found disclosures enter the news queue until reviewed."
+}

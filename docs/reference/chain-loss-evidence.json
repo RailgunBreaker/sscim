@@ -1,0 +1,484 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-09-08",
+  "entities": [
+    {
+      "id": "ford",
+      "name": "Ford Motor Company",
+      "type": "company"
+    },
+    {
+      "id": "stellantis",
+      "name": "Stellantis N.V.",
+      "type": "company"
+    },
+    {
+      "id": "renault",
+      "name": "Renault Group",
+      "type": "company"
+    }
+  ],
+  "incidents": [
+    {
+      "id": "global_automotive_semiconductor_shortage_2021",
+      "name": "Global automotive semiconductor shortage, 2021",
+      "datePrecision": "year",
+      "startDate": "2021-01-01",
+      "endDate": "2021-12-31",
+      "limitations": "An aggregate shortage episode, not an independent single-facility disruption."
+    }
+  ],
+  "records": [
+    {
+      "id": "ford_2021q1_lost_units",
+      "companyId": "ford",
+      "incidentId": "global_automotive_semiconductor_shortage_2021",
+      "periodStart": "2021-01-01",
+      "periodEnd": "2021-03-31",
+      "metric": "vehicle_production_shortfall",
+      "value": 200000,
+      "units": "vehicles",
+      "kind": "reported_outcome",
+      "causeScope": "semiconductor_shortage",
+      "denominator": null,
+      "measurementBasis": "issuer_attributed_shortfall",
+      "precision": "approximately; no statistical error band published",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.sec.gov/Archives/edgar/data/37996/000003799621000026/f-20210331.htm",
+        "publicationDate": "2021-04-29",
+        "informationAvailableDate": "2021-04-29",
+        "supportingSection": "MD&A Automotive and Outlook, pp. 36 and 56; reported Q1 loss versus Q2 and full-year forecasts",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-08",
+        "provenance": "Codex primary-source review; not independent human adjudication"
+      },
+      "limitations": "Attributed to the overall semiconductor shortage by the company; not a separately identified loss from one fab. Vehicles, wholesale units, profit and fractions are distinct targets. Planned output is not an independently measured counterfactual."
+    },
+    {
+      "id": "ford_2021q1_lost_fraction",
+      "companyId": "ford",
+      "incidentId": "global_automotive_semiconductor_shortage_2021",
+      "periodStart": "2021-01-01",
+      "periodEnd": "2021-03-31",
+      "metric": "production_loss_fraction",
+      "value": 0.17,
+      "units": "fraction",
+      "kind": "reported_outcome",
+      "causeScope": "semiconductor_shortage",
+      "denominator": "Company planned vehicle production for the stated period",
+      "measurementBasis": "issuer_attributed_shortfall",
+      "precision": "approximately; no statistical error band published",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.sec.gov/Archives/edgar/data/37996/000003799621000026/f-20210331.htm",
+        "publicationDate": "2021-04-29",
+        "informationAvailableDate": "2021-04-29",
+        "supportingSection": "MD&A Automotive and Outlook, pp. 36 and 56; reported Q1 loss versus Q2 and full-year forecasts",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-08",
+        "provenance": "Codex primary-source review; not independent human adjudication"
+      },
+      "limitations": "Attributed to the overall semiconductor shortage by the company; not a separately identified loss from one fab. Vehicles, wholesale units, profit and fractions are distinct targets. Planned output is not an independently measured counterfactual."
+    },
+    {
+      "id": "ford_2021q2_loss_forecast",
+      "companyId": "ford",
+      "incidentId": "global_automotive_semiconductor_shortage_2021",
+      "periodStart": "2021-04-01",
+      "periodEnd": "2021-06-30",
+      "metric": "production_loss_fraction",
+      "value": 0.5,
+      "units": "fraction",
+      "kind": "issuer_forecast",
+      "causeScope": "semiconductor_shortage",
+      "denominator": "Company planned vehicle production for the stated period",
+      "measurementBasis": "issuer_attributed_shortfall",
+      "precision": "approximately; no statistical error band published",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.sec.gov/Archives/edgar/data/37996/000003799621000026/f-20210331.htm",
+        "publicationDate": "2021-04-29",
+        "informationAvailableDate": "2021-04-29",
+        "supportingSection": "MD&A Automotive and Outlook, pp. 36 and 56; reported Q1 loss versus Q2 and full-year forecasts",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-08",
+        "provenance": "Codex primary-source review; not independent human adjudication"
+      },
+      "limitations": "Attributed to the overall semiconductor shortage by the company; not a separately identified loss from one fab. Vehicles, wholesale units, profit and fractions are distinct targets. Planned output is not an independently measured counterfactual."
+    },
+    {
+      "id": "ford_2021_wholesale_forecast",
+      "companyId": "ford",
+      "incidentId": "global_automotive_semiconductor_shortage_2021",
+      "periodStart": "2021-01-01",
+      "periodEnd": "2021-12-31",
+      "metric": "wholesale_unit_shortfall",
+      "value": 1100000,
+      "units": "wholesale vehicles",
+      "kind": "issuer_forecast",
+      "causeScope": "semiconductor_shortage",
+      "denominator": null,
+      "measurementBasis": "issuer_attributed_shortfall",
+      "precision": "approximately; no statistical error band published",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.sec.gov/Archives/edgar/data/37996/000003799621000026/f-20210331.htm",
+        "publicationDate": "2021-04-29",
+        "informationAvailableDate": "2021-04-29",
+        "supportingSection": "MD&A Automotive and Outlook, pp. 36 and 56; reported Q1 loss versus Q2 and full-year forecasts",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-08",
+        "provenance": "Codex primary-source review; not independent human adjudication"
+      },
+      "limitations": "Attributed to the overall semiconductor shortage by the company; not a separately identified loss from one fab. Vehicles, wholesale units, profit and fractions are distinct targets. Planned output is not an independently measured counterfactual."
+    },
+    {
+      "id": "ford_2021_ebit_forecast",
+      "companyId": "ford",
+      "incidentId": "global_automotive_semiconductor_shortage_2021",
+      "periodStart": "2021-01-01",
+      "periodEnd": "2021-12-31",
+      "metric": "adjusted_ebit_headwind",
+      "value": 2500000000,
+      "units": "USD",
+      "kind": "issuer_forecast",
+      "causeScope": "semiconductor_shortage",
+      "denominator": null,
+      "measurementBasis": "issuer_attributed_shortfall",
+      "precision": "approximately; no statistical error band published",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.sec.gov/Archives/edgar/data/37996/000003799621000026/f-20210331.htm",
+        "publicationDate": "2021-04-29",
+        "informationAvailableDate": "2021-04-29",
+        "supportingSection": "MD&A Automotive and Outlook, pp. 36 and 56; reported Q1 loss versus Q2 and full-year forecasts",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-08",
+        "provenance": "Codex primary-source review; not independent human adjudication"
+      },
+      "limitations": "Attributed to the overall semiconductor shortage by the company; not a separately identified loss from one fab. Vehicles, wholesale units, profit and fractions are distinct targets. Planned output is not an independently measured counterfactual."
+    },
+    {
+      "id": "stellantis_2021q3_lost_units",
+      "companyId": "stellantis",
+      "incidentId": "global_automotive_semiconductor_shortage_2021",
+      "periodStart": "2021-07-01",
+      "periodEnd": "2021-09-30",
+      "metric": "vehicle_production_shortfall",
+      "value": 600000,
+      "units": "vehicles",
+      "kind": "reported_outcome",
+      "causeScope": "semiconductor_shortage",
+      "denominator": null,
+      "measurementBasis": "issuer_attributed_shortfall",
+      "precision": "approximately; no statistical error band published",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.stellantis.com/en/news/press-releases/2021/october/third-quarter-2021-shipments-and-revenues",
+        "publicationDate": "2021-10-28",
+        "informationAvailableDate": "2021-10-28",
+        "supportingSection": "Opening production-loss disclosure: approximately 600 thousand units, 30% of planned Q3 production",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-08",
+        "provenance": "Codex primary-source review; not independent human adjudication"
+      },
+      "limitations": "Attributed to the overall semiconductor shortage by the company; not a separately identified loss from one fab. Vehicles, wholesale units, profit and fractions are distinct targets. Planned output is not an independently measured counterfactual."
+    },
+    {
+      "id": "stellantis_2021q3_lost_fraction",
+      "companyId": "stellantis",
+      "incidentId": "global_automotive_semiconductor_shortage_2021",
+      "periodStart": "2021-07-01",
+      "periodEnd": "2021-09-30",
+      "metric": "production_loss_fraction",
+      "value": 0.3,
+      "units": "fraction",
+      "kind": "reported_outcome",
+      "causeScope": "semiconductor_shortage",
+      "denominator": "Company planned vehicle production for the stated period",
+      "measurementBasis": "issuer_attributed_shortfall",
+      "precision": "approximately; no statistical error band published",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.stellantis.com/en/news/press-releases/2021/october/third-quarter-2021-shipments-and-revenues",
+        "publicationDate": "2021-10-28",
+        "informationAvailableDate": "2021-10-28",
+        "supportingSection": "Opening production-loss disclosure: approximately 600 thousand units, 30% of planned Q3 production",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-08",
+        "provenance": "Codex primary-source review; not independent human adjudication"
+      },
+      "limitations": "Attributed to the overall semiconductor shortage by the company; not a separately identified loss from one fab. Vehicles, wholesale units, profit and fractions are distinct targets. Planned output is not an independently measured counterfactual."
+    },
+    {
+      "id": "stellantis_2021_lost_fraction",
+      "companyId": "stellantis",
+      "incidentId": "global_automotive_semiconductor_shortage_2021",
+      "periodStart": "2021-01-01",
+      "periodEnd": "2021-12-31",
+      "metric": "production_loss_fraction",
+      "value": 0.2,
+      "units": "fraction",
+      "kind": "reported_outcome",
+      "causeScope": "semiconductor_shortage",
+      "denominator": "Company planned vehicle production for the stated period",
+      "measurementBasis": "issuer_attributed_shortfall",
+      "precision": "approximately; no statistical error band published",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.sec.gov/Archives/edgar/data/1605484/000160548423000020/stellantis-20221231.htm",
+        "publicationDate": "2023-02-24",
+        "informationAvailableDate": "2023-02-24",
+        "supportingSection": "2021 semiconductor shortage discussion: approximately 20 percent of planned production",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-08",
+        "provenance": "Codex primary-source review; not independent human adjudication"
+      },
+      "limitations": "Attributed to the overall semiconductor shortage by the company; not a separately identified loss from one fab. Vehicles, wholesale units, profit and fractions are distinct targets. Planned output is not an independently measured counterfactual."
+    },
+    {
+      "id": "renault_2021q3_lost_units",
+      "companyId": "renault",
+      "incidentId": "global_automotive_semiconductor_shortage_2021",
+      "periodStart": "2021-07-01",
+      "periodEnd": "2021-09-30",
+      "metric": "vehicle_production_shortfall",
+      "value": 170000,
+      "units": "vehicles",
+      "kind": "reported_outcome",
+      "causeScope": "component_shortage",
+      "denominator": null,
+      "measurementBasis": "issuer_attributed_shortfall",
+      "precision": "approximately; no statistical error band published",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://media.renaultgroup.com/third-quarter-2021-priority-given-to-value-over-volume-optimized-revenues-in-a-context-strongly-marked-by-the-semiconductor-crisis/?lang=fra",
+        "publicationDate": "2021-10-22",
+        "informationAvailableDate": "2021-10-22",
+        "supportingSection": "Q3 production loss from unavailable components; full-year figure explicitly anticipated",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-08",
+        "provenance": "Codex primary-source review; not independent human adjudication"
+      },
+      "limitations": "Issuer estimates losses from unavailable components in the semiconductor-crisis context; the source does not isolate a semiconductor-only counterfactual."
+    },
+    {
+      "id": "renault_2021_loss_forecast",
+      "companyId": "renault",
+      "incidentId": "global_automotive_semiconductor_shortage_2021",
+      "periodStart": "2021-01-01",
+      "periodEnd": "2021-12-31",
+      "metric": "vehicle_production_shortfall",
+      "value": 500000,
+      "units": "vehicles",
+      "kind": "issuer_forecast",
+      "causeScope": "component_shortage",
+      "denominator": null,
+      "measurementBasis": "issuer_attributed_shortfall",
+      "precision": "approximately; no statistical error band published",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://media.renaultgroup.com/third-quarter-2021-priority-given-to-value-over-volume-optimized-revenues-in-a-context-strongly-marked-by-the-semiconductor-crisis/?lang=fra",
+        "publicationDate": "2021-10-22",
+        "informationAvailableDate": "2021-10-22",
+        "supportingSection": "Q3 production loss from unavailable components; full-year figure explicitly anticipated",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-08",
+        "provenance": "Codex primary-source review; not independent human adjudication"
+      },
+      "limitations": "Attributed to the overall semiconductor shortage by the company; not a separately identified loss from one fab. Vehicles, wholesale units, profit and fractions are distinct targets. Planned output is not an independently measured counterfactual."
+    }
+  ],
+  "sectorEstimates": [
+    {
+      "id": "spglobal_2021_light_vehicle_loss",
+      "periodStart": "2021-01-01",
+      "periodEnd": "2021-12-31",
+      "value": 9500000,
+      "qualifier": "greater_than",
+      "scopeId": "global_light_vehicles",
+      "geography": "global",
+      "sector": "light_vehicle_manufacturing",
+      "companyId": null,
+      "metric": "light_vehicle_production_shortfall",
+      "units": "light vehicles",
+      "causeScope": "semiconductor_shortage",
+      "accountingBoundary": "final_vehicle_output",
+      "kind": "external_retrospective_estimate",
+      "measurementBasis": "publisher_estimated_counterfactual",
+      "estimator": "S&P Global Mobility",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://press.spglobal.com/2023-07-13-S-P-Global-Mobility-The-semiconductor-shortage-is-mostly-over-for-the-auto-industry",
+        "publicationDate": "2023-07-13",
+        "informationAvailableDate": "2023-07-13",
+        "supportingSection": "Retrospective global light-vehicle production loss estimates and methodology, 2021 through H1 2023",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-08",
+        "provenance": "Codex primary-source review; not independent human adjudication"
+      },
+      "method": "Publisher compares OEM disruption announcements with its estimates of contemporaneous planned production.",
+      "independentlyReproduced": false,
+      "uncertaintyInterval": null,
+      "limitations": "Published sector-wide estimate, not a census of realized lost units. Underlying OEM-level allocations and counterfactual plans are not supplied here. Does not cover other semiconductor end markets or identify losses by upstream plant."
+    },
+    {
+      "id": "spglobal_2021q3_light_vehicle_loss",
+      "periodStart": "2021-07-01",
+      "periodEnd": "2021-09-30",
+      "value": 3500000,
+      "qualifier": "approximately",
+      "scopeId": "global_light_vehicles",
+      "geography": "global",
+      "sector": "light_vehicle_manufacturing",
+      "companyId": null,
+      "metric": "light_vehicle_production_shortfall",
+      "units": "light vehicles",
+      "causeScope": "semiconductor_shortage",
+      "accountingBoundary": "final_vehicle_output",
+      "kind": "external_retrospective_estimate",
+      "measurementBasis": "publisher_estimated_counterfactual",
+      "estimator": "S&P Global Mobility",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://press.spglobal.com/2023-07-13-S-P-Global-Mobility-The-semiconductor-shortage-is-mostly-over-for-the-auto-industry",
+        "publicationDate": "2023-07-13",
+        "informationAvailableDate": "2023-07-13",
+        "supportingSection": "Retrospective global light-vehicle production loss estimates and methodology, 2021 through H1 2023",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-08",
+        "provenance": "Codex primary-source review; not independent human adjudication"
+      },
+      "method": "Publisher compares OEM disruption announcements with its estimates of contemporaneous planned production.",
+      "independentlyReproduced": false,
+      "uncertaintyInterval": null,
+      "limitations": "Published sector-wide estimate, not a census of realized lost units. Underlying OEM-level allocations and counterfactual plans are not supplied here. Does not cover other semiconductor end markets or identify losses by upstream plant."
+    },
+    {
+      "id": "spglobal_2022_light_vehicle_loss",
+      "periodStart": "2022-01-01",
+      "periodEnd": "2022-12-31",
+      "value": 3000000,
+      "qualifier": "approximately",
+      "scopeId": "global_light_vehicles",
+      "geography": "global",
+      "sector": "light_vehicle_manufacturing",
+      "companyId": null,
+      "metric": "light_vehicle_production_shortfall",
+      "units": "light vehicles",
+      "causeScope": "semiconductor_shortage",
+      "accountingBoundary": "final_vehicle_output",
+      "kind": "external_retrospective_estimate",
+      "measurementBasis": "publisher_estimated_counterfactual",
+      "estimator": "S&P Global Mobility",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://press.spglobal.com/2023-07-13-S-P-Global-Mobility-The-semiconductor-shortage-is-mostly-over-for-the-auto-industry",
+        "publicationDate": "2023-07-13",
+        "informationAvailableDate": "2023-07-13",
+        "supportingSection": "Retrospective global light-vehicle production loss estimates and methodology, 2021 through H1 2023",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-08",
+        "provenance": "Codex primary-source review; not independent human adjudication"
+      },
+      "method": "Publisher compares OEM disruption announcements with its estimates of contemporaneous planned production.",
+      "independentlyReproduced": false,
+      "uncertaintyInterval": null,
+      "limitations": "Published sector-wide estimate, not a census of realized lost units. Underlying OEM-level allocations and counterfactual plans are not supplied here. Does not cover other semiconductor end markets or identify losses by upstream plant."
+    },
+    {
+      "id": "spglobal_2023h1_light_vehicle_loss",
+      "periodStart": "2023-01-01",
+      "periodEnd": "2023-06-30",
+      "value": 524000,
+      "qualifier": "approximately",
+      "scopeId": "global_light_vehicles",
+      "geography": "global",
+      "sector": "light_vehicle_manufacturing",
+      "companyId": null,
+      "metric": "light_vehicle_production_shortfall",
+      "units": "light vehicles",
+      "causeScope": "semiconductor_shortage",
+      "accountingBoundary": "final_vehicle_output",
+      "kind": "external_retrospective_estimate",
+      "measurementBasis": "publisher_estimated_counterfactual",
+      "estimator": "S&P Global Mobility",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://press.spglobal.com/2023-07-13-S-P-Global-Mobility-The-semiconductor-shortage-is-mostly-over-for-the-auto-industry",
+        "publicationDate": "2023-07-13",
+        "informationAvailableDate": "2023-07-13",
+        "supportingSection": "Retrospective global light-vehicle production loss estimates and methodology, 2021 through H1 2023",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-08",
+        "provenance": "Codex primary-source review; not independent human adjudication"
+      },
+      "method": "Publisher compares OEM disruption announcements with its estimates of contemporaneous planned production.",
+      "independentlyReproduced": false,
+      "uncertaintyInterval": null,
+      "limitations": "Published sector-wide estimate, not a census of realized lost units. Underlying OEM-level allocations and counterfactual plans are not supplied here. Does not cover other semiconductor end markets or identify losses by upstream plant."
+    }
+  ],
+  "transmissionEvidence": [
+    {
+      "id": "naka_fire_ford_outlook_2021",
+      "incidentId": "renesas_naka_fire_2021",
+      "downstreamIncidentId": "global_automotive_semiconductor_shortage_2021",
+      "supplierCompanyId": "renesas",
+      "supplierFacilityId": "renesas_naka",
+      "customerCompanyId": "ford",
+      "relationshipKind": "issuer_reported_contributing_disruption",
+      "intermediaryCompanyIds": null,
+      "allocatedLoss": null,
+      "allocationShare": null,
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.sec.gov/Archives/edgar/data/37996/000003799621000026/f-20210331.htm",
+        "publicationDate": "2021-04-29",
+        "informationAvailableDate": "2021-04-29",
+        "supportingSection": "MD&A Automotive and Outlook, pp. 36 and 56; reported Q1 loss versus Q2 and full-year forecasts",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-08",
+        "provenance": "Codex primary-source review; not independent human adjudication"
+      },
+      "claim": "Ford includes the Naka fire in its discussion of the worsening shortage and revised second-quarter production outlook.",
+      "limitations": "The disclosure does not specify a direct shipment route, named tier-one intermediaries, or the fraction of Ford losses caused by the fire."
+    }
+  ],
+  "limitations": [
+    "Losses cover a disclosed subset of downstream companies, not the global chain.",
+    "Repeated metrics for the same company and period are not independent observations.",
+    "Reported losses and forecasts must not be pooled or automatically added to upstream financial losses."
+  ]
+}

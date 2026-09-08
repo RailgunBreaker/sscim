@@ -11,7 +11,7 @@ Its numbers describe its original inputs and are not the current baseline.
 | Measure | Result |
 | --- | --- |
 | Model version | sscim-model-v7.1-exposure-robustness |
-| Dataset as-of | 2026-09-06 |
+| Dataset as-of | 2026-09-09 |
 | Base chain index | 5.084617 |
 | Two engine builds agree | true |
 | Explicit base parameters agree with defaults | true |

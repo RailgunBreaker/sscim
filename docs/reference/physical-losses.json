@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-09-09",
+  "records": [
+    {
+      "id": "naka_2022_200mm_loss",
+      "incidentId": "fukushima_earthquake_2022",
+      "companyId": "renesas",
+      "facilityId": "renesas_naka",
+      "scopeId": "naka_200mm",
+      "scope": "Naka 200mm line",
+      "metric": "gross_production_shortfall_equivalent_days",
+      "units": "local_baseline_production_days",
+      "value": 14,
+      "kind": "issuer_retrospective_estimate",
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-09",
+        "provenance": "Codex reading of primary issuer disclosures, not independent factory telemetry"
+      },
+      "source": {
+        "url": "https://www.renesas.com/en/about/newsroom/update-4-final-impact-march-16-earthquake-coast-fukushima-prefecture-renesas-operation-1",
+        "publicationDate": "2022-03-26",
+        "informationAvailableDate": "2022-03-26",
+        "supportingSection": "Naka: ruined work-in-process and reduced production, approximately two weeks for 200mm and three for 300mm; recovery of shortfalls continues.",
+        "claimStatus": "verified"
+      },
+      "recoveryId": "naka_2022_quake_duration",
+      "precision": "approximately; no statistical uncertainty published",
+      "components": [
+        "ruined_work_in_process",
+        "halted_or_reduced_production"
+      ],
+      "accountingBoundary": "gross_shortfall_before_subsequent_catchup",
+      "denominator": "One day of normal production for this source-defined line or factory; absolute volume undisclosed",
+      "downstreamLoss": null,
+      "catchupProduction": null,
+      "permanentLoss": null,
+      "supplierAllocation": null
+    },
+    {
+      "id": "naka_2022_300mm_loss",
+      "incidentId": "fukushima_earthquake_2022",
+      "companyId": "renesas",
+      "facilityId": "renesas_naka",
+      "scopeId": "naka_300mm",
+      "scope": "Naka 300mm line",
+      "metric": "gross_production_shortfall_equivalent_days",
+      "units": "local_baseline_production_days",
+      "value": 21,
+      "kind": "issuer_retrospective_estimate",
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-09",
+        "provenance": "Codex reading of primary issuer disclosures, not independent factory telemetry"
+      },
+      "source": {
+        "url": "https://www.renesas.com/en/about/newsroom/update-4-final-impact-march-16-earthquake-coast-fukushima-prefecture-renesas-operation-1",
+        "publicationDate": "2022-03-26",
+        "informationAvailableDate": "2022-03-26",
+        "supportingSection": "Naka: ruined work-in-process and reduced production, approximately two weeks for 200mm and three for 300mm; recovery of shortfalls continues.",
+        "claimStatus": "verified"
+      },
+      "recoveryId": "naka_2022_quake_duration",
+      "precision": "approximately; no statistical uncertainty published",
+      "components": [
+        "ruined_work_in_process",
+        "halted_or_reduced_production"
+      ],
+      "accountingBoundary": "gross_shortfall_before_subsequent_catchup",
+      "denominator": "One day of normal production for this source-defined line or factory; absolute volume undisclosed",
+      "downstreamLoss": null,
+      "catchupProduction": null,
+      "permanentLoss": null,
+      "supplierAllocation": null
+    },
+    {
+      "id": "takasaki_2022_loss",
+      "incidentId": "fukushima_earthquake_2022",
+      "companyId": "renesas",
+      "facilityId": "renesas_takasaki",
+      "scopeId": "takasaki_factory",
+      "scope": "Takasaki factory",
+      "metric": "gross_production_shortfall_equivalent_days",
+      "units": "local_baseline_production_days",
+      "value": 10,
+      "kind": "issuer_retrospective_estimate",
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-09",
+        "provenance": "Codex reading of primary issuer disclosures, not independent factory telemetry"
+      },
+      "source": {
+        "url": "https://www.renesas.com/en/about/newsroom/update-3-impact-march-16-earthquake-coast-fukushima-prefecture-renesas-operation",
+        "publicationDate": "2022-03-23",
+        "informationAvailableDate": "2022-03-23",
+        "supportingSection": "Takasaki: approximately ten days of production from ruined work-in-process and halted production; recovery continues.",
+        "claimStatus": "verified"
+      },
+      "recoveryId": "takasaki_2022_quake_duration",
+      "precision": "approximately; no statistical uncertainty published",
+      "components": [
+        "ruined_work_in_process",
+        "halted_or_reduced_production"
+      ],
+      "accountingBoundary": "gross_shortfall_before_subsequent_catchup",
+      "denominator": "One day of normal production for this source-defined line or factory; absolute volume undisclosed",
+      "downstreamLoss": null,
+      "catchupProduction": null,
+      "permanentLoss": null,
+      "supplierAllocation": null
+    },
+    {
+      "id": "kawashiri_2022_loss",
+      "incidentId": "kawashiri_voltage_drop_2022",
+      "companyId": "renesas",
+      "facilityId": "renesas_kawashiri",
+      "scopeId": "kawashiri_factory",
+      "scope": "Kawashiri factory",
+      "metric": "gross_production_shortfall_equivalent_days",
+      "units": "local_baseline_production_days",
+      "value": 7,
+      "kind": "issuer_retrospective_estimate",
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-09",
+        "provenance": "Codex reading of primary issuer disclosures, not independent factory telemetry"
+      },
+      "source": {
+        "url": "https://www.renesas.com/en/about/newsroom/update-2-final-impact-instantaneous-voltage-drop-operation-kawashiri-factory",
+        "publicationDate": "2022-07-11",
+        "informationAvailableDate": "2022-07-11",
+        "supportingSection": "Updated assessment: approximately one week combined ruined work-in-process and halted production; earlier two-week maximum was preliminary.",
+        "claimStatus": "verified"
+      },
+      "recoveryId": "kawashiri_2022_lightning_duration",
+      "precision": "approximately; no statistical uncertainty published",
+      "components": [
+        "ruined_work_in_process",
+        "halted_or_reduced_production"
+      ],
+      "accountingBoundary": "gross_shortfall_before_subsequent_catchup",
+      "denominator": "One day of normal production for this source-defined line or factory; absolute volume undisclosed",
+      "downstreamLoss": null,
+      "catchupProduction": null,
+      "permanentLoss": null,
+      "supplierAllocation": null
+    }
+  ],
+  "limitations": [
+    "Production-equivalent days have different local denominators and cannot be added across lines or factories.",
+    "Full wafer-input restoration is not recovery of accumulated output shortfalls.",
+    "Issuer estimates do not identify downstream customer losses or a whole-chain economic total."
+  ]
+}

@@ -1,0 +1,183 @@
+{
+  "asOf": "2026-09-08",
+  "reportedOutcomes": 6,
+  "issuerForecasts": 4,
+  "companyAttributedLinks": 1,
+  "ablation": {
+    "withLink": 1,
+    "withoutLink": 0
+  },
+  "coveredSubsetExample": {
+    "value": 800000,
+    "units": "vehicles",
+    "metric": "vehicle_production_shortfall",
+    "selectedRecordIds": [
+      "ford_2021q1_lost_units",
+      "stellantis_2021q3_lost_units"
+    ],
+    "scope": "Selected non-overlapping issuer-reported shortfalls only",
+    "chainWide": false,
+    "precision": "Approximate as reported; not a statistical lower bound"
+  },
+  "sectorAccounts": {
+    "asOf": "2026-09-08",
+    "estimates": [
+      {
+        "id": "spglobal_2021_light_vehicle_loss",
+        "periodStart": "2021-01-01",
+        "periodEnd": "2021-12-31",
+        "value": 9500000,
+        "qualifier": "greater_than",
+        "scopeId": "global_light_vehicles",
+        "geography": "global",
+        "sector": "light_vehicle_manufacturing",
+        "companyId": null,
+        "metric": "light_vehicle_production_shortfall",
+        "units": "light vehicles",
+        "causeScope": "semiconductor_shortage",
+        "accountingBoundary": "final_vehicle_output",
+        "kind": "external_retrospective_estimate",
+        "measurementBasis": "publisher_estimated_counterfactual",
+        "estimator": "S&P Global Mobility",
+        "claimStatus": "verified",
+        "source": {
+          "url": "https://press.spglobal.com/2023-07-13-S-P-Global-Mobility-The-semiconductor-shortage-is-mostly-over-for-the-auto-industry",
+          "publicationDate": "2023-07-13",
+          "informationAvailableDate": "2023-07-13",
+          "supportingSection": "Retrospective global light-vehicle production loss estimates and methodology, 2021 through H1 2023",
+          "claimStatus": "verified"
+        },
+        "review": {
+          "verifiedAt": "2026-09-08",
+          "provenance": "Codex primary-source review; not independent human adjudication"
+        },
+        "method": "Publisher compares OEM disruption announcements with its estimates of contemporaneous planned production.",
+        "independentlyReproduced": false,
+        "uncertaintyInterval": null,
+        "limitations": "Published sector-wide estimate, not a census of realized lost units. Underlying OEM-level allocations and counterfactual plans are not supplied here. Does not cover other semiconductor end markets or identify losses by upstream plant."
+      },
+      {
+        "id": "spglobal_2021q3_light_vehicle_loss",
+        "periodStart": "2021-07-01",
+        "periodEnd": "2021-09-30",
+        "value": 3500000,
+        "qualifier": "approximately",
+        "scopeId": "global_light_vehicles",
+        "geography": "global",
+        "sector": "light_vehicle_manufacturing",
+        "companyId": null,
+        "metric": "light_vehicle_production_shortfall",
+        "units": "light vehicles",
+        "causeScope": "semiconductor_shortage",
+        "accountingBoundary": "final_vehicle_output",
+        "kind": "external_retrospective_estimate",
+        "measurementBasis": "publisher_estimated_counterfactual",
+        "estimator": "S&P Global Mobility",
+        "claimStatus": "verified",
+        "source": {
+          "url": "https://press.spglobal.com/2023-07-13-S-P-Global-Mobility-The-semiconductor-shortage-is-mostly-over-for-the-auto-industry",
+          "publicationDate": "2023-07-13",
+          "informationAvailableDate": "2023-07-13",
+          "supportingSection": "Retrospective global light-vehicle production loss estimates and methodology, 2021 through H1 2023",
+          "claimStatus": "verified"
+        },
+        "review": {
+          "verifiedAt": "2026-09-08",
+          "provenance": "Codex primary-source review; not independent human adjudication"
+        },
+        "method": "Publisher compares OEM disruption announcements with its estimates of contemporaneous planned production.",
+        "independentlyReproduced": false,
+        "uncertaintyInterval": null,
+        "limitations": "Published sector-wide estimate, not a census of realized lost units. Underlying OEM-level allocations and counterfactual plans are not supplied here. Does not cover other semiconductor end markets or identify losses by upstream plant."
+      },
+      {
+        "id": "spglobal_2022_light_vehicle_loss",
+        "periodStart": "2022-01-01",
+        "periodEnd": "2022-12-31",
+        "value": 3000000,
+        "qualifier": "approximately",
+        "scopeId": "global_light_vehicles",
+        "geography": "global",
+        "sector": "light_vehicle_manufacturing",
+        "companyId": null,
+        "metric": "light_vehicle_production_shortfall",
+        "units": "light vehicles",
+        "causeScope": "semiconductor_shortage",
+        "accountingBoundary": "final_vehicle_output",
+        "kind": "external_retrospective_estimate",
+        "measurementBasis": "publisher_estimated_counterfactual",
+        "estimator": "S&P Global Mobility",
+        "claimStatus": "verified",
+        "source": {
+          "url": "https://press.spglobal.com/2023-07-13-S-P-Global-Mobility-The-semiconductor-shortage-is-mostly-over-for-the-auto-industry",
+          "publicationDate": "2023-07-13",
+          "informationAvailableDate": "2023-07-13",
+          "supportingSection": "Retrospective global light-vehicle production loss estimates and methodology, 2021 through H1 2023",
+          "claimStatus": "verified"
+        },
+        "review": {
+          "verifiedAt": "2026-09-08",
+          "provenance": "Codex primary-source review; not independent human adjudication"
+        },
+        "method": "Publisher compares OEM disruption announcements with its estimates of contemporaneous planned production.",
+        "independentlyReproduced": false,
+        "uncertaintyInterval": null,
+        "limitations": "Published sector-wide estimate, not a census of realized lost units. Underlying OEM-level allocations and counterfactual plans are not supplied here. Does not cover other semiconductor end markets or identify losses by upstream plant."
+      },
+      {
+        "id": "spglobal_2023h1_light_vehicle_loss",
+        "periodStart": "2023-01-01",
+        "periodEnd": "2023-06-30",
+        "value": 524000,
+        "qualifier": "approximately",
+        "scopeId": "global_light_vehicles",
+        "geography": "global",
+        "sector": "light_vehicle_manufacturing",
+        "companyId": null,
+        "metric": "light_vehicle_production_shortfall",
+        "units": "light vehicles",
+        "causeScope": "semiconductor_shortage",
+        "accountingBoundary": "final_vehicle_output",
+        "kind": "external_retrospective_estimate",
+        "measurementBasis": "publisher_estimated_counterfactual",
+        "estimator": "S&P Global Mobility",
+        "claimStatus": "verified",
+        "source": {
+          "url": "https://press.spglobal.com/2023-07-13-S-P-Global-Mobility-The-semiconductor-shortage-is-mostly-over-for-the-auto-industry",
+          "publicationDate": "2023-07-13",
+          "informationAvailableDate": "2023-07-13",
+          "supportingSection": "Retrospective global light-vehicle production loss estimates and methodology, 2021 through H1 2023",
+          "claimStatus": "verified"
+        },
+        "review": {
+          "verifiedAt": "2026-09-08",
+          "provenance": "Codex primary-source review; not independent human adjudication"
+        },
+        "method": "Publisher compares OEM disruption announcements with its estimates of contemporaneous planned production.",
+        "independentlyReproduced": false,
+        "uncertaintyInterval": null,
+        "limitations": "Published sector-wide estimate, not a census of realized lost units. Underlying OEM-level allocations and counterfactual plans are not supplied here. Does not cover other semiconductor end markets or identify losses by upstream plant."
+      }
+    ],
+    "rejected": [],
+    "allIndustryLoss": null,
+    "upstreamAllocation": null,
+    "coverage": [
+      {
+        "scope": "global_light_vehicles",
+        "status": "external_sector_estimates_available"
+      },
+      {
+        "scope": "other_semiconductor_end_markets",
+        "status": "unavailable"
+      },
+      {
+        "scope": "supplier_and_plant_loss_allocation",
+        "status": "unavailable"
+      }
+    ]
+  },
+  "chainWideLoss": null,
+  "causalAttributionValidated": false,
+  "reason": "No complete chain denominator or identified allocation of downstream loss to individual upstream disruptions."
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SSCIM structured analytical catalog",
+  "type": "object",
+  "required": ["schemaVersion", "datasets", "records", "fields", "sources", "recordSources", "entities", "relationships"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "records": { "type": "array", "items": { "$ref": "#/$defs/record" } },
+    "datasets": { "type": "array" }, "fields": { "type": "array" }, "sources": { "type": "array" },
+    "recordSources": { "type": "array" }, "entities": { "type": "array" }, "relationships": { "type": "array" }
+  },
+  "$defs": {
+    "record": {
+      "type": "object",
+      "required": ["id", "datasetId", "pointer", "epistemicStatus", "payload"],
+      "properties": {
+        "id": { "type": "string" }, "datasetId": { "type": "string" }, "pointer": { "type": "string" },
+        "epistemicStatus": { "enum": ["source_reported", "external_estimate", "issuer_estimate", "issuer_forecast", "model_prediction", "assumption", "evaluation_result", "unreviewed", "reference_unverified"] },
+        "value": { "type": ["number", "null"] }, "units": { "type": ["string", "null"] },
+        "metric": { "type": ["string", "null"] }, "availableAt": { "type": ["string", "null"] }
+      }
+    }
+  }
+}

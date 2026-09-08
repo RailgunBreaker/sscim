@@ -6,6 +6,15 @@ The application now opens with [documented observations and supplier disclosures
 
 SSCIM includes a [historically tested TSMC revenue nowcast](PREDICTIVE_VALIDATION.md). The supply-chain research model remains uncalibrated. SSCIM does not provide a live trading signal, measured trade-flow model or investment advice.
 
+An hourly local workflow now collects, evaluates and exports the evidence
+described in [structured evidence and prospective operations](STRUCTURED_EVIDENCE.md):
+every analytical dataset is exported to a queryable JSON/SQLite catalog, one
+prospective revenue forecast is captured and pending, and four disclosed-loss
+accounting scopes are reconciled in [chain loss accounting](CHAIN_LOSS_ACCOUNTING.md).
+A scoped [recovery-duration fit](RECOVERY_CALIBRATION.md) over six reported
+factory recoveries is available for research and promotes no global parameter.
+Prospective accuracy and chain-wide loss remain unestablished.
+
 ## What it is for
 
 - **General readers** — understand why a material, equipment supplier, fab, or region can matter far beyond its own borders. Start with the [public guide](PUBLIC_GUIDE.md).
@@ -62,6 +71,9 @@ Read the explanation, source, confidence label, and assumptions before using any
 | Know what enters the model | [Data sources, inputs, and outputs](DATA_SOURCES_AND_OUTPUTS.md) |
 | See what earlier releases delivered and what comes next | [Project roadmap](MODEL_ROADMAP.md) |
 | Follow evidence to publication | [Data pipeline](computation-demo/DATA_PIPELINE.md) |
+| See what is collected, scored and exported today | [Structured evidence and prospective operations](STRUCTURED_EVIDENCE.md) |
+| Follow a disclosed loss through its accounting scope | [Chain loss accounting](CHAIN_LOSS_ACCOUNTING.md) |
+| Check the recovery-duration fit and why it is not promoted | [Recovery duration calibration](RECOVERY_CALIBRATION.md) |
 | Find any document quickly | [Documentation reference](DOCUMENTATION_REFERENCE.md) |
 
 ## Project status and roadmap

@@ -1,0 +1,40 @@
+{
+  "record": {
+    "modelId": "tsmc-revenue-lag2-prospective-v1",
+    "companyId": "tsmc",
+    "metric": "consolidated_monthly_revenue",
+    "units": "TWD million",
+    "targetPeriod": "2026-09",
+    "capturedAt": "2026-09-07T23:52:46.734Z",
+    "informationLagMonths": 2,
+    "lastInputPeriod": "2026-07",
+    "lastInputAvailableBy": "2026-08-10",
+    "prediction": 485683.76938917645,
+    "lower": 382876.25421127933,
+    "upper": 616096.5096516805,
+    "nominalCoverage": 0.8,
+    "baseline": 467580,
+    "baselineDefinition": "Latest available month, same information cutoff",
+    "calibration": {
+      "start": "2022-01",
+      "end": "2023-12",
+      "months": 24,
+      "logErrorRadius": 0.2378458909272595
+    },
+    "state": "pending_outcome",
+    "operationallyValidated": false,
+    "modelStatus": "experimental_horizon_extension; the previous lag-one benchmark does not validate this horizon",
+    "limitations": [
+      "Local hashes detect later modifications but are not independent timestamp attestation.",
+      "Monthly revenue performance is not disruption-loss or chain-wide causal validation.",
+      "Prospective performance cannot be known before the outcomes occur."
+    ],
+    "inputSha256": "3606991e00f34a1527b48818d50438ac22bdd282ee515557fcc7e8fd233be04b",
+    "protocolSha256": "7dd83c4382ef0e286936faf155e3aa411975ad33b3895d6f74754c08bfa7fcdd",
+    "engineSha256": "91a2112ac4a4b6a505c82dfd179ce00045ea67b7e9c09a218a4d046c108f643c",
+    "inputSnapshotPath": "inputs/3606991e00f34a1527b48818d50438ac22bdd282ee515557fcc7e8fd233be04b.json",
+    "protocolSnapshotPath": "inputs/7dd83c4382ef0e286936faf155e3aa411975ad33b3895d6f74754c08bfa7fcdd.json",
+    "engineSnapshotPath": "inputs/91a2112ac4a4b6a505c82dfd179ce00045ea67b7e9c09a218a4d046c108f643c.js"
+  },
+  "sha256": "9e01155c4dd8dc3b1b4d31a44c1f8cc1d6d70b0d7d1c69d1ccb44bb487231785"
+}

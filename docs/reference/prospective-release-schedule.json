@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-09-09",
+  "source": {
+    "url": "https://investor.tsmc.com/english/financial-calendar",
+    "supportingSection": "Upcoming Events: monthly sales disclosures, September 2026 through January 2027",
+    "publicationDate": null,
+    "observedOn": "2026-09-09",
+    "limitations": "Observed calendar schedule, not a published outcome or a guaranteed SEC filing time."
+  },
+  "records": [
+    { "companyId": "tsmc", "metric": "consolidated_monthly_revenue", "targetPeriod": "2026-08", "scheduledAt": "2026-09-10T05:30:00Z", "kind": "issuer_schedule" },
+    { "companyId": "tsmc", "metric": "consolidated_monthly_revenue", "targetPeriod": "2026-09", "scheduledAt": "2026-10-08T05:30:00Z", "kind": "issuer_schedule" },
+    { "companyId": "tsmc", "metric": "consolidated_monthly_revenue", "targetPeriod": "2026-10", "scheduledAt": "2026-11-10T05:30:00Z", "kind": "issuer_schedule" },
+    { "companyId": "tsmc", "metric": "consolidated_monthly_revenue", "targetPeriod": "2026-11", "scheduledAt": "2026-12-10T05:30:00Z", "kind": "issuer_schedule" },
+    { "companyId": "tsmc", "metric": "consolidated_monthly_revenue", "targetPeriod": "2026-12", "scheduledAt": "2027-01-08T05:30:00Z", "kind": "issuer_schedule" }
+  ]
+}
