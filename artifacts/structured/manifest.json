@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "exportedAt": "2026-09-08T16:26:10.670Z",
-  "catalogSha256": "2e362e9aeabd0823da1be0862e01e56ee6f4f82f5148393251788d0c2c9987bc",
-  "sqlite": "sscim-evidence-2e362e9aeabd.sqlite",
-  "json": "sscim-evidence-2e362e9aeabd.json",
+  "exportedAt": "2026-09-08T16:46:40.701Z",
+  "catalogSha256": "50cbe0f7bb7e8c9041f444b7801a33770f7bdb36d2893a7cefad8b3f66ad3af8",
+  "sqlite": "sscim-evidence-50cbe0f7bb7e.sqlite",
+  "json": "sscim-evidence-50cbe0f7bb7e.json",
   "datasets": [
     {
       "id": "vault.countries",
@@ -48,7 +48,7 @@
     {
       "id": "vault.events",
       "records": 167,
-      "sha256": "7c697cb4e6c3cdfb1f47e0ae5bba13c2623ba29c244fab877c7dac1c6ab6f02a"
+      "sha256": "8ed09143106473fc47f8f5fda58fb364645b928442d21ea46dfa49edcdfa34d9"
     },
     {
       "id": "vault.scenarios",
@@ -68,22 +68,22 @@
     {
       "id": "vault.meta",
       "records": 8,
-      "sha256": "56c8d4e9f2c34d67543226e42ff4fc77cf0ed29c8cff82160d7942490b7f9398"
+      "sha256": "9ca92228d8867b1bdf7f1888af6d54cc917a9879f0544fdfffce50fe891f4cd8"
     },
     {
       "id": "vault.event_candidates",
-      "records": 419,
-      "sha256": "567456ecfb83ca4e357eddca2d806f9f5b18ef86b511a49ff83a169514469982"
+      "records": 424,
+      "sha256": "73397f7c676b05575633ceedaf2a3c0a4f7a63f10f08d2d0103541c49f3a9ecb"
     },
     {
       "id": "vault.briefings",
       "records": 9,
-      "sha256": "dc1d659ea9cc1f73eb2bc27024f10d87772f81d8fdb386de8d86834f6e49c9f3"
+      "sha256": "a8fabd1c3beb041223d33a9db2caf4b529303af0b5c482454418e781294d5df9"
     },
     {
       "id": "vault.facilities",
       "records": 275,
-      "sha256": "86206023cab73e3fe9d8cdbc70bcdbf6426ed14bd4ef555c8f145125aabcc292"
+      "sha256": "7784947048c7fe696c710a1388f232b392b87cc5ab788c416be8ddabacada930"
     },
     {
       "id": "vault.event_overrides",
@@ -198,7 +198,7 @@
     {
       "id": "docs/reference/tsmc-revenue-current.json",
       "records": 183,
-      "sha256": "1042d4695b20033b44c6bafe7c4218696dd56244846cabc676c7afd3a1ece943"
+      "sha256": "45f42bda301866eed7ce71645b7eeeae77f31ddfd677777b79e5b6739548c1eb"
     },
     {
       "id": "docs/benchmarks/chain-loss-evaluation.json",
@@ -218,7 +218,7 @@
     {
       "id": "docs/benchmarks/loss-source-collection.json",
       "records": 22,
-      "sha256": "580c9e20428823ca87e7250bef62b17879aed360b0f66e00c5e1799c16bbc73d"
+      "sha256": "e2e2829d372cf9d9a1cd0bf3eccec6feea1a770dd937babe36f3882c2bb847af"
     },
     {
       "id": "docs/benchmarks/news-evaluation-initial.json",
@@ -277,13 +277,13 @@
     },
     {
       "id": "docs/benchmarks/prospective-news-performance.json",
-      "records": 254,
-      "sha256": "1da161ab7816adcba7c54736252fd49bee43b158bb1d68a72261e8630301da93"
+      "records": 259,
+      "sha256": "c038cddf38cef1c2b3ceda4f851cd9339bd12205076155b61801ac5439f7ce5f"
     },
     {
       "id": "docs/benchmarks/prospective-performance.json",
       "records": 12,
-      "sha256": "ecda43f44a6da211050c2ba8a25a208aa61b501302ea89fd475e6cefd53cf0a9"
+      "sha256": "868cb9b3613d77c818997c8784ff06d19a6725c2a830cf6610f479e2db0e1f0d"
     },
     {
       "id": "docs/benchmarks/public-review-before-79289b1.json",
@@ -378,7 +378,7 @@
     {
       "id": "docs/operational-monitor/loss-filing-candidates.json",
       "records": 25,
-      "sha256": "5b58b5364300d2fb787d9cdf7e1ebc3bd4b5df06394e54fa3ed80ce7269b3c6d"
+      "sha256": "6a2d046b568e305a2740f0c65e25bd4276749c576d6425d2c52bf2a19ea0526f"
     },
     {
       "id": "docs/operational-monitor/news-baseline.json",
@@ -388,7 +388,7 @@
     {
       "id": "docs/computation-demo/validation/validation-results.json",
       "records": 13,
-      "sha256": "5fa48dd25f51a322e48acbdc27a1696616d7aaf3c519ce2c0f7dff0073098d52"
+      "sha256": "fbea986c30ede00ca30d046c58ae3274f94c5b80fcd0dcba603dc5b90a7240fc"
     },
     {
       "id": "docs/computation-demo/real-data-example/real-mini-dataset.json",
@@ -401,12 +401,12 @@
       "sha256": "cd42937cbc0771f6a4c65bacdeb55dfae9ef47150bc1edaaa65849aec064da18"
     }
   ],
-  "records": 7138,
-  "fields": 97133,
-  "sources": 673,
-  "recordSources": 1497,
+  "records": 7148,
+  "fields": 97248,
+  "sources": 678,
+  "recordSources": 1502,
   "entities": 441,
   "relationships": 299,
-  "jsonFileSha256": "19fed787f5fa26365d2f3295761ad8e3218940f97f6cd5f773e3a206a539dcb2",
-  "sqliteFileSha256": "363af895d7dd383660bc6baf5e62ad46a9607caffa139ae78f309927cd8b9f01"
+  "jsonFileSha256": "3898ffb6bf133a540ee97dbf48d7bfecb41b22c6bf2827e4f2174c0b4809c64a",
+  "sqliteFileSha256": "73e32fad30980419e16a6bb14f54ca84e830ea80c2e3266e02d7169e9c3f13d0"
 }

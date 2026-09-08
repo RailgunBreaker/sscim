@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "checkedAt": "2026-09-08T16:25:04.189Z",
+  "checkedAt": "2026-09-08T16:45:29.423Z",
   "startedAt": "2026-09-08T11:54:24.638Z",
   "issuers": [
     {
@@ -134,7 +134,7 @@
       "matchingParagraphs": 3,
       "excerpt": "Recovery from contamination incident",
       "firstSeenAt": "2026-09-08T11:57:34.598Z",
-      "lastSeenAt": "2026-09-08T16:25:04.189Z",
+      "lastSeenAt": "2026-09-08T16:45:29.423Z",
       "claimStatus": "unreviewed",
       "reviewState": "reviewed",
       "numericLoss": null,
@@ -151,7 +151,7 @@
         "sourceSha256": "391af5f579ab36e6228631b416676234518e29ced5611ecb7bd94f34385c9283",
         "evidenceSha256": "890f3bda356fe3738c8970745e62940ebbe53a63904bd742d411945a90798ae9"
       },
-      "sourceChangedSincePreviousCheck": true,
+      "sourceChangedSincePreviousCheck": false,
       "previousSourceSha256": "daab7d668c8ab920376821ad29ebd8165f840c24f26290963f5be5955df0513d"
     }
   ],

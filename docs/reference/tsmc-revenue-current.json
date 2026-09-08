@@ -3,7 +3,7 @@
   "companyId": "tsmc",
   "metric": "consolidated_monthly_revenue",
   "units": "TWD million",
-  "retrievedAt": "2026-09-08T16:24:49.967Z",
+  "retrievedAt": "2026-09-08T16:45:16.026Z",
   "historicalVintagesVerified": true,
   "reviewProvenance": "Codex primary-source extraction and annual-sum checks; not independent human adjudication",
   "sources": [
