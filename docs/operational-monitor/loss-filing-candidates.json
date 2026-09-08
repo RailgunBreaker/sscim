@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "checkedAt": "2026-09-08T15:45:30.233Z",
+  "checkedAt": "2026-09-08T16:25:04.189Z",
   "startedAt": "2026-09-08T11:54:24.638Z",
   "issuers": [
     {
@@ -123,7 +123,7 @@
       "publicationDate": "2024-08-20",
       "form": "10-K",
       "sourceUrl": "https://www.sec.gov/Archives/edgar/data/106040/000010604024000031/wdc-20240628.htm",
-      "sourceSha256": "daab7d668c8ab920376821ad29ebd8165f840c24f26290963f5be5955df0513d",
+      "sourceSha256": "169693fe0ec9e43b8d9be8f9dab68b81357d86657a517d8496c67773abed4120",
       "hashBasis": "utf8_decoded_text",
       "evidenceSha256": "890f3bda356fe3738c8970745e62940ebbe53a63904bd742d411945a90798ae9",
       "evidenceHashBasis": "normalized_visible_text_v1",
@@ -134,7 +134,7 @@
       "matchingParagraphs": 3,
       "excerpt": "Recovery from contamination incident",
       "firstSeenAt": "2026-09-08T11:57:34.598Z",
-      "lastSeenAt": "2026-09-08T15:45:30.233Z",
+      "lastSeenAt": "2026-09-08T16:25:04.189Z",
       "claimStatus": "unreviewed",
       "reviewState": "reviewed",
       "numericLoss": null,
@@ -152,7 +152,7 @@
         "evidenceSha256": "890f3bda356fe3738c8970745e62940ebbe53a63904bd742d411945a90798ae9"
       },
       "sourceChangedSincePreviousCheck": true,
-      "previousSourceSha256": "c1f4594e57ccaf2604923637e1e191ea937de1704dccfd1d634686c1d072770d"
+      "previousSourceSha256": "daab7d668c8ab920376821ad29ebd8165f840c24f26290963f5be5955df0513d"
     }
   ],
   "newCandidates": 0,

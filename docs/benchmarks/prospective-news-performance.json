@@ -1,7 +1,7 @@
 {
   "startedAt": "2026-09-07T23:57:08.984Z",
-  "asOf": "2026-09-08T15:46:38.628Z",
-  "newEligibleRecords": 134,
+  "asOf": "2026-09-08T16:26:09.873Z",
+  "newEligibleRecords": 136,
   "backfilledRecords": 107,
   "invalidOrMissingTiming": 0,
   "eligibleIds": [
@@ -138,7 +138,9 @@
     "cand_rss_news_d599972a4abab65210f0e19f67a4b303",
     "cand_rss_news_29b563e6bebe5c1a6b629c0fc683cac9",
     "cand_rss_news_088c956a7cb2a1721972207af085b1ee",
-    "cand_rss_news_42e1efba2d97bd5b586e5da35b553b6e"
+    "cand_rss_news_42e1efba2d97bd5b586e5da35b553b6e",
+    "cand_rss_news_8138aeb14f5c822bf3d944d74478565c",
+    "cand_rss_news_89a2c016a98463786ac7ea752ecb298b"
   ],
   "backfillIds": [
     "cand_rss_news_190c3489f4e4f2e84d6022c8fc8cd75d",
@@ -252,21 +254,21 @@
   "invalidIds": [],
   "timeliness": {
     "rss-news": {
-      "records": 134,
+      "records": 136,
       "missingPublication": 0,
       "invalidTiming": 0,
-      "latestInsertedAt": "2026-09-08T15:45:38.000Z",
+      "latestInsertedAt": "2026-09-08T16:25:12.000Z",
       "ingestionLag": {
-        "count": 134,
+        "count": 136,
         "medianHours": 1.4963888888888888,
         "p95Hours": 8.060277777777777,
         "maximumHours": 10.927777777777777
       },
       "pendingAge": {
-        "count": 123,
-        "medianHours": 6.019341111111111,
-        "p95Hours": 13.04573,
-        "maximumHours": 13.04573
+        "count": 125,
+        "medianHours": 6.678020277777778,
+        "p95Hours": 13.704409166666666,
+        "maximumHours": 13.704409166666666
       }
     }
   },
