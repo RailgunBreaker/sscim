@@ -1,0 +1,412 @@
+{
+  "schemaVersion": 1,
+  "exportedAt": "2026-09-08T15:46:39.442Z",
+  "catalogSha256": "ee54539845e5edd4698b0ffe5b1a546e1ebc1a14e260f1a1e8ee591f38865dbe",
+  "sqlite": "sscim-evidence-ee54539845e5.sqlite",
+  "json": "sscim-evidence-ee54539845e5.json",
+  "datasets": [
+    {
+      "id": "vault.countries",
+      "records": 24,
+      "sha256": "52702433f9c3d731ecf892b13feda2573ee3b402f1dfa1e01ccb08671883ab5c"
+    },
+    {
+      "id": "vault.stages",
+      "records": 24,
+      "sha256": "14a0738a9f4465cfaafed048bc868fcf7eb878ca2c7c8213d92d30ad4979a24c"
+    },
+    {
+      "id": "vault.flow_edges",
+      "records": 34,
+      "sha256": "69447624f43a2dc858fc44f5dc771f9bf3cdeffd52df7815b374ec8b02f4a704"
+    },
+    {
+      "id": "vault.tier_labels",
+      "records": 7,
+      "sha256": "555274948c9de4954b689424ab4881cb9bcf78b161914e11afbb9ec588e8b460"
+    },
+    {
+      "id": "vault.companies",
+      "records": 109,
+      "sha256": "1390eabee9cb014e82cb91dade929c438797ac1bf751342a8a430c467da63852"
+    },
+    {
+      "id": "vault.customers",
+      "records": 243,
+      "sha256": "e10e25a32ec6fe7ef19277ab293d8b39e8b04b7124acc681267e70e0124d4abc"
+    },
+    {
+      "id": "vault.owners",
+      "records": 75,
+      "sha256": "2d2d7708a874b03ceeec59ef6828e4c087aa0474de90c09d916a6445036895a3"
+    },
+    {
+      "id": "vault.policies",
+      "records": 7,
+      "sha256": "e880fe2aaca8d0b42c679cbdd4ee29c2563150ab937e287a592bc8581b376c0f"
+    },
+    {
+      "id": "vault.events",
+      "records": 167,
+      "sha256": "d4e6c28305e4aa6d6a0cc3bfce88d595583ea50c2b970438ae1c134b07ba5e77"
+    },
+    {
+      "id": "vault.scenarios",
+      "records": 4,
+      "sha256": "a486616889bc7a0ac4f0517b717740bac964df15d68ff18f6a6a25a8f86a798f"
+    },
+    {
+      "id": "vault.data_notes",
+      "records": 14,
+      "sha256": "c334f79eb7d82786943c1ba5f0549f08252b2e008a8dfb796e1ff3204bc69cf7"
+    },
+    {
+      "id": "vault.quotes",
+      "records": 92,
+      "sha256": "e0fe575250f3b7d19801fddd79c243684c6311ae788f693649a0fea0adf5ca4b"
+    },
+    {
+      "id": "vault.meta",
+      "records": 8,
+      "sha256": "a8b4befbf0d9b3053c417ef8b07ff5b3e52c6127f76ab5feae31aace2048dd94"
+    },
+    {
+      "id": "vault.event_candidates",
+      "records": 417,
+      "sha256": "4f442dceb6d2a81ae1ce8aa075054d920f2b5e7bbb22f1a47860d0b057b29cf4"
+    },
+    {
+      "id": "vault.briefings",
+      "records": 9,
+      "sha256": "02405d273047d37ab2820bd0f8bc25eee10dd3a6debcdc13ff1f3379eb066803"
+    },
+    {
+      "id": "vault.facilities",
+      "records": 275,
+      "sha256": "22fc2ec84991611854703ec2d3c28de111f5685d64364d9e4ddc40bb2d7a13ba"
+    },
+    {
+      "id": "vault.event_overrides",
+      "records": 1,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "id": "vault.event_evidence",
+      "records": 167,
+      "sha256": "fac012e88c4405f2ad403a290578a3f66e7de515a16bd4c0e758031b9005c4bf"
+    },
+    {
+      "id": "vault.measurement_evidence",
+      "records": 612,
+      "sha256": "d7c8a59af0128593061918db222fd71155e131b69a566f5570177075a2ece45e"
+    },
+    {
+      "id": "vault.facility_evidence",
+      "records": 2,
+      "sha256": "38dd1eb2b08078d06c140fe9198d129a5c6494995db86c28e403bbc74b9b9ad4"
+    },
+    {
+      "id": "docs/reference/chain-loss-evidence.json",
+      "records": 24,
+      "sha256": "954912b3b0d4bf15ba714acf780f1bcc5a5816594aefc6df22d833a9d6514f42"
+    },
+    {
+      "id": "docs/reference/event-evidence.json",
+      "records": 335,
+      "sha256": "7606d84cd441f0100b1ca33e9604e68fecd7585bdc0ee3a50c833e3b4e169f79"
+    },
+    {
+      "id": "docs/reference/facility-evidence.json",
+      "records": 2,
+      "sha256": "5090b606e2387ef3b6e7dc6fe19c11fb695dcc89194fa20ae95652582f8741cc"
+    },
+    {
+      "id": "docs/reference/loss-reconciliations.json",
+      "records": 37,
+      "sha256": "aae5d09a57e7cf7263defb34766bb0ebbdec7571de876d2cc77d57009c426644"
+    },
+    {
+      "id": "docs/reference/measurement-evidence.json",
+      "records": 617,
+      "sha256": "77ad96342bd5bee62a8a0fd49cf6531e0ba4f6c56147d5c2a47e87c521a6513d"
+    },
+    {
+      "id": "docs/reference/news-benchmark.json",
+      "records": 24,
+      "sha256": "7c1428a7c3402b63747ff7d40734e2e4e5845f3869bbba417614ffe58a03de30"
+    },
+    {
+      "id": "docs/reference/news-incident-holdout.json",
+      "records": 26,
+      "sha256": "3e1ea93e3b3d9078ade941b601a4369c8be8cc6787e2e22a328e3ba09912d89e"
+    },
+    {
+      "id": "docs/reference/observed-data.json",
+      "records": 114,
+      "sha256": "6d9c99909d8914dc937db343844b380f112c032d66cf082178d6fa6988ff6e11"
+    },
+    {
+      "id": "docs/reference/physical-losses.json",
+      "records": 9,
+      "sha256": "46028cba5034c3fa9b43d045a63af6f66b7d9981c012c6f94808b0a68d7267c8"
+    },
+    {
+      "id": "docs/reference/prospective-protocol.json",
+      "records": 17,
+      "sha256": "7ef0901d5551dd63cbfd29c78a5b5c0c71c0273aa5948d786704ed4bbd305ea6"
+    },
+    {
+      "id": "docs/reference/prospective-release-schedule.json",
+      "records": 8,
+      "sha256": "cd8f30a97db80b87366a4bcf80e9f5c9ea117758aba28d22a31874a0aa0a20e3"
+    },
+    {
+      "id": "docs/reference/recovery-calibration-protocol.json",
+      "records": 15,
+      "sha256": "37307eefc1c594bbe7a76420c922cffa14ae04643c132ac7d4180fc6249d7d9c"
+    },
+    {
+      "id": "docs/reference/recovery-durations.json",
+      "records": 15,
+      "sha256": "eae8319a9d55b6ba1fb6851dd870a20d728d12cb1837e647f29248eda53891c3"
+    },
+    {
+      "id": "docs/reference/revenue-prediction-protocol.json",
+      "records": 30,
+      "sha256": "87c16f9f6da53dcf73c40602da0f4c8fffc845f7186592a09d714fda8a427f8d"
+    },
+    {
+      "id": "docs/reference/semiconductor-loss-followup.json",
+      "records": 15,
+      "sha256": "00cb9a2809f70d9a1a26ac0e124ec81374300efc593599d7ff55fd96c8908cda"
+    },
+    {
+      "id": "docs/reference/structured-evidence.schema.json",
+      "records": 13,
+      "sha256": "49cf9b40d57715e71848695876968066835963caf26016626e5d4f69ae9c9844"
+    },
+    {
+      "id": "docs/reference/supplier-loss-allocations.json",
+      "records": 22,
+      "sha256": "3e335ef85b172963c0db839517d7c865657807d9ada0fe21921279445f48044b"
+    },
+    {
+      "id": "docs/reference/tsmc-monthly-revenue.json",
+      "records": 176,
+      "sha256": "e180e5da0f8b459cee6fe54695a17e6e2003bbb39282ee9714c534851e993cfc"
+    },
+    {
+      "id": "docs/reference/tsmc-revenue-current.json",
+      "records": 183,
+      "sha256": "cdb7bab0dc8f8c965538665f6d10cd008de6c6cacce8b1fad1091661618d16dc"
+    },
+    {
+      "id": "docs/benchmarks/chain-loss-evaluation.json",
+      "records": 10,
+      "sha256": "c27ea3ee2c74b9bafe23272dcff914b77cc4192c0608235400845733ef0cf340"
+    },
+    {
+      "id": "docs/benchmarks/lag-two-validation.json",
+      "records": 45,
+      "sha256": "292920d21e82b993b339066bcb797de58ba74746bbf3a7048941cd415c7e738f"
+    },
+    {
+      "id": "docs/benchmarks/loss-reconciliation-evaluation.json",
+      "records": 33,
+      "sha256": "68c863465b83ae202bde2532435e90b838f2ed219eb5b0b7cc257532076bb63e"
+    },
+    {
+      "id": "docs/benchmarks/loss-source-collection.json",
+      "records": 22,
+      "sha256": "d20a8ae9276dfba3ccd696334a7bdd73d8fc2d1a552581a6fe61ea422aec63e2"
+    },
+    {
+      "id": "docs/benchmarks/news-evaluation-initial.json",
+      "records": 19,
+      "sha256": "768cc4ac1451e0b7344f7a24f5a5b85bb85f1d46f418eefa204f8c88a2d17aad"
+    },
+    {
+      "id": "docs/benchmarks/news-evaluation.json",
+      "records": 20,
+      "sha256": "849c89079261fa7a677bb26e23600bdffb422cba7f43caa67fbfdb58ec7036c8"
+    },
+    {
+      "id": "docs/benchmarks/news-incident-holdout-evaluation.json",
+      "records": 21,
+      "sha256": "d7c0ffbd64657bf81bedf7ec53cc7a4232e7f21f5b585362b1378cae128c7d90"
+    },
+    {
+      "id": "docs/benchmarks/news-incident-holdout-predictions.json",
+      "records": 12,
+      "sha256": "95d38e42a3e092ea7a166943d91b2b1399b997896436384a8ec8202fa1736935"
+    },
+    {
+      "id": "docs/benchmarks/news-predictions-initial.json",
+      "records": 18,
+      "sha256": "c89cb26c715a8591edc92472bb95394ab1e45a333b169d9d8603e9e746349162"
+    },
+    {
+      "id": "docs/benchmarks/news-predictions.json",
+      "records": 18,
+      "sha256": "bebf51e4e0417bb176aab5028f6cf5817f240636c3259ce188364f96104464b8"
+    },
+    {
+      "id": "docs/benchmarks/news-timeliness.json",
+      "records": 4,
+      "sha256": "c28d85c1b4f99e485c864e82211241f3c70466685627318411e3284a56bd8b81"
+    },
+    {
+      "id": "docs/benchmarks/observed-data-evaluation.json",
+      "records": 18,
+      "sha256": "91d89f8aa797eb5e13cd4366955c081461c199cff48d124000528160d8218d22"
+    },
+    {
+      "id": "docs/benchmarks/observed-source-availability.json",
+      "records": 23,
+      "sha256": "c88c56fe8aff7d2c593f23c0a4f51381693fca1aa06da693a4129500d1d9172b"
+    },
+    {
+      "id": "docs/benchmarks/operations-workflow-verification.json",
+      "records": 6,
+      "sha256": "b45f785e7c1061192c37ed0809b176e561f1358d1b3c9f167f48288c0db348ab"
+    },
+    {
+      "id": "docs/benchmarks/physical-loss-evaluation.json",
+      "records": 13,
+      "sha256": "b69331e4820e1e32d3e78c7f6735f185c27e89616b9cd204d854fb2c31aa37ea"
+    },
+    {
+      "id": "docs/benchmarks/prospective-news-performance.json",
+      "records": 252,
+      "sha256": "a0f08d6cc6ee03adf738ded87e38ace100bf911decd9991d8224a9578276d661"
+    },
+    {
+      "id": "docs/benchmarks/prospective-performance.json",
+      "records": 12,
+      "sha256": "b8a25d2a263c4ff49eb7260aa952b41ee2aca09db108b1e3584457ea8ee16cb8"
+    },
+    {
+      "id": "docs/benchmarks/public-review-before-79289b1.json",
+      "records": 171,
+      "sha256": "47aa224824229db1c9f103c086b7f57054347b644a787017b329f79e91e3c461"
+    },
+    {
+      "id": "docs/benchmarks/recovery-calibration.json",
+      "records": 35,
+      "sha256": "1d4bd4313b543f823cd34c968b568f4d69db4f4ad40e25ad80748be3024c9b89"
+    },
+    {
+      "id": "docs/benchmarks/revenue-prediction.json",
+      "records": 56,
+      "sha256": "0a363b72a7f7c774b8b9b643b66ad56786e696f017299ccc3f2d71cee945f00f"
+    },
+    {
+      "id": "docs/benchmarks/revenue-vintage-audit.json",
+      "records": 160,
+      "sha256": "8869a1f06a496b78f7ad93442e9c3b22a7e901e8762e95e2aeef6ef092c48441"
+    },
+    {
+      "id": "docs/benchmarks/semiconductor-loss-followup-evaluation.json",
+      "records": 12,
+      "sha256": "37b3c8990b709fa195cbeb9da3f67b05c3f8e7f062b59df252163a694a3a5946"
+    },
+    {
+      "id": "docs/benchmarks/supplier-loss-allocation-evaluation.json",
+      "records": 23,
+      "sha256": "59314b0bdd403b9b9ee511a789bfd55a5d908005e25128ec0c04d2ffcb117d77"
+    },
+    {
+      "id": "docs/benchmarks/v6-frozen-benchmark.json",
+      "records": 37,
+      "sha256": "91139628245e17f5c216029dcd01165acd790aaf81ef72982ed12b66e2dcd3be"
+    },
+    {
+      "id": "docs/benchmarks/v6-to-v7-benchmark.json",
+      "records": 190,
+      "sha256": "bfa76bfe3b1e2f5ce4e7da5c33104512161851eaaeb7a33a1ffc99a3169ab1b9"
+    },
+    {
+      "id": "docs/benchmarks/v7-curation-uncertainty-public-review.json",
+      "records": 10,
+      "sha256": "202a6a3026097d0b1a2eb75d1ffe9adf6d431e5aef87fd8a6117180ab711c863"
+    },
+    {
+      "id": "docs/benchmarks/v7-curation-uncertainty.json",
+      "records": 9,
+      "sha256": "1e6bcde7c028acfe274ec3ce6314d8889d8b28630aa3c7693b2665d12afc68fd"
+    },
+    {
+      "id": "docs/benchmarks/v7-exposure-robustness-frozen-benchmark.json",
+      "records": 37,
+      "sha256": "1223bab7a1657a532d2ce325ff6bcd031ce94cc6898ea3e248be891051de043d"
+    },
+    {
+      "id": "docs/benchmarks/v7-legacy-fallback-public-review.json",
+      "records": 770,
+      "sha256": "2affaacd3fda0427f024f3416078ca13a70a6a3a8f0d06f1ba667bbd996ed455"
+    },
+    {
+      "id": "docs/benchmarks/v7-legacy-fallback.json",
+      "records": 770,
+      "sha256": "a22094bef43e9103d593d7013b02557abd7b32879e1eed36c79c8273e248a7ec"
+    },
+    {
+      "id": "docs/benchmarks/v7-sensitivity-public-review.json",
+      "records": 9,
+      "sha256": "7a5492ac3f1c64bd9b905a2e2e943627e9fa94b195193086611eb5e4e83d3ae2"
+    },
+    {
+      "id": "docs/benchmarks/v7-sensitivity.json",
+      "records": 9,
+      "sha256": "06cc21d5227e779091fb96d4eca1ce00ec4e372934864ab5dfc668764edf1b47"
+    },
+    {
+      "id": "docs/benchmarks/verification-before-public-review-79289b1.json",
+      "records": 20,
+      "sha256": "bda06ed96977301981aa7bc6117d33f314535e73f757bef568e2f5229e525caf"
+    },
+    {
+      "id": "docs/benchmarks/verification-run.json",
+      "records": 20,
+      "sha256": "5ff387250be2063b6d8ea846976bd60bf933aa21cf3dcef52dc41c3942c38fc4"
+    },
+    {
+      "id": "docs/prospective/tsmc-revenue-lag2-prospective-v1-2026-09.json",
+      "records": 2,
+      "sha256": "45f1573ff5e744b3f43b27be07cc3b6a96dde5e0efbfe08dfa81c867ff7cd09c"
+    },
+    {
+      "id": "docs/operational-monitor/loss-filing-candidates.json",
+      "records": 25,
+      "sha256": "3f2d43cb0547a155492db40612f51114b53cec255ec386a76c6b9c7845e38e28"
+    },
+    {
+      "id": "docs/operational-monitor/news-baseline.json",
+      "records": 179,
+      "sha256": "4e216fdad591647785984b1b4c0485efe2fb7e2a3342b3bf12f244016292b037"
+    },
+    {
+      "id": "docs/computation-demo/validation/validation-results.json",
+      "records": 13,
+      "sha256": "ac32283578b5310307b80acfbef02df97835ba5bae09b02039e1b66c2235e721"
+    },
+    {
+      "id": "docs/computation-demo/real-data-example/real-mini-dataset.json",
+      "records": 25,
+      "sha256": "0b05cb025c8ac08e163837004c90a13dd6caf9f5914d959d301678f55880caff"
+    },
+    {
+      "id": "docs/computation-demo/real-data-example/real-mini-results.json",
+      "records": 33,
+      "sha256": "cd42937cbc0771f6a4c65bacdeb55dfae9ef47150bc1edaaa65849aec064da18"
+    }
+  ],
+  "records": 7134,
+  "fields": 97087,
+  "sources": 671,
+  "recordSources": 1495,
+  "entities": 441,
+  "relationships": 299,
+  "jsonFileSha256": "0142d4dc86a5d9df45374405514009a7c90f28e233fc531580a8284c7f3f85ba",
+  "sqliteFileSha256": "ea6be23d369f94d686200e3b2f31e9e830833d4bdba5a1c3879aafe6749858b5"
+}

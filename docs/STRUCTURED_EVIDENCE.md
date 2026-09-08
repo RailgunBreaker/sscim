@@ -120,6 +120,9 @@ detection latency or recall.
 `artifacts/structured/manifest.json` identifies the current content-addressed JSON
 and SQLite files, counts, dataset hashes and actual file hashes. Both formats
 represent the same catalog. Rebuild with `node server/scripts/export-structured-evidence.mjs`.
+The manifest is committed, because the published bundle reads it; the JSON and
+SQLite payloads it names are roughly 120 MB per generation and are regenerated
+locally rather than kept in version control.
 
 Scope includes all 20 analytical vault tables; all top-level JSON in
 `docs/reference`, `docs/benchmarks`, `docs/prospective` and
