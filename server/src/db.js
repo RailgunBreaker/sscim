@@ -13,6 +13,29 @@ export const db = new Database(DB_PATH);
 db.pragma('journal_mode = WAL');
 db.pragma('foreign_keys = ON');
 
+/* CLOSE THE DATABASE WHILE THE ENVIRONMENT IS STILL ALIVE.
+
+   No consumer of this module ever closed it, so every prepared Statement
+   stayed reachable until the process ended. Node then tears the Environment
+   down and finalizes the leftovers, and better-sqlite3's ~Statement calls
+   node::RemoveEnvironmentCleanupHook, which asserts the Environment is not
+   null — it is, by then — and aborts:
+
+     Assertion failed: (env) != nullptr   at ../src/api/hooks.cc:142
+     Statement::~Statement() [better_sqlite3.node]
+     Aborted (core dumped)                exit code 134
+
+   That abort lands AFTER the script has done its work, and with stdout on a
+   pipe it takes the unflushed success line with it, so CI reported a crash
+   with no output from a step that had actually succeeded. Whether it fires
+   depends on teardown GC timing, which is why it hit GitHub's runner and not
+   a local run on the same Node major.
+
+   Closing here finalizes every statement in time, leaving teardown nothing to
+   collect. It also checkpoints the WAL and removes the -wal/-shm sidecars, so
+   the committed .db file is complete. */
+process.once('exit', () => { try { if (db.open) db.close(); } catch { /* already closed */ } });
+
 /* Core entity tables use a *_json column for naturally nested per-entity
    attributes (a stage's country-share map, a company's stage-stake map,
    an event's stage/country/timeline arrays) — idiomatic for this shape of
