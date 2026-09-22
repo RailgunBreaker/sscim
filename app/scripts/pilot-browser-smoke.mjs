@@ -1,13 +1,15 @@
 // Real UI + authenticated HTTP routes + isolated in-memory SQLite. These
 // synthetic interaction fixtures never enter the user's private workspace.
 import { createRequire } from 'node:module';
-import { readFileSync, mkdirSync } from 'node:fs';
+import { readFileSync, mkdirSync, mkdtempSync, rmSync } from 'node:fs';
+import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { once } from 'node:events';
 import { chromium } from 'playwright-core';
 import { createPilotStore } from '../../server/src/pilot-store.js';
 import { pilotRouter } from '../../server/src/routes/pilot.js';
 import { loadPilotIntake } from '../../server/src/pilot-intake.js';
+import { archiveFiling, readArchivedFiling } from '../../server/src/filing-archive.js';
 const express = createRequire(new URL('../../server/package.json', import.meta.url))('express');
 const snapshot = JSON.parse(readFileSync(new URL('../src/data/operational-snapshot.json', import.meta.url)));
 const previousToken = process.env.ADMIN_TOKEN;
@@ -21,14 +23,24 @@ app.use(express.static(fileURLToPath(new URL('../../dist-app/', import.meta.url)
 const server = app.listen(0, '127.0.0.1'); await once(server, 'listening');
 const base = `http://127.0.0.1:${server.address().port}`;
 const shots = new URL('../../artifacts/dashboard-check/', import.meta.url); mkdirSync(shots, { recursive: true });
+// Every frozen source in this interaction test is an explicitly synthetic,
+// content-addressed fixture. A fresh checkout has no private research archive.
+const archiveDirectory = mkdtempSync(fileURLToPath(new URL('pilot-fixtures-', shots)));
+const intakeFixture = structuredClone(loadPilotIntake());
+intakeFixture.checks = intakeFixture.checks.map((check, index) => ({ ...check,
+  url: `https://example.test/browser-fixture-${index}.html`,
+  ...archiveFiling(`<html><body><h1>Synthetic browser filing fixture ${index}</h1><p>No real issuer judgment or incident loss is asserted.</p></body></html>`, archiveDirectory),
+}));
 let browser, checks = 0;
 const check = (value, label) => { if (!value) throw new Error(label); checks++; console.log('PASS ' + label); };
 try {
-  for (const channel of ['msedge', 'chrome', 'chromium']) { try { browser = await chromium.launch({ channel, headless: true }); break; } catch { /* next installed browser */ } }
+  if (process.env.CHROME_PATH) browser = await chromium.launch({ executablePath: process.env.CHROME_PATH, headless: true });
+  else for (const channel of ['msedge', 'chrome', 'chromium']) { try { browser = await chromium.launch({ channel, headless: true }); break; } catch { /* next installed browser */ } }
   if (!browser) browser = await chromium.launch({ headless: true });
   for (const width of [1366, 375]) {
     let draftRecords = [];
-    store = createPilotStore(':memory:', id => snapshot.companies.some(c => c.id === id), undefined, loadPilotIntake, () => ({ records: draftRecords }));
+    store = createPilotStore(':memory:', id => snapshot.companies.some(c => c.id === id), undefined,
+      () => intakeFixture, () => ({ records: draftRecords }), hash => readArchivedFiling(hash, archiveDirectory));
     const page = await browser.newPage({ viewport: { width, height: 936 } }), errors = [];
     page.on('pageerror', e => errors.push(e.message));
     await page.route('**/api/**', async route => {
@@ -124,7 +136,8 @@ try {
     await auditCase.getByRole('button', { name: 'Read frozen source' }).click();
     const archivedText = auditCase.getByLabel('Archived filing text', { exact: true });
     await archivedText.waitFor();
-    check((await archivedText.inputValue()).length > 1000, `${width}: archived real source is readable inside the app`);
+    check((await archivedText.inputValue()).includes('Synthetic browser filing fixture')
+      && (await archivedText.inputValue()).includes('No real issuer judgment'), `${width}: isolated archived source is readable inside the app`);
     await auditCase.getByLabel('Reviewer identity').fill('Browser test fixture reviewer');
     await auditCase.getByLabel('Review origin').selectOption('ai_assisted');
     await auditCase.getByLabel('Sections reviewed').fill('Test interaction only; no real source judgment');
@@ -173,5 +186,7 @@ try {
   throw error;
 } finally {
   await browser?.close(); await new Promise(r => server.close(r)); store?.close();
+  if (dirname(resolve(archiveDirectory)) !== resolve(fileURLToPath(shots))) throw new Error('Unexpected test archive path');
+  rmSync(archiveDirectory, { recursive: true, force: true });
   if (previousToken === undefined) delete process.env.ADMIN_TOKEN; else process.env.ADMIN_TOKEN = previousToken;
 }

@@ -5,7 +5,7 @@ import { validatePilotRecord, pilotSummary } from '../../app/src/engine/pilotWor
 import { PILOT_PROTOCOL } from './pilot-intake.js';
 import { createPilotAudit } from './pilot-audit.js';
 
-export function createPilotStore(path, companyExists, clock = () => new Date().toISOString(), getIntake = () => ({ candidates: [], historicalCases: [], checks: [], checkedAt: null }), getScreeningDrafts) {
+export function createPilotStore(path, companyExists, clock = () => new Date().toISOString(), getIntake = () => ({ candidates: [], historicalCases: [], checks: [], checkedAt: null }), getScreeningDrafts, readAuditSource) {
   const db = new Database(path);
   db.pragma('journal_mode = WAL');
   db.exec(`CREATE TABLE IF NOT EXISTS pilot_records (
@@ -19,7 +19,7 @@ export function createPilotStore(path, companyExists, clock = () => new Date().t
     CREATE TABLE IF NOT EXISTS pilot_sources (candidate_id TEXT NOT NULL, revision TEXT NOT NULL, queued_at TEXT NOT NULL, payload TEXT NOT NULL, PRIMARY KEY(candidate_id,revision));
     CREATE TABLE IF NOT EXISTS pilot_collection_runs (digest TEXT PRIMARY KEY, recorded_at TEXT NOT NULL, payload TEXT NOT NULL);
     CREATE TABLE IF NOT EXISTS pilot_reviews (sequence INTEGER PRIMARY KEY AUTOINCREMENT, request_id TEXT UNIQUE NOT NULL, candidate_id TEXT NOT NULL, revision TEXT NOT NULL, payload TEXT NOT NULL);`);
-  const audit = createPilotAudit(db, clock, undefined, getScreeningDrafts || (path === ':memory:' ? () => ({ records: [] }) : undefined));
+  const audit = createPilotAudit(db, clock, readAuditSource, getScreeningDrafts || (path === ':memory:' ? () => ({ records: [] }) : undefined));
   const decode = r => r && ({ id: r.id, type: r.type, version: r.version, payload: JSON.parse(r.payload), createdAt: r.created_at, updatedAt: r.updated_at });
   const get = id => decode(db.prepare('SELECT * FROM pilot_records WHERE id=?').get(id));
   function save(type, input, { id = randomUUID(), version = 0, reason = 'Created by workspace operator', replayCreate = false } = {}) {
