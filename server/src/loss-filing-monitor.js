@@ -1,6 +1,7 @@
 import { createHash } from 'node:crypto';
 import { validDate } from '../../app/src/engine/evidenceContract.js';
 const hash = value => createHash('sha256').update(value).digest('hex');
+export const LOSS_DETECTOR_VERSION = 'material-recovery-v1';
 const topics = [
   {id:'material_incident',pattern:/\b(contamination|photoresist|defective material|unqualified material)\b/i},
   {id:'recovery',pattern:/\b(recover(?:y|ies|ed)?|reimburs\w*|compensat\w*|insurance|insurers?)\b/i},
@@ -16,11 +17,14 @@ export function recentLossFilings(submission, {companyId,cik,forms,limit=4}, asO
     .sort((a,b)=>b.publicationDate.localeCompare(a.publicationDate)||b.accession.localeCompare(a.accession))
     .slice(0,limit).map(f=>({...f,companyId,url:`https://www.sec.gov/Archives/edgar/data/${Number(cik)}/${f.accession.replaceAll('-','')}/${f.document}`}));
 }
-export function lossDisclosureCandidate(filing, html, checkedAt) {
+export function filingParagraphs(html) {
   const text=html.replace(/<(script|style|ix:hidden)\b[^>]*>[\s\S]*?<\/\1>/gi,' ')
     .replace(/<\/(?:p|div|tr|li|h[1-6])\s*>/gi,'\n')
     .replace(/<[^>]+>/g,' ').replace(/&(?:nbsp|#160|#xA0);/gi,' ').replace(/&amp;/gi,'&');
-  const paragraphs=text.split(/\n+/).map(p=>p.replace(/\s+/g,' ').trim()).filter(Boolean);
+  return text.split(/\n+/).map(p=>p.replace(/\s+/g,' ').trim()).filter(Boolean);
+}
+export function lossDisclosureCandidate(filing, html, checkedAt) {
+  const paragraphs=filingParagraphs(html);
   const matches=paragraphs.map(p=>({text:p,topics:topics.filter(t=>t.pattern.test(p)).map(t=>t.id)}))
     .filter(p=>p.topics.includes('material_incident')&&(p.topics.includes('recovery')||p.topics.includes('downstream_loss')));
   if(!matches.length)return null;

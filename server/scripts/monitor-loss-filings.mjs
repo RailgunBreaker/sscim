@@ -1,6 +1,8 @@
 import { readFileSync, existsSync } from 'node:fs';
 import { writeAtomicJson } from '../src/atomic-json.js';
-import { recentLossFilings, lossDisclosureCandidate, mergeLossCandidates } from '../src/loss-filing-monitor.js';
+import { recentLossFilings, lossDisclosureCandidate, mergeLossCandidates, LOSS_DETECTOR_VERSION } from '../src/loss-filing-monitor.js';
+import { archiveFiling } from '../src/filing-archive.js';
+import { createHash } from 'node:crypto';
 const root=new URL('../../',import.meta.url);
 const path=new URL('docs/operational-monitor/loss-filing-candidates.json',root);
 const previous=existsSync(path)?JSON.parse(readFileSync(path)):{candidates:[]};
@@ -28,8 +30,8 @@ for(const issuer of issuers) {
         if(!/<(?:html|body)\b/i.test(body)||body.length<1000)throw new Error('Unexpected filing response');
         const candidate=lossDisclosureCandidate(filing,body,checkedAt);
         if(candidate)found.push(candidate);
-        checks.push({companyId:issuer.companyId,url:filing.url,publicationDate:filing.publicationDate,status:'retrieved',candidateId:candidate?.id||null});
-      }catch(error){checks.push({companyId:issuer.companyId,url:filing.url,status:'unavailable',error:error.message});}
+        checks.push({companyId:issuer.companyId,url:filing.url,publicationDate:filing.publicationDate,form:filing.form,status:'retrieved',candidateId:candidate?.id||null,...archiveFiling(body)});
+      }catch(error){checks.push({companyId:issuer.companyId,url:filing.url,publicationDate:filing.publicationDate,form:filing.form,status:'unavailable',error:error.message});}
     }
   }catch(error){checks.push({companyId:issuer.companyId,status:'discovery_unavailable',error:error.message});}
 }
@@ -40,9 +42,10 @@ try {
   const candidate=lossDisclosureCandidate(referenceFiling,body,checkedAt);
   if(!candidate)throw new Error('Known recovery reference no longer matches; inspect source/parser');
   found.push({...candidate,discoveryKind:'historical_reference'});
-  checks.push({companyId:'wdc',url:referenceFiling.url,status:'retrieved',discoveryKind:'historical_reference',candidateId:candidate.id});
+  checks.push({companyId:'wdc',url:referenceFiling.url,publicationDate:referenceFiling.publicationDate,form:referenceFiling.form,status:'retrieved',discoveryKind:'historical_reference',candidateId:candidate.id,...archiveFiling(body)});
 } catch(error){checks.push({companyId:'wdc',url:referenceFiling.url,status:'reference_check_failed',error:error.message});}
-const report={schemaVersion:1,checkedAt,startedAt:previous.startedAt||checkedAt,issuers,checks,
+const report={schemaVersion:2,checkedAt,startedAt:previous.startedAt||checkedAt,issuers,checks,
+  detectorVersion:LOSS_DETECTOR_VERSION,detectorSha256:createHash('sha256').update(readFileSync(new URL('server/src/loss-filing-monitor.js',root))).digest('hex'),
   candidates:mergeLossCandidates(previous.candidates,found),
   newCandidates:found.filter(c=>!previous.candidates.some(p=>p.id===c.id)).length,
   unavailable:checks.filter(c=>c.status!=='retrieved').length,

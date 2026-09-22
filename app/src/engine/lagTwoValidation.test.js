@@ -37,3 +37,16 @@ it('rejects changed targets, horizons and overlapping periods',()=>{
   expect(()=>evaluateLagTwoValidation(data,{...protocol,informationLagMonths:1})).toThrow(/protocol/);
   expect(()=>evaluateLagTwoValidation(data,protocol,{testStart:'2023-01',testEnd:'2025-12'})).toThrow(/Overlapping/);
 });
+it('extends the unchanged rule to later disclosures without using target outcomes in their own predictions',()=>{
+  const current = load('docs/reference/tsmc-revenue-current.json');
+  const end = current.records.at(-1).period;
+  const options = { testStart: '2026-01', testEnd: end };
+  const before = evaluateLagTwoValidation(current, protocol, options);
+  const changed = structuredClone(current);
+  changed.records.at(-1).amount *= 2;
+  const after = evaluateLagTwoValidation(changed, protocol, options);
+  expect(before.calibration).toEqual(evaluateLagTwoValidation(data, protocol).calibration);
+  for (const field of ['prediction','lower','upper']) expect(after.predictions.at(-1)[field]).toBe(before.predictions.at(-1)[field]);
+  expect(after.test.mae).not.toBe(before.test.mae);
+  expect(before.prospectiveValidated).toBe(false);
+});

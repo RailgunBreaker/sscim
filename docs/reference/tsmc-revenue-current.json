@@ -3,7 +3,7 @@
   "companyId": "tsmc",
   "metric": "consolidated_monthly_revenue",
   "units": "TWD million",
-  "retrievedAt": "2026-09-08T16:45:16.026Z",
+  "retrievedAt": "2026-09-22T14:45:15.755Z",
   "historicalVintagesVerified": true,
   "reviewProvenance": "Codex primary-source extraction and annual-sum checks; not independent human adjudication",
   "sources": [
@@ -1495,6 +1495,16 @@
       "retrievedAt": "2026-09-07T23:50:07.193Z",
       "sourceSha256": "f976f7ad874e236399c2bb800c63e62836e47671e128e2662ff92c19b0939cd5",
       "supportingExcerpt": "TSMC July 2026 Revenue Report; consolidated net revenue 467,580; NT$ million"
+    },
+    {
+      "period": "2026-08",
+      "amount": 514806,
+      "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000658/tsm-revenue20260910.htm",
+      "originalDisclosureUrl": "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000658/tsm-revenue20260910.htm",
+      "availableBy": "2026-09-10",
+      "retrievedAt": "2026-09-16T14:10:29.611Z",
+      "sourceSha256": "d7a76adf88a68feabfabe483de3cb7c07de56b7dc608274bafe5362d2bd8a3af",
+      "supportingExcerpt": "TSMC August 2026 Revenue Report; consolidated net revenue 514,806; NT$ million"
     }
   ]
 }

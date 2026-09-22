@@ -17,6 +17,7 @@ import { dirname, resolve } from 'node:path';
 import { db } from '../../server/src/db.js';
 import { seedIfEmpty } from '../../server/src/seed-logic.js';
 import { buildBundle } from '../../server/src/bundle.js';
+import { publicBundle } from '../../server/src/public-bundle.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -32,6 +33,7 @@ db.pragma('wal_checkpoint(TRUNCATE)');
 
 const outPath = resolve(__dirname, '../src/data/vault-snapshot.json');
 writeFileSync(outPath, JSON.stringify(bundle), 'utf8');
+writeFileSync(resolve(__dirname, '../src/data/operational-snapshot.json'), JSON.stringify(publicBundle(bundle)), 'utf8');
 
 /* SYNCHRONOUS WRITE, THEN AN EXPLICIT EXIT. Neither is the fix for the CI
    abort that used to kill this step — that was better-sqlite3 11 asserting in

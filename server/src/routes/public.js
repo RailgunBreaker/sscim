@@ -1,24 +1,15 @@
 import { Router } from 'express';
-import {
-  getStages, getFlowEdges, getTierLabels, getCountries, getCompanies,
-  getCustomers, getOwners, getPolicies, getEvents, getScenarios, getDataNotes,
-  getQuotes, buildBundle, getBriefingIndex, getBriefing,
-} from '../bundle.js';
+import { getQuotes, buildBundle } from '../bundle.js';
 import { quotesAreStale, quotesAsOf, refreshQuotesInBackground } from '../quotes.js';
+import { publicBundle } from '../public-bundle.js';
 
 export const publicRouter = Router();
 
-publicRouter.get('/stages', (req, res) => res.json(getStages()));
-publicRouter.get('/flow-edges', (req, res) => res.json(getFlowEdges()));
-publicRouter.get('/tier-labels', (req, res) => res.json(getTierLabels()));
-publicRouter.get('/countries', (req, res) => res.json(getCountries()));
-publicRouter.get('/companies', (req, res) => res.json(getCompanies()));
-publicRouter.get('/customers', (req, res) => res.json(getCustomers()));
-publicRouter.get('/owners', (req, res) => res.json(getOwners()));
-publicRouter.get('/policies', (req, res) => res.json(getPolicies()));
-publicRouter.get('/events', (req, res) => res.json(getEvents()));
-publicRouter.get('/scenarios', (req, res) => res.json(getScenarios()));
-publicRouter.get('/data-notes', (req, res) => res.json(getDataNotes()));
+for (const [path, key] of [['stages','stages'], ['flow-edges','flowEdges'], ['tier-labels','tierLabels'],
+  ['countries','countries'], ['companies','companies'], ['customers','customers'], ['owners','owners'],
+  ['policies','policies'], ['events','events'], ['scenarios','scenarios'], ['data-notes','dataNotes']]) {
+  publicRouter.get('/' + path, (req, res) => res.json(publicBundle(buildBundle())[key]));
+}
 /* Quotes are the one dataset that goes stale on its own — everything else
    changes only when the pipeline or an admin edit changes it. Against a live
    backend, a read older than STALE_AFTER_MS kicks off a background refresh and
@@ -33,15 +24,13 @@ publicRouter.get('/quotes', (req, res) => {
 
 /* Briefing archive. The list is cheap; a body is fetched on demand, because
    ~6KB each would make the startup bundle grow with the archive. */
-publicRouter.get('/briefings', (req, res) => res.json({ briefings: getBriefingIndex() }));
+publicRouter.get('/briefings', (req, res) => res.json({ briefings: [] }));
 publicRouter.get('/briefings/:date', (req, res) => {
-  const found = getBriefing(req.params.date);
-  if (!found) return res.status(404).json({ error: 'No briefing archived for that date.' });
-  res.json(found);
+  res.status(404).json({ error: 'Research briefings are not part of the reviewed operational API.' });
 });
 
 /* Single-fetch bundle — what the dashboard actually loads on startup. */
 publicRouter.get('/bundle', (req, res) => {
   if (quotesAreStale()) refreshQuotesInBackground();
-  res.json(buildBundle());
+  res.json(publicBundle(buildBundle()));
 });

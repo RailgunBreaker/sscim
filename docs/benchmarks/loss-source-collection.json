@@ -1,9 +1,9 @@
 {
-  "asOf": "2026-09-08T16:45:29.377Z",
+  "asOf": "2026-09-22T14:46:56.405Z",
   "sources": [
     {
       "url": "https://www.sec.gov/Archives/edgar/data/37996/000003799621000026/f-20210331.htm",
-      "checkedAt": "2026-09-08T16:45:18.397Z",
+      "checkedAt": "2026-09-22T14:46:20.154Z",
       "recordIds": [
         "ford_2021q1_lost_units",
         "ford_2021q1_lost_fraction",
@@ -12,7 +12,7 @@
         "ford_2021_ebit_forecast"
       ],
       "status": "retrieved",
-      "sha256": "281fbb945c7dfe96547270f19bc9b3f7ddc50d8147e34a4040e62c49b67e6e11",
+      "sha256": "5f1e415fafc1ee1b3a3171f34710bb7597ef8b3c950737079558771c5d962fbc",
       "hashBasis": "raw_bytes",
       "baselineSha256": "14c702ea3ae5b60e1066de68cd2036b4f06a5d4acb6e5a6894d201204b76c4c0",
       "baselineHashBasis": "legacy_unspecified",
@@ -20,36 +20,30 @@
       "reviewRequired": true,
       "finalUrl": "https://www.sec.gov/Archives/edgar/data/37996/000003799621000026/f-20210331.htm",
       "documentType": "html",
-      "bytes": 3221026,
-      "lastSuccessfulAt": "2026-09-08T16:45:18.397Z"
+      "bytes": 3220772,
+      "lastSuccessfulAt": "2026-09-22T14:46:20.154Z"
     },
     {
       "url": "https://www.stellantis.com/en/news/press-releases/2021/october/third-quarter-2021-shipments-and-revenues",
-      "checkedAt": "2026-09-08T16:45:18.807Z",
+      "checkedAt": "2026-09-22T14:46:21.875Z",
       "recordIds": [
         "stellantis_2021q3_lost_units",
         "stellantis_2021q3_lost_fraction"
       ],
-      "status": "retrieved",
-      "sha256": "348129338a2ed2ea35a763811bcab3f3239f951e823c8af903a2fa7b4a95b6b5",
-      "hashBasis": "raw_bytes",
+      "status": "unavailable",
+      "error": "HTTP 403",
       "baselineSha256": "759ca627fb1dd4f59db1359ae7ad48266febbd97b900cee866dc9494ab4b46fe",
       "baselineHashBasis": "raw_bytes",
-      "contentChangedSinceBaseline": true,
-      "reviewRequired": true,
-      "finalUrl": "https://www.stellantis.com/en/news/press-releases/2021/october/third-quarter-2021-shipments-and-revenues",
-      "documentType": "html",
-      "bytes": 93431,
-      "lastSuccessfulAt": "2026-09-08T16:45:18.807Z"
+      "lastSuccessfulAt": "2026-09-17T14:45:21.203Z"
     },
     {
       "url": "https://www.sec.gov/Archives/edgar/data/1605484/000160548423000020/stellantis-20221231.htm",
-      "checkedAt": "2026-09-08T16:45:19.987Z",
+      "checkedAt": "2026-09-22T14:46:22.838Z",
       "recordIds": [
         "stellantis_2021_lost_fraction"
       ],
       "status": "retrieved",
-      "sha256": "fe87abe14502df9e8460058a7380afe446396edfc682175417053998644f6a23",
+      "sha256": "bfe56aa8328a4fa276ec8e9dbc0aa6eb0cc5bbd777c324102117bd5ebc3295e9",
       "hashBasis": "raw_bytes",
       "baselineSha256": "f1cee3eee26cbacd08586bd6be76833a5ab7c84a88fa99b8f06b1d45bb85dd1e",
       "baselineHashBasis": "legacy_unspecified",
@@ -57,31 +51,31 @@
       "reviewRequired": true,
       "finalUrl": "https://www.sec.gov/Archives/edgar/data/1605484/000160548423000020/stellantis-20221231.htm",
       "documentType": "html",
-      "bytes": 12007498,
-      "lastSuccessfulAt": "2026-09-08T16:45:19.987Z"
+      "bytes": 12007244,
+      "lastSuccessfulAt": "2026-09-22T14:46:22.838Z"
     },
     {
       "url": "https://media.renaultgroup.com/third-quarter-2021-priority-given-to-value-over-volume-optimized-revenues-in-a-context-strongly-marked-by-the-semiconductor-crisis/?lang=fra",
-      "checkedAt": "2026-09-08T16:45:20.500Z",
+      "checkedAt": "2026-09-22T14:46:23.957Z",
       "recordIds": [
         "renault_2021q3_lost_units",
         "renault_2021_loss_forecast"
       ],
       "status": "retrieved",
-      "sha256": "31056273978438f3e0e37dd720e1957a1e16864ee0c30467910e85b52e2dff74",
+      "sha256": "da392d6bbd9f62954c500be31e207f05cff15bcc363f4748d679bc00ab6ec808",
       "hashBasis": "raw_bytes",
       "baselineSha256": "31056273978438f3e0e37dd720e1957a1e16864ee0c30467910e85b52e2dff74",
       "baselineHashBasis": "raw_bytes",
-      "contentChangedSinceBaseline": false,
-      "reviewRequired": false,
+      "contentChangedSinceBaseline": true,
+      "reviewRequired": true,
       "finalUrl": "https://media.renaultgroup.com/third-quarter-2021-priority-given-to-value-over-volume-optimized-revenues-in-a-context-strongly-marked-by-the-semiconductor-crisis/?lang=fra",
       "documentType": "html",
-      "bytes": 209261,
-      "lastSuccessfulAt": "2026-09-08T16:45:20.500Z"
+      "bytes": 209263,
+      "lastSuccessfulAt": "2026-09-22T14:46:23.957Z"
     },
     {
       "url": "https://press.spglobal.com/2023-07-13-S-P-Global-Mobility-The-semiconductor-shortage-is-mostly-over-for-the-auto-industry",
-      "checkedAt": "2026-09-08T16:45:22.006Z",
+      "checkedAt": "2026-09-22T14:46:25.932Z",
       "recordIds": [
         "spglobal_2021_light_vehicle_loss",
         "spglobal_2021q3_light_vehicle_loss",
@@ -89,7 +83,7 @@
         "spglobal_2023h1_light_vehicle_loss"
       ],
       "status": "retrieved",
-      "sha256": "60a951acece59587494c72f70b03ffc514fb5cf18e42dbf344adbe327f9a2cdd",
+      "sha256": "2a54bebdd0c67ba8242183d4b9f2b14128301609db0eeddbd3d06a63c43fd0aa",
       "hashBasis": "raw_bytes",
       "baselineSha256": "94b56aa0ea331e51b86aed7ae919ccc06b4bc695c61642dd3398b01a4e5c996b",
       "baselineHashBasis": "legacy_unspecified",
@@ -97,12 +91,12 @@
       "reviewRequired": true,
       "finalUrl": "https://press.spglobal.com/2023-07-13-S-P-Global-Mobility-The-semiconductor-shortage-is-mostly-over-for-the-auto-industry",
       "documentType": "html",
-      "bytes": 55255,
-      "lastSuccessfulAt": "2026-09-08T16:45:22.006Z"
+      "bytes": 60044,
+      "lastSuccessfulAt": "2026-09-22T14:46:25.932Z"
     },
     {
       "url": "https://www.sony.com/SonyInfo/IR/library/presen/er/16q4_sonypre.pdf",
-      "checkedAt": "2026-09-08T16:45:22.314Z",
+      "checkedAt": "2026-09-22T14:46:26.305Z",
       "recordIds": [
         "sony_fy16_consolidated",
         "sony_fy16_semiconductors",
@@ -117,21 +111,15 @@
         "sony_fy16_q3",
         "sony_fy16_q4"
       ],
-      "status": "retrieved",
-      "sha256": "504d8788cecec743920442bcb375dcb62c85166878112d4ea7d6ccf1d0a078ed",
-      "hashBasis": "raw_bytes",
+      "status": "unavailable",
+      "error": "HTTP 403",
       "baselineSha256": "504d8788cecec743920442bcb375dcb62c85166878112d4ea7d6ccf1d0a078ed",
       "baselineHashBasis": "raw_bytes",
-      "contentChangedSinceBaseline": false,
-      "reviewRequired": false,
-      "finalUrl": "https://www.sony.com/en/SonyInfo/IR/library/presen/er/16q4_sonypre.pdf",
-      "documentType": "pdf",
-      "bytes": 227126,
-      "lastSuccessfulAt": "2026-09-08T16:45:22.314Z"
+      "lastSuccessfulAt": "2026-09-17T14:45:25.983Z"
     },
     {
       "url": "https://www.sec.gov/Archives/edgar/data/106040/000010604022000055/wdc-20220701.htm",
-      "checkedAt": "2026-09-08T16:45:23.077Z",
+      "checkedAt": "2026-09-22T14:46:27.270Z",
       "recordIds": [
         "wdc_contamination_fy2022",
         "wdc_power_cost_fy2020",
@@ -141,7 +129,7 @@
         "wdc_contamination_charge"
       ],
       "status": "retrieved",
-      "sha256": "b2a9c6db163b1c5b7ce53c32f22cea733802a44eb6ab129ea2d02451ebf09560",
+      "sha256": "b7b98aa4205bfd28fc55d6688e7daaf99f50ad42f4b68442554ffca67b47ed32",
       "hashBasis": "raw_bytes",
       "baselineSha256": "545e2d9532f071cf71511d1988104633e289dd7daa4a2d988b7cd0d99dd8d568",
       "baselineHashBasis": "raw_bytes",
@@ -149,30 +137,24 @@
       "reviewRequired": true,
       "finalUrl": "https://www.sec.gov/Archives/edgar/data/106040/000010604022000055/wdc-20220701.htm",
       "documentType": "html",
-      "bytes": 3067277,
-      "lastSuccessfulAt": "2026-09-08T16:45:23.077Z"
+      "bytes": 3067023,
+      "lastSuccessfulAt": "2026-09-22T14:46:27.270Z"
     },
     {
       "url": "https://www.nokia.com/newsroom/nokia-corporation-financial-report-for-q4-and-full-year-2020/",
-      "checkedAt": "2026-09-08T16:45:23.436Z",
+      "checkedAt": "2026-09-22T14:46:27.689Z",
       "recordIds": [
         "nokia_factory_closures_2020"
       ],
-      "status": "retrieved",
-      "sha256": "0560a5b8ce2274215025e46a119b2b469c37078da5fe6c002ed97ce5c8da9cae",
-      "hashBasis": "raw_bytes",
+      "status": "unavailable",
+      "error": "HTTP 403",
       "baselineSha256": "c76afc1a38f54692842e727541857ddb54d89a57845858ab171adc50a1b2fbfa",
       "baselineHashBasis": "legacy_unspecified",
-      "contentChangedSinceBaseline": true,
-      "reviewRequired": true,
-      "finalUrl": "https://www.nokia.com/newsroom/nokia-corporation-financial-report-for-q4-and-full-year-2020/",
-      "documentType": "html",
-      "bytes": 199462,
-      "lastSuccessfulAt": "2026-09-08T16:45:23.436Z"
+      "lastSuccessfulAt": "2026-09-17T14:45:29.265Z"
     },
     {
       "url": "https://www.renesas.com/en/document/ppt/2021-2q-presentation-material",
-      "checkedAt": "2026-09-08T16:45:24.139Z",
+      "checkedAt": "2026-09-22T14:46:28.465Z",
       "recordIds": [
         "renesas_naka_q2_net",
         "renesas_naka_q2_gross",
@@ -188,30 +170,24 @@
       "finalUrl": "https://www.renesas.com/en/document/ppt/2021-2q-presentation-material",
       "documentType": "pdf",
       "bytes": 499446,
-      "lastSuccessfulAt": "2026-09-08T16:45:24.139Z"
+      "lastSuccessfulAt": "2026-09-22T14:46:28.465Z"
     },
     {
       "url": "https://news.gm.com/home.detail.html/Pages/news/us/en/2021/oct/1012-boltev.html",
-      "checkedAt": "2026-09-08T16:45:25.176Z",
+      "checkedAt": "2026-09-22T14:46:29.802Z",
       "recordIds": [
         "gm_bolt_2021",
         "gm_lg_recovery"
       ],
-      "status": "retrieved",
-      "sha256": "fc1f60b82ecaa40b51100fa13d6a27a18e027404f72761ea39429732ef4418be",
-      "hashBasis": "raw_bytes",
+      "status": "unavailable",
+      "error": "HTTP 403",
       "baselineSha256": "554df643fdb014cab15634b3bcb94c9fd8a70fdb92273f2c446a2e037ddd5eef",
       "baselineHashBasis": "raw_bytes",
-      "contentChangedSinceBaseline": true,
-      "reviewRequired": true,
-      "finalUrl": "https://news.gm.com/home.detail.html/Pages/news/us/en/2021/oct/1012-boltev.html",
-      "documentType": "html",
-      "bytes": 62036,
-      "lastSuccessfulAt": "2026-09-08T16:45:25.176Z"
+      "lastSuccessfulAt": "2026-09-17T14:45:32.994Z"
     },
     {
       "url": "https://links.sgx.com/FileOpen/LGES%202024%20-%20Final%20Offering%20Circular%20%28dd%2024.06.24%29.ashx?App=Prospectus&FileID=63194",
-      "checkedAt": "2026-09-08T16:45:25.858Z",
+      "checkedAt": "2026-09-22T14:46:30.672Z",
       "recordIds": [
         "lg_bolt_estimate",
         "hyundai_replacement_estimate",
@@ -228,11 +204,11 @@
       "finalUrl": "https://links.sgx.com/FileOpen/LGES%202024%20-%20Final%20Offering%20Circular%20%28dd%2024.06.24%29.ashx?App=Prospectus&FileID=63194",
       "documentType": "pdf",
       "bytes": 6085575,
-      "lastSuccessfulAt": "2026-09-08T16:45:25.858Z"
+      "lastSuccessfulAt": "2026-09-22T14:46:30.672Z"
     },
     {
       "url": "https://www.kioxia-holdings.com/content/dam/kioxia-hd/en-jp/about/asset/Financial-Results-FY2021-4Q-en.pdf",
-      "checkedAt": "2026-09-08T16:45:26.808Z",
+      "checkedAt": "2026-09-22T14:46:32.522Z",
       "recordIds": [
         "kioxia_contamination_fy2021"
       ],
@@ -246,16 +222,16 @@
       "finalUrl": "https://www.kioxia-holdings.com/content/dam/kioxia-hd/en-jp/about/asset/Financial-Results-FY2021-4Q-en.pdf",
       "documentType": "pdf",
       "bytes": 166818,
-      "lastSuccessfulAt": "2026-09-08T16:45:26.808Z"
+      "lastSuccessfulAt": "2026-09-22T14:46:32.522Z"
     },
     {
       "url": "https://www.sec.gov/Archives/edgar/data/1046179/000119312522104891/R40.htm",
-      "checkedAt": "2026-09-08T16:45:27.213Z",
+      "checkedAt": "2026-09-22T14:46:33.890Z",
       "recordIds": [
         "tsmc_photoresist_charge"
       ],
       "status": "retrieved",
-      "sha256": "d56cf170d2f7fb4a102687e9d25cbdc9175d9cc1f80a1666990677b7bb2b5fb8",
+      "sha256": "c0c58f35257e1f3d35be3d01e7caeef938933158310ec40a305b9cbaa8ca2330",
       "hashBasis": "raw_bytes",
       "baselineSha256": "a8499706563d38a8aacc92894c1abd5e83dc339555c17518fedca3318a3a2977",
       "baselineHashBasis": "raw_bytes",
@@ -263,18 +239,21 @@
       "reviewRequired": true,
       "finalUrl": "https://www.sec.gov/Archives/edgar/data/1046179/000119312522104891/R40.htm",
       "documentType": "html",
-      "bytes": 6296,
-      "lastSuccessfulAt": "2026-09-08T16:45:27.213Z"
+      "bytes": 6042,
+      "lastSuccessfulAt": "2026-09-22T14:46:33.890Z"
     },
     {
       "url": "https://www.sec.gov/Archives/edgar/data/106040/000010604024000031/wdc-20240628.htm",
-      "checkedAt": "2026-09-08T16:45:27.541Z",
+      "checkedAt": "2026-09-22T14:46:34.466Z",
       "recordIds": [
         "wdc_contamination_recovery_fy2024",
-        "wdc_contamination_insurer_cash_fy2024"
+        "wdc_contamination_insurer_cash_fy2024",
+        "wdc_contamination_cost_scope",
+        "wdc_demand_utilization_2023",
+        "wdc_demand_utilization_2024"
       ],
       "status": "retrieved",
-      "sha256": "169693fe0ec9e43b8d9be8f9dab68b81357d86657a517d8496c67773abed4120",
+      "sha256": "774b8f4604bddb05e27674dc575549053862d5ba70ef475230317797f1c2ae9f",
       "hashBasis": "raw_bytes",
       "baselineSha256": "391af5f579ab36e6228631b416676234518e29ced5611ecb7bd94f34385c9283",
       "baselineHashBasis": "raw_bytes",
@@ -282,12 +261,12 @@
       "reviewRequired": true,
       "finalUrl": "https://www.sec.gov/Archives/edgar/data/106040/000010604024000031/wdc-20240628.htm",
       "documentType": "html",
-      "bytes": 2685383,
-      "lastSuccessfulAt": "2026-09-08T16:45:27.541Z"
+      "bytes": 2685129,
+      "lastSuccessfulAt": "2026-09-22T14:46:34.466Z"
     },
     {
       "url": "https://www.nikon.com/company/ir/ir_library/result/pdf/2017/17_all_e.pdf",
-      "checkedAt": "2026-09-08T16:45:27.899Z",
+      "checkedAt": "2026-09-22T14:46:35.401Z",
       "recordIds": [
         "nikon_imaging_sales_decline_fy2017",
         "nikon_imaging_income_decline_fy2017"
@@ -302,17 +281,17 @@
       "finalUrl": "https://www.nikon.com/content/dam/web-assets/nikoncom/company/local/global/en/ir/ir_library/result/pdf/2017/17_all_e.pdf",
       "documentType": "pdf",
       "bytes": 539410,
-      "lastSuccessfulAt": "2026-09-08T16:45:27.899Z"
+      "lastSuccessfulAt": "2026-09-22T14:46:35.401Z"
     },
     {
       "url": "https://www.renesas.com/en/about/newsroom/update-4-final-impact-march-16-earthquake-coast-fukushima-prefecture-renesas-operation-1",
-      "checkedAt": "2026-09-08T16:45:28.413Z",
+      "checkedAt": "2026-09-22T14:46:36.941Z",
       "recordIds": [
         "naka_2022_200mm_loss",
         "naka_2022_300mm_loss"
       ],
       "status": "retrieved",
-      "sha256": "752c6f5ea5e7940785f16b3b263b6bf465438e087b4fcf2a603305491a6811d0",
+      "sha256": "87f5a0a55bf349cf4f80783aff5cc95a82c58eb1c4d97cc2a308cd516dccad84",
       "hashBasis": "raw_bytes",
       "baselineSha256": "6d9ca9144f6535304f1a3c88873d7cd50926ed37e5041ad11f33318b18be857e",
       "baselineHashBasis": "raw_bytes",
@@ -320,17 +299,17 @@
       "reviewRequired": true,
       "finalUrl": "https://www.renesas.com/en/about/newsroom/update-4-final-impact-march-16-earthquake-coast-fukushima-prefecture-renesas-operation-1",
       "documentType": "html",
-      "bytes": 222444,
-      "lastSuccessfulAt": "2026-09-08T16:45:28.413Z"
+      "bytes": 230198,
+      "lastSuccessfulAt": "2026-09-22T14:46:36.941Z"
     },
     {
       "url": "https://www.renesas.com/en/about/newsroom/update-3-impact-march-16-earthquake-coast-fukushima-prefecture-renesas-operation",
-      "checkedAt": "2026-09-08T16:45:28.740Z",
+      "checkedAt": "2026-09-22T14:46:37.627Z",
       "recordIds": [
         "takasaki_2022_loss"
       ],
       "status": "retrieved",
-      "sha256": "11c7e845da276cde89a62c66a3e671d9a824a2a1bcd6fe8ab30169543b80348a",
+      "sha256": "e97ed08d05f47c99c5112aececcefd0d5531e772028bb92cb39c35106894ddb8",
       "hashBasis": "raw_bytes",
       "baselineSha256": "a12415a126097b1a75c87ba1bf3d9d7a4adbab1d83659127d28157e95b73a18c",
       "baselineHashBasis": "raw_bytes",
@@ -338,17 +317,17 @@
       "reviewRequired": true,
       "finalUrl": "https://www.renesas.com/en/about/newsroom/update-3-impact-march-16-earthquake-coast-fukushima-prefecture-renesas-operation",
       "documentType": "html",
-      "bytes": 228459,
-      "lastSuccessfulAt": "2026-09-08T16:45:28.740Z"
+      "bytes": 235430,
+      "lastSuccessfulAt": "2026-09-22T14:46:37.627Z"
     },
     {
       "url": "https://www.renesas.com/en/about/newsroom/update-2-final-impact-instantaneous-voltage-drop-operation-kawashiri-factory",
-      "checkedAt": "2026-09-08T16:45:29.066Z",
+      "checkedAt": "2026-09-22T14:46:38.108Z",
       "recordIds": [
         "kawashiri_2022_loss"
       ],
       "status": "retrieved",
-      "sha256": "9936be0b9f36a73d2c63c2df489f67749df708fb51b7115510e9e68a17be4fde",
+      "sha256": "dba3be82fa9e50f2429af6f6eacff1961ef93ed368acc34cf580da4f17c0035f",
       "hashBasis": "raw_bytes",
       "baselineSha256": "d8174cbe76f62cf8c7e164226d9527c9900f463e1b8e0d6c766002eb91b90576",
       "baselineHashBasis": "raw_bytes",
@@ -356,11 +335,355 @@
       "reviewRequired": true,
       "finalUrl": "https://www.renesas.com/en/about/newsroom/update-2-final-impact-instantaneous-voltage-drop-operation-kawashiri-factory",
       "documentType": "html",
-      "bytes": 220023,
-      "lastSuccessfulAt": "2026-09-08T16:45:29.066Z"
+      "bytes": 226994,
+      "lastSuccessfulAt": "2026-09-22T14:46:38.108Z"
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/106040/000010604024000022/wdc-20240329.htm",
+      "checkedAt": "2026-09-22T14:46:38.467Z",
+      "recordIds": [
+        "wdc_recovery_2024q2_insurer",
+        "wdc_recovery_2024q3_unassigned",
+        "wdc_recovery_2024_nine_months"
+      ],
+      "status": "retrieved",
+      "sha256": "4ebf0a0c937c470fd4af1e8f292356c1a09d3dff245d1092a736546d8f7027c5",
+      "hashBasis": "raw_bytes",
+      "baselineSha256": "246eee66726f74669a71def04fc9203c4fe0f72cb8c5ba3240eb4330cf3d7c86",
+      "baselineHashBasis": "raw_bytes",
+      "contentChangedSinceBaseline": true,
+      "reviewRequired": true,
+      "finalUrl": "https://www.sec.gov/Archives/edgar/data/106040/000010604024000022/wdc-20240329.htm",
+      "documentType": "html",
+      "bytes": 1979408,
+      "lastSuccessfulAt": "2026-09-22T14:46:38.467Z"
+    },
+    {
+      "url": "https://links.sgx.com/FileOpen/Kioxia%20Holdings%20Corp_946237_010_CL_NoDISC_PW_17July0630H.ashx?App=Prospectus&FileID=66909",
+      "checkedAt": "2026-09-22T14:46:38.842Z",
+      "recordIds": [
+        "kioxia_recovery_fy2023_precise",
+        "kioxia_flash_jv_accounting",
+        "kioxia_contamination_cost_scope"
+      ],
+      "status": "retrieved",
+      "sha256": "8066a674702d2fa415d5a791ff1a2855b7fc276cd0f0fce1b5a97b9ebb3fe2f7",
+      "hashBasis": "raw_bytes",
+      "baselineSha256": "8066a674702d2fa415d5a791ff1a2855b7fc276cd0f0fce1b5a97b9ebb3fe2f7",
+      "baselineHashBasis": "raw_bytes",
+      "contentChangedSinceBaseline": false,
+      "reviewRequired": false,
+      "finalUrl": "https://links.sgx.com/FileOpen/Kioxia%20Holdings%20Corp_946237_010_CL_NoDISC_PW_17July0630H.ashx?App=Prospectus&FileID=66909",
+      "documentType": "pdf",
+      "bytes": 1334672,
+      "lastSuccessfulAt": "2026-09-22T14:46:38.842Z"
+    },
+    {
+      "url": "https://www.kioxia-holdings.com/content/dam/kioxia-hd/en-jp/about/asset/Financial-Results-FY2023-4Q-en.pdf",
+      "checkedAt": "2026-09-22T14:46:40.382Z",
+      "recordIds": [
+        "kioxia_recovery_fy2023_rounded"
+      ],
+      "status": "retrieved",
+      "sha256": "f9382d499b2a3a722dfee94b1c14fadf1b7d584b8eff0e280b4fa48633495345",
+      "hashBasis": "raw_bytes",
+      "baselineSha256": "f9382d499b2a3a722dfee94b1c14fadf1b7d584b8eff0e280b4fa48633495345",
+      "baselineHashBasis": "raw_bytes",
+      "contentChangedSinceBaseline": false,
+      "reviewRequired": false,
+      "finalUrl": "https://www.kioxia-holdings.com/content/dam/kioxia-hd/en-jp/about/asset/Financial-Results-FY2023-4Q-en.pdf",
+      "documentType": "pdf",
+      "bytes": 158103,
+      "lastSuccessfulAt": "2026-09-22T14:46:40.382Z"
+    },
+    {
+      "url": "https://www.kioxia-holdings.com/content/dam/kioxia-hd/en-jp/about/asset/Financial-Results-FY2022-4Q-en.pdf",
+      "checkedAt": "2026-09-22T14:46:41.360Z",
+      "recordIds": [
+        "kioxia_charge_fy2021_corroboration",
+        "kioxia_fy2022_charge_dash"
+      ],
+      "status": "retrieved",
+      "sha256": "b08e190597583cd2468c62df2e4c0a2233cfb61fd4e78a26a29219dcea6183e4",
+      "hashBasis": "raw_bytes",
+      "baselineSha256": "b08e190597583cd2468c62df2e4c0a2233cfb61fd4e78a26a29219dcea6183e4",
+      "baselineHashBasis": "raw_bytes",
+      "contentChangedSinceBaseline": false,
+      "reviewRequired": false,
+      "finalUrl": "https://www.kioxia-holdings.com/content/dam/kioxia-hd/en-jp/about/asset/Financial-Results-FY2022-4Q-en.pdf",
+      "documentType": "pdf",
+      "bytes": 160019,
+      "lastSuccessfulAt": "2026-09-22T14:46:41.360Z"
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/106040/000010604022000040/wdc-20220401.htm",
+      "checkedAt": "2026-09-22T14:46:41.655Z",
+      "recordIds": [
+        "wdc_charge_2022_nine_months",
+        "wdc_enterprise_ssd_2022q3_effect"
+      ],
+      "status": "retrieved",
+      "sha256": "1a9bbd07e93651405cba3736cb3ae377f442faf6991466a3e24e1d2c4c7a7730",
+      "hashBasis": "raw_bytes",
+      "baselineSha256": "24983e4f04077209dabc770d56647fce03f5fda90f9293caa80c3a7756eac936",
+      "baselineHashBasis": "raw_bytes",
+      "contentChangedSinceBaseline": true,
+      "reviewRequired": true,
+      "finalUrl": "https://www.sec.gov/Archives/edgar/data/106040/000010604022000040/wdc-20220401.htm",
+      "documentType": "html",
+      "bytes": 2183846,
+      "lastSuccessfulAt": "2026-09-22T14:46:41.655Z"
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/106040/000010604022000049/ex991-pressreleaseq422.htm",
+      "checkedAt": "2026-09-22T14:46:42.042Z",
+      "recordIds": [
+        "wdc_charge_2022q4",
+        "wdc_enterprise_ssd_2022q4_growth"
+      ],
+      "status": "retrieved",
+      "sha256": "cc30d261e1701fc0140e232e50b8603851f4cd551aac56bcc4dd1496f238a0de",
+      "hashBasis": "raw_bytes",
+      "baselineSha256": "feba6f30f8d5ce25a36f3fc942a2bba9ffdeadc5e8c4c2460b416140f439d69e",
+      "baselineHashBasis": "raw_bytes",
+      "contentChangedSinceBaseline": true,
+      "reviewRequired": true,
+      "finalUrl": "https://www.sec.gov/Archives/edgar/data/106040/000010604022000049/ex991-pressreleaseq422.htm",
+      "documentType": "html",
+      "bytes": 484014,
+      "lastSuccessfulAt": "2026-09-22T14:46:42.042Z"
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/2023554/000202355425000027/sndk-20250328.htm",
+      "checkedAt": "2026-09-22T14:46:42.662Z",
+      "recordIds": [
+        "sandisk_historical_insurance_2024",
+        "sandisk_pre_separation_accounts"
+      ],
+      "status": "retrieved",
+      "sha256": "083324cbcd44be9ad8ccd821dcc428ee11d3ff0edf2dff6cb7f2f067da373a90",
+      "hashBasis": "raw_bytes",
+      "baselineSha256": "36ce1676c9c2405c0da2ff8c6fed46edfe36912825f6a0bd08c10f27eab84818",
+      "baselineHashBasis": "raw_bytes",
+      "contentChangedSinceBaseline": true,
+      "reviewRequired": true,
+      "finalUrl": "https://www.sec.gov/Archives/edgar/data/2023554/000202355425000027/sndk-20250328.htm",
+      "documentType": "html",
+      "bytes": 1496986,
+      "lastSuccessfulAt": "2026-09-22T14:46:42.662Z"
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/106040/000130817924000755/wdc4316471-def14a.htm",
+      "checkedAt": "2026-09-22T14:46:43.159Z",
+      "recordIds": [
+        "wdc_march2024_receipt"
+      ],
+      "status": "retrieved",
+      "sha256": "69a0cac0f21c69142c9acff3e1329072f6f80822a3b34688e7869ef77bdbecd1",
+      "hashBasis": "raw_bytes",
+      "baselineSha256": "1699f203ae18bf3be57b35e9aee7931332a14fa97d5dc1f84ffe9f689412f3b9",
+      "baselineHashBasis": "raw_bytes",
+      "contentChangedSinceBaseline": true,
+      "reviewRequired": true,
+      "finalUrl": "https://www.sec.gov/Archives/edgar/data/106040/000130817924000755/wdc4316471-def14a.htm",
+      "documentType": "html",
+      "bytes": 1899237,
+      "lastSuccessfulAt": "2026-09-22T14:46:43.159Z"
+    },
+    {
+      "url": "https://www.westerndigital.com/company/newsroom/press-releases/2022/2022-02-09-western-digital-comments-on-production-status-of-its-joint-venture-flash-memory-manufacturing-facilities",
+      "checkedAt": "2026-09-22T14:46:43.534Z",
+      "recordIds": [
+        "wdc_flash_availability_initial"
+      ],
+      "status": "retrieved",
+      "sha256": "49f59617a9108646b014cb69b0f1b0f36fb1d23cce6bc5110f7e7b9e79a20362",
+      "hashBasis": "raw_bytes",
+      "baselineSha256": "bc12a65b8100bed61f5ea05e983c8d2b489b5cc4b497b6487219e319d07b4092",
+      "baselineHashBasis": "raw_bytes",
+      "contentChangedSinceBaseline": true,
+      "reviewRequired": true,
+      "finalUrl": "https://www.westerndigital.com/company/newsroom/press-releases/2022/2022-02-09-western-digital-comments-on-production-status-of-its-joint-venture-flash-memory-manufacturing-facilities",
+      "documentType": "html",
+      "bytes": 996715,
+      "lastSuccessfulAt": "2026-09-22T14:46:43.534Z"
+    },
+    {
+      "url": "https://www.westerndigital.com/company/newsroom/press-releases/2022/2022-03-02-western-digital-provides-update-on-production-status-and-fiscal-outlook",
+      "checkedAt": "2026-09-22T14:46:44.964Z",
+      "recordIds": [
+        "wdc_flash_availability_update",
+        "wdc_q3_mixed_adjustment_forecast"
+      ],
+      "status": "retrieved",
+      "sha256": "d4246dc263ffe203d8794f65bd8d77b6cd8f4e84a6d72a3ddffba4ae939d9b29",
+      "hashBasis": "raw_bytes",
+      "baselineSha256": "45116080a87113c524d0e23d6e52ed6bf77d3f2c6e5c65ee9dd3a4d6b1beab07",
+      "baselineHashBasis": "raw_bytes",
+      "contentChangedSinceBaseline": true,
+      "reviewRequired": true,
+      "finalUrl": "https://www.westerndigital.com/company/newsroom/press-releases/2022/2022-03-02-western-digital-provides-update-on-production-status-and-fiscal-outlook",
+      "documentType": "html",
+      "bytes": 997598,
+      "lastSuccessfulAt": "2026-09-22T14:46:44.964Z"
+    },
+    {
+      "url": "https://www.kioxia.com/en-jp/about/news/2022/20220303-1.html",
+      "checkedAt": "2026-09-22T14:46:46.134Z",
+      "recordIds": [
+        "kioxia_operations_restored"
+      ],
+      "status": "retrieved",
+      "sha256": "5bfda3031101fd83a983ff14d373c7921b57f883cbcac49182b21789ed266320",
+      "hashBasis": "raw_bytes",
+      "baselineSha256": "683cc15317ba1e4a9f4408641166f70dc05ac9a74dadd8ba0c91f74c3fdfc117",
+      "baselineHashBasis": "raw_bytes",
+      "contentChangedSinceBaseline": true,
+      "reviewRequired": true,
+      "finalUrl": "https://www.kioxia.com/en-jp/about/news/2022/20220303-1.html",
+      "documentType": "html",
+      "bytes": 63305,
+      "lastSuccessfulAt": "2026-09-22T14:46:46.134Z"
+    },
+    {
+      "url": "https://pr.tsmc.com/system/files/newspdf/PGWQISTHTH/NEWS_FILE_EN.pdf",
+      "checkedAt": "2026-09-22T14:46:47.084Z",
+      "recordIds": [
+        "tsmc_q1_revenue_shortfall_forecast",
+        "tsmc_q2_replacement_forecast",
+        "tsmc_q1_mixed_uplift_forecast",
+        "tsmc_q1_margin_forecast",
+        "tsmc_q2_margin_forecast"
+      ],
+      "status": "retrieved",
+      "sha256": "2872fbc0b2a6dd6d56b4841e3851ca77069bdc10c70271c9559add378f97d4cf",
+      "hashBasis": "raw_bytes",
+      "baselineSha256": "2872fbc0b2a6dd6d56b4841e3851ca77069bdc10c70271c9559add378f97d4cf",
+      "baselineHashBasis": "raw_bytes",
+      "contentChangedSinceBaseline": false,
+      "reviewRequired": false,
+      "finalUrl": "https://pr.tsmc.com/system/files/newspdf/PGWQISTHTH/NEWS_FILE_EN.pdf",
+      "documentType": "pdf",
+      "bytes": 196418,
+      "lastSuccessfulAt": "2026-09-22T14:46:47.084Z"
+    },
+    {
+      "url": "https://investor.tsmc.com/japanese/encrypt/files/encrypt_file/english/2019/Q1/TSMC%201Q19%20transcript.pdf",
+      "checkedAt": "2026-09-22T14:46:48.966Z",
+      "recordIds": [
+        "tsmc_q1_margin_reported"
+      ],
+      "status": "unavailable",
+      "error": "Command failed: python -c import sys,urllib.request,gzip,json,base64\nr=urllib.request.urlopen(urllib.request.Request(sys.argv[1],headers={'User-Agent':sys.argv[2]}),timeout=20)\nb=r.read()\nif b[:2]==b'\\x1f\\x8b': b=gzip.decompress(b)\nprint(json.dumps({'body':base64.b64encode(b).decode('ascii'),'url':r.url,'contentType':r.headers.get('Content-Type','')})) https://investor.tsmc.com/japanese/encrypt/files/encrypt_file/english/2019/Q1/TSMC%201Q19%20transcript.pdf SSCIM public-source research alansong0318@outlook.com\nTraceback (most recent call last):\r\n  File \"<string>\", line 2, in <module>\r\n    r=urllib.request.urlopen(urllib.request.Request(sys.argv[1],headers={'User-Agent':sys.argv[2]}),timeout=20)\r\n  File \"C:\\Python314\\Lib\\urllib\\request.py\", line 187, in urlopen\r\n    return opener.open(url, data, timeout)\r\n           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^\r\n  File \"C:\\Python314\\Lib\\urllib\\request.py\", line 493, in open\r\n    response = meth(req, response)\r\n  File \"C:\\Python314\\Lib\\urllib\\request.py\", line 602, in http_response\r\n    response = self.parent.error(\r\n        'http', request, response, code, msg, hdrs)\r\n  File \"C:\\Python314\\Lib\\urllib\\request.py\", line 531, in error\r\n    return self._call_chain(*args)\r\n           ~~~~~~~~~~~~~~~~^^^^^^^\r\n  File \"C:\\Python314\\Lib\\urllib\\request.py\", line 464, in _call_chain\r\n    result = func(*args)\r\n  File \"C:\\Python314\\Lib\\urllib\\request.py\", line 611, in http_error_default\r\n    raise HTTPError(req.full_url, code, msg, hdrs, fp)\r\nurllib.error.HTTPError: HTTP Error 403: Forbidden\r\n",
+      "baselineSha256": "fae18ba8236ff760e27cc8a70203b830803fe5e4188082d328cf9dec0de391cf",
+      "baselineHashBasis": "raw_bytes",
+      "lastSuccessfulAt": "2026-09-22T13:46:45.776Z"
+    },
+    {
+      "url": "https://investor.tsmc.com/schinese/encrypt/files/encrypt_file/english/2019/Q2/2Q19ManagementReport.pdf",
+      "checkedAt": "2026-09-22T14:46:49.772Z",
+      "recordIds": [
+        "tsmc_q2_margin_reported"
+      ],
+      "status": "unavailable",
+      "error": "Command failed: python -c import sys,urllib.request,gzip,json,base64\nr=urllib.request.urlopen(urllib.request.Request(sys.argv[1],headers={'User-Agent':sys.argv[2]}),timeout=20)\nb=r.read()\nif b[:2]==b'\\x1f\\x8b': b=gzip.decompress(b)\nprint(json.dumps({'body':base64.b64encode(b).decode('ascii'),'url':r.url,'contentType':r.headers.get('Content-Type','')})) https://investor.tsmc.com/schinese/encrypt/files/encrypt_file/english/2019/Q2/2Q19ManagementReport.pdf SSCIM public-source research alansong0318@outlook.com\nTraceback (most recent call last):\r\n  File \"<string>\", line 2, in <module>\r\n    r=urllib.request.urlopen(urllib.request.Request(sys.argv[1],headers={'User-Agent':sys.argv[2]}),timeout=20)\r\n  File \"C:\\Python314\\Lib\\urllib\\request.py\", line 187, in urlopen\r\n    return opener.open(url, data, timeout)\r\n           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^\r\n  File \"C:\\Python314\\Lib\\urllib\\request.py\", line 493, in open\r\n    response = meth(req, response)\r\n  File \"C:\\Python314\\Lib\\urllib\\request.py\", line 602, in http_response\r\n    response = self.parent.error(\r\n        'http', request, response, code, msg, hdrs)\r\n  File \"C:\\Python314\\Lib\\urllib\\request.py\", line 531, in error\r\n    return self._call_chain(*args)\r\n           ~~~~~~~~~~~~~~~~^^^^^^^\r\n  File \"C:\\Python314\\Lib\\urllib\\request.py\", line 464, in _call_chain\r\n    result = func(*args)\r\n  File \"C:\\Python314\\Lib\\urllib\\request.py\", line 611, in http_error_default\r\n    raise HTTPError(req.full_url, code, msg, hdrs, fp)\r\nurllib.error.HTTPError: HTTP Error 403: Forbidden\r\n",
+      "baselineSha256": "0770d4bdf93ca2379ccdebb966eb72f410f6c5f2caf2a0f19788c1f6163c6359",
+      "baselineHashBasis": "raw_bytes",
+      "lastSuccessfulAt": "2026-09-22T13:46:47.796Z"
+    },
+    {
+      "url": "https://www.kioxia-holdings.com/content/dam/kioxia-hd/en-jp/ir/library/securities/asset/Annual-Securities-Report-FY2025-EN.pdf",
+      "checkedAt": "2026-09-22T14:46:50.365Z",
+      "recordIds": [
+        "kioxia_unattributed_insurance_ended_2025",
+        "kioxia_unattributed_insurance_ended_2026",
+        "kioxia_jv_voting_2026"
+      ],
+      "status": "retrieved",
+      "sha256": "3e95d19961d6ebeec6a45875a7c7085eea5a04ed0342ff6e9659f32245d79c14",
+      "hashBasis": "raw_bytes",
+      "baselineSha256": "3e95d19961d6ebeec6a45875a7c7085eea5a04ed0342ff6e9659f32245d79c14",
+      "baselineHashBasis": "raw_bytes",
+      "contentChangedSinceBaseline": false,
+      "reviewRequired": false,
+      "finalUrl": "https://www.kioxia-holdings.com/content/dam/kioxia-hd/en-jp/ir/library/securities/asset/Annual-Securities-Report-FY2025-EN.pdf",
+      "documentType": "pdf",
+      "bytes": 5242207,
+      "lastSuccessfulAt": "2026-09-22T14:46:50.365Z"
+    },
+    {
+      "url": "https://www.kioxia-holdings.com/content/dam/kioxia-hd/en-jp/about/asset/Financial-Results-FY2022-1Q-en.pdf",
+      "checkedAt": "2026-09-22T14:46:51.765Z",
+      "recordIds": [
+        "kioxia_sales_calendar_2022q1",
+        "kioxia_sales_calendar_2022q2",
+        "kioxia_sales_2022q2_mixed_causes"
+      ],
+      "status": "retrieved",
+      "sha256": "a1a35d72b286b5ad8d489c88a299aa0ffe303f808a4f82ae8236ef2d99f6212d",
+      "hashBasis": "raw_bytes",
+      "baselineSha256": "a1a35d72b286b5ad8d489c88a299aa0ffe303f808a4f82ae8236ef2d99f6212d",
+      "baselineHashBasis": "raw_bytes",
+      "contentChangedSinceBaseline": false,
+      "reviewRequired": false,
+      "finalUrl": "https://www.kioxia-holdings.com/content/dam/kioxia-hd/en-jp/about/asset/Financial-Results-FY2022-1Q-en.pdf",
+      "documentType": "pdf",
+      "bytes": 160836,
+      "lastSuccessfulAt": "2026-09-22T14:46:51.765Z"
+    },
+    {
+      "url": "https://www.phison.com/wp-content/uploads/2025/11/Phison_Electronic_Corporation_2022_Annual_Report.pdf",
+      "checkedAt": "2026-09-22T14:46:52.061Z",
+      "recordIds": [
+        "phison_purchase_kioxia_taiwan_2022",
+        "phison_sale_kioxia_2022",
+        "phison_sale_apacer_2022",
+        "phison_supplier_concentration_2022_report",
+        "phison_consolidated_inventory_expense_2022",
+        "phison_consolidated_inventory_expense_2021",
+        "phison_parent_inventory_expense_2022",
+        "phison_parent_inventory_expense_2021"
+      ],
+      "status": "retrieved",
+      "sha256": "5b7ab1df5d9d29c394db508a0738db037782fd4e2970359fd1b0084e9b8262f7",
+      "hashBasis": "raw_bytes",
+      "baselineSha256": "5b7ab1df5d9d29c394db508a0738db037782fd4e2970359fd1b0084e9b8262f7",
+      "baselineHashBasis": "raw_bytes",
+      "contentChangedSinceBaseline": false,
+      "reviewRequired": false,
+      "finalUrl": "https://www.phison.com/wp-content/uploads/2025/11/Phison_Electronic_Corporation_2022_Annual_Report.pdf",
+      "documentType": "pdf",
+      "bytes": 8943621,
+      "lastSuccessfulAt": "2026-09-22T14:46:52.061Z"
+    },
+    {
+      "url": "https://www.apacer.com/upload/media/investor/financial/Annual_Report/2022_Annual_Report_EN.pdf",
+      "checkedAt": "2026-09-22T14:46:53.664Z",
+      "recordIds": [
+        "apacer_parent_phison_purchases_2022",
+        "apacer_udinfo_phison_purchases_2022",
+        "apacer_group_phison_purchases_2022",
+        "apacer_parent_phison_purchases_note_2022",
+        "apacer_udinfo_consolidation_2022",
+        "apacer_consolidated_inventory_expense_2022",
+        "apacer_consolidated_inventory_expense_2021",
+        "apacer_parent_inventory_expense_2022",
+        "apacer_parent_inventory_expense_2021"
+      ],
+      "status": "retrieved",
+      "sha256": "ebfea018d826bef0d5ea2b747f54ddcaa2fc0005aa5f87fe35435cfa0704ffb6",
+      "hashBasis": "raw_bytes",
+      "baselineSha256": "ebfea018d826bef0d5ea2b747f54ddcaa2fc0005aa5f87fe35435cfa0704ffb6",
+      "baselineHashBasis": "raw_bytes",
+      "contentChangedSinceBaseline": false,
+      "reviewRequired": false,
+      "finalUrl": "https://www.apacer.com/upload/media/investor/financial/Annual_Report/2022_Annual_Report_EN.pdf",
+      "documentType": "pdf",
+      "bytes": 4706952,
+      "lastSuccessfulAt": "2026-09-22T14:46:53.664Z"
     }
   ],
-  "unavailable": 0,
-  "reviewRequired": 12,
+  "unavailable": 6,
+  "reviewRequired": 18,
   "limitation": "Retrieval and byte-change monitoring, not automatic claim verification. Dynamic page changes can trigger review. Newly found disclosures enter the news queue until reviewed."
 }

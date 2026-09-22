@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "exportedAt": "2026-09-08T16:46:40.701Z",
-  "catalogSha256": "50cbe0f7bb7e8c9041f444b7801a33770f7bdb36d2893a7cefad8b3f66ad3af8",
-  "sqlite": "sscim-evidence-50cbe0f7bb7e.sqlite",
-  "json": "sscim-evidence-50cbe0f7bb7e.json",
+  "exportedAt": "2026-09-22T14:48:08.349Z",
+  "catalogSha256": "f3c56822b985ba474ab00796e67b333be90f91ee15f958bc209d7eea9728508e",
+  "sqlite": "sscim-evidence-f3c56822b985.sqlite",
+  "json": "sscim-evidence-f3c56822b985.json",
   "datasets": [
     {
       "id": "vault.countries",
@@ -48,7 +48,7 @@
     {
       "id": "vault.events",
       "records": 167,
-      "sha256": "8ed09143106473fc47f8f5fda58fb364645b928442d21ea46dfa49edcdfa34d9"
+      "sha256": "5cd5454876811b8204dfb1e82cb1b3c23fefd09bd42695ca9af6997f128eb66b"
     },
     {
       "id": "vault.scenarios",
@@ -63,27 +63,27 @@
     {
       "id": "vault.quotes",
       "records": 92,
-      "sha256": "e0fe575250f3b7d19801fddd79c243684c6311ae788f693649a0fea0adf5ca4b"
+      "sha256": "0cae79f52e2a0506dc9e2d651806a80e300628722280e45a61579ba13e3599ec"
     },
     {
       "id": "vault.meta",
       "records": 8,
-      "sha256": "9ca92228d8867b1bdf7f1888af6d54cc917a9879f0544fdfffce50fe891f4cd8"
+      "sha256": "567e80e6788afeffcfbbfcf0fe9097e20df88cea81f72d1d6d6645d62812f4c3"
     },
     {
       "id": "vault.event_candidates",
-      "records": 424,
-      "sha256": "73397f7c676b05575633ceedaf2a3c0a4f7a63f10f08d2d0103541c49f3a9ecb"
+      "records": 1499,
+      "sha256": "b7e2bec8385380fbed5e7894c79f271421b92dcec647137300125fdb79d949a7"
     },
     {
       "id": "vault.briefings",
-      "records": 9,
-      "sha256": "a8fabd1c3beb041223d33a9db2caf4b529303af0b5c482454418e781294d5df9"
+      "records": 17,
+      "sha256": "00be296efd9df9139a5841bab846c5a2171983f47e47923dccfa35fa6dc378e4"
     },
     {
       "id": "vault.facilities",
       "records": 275,
-      "sha256": "7784947048c7fe696c710a1388f232b392b87cc5ab788c416be8ddabacada930"
+      "sha256": "ab47b695e9430a0387f74636d8ea3db9ad9276cd5d5a0d35032ecc0041930bfe"
     },
     {
       "id": "vault.event_overrides",
@@ -111,6 +111,11 @@
       "sha256": "954912b3b0d4bf15ba714acf780f1bcc5a5816594aefc6df22d833a9d6514f42"
     },
     {
+      "id": "docs/reference/chain-loss-verification.json",
+      "records": 79,
+      "sha256": "bc45e317026decd80a2cb2ab6675703dac456b7164979a708002e9456157ad3b"
+    },
+    {
       "id": "docs/reference/event-evidence.json",
       "records": 335,
       "sha256": "7606d84cd441f0100b1ca33e9604e68fecd7585bdc0ee3a50c833e3b4e169f79"
@@ -121,9 +126,14 @@
       "sha256": "5090b606e2387ef3b6e7dc6fe19c11fb695dcc89194fa20ae95652582f8741cc"
     },
     {
+      "id": "docs/reference/gf-operating-evidence.json",
+      "records": 25,
+      "sha256": "8e8b679539f8a047d9d0e03b5f4487b9d2ddd6efcf36c5e2961c537ed2393352"
+    },
+    {
       "id": "docs/reference/loss-reconciliations.json",
       "records": 37,
-      "sha256": "aae5d09a57e7cf7263defb34766bb0ebbdec7571de876d2cc77d57009c426644"
+      "sha256": "a3b9d152c031d70be1699ced6fb65f9e86efad857f9b66eb1232d8e93bf70917"
     },
     {
       "id": "docs/reference/measurement-evidence.json",
@@ -142,8 +152,8 @@
     },
     {
       "id": "docs/reference/observed-data.json",
-      "records": 114,
-      "sha256": "6d9c99909d8914dc937db343844b380f112c032d66cf082178d6fa6988ff6e11"
+      "records": 116,
+      "sha256": "45d9c00b28f34ec2a52cbe2ad6ceb3fa7e4e1a60a679cc7748c9702585b0fecb"
     },
     {
       "id": "docs/reference/physical-losses.json",
@@ -197,28 +207,38 @@
     },
     {
       "id": "docs/reference/tsmc-revenue-current.json",
-      "records": 183,
-      "sha256": "45f42bda301866eed7ce71645b7eeeae77f31ddfd677777b79e5b6739548c1eb"
+      "records": 184,
+      "sha256": "9009cba057f67bce0f71490d0a91711ba5b30532fcdcff2beb8fff00ecb94dcc"
     },
     {
       "id": "docs/benchmarks/chain-loss-evaluation.json",
       "records": 10,
-      "sha256": "c27ea3ee2c74b9bafe23272dcff914b77cc4192c0608235400845733ef0cf340"
+      "sha256": "e5dcf624e54b2acee5cf26a0188ac57bd43315bcaea57ed8dc0388ad76961bc3"
+    },
+    {
+      "id": "docs/benchmarks/chain-loss-verification.json",
+      "records": 59,
+      "sha256": "f277a9bf80980c68844c73707998e24eb1662b612cfaa06a586378645c0942dc"
+    },
+    {
+      "id": "docs/benchmarks/gf-operating-evaluation.json",
+      "records": 12,
+      "sha256": "ea9710078d72c9ddb68ee058f6f04a6775bc3ffa6c32e108ae1ec4db326deb23"
     },
     {
       "id": "docs/benchmarks/lag-two-validation.json",
-      "records": 45,
-      "sha256": "292920d21e82b993b339066bcb797de58ba74746bbf3a7048941cd415c7e738f"
+      "records": 46,
+      "sha256": "45a2d38545dbc4d1594c947308628fd70ad89764f6fb5464b7e78c0d22dc3f56"
     },
     {
       "id": "docs/benchmarks/loss-reconciliation-evaluation.json",
       "records": 33,
-      "sha256": "68c863465b83ae202bde2532435e90b838f2ed219eb5b0b7cc257532076bb63e"
+      "sha256": "df8675a21bdf7f392b06e1d1596825ec16ec9fbff4d45aacce057d71e4144b75"
     },
     {
       "id": "docs/benchmarks/loss-source-collection.json",
-      "records": 22,
-      "sha256": "e2e2829d372cf9d9a1cd0bf3eccec6feea1a770dd937babe36f3882c2bb847af"
+      "records": 40,
+      "sha256": "727b7a30a0f5d52c4ea1db9bf3bebdd4cb84110d2a3a4b1ab5ceb15283ba959a"
     },
     {
       "id": "docs/benchmarks/news-evaluation-initial.json",
@@ -258,12 +278,12 @@
     {
       "id": "docs/benchmarks/observed-data-evaluation.json",
       "records": 18,
-      "sha256": "91d89f8aa797eb5e13cd4366955c081461c199cff48d124000528160d8218d22"
+      "sha256": "f830e31cabc5fc1b957c4b99d00f9dd5953c4206c11af768395adb9b863adfe7"
     },
     {
       "id": "docs/benchmarks/observed-source-availability.json",
-      "records": 23,
-      "sha256": "c88c56fe8aff7d2c593f23c0a4f51381693fca1aa06da693a4129500d1d9172b"
+      "records": 26,
+      "sha256": "00d4bdf89f849615bb65d4517954d23a435577600903ba320fccebfc5dcdc0b9"
     },
     {
       "id": "docs/benchmarks/operations-workflow-verification.json",
@@ -277,13 +297,13 @@
     },
     {
       "id": "docs/benchmarks/prospective-news-performance.json",
-      "records": 259,
-      "sha256": "c038cddf38cef1c2b3ceda4f851cd9339bd12205076155b61801ac5439f7ce5f"
+      "records": 1331,
+      "sha256": "8136d0b30d2aab86812bbe4c7f37fdac3d793790051ad9b797a9fd02342906eb"
     },
     {
       "id": "docs/benchmarks/prospective-performance.json",
       "records": 12,
-      "sha256": "868cb9b3613d77c818997c8784ff06d19a6725c2a830cf6610f479e2db0e1f0d"
+      "sha256": "5600c9f7aabe38f969e8ddb22787c0da979c7cd3b319964e3b0a50b9e9b099d3"
     },
     {
       "id": "docs/benchmarks/public-review-before-79289b1.json",
@@ -308,12 +328,12 @@
     {
       "id": "docs/benchmarks/semiconductor-loss-followup-evaluation.json",
       "records": 12,
-      "sha256": "37b3c8990b709fa195cbeb9da3f67b05c3f8e7f062b59df252163a694a3a5946"
+      "sha256": "593087b3e73a5025a32649d643023d07ec6eb34349afdcfe0b5636e7f579d4a1"
     },
     {
       "id": "docs/benchmarks/supplier-loss-allocation-evaluation.json",
       "records": 23,
-      "sha256": "59314b0bdd403b9b9ee511a789bfd55a5d908005e25128ec0c04d2ffcb117d77"
+      "sha256": "244b7091697e88938e4efcb4a9669d8daf6adfce77c0e9752f3c4bccadff4f7d"
     },
     {
       "id": "docs/benchmarks/v6-frozen-benchmark.json",
@@ -377,8 +397,8 @@
     },
     {
       "id": "docs/operational-monitor/loss-filing-candidates.json",
-      "records": 25,
-      "sha256": "6a2d046b568e305a2740f0c65e25bd4276749c576d6425d2c52bf2a19ea0526f"
+      "records": 27,
+      "sha256": "4695740ffc935d2da75add943288ddfe4a3f23598fe6762d40e0cbc0eb4b82ae"
     },
     {
       "id": "docs/operational-monitor/news-baseline.json",
@@ -388,7 +408,7 @@
     {
       "id": "docs/computation-demo/validation/validation-results.json",
       "records": 13,
-      "sha256": "fbea986c30ede00ca30d046c58ae3274f94c5b80fcd0dcba603dc5b90a7240fc"
+      "sha256": "392654b1a6667b108cbd8197913f085bc96990fc46b8e122d119c0109dba6b4f"
     },
     {
       "id": "docs/computation-demo/real-data-example/real-mini-dataset.json",
@@ -401,12 +421,12 @@
       "sha256": "cd42937cbc0771f6a4c65bacdeb55dfae9ef47150bc1edaaa65849aec064da18"
     }
   ],
-  "records": 7148,
-  "fields": 97248,
-  "sources": 678,
-  "recordSources": 1502,
+  "records": 9505,
+  "fields": 126663,
+  "sources": 1780,
+  "recordSources": 2787,
   "entities": 441,
-  "relationships": 299,
-  "jsonFileSha256": "3898ffb6bf133a540ee97dbf48d7bfecb41b22c6bf2827e4f2174c0b4809c64a",
-  "sqliteFileSha256": "73e32fad30980419e16a6bb14f54ca84e830ea80c2e3266e02d7169e9c3f13d0"
+  "relationships": 302,
+  "jsonFileSha256": "ba3f031e19ce93694fe60c00a74c3de85b367c59aff1700152f3f6587f6b75fc",
+  "sqliteFileSha256": "d2107a14a267fefd161ba71815402881ea1af33b5f27ffb570d915b821c22d08"
 }

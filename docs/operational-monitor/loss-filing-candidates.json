@@ -1,6 +1,6 @@
 {
-  "schemaVersion": 1,
-  "checkedAt": "2026-09-08T16:45:29.423Z",
+  "schemaVersion": 2,
+  "checkedAt": "2026-09-22T14:46:56.456Z",
   "startedAt": "2026-09-08T11:54:24.638Z",
   "issuers": [
     {
@@ -35,87 +35,138 @@
       "companyId": "wdc",
       "url": "https://www.sec.gov/Archives/edgar/data/106040/000162828026057139/wdc-20260703.htm",
       "publicationDate": "2026-08-14",
+      "form": "10-K",
       "status": "retrieved",
-      "candidateId": null
+      "candidateId": null,
+      "sourceSha256": "eebfb19b257a8df02dfd690276161e0a901c655cf47ae6a029699b61baccfbb7",
+      "hashBasis": "utf8_decoded_text",
+      "archiveKind": "filing_audit_v1"
     },
     {
       "companyId": "wdc",
       "url": "https://www.sec.gov/Archives/edgar/data/106040/000162828026029054/wdc-20260403.htm",
       "publicationDate": "2026-05-01",
+      "form": "10-Q",
       "status": "retrieved",
-      "candidateId": null
+      "candidateId": null,
+      "sourceSha256": "f16efed8422d04e3ca885203cf492752b15bf6eede02c285c3ed8f546ecccffd",
+      "hashBasis": "utf8_decoded_text",
+      "archiveKind": "filing_audit_v1"
     },
     {
       "companyId": "wdc",
       "url": "https://www.sec.gov/Archives/edgar/data/106040/000162828026004207/wdc-20260102.htm",
       "publicationDate": "2026-01-30",
+      "form": "10-Q",
       "status": "retrieved",
-      "candidateId": null
+      "candidateId": null,
+      "sourceSha256": "f508e592397a1ffa050a477a6deb1948b21d8a24a227915b3d6ec5817f1b8a36",
+      "hashBasis": "utf8_decoded_text",
+      "archiveKind": "filing_audit_v1"
     },
     {
       "companyId": "wdc",
       "url": "https://www.sec.gov/Archives/edgar/data/106040/000162828025047613/wdc-20251003.htm",
       "publicationDate": "2025-10-31",
+      "form": "10-Q",
       "status": "retrieved",
-      "candidateId": null
+      "candidateId": null,
+      "sourceSha256": "22363aff27e3db93d14acbaf38923162b4957bdeea6960fe31d8bab9f0d7f255",
+      "hashBasis": "utf8_decoded_text",
+      "archiveKind": "filing_audit_v1"
     },
     {
       "companyId": "sandisk",
       "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026057406/sndk-20260703.htm",
       "publicationDate": "2026-08-17",
+      "form": "10-K",
       "status": "retrieved",
-      "candidateId": null
+      "candidateId": null,
+      "sourceSha256": "e10bdd7d325b4385674f705300c28a5a1f9565492892c9622292f6854bfb2098",
+      "hashBasis": "utf8_decoded_text",
+      "archiveKind": "filing_audit_v1"
     },
     {
       "companyId": "sandisk",
       "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026029401/sndk-20260403.htm",
       "publicationDate": "2026-05-01",
+      "form": "10-Q",
       "status": "retrieved",
-      "candidateId": null
+      "candidateId": null,
+      "sourceSha256": "0f696d31616e7b5a116468b48ffedde22052b5d0a1ff2a394587f9f0f6a90967",
+      "hashBasis": "utf8_decoded_text",
+      "archiveKind": "filing_audit_v1"
     },
     {
       "companyId": "sandisk",
       "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026004407/sndk-20260102.htm",
       "publicationDate": "2026-01-30",
+      "form": "10-Q",
       "status": "retrieved",
-      "candidateId": null
+      "candidateId": null,
+      "sourceSha256": "5ed66e202a8323873d658f1284a7ca8f9756366bcb3690397e3cbf7fdfed53a7",
+      "hashBasis": "utf8_decoded_text",
+      "archiveKind": "filing_audit_v1"
     },
     {
       "companyId": "sandisk",
       "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828025050698/sndk-20251003.htm",
       "publicationDate": "2025-11-07",
+      "form": "10-Q",
       "status": "retrieved",
-      "candidateId": null
+      "candidateId": null,
+      "sourceSha256": "ad0298b1af535a10b8454269ccc26d6dce675cfbc3f98c90ee4263ed3ec0c6a5",
+      "hashBasis": "utf8_decoded_text",
+      "archiveKind": "filing_audit_v1"
     },
     {
       "companyId": "tsmc",
       "url": "https://www.sec.gov/Archives/edgar/data/1046179/000162828026025362/tsm-20251231.htm",
       "publicationDate": "2026-04-16",
+      "form": "20-F",
       "status": "retrieved",
-      "candidateId": null
+      "candidateId": null,
+      "sourceSha256": "0d44e879ccf806bd9e17dbe3dbefabd7e1e6540cbb810ed9aa78ae569174ee6d",
+      "hashBasis": "utf8_decoded_text",
+      "archiveKind": "filing_audit_v1"
     },
     {
       "companyId": "tsmc",
       "url": "https://www.sec.gov/Archives/edgar/data/1046179/000119312525083423/d896993d20f.htm",
       "publicationDate": "2025-04-17",
+      "form": "20-F",
       "status": "retrieved",
-      "candidateId": null
+      "candidateId": null,
+      "sourceSha256": "359e6dd3e42a21de5185b9f9daa33afa3d73b95171608dcfa221ef0981a6937e",
+      "hashBasis": "utf8_decoded_text",
+      "archiveKind": "filing_audit_v1"
     },
     {
       "companyId": "tsmc",
       "url": "https://www.sec.gov/Archives/edgar/data/1046179/000119312524099840/d592628d20f.htm",
       "publicationDate": "2024-04-18",
+      "form": "20-F",
       "status": "retrieved",
-      "candidateId": null
+      "candidateId": null,
+      "sourceSha256": "2ba475ad5483caad0b60e2a327e4fe9c0aef4d15f3d2b1a5fe53699419e72959",
+      "hashBasis": "utf8_decoded_text",
+      "archiveKind": "filing_audit_v1"
     },
     {
       "companyId": "wdc",
       "url": "https://www.sec.gov/Archives/edgar/data/106040/000010604024000031/wdc-20240628.htm",
+      "publicationDate": "2024-08-20",
+      "form": "10-K",
       "status": "retrieved",
       "discoveryKind": "historical_reference",
-      "candidateId": "loss_filing_2c67a2d7802668fbfd1f1a7d"
+      "candidateId": "loss_filing_2c67a2d7802668fbfd1f1a7d",
+      "sourceSha256": "053aea84a0122246f91642a139c74d6aa33d95877f3c031e8c5fa0cacfc9ad9e",
+      "hashBasis": "utf8_decoded_text",
+      "archiveKind": "filing_audit_v1"
     }
   ],
+  "detectorVersion": "material-recovery-v1",
+  "detectorSha256": "3273635279bb9324376d17a57dd345a8abf3632cf274b890758ca4233b206543",
   "candidates": [
     {
       "id": "loss_filing_2c67a2d7802668fbfd1f1a7d",
@@ -123,7 +174,7 @@
       "publicationDate": "2024-08-20",
       "form": "10-K",
       "sourceUrl": "https://www.sec.gov/Archives/edgar/data/106040/000010604024000031/wdc-20240628.htm",
-      "sourceSha256": "169693fe0ec9e43b8d9be8f9dab68b81357d86657a517d8496c67773abed4120",
+      "sourceSha256": "053aea84a0122246f91642a139c74d6aa33d95877f3c031e8c5fa0cacfc9ad9e",
       "hashBasis": "utf8_decoded_text",
       "evidenceSha256": "890f3bda356fe3738c8970745e62940ebbe53a63904bd742d411945a90798ae9",
       "evidenceHashBasis": "normalized_visible_text_v1",
@@ -134,7 +185,7 @@
       "matchingParagraphs": 3,
       "excerpt": "Recovery from contamination incident",
       "firstSeenAt": "2026-09-08T11:57:34.598Z",
-      "lastSeenAt": "2026-09-08T16:45:29.423Z",
+      "lastSeenAt": "2026-09-22T14:46:56.456Z",
       "claimStatus": "unreviewed",
       "reviewState": "reviewed",
       "numericLoss": null,
@@ -151,8 +202,8 @@
         "sourceSha256": "391af5f579ab36e6228631b416676234518e29ced5611ecb7bd94f34385c9283",
         "evidenceSha256": "890f3bda356fe3738c8970745e62940ebbe53a63904bd742d411945a90798ae9"
       },
-      "sourceChangedSincePreviousCheck": false,
-      "previousSourceSha256": "daab7d668c8ab920376821ad29ebd8165f840c24f26290963f5be5955df0513d"
+      "sourceChangedSincePreviousCheck": true,
+      "previousSourceSha256": "de2efbcd0571f601a8217cc34dc75070b657ce37ed83855e04792d7079c58f50"
     }
   ],
   "newCandidates": 0,

@@ -4,15 +4,16 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 const root = new URL('../../', import.meta.url);
 const data = JSON.parse(readFileSync(new URL('docs/reference/observed-data.json', root), 'utf8'));
+const operating = JSON.parse(readFileSync(new URL('docs/reference/gf-operating-evidence.json', root), 'utf8'));
 const urls = [...new Set([...data.observations, ...data.relationships, ...data.capacities,
-  ...(data.financialOutcomes || []), ...(data.manufacturingRoutes || [])]
+  ...(data.financialOutcomes || []), ...(data.manufacturingRoutes || []), ...operating.records]
   .flatMap(r => [r.source.url, ...(r.source.supportingUrls || [])]))];
-const prior = new Map((data.sourceArtifacts || []).map(r => [r.url, r.sha256]));
+const prior = new Map([...(data.sourceArtifacts || []), ...operating.sourceArtifacts].map(r => [r.url, r.sha256]));
 const results = [];
 for (let i = 0; i < urls.length; i += 3) {
   results.push(...await Promise.all(urls.slice(i, i + 3).map(async url => {
     try {
-      const response = await fetch(url, { signal: AbortSignal.timeout(20000), headers: { 'User-Agent': 'SSCIM research source verification' } });
+      const response = await fetch(url, { signal: AbortSignal.timeout(20000), headers: { 'User-Agent': 'SSCIM public-source research alansong0318@outlook.com' } });
       if (!response.ok) return { url, status: 'unavailable', httpStatus: response.status };
       const bytes = new Uint8Array(await response.arrayBuffer());
       const hash = createHash('sha256').update(bytes).digest('hex');

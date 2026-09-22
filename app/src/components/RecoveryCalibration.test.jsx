@@ -8,7 +8,7 @@ it('shows the issuer comparison and separates parameter uncertainty from predict
   expect(html).toContain('issuer target error was 2.0');
   expect(html).toContain('versus 10.0');
   expect(html).toContain('not a recovery prediction interval');
-  expect(html).toContain('Global model defaults remain assumptions');
+  expect(html).toContain('does not use the archived global assumptions to score companies');
   expect(html).toContain('reconstructed after the outcomes were known');
   expect(html).toContain('not established an advantage over simple baselines');
 });

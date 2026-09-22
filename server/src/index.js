@@ -1,13 +1,17 @@
 import './load-env.js';
 import express from 'express';
 import { corsMiddleware } from './middleware/cors.js';
-import { readFileSync } from 'node:fs';
+import { readFileSync, mkdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import './db.js';
 import { seedIfEmpty, seedCounts } from './seed-logic.js';
 import { publicRouter } from './routes/public.js';
 import { adminRouter } from './routes/admin.js';
+import { db } from './db.js';
+import { createPilotStore } from './pilot-store.js';
+import { pilotRouter } from './routes/pilot.js';
+import { loadPilotIntake } from './pilot-intake.js';
 
 // Bootstrap a brand-new database automatically (e.g. first boot on a fresh
 // host) — a no-op if the vault is already populated, so this never clobbers
@@ -44,6 +48,16 @@ const serveStatus = (req, res) => res.type('html').send(STATUS_PAGE);
 app.get('/', serveStatus);
 app.get('/status', serveStatus);
 app.use('/api', publicRouter);
+let privatePilot;
+app.use('/api/admin/pilot', pilotRouter(() => {
+  if (!privatePilot) {
+    const directory = new URL('../data/private/', import.meta.url);
+    mkdirSync(directory, { recursive: true });
+    privatePilot = createPilotStore(fileURLToPath(new URL('pilot.db', directory)), id => Boolean(db.prepare('SELECT id FROM companies WHERE id=?').get(id)), undefined, loadPilotIntake);
+    process.once('exit', () => privatePilot.close());
+  }
+  return privatePilot;
+}));
 app.use('/api/admin', adminRouter);
 
 const PORT = process.env.PORT || 8787;

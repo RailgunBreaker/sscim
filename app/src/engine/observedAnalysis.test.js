@@ -40,7 +40,17 @@ describe('observed analysis, independent of illustrative seed coefficients', () 
     const amd = analysis.companyAssessment('soitec').downstream.find(r => r.id === 'amd');
     expect(amd.inference).toBe(true);
     expect(amd.productionImpact).toBeNull();
-    expect(build({ relationships: data.relationships.filter(r => r.id !== row.id) }).companyAssessment('soitec').documentedCustomerReach).toBe(0);
+    expect(build({ relationships: data.relationships.filter(r => r.supplier !== 'soitec') }).companyAssessment('soitec').documentedCustomerReach).toBe(0);
+  });
+  it('keeps procurement spend separate from physical wafer exposure', () => {
+    const row = data.relationships.find(r => r.id === 'soitec_gf_soi_2025_spend');
+    expect(row.spendShare).toBe(.71);
+    expect(row.inputShare).toBeNull();
+    const result = build().inputExposure('gf', { productScope: row.productScope, periodEnd: row.periodEnd,
+      supplierDisruptions: { soitec: 1 } });
+    expect(result.value).toEqual({ low: 0, high: 1 });
+    expect(result.documentedShare).toBe(0);
+    expect(result.productionImpact).toBeNull();
   });
   it('gates source dates, false citations, malformed dates and forecasts', () => {
     const row = structuredClone(data.observations[0]);

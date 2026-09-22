@@ -1,5 +1,5 @@
 {
-  "asOf": "2026-09-08",
+  "asOf": "2026-09-22",
   "records": [
     {
       "id": "sony_fy16_consolidated",
@@ -413,7 +413,10 @@
       "id": "wdc_contamination_fy2022",
       "value": 207,
       "companyId": "wdc",
-      "incidentId": "flash_ventures_contamination_2022",
+      "incidentId": "nand_contamination_2022",
+      "legacyIncidentIds": [
+        "flash_ventures_contamination_2022"
+      ],
       "periodStart": "2021-07-03",
       "periodEnd": "2022-07-01",
       "units": "USD million",

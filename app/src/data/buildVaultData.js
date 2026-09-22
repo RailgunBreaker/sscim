@@ -31,10 +31,15 @@ export function buildVaultData(bundle) {
 
   const data = {
     OBSERVED_DATA: bundle.observedData || { observations: [], relationships: [], capacities: [] },
+    OPERATING_EVIDENCE: bundle.operatingEvidence || { records: [] },
+    OPERATING_VALIDATION: Array.isArray(bundle.operatingValidation?.inventory) ? bundle.operatingValidation : null,
+    SOURCE_AVAILABILITY: Array.isArray(bundle.sourceAvailability?.results) ? bundle.sourceAvailability : null,
+    REVENUE_CURRENT: Array.isArray(bundle.revenueCurrent?.records) ? bundle.revenueCurrent : null,
     OBSERVED_ANALYSIS: buildObservedAnalysis({ ...bundle.observedData, asOf: bundle.meta?.snapshotDate }),
     FINANCIAL_EVIDENCE: buildFinancialEvidence(bundle.observedData?.financialOutcomes, bundle.meta?.snapshotDate),
     REVENUE_VALIDATION: bundle.revenueValidation || null,
     CHAIN_LOSS: chainLossEvidence(bundle.chainLossEvidence || {}, bundle.meta?.snapshotDate),
+    CHAIN_LOSS_VERIFICATION: bundle.chainLossVerification || null,
     CHAIN_ACCOUNTS: chainLossAccounts(bundle.chainLossEvidence || {}, bundle.meta?.snapshotDate),
     LOSS_RECONCILIATION: lossReconciliation(bundle.lossReconciliations || {}, bundle.meta?.snapshotDate),
     SUPPLIER_LOSS_ALLOCATION: supplierLossAllocation(bundle.supplierLossAllocations || {}, bundle.meta?.snapshotDate),

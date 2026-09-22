@@ -1,9 +1,71 @@
 # SSCIM — Semiconductor Supply Chain Intelligence Map
 
-An explainable research tool for tracing how a semiconductor disruption moves
-through a modeled supply chain. Pick a plant, an event, a stage or a country,
-and see what it touches — with the propagation arithmetic shown rather than
-hidden behind a single risk score.
+A semiconductor evidence and supplier-investigation workspace. The current
+dashboard shows documented relationships, reviewed occurrences, reported
+operations, and scoped disruption-loss evidence. The earlier propagation
+engine remains available as archived research; it does not drive the dashboard.
+
+The **Investigations** tab supports a single-operator local pilot: define a
+supplier watchlist and monitoring objective, link an investigation to a source,
+record actions, and track expected deliveries and partial receipts. Connect with
+the API's existing `ADMIN_TOKEN` from `server/.env`. The token is held only in
+memory while this view is open. Private records and their revision history live
+in the ignored `server/data/private/pilot.db`, outside the public vault,
+snapshots, and structured evidence export. Use **Export private records** for a
+separate JSON copy. This is not a multi-user or tenant-isolated service.
+
+The same tab includes a public-disclosure pilot for Western Digital, Sandisk
+and TSMC. **Activate disclosure pilot** fixes its start time, 30-day checkpoint
+and 48-hour review target, adds three source-backed historical investigations,
+and connects the existing filing collector to an actionable review queue.
+These time targets are operating choices, not calibrated model parameters.
+Investigate, defer or dismiss a candidate with a reason; decisions preserve
+source revisions and timestamps. Changed source content requires a new review.
+The existing collector populates the queue through `run-operations.mjs`, even
+with the app closed. Collection snapshots retain matched and unmatched checks
+and retrieval failures in the private export. Reload the workspace to see new
+output. Historical backfills remain distinct from
+documents published after activation. Review throughput does not measure
+prediction accuracy, incident recall or operational benefit; those still need
+independent evaluation and observed outcomes. Pilot issuers may be selected
+inside Investigations even when they are absent from the public company map.
+
+**Filing accuracy audit**, in the same tab, freezes every check in a selected
+collection run. The collector now archives matched and unmatched filing bodies
+with SHA-256 fingerprints and the detector version. Reviewers can read that
+frozen source inside the app and record a relevance judgment, sections reviewed,
+supporting text, rationale and reviewer provenance. Historical positive controls
+are excluded from the audit denominator. Missing or uncertain reviews prevent
+complete-run scoring, and AI-assisted/operator reviews never qualify as external
+validation. Once every regular filing has a conclusive declared external review,
+the app reports agreement, precision and recall for that census only. Reviewer
+identity and independence remain operator-declared; these are not independently
+authenticated accuracy claims or evidence of predictive performance. Corrections
+retain earlier judgments. Private audit records are included in the private
+workspace export; archived filing copies remain local in
+`artifacts/collected/filing-audit/` and should be retained with that export.
+AI screening notes can also appear alongside a frozen case as **unscored drafts**.
+The local private file `server/data/private/filing-screening-drafts.json` holds
+these notes. Their source fingerprints and excerpts are checked before display;
+they never create judgments or reduce the external review requirement. The audit
+separately shows review origin, current classifications and outstanding external
+reviews, including a warning when no positive filing has been identified.
+
+The audit's **External reviewer handoff** downloads a source package and blank
+JSON response template without detector outputs, AI notes, earlier judgments or
+historical controls. No message or file is sent automatically. A reviewer returns
+only the completed response template; the app previews it without writes before
+the operator imports it. Imports check case identity, frozen source fingerprints,
+evidence text and record versions. An invalid entry rolls back the entire import;
+retries do not duplicate judgments. Partial responses leave the remaining cases
+pending. Completing this filing census means recording all qualifying external
+reviews, resolving uncertainty and checking the scoped results; it does not
+complete predictive validation or establish losses across the whole supply chain.
+
+The public API and the dashboard's operational snapshot exclude legacy stage
+scores, assumed company links, generated event narratives, and research
+briefings. Pilot delivery metrics describe the operator's recorded sample;
+they do not attribute delays to an incident or validate predictive accuracy.
 
 **Live deployment:** <https://railgunbreaker.github.io/sscim/>
 
@@ -39,7 +101,7 @@ fitted to nothing.
 
 ---
 
-## Screenshots
+## Historical research screenshots
 
 | | |
 | --- | --- |
@@ -52,7 +114,7 @@ fitted to nothing.
 
 ---
 
-## What it does
+## Archived research features
 
 - **Facility Playground** — pick one of 275 named plants and trace the modeled
   network around it: suppliers left, customers right, one hop or three or

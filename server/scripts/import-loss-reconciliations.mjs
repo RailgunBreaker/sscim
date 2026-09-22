@@ -30,7 +30,8 @@ for (const [q,start,end,value] of [
 const newRecord = (id,value,companyId,incidentId,periodStart,periodEnd,units,metric,kind,source,extra={}) => ({
   id,value,companyId,incidentId,periodStart,periodEnd,units,metric,kind,source,review,
   claimStatus:'verified', roundingUnit:1, atoms:[id], accountingBasis:'reported_accounting_amount', permanentEconomicLoss:null,...extra });
-records.push(newRecord('wdc_contamination_fy2022',207,'wdc','flash_ventures_contamination_2022','2021-07-03','2022-07-01','USD million','recognized_disaster_cost','reported_outcome',wdc,{
+records.push(newRecord('wdc_contamination_fy2022',207,'wdc','nand_contamination_2022','2021-07-03','2022-07-01','USD million','recognized_disaster_cost','reported_outcome',wdc,{
+  legacyIncidentIds:['flash_ventures_contamination_2022'],
   label:'Contamination charges in cost of revenue',causeScope:'manufacturing_contamination',
   limitations:'Western Digital reported charges; not total Flash Ventures or downstream-customer losses. No doubling by its generally 50% wafer share.' }));
 for (const [id,value,start,end,label] of [

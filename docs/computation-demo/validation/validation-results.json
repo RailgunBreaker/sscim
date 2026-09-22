@@ -1,7 +1,7 @@
 {
   "modelVersion": "sscim-model-v7.1-exposure-robustness",
-  "datasetAsOf": "2026-09-09",
-  "generatedAt": "2026-09-08T16:46:22.025Z",
+  "datasetAsOf": "2026-09-22",
+  "generatedAt": "2026-09-22T14:47:51.167Z",
   "whatThisEstablishes": [
     "Output ranking stability within the sampled assumption box; this is not a confidence interval.",
     "Pipeline regression: the engine at base parameters still produces these values, and two builds agree bit-for-bit."

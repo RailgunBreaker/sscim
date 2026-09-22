@@ -4,12 +4,16 @@ import SupplierLossAllocation from './SupplierLossAllocation.jsx';
 import SemiconductorLossFollowup from './SemiconductorLossFollowup.jsx';
 import RecoveryCalibration from './RecoveryCalibration.jsx';
 import PhysicalLosses from './PhysicalLosses.jsx';
+import ChainLossVerification from './ChainLossVerification.jsx';
 const cell = { padding: '10px 8px', textAlign: 'left', borderBottom: `1px solid ${C.line}`, verticalAlign: 'top' };
-export default function OperationalEvidence({ data }) {
+export default function OperationalEvidence({ data, view = 'all' }) {
   const loss = data.CHAIN_LOSS, performance = data.PROSPECTIVE_PERFORMANCE, news = data.PROSPECTIVE_NEWS;
+  const losses = view !== 'validation', validation = view !== 'losses';
   return <>
     {data.LIVE_GAPS?.filled?.some(key => ['chainLossEvidence','lossReconciliations','supplierLossAllocations','semiconductorLossFollowup','recoveryCalibration','physicalLosses','lagTwoValidation','lossFilingMonitor','prospectivePerformance','prospectiveNewsPerformance','structuredCatalog','prospectiveNowcasts'].includes(key)) && <p role="status">Some operational-evidence sections are missing from the API. Those sections use the dated bundled snapshot.</p>}
-    <RecoveryCalibration report={data.RECOVERY_CALIBRATION} />
+    {validation && <RecoveryCalibration report={data.RECOVERY_CALIBRATION} />}
+    {losses && <>
+    <ChainLossVerification report={data.CHAIN_LOSS_VERIFICATION} />
     <PhysicalLosses report={data.PHYSICAL_LOSSES} />
     <SemiconductorLossFollowup report={data.SEMICONDUCTOR_LOSS_FOLLOWUP} monitor={data.LOSS_FILING_MONITOR} />
     <SupplierLossAllocation report={data.SUPPLIER_LOSS_ALLOCATION} />
@@ -40,7 +44,8 @@ export default function OperationalEvidence({ data }) {
       </table></div>
       <p>Underlying allocations have not been independently reproduced. Other semiconductor end markets and supplier-by-supplier loss allocations remain unmeasured.</p>
     </section>
-    {performance && <section aria-label="Prospective performance">
+    </>}
+    {validation && performance && <section aria-label="Prospective performance">
       <h2>Prospective performance</h2>
       <p>{performance.captured} forecast captured; {performance.scored} scored; {performance.pending} awaiting an outcome. A pending forecast contributes no accuracy or coverage result.</p>
       {(performance.metrics || []).map(m => <p key={m.modelId}>
@@ -60,7 +65,7 @@ export default function OperationalEvidence({ data }) {
       <p>Inputs, protocol and engine code were archived with each forecast. Local hashes detect changes but do not provide independent timestamp attestation. Operational performance is not yet established.</p>
       {news && <p>News monitoring began {news.startedAt} (UTC): {news.newEligibleRecords} qualifying new reports, {news.backfilledRecords} backfilled reports, {news.invalidOrMissingTiming} with missing or invalid timing. Classification accuracy and incident recall await independent labels.</p>}
     </section>}
-    {data.STRUCTURED_CATALOG && <section aria-label="Structured data coverage"><h2>Structured data coverage</h2>
+    {validation && data.STRUCTURED_CATALOG && <section aria-label="Structured data coverage"><h2>Structured data coverage</h2>
       <p>{data.STRUCTURED_CATALOG.datasets.length} datasets; {data.STRUCTURED_CATALOG.records.toLocaleString('en-US')} records; {data.STRUCTURED_CATALOG.fields.toLocaleString('en-US')} typed fields. Exported {data.STRUCTURED_CATALOG.exportedAt}.</p>
       <p>The JSON and SQLite catalog retains source links, dates, units, original payloads and evidence status. Counts include multiple representations of evidence and are not independent incident counts.</p>
     </section>}

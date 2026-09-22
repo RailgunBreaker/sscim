@@ -149,8 +149,13 @@ export function getBriefingBodies(limit = BUNDLED_BRIEFING_BODIES) {
 export function buildBundle() {
   return {
     observedData: JSON.parse(readFileSync(new URL('../../docs/reference/observed-data.json', import.meta.url), 'utf8')),
+    operatingEvidence: optionalEvidence('docs/reference/gf-operating-evidence.json'),
+    operatingValidation: optionalEvidence('docs/benchmarks/gf-operating-evaluation.json'),
+    sourceAvailability: optionalEvidence('docs/benchmarks/observed-source-availability.json'),
+    revenueCurrent: optionalEvidence('docs/reference/tsmc-revenue-current.json'),
     revenueValidation: JSON.parse(readFileSync(new URL('../../docs/benchmarks/revenue-prediction.json', import.meta.url), 'utf8')),
     chainLossEvidence: optionalEvidence('docs/reference/chain-loss-evidence.json'),
+    chainLossVerification: optionalEvidence('docs/benchmarks/chain-loss-verification.json'),
     lossReconciliations: optionalEvidence('docs/reference/loss-reconciliations.json'),
     supplierLossAllocations: optionalEvidence('docs/reference/supplier-loss-allocations.json'),
     semiconductorLossFollowup: optionalEvidence('docs/reference/semiconductor-loss-followup.json'),

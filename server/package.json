@@ -26,6 +26,8 @@
     "repair:provenance": "node scripts/repair-event-provenance.mjs",
     "news:update": "node scripts/pipeline.mjs --local-only --no-ai --no-triage --no-quotes",
     "evaluate:observed": "node scripts/evaluate-observed-data.mjs",
+    "collect:gf-operating": "node scripts/import-gf-operating-evidence.mjs",
+    "evaluate:gf-operating": "node scripts/evaluate-gf-operating-evidence.mjs",
     "calibrate:recovery": "node scripts/calibrate-recovery.mjs",
     "evaluate:lag-two": "node scripts/evaluate-lag-two.mjs",
     "losses:physical": "node scripts/evaluate-physical-losses.mjs",

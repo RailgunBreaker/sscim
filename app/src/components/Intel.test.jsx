@@ -34,7 +34,8 @@ vi.mock('leaflet', () => {
 });
 vi.mock('leaflet/dist/leaflet.css', () => ({}));
 
-import { VaultProvider, useVault } from '../data/VaultContext.jsx';
+import { useVault } from '../data/VaultContext.jsx';
+import { VaultProvider } from '../data/researchTestFixture.jsx';
 import { InteractionProvider } from '../interaction/InteractionContext.jsx';
 import { WatchlistProvider } from '../interaction/WatchlistContext.jsx';
 import { buildModel } from '../engine/buildModel.js';

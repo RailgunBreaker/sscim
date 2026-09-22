@@ -1,0 +1,2086 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-09-22",
+  "records": [
+    {
+      "id": "wdc_recovery_2024q2_insurer",
+      "companyId": "wdc",
+      "incidentId": "nand_contamination_2022",
+      "metric": "recognized_recovery",
+      "value": 36,
+      "units": "USD million",
+      "roundingUnit": 1,
+      "kind": "reported_outcome",
+      "accountingBasis": "reported_accounting_amount",
+      "periodStart": "2023-09-30",
+      "periodEnd": "2023-12-29",
+      "counterpartyClass": "insurer",
+      "counterpartyId": null,
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-17",
+        "provenance": "Codex review of primary SEC filings; not independent causal validation"
+      },
+      "source": {
+        "url": "https://www.sec.gov/Archives/edgar/data/106040/000010604024000022/wdc-20240329.htm",
+        "publicationDate": "2024-04-30",
+        "informationAvailableDate": "2024-04-30",
+        "publicationDateEvidence": "https://www.sec.gov/Archives/edgar/data/106040/000010604024000022/0000106040-24-000022-index.htm",
+        "supportingSection": "Note 10 Flash Ventures: receipt during the quarter ended December 29, 2023, recorded in Cost of revenue",
+        "sha256": "246eee66726f74669a71def04fc9203c4fe0f72cb8c5ba3240eb4330cf3d7c86",
+        "hashBasis": "raw_bytes",
+        "claimStatus": "verified"
+      }
+    },
+    {
+      "id": "wdc_recovery_2024q3_unassigned",
+      "companyId": "wdc",
+      "incidentId": "nand_contamination_2022",
+      "metric": "recognized_recovery",
+      "value": 1,
+      "units": "USD million",
+      "roundingUnit": 1,
+      "kind": "reported_outcome",
+      "accountingBasis": "reported_accounting_amount",
+      "periodStart": "2023-12-30",
+      "periodEnd": "2024-03-29",
+      "counterpartyClass": "undisclosed",
+      "counterpartyId": null,
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-17",
+        "provenance": "Codex review of primary SEC filings; not independent causal validation"
+      },
+      "source": {
+        "url": "https://www.sec.gov/Archives/edgar/data/106040/000010604024000022/wdc-20240329.htm",
+        "publicationDate": "2024-04-30",
+        "informationAvailableDate": "2024-04-30",
+        "publicationDateEvidence": "https://www.sec.gov/Archives/edgar/data/106040/000010604024000022/0000106040-24-000022-index.htm",
+        "supportingSection": "Note 3: Recovery from contamination incident, three months ended March 29, 2024",
+        "sha256": "246eee66726f74669a71def04fc9203c4fe0f72cb8c5ba3240eb4330cf3d7c86",
+        "hashBasis": "raw_bytes",
+        "claimStatus": "verified"
+      }
+    },
+    {
+      "id": "wdc_recovery_2024_nine_months",
+      "companyId": "wdc",
+      "incidentId": "nand_contamination_2022",
+      "metric": "recognized_recovery",
+      "value": 37,
+      "units": "USD million",
+      "roundingUnit": 1,
+      "kind": "reported_outcome",
+      "accountingBasis": "reported_accounting_amount",
+      "periodStart": "2023-07-01",
+      "periodEnd": "2024-03-29",
+      "counterpartyClass": "mixed_or_unspecified",
+      "counterpartyId": null,
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-17",
+        "provenance": "Codex review of primary SEC filings; not independent causal validation"
+      },
+      "source": {
+        "url": "https://www.sec.gov/Archives/edgar/data/106040/000010604024000022/wdc-20240329.htm",
+        "publicationDate": "2024-04-30",
+        "informationAvailableDate": "2024-04-30",
+        "publicationDateEvidence": "https://www.sec.gov/Archives/edgar/data/106040/000010604024000022/0000106040-24-000022-index.htm",
+        "supportingSection": "Note 3: Recovery from contamination incident, nine months ended March 29, 2024",
+        "sha256": "246eee66726f74669a71def04fc9203c4fe0f72cb8c5ba3240eb4330cf3d7c86",
+        "hashBasis": "raw_bytes",
+        "claimStatus": "verified"
+      }
+    },
+    {
+      "id": "kioxia_recovery_fy2023_precise",
+      "companyId": "kioxia",
+      "incidentId": "nand_contamination_2022",
+      "metric": "recognized_recovery",
+      "value": 7.571,
+      "units": "JPY billion",
+      "roundingUnit": 0.001,
+      "kind": "reported_outcome",
+      "accountingBasis": "IFRS_operating_income_effect",
+      "periodStart": "2023-04-01",
+      "periodEnd": "2024-03-31",
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-17",
+        "provenance": "Primary issuer PDF tables and footnotes visually reviewed; disclosure verification, not independent causal validation"
+      },
+      "source": {
+        "url": "https://links.sgx.com/FileOpen/Kioxia%20Holdings%20Corp_946237_010_CL_NoDISC_PW_17July0630H.ashx?App=Prospectus&FileID=66909",
+        "publicationDate": "2025-07-16",
+        "informationAvailableDate": "2025-07-16",
+        "supportingSection": "Printed page 60 (PDF page 73), non-GAAP operating profit reconciliation, FY ended March 31, 2024 and footnote 3",
+        "sha256": "8066a674702d2fa415d5a791ff1a2855b7fc276cd0f0fce1b5a97b9ebb3fe2f7",
+        "hashBasis": "raw_bytes",
+        "claimStatus": "verified"
+      },
+      "sourceValue": 7571,
+      "sourceUnits": "JPY million",
+      "sourceSignedAdjustment": -7571,
+      "normalizationDivisor": 1000,
+      "counterpartyClass": "insurer",
+      "counterpartyId": null,
+      "cashSettlementDate": null,
+      "excludedScope": [
+        "sales-related impacts",
+        "other related impacts",
+        "non-operating or non-material impacts"
+      ],
+      "interpretation": "Positive insurance income; the negative source adjustment removes that income from non-GAAP profit. Not an additional expense."
+    },
+    {
+      "id": "kioxia_recovery_fy2023_rounded",
+      "companyId": "kioxia",
+      "incidentId": "nand_contamination_2022",
+      "metric": "recognized_recovery",
+      "value": 7.6,
+      "units": "JPY billion",
+      "roundingUnit": 0.1,
+      "kind": "reported_outcome",
+      "accountingBasis": "IFRS_operating_income_effect",
+      "periodStart": "2023-04-01",
+      "periodEnd": "2024-03-31",
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-17",
+        "provenance": "Primary issuer PDF tables and footnotes visually reviewed; disclosure verification, not independent causal validation"
+      },
+      "source": {
+        "url": "https://www.kioxia-holdings.com/content/dam/kioxia-hd/en-jp/about/asset/Financial-Results-FY2023-4Q-en.pdf",
+        "publicationDate": "2024-05-15",
+        "informationAvailableDate": "2025-07-16",
+        "supportingSection": "Page 3 footnote 4: FY2023 non-GAAP reconciliation deducts JPY 7.6 billion insurance proceeds",
+        "sha256": "f9382d499b2a3a722dfee94b1c14fadf1b7d584b8eff0e280b4fa48633495345",
+        "hashBasis": "raw_bytes",
+        "claimStatus": "verified"
+      },
+      "attributionSource": {
+        "url": "https://links.sgx.com/FileOpen/Kioxia%20Holdings%20Corp_946237_010_CL_NoDISC_PW_17July0630H.ashx?App=Prospectus&FileID=66909",
+        "publicationDate": "2025-07-16",
+        "informationAvailableDate": "2025-07-16",
+        "supportingSection": "Printed page 60 (PDF page 73), non-GAAP operating profit reconciliation, FY ended March 31, 2024 and footnote 3",
+        "sha256": "8066a674702d2fa415d5a791ff1a2855b7fc276cd0f0fce1b5a97b9ebb3fe2f7",
+        "hashBasis": "raw_bytes",
+        "claimStatus": "verified"
+      },
+      "counterpartyClass": "insurer",
+      "counterpartyId": null,
+      "interpretation": "Earlier rounded insurance figure; incident attribution depends on the later circular. Corroboration only, not a second recovery."
+    },
+    {
+      "id": "kioxia_charge_fy2021_corroboration",
+      "companyId": "kioxia",
+      "incidentId": "nand_contamination_2022",
+      "metric": "operating_income_reduction",
+      "value": 33.2,
+      "units": "JPY billion",
+      "roundingUnit": 0.1,
+      "kind": "reported_outcome",
+      "accountingBasis": "IFRS_operating_income_effect",
+      "periodStart": "2021-04-01",
+      "periodEnd": "2022-03-31",
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-17",
+        "provenance": "Primary issuer PDF tables and footnotes visually reviewed; disclosure verification, not independent causal validation"
+      },
+      "source": {
+        "url": "https://www.kioxia-holdings.com/content/dam/kioxia-hd/en-jp/about/asset/Financial-Results-FY2022-4Q-en.pdf",
+        "publicationDate": "2023-05-12",
+        "informationAvailableDate": "2023-05-12",
+        "supportingSection": "Page 3: FY2021 comparative contamination-related charges column and footnote 3",
+        "sha256": "b08e190597583cd2468c62df2e4c0a2233cfb61fd4e78a26a29219dcea6183e4",
+        "hashBasis": "raw_bytes",
+        "claimStatus": "verified"
+      }
+    },
+    {
+      "id": "wdc_charge_2022_nine_months",
+      "companyId": "wdc",
+      "incidentId": "nand_contamination_2022",
+      "metric": "recognized_disaster_cost",
+      "value": 203,
+      "units": "USD million",
+      "roundingUnit": 1,
+      "kind": "reported_outcome",
+      "accountingBasis": "reported_accounting_amount",
+      "periodStart": "2021-07-03",
+      "periodEnd": "2022-04-01",
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-18",
+        "provenance": "Primary issuer releases and SEC proxy appendix reviewed; source claims retain their original forecast or reported status"
+      },
+      "source": {
+        "url": "https://www.sec.gov/Archives/edgar/data/106040/000010604022000040/wdc-20220401.htm",
+        "publicationDate": "2022-05-04",
+        "informationAvailableDate": "2022-05-04",
+        "supportingSection": "Note 10 Flash Ventures, contamination charges for the nine months ended April 1, 2022",
+        "sha256": "24983e4f04077209dabc770d56647fce03f5fda90f9293caa80c3a7756eac936",
+        "hashBasis": "raw_bytes",
+        "claimStatus": "verified"
+      }
+    },
+    {
+      "id": "wdc_charge_2022q4",
+      "companyId": "wdc",
+      "incidentId": "nand_contamination_2022",
+      "metric": "recognized_disaster_cost",
+      "value": 4,
+      "units": "USD million",
+      "roundingUnit": 1,
+      "kind": "reported_outcome",
+      "accountingBasis": "reported_accounting_amount",
+      "periodStart": "2022-04-02",
+      "periodEnd": "2022-07-01",
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-18",
+        "provenance": "Primary issuer releases and SEC proxy appendix reviewed; source claims retain their original forecast or reported status"
+      },
+      "source": {
+        "url": "https://www.sec.gov/Archives/edgar/data/106040/000010604022000049/ex991-pressreleaseq422.htm",
+        "publicationDate": "2022-08-05",
+        "informationAvailableDate": "2022-08-05",
+        "supportingSection": "Preliminary reconciliation of GAAP to non-GAAP financial measures, contamination-related charges, quarter ended July 1, 2022",
+        "sha256": "feba6f30f8d5ce25a36f3fc942a2bba9ffdeadc5e8c4c2460b416140f439d69e",
+        "hashBasis": "raw_bytes",
+        "claimStatus": "verified"
+      },
+      "outcomeStatus": "preliminary_earnings_release"
+    },
+    {
+      "id": "sandisk_historical_insurance_2024",
+      "companyId": "sandisk",
+      "incidentId": "nand_contamination_2022",
+      "metric": "recognized_recovery",
+      "value": 36,
+      "units": "USD million",
+      "roundingUnit": 1,
+      "kind": "reported_outcome",
+      "accountingBasis": "historical_flash_business_carveout",
+      "periodStart": "2023-07-01",
+      "periodEnd": "2024-03-29",
+      "counterpartyClass": "insurer",
+      "counterpartyId": null,
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-18",
+        "provenance": "Primary issuer releases and SEC proxy appendix reviewed; source claims retain their original forecast or reported status"
+      },
+      "source": {
+        "url": "https://www.sec.gov/Archives/edgar/data/2023554/000202355425000027/sndk-20250328.htm",
+        "publicationDate": "2025-05-12",
+        "informationAvailableDate": "2025-05-12",
+        "supportingSection": "MD&A Gross Profit and Gross Margin, nine months ended March 28, 2025 versus March 29, 2024",
+        "sha256": "36ce1676c9c2405c0da2ff8c6fed46edfe36912825f6a0bd08c10f27eab84818",
+        "hashBasis": "raw_bytes",
+        "claimStatus": "verified"
+      }
+    }
+  ],
+  "documents": [
+    {
+      "id": "wdc_2024q3",
+      "url": "https://www.sec.gov/Archives/edgar/data/106040/000010604024000022/wdc-20240329.htm",
+      "publicationDate": "2024-04-30",
+      "finding": "Note 3 reports USD 1 million quarterly and USD 37 million nine-month contamination recovery. Note 10 places the USD 36 million insurer recovery in the quarter ended December 29, 2023, recorded in cost of revenue.",
+      "lastFetchAttemptAt": "2026-09-18T13:34:14.491Z",
+      "retrievedAt": "2026-09-18T13:34:15.700Z",
+      "retrievalStatus": "retrieved",
+      "sha256": "246eee66726f74669a71def04fc9203c4fe0f72cb8c5ba3240eb4330cf3d7c86",
+      "hashBasis": "raw_bytes",
+      "reviewedAt": "2026-09-17",
+      "archivePath": "artifacts/collected/chain-loss/246eee66726f74669a71def04fc9203c4fe0f72cb8c5ba3240eb4330cf3d7c86.html"
+    },
+    {
+      "id": "wdc_2024",
+      "url": "https://www.sec.gov/Archives/edgar/data/106040/000010604024000031/wdc-20240628.htm",
+      "publicationDate": "2024-08-20",
+      "finding": "Notes 3 and 10 report USD 207 million FY2022 charge, USD 37 million FY2024 recognized recovery, and USD 36 million insurer receipt. Remaining recoveries cannot be estimated.",
+      "lastFetchAttemptAt": "2026-09-18T13:34:15.707Z",
+      "retrievedAt": "2026-09-18T13:34:15.776Z",
+      "retrievalStatus": "retrieved",
+      "sha256": "c151243f9f20a24ba3ee7ff9e0001ae13b57c25707e2cd6c32384deab66fe0ac",
+      "hashBasis": "raw_bytes",
+      "reviewedAt": "2026-09-17",
+      "archivePath": "artifacts/collected/chain-loss/c151243f9f20a24ba3ee7ff9e0001ae13b57c25707e2cd6c32384deab66fe0ac.html"
+    },
+    {
+      "id": "wdc_2026",
+      "url": "https://www.sec.gov/Archives/edgar/data/106040/000162828026057139/wdc-20260703.htm",
+      "publicationDate": "2026-08-14",
+      "finding": "Reviewed annual filing; no new quantified reimbursement attributed to the 2022 contamination incident was identified. Generic contamination risk discussion is not an incident outcome.",
+      "lastFetchAttemptAt": "2026-09-18T13:34:15.779Z",
+      "retrievedAt": "2026-09-18T13:34:15.799Z",
+      "retrievalStatus": "retrieved",
+      "sha256": "542aeb70fe0f1e06bf3bc283b9754a9893fcc89336833d92a139ab6b21458797",
+      "hashBasis": "raw_bytes",
+      "reviewedAt": "2026-09-17",
+      "archivePath": "artifacts/collected/chain-loss/542aeb70fe0f1e06bf3bc283b9754a9893fcc89336833d92a139ab6b21458797.html"
+    },
+    {
+      "id": "sandisk_2026",
+      "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026057406/sndk-20260703.htm",
+      "publicationDate": "2026-08-17",
+      "finding": "Reviewed annual filing; no new quantified reimbursement attributed to the 2022 contamination incident was identified. Absence of a disclosure does not establish zero recovery.",
+      "lastFetchAttemptAt": "2026-09-18T13:34:15.801Z",
+      "retrievedAt": "2026-09-18T13:34:15.833Z",
+      "retrievalStatus": "retrieved",
+      "sha256": "d3a07ad05af54962751a21e1eeaa10fdd4420fa4967c9140e2e1f836e6aa66bd",
+      "hashBasis": "raw_bytes",
+      "reviewedAt": "2026-09-17",
+      "archivePath": "artifacts/collected/chain-loss/d3a07ad05af54962751a21e1eeaa10fdd4420fa4967c9140e2e1f836e6aa66bd.html"
+    },
+    {
+      "id": "kioxia_2025_circular",
+      "url": "https://links.sgx.com/FileOpen/Kioxia%20Holdings%20Corp_946237_010_CL_NoDISC_PW_17July0630H.ashx?App=Prospectus&FileID=66909",
+      "publicationDate": "2025-07-16",
+      "expectedSha256": "8066a674702d2fa415d5a791ff1a2855b7fc276cd0f0fce1b5a97b9ebb3fe2f7",
+      "format": "pdf",
+      "finding": "Printed page 60 identifies JPY 7,571 million contamination-related insurance income in the year ended March 2024; excludes sales and other impacts. Printed page 98 describes 50% joint-operation accounting, not an incident loss allocation.",
+      "lastFetchAttemptAt": "2026-09-18T13:34:15.835Z",
+      "retrievedAt": "2026-09-18T13:34:17.462Z",
+      "retrievalStatus": "retrieved",
+      "sha256": "8066a674702d2fa415d5a791ff1a2855b7fc276cd0f0fce1b5a97b9ebb3fe2f7",
+      "hashBasis": "raw_bytes",
+      "reviewedAt": "2026-09-17",
+      "archivePath": "artifacts/collected/chain-loss/8066a674702d2fa415d5a791ff1a2855b7fc276cd0f0fce1b5a97b9ebb3fe2f7.pdf"
+    },
+    {
+      "id": "kioxia_fy2023",
+      "url": "https://www.kioxia-holdings.com/content/dam/kioxia-hd/en-jp/about/asset/Financial-Results-FY2023-4Q-en.pdf",
+      "publicationDate": "2024-05-15",
+      "expectedSha256": "f9382d499b2a3a722dfee94b1c14fadf1b7d584b8eff0e280b4fa48633495345",
+      "format": "pdf",
+      "finding": "Page 3 footnote 4 reports JPY 7.6 billion insurance proceeds in FY2023. The later circular supplies the precise amount and explicit incident attribution; these are corroborating views of one recovery.",
+      "lastFetchAttemptAt": "2026-09-18T13:34:17.463Z",
+      "retrievedAt": "2026-09-18T13:34:18.487Z",
+      "retrievalStatus": "retrieved",
+      "sha256": "f9382d499b2a3a722dfee94b1c14fadf1b7d584b8eff0e280b4fa48633495345",
+      "hashBasis": "raw_bytes",
+      "reviewedAt": "2026-09-17",
+      "archivePath": "artifacts/collected/chain-loss/f9382d499b2a3a722dfee94b1c14fadf1b7d584b8eff0e280b4fa48633495345.pdf"
+    },
+    {
+      "id": "kioxia_fy2022",
+      "url": "https://www.kioxia-holdings.com/content/dam/kioxia-hd/en-jp/about/asset/Financial-Results-FY2022-4Q-en.pdf",
+      "publicationDate": "2023-05-12",
+      "expectedSha256": "b08e190597583cd2468c62df2e4c0a2233cfb61fd4e78a26a29219dcea6183e4",
+      "format": "pdf",
+      "finding": "Page 3 repeats the FY2021 JPY 33.2 billion charge and shows a dash for FY2022 contamination charges. The dash is retained as reported, not treated as proof of zero economic loss.",
+      "lastFetchAttemptAt": "2026-09-18T13:34:18.488Z",
+      "retrievedAt": "2026-09-18T13:34:19.503Z",
+      "retrievalStatus": "retrieved",
+      "sha256": "b08e190597583cd2468c62df2e4c0a2233cfb61fd4e78a26a29219dcea6183e4",
+      "hashBasis": "raw_bytes",
+      "reviewedAt": "2026-09-17",
+      "archivePath": "artifacts/collected/chain-loss/b08e190597583cd2468c62df2e4c0a2233cfb61fd4e78a26a29219dcea6183e4.pdf"
+    },
+    {
+      "id": "wdc_proxy_2024",
+      "url": "https://www.sec.gov/Archives/edgar/data/106040/000130817924000755/wdc4316471-def14a.htm",
+      "publicationDate": "2024-10-07",
+      "reviewedAt": "2026-09-18",
+      "expectedSha256": "1699f203ae18bf3be57b35e9aee7931332a14fa97d5dc1f84ffe9f689412f3b9",
+      "finding": "Appendix A says recoveries were received in both quarters ended December 2023 and March 2024. Payer identity, payment medium and exact settlement date are not specified for March.",
+      "lastFetchAttemptAt": "2026-09-18T13:34:19.504Z",
+      "retrievedAt": "2026-09-18T13:34:19.534Z",
+      "retrievalStatus": "retrieved",
+      "sha256": "1699f203ae18bf3be57b35e9aee7931332a14fa97d5dc1f84ffe9f689412f3b9",
+      "hashBasis": "raw_bytes",
+      "archivePath": "artifacts/collected/chain-loss/1699f203ae18bf3be57b35e9aee7931332a14fa97d5dc1f84ffe9f689412f3b9.html"
+    },
+    {
+      "id": "wdc_availability_2022",
+      "url": "https://www.westerndigital.com/company/newsroom/press-releases/2022/2022-02-09-western-digital-comments-on-production-status-of-its-joint-venture-flash-memory-manufacturing-facilities",
+      "publicationDate": "2022-02-09",
+      "reviewedAt": "2026-09-18",
+      "expectedSectionSha256": "01b7676a5e5a6182355482d0858f91d7828d8ac93df698fc600dff22bc8a8ce6",
+      "sectionIssuer": "wdc",
+      "finding": "WDC initially forecast at least 6.5 exabytes of reduced availability for its own flash supply. This is not a joint-company total or measured downstream loss.",
+      "lastFetchAttemptAt": "2026-09-18T13:34:19.536Z",
+      "retrievedAt": "2026-09-18T13:34:20.629Z",
+      "retrievalStatus": "retrieved",
+      "sha256": "20012d2cc63e93f723df1951013fdf264b478a4363fe43bcb6e334382435d979",
+      "sectionSha256": "01b7676a5e5a6182355482d0858f91d7828d8ac93df698fc600dff22bc8a8ce6",
+      "sectionHashBasis": "issuer_release_opening_through_outlook_before_company_boilerplate",
+      "hashBasis": "raw_bytes",
+      "archivePath": "artifacts/collected/chain-loss/20012d2cc63e93f723df1951013fdf264b478a4363fe43bcb6e334382435d979.html"
+    },
+    {
+      "id": "wdc_update_2022",
+      "url": "https://www.westerndigital.com/company/newsroom/press-releases/2022/2022-03-02-western-digital-provides-update-on-production-status-and-fiscal-outlook",
+      "publicationDate": "2022-03-02",
+      "reviewedAt": "2026-09-18",
+      "expectedSectionSha256": "f346f1c96be708d66c48daedecfec4ee7169ad4208714f8dec87202260d12bd3",
+      "sectionIssuer": "wdc",
+      "finding": "WDC updated the availability forecast to approximately 7 exabytes, mainly fiscal Q3/Q4, while output ramped after normal operations resumed. The USD 250-270 million outlook adjustment also includes stock compensation and other items, so is not a contamination-only loss forecast.",
+      "lastFetchAttemptAt": "2026-09-18T13:34:20.638Z",
+      "retrievedAt": "2026-09-18T13:34:21.630Z",
+      "retrievalStatus": "retrieved",
+      "sha256": "2f4f61c80e119d14a34de3fed58b964a8359622a471a24c8c73c3d7357472ecf",
+      "sectionSha256": "f346f1c96be708d66c48daedecfec4ee7169ad4208714f8dec87202260d12bd3",
+      "sectionHashBasis": "issuer_release_opening_through_outlook_before_company_boilerplate",
+      "hashBasis": "raw_bytes",
+      "archivePath": "artifacts/collected/chain-loss/2f4f61c80e119d14a34de3fed58b964a8359622a471a24c8c73c3d7357472ecf.html"
+    },
+    {
+      "id": "kioxia_restoration_2022",
+      "url": "https://www.kioxia.com/en-jp/about/news/2022/20220303-1.html",
+      "publicationDate": "2022-03-03",
+      "reviewedAt": "2026-09-18",
+      "expectedSectionSha256": "db99e7f83dc91390b6c66a0daa8eb06fb1bcc6fcb852d767b33ecf59dae64426",
+      "sectionIssuer": "kioxia",
+      "finding": "Kioxia reports normal operations restored in late February, with output still ramping and shipment impacts expected. No exact recovery day, recovered backlog volume or final customer loss is disclosed.",
+      "lastFetchAttemptAt": "2026-09-18T13:34:21.634Z",
+      "retrievedAt": "2026-09-18T13:34:22.290Z",
+      "retrievalStatus": "retrieved",
+      "sha256": "1c49472264e43511e27b52098254201267273698891388a0a5c962f4670b1cc5",
+      "sectionSha256": "db99e7f83dc91390b6c66a0daa8eb06fb1bcc6fcb852d767b33ecf59dae64426",
+      "sectionHashBasis": "issuer_release_body_before_share_controls",
+      "hashBasis": "raw_bytes",
+      "archivePath": "artifacts/collected/chain-loss/1c49472264e43511e27b52098254201267273698891388a0a5c962f4670b1cc5.html"
+    },
+    {
+      "id": "wdc_2022q3",
+      "url": "https://www.sec.gov/Archives/edgar/data/106040/000010604022000040/wdc-20220401.htm",
+      "publicationDate": "2022-05-04",
+      "reviewedAt": "2026-09-18",
+      "expectedSha256": "24983e4f04077209dabc770d56647fce03f5fda90f9293caa80c3a7756eac936",
+      "finding": "Note 10 reports USD 203 million contamination charges for both Q3 and nine months. MD&A attributes lower enterprise SSD revenues primarily to contamination-related supply impact, without quantifying that revenue loss.",
+      "lastFetchAttemptAt": "2026-09-18T13:34:22.291Z",
+      "retrievedAt": "2026-09-18T13:34:22.314Z",
+      "retrievalStatus": "retrieved",
+      "sha256": "24983e4f04077209dabc770d56647fce03f5fda90f9293caa80c3a7756eac936",
+      "hashBasis": "raw_bytes",
+      "archivePath": "artifacts/collected/chain-loss/24983e4f04077209dabc770d56647fce03f5fda90f9293caa80c3a7756eac936.html"
+    },
+    {
+      "id": "wdc_2022q4_release",
+      "url": "https://www.sec.gov/Archives/edgar/data/106040/000010604022000049/ex991-pressreleaseq422.htm",
+      "publicationDate": "2022-08-05",
+      "reviewedAt": "2026-09-18",
+      "expectedSha256": "feba6f30f8d5ce25a36f3fc942a2bba9ffdeadc5e8c4c2460b416140f439d69e",
+      "finding": "Preliminary earnings reconciliation reports USD 4 million Q4 contamination charges and USD 207 million annually. Enterprise SSD revenue grew 38% year over year and more than doubled sequentially; this is not a quantified recovery of the earlier shortfall.",
+      "lastFetchAttemptAt": "2026-09-18T13:34:22.317Z",
+      "retrievedAt": "2026-09-18T13:34:22.344Z",
+      "retrievalStatus": "retrieved",
+      "sha256": "feba6f30f8d5ce25a36f3fc942a2bba9ffdeadc5e8c4c2460b416140f439d69e",
+      "hashBasis": "raw_bytes",
+      "archivePath": "artifacts/collected/chain-loss/feba6f30f8d5ce25a36f3fc942a2bba9ffdeadc5e8c4c2460b416140f439d69e.html"
+    },
+    {
+      "id": "sandisk_2025q3",
+      "url": "https://www.sec.gov/Archives/edgar/data/2023554/000202355425000027/sndk-20250328.htm",
+      "publicationDate": "2025-05-12",
+      "reviewedAt": "2026-09-18",
+      "expectedSha256": "36ce1676c9c2405c0da2ff8c6fed46edfe36912825f6a0bd08c10f27eab84818",
+      "finding": "MD&A repeats USD 36 million insurer recoveries for the nine months ended March 2024. Note 2 identifies pre-separation accounts as derived from WDC records. This historical flash-business view is not evidence of an additional 2025 recovery.",
+      "lastFetchAttemptAt": "2026-09-18T13:34:22.345Z",
+      "retrievedAt": "2026-09-18T13:34:22.393Z",
+      "retrievalStatus": "retrieved",
+      "sha256": "36ce1676c9c2405c0da2ff8c6fed46edfe36912825f6a0bd08c10f27eab84818",
+      "hashBasis": "raw_bytes",
+      "archivePath": "artifacts/collected/chain-loss/36ce1676c9c2405c0da2ff8c6fed46edfe36912825f6a0bd08c10f27eab84818.html"
+    },
+    {
+      "id": "tsmc_photoresist_2019_guidance",
+      "url": "https://pr.tsmc.com/system/files/newspdf/PGWQISTHTH/NEWS_FILE_EN.pdf",
+      "publicationDate": "2019-02-15",
+      "reviewedAt": "2026-09-18",
+      "format": "pdf",
+      "expectedSha256": "2872fbc0b2a6dd6d56b4841e3851ca77069bdc10c70271c9559add378f97d4cf",
+      "finding": "Page 1 forecasts USD 550 million Q1 revenue reduction and USD 550 million Q2 replacement revenue. The separate USD 230 million Q1 uplift combines production pull-in and stronger demand. Incident gross-margin effects are forecasts, not supplier payments or observed customer losses.",
+      "lastFetchAttemptAt": "2026-09-18T13:34:22.395Z",
+      "retrievedAt": "2026-09-18T13:34:23.498Z",
+      "retrievalStatus": "retrieved",
+      "sha256": "2872fbc0b2a6dd6d56b4841e3851ca77069bdc10c70271c9559add378f97d4cf",
+      "hashBasis": "raw_bytes",
+      "archivePath": "artifacts/collected/chain-loss/2872fbc0b2a6dd6d56b4841e3851ca77069bdc10c70271c9559add378f97d4cf.pdf"
+    },
+    {
+      "id": "tsmc_2019q1_call",
+      "url": "https://investor.tsmc.com/japanese/encrypt/files/encrypt_file/english/2019/Q1/TSMC%201Q19%20transcript.pdf",
+      "publicationDate": "2019-04-18",
+      "reviewedAt": "2026-09-18",
+      "format": "pdf",
+      "expectedSha256": "fae18ba8236ff760e27cc8a70203b830803fe5e4188082d328cf9dec0de391cf",
+      "finding": "Page 3 retrospectively attributes about 2.6 percentage points of Q1 gross-margin reduction to photoresist, matching the February forecast. The same issuer supplies both estimates; the Q2 wafer replacement remains forward-looking.",
+      "lastFetchAttemptAt": "2026-09-18T13:34:23.499Z",
+      "retrievedAt": "2026-09-18T13:34:24.599Z",
+      "retrievalStatus": "retrieved",
+      "sha256": "fae18ba8236ff760e27cc8a70203b830803fe5e4188082d328cf9dec0de391cf",
+      "hashBasis": "raw_bytes",
+      "archivePath": "artifacts/collected/chain-loss/fae18ba8236ff760e27cc8a70203b830803fe5e4188082d328cf9dec0de391cf.pdf"
+    },
+    {
+      "id": "tsmc_2019q2_report",
+      "url": "https://investor.tsmc.com/schinese/encrypt/files/encrypt_file/english/2019/Q2/2Q19ManagementReport.pdf",
+      "publicationDate": "2019-07-18",
+      "reviewedAt": "2026-09-18",
+      "format": "pdf",
+      "expectedSha256": "0770d4bdf93ca2379ccdebb966eb72f410f6c5f2caf2a0f19788c1f6163c6359",
+      "finding": "Page 2 reports a 1.7 percentage-point sequential gross-margin increase driven by absence of the incident and foreign exchange. This mixed change does not isolate realized catch-up revenue or the incident-only margin contribution.",
+      "lastFetchAttemptAt": "2026-09-18T13:34:24.600Z",
+      "retrievedAt": "2026-09-18T13:29:52.175Z",
+      "retrievalStatus": "reviewed_archive_network_unavailable",
+      "sha256": "0770d4bdf93ca2379ccdebb966eb72f410f6c5f2caf2a0f19788c1f6163c6359",
+      "hashBasis": "raw_bytes",
+      "archivePath": "artifacts/collected/chain-loss/0770d4bdf93ca2379ccdebb966eb72f410f6c5f2caf2a0f19788c1f6163c6359.pdf"
+    },
+    {
+      "id": "kioxia_securities_fy2025",
+      "url": "https://www.kioxia-holdings.com/content/dam/kioxia-hd/en-jp/ir/library/securities/asset/Annual-Securities-Report-FY2025-EN.pdf",
+      "publicationDate": "2026-06-24",
+      "reviewedAt": "2026-09-20",
+      "format": "pdf",
+      "publicationDateEvidence": "https://www.kioxia-holdings.com/en-jp/ir/library/securities.html",
+      "expectedSha256": "3e95d19961d6ebeec6a45875a7c7085eea5a04ed0342ff6e9659f32245d79c14",
+      "finding": "Note 24 reports insurance income without incident attribution. Note 31 describes joint-operation governance. Neither establishes a 2022 contamination settlement or a disjoint loss allocation.",
+      "limitation": "Partial English translation; the Japanese original prevails. Review covers Notes 24, 31, 33 and the disaster-risk disclosure. The absence of an identified settlement is not evidence of zero recovery.",
+      "archivePath": "artifacts/collected/chain-loss/3e95d19961d6ebeec6a45875a7c7085eea5a04ed0342ff6e9659f32245d79c14.pdf",
+      "sha256": "3e95d19961d6ebeec6a45875a7c7085eea5a04ed0342ff6e9659f32245d79c14",
+      "hashBasis": "raw_bytes",
+      "retrievedAt": "2026-09-20T11:34:33.593Z",
+      "retrievalStatus": "retrieved"
+    },
+    {
+      "id": "kioxia_fy2022q1",
+      "url": "https://www.kioxia-holdings.com/content/dam/kioxia-hd/en-jp/about/asset/Financial-Results-FY2022-1Q-en.pdf",
+      "publicationDate": "2022-08-10",
+      "reviewedAt": "2026-09-21",
+      "format": "pdf",
+      "expectedSha256": "a1a35d72b286b5ad8d489c88a299aa0ffe303f808a4f82ae8236ef2d99f6212d",
+      "finding": "Pages 3-4 report quarterly sales and attribute shipment disruption to both contamination and COVID-19 interruptions. The sales difference is not an incident-only loss.",
+      "archivePath": "artifacts/collected/chain-loss/a1a35d72b286b5ad8d489c88a299aa0ffe303f808a4f82ae8236ef2d99f6212d.pdf",
+      "sha256": "a1a35d72b286b5ad8d489c88a299aa0ffe303f808a4f82ae8236ef2d99f6212d",
+      "hashBasis": "raw_bytes",
+      "retrievedAt": "2026-09-20T16:47:40.788Z",
+      "retrievalStatus": "retrieved"
+    },
+    {
+      "id": "phison_annual_2022",
+      "url": "https://www.phison.com/wp-content/uploads/2025/11/Phison_Electronic_Corporation_2022_Annual_Report.pdf",
+      "publicationDate": "2023-05-12",
+      "publicationDateBasis": "report_print_date",
+      "informationAvailableDate": "2026-09-21",
+      "reviewedAt": "2026-09-21",
+      "format": "pdf",
+      "publicationDateEvidence": "https://www.phison.com/investor-relations/annual-reports/",
+      "expectedSha256": "5b7ab1df5d9d29c394db508a0738db037782fd4e2970359fd1b0084e9b8262f7",
+      "finding": "Table 3 records 2022 purchases from Kioxia Taiwan and sales to Kioxia and Apacer. The supplier-concentration discussion describes the sourcing relationship but does not quantify a contamination loss.",
+      "limitation": "May 12, 2023 is the printed report date. Availability is conservatively dated to this review of the migrated archive. Commercial transactions are not incident losses or proof of affected shipments.",
+      "archivePath": "artifacts/collected/chain-loss/5b7ab1df5d9d29c394db508a0738db037782fd4e2970359fd1b0084e9b8262f7.pdf",
+      "sha256": "5b7ab1df5d9d29c394db508a0738db037782fd4e2970359fd1b0084e9b8262f7",
+      "hashBasis": "raw_bytes",
+      "retrievedAt": "2026-09-21T00:12:17.759Z",
+      "retrievalStatus": "retrieved"
+    },
+    {
+      "id": "apacer_annual_2022",
+      "url": "https://www.apacer.com/upload/media/investor/financial/Annual_Report/2022_Annual_Report_EN.pdf",
+      "publicationDate": "2023-04-30",
+      "publicationDateBasis": "report_print_date",
+      "informationAvailableDate": "2026-09-21",
+      "reviewedAt": "2026-09-21",
+      "format": "pdf",
+      "expectedSha256": "ebfea018d826bef0d5ea2b747f54ddcaa2fc0005aa5f87fe35435cfa0704ffb6",
+      "finding": "Phison purchases are reported separately for Apacer parent, UD INFO and the consolidated group. The parent amount differs from Phison reported sales to Apacer; no explanation of that difference is established.",
+      "limitation": "The printed date does not establish original online availability. This review establishes accounting disclosures, not incident losses, replacement purchases or uninterrupted deliveries.",
+      "archivePath": "artifacts/collected/chain-loss/ebfea018d826bef0d5ea2b747f54ddcaa2fc0005aa5f87fe35435cfa0704ffb6.pdf",
+      "sha256": "ebfea018d826bef0d5ea2b747f54ddcaa2fc0005aa5f87fe35435cfa0704ffb6",
+      "hashBasis": "raw_bytes",
+      "retrievedAt": "2026-09-21T14:55:42.022Z",
+      "retrievalStatus": "retrieved"
+    }
+  ],
+  "boundaryEvidence": [
+    {
+      "id": "kioxia_flash_jv_accounting",
+      "companyId": "kioxia",
+      "incidentId": "nand_contamination_2022",
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-17",
+        "provenance": "Primary issuer PDF tables and footnotes visually reviewed; disclosure verification, not independent causal validation"
+      },
+      "source": {
+        "url": "https://links.sgx.com/FileOpen/Kioxia%20Holdings%20Corp_946237_010_CL_NoDISC_PW_17July0630H.ashx?App=Prospectus&FileID=66909",
+        "publicationDate": "2025-07-16",
+        "informationAvailableDate": "2025-07-16",
+        "supportingSection": "Printed page 98 (PDF page 111), The Flash JV Companies",
+        "sha256": "8066a674702d2fa415d5a791ff1a2855b7fc276cd0f0fce1b5a97b9ebb3fe2f7",
+        "hashBasis": "raw_bytes",
+        "claimStatus": "verified"
+      },
+      "equityShare": 0.501,
+      "recognizedAccountShare": 0.5,
+      "outputPurchaseShare": 0.5,
+      "sandiskFixedCostShare": 0.5,
+      "accountingTreatment": "IFRS joint operation: Kioxia recognizes half of JV assets, liabilities, revenue and expenses.",
+      "transactionPath": "Kioxia fabricates wafers and sells to the JVs; the JVs sell output to Kioxia and Sandisk; both complete further processing and sell to their own customers.",
+      "incidentCostAllocation": null,
+      "disjointIncidentComponentsVerified": false,
+      "limitation": "Contract and accounting shares do not identify the contamination charge components, eliminations, insurer identities or downstream losses."
+    }
+  ],
+  "periodObservations": [
+    {
+      "id": "kioxia_fy2022_charge_dash",
+      "companyId": "kioxia",
+      "incidentId": "nand_contamination_2022",
+      "metric": "contamination_charge_presentation",
+      "periodStart": "2022-04-01",
+      "periodEnd": "2023-03-31",
+      "reportedSymbol": "-",
+      "value": null,
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-17",
+        "provenance": "Primary issuer PDF tables and footnotes visually reviewed; disclosure verification, not independent causal validation"
+      },
+      "source": {
+        "url": "https://www.kioxia-holdings.com/content/dam/kioxia-hd/en-jp/about/asset/Financial-Results-FY2022-4Q-en.pdf",
+        "publicationDate": "2023-05-12",
+        "informationAvailableDate": "2023-05-12",
+        "supportingSection": "Page 3, contamination-related charges, FY2022 column",
+        "sha256": "b08e190597583cd2468c62df2e4c0a2233cfb61fd4e78a26a29219dcea6183e4",
+        "hashBasis": "raw_bytes",
+        "claimStatus": "verified"
+      },
+      "interpretation": "No separate amount shown in this charge row; does not establish zero sales impact or final settlement."
+    }
+  ],
+  "receiptEvidence": [
+    {
+      "id": "wdc_march2024_receipt",
+      "companyId": "wdc",
+      "incidentId": "nand_contamination_2022",
+      "metric": "recovery_receipt_disclosure",
+      "kind": "reported_outcome",
+      "periodStart": "2023-12-30",
+      "periodEnd": "2024-03-29",
+      "reportedReceipt": true,
+      "value": null,
+      "cashAmount": null,
+      "paymentMedium": "unspecified",
+      "counterpartyId": null,
+      "relatedRecordId": "wdc_recovery_2024q3_unassigned",
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-18",
+        "provenance": "Primary issuer releases and SEC proxy appendix reviewed; source claims retain their original forecast or reported status"
+      },
+      "source": {
+        "url": "https://www.sec.gov/Archives/edgar/data/106040/000130817924000755/wdc4316471-def14a.htm",
+        "publicationDate": "2024-10-07",
+        "informationAvailableDate": "2024-10-07",
+        "supportingSection": "Appendix A, Explanations of Adjustments to Non-GAAP Measures: Recovery from contamination incident",
+        "sha256": "1699f203ae18bf3be57b35e9aee7931332a14fa97d5dc1f84ffe9f689412f3b9",
+        "hashBasis": "raw_bytes",
+        "claimStatus": "verified",
+        "publicationDateEvidence": "https://investor.wdc.com/sec-filings/sec-filing/def-14a/0001308179-24-000755"
+      },
+      "interpretation": "Recovery receipt is reported for this quarter. The separately reported USD 1 million accounting recovery is not an independently disclosed cash amount."
+    }
+  ],
+  "operationalEvidence": [
+    {
+      "id": "wdc_flash_availability_initial",
+      "companyId": "wdc",
+      "incidentId": "nand_contamination_2022",
+      "metric": "flash_availability_reduction",
+      "value": 6.5,
+      "units": "exabytes",
+      "qualifier": "at_least",
+      "kind": "issuer_forecast",
+      "scopeId": "wdc_own_flash_availability",
+      "supersedesId": null,
+      "permanentLoss": null,
+      "downstreamLoss": null,
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-18",
+        "provenance": "Primary issuer releases and SEC proxy appendix reviewed; source claims retain their original forecast or reported status"
+      },
+      "source": {
+        "url": "https://www.westerndigital.com/company/newsroom/press-releases/2022/2022-02-09-western-digital-comments-on-production-status-of-its-joint-venture-flash-memory-manufacturing-facilities",
+        "publicationDate": "2022-02-09",
+        "informationAvailableDate": "2022-02-09",
+        "supportingSection": "Opening production-status paragraphs and forward-looking statements",
+        "sha256": "20012d2cc63e93f723df1951013fdf264b478a4363fe43bcb6e334382435d979",
+        "hashBasis": "raw_bytes",
+        "claimStatus": "verified",
+        "sectionSha256": "01b7676a5e5a6182355482d0858f91d7828d8ac93df698fc600dff22bc8a8ce6",
+        "sectionHashBasis": "issuer_release_opening_through_outlook_before_company_boilerplate"
+      }
+    },
+    {
+      "id": "wdc_flash_availability_update",
+      "companyId": "wdc",
+      "incidentId": "nand_contamination_2022",
+      "metric": "flash_availability_reduction",
+      "value": 7,
+      "units": "exabytes",
+      "qualifier": "approximately",
+      "kind": "issuer_forecast",
+      "scopeId": "wdc_own_flash_availability",
+      "supersedesId": "wdc_flash_availability_initial",
+      "permanentLoss": null,
+      "downstreamLoss": null,
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-18",
+        "provenance": "Primary issuer releases and SEC proxy appendix reviewed; source claims retain their original forecast or reported status"
+      },
+      "source": {
+        "url": "https://www.westerndigital.com/company/newsroom/press-releases/2022/2022-03-02-western-digital-provides-update-on-production-status-and-fiscal-outlook",
+        "publicationDate": "2022-03-02",
+        "informationAvailableDate": "2022-03-02",
+        "supportingSection": "Opening production-status paragraphs and forward-looking statements",
+        "sha256": "2f4f61c80e119d14a34de3fed58b964a8359622a471a24c8c73c3d7357472ecf",
+        "hashBasis": "raw_bytes",
+        "claimStatus": "verified",
+        "sectionSha256": "f346f1c96be708d66c48daedecfec4ee7169ad4208714f8dec87202260d12bd3",
+        "sectionHashBasis": "issuer_release_opening_through_outlook_before_company_boilerplate"
+      },
+      "expectedTiming": "Predominantly fiscal Q3 and Q4 of FY2022; not an exact period partition"
+    },
+    {
+      "id": "kioxia_operations_restored",
+      "companyId": "kioxia",
+      "incidentId": "nand_contamination_2022",
+      "kind": "reported_outcome",
+      "metric": "normal_operations_restored",
+      "facilityIds": [
+        "kioxia_yokkaichi",
+        "kioxia_kitakami"
+      ],
+      "reportedTiming": "late February 2022",
+      "exactDate": null,
+      "fullOutputRestored": null,
+      "catchupVolume": null,
+      "shipmentImpactExpected": true,
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-18",
+        "provenance": "Primary issuer releases and SEC proxy appendix reviewed; source claims retain their original forecast or reported status"
+      },
+      "source": {
+        "url": "https://www.kioxia.com/en-jp/about/news/2022/20220303-1.html",
+        "publicationDate": "2022-03-03",
+        "informationAvailableDate": "2022-03-03",
+        "supportingSection": "Both production-status paragraphs",
+        "sha256": "1c49472264e43511e27b52098254201267273698891388a0a5c962f4670b1cc5",
+        "hashBasis": "raw_bytes",
+        "claimStatus": "verified",
+        "sectionSha256": "db99e7f83dc91390b6c66a0daa8eb06fb1bcc6fcb852d767b33ecf59dae64426",
+        "sectionHashBasis": "issuer_release_body_before_share_controls"
+      },
+      "interpretation": "Operations resumed; full output, backlog clearance and customer recovery dates remain unquantified."
+    },
+    {
+      "id": "wdc_q3_mixed_adjustment_forecast",
+      "companyId": "wdc",
+      "incidentId": "nand_contamination_2022",
+      "kind": "issuer_forecast",
+      "metric": "non_gaap_gross_margin_adjustments",
+      "lower": 250,
+      "upper": 270,
+      "units": "USD million",
+      "periodEnd": "2022-04-01",
+      "causeScope": "mixed",
+      "components": [
+        "stock_based_compensation",
+        "contamination_charges",
+        "other_adjustments"
+      ],
+      "contaminationOnlyAmount": null,
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-18",
+        "provenance": "Primary issuer releases and SEC proxy appendix reviewed; source claims retain their original forecast or reported status"
+      },
+      "source": {
+        "url": "https://www.westerndigital.com/company/newsroom/press-releases/2022/2022-03-02-western-digital-provides-update-on-production-status-and-fiscal-outlook",
+        "publicationDate": "2022-03-02",
+        "informationAvailableDate": "2022-03-02",
+        "supportingSection": "Fiscal Q3 outlook footnote 1",
+        "sha256": "2f4f61c80e119d14a34de3fed58b964a8359622a471a24c8c73c3d7357472ecf",
+        "hashBasis": "raw_bytes",
+        "claimStatus": "verified",
+        "sectionSha256": "f346f1c96be708d66c48daedecfec4ee7169ad4208714f8dec87202260d12bd3",
+        "sectionHashBasis": "issuer_release_opening_through_outlook_before_company_boilerplate"
+      },
+      "interpretation": "Combined outlook adjustment cannot be scored against the USD 207 million annual contamination-only charge."
+    }
+  ],
+  "reportingRelationships": [
+    {
+      "id": "sandisk_pre_separation_accounts",
+      "fromCompanyId": "wdc",
+      "toCompanyId": "sandisk",
+      "type": "historical_carveout",
+      "separationDate": "2025-02-21",
+      "relatedRecordId": "sandisk_historical_insurance_2024",
+      "parentRecordId": "wdc_recovery_2024q2_insurer",
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-18",
+        "provenance": "Primary issuer releases and SEC proxy appendix reviewed; source claims retain their original forecast or reported status"
+      },
+      "source": {
+        "url": "https://www.sec.gov/Archives/edgar/data/2023554/000202355425000027/sndk-20250328.htm",
+        "publicationDate": "2025-05-12",
+        "informationAvailableDate": "2025-05-12",
+        "supportingSection": "Note 2 Basis of Presentation, Periods Prior to the Separation",
+        "sha256": "36ce1676c9c2405c0da2ff8c6fed46edfe36912825f6a0bd08c10f27eab84818",
+        "hashBasis": "raw_bytes",
+        "claimStatus": "verified"
+      },
+      "interpretation": "Pre-separation financial statements derive from WDC accounts. The historical insurer amount is corroborating evidence and cannot be added as a new recovery. The USD 1 million difference from WDC total recovery remains unallocated."
+    }
+  ],
+  "productEvidence": [
+    {
+      "id": "wdc_enterprise_ssd_2022q3_effect",
+      "companyId": "wdc",
+      "incidentId": "nand_contamination_2022",
+      "metric": "enterprise_ssd_revenue_effect",
+      "kind": "reported_outcome",
+      "periodStart": "2022-01-01",
+      "periodEnd": "2022-04-01",
+      "direction": "decrease",
+      "causalStatus": "issuer_attributed_unquantified",
+      "value": null,
+      "units": "USD million",
+      "externalCustomerLoss": null,
+      "catchupAmount": null,
+      "permanentLoss": null,
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-18",
+        "provenance": "Primary issuer releases and SEC proxy appendix reviewed; source claims retain their original forecast or reported status"
+      },
+      "source": {
+        "url": "https://www.sec.gov/Archives/edgar/data/106040/000010604022000040/wdc-20220401.htm",
+        "publicationDate": "2022-05-04",
+        "informationAvailableDate": "2022-05-04",
+        "supportingSection": "MD&A Results of Operations, Net Revenue, Cloud revenue discussion",
+        "sha256": "24983e4f04077209dabc770d56647fce03f5fda90f9293caa80c3a7756eac936",
+        "hashBasis": "raw_bytes",
+        "claimStatus": "verified"
+      },
+      "interpretation": "WDC attributes lower enterprise SSD revenues primarily to contamination-related supply constraints. The amount and losses at its customers are not isolated."
+    },
+    {
+      "id": "wdc_enterprise_ssd_2022q4_growth",
+      "companyId": "wdc",
+      "incidentId": "nand_contamination_2022",
+      "metric": "enterprise_ssd_revenue_growth_yoy",
+      "kind": "reported_outcome",
+      "periodStart": "2022-04-02",
+      "periodEnd": "2022-07-01",
+      "value": 38,
+      "units": "percent",
+      "causalStatus": "growth_not_identified_catchup",
+      "outcomeStatus": "preliminary_earnings_release",
+      "externalCustomerLoss": null,
+      "catchupAmount": null,
+      "permanentLoss": null,
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-18",
+        "provenance": "Primary issuer releases and SEC proxy appendix reviewed; source claims retain their original forecast or reported status"
+      },
+      "source": {
+        "url": "https://www.sec.gov/Archives/edgar/data/106040/000010604022000049/ex991-pressreleaseq422.htm",
+        "publicationDate": "2022-08-05",
+        "informationAvailableDate": "2022-08-05",
+        "supportingSection": "Page 3 End Market Summary, fourth-quarter Cloud bullet",
+        "sha256": "feba6f30f8d5ce25a36f3fc942a2bba9ffdeadc5e8c4c2460b416140f439d69e",
+        "hashBasis": "raw_bytes",
+        "claimStatus": "verified"
+      },
+      "interpretation": "Subsequent enterprise SSD revenue growth is reported; no counterfactual, deferred-sales bridge or final missed-demand amount is supplied."
+    }
+  ],
+  "photoresistEvidence": [
+    {
+      "id": "tsmc_q1_revenue_shortfall_forecast",
+      "companyId": "tsmc",
+      "incidentId": "photoresist_contamination_2019",
+      "metric": "incident_revenue_reduction",
+      "value": 550,
+      "units": "USD million",
+      "kind": "issuer_forecast",
+      "periodStart": "2019-01-01",
+      "periodEnd": "2019-03-31",
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-18",
+        "provenance": "Primary issuer PDFs visually reviewed; management attribution is not independent causal validation"
+      },
+      "source": {
+        "url": "https://pr.tsmc.com/system/files/newspdf/PGWQISTHTH/NEWS_FILE_EN.pdf",
+        "publicationDate": "2019-02-15",
+        "informationAvailableDate": "2019-02-15",
+        "supportingSection": "Page 1, first incident-impact bullet",
+        "sha256": "2872fbc0b2a6dd6d56b4841e3851ca77069bdc10c70271c9559add378f97d4cf",
+        "hashBasis": "raw_bytes",
+        "claimStatus": "verified"
+      },
+      "qualifier": "approximately",
+      "causeScope": "incident_only",
+      "direction": "decrease"
+    },
+    {
+      "id": "tsmc_q2_replacement_forecast",
+      "companyId": "tsmc",
+      "incidentId": "photoresist_contamination_2019",
+      "metric": "replacement_revenue",
+      "value": 550,
+      "units": "USD million",
+      "kind": "issuer_forecast",
+      "periodStart": "2019-04-01",
+      "periodEnd": "2019-06-30",
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-18",
+        "provenance": "Primary issuer PDFs visually reviewed; management attribution is not independent causal validation"
+      },
+      "source": {
+        "url": "https://pr.tsmc.com/system/files/newspdf/PGWQISTHTH/NEWS_FILE_EN.pdf",
+        "publicationDate": "2019-02-15",
+        "informationAvailableDate": "2019-02-15",
+        "supportingSection": "Page 1, second incident-impact bullet",
+        "sha256": "2872fbc0b2a6dd6d56b4841e3851ca77069bdc10c70271c9559add378f97d4cf",
+        "hashBasis": "raw_bytes",
+        "claimStatus": "verified"
+      },
+      "qualifier": "approximately",
+      "causeScope": "incident_only",
+      "direction": "increase"
+    },
+    {
+      "id": "tsmc_q1_mixed_uplift_forecast",
+      "companyId": "tsmc",
+      "incidentId": "photoresist_contamination_2019",
+      "metric": "additional_revenue",
+      "value": 230,
+      "units": "USD million",
+      "kind": "issuer_forecast",
+      "periodStart": "2019-01-01",
+      "periodEnd": "2019-03-31",
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-18",
+        "provenance": "Primary issuer PDFs visually reviewed; management attribution is not independent causal validation"
+      },
+      "source": {
+        "url": "https://pr.tsmc.com/system/files/newspdf/PGWQISTHTH/NEWS_FILE_EN.pdf",
+        "publicationDate": "2019-02-15",
+        "informationAvailableDate": "2019-02-15",
+        "supportingSection": "Page 1, production pull-in and demand paragraph",
+        "sha256": "2872fbc0b2a6dd6d56b4841e3851ca77069bdc10c70271c9559add378f97d4cf",
+        "hashBasis": "raw_bytes",
+        "claimStatus": "verified"
+      },
+      "qualifier": "approximately",
+      "causeScope": "mixed",
+      "direction": "increase",
+      "components": [
+        "production_pull_in",
+        "increased_demand"
+      ]
+    },
+    {
+      "id": "tsmc_q1_margin_forecast",
+      "companyId": "tsmc",
+      "incidentId": "photoresist_contamination_2019",
+      "metric": "incident_gross_margin_reduction",
+      "value": 2.6,
+      "units": "percentage points",
+      "kind": "issuer_forecast",
+      "periodStart": "2019-01-01",
+      "periodEnd": "2019-03-31",
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-18",
+        "provenance": "Primary issuer PDFs visually reviewed; management attribution is not independent causal validation"
+      },
+      "source": {
+        "url": "https://pr.tsmc.com/system/files/newspdf/PGWQISTHTH/NEWS_FILE_EN.pdf",
+        "publicationDate": "2019-02-15",
+        "informationAvailableDate": "2019-02-15",
+        "supportingSection": "Page 1, first incident-impact bullet",
+        "sha256": "2872fbc0b2a6dd6d56b4841e3851ca77069bdc10c70271c9559add378f97d4cf",
+        "hashBasis": "raw_bytes",
+        "claimStatus": "verified"
+      },
+      "qualifier": "approximately",
+      "causeScope": "incident_only",
+      "direction": "decrease",
+      "scopeId": "company_gross_margin",
+      "accountingBasis": "issuer_attributed_margin_effect"
+    },
+    {
+      "id": "tsmc_q1_margin_reported",
+      "companyId": "tsmc",
+      "incidentId": "photoresist_contamination_2019",
+      "metric": "incident_gross_margin_reduction",
+      "value": 2.6,
+      "units": "percentage points",
+      "kind": "reported_outcome",
+      "periodStart": "2019-01-01",
+      "periodEnd": "2019-03-31",
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-18",
+        "provenance": "Primary issuer PDFs visually reviewed; management attribution is not independent causal validation"
+      },
+      "source": {
+        "url": "https://investor.tsmc.com/japanese/encrypt/files/encrypt_file/english/2019/Q1/TSMC%201Q19%20transcript.pdf",
+        "publicationDate": "2019-04-18",
+        "informationAvailableDate": "2019-04-18",
+        "supportingSection": "Page 3, management discussion of Q1 profitability",
+        "sha256": "fae18ba8236ff760e27cc8a70203b830803fe5e4188082d328cf9dec0de391cf",
+        "hashBasis": "raw_bytes",
+        "claimStatus": "verified"
+      },
+      "qualifier": "approximately",
+      "causeScope": "incident_only",
+      "direction": "decrease",
+      "scopeId": "company_gross_margin",
+      "accountingBasis": "issuer_attributed_margin_effect"
+    },
+    {
+      "id": "tsmc_q2_margin_forecast",
+      "companyId": "tsmc",
+      "incidentId": "photoresist_contamination_2019",
+      "metric": "incident_gross_margin_improvement",
+      "value": 1.5,
+      "units": "percentage points",
+      "kind": "issuer_forecast",
+      "periodStart": "2019-04-01",
+      "periodEnd": "2019-06-30",
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-18",
+        "provenance": "Primary issuer PDFs visually reviewed; management attribution is not independent causal validation"
+      },
+      "source": {
+        "url": "https://pr.tsmc.com/system/files/newspdf/PGWQISTHTH/NEWS_FILE_EN.pdf",
+        "publicationDate": "2019-02-15",
+        "informationAvailableDate": "2019-02-15",
+        "supportingSection": "Page 1, second incident-impact bullet",
+        "sha256": "2872fbc0b2a6dd6d56b4841e3851ca77069bdc10c70271c9559add378f97d4cf",
+        "hashBasis": "raw_bytes",
+        "claimStatus": "verified"
+      },
+      "qualifier": "approximately",
+      "causeScope": "incident_only",
+      "direction": "increase"
+    },
+    {
+      "id": "tsmc_q2_margin_reported",
+      "companyId": "tsmc",
+      "incidentId": "photoresist_contamination_2019",
+      "metric": "total_gross_margin_change_qoq",
+      "value": 1.7,
+      "units": "percentage points",
+      "kind": "reported_outcome",
+      "periodStart": "2019-04-01",
+      "periodEnd": "2019-06-30",
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-18",
+        "provenance": "Primary issuer PDFs visually reviewed; management attribution is not independent causal validation"
+      },
+      "source": {
+        "url": "https://investor.tsmc.com/schinese/encrypt/files/encrypt_file/english/2019/Q2/2Q19ManagementReport.pdf",
+        "publicationDate": "2019-07-18",
+        "informationAvailableDate": "2019-07-18",
+        "supportingSection": "Page 2, Gross Profit Analysis",
+        "sha256": "0770d4bdf93ca2379ccdebb966eb72f410f6c5f2caf2a0f19788c1f6163c6359",
+        "hashBasis": "raw_bytes",
+        "claimStatus": "verified"
+      },
+      "causeScope": "mixed",
+      "direction": "increase",
+      "components": [
+        "absence_of_photoresist_incident",
+        "foreign_exchange"
+      ]
+    }
+  ],
+  "limitations": [
+    "Quarterly and annual disclosures are corroborating views, not additional losses.",
+    "Receipt in the March 2024 quarter is reported; the USD 1 million counterparty, cash amount and settlement details remain unspecified.",
+    "Equal reported amounts do not establish a complete time partition or the final disposition of remaining claims."
+  ],
+  "unattributedRecoveries": [
+    {
+      "id": "kioxia_unattributed_insurance_ended_2025",
+      "companyId": "kioxia",
+      "incidentId": null,
+      "metric": "insurance_claim_income",
+      "kind": "reported_outcome",
+      "value": 2695,
+      "units": "JPY million",
+      "roundingUnit": 1,
+      "accountingBasis": "IFRS_other_income",
+      "periodStart": "2024-04-01",
+      "periodEnd": "2025-03-31",
+      "attributionStatus": "incident_unspecified",
+      "counterpartyClass": "insurer",
+      "counterpartyId": null,
+      "cashAmount": null,
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-20",
+        "provenance": "Codex visual review of primary issuer PDF tables and notes; not independent causal validation"
+      },
+      "source": {
+        "url": "https://www.kioxia-holdings.com/content/dam/kioxia-hd/en-jp/ir/library/securities/asset/Annual-Securities-Report-FY2025-EN.pdf",
+        "publicationDate": "2026-06-24",
+        "informationAvailableDate": "2026-06-24",
+        "publicationDateEvidence": "https://www.kioxia-holdings.com/en-jp/ir/library/securities.html",
+        "sha256": "3e95d19961d6ebeec6a45875a7c7085eea5a04ed0342ff6e9659f32245d79c14",
+        "hashBasis": "raw_bytes",
+        "supportingSection": "Note 24, printed page 59 (PDF page 61), Insurance claim income; columns are years ended March 2026 and March 2025",
+        "claimStatus": "verified"
+      },
+      "interpretation": "Company insurance income with no incident attribution in this table. Excluded from the 2022 contamination account pending an incident-specific reconciliation."
+    },
+    {
+      "id": "kioxia_unattributed_insurance_ended_2026",
+      "companyId": "kioxia",
+      "incidentId": null,
+      "metric": "insurance_claim_income",
+      "kind": "reported_outcome",
+      "value": 188,
+      "units": "JPY million",
+      "roundingUnit": 1,
+      "accountingBasis": "IFRS_other_income",
+      "periodStart": "2025-04-01",
+      "periodEnd": "2026-03-31",
+      "attributionStatus": "incident_unspecified",
+      "counterpartyClass": "insurer",
+      "counterpartyId": null,
+      "cashAmount": null,
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-20",
+        "provenance": "Codex visual review of primary issuer PDF tables and notes; not independent causal validation"
+      },
+      "source": {
+        "url": "https://www.kioxia-holdings.com/content/dam/kioxia-hd/en-jp/ir/library/securities/asset/Annual-Securities-Report-FY2025-EN.pdf",
+        "publicationDate": "2026-06-24",
+        "informationAvailableDate": "2026-06-24",
+        "publicationDateEvidence": "https://www.kioxia-holdings.com/en-jp/ir/library/securities.html",
+        "sha256": "3e95d19961d6ebeec6a45875a7c7085eea5a04ed0342ff6e9659f32245d79c14",
+        "hashBasis": "raw_bytes",
+        "supportingSection": "Note 24, printed page 59 (PDF page 61), Insurance claim income; columns are years ended March 2026 and March 2025",
+        "claimStatus": "verified"
+      },
+      "interpretation": "Company insurance income with no incident attribution in this table. Excluded from the 2022 contamination account pending an incident-specific reconciliation."
+    }
+  ],
+  "governanceEvidence": [
+    {
+      "id": "kioxia_jv_voting_2026",
+      "companyId": "kioxia",
+      "incidentId": null,
+      "asOfDate": "2026-03-31",
+      "ventureNames": [
+        "Flash Partners, Ltd.",
+        "Flash Alliance, Ltd.",
+        "Flash Forward, LLC"
+      ],
+      "votingRightsShare": 0.501,
+      "controlBasis": "equal_decision_making",
+      "accountingTreatment": "IFRS joint operations",
+      "incidentCostAllocation": null,
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-20",
+        "provenance": "Codex visual review of primary issuer PDF tables and notes; not independent causal validation"
+      },
+      "source": {
+        "url": "https://www.kioxia-holdings.com/content/dam/kioxia-hd/en-jp/ir/library/securities/asset/Annual-Securities-Report-FY2025-EN.pdf",
+        "publicationDate": "2026-06-24",
+        "informationAvailableDate": "2026-06-24",
+        "publicationDateEvidence": "https://www.kioxia-holdings.com/en-jp/ir/library/securities.html",
+        "sha256": "3e95d19961d6ebeec6a45875a7c7085eea5a04ed0342ff6e9659f32245d79c14",
+        "hashBasis": "raw_bytes",
+        "supportingSection": "Note 31, printed page 78 (PDF page 80), Joint Agreements, ownership table and following paragraph",
+        "claimStatus": "verified"
+      },
+      "interpretation": "Voting rights and joint control describe governance. They do not allocate contamination losses or replace the historical accounting-share disclosure."
+    }
+  ],
+  "producerCostEvidence": [
+    {
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-21",
+        "provenance": "Codex review of primary WDC filing and visually inspected Kioxia PDF pages; disclosure reconciliation, not independent causal validation"
+      },
+      "kind": "reported_outcome",
+      "id": "wdc_contamination_cost_scope",
+      "companyId": "wdc",
+      "incidentId": "nand_contamination_2022",
+      "metric": "recognized_disaster_cost",
+      "value": 207,
+      "units": "USD million",
+      "periodStart": "2021-07-03",
+      "periodEnd": "2022-07-01",
+      "accountingLine": "cost_of_revenue",
+      "accountingBasis": "reported_accounting_amount",
+      "relatedRecordId": "wdc_contamination_fy2022",
+      "components": [
+        {
+          "id": "inventory_and_rework",
+          "label": "Inventory written off and reprocessing",
+          "value": null
+        },
+        {
+          "id": "decontamination_and_restoration",
+          "label": "Cleanup and restoring production",
+          "value": null
+        },
+        {
+          "id": "underabsorbed_overhead",
+          "label": "Unabsorbed manufacturing overhead",
+          "value": null
+        }
+      ],
+      "componentCoverage": "principal_categories_not_exhaustive",
+      "source": {
+        "url": "https://www.sec.gov/Archives/edgar/data/106040/000010604024000031/wdc-20240628.htm",
+        "publicationDate": "2024-08-20",
+        "informationAvailableDate": "2024-08-20",
+        "sha256": "c151243f9f20a24ba3ee7ff9e0001ae13b57c25707e2cd6c32384deab66fe0ac",
+        "hashBasis": "raw_bytes",
+        "supportingSection": "Note 10, Flash Ventures, printed page 87: utilization costs and February 2022 contamination charges",
+        "claimStatus": "verified"
+      },
+      "limitation": "The filing names principal categories without amounts. This accounting charge is not a measured physical-damage total or a downstream loss."
+    },
+    {
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-21",
+        "provenance": "Codex review of primary WDC filing and visually inspected Kioxia PDF pages; disclosure reconciliation, not independent causal validation"
+      },
+      "kind": "reported_outcome",
+      "id": "kioxia_contamination_cost_scope",
+      "companyId": "kioxia",
+      "incidentId": "nand_contamination_2022",
+      "metric": "operating_income_reduction",
+      "value": 33.2,
+      "units": "JPY billion",
+      "periodStart": "2021-04-01",
+      "periodEnd": "2022-03-31",
+      "accountingLine": "cost_of_sales",
+      "accountingBasis": "IFRS_operating_income_effect",
+      "relatedRecordId": "kioxia_charge_fy2021_corroboration",
+      "components": [],
+      "componentCoverage": "not_itemized",
+      "source": {
+        "url": "https://links.sgx.com/FileOpen/Kioxia%20Holdings%20Corp_946237_010_CL_NoDISC_PW_17July0630H.ashx?App=Prospectus&FileID=66909",
+        "publicationDate": "2025-07-16",
+        "informationAvailableDate": "2025-07-16",
+        "sha256": "8066a674702d2fa415d5a791ff1a2855b7fc276cd0f0fce1b5a97b9ebb3fe2f7",
+        "hashBasis": "raw_bytes",
+        "supportingSection": "Printed page 73 (PDF page 86), Incident of use of contaminated material in certain manufacturing process",
+        "claimStatus": "verified"
+      },
+      "limitation": "The circular locates the charge in cost of sales. It does not supply component amounts or an elimination bridge to WDC and the joint ventures."
+    }
+  ],
+  "otherCauseCosts": [
+    {
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-21",
+        "provenance": "Codex review of primary WDC filing and visually inspected Kioxia PDF pages; disclosure reconciliation, not independent causal validation"
+      },
+      "kind": "reported_outcome",
+      "id": "wdc_demand_utilization_2023",
+      "companyId": "wdc",
+      "incidentId": null,
+      "metric": "underutilization_cost",
+      "value": 286,
+      "units": "USD million",
+      "periodStart": "2022-07-02",
+      "periodEnd": "2023-06-30",
+      "accountingBasis": "reported_accounting_amount",
+      "causeScope": "demand_alignment",
+      "source": {
+        "url": "https://www.sec.gov/Archives/edgar/data/106040/000010604024000031/wdc-20240628.htm",
+        "publicationDate": "2024-08-20",
+        "informationAvailableDate": "2024-08-20",
+        "sha256": "c151243f9f20a24ba3ee7ff9e0001ae13b57c25707e2cd6c32384deab66fe0ac",
+        "hashBasis": "raw_bytes",
+        "supportingSection": "Note 10, Flash Ventures, printed page 87: utilization costs and February 2022 contamination charges",
+        "claimStatus": "verified"
+      },
+      "interpretation": "The issuer attributes these costs to reducing wafer supply to match demand. They are excluded from the 2022 contamination account."
+    },
+    {
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-21",
+        "provenance": "Codex review of primary WDC filing and visually inspected Kioxia PDF pages; disclosure reconciliation, not independent causal validation"
+      },
+      "kind": "reported_outcome",
+      "id": "wdc_demand_utilization_2024",
+      "companyId": "wdc",
+      "incidentId": null,
+      "metric": "underutilization_cost",
+      "value": 249,
+      "units": "USD million",
+      "periodStart": "2023-07-01",
+      "periodEnd": "2024-06-28",
+      "accountingBasis": "reported_accounting_amount",
+      "causeScope": "demand_alignment",
+      "source": {
+        "url": "https://www.sec.gov/Archives/edgar/data/106040/000010604024000031/wdc-20240628.htm",
+        "publicationDate": "2024-08-20",
+        "informationAvailableDate": "2024-08-20",
+        "sha256": "c151243f9f20a24ba3ee7ff9e0001ae13b57c25707e2cd6c32384deab66fe0ac",
+        "hashBasis": "raw_bytes",
+        "supportingSection": "Note 10, Flash Ventures, printed page 87: utilization costs and February 2022 contamination charges",
+        "claimStatus": "verified"
+      },
+      "interpretation": "The issuer attributes these costs to reducing wafer supply to match demand. They are excluded from the 2022 contamination account."
+    }
+  ],
+  "companySalesEvidence": [
+    {
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-21",
+        "provenance": "Codex review of primary WDC filing and visually inspected Kioxia PDF pages; disclosure reconciliation, not independent causal validation"
+      },
+      "kind": "reported_outcome",
+      "id": "kioxia_sales_calendar_2022q1",
+      "companyId": "kioxia",
+      "incidentId": null,
+      "metric": "company_sales",
+      "value": 393.8,
+      "units": "JPY billion",
+      "roundingUnit": 0.1,
+      "periodStart": "2022-01-01",
+      "periodEnd": "2022-03-31",
+      "accountingBasis": "IFRS_company_sales",
+      "source": {
+        "url": "https://www.kioxia-holdings.com/content/dam/kioxia-hd/en-jp/about/asset/Financial-Results-FY2022-1Q-en.pdf",
+        "publicationDate": "2022-08-10",
+        "informationAvailableDate": "2022-08-10",
+        "sha256": "a1a35d72b286b5ad8d489c88a299aa0ffe303f808a4f82ae8236ef2d99f6212d",
+        "hashBasis": "raw_bytes",
+        "supportingSection": "Page 3, Sales row: FY21 Q4 and FY22 Q1",
+        "claimStatus": "verified"
+      }
+    },
+    {
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-21",
+        "provenance": "Codex review of primary WDC filing and visually inspected Kioxia PDF pages; disclosure reconciliation, not independent causal validation"
+      },
+      "kind": "reported_outcome",
+      "id": "kioxia_sales_calendar_2022q2",
+      "companyId": "kioxia",
+      "incidentId": null,
+      "metric": "company_sales",
+      "value": 367.3,
+      "units": "JPY billion",
+      "roundingUnit": 0.1,
+      "periodStart": "2022-04-01",
+      "periodEnd": "2022-06-30",
+      "accountingBasis": "IFRS_company_sales",
+      "source": {
+        "url": "https://www.kioxia-holdings.com/content/dam/kioxia-hd/en-jp/about/asset/Financial-Results-FY2022-1Q-en.pdf",
+        "publicationDate": "2022-08-10",
+        "informationAvailableDate": "2022-08-10",
+        "sha256": "a1a35d72b286b5ad8d489c88a299aa0ffe303f808a4f82ae8236ef2d99f6212d",
+        "hashBasis": "raw_bytes",
+        "supportingSection": "Page 3, Sales row: FY21 Q4 and FY22 Q1",
+        "claimStatus": "verified"
+      }
+    }
+  ],
+  "salesAttributionEvidence": [
+    {
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-21",
+        "provenance": "Codex review of primary WDC filing and visually inspected Kioxia PDF pages; disclosure reconciliation, not independent causal validation"
+      },
+      "kind": "reported_outcome",
+      "id": "kioxia_sales_2022q2_mixed_causes",
+      "companyId": "kioxia",
+      "incidentId": "nand_contamination_2022",
+      "metric": "shipment_disruption_attribution",
+      "periodStart": "2022-04-01",
+      "periodEnd": "2022-06-30",
+      "causeScope": "mixed",
+      "components": [
+        "manufacturing_contamination",
+        "covid_assembly_test_logistics"
+      ],
+      "reportedBitGrowth": "Low-20% decrease",
+      "bitGrowthValue": null,
+      "reportedYenAspGrowth": "Low-teens % increase",
+      "priceContext": "Yen-denominated prices also benefited from a stronger US dollar.",
+      "source": {
+        "url": "https://www.kioxia-holdings.com/content/dam/kioxia-hd/en-jp/about/asset/Financial-Results-FY2022-1Q-en.pdf",
+        "publicationDate": "2022-08-10",
+        "informationAvailableDate": "2022-08-10",
+        "sha256": "a1a35d72b286b5ad8d489c88a299aa0ffe303f808a4f82ae8236ef2d99f6212d",
+        "hashBasis": "raw_bytes",
+        "supportingSection": "Page 4, Recent Sales Trends table and accompanying bullets",
+        "claimStatus": "verified"
+      },
+      "incidentSalesLoss": null,
+      "customerLoss": null,
+      "catchupAmount": null
+    }
+  ],
+  "customerTransactions": [
+    {
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-21",
+        "provenance": "Codex visual review of primary annual-report tables and supplier-risk discussion; not independent incident-loss validation"
+      },
+      "id": "phison_purchase_kioxia_taiwan_2022",
+      "companyId": "phison",
+      "incidentId": null,
+      "investigationIncidentId": "nand_contamination_2022",
+      "kind": "reported_outcome",
+      "metric": "commercial_transaction",
+      "reportingScope": "phison_parent_company",
+      "supplierId": "kioxia_taiwan",
+      "supplierName": "Kioxia Taiwan Corporation",
+      "customerId": "phison",
+      "customerName": "Phison Electronics Corporation",
+      "transactionType": "purchase",
+      "periodStart": "2022-01-01",
+      "periodEnd": "2022-12-31",
+      "value": 11413643,
+      "units": "TWD thousand",
+      "sourceSignedValue": 11413643,
+      "sharePercent": 32,
+      "sourceSignedSharePercent": 32,
+      "percentageRoundingUnit": 1,
+      "shareBasis": "Phison parent-company total purchases",
+      "accountingBasis": "related_party_commercial_transactions",
+      "productScope": "Products not itemized in this transaction row",
+      "supplierFacilityId": null,
+      "affectedShipments": null,
+      "incidentLoss": null,
+      "inputVolumeShare": null,
+      "source": {
+        "url": "https://www.phison.com/wp-content/uploads/2025/11/Phison_Electronic_Corporation_2022_Annual_Report.pdf",
+        "publicationDate": "2023-05-12",
+        "publicationDateBasis": "report_print_date",
+        "informationAvailableDate": "2026-09-21",
+        "sha256": "5b7ab1df5d9d29c394db508a0738db037782fd4e2970359fd1b0084e9b8262f7",
+        "hashBasis": "raw_bytes",
+        "supportingSection": "Consolidated financial statement appendix, Table 3, printed page 290 (PDF page 302), parent-company transaction row",
+        "claimStatus": "verified"
+      },
+      "interpretation": "Annual commercial flow for follow-up. No incident attribution, facility allocation or physical supply share is established. Parentheses distinguish sales in the source table; they are not negative losses."
+    },
+    {
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-21",
+        "provenance": "Codex visual review of primary annual-report tables and supplier-risk discussion; not independent incident-loss validation"
+      },
+      "id": "phison_sale_kioxia_2022",
+      "companyId": "phison",
+      "incidentId": null,
+      "investigationIncidentId": "nand_contamination_2022",
+      "kind": "reported_outcome",
+      "metric": "commercial_transaction",
+      "reportingScope": "phison_parent_company",
+      "supplierId": "phison",
+      "supplierName": "Phison Electronics Corporation",
+      "customerId": "kioxia",
+      "customerName": "Kioxia Corporation",
+      "transactionType": "sale",
+      "periodStart": "2022-01-01",
+      "periodEnd": "2022-12-31",
+      "value": 1640541,
+      "units": "TWD thousand",
+      "sourceSignedValue": -1640541,
+      "sharePercent": 3,
+      "sourceSignedSharePercent": -3,
+      "percentageRoundingUnit": 1,
+      "shareBasis": "Phison parent-company total sales",
+      "accountingBasis": "related_party_commercial_transactions",
+      "productScope": "Products not itemized in this transaction row",
+      "supplierFacilityId": null,
+      "affectedShipments": null,
+      "incidentLoss": null,
+      "inputVolumeShare": null,
+      "source": {
+        "url": "https://www.phison.com/wp-content/uploads/2025/11/Phison_Electronic_Corporation_2022_Annual_Report.pdf",
+        "publicationDate": "2023-05-12",
+        "publicationDateBasis": "report_print_date",
+        "informationAvailableDate": "2026-09-21",
+        "sha256": "5b7ab1df5d9d29c394db508a0738db037782fd4e2970359fd1b0084e9b8262f7",
+        "hashBasis": "raw_bytes",
+        "supportingSection": "Consolidated financial statement appendix, Table 3, printed page 290 (PDF page 302), parent-company transaction row",
+        "claimStatus": "verified"
+      },
+      "interpretation": "Annual commercial flow for follow-up. No incident attribution, facility allocation or physical supply share is established. Parentheses distinguish sales in the source table; they are not negative losses."
+    },
+    {
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-21",
+        "provenance": "Codex visual review of primary annual-report tables and supplier-risk discussion; not independent incident-loss validation"
+      },
+      "id": "phison_sale_apacer_2022",
+      "companyId": "phison",
+      "incidentId": null,
+      "investigationIncidentId": "nand_contamination_2022",
+      "kind": "reported_outcome",
+      "metric": "commercial_transaction",
+      "reportingScope": "phison_parent_company",
+      "supplierId": "phison",
+      "supplierName": "Phison Electronics Corporation",
+      "customerId": "apacer",
+      "customerName": "Apacer Technology Inc.",
+      "transactionType": "sale",
+      "periodStart": "2022-01-01",
+      "periodEnd": "2022-12-31",
+      "value": 1074199,
+      "units": "TWD thousand",
+      "sourceSignedValue": -1074199,
+      "sharePercent": 2,
+      "sourceSignedSharePercent": -2,
+      "percentageRoundingUnit": 1,
+      "shareBasis": "Phison parent-company total sales",
+      "accountingBasis": "related_party_commercial_transactions",
+      "productScope": "Products not itemized in this transaction row",
+      "supplierFacilityId": null,
+      "affectedShipments": null,
+      "incidentLoss": null,
+      "inputVolumeShare": null,
+      "source": {
+        "url": "https://www.phison.com/wp-content/uploads/2025/11/Phison_Electronic_Corporation_2022_Annual_Report.pdf",
+        "publicationDate": "2023-05-12",
+        "publicationDateBasis": "report_print_date",
+        "informationAvailableDate": "2026-09-21",
+        "sha256": "5b7ab1df5d9d29c394db508a0738db037782fd4e2970359fd1b0084e9b8262f7",
+        "hashBasis": "raw_bytes",
+        "supportingSection": "Consolidated financial statement appendix, Table 3, printed page 291 (PDF page 303), parent-company transaction row",
+        "claimStatus": "verified"
+      },
+      "interpretation": "Annual commercial flow for follow-up. No incident attribution, facility allocation or physical supply share is established. Parentheses distinguish sales in the source table; they are not negative losses."
+    }
+  ],
+  "customerSupplyStatements": [
+    {
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-21",
+        "provenance": "Codex visual review of primary annual-report tables and supplier-risk discussion; not independent incident-loss validation"
+      },
+      "id": "phison_supplier_concentration_2022_report",
+      "companyId": "phison",
+      "supplierId": "kioxia_taiwan",
+      "incidentId": null,
+      "kind": "issuer_qualitative_assessment",
+      "statementAsOf": "2023-05-12",
+      "assessment": "Phison identifies Kioxia Taiwan as its major supplier and describes supply as stable in its supplier-concentration discussion.",
+      "incidentLoss": null,
+      "outageDays": null,
+      "mitigationEffect": null,
+      "source": {
+        "url": "https://www.phison.com/wp-content/uploads/2025/11/Phison_Electronic_Corporation_2022_Annual_Report.pdf",
+        "publicationDate": "2023-05-12",
+        "publicationDateBasis": "report_print_date",
+        "informationAvailableDate": "2026-09-21",
+        "sha256": "5b7ab1df5d9d29c394db508a0738db037782fd4e2970359fd1b0084e9b8262f7",
+        "hashBasis": "raw_bytes",
+        "supportingSection": "Section 7.6.9, printed page 194 (PDF page 205), concentration of purchasing sources",
+        "claimStatus": "verified"
+      },
+      "limitation": "General supplier-risk assessment at report time. It does not establish uninterrupted deliveries during the incident, zero losses or a measured benefit from mitigation."
+    }
+  ],
+  "counterpartyPurchaseEvidence": [
+    {
+      "id": "apacer_parent_phison_purchases_2022",
+      "companyId": "apacer",
+      "supplierId": "phison",
+      "buyerScopeId": "apacer_parent",
+      "buyerScopeLabel": "Apacer parent company",
+      "value": 1073281,
+      "units": "TWD thousand",
+      "roundingUnit": 1,
+      "periodStart": "2022-01-01",
+      "periodEnd": "2022-12-31",
+      "kind": "reported_outcome",
+      "metric": "related_party_purchases",
+      "accountingBasis": "reported_2022_consolidation_scope",
+      "incidentId": null,
+      "incidentLoss": null,
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-21",
+        "provenance": "Codex visual review of primary annual-report financial tables; not independent incident-loss validation"
+      },
+      "source": {
+        "url": "https://www.apacer.com/upload/media/investor/financial/Annual_Report/2022_Annual_Report_EN.pdf",
+        "publicationDate": "2023-04-30",
+        "publicationDateBasis": "report_print_date",
+        "informationAvailableDate": "2026-09-21",
+        "sha256": "ebfea018d826bef0d5ea2b747f54ddcaa2fc0005aa5f87fe35435cfa0704ffb6",
+        "hashBasis": "raw_bytes",
+        "supportingSection": "Printed page 247 (PDF page 249), related-party transaction table: The Company / Phison",
+        "claimStatus": "verified"
+      },
+      "limitation": "Commercial purchases within the stated reporting scope. No incident attribution or physical shipment allocation. Repeated parent-only disclosure is corroboration, not another purchase."
+    },
+    {
+      "id": "apacer_udinfo_phison_purchases_2022",
+      "companyId": "apacer",
+      "supplierId": "phison",
+      "buyerScopeId": "udinfo_in_apacer_consolidation",
+      "buyerScopeLabel": "UD INFO within Apacer consolidation",
+      "value": 130914,
+      "units": "TWD thousand",
+      "roundingUnit": 1,
+      "periodStart": "2022-01-01",
+      "periodEnd": "2022-12-31",
+      "kind": "reported_outcome",
+      "metric": "related_party_purchases",
+      "accountingBasis": "reported_2022_consolidation_scope",
+      "incidentId": null,
+      "incidentLoss": null,
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-21",
+        "provenance": "Codex visual review of primary annual-report financial tables; not independent incident-loss validation"
+      },
+      "source": {
+        "url": "https://www.apacer.com/upload/media/investor/financial/Annual_Report/2022_Annual_Report_EN.pdf",
+        "publicationDate": "2023-04-30",
+        "publicationDateBasis": "report_print_date",
+        "informationAvailableDate": "2026-09-21",
+        "sha256": "ebfea018d826bef0d5ea2b747f54ddcaa2fc0005aa5f87fe35435cfa0704ffb6",
+        "hashBasis": "raw_bytes",
+        "supportingSection": "Printed page 247 (PDF page 249), related-party transaction table: UD / Phison",
+        "claimStatus": "verified"
+      },
+      "limitation": "Commercial purchases within the stated reporting scope. No incident attribution or physical shipment allocation. Repeated parent-only disclosure is corroboration, not another purchase."
+    },
+    {
+      "id": "apacer_group_phison_purchases_2022",
+      "companyId": "apacer",
+      "supplierId": "phison",
+      "buyerScopeId": "apacer_consolidated",
+      "buyerScopeLabel": "Apacer consolidated group",
+      "value": 1204195,
+      "units": "TWD thousand",
+      "roundingUnit": 1,
+      "periodStart": "2022-01-01",
+      "periodEnd": "2022-12-31",
+      "kind": "reported_outcome",
+      "metric": "related_party_purchases",
+      "accountingBasis": "reported_2022_consolidation_scope",
+      "incidentId": null,
+      "incidentLoss": null,
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-21",
+        "provenance": "Codex visual review of primary annual-report financial tables; not independent incident-loss validation"
+      },
+      "source": {
+        "url": "https://www.apacer.com/upload/media/investor/financial/Annual_Report/2022_Annual_Report_EN.pdf",
+        "publicationDate": "2023-04-30",
+        "publicationDateBasis": "report_print_date",
+        "informationAvailableDate": "2026-09-21",
+        "sha256": "ebfea018d826bef0d5ea2b747f54ddcaa2fc0005aa5f87fe35435cfa0704ffb6",
+        "hashBasis": "raw_bytes",
+        "supportingSection": "Note 7(b)(ii), printed page 243 (PDF page 245), Phison purchases row",
+        "claimStatus": "verified"
+      },
+      "limitation": "Commercial purchases within the stated reporting scope. No incident attribution or physical shipment allocation. Repeated parent-only disclosure is corroboration, not another purchase."
+    },
+    {
+      "id": "apacer_parent_phison_purchases_note_2022",
+      "companyId": "apacer",
+      "supplierId": "phison",
+      "buyerScopeId": "apacer_parent",
+      "buyerScopeLabel": "Apacer parent company (corroborating note)",
+      "value": 1073281,
+      "units": "TWD thousand",
+      "roundingUnit": 1,
+      "periodStart": "2022-01-01",
+      "periodEnd": "2022-12-31",
+      "kind": "reported_outcome",
+      "metric": "related_party_purchases",
+      "accountingBasis": "reported_2022_consolidation_scope",
+      "incidentId": null,
+      "incidentLoss": null,
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-21",
+        "provenance": "Codex visual review of primary annual-report financial tables; not independent incident-loss validation"
+      },
+      "source": {
+        "url": "https://www.apacer.com/upload/media/investor/financial/Annual_Report/2022_Annual_Report_EN.pdf",
+        "publicationDate": "2023-04-30",
+        "publicationDateBasis": "report_print_date",
+        "informationAvailableDate": "2026-09-21",
+        "sha256": "ebfea018d826bef0d5ea2b747f54ddcaa2fc0005aa5f87fe35435cfa0704ffb6",
+        "hashBasis": "raw_bytes",
+        "supportingSection": "Parent-only notes, printed page 312 (PDF page 314), Phison purchases row",
+        "claimStatus": "verified"
+      },
+      "limitation": "Commercial purchases within the stated reporting scope. No incident attribution or physical shipment allocation. Repeated parent-only disclosure is corroboration, not another purchase."
+    }
+  ],
+  "counterpartyConsolidationEvidence": [
+    {
+      "id": "apacer_udinfo_consolidation_2022",
+      "companyId": "apacer",
+      "includedCompanyId": "udinfo",
+      "groupScopeId": "apacer_consolidated",
+      "componentScopeId": "udinfo_in_apacer_consolidation",
+      "kind": "reported_consolidation_scope",
+      "controlObtainedDate": "2022-08-01",
+      "consolidationStartDate": "2022-08-01",
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-22",
+        "provenance": "Codex visual review of primary business-combination note"
+      },
+      "source": {
+        "url": "https://www.apacer.com/upload/media/investor/financial/Annual_Report/2022_Annual_Report_EN.pdf",
+        "publicationDate": "2023-04-30",
+        "publicationDateBasis": "report_print_date",
+        "informationAvailableDate": "2026-09-21",
+        "sha256": "ebfea018d826bef0d5ea2b747f54ddcaa2fc0005aa5f87fe35435cfa0704ffb6",
+        "hashBasis": "raw_bytes",
+        "supportingSection": "Note 6(g)(i), printed page 211 (PDF page 213), UD INFO acquisition and consolidation from acquisition date",
+        "claimStatus": "verified"
+      },
+      "limitation": "UD INFO entered the group during the year. Its component is retained within the reported consolidation scope, not treated as a full-year standalone purchase total."
+    }
+  ],
+  "customerInventoryEvidence": [
+    {
+      "id": "phison_consolidated_inventory_expense_2022",
+      "companyId": "phison",
+      "companyName": "Phison",
+      "scopeId": "phison_consolidated",
+      "scopeLabel": "Phison consolidated group",
+      "kind": "reported_outcome",
+      "metric": "inventory_valuation_expense",
+      "sourceMetric": "Inventory obsolescence expense",
+      "value": 1711889,
+      "units": "TWD thousand",
+      "roundingUnit": 1,
+      "periodStart": "2022-01-01",
+      "periodEnd": "2022-12-31",
+      "accountingBasis": "expense_in_cost_of_revenue",
+      "attributionStatus": "incident_unspecified",
+      "incidentId": null,
+      "incidentLoss": null,
+      "affectedInventoryLots": null,
+      "cashLoss": null,
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-22",
+        "provenance": "Codex visual review of primary annual-report inventory notes; not independent causal validation"
+      },
+      "source": {
+        "url": "https://www.phison.com/wp-content/uploads/2025/11/Phison_Electronic_Corporation_2022_Annual_Report.pdf",
+        "publicationDate": "2023-05-12",
+        "publicationDateBasis": "report_print_date",
+        "informationAvailableDate": "2026-09-22",
+        "sha256": "5b7ab1df5d9d29c394db508a0738db037782fd4e2970359fd1b0084e9b8262f7",
+        "hashBasis": "raw_bytes",
+        "supportingSection": "Note 6(7), printed page 241 (PDF page 253), consolidated inventory expense",
+        "claimStatus": "verified"
+      },
+      "limitation": "Annual expense has no contamination-specific allocation. Parent and consolidated scopes overlap. Prior-year expense is historical context, not a no-incident counterfactual; group composition can change."
+    },
+    {
+      "id": "phison_consolidated_inventory_expense_2021",
+      "companyId": "phison",
+      "companyName": "Phison",
+      "scopeId": "phison_consolidated",
+      "scopeLabel": "Phison consolidated group",
+      "kind": "reported_outcome",
+      "metric": "inventory_valuation_expense",
+      "sourceMetric": "Inventory obsolescence expense",
+      "value": 135888,
+      "units": "TWD thousand",
+      "roundingUnit": 1,
+      "periodStart": "2021-01-01",
+      "periodEnd": "2021-12-31",
+      "accountingBasis": "expense_in_cost_of_revenue",
+      "attributionStatus": "incident_unspecified",
+      "incidentId": null,
+      "incidentLoss": null,
+      "affectedInventoryLots": null,
+      "cashLoss": null,
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-22",
+        "provenance": "Codex visual review of primary annual-report inventory notes; not independent causal validation"
+      },
+      "source": {
+        "url": "https://www.phison.com/wp-content/uploads/2025/11/Phison_Electronic_Corporation_2022_Annual_Report.pdf",
+        "publicationDate": "2023-05-12",
+        "publicationDateBasis": "report_print_date",
+        "informationAvailableDate": "2026-09-22",
+        "sha256": "5b7ab1df5d9d29c394db508a0738db037782fd4e2970359fd1b0084e9b8262f7",
+        "hashBasis": "raw_bytes",
+        "supportingSection": "Note 6(7), printed page 241 (PDF page 253), consolidated inventory expense",
+        "claimStatus": "verified"
+      },
+      "limitation": "Annual expense has no contamination-specific allocation. Parent and consolidated scopes overlap. Prior-year expense is historical context, not a no-incident counterfactual; group composition can change."
+    },
+    {
+      "id": "phison_parent_inventory_expense_2022",
+      "companyId": "phison",
+      "companyName": "Phison",
+      "scopeId": "phison_parent",
+      "scopeLabel": "Phison parent company",
+      "kind": "reported_outcome",
+      "metric": "inventory_valuation_expense",
+      "sourceMetric": "Inventory obsolescence expense",
+      "value": 1671654,
+      "units": "TWD thousand",
+      "roundingUnit": 1,
+      "periodStart": "2022-01-01",
+      "periodEnd": "2022-12-31",
+      "accountingBasis": "expense_in_cost_of_revenue",
+      "attributionStatus": "incident_unspecified",
+      "incidentId": null,
+      "incidentLoss": null,
+      "affectedInventoryLots": null,
+      "cashLoss": null,
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-22",
+        "provenance": "Codex visual review of primary annual-report inventory notes; not independent causal validation"
+      },
+      "source": {
+        "url": "https://www.phison.com/wp-content/uploads/2025/11/Phison_Electronic_Corporation_2022_Annual_Report.pdf",
+        "publicationDate": "2023-05-12",
+        "publicationDateBasis": "report_print_date",
+        "informationAvailableDate": "2026-09-22",
+        "sha256": "5b7ab1df5d9d29c394db508a0738db037782fd4e2970359fd1b0084e9b8262f7",
+        "hashBasis": "raw_bytes",
+        "supportingSection": "Note 6(7), printed page 328 (PDF page 340), parent-only inventory expense",
+        "claimStatus": "verified"
+      },
+      "limitation": "Annual expense has no contamination-specific allocation. Parent and consolidated scopes overlap. Prior-year expense is historical context, not a no-incident counterfactual; group composition can change."
+    },
+    {
+      "id": "phison_parent_inventory_expense_2021",
+      "companyId": "phison",
+      "companyName": "Phison",
+      "scopeId": "phison_parent",
+      "scopeLabel": "Phison parent company",
+      "kind": "reported_outcome",
+      "metric": "inventory_valuation_expense",
+      "sourceMetric": "Inventory obsolescence expense",
+      "value": 135858,
+      "units": "TWD thousand",
+      "roundingUnit": 1,
+      "periodStart": "2021-01-01",
+      "periodEnd": "2021-12-31",
+      "accountingBasis": "expense_in_cost_of_revenue",
+      "attributionStatus": "incident_unspecified",
+      "incidentId": null,
+      "incidentLoss": null,
+      "affectedInventoryLots": null,
+      "cashLoss": null,
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-22",
+        "provenance": "Codex visual review of primary annual-report inventory notes; not independent causal validation"
+      },
+      "source": {
+        "url": "https://www.phison.com/wp-content/uploads/2025/11/Phison_Electronic_Corporation_2022_Annual_Report.pdf",
+        "publicationDate": "2023-05-12",
+        "publicationDateBasis": "report_print_date",
+        "informationAvailableDate": "2026-09-22",
+        "sha256": "5b7ab1df5d9d29c394db508a0738db037782fd4e2970359fd1b0084e9b8262f7",
+        "hashBasis": "raw_bytes",
+        "supportingSection": "Note 6(7), printed page 328 (PDF page 340), parent-only inventory expense",
+        "claimStatus": "verified"
+      },
+      "limitation": "Annual expense has no contamination-specific allocation. Parent and consolidated scopes overlap. Prior-year expense is historical context, not a no-incident counterfactual; group composition can change."
+    },
+    {
+      "id": "apacer_consolidated_inventory_expense_2022",
+      "companyId": "apacer",
+      "companyName": "Apacer",
+      "scopeId": "apacer_consolidated",
+      "scopeLabel": "Apacer consolidated group",
+      "kind": "reported_outcome",
+      "metric": "inventory_valuation_expense",
+      "sourceMetric": "Inventory write-down expense",
+      "value": 203606,
+      "units": "TWD thousand",
+      "roundingUnit": 1,
+      "periodStart": "2022-01-01",
+      "periodEnd": "2022-12-31",
+      "accountingBasis": "expense_in_cost_of_revenue",
+      "attributionStatus": "incident_unspecified",
+      "incidentId": null,
+      "incidentLoss": null,
+      "affectedInventoryLots": null,
+      "cashLoss": null,
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-22",
+        "provenance": "Codex visual review of primary annual-report inventory notes; not independent causal validation"
+      },
+      "source": {
+        "url": "https://www.apacer.com/upload/media/investor/financial/Annual_Report/2022_Annual_Report_EN.pdf",
+        "publicationDate": "2023-04-30",
+        "publicationDateBasis": "report_print_date",
+        "informationAvailableDate": "2026-09-22",
+        "sha256": "ebfea018d826bef0d5ea2b747f54ddcaa2fc0005aa5f87fe35435cfa0704ffb6",
+        "hashBasis": "raw_bytes",
+        "supportingSection": "Note 6(e), printed page 210 (PDF page 212), consolidated inventory write-downs",
+        "claimStatus": "verified"
+      },
+      "limitation": "Annual expense has no contamination-specific allocation. Parent and consolidated scopes overlap. Prior-year expense is historical context, not a no-incident counterfactual; group composition can change."
+    },
+    {
+      "id": "apacer_consolidated_inventory_expense_2021",
+      "companyId": "apacer",
+      "companyName": "Apacer",
+      "scopeId": "apacer_consolidated",
+      "scopeLabel": "Apacer consolidated group",
+      "kind": "reported_outcome",
+      "metric": "inventory_valuation_expense",
+      "sourceMetric": "Inventory write-down expense",
+      "value": 161105,
+      "units": "TWD thousand",
+      "roundingUnit": 1,
+      "periodStart": "2021-01-01",
+      "periodEnd": "2021-12-31",
+      "accountingBasis": "expense_in_cost_of_revenue",
+      "attributionStatus": "incident_unspecified",
+      "incidentId": null,
+      "incidentLoss": null,
+      "affectedInventoryLots": null,
+      "cashLoss": null,
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-22",
+        "provenance": "Codex visual review of primary annual-report inventory notes; not independent causal validation"
+      },
+      "source": {
+        "url": "https://www.apacer.com/upload/media/investor/financial/Annual_Report/2022_Annual_Report_EN.pdf",
+        "publicationDate": "2023-04-30",
+        "publicationDateBasis": "report_print_date",
+        "informationAvailableDate": "2026-09-22",
+        "sha256": "ebfea018d826bef0d5ea2b747f54ddcaa2fc0005aa5f87fe35435cfa0704ffb6",
+        "hashBasis": "raw_bytes",
+        "supportingSection": "Note 6(e), printed page 210 (PDF page 212), consolidated inventory write-downs",
+        "claimStatus": "verified"
+      },
+      "limitation": "Annual expense has no contamination-specific allocation. Parent and consolidated scopes overlap. Prior-year expense is historical context, not a no-incident counterfactual; group composition can change."
+    },
+    {
+      "id": "apacer_parent_inventory_expense_2022",
+      "companyId": "apacer",
+      "companyName": "Apacer",
+      "scopeId": "apacer_parent",
+      "scopeLabel": "Apacer parent company",
+      "kind": "reported_outcome",
+      "metric": "inventory_valuation_expense",
+      "sourceMetric": "Inventory write-down expense",
+      "value": 191000,
+      "units": "TWD thousand",
+      "roundingUnit": 1,
+      "periodStart": "2022-01-01",
+      "periodEnd": "2022-12-31",
+      "accountingBasis": "expense_in_cost_of_revenue",
+      "attributionStatus": "incident_unspecified",
+      "incidentId": null,
+      "incidentLoss": null,
+      "affectedInventoryLots": null,
+      "cashLoss": null,
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-22",
+        "provenance": "Codex visual review of primary annual-report inventory notes; not independent causal validation"
+      },
+      "source": {
+        "url": "https://www.apacer.com/upload/media/investor/financial/Annual_Report/2022_Annual_Report_EN.pdf",
+        "publicationDate": "2023-04-30",
+        "publicationDateBasis": "report_print_date",
+        "informationAvailableDate": "2026-09-22",
+        "sha256": "ebfea018d826bef0d5ea2b747f54ddcaa2fc0005aa5f87fe35435cfa0704ffb6",
+        "hashBasis": "raw_bytes",
+        "supportingSection": "Note 6(e), printed page 282 (PDF page 284), parent-only inventory write-downs",
+        "claimStatus": "verified"
+      },
+      "limitation": "Annual expense has no contamination-specific allocation. Parent and consolidated scopes overlap. Prior-year expense is historical context, not a no-incident counterfactual; group composition can change."
+    },
+    {
+      "id": "apacer_parent_inventory_expense_2021",
+      "companyId": "apacer",
+      "companyName": "Apacer",
+      "scopeId": "apacer_parent",
+      "scopeLabel": "Apacer parent company",
+      "kind": "reported_outcome",
+      "metric": "inventory_valuation_expense",
+      "sourceMetric": "Inventory write-down expense",
+      "value": 155000,
+      "units": "TWD thousand",
+      "roundingUnit": 1,
+      "periodStart": "2021-01-01",
+      "periodEnd": "2021-12-31",
+      "accountingBasis": "expense_in_cost_of_revenue",
+      "attributionStatus": "incident_unspecified",
+      "incidentId": null,
+      "incidentLoss": null,
+      "affectedInventoryLots": null,
+      "cashLoss": null,
+      "claimStatus": "verified",
+      "review": {
+        "verifiedAt": "2026-09-22",
+        "provenance": "Codex visual review of primary annual-report inventory notes; not independent causal validation"
+      },
+      "source": {
+        "url": "https://www.apacer.com/upload/media/investor/financial/Annual_Report/2022_Annual_Report_EN.pdf",
+        "publicationDate": "2023-04-30",
+        "publicationDateBasis": "report_print_date",
+        "informationAvailableDate": "2026-09-22",
+        "sha256": "ebfea018d826bef0d5ea2b747f54ddcaa2fc0005aa5f87fe35435cfa0704ffb6",
+        "hashBasis": "raw_bytes",
+        "supportingSection": "Note 6(e), printed page 282 (PDF page 284), parent-only inventory write-downs",
+        "claimStatus": "verified"
+      },
+      "limitation": "Annual expense has no contamination-specific allocation. Parent and consolidated scopes overlap. Prior-year expense is historical context, not a no-incident counterfactual; group composition can change."
+    }
+  ]
+}

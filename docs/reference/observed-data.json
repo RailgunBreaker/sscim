@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "reviewedAt": "2026-09-07",
+  "reviewedAt": "2026-09-17",
   "observations": [
     {
       "id": "naka_20210417",
@@ -831,6 +831,35 @@
         "provenance": "Codex review of primary documents; not independent human adjudication"
       },
       "limitations": "Historical aggregate SOI input share, reported at whole-percent precision. No allocation to a particular fab or downstream product is disclosed. Remaining 39% and inventory/substitution are unquantified."
+    },
+    {
+      "id": "soitec_gf_soi_2025_spend",
+      "level": "company",
+      "supplier": "soitec",
+      "customer": "gf",
+      "productScope": "GlobalFoundries silicon-on-insulator (SOI) wafer inputs",
+      "periodEnd": "2025-12-31",
+      "inputShare": null,
+      "spendShare": 0.71,
+      "supplierRevenueShare": null,
+      "shareBasis": "Approximately 71% of SOI wafer spend in 2025; physical wafer share is not disclosed in this claim",
+      "claimStatus": "verified",
+      "source": {
+        "url": "https://www.sec.gov/Archives/edgar/data/1709048/000170904826000022/gfs-20251231.htm",
+        "publicationDate": "2026-02-27",
+        "informationAvailableDate": "2026-02-27",
+        "publicationDateEvidence": "https://www.sec.gov/Archives/edgar/data/1709048/000170904826000022/0001709048-26-000022-index.html",
+        "supportingSection": "Item 3.D Risk Factors, silicon supply chain: Soitec share of 2025 SOI wafer spend",
+        "sha256": "2e330c345eca27b7fbc85028cd56ba2240b3e3d2b5602774fa0245b44f4b1efa",
+        "hashBasis": "raw_bytes",
+        "claimStatus": "verified"
+      },
+      "review": {
+        "verifiedAt": "2026-09-17",
+        "provenance": "Codex review of primary SEC filings; not independent operational measurement"
+      },
+      "operatingEvidenceId": "gf_soitec_soi_spend_share_2025",
+      "limitations": "Preserves the commercial dependency, but expenditure concentration cannot be used as a physical input or plant-shipment share. The 2024 61% supply share has a different denominator."
     }
   ],
   "capacities": [
@@ -2155,6 +2184,16 @@
       "sha256": "250a200ff5dcfc4a11af5e260a0a7a3a1bc4d9f4909d0fa1eeca6b3585545db8",
       "reviewedAt": "2026-09-07",
       "review": "Rendered relevant table checked against source header, columns and units"
+    },
+    {
+      "id": "annual",
+      "url": "https://www.sec.gov/Archives/edgar/data/1709048/000170904826000022/gfs-20251231.htm",
+      "sha256": "2e330c345eca27b7fbc85028cd56ba2240b3e3d2b5602774fa0245b44f4b1efa",
+      "hashBasis": "raw_bytes",
+      "archivePath": "artifacts/collected/gf/2e330c345eca27b7fbc85028cd56ba2240b3e3d2b5602774fa0245b44f4b1efa.html",
+      "bytes": 3366613,
+      "reviewedAt": "2026-09-17",
+      "claimVerification": "Manual source review; matching bytes alone do not validate claims"
     }
   ],
   "financialOutcomes": [

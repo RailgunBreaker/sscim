@@ -26,7 +26,7 @@ import LanguagePicker from './LanguagePicker.jsx';
    looking at rather than to do something. */
 
 export default function Header({
-  lang, setLang, setSel, setShowGuide, setShowBriefing, tourTarget,
+  lang, setLang, setSel, setShowGuide, setShowBriefing, tourTarget, documented = false, companyId, onCompanyChange,
 }) {
   const { data, engine } = useVault();
   const { COMPANIES, COUNTRY_NAMES } = data;
@@ -34,7 +34,7 @@ export default function Header({
 
   /* Counted from the snapshot, not typed in. */
   const scope = useMemo(() => {
-    const stages = engine.STAGES || data.STAGES || [];
+    const stages = engine?.STAGES || data.STAGES || [];
     const countryIds = Object.keys(COUNTRY_NAMES || {});
     const scored = countryIds.filter((id) => stages.some((st) => (st.shares || {})[id] > 0));
     return {
@@ -48,7 +48,16 @@ export default function Header({
     };
   }, [engine, data, COMPANIES, COUNTRY_NAMES]);
 
-  const datasetAsOf = engine.MODEL_PRIORS?.datasetAsOf ?? null;
+  const datasetAsOf = engine?.MODEL_PRIORS?.datasetAsOf ?? data.META?.snapshotDate ?? null;
+
+  if (documented) return <header className="dashboard-header" style={{ padding: '16px 24px', display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 18, background: C.panel, borderBottom: `1px solid ${C.line}` }}>
+    <a href="index.html" aria-label="SSCIM home"><img src="sscim-logo.png" alt="SSCIM" style={{ width: 88, filter: C.logoFilter }} /></a>
+    <div><strong>Supply chain intelligence</strong><div style={{ color: C.dim, fontSize: 12 }}>Data through {datasetAsOf} · <Freshness /></div></div>
+    <label style={{ marginLeft: 'auto' }}>Company{' '}<select aria-label="Select company" value={companyId} onChange={e => onCompanyChange(e.target.value)}>
+      {[...COMPANIES].sort((a,b) => a.name.localeCompare(b.name)).map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+    </select></label>
+    <ThemeControl />
+  </header>;
 
   return (
     <header

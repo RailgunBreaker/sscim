@@ -1,5 +1,5 @@
 {
-  "asOf": "2026-09-08",
+  "asOf": "2026-09-22",
   "reportedOutcomes": 6,
   "issuerForecasts": 4,
   "companyAttributedLinks": 1,
@@ -20,7 +20,7 @@
     "precision": "Approximate as reported; not a statistical lower bound"
   },
   "sectorAccounts": {
-    "asOf": "2026-09-08",
+    "asOf": "2026-09-22",
     "estimates": [
       {
         "id": "spglobal_2021_light_vehicle_loss",
