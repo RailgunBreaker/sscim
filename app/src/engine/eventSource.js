@@ -39,9 +39,8 @@
    ==================================================================== */
 import { clamp } from './math.js';
 import { severityIntensity } from './severity.js';
-import { persistence, persistenceByStage, profileHorizonDays, isProfileId } from './persistence.js';
+import { persistence, profileHorizonDays, isProfileId } from './persistence.js';
 import { EVENT_MODEL, LEGACY_PROFILE, UNSCORED_PROFILE, ACTIVE_HORIZON_DAYS } from './event-model.js';
-import { factualEligibility, eventEvaluationDate } from './evidence.js';
 
 export const UNSCORED_REASONS = Object.freeze({
   NOT_OPERATIONAL: 'not_operational',
@@ -49,7 +48,6 @@ export const UNSCORED_REASONS = Object.freeze({
   NO_STAGE_MAPPING: 'country_only_no_stage_mapping',
   FUTURE_DATED: 'future_dated',
   ZERO_PERSISTENCE: 'zero_persistence_at_evaluation_date',
-  EVIDENCE_INELIGIBLE: 'evidence_ineligible',
 });
 
 /* Unique stage ids of a record, order-preserving. */
@@ -86,10 +84,9 @@ export function groupIncidents(events, { incidentOf } = {}) {
     // most severe record, else the lowest id. Never "whichever came first
     // in the array", which is how a bundle's serialisation order becomes a
     // modelling decision.
-    const bySeverityThenId = (a, b) => (b.event.sev ?? 0) - (a.event.sev ?? 0)
-      || (a.event.id < b.event.id ? -1 : a.event.id > b.event.id ? 1 : 0);
-    const declared = g.records.filter((r) => r.role === 'primary').sort(bySeverityThenId)[0];
-    const primary = declared ?? [...g.records].sort(bySeverityThenId)[0];
+    const declared = g.records.find((r) => r.role === 'primary');
+    const primary = declared ?? [...g.records].sort((a, b) =>
+      (b.event.sev ?? 0) - (a.event.sev ?? 0) || (a.event.id < b.event.id ? -1 : 1))[0];
     out.push({
       incidentId: g.incidentId,
       primary: primary.event,
@@ -169,9 +166,7 @@ export function stageExposure(event, curated) {
 
    Returns { z, scored, unscoredReason, channel, intensity, persistence,
              exposure, exposureSource, profile, diagnostics }. */
-export function incidentSourceVector({ event, assumption, ageDays, params, evaluationDate: suppliedEvaluationDate, curated = EVENT_MODEL[event?.id] ?? null }) {
-  const evaluationDate = eventEvaluationDate(event, ageDays, suppliedEvaluationDate);
-  const evidenceEligibility = factualEligibility(event, evaluationDate);
+export function incidentSourceVector({ event, assumption, ageDays, params, curated = EVENT_MODEL[event?.id] ?? null }) {
   const diagnostics = [];
   const stages = uniqueStages(event);
   const rawStageCount = (event?.stages || []).length;
@@ -182,14 +177,10 @@ export function incidentSourceVector({ event, assumption, ageDays, params, evalu
   const unscored = (reason) => ({
     z: {}, scored: false, unscoredReason: reason, channel: assumption?.channel ?? 'downstream',
     intensity: 0, persistence: 0, exposure: {}, exposureSource: 'none',
-    profile: UNSCORED_PROFILE, diagnostics, evidenceEligibility,
+    profile: UNSCORED_PROFILE, diagnostics,
   });
 
   if (!assumption?.operational) return unscored(UNSCORED_REASONS.NOT_OPERATIONAL);
-  if (!evidenceEligibility.eligible) {
-    diagnostics.push({ code: 'factual_evidence_excluded', id: event.id, detail: evidenceEligibility.reason });
-    return unscored(UNSCORED_REASONS.EVIDENCE_INELIGIBLE);
-  }
 
   if (!stages.length) {
     diagnostics.push({ code: 'country_only_event', id: event.id, detail: 'record carries countries but no stage mapping — displayed, operationally unscored' });
@@ -245,8 +236,6 @@ export function incidentSourceVector({ event, assumption, ageDays, params, evalu
   }
 
   const R = persistence(profile, ageDays, params);
-  const recovery = persistenceByStage(profile, ageDays, params, { stages: exposureResult.stages, evaluationDate });
-  diagnostics.push(...recovery.diagnostics.map((d) => ({ ...d, id: event.id })));
   const intensity = severityIntensity(event.sev, params.severityMapping);
 
   if (Number.isFinite(ageDays) && ageDays < 0) {
@@ -255,7 +244,7 @@ export function incidentSourceVector({ event, assumption, ageDays, params, evalu
 
   const z = {};
   for (const [sid, alpha] of Object.entries(exposureResult.exposure)) {
-    const v = signOf(sid) * intensity * alpha * recovery.byStage[sid];
+    const v = signOf(sid) * intensity * alpha * R;
     if (v) z[sid] = clamp(v, -1, 1);
   }
 
@@ -266,13 +255,7 @@ export function incidentSourceVector({ event, assumption, ageDays, params, evalu
     unscoredReason: scored ? null : UNSCORED_REASONS.ZERO_PERSISTENCE,
     channel: assumption.channel ?? 'downstream',
     intensity,
-    // Compatibility summary is exposure-weighted; computation uses R per stage.
-    persistence: Object.entries(exposureResult.exposure).reduce((sum, [sid, alpha]) => sum + alpha * recovery.byStage[sid], 0)
-      / (Object.values(exposureResult.exposure).reduce((sum, alpha) => sum + alpha, 0) || 1),
-    assumedPersistence: R,
-    persistenceByStage: recovery.byStage,
-    recoveryComponents: recovery.components,
-    evidenceEligibility,
+    persistence: R,
     exposure: exposureResult.exposure,
     exposureSource: exposureResult.source,
     exposureBasis: exposureResult.basis ?? null,

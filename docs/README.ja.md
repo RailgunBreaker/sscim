@@ -4,8 +4,6 @@ SSCIM は、半導体サプライチェーンの中である混乱がどこへ�
 
 **SSCIM ではないもの:** リアルタイムの売買シグナル、予測エンジン、実測された貿易フローのモデル、投資助言。
 
-現在は、ローカルの定時ワークフローが一次情報にもとづく観測データ、開示された損失の会計、履歴で検証した売上ナウキャスト、および結果待ちの予測1件を収集・評価しています。範囲・出典・再現手順は[構造化エビデンスと予測運用（英語）](STRUCTURED_EVIDENCE.md)、[チェーン損失会計（英語）](CHAIN_LOSS_ACCOUNTING.md)、[復旧期間のキャリブレーション（英語）](RECOVERY_CALIBRATION.md)を参照してください。将来予測の精度とチェーン全体の損失は未確立です。
-
 ## 想定される読者
 
 - **一般の読者** — ある材料・装置メーカー・ファブ・地域が、なぜ自国の枠を超えて重要になり得るのかを理解する。[一般向けガイド（英語）](PUBLIC_GUIDE.md)から。
@@ -71,8 +69,3 @@ SSCIM の数値は、公開スナップショットと明示された前提か�
 （併設ドキュメントは英語です。）
 
 [English](README.md) · [简体中文](README.zh.md)
-
-
-## Public research review correction — 2026-09-06
-
-Application patch 0.7.2 retains the v7.1 model identifier and global defaults; the data revision is `public-review-2026-09-06`. The factual baseline excludes unresolved claims independently of confidence. Exposure magnitudes remain explicit assumptions. Company coefficients have unresolved denominators and rankings are illustrative. Recovery evidence applies only to the documented component after publication. Historical calculations are **current-model retrospective replay**, distinct from archived contemporaneous outputs and genuine point-in-time validation requiring dated input vintages. Missing coverage and neutral scores do not establish safety. See the [implementation report](PUBLIC_RESEARCH_REVIEW.md) and [canonical specification](MODEL_V7_SPEC.md).

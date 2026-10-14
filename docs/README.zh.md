@@ -4,8 +4,6 @@ SSCIM 是一个可解释的研究工具，用于探索半导体供应链中的�
 
 **SSCIM 不是：** 实时交易信号、预测引擎、实测贸易流模型，也不是投资建议。
 
-目前有一个本地定时工作流在持续收集与评估：一手来源的观测数据、已披露损失的会计口径、经历史检验的营收即时预测，以及一份尚未出结果的前瞻预测。范围、出处与复现命令见[结构化证据与前瞻运行（英文）](STRUCTURED_EVIDENCE.md)、[链条损失会计（英文）](CHAIN_LOSS_ACCOUNTING.md)、[恢复时长校准（英文）](RECOVERY_CALIBRATION.md)。前瞻精度与全链条损失尚未确立。
-
 ## 面向哪些读者
 
 - **一般读者** — 理解某种材料、设备供应商、晶圆厂或地区为何会产生远超自身边界的影响。请从[公众指南（英文）](PUBLIC_GUIDE.md)开始。
@@ -71,8 +69,3 @@ SSCIM 的数值是基于公开快照和明确前提计算出的敏感度，不�
 （延伸文档为英文。）
 
 [English](README.md) · [日本語](README.ja.md)
-
-
-## Public research review correction — 2026-09-06
-
-Application patch 0.7.2 retains the v7.1 model identifier and global defaults; the data revision is `public-review-2026-09-06`. The factual baseline excludes unresolved claims independently of confidence. Exposure magnitudes remain explicit assumptions. Company coefficients have unresolved denominators and rankings are illustrative. Recovery evidence applies only to the documented component after publication. Historical calculations are **current-model retrospective replay**, distinct from archived contemporaneous outputs and genuine point-in-time validation requiring dated input vintages. Missing coverage and neutral scores do not establish safety. See the [implementation report](PUBLIC_RESEARCH_REVIEW.md) and [canonical specification](MODEL_V7_SPEC.md).

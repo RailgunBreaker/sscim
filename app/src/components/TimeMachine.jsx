@@ -1,4 +1,3 @@
-import { t } from '../i18n/index.js';
 import { useMemo } from 'react';
 import { C } from '../theme.js';
 import { Disclosure } from '../ui/primitives.jsx';
@@ -80,10 +79,10 @@ export default function TimeMachine({ asOfDaysAgo, setAsOfDaysAgo, setSel, selec
   const onSlide = (v) => setAsOfDaysAgo(Math.max(0, spanDays - Number(v)));
 
   return (
-    <div className="cbar" style={{ padding: '7px 16px', background: live ? C.panel2 : C.panel2, borderBottom: `1px solid ${live ? C.line : C.copperDim}` }}>
+    <div className="cbar" style={{ padding: '7px 16px', background: live ? C.panel2 : '#161A26', borderBottom: `1px solid ${live ? C.line : C.copperDim}` }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
         <span className="mono" style={{ fontSize: 12, color: live ? C.faint : C.copper, flexShrink: 0 }}>
-          {live ? t('LIVE') : '⟲ REVIEWING'}
+          {live ? 'LIVE' : '⟲ REVIEWING'}
         </span>
         <span className="mono" style={{ fontSize: 12, color: live ? C.dim : C.text, fontWeight: live ? 400 : 700, flexShrink: 0 }}>
           {shownDate}
@@ -94,14 +93,16 @@ export default function TimeMachine({ asOfDaysAgo, setAsOfDaysAgo, setSel, selec
 
         <input type="range" min="0" max={spanDays} step="1" value={sliderValue}
           onChange={(e) => onSlide(e.target.value)}
-          aria-label={t('Review the chain as of a past date')}
+          aria-label="Review the chain as of a past date"
           style={{ flex: '1 1 240px', minWidth: 160, accentColor: live ? C.copperDim : C.copper }} />
 
         <button type="button" onClick={() => setAsOfDaysAgo(0)} disabled={live}
           style={{ fontSize: 12, padding: '3px 10px', borderRadius: 4, fontFamily: 'inherit',
             cursor: live ? 'default' : 'pointer', fontWeight: live ? 400 : 700,
-            background: live ? 'transparent' : C.copper, color: live ? C.faint : C.onAccent,
-            border: `1px solid ${live ? C.line : C.copper}`, opacity: live ? 0.5 : 1 }}>{t('Return to live')}</button>
+            background: live ? 'transparent' : C.copper, color: live ? C.faint : '#0C111C',
+            border: `1px solid ${live ? C.line : C.copper}`, opacity: live ? 0.5 : 1 }}>
+          Return to live
+        </button>
       </div>
 
       {/* --- event markers: click to jump to that date --- */}
@@ -116,7 +117,7 @@ export default function TimeMachine({ asOfDaysAgo, setAsOfDaysAgo, setSel, selec
           return (
             <button key={im.id} type="button"
               onClick={() => { setAsOfDaysAgo(im.daysAgo); setSel({ type: 'event', id: im.id }); }}
-              title={`${im.dateISO} · ${im.title}\nincident-removal difference on its date: ${(im.marginal ?? 0) >= 0 ? '+' : ''}${(im.marginal ?? 0).toFixed(3)} (not an additive share)`}
+              title={`${im.dateISO} · ${im.title}\nmarginal contribution to the index that day: ${(im.marginal ?? 0) >= 0 ? '+' : ''}${(im.marginal ?? 0).toFixed(3)}`}
               aria-label={`Review ${im.dateISO}: ${im.title}`}
               style={{
                 position: 'absolute', left: `${pos}%`, transform: 'translateX(-50%)',
@@ -137,16 +138,15 @@ export default function TimeMachine({ asOfDaysAgo, setAsOfDaysAgo, setSel, selec
           reader has not asked for belongs. The state sentence, which says
           WHAT IS ON SCREEN rather than how to read it, stays visible. */}
       {live ? (
-        <Disclosure summary={t('How to read this timeline')} style={{ marginTop: 2 }}>
-          Current-model retrospective replay over the last{' '}
+        <Disclosure summary="How to read this timeline" style={{ marginTop: 2 }}>
+          Drag to review the chain as it stood on any date in the last{' '}
           {Math.round(spanDays / 30)} months, or click an event marker. Marker
-          height shows the index difference when the entire incident, including its updates,
-          is removed on the primary record&rsquo;s date. These differences are not additive shares.
-          The replay uses the current network and parameters. These are recalculations, not archived outputs or point-in-time validation; source publication dates limit when evidence can apply.
+          height is that event&rsquo;s marginal contribution to the index on its own
+          date — what it added to the published number, not its standalone size.
         </Disclosure>
       ) : (
         <div style={{ fontSize: 12, color: C.faint, lineHeight: 1.6, marginTop: 2 }}>
-          {`Current-model retrospective replay for ${shownDate}: ${engine.eventsAsOf(asOfDaysAgo).length} available event record(s). Current network and parameters; sparse coverage and a neutral score do not establish historical safety.`}
+          {`Showing the model re-derived for ${shownDate}: ${engine.eventsAsOf(asOfDaysAgo).length} event(s) inside the decay window on that date. This is a past state of the record, not a hypothesis.`}
         </div>
       )}
     </div>

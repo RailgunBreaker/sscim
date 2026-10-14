@@ -1,15 +1,5 @@
 import { db } from './db.js';
 import { getMetaBundle } from './meta.js';
-import { getMeasurementLedger } from './measurement-ledger.js';
-import { readFileSync, readdirSync, existsSync } from 'node:fs';
-const optionalEvidence = path => { const url = new URL(`../../${path}`, import.meta.url); return existsSync(url) ? JSON.parse(readFileSync(url, 'utf8')) : null; };
-function publicProspectiveNews() {
-  const report = optionalEvidence('docs/benchmarks/prospective-news-performance.json');
-  if (!report) return null;
-  // Candidate IDs remain in the local audit report, outside the public bundle.
-  const { eligibleIds, backfillIds, invalidIds, ...summary } = report;
-  return summary;
-}
 
 /* Reads the whole vault out of SQLite in the wire format the dashboard
    consumes. Shared by the live API (routes/public.js) and the static-snapshot
@@ -35,15 +25,11 @@ export function getCountries() {
    because the map needs every site the moment a hazard radius is drawn, and the
    whole table is ~20KB of JSON — smaller than one briefing body. */
 export function getFacilities() {
-  const evidenceRows = db.prepare("SELECT name FROM sqlite_master WHERE name='facility_evidence'").get()
-    ? db.prepare('SELECT facility_id, evidence_json FROM facility_evidence').all() : [];
-  const evidence = Object.fromEntries(evidenceRows.map(r => [r.facility_id, JSON.parse(r.evidence_json)]));
   return db.prepare('SELECT * FROM facilities ORDER BY id').all().map((f) => ({
     id: f.id, name: f.name, company: f.company_id, country: f.country,
     lat: f.lat, lng: f.lng, kind: f.kind, stages: JSON.parse(f.stages_json), scale: f.scale,
     output: f.output, node: f.node, waferSize: f.wafer_size,
     status: f.status, since: f.since, source: f.source,
-    evidence: evidence[f.id] || null, scaleBasis: 'analyst ordinal; not measured capacity', linkBasis: 'derived relationships; not confirmed shipments',
   }));
 }
 export function getCompanies() {
@@ -67,11 +53,8 @@ export function getPolicies() {
   return db.prepare('SELECT * FROM policies').all().map((p) => ({ id: p.id, name: p.name, sev: p.sev, stages: JSON.parse(p.stages_json) }));
 }
 export function getEvents() {
-  const evidence = new Map(db.prepare('SELECT event_id, evidence_json FROM event_evidence ORDER BY recorded_at, revision').all()
-    .map((r) => [r.event_id, JSON.parse(r.evidence_json)]));
   return db.prepare('SELECT * FROM events').all().map((e) => ({
-    id: e.id, date: e.date, dateISO: e.date_iso, daysAgo: e.days_ago, sev: e.sev, type: e.type, conf: e.conf,
-    recordKind: 'factual', evidence: evidence.get(e.id) || null,
+    id: e.id, date: e.date, daysAgo: e.days_ago, sev: e.sev, type: e.type, conf: e.conf,
     title: e.title, summary: e.summary, first: e.first, second: e.second, watch: e.watch,
     detail: e.detail, source: e.source,
     /* Provenance is published, not implied. 'automatic' means triage
@@ -148,27 +131,6 @@ export function getBriefingBodies(limit = BUNDLED_BRIEFING_BODIES) {
 
 export function buildBundle() {
   return {
-    observedData: JSON.parse(readFileSync(new URL('../../docs/reference/observed-data.json', import.meta.url), 'utf8')),
-    operatingEvidence: optionalEvidence('docs/reference/gf-operating-evidence.json'),
-    operatingValidation: optionalEvidence('docs/benchmarks/gf-operating-evaluation.json'),
-    sourceAvailability: optionalEvidence('docs/benchmarks/observed-source-availability.json'),
-    revenueCurrent: optionalEvidence('docs/reference/tsmc-revenue-current.json'),
-    revenueValidation: JSON.parse(readFileSync(new URL('../../docs/benchmarks/revenue-prediction.json', import.meta.url), 'utf8')),
-    chainLossEvidence: optionalEvidence('docs/reference/chain-loss-evidence.json'),
-    chainLossVerification: optionalEvidence('docs/benchmarks/chain-loss-verification.json'),
-    lossReconciliations: optionalEvidence('docs/reference/loss-reconciliations.json'),
-    supplierLossAllocations: optionalEvidence('docs/reference/supplier-loss-allocations.json'),
-    semiconductorLossFollowup: optionalEvidence('docs/reference/semiconductor-loss-followup.json'),
-    recoveryCalibration: optionalEvidence('docs/benchmarks/recovery-calibration.json'),
-    physicalLosses: optionalEvidence('docs/benchmarks/physical-loss-evaluation.json'),
-    lagTwoValidation: optionalEvidence('docs/benchmarks/lag-two-validation.json'),
-    lossFilingMonitor: optionalEvidence('docs/operational-monitor/loss-filing-candidates.json'),
-    prospectivePerformance: optionalEvidence('docs/benchmarks/prospective-performance.json'),
-    prospectiveNewsPerformance: publicProspectiveNews(),
-    structuredCatalog: optionalEvidence('artifacts/structured/manifest.json'),
-    prospectiveNowcasts: existsSync(new URL('../../docs/prospective/', import.meta.url))
-      ? readdirSync(new URL('../../docs/prospective/', import.meta.url)).filter(f => f.endsWith('.json'))
-        .map(f => optionalEvidence(`docs/prospective/${f}`)?.record).filter(Boolean) : [],
     stages: getStages(),
     flowEdges: getFlowEdges(),
     tierLabels: getTierLabels(),
@@ -181,7 +143,6 @@ export function buildBundle() {
     events: getEvents(),
     scenarios: getScenarios(),
     dataNotes: getDataNotes(),
-    measurementEvidence: getMeasurementLedger(db),
     quotes: getQuotes(),
     briefings: getBriefingIndex(),
     briefingBodies: getBriefingBodies(),

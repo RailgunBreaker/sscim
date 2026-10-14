@@ -2,7 +2,7 @@
   "name": "sscim-server",
   "private": true,
   "license": "UNLICENSED",
-  "version": "0.7.2",
+  "version": "0.7.1",
   "type": "module",
   "scripts": {
     "dev": "node src/index.js",
@@ -23,41 +23,12 @@
     "sources:sec": "node scripts/resolve-sec-citations.mjs",
     "sources:methods": "node scripts/resolve-method-citations.mjs",
     "evidence": "node scripts/build-evidence-coverage.mjs",
-    "repair:provenance": "node scripts/repair-event-provenance.mjs",
-    "news:update": "node scripts/pipeline.mjs --local-only --no-ai --no-triage --no-quotes",
-    "evaluate:observed": "node scripts/evaluate-observed-data.mjs",
-    "collect:gf-operating": "node scripts/import-gf-operating-evidence.mjs",
-    "evaluate:gf-operating": "node scripts/evaluate-gf-operating-evidence.mjs",
-    "calibrate:recovery": "node scripts/calibrate-recovery.mjs",
-    "evaluate:lag-two": "node scripts/evaluate-lag-two.mjs",
-    "losses:physical": "node scripts/evaluate-physical-losses.mjs",
-    "evaluate:revenue": "node scripts/evaluate-revenue-prediction.mjs",
-    "evaluate:chain-loss": "node scripts/evaluate-chain-loss.mjs",
-    "data:structured": "node scripts/export-structured-evidence.mjs",
-    "revenue:refresh": "node scripts/refresh-revenue-current.mjs",
-    "prospective:capture": "node scripts/capture-prospective-nowcast.mjs",
-    "prospective:score": "node scripts/score-prospective-nowcasts.mjs",
-    "prospective:news": "node scripts/monitor-prospective-news.mjs",
-    "operations": "node scripts/run-operations.mjs",
-    "operations:install": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/install-operations-task.ps1",
-    "operations:remove": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/install-operations-task.ps1 -Remove",
-    "losses:collect": "node scripts/collect-loss-disclosures.mjs",
-    "losses:reconcile": "node scripts/evaluate-loss-reconciliations.mjs",
-    "losses:allocate": "node scripts/evaluate-supplier-loss-allocations.mjs",
-    "losses:followup": "node scripts/evaluate-semiconductor-loss-followup.mjs",
-    "losses:discover": "node scripts/monitor-loss-filings.mjs",
-    "losses:review-filing": "node scripts/review-loss-filing.mjs",
-    "audit:revenue-vintages": "node scripts/audit-revenue-vintages.mjs",
-    "evaluate:news": "node scripts/evaluate-news.mjs",
-    "benchmark:news": "node scripts/run-news-benchmark.mjs",
-    "audit:news-timeliness": "node scripts/audit-news-timeliness.mjs",
-    "check:observed-sources": "node scripts/check-observed-sources.mjs"
+    "repair:provenance": "node scripts/repair-event-provenance.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.115.0",
-    "better-sqlite3": "^13.0.3",
+    "better-sqlite3": "^11.3.0",
     "cors": "^2.8.5",
-    "express": "^4.19.2",
-    "fast-xml-parser": "^5.11.1"
+    "express": "^4.19.2"
   }
 }

@@ -16,7 +16,6 @@
    Run:  npm run shots                    write into docs/screenshots/after
          npm run shots -- --phase before  write into docs/screenshots/before
          npm run shots -- --only landing  a single scene
-         npm run shots -- --scheme light  the light-theme record
    ==================================================================== */
 import http from 'node:http';
 import fs from 'node:fs';
@@ -33,11 +32,6 @@ const arg = (flag, fallback) => {
 };
 const PHASE = arg('--phase', 'after');
 const ONLY = arg('--only', null);
-/* Pinned, not inherited. Playwright's default context is light, so leaving
-   this to the harness silently captured the light theme regardless of what
-   the product itself defaults to (theme.js falls back to dark when the OS
-   states no preference). Pass --scheme light for the light-theme record. */
-const SCHEME = arg('--scheme', 'dark');
 const outDir = path.resolve(here, '..', '..', 'docs', 'screenshots', PHASE);
 
 const MIME = {
@@ -115,7 +109,6 @@ async function capture(browser, vp, scene) {
     viewport: { width: vp.width, height: vp.height },
     deviceScaleFactor: 1,
     reducedMotion: 'no-preference',
-    colorScheme: SCHEME,
   });
   const page = await context.newPage();
   page.on('console', () => {});
@@ -180,7 +173,7 @@ async function main() {
   const written = [];
   const overflows = [];
 
-  console.log(`SSCIM screenshots — phase "${PHASE}", ${SCHEME} theme → docs/screenshots/${PHASE}/`);
+  console.log(`SSCIM screenshots — phase "${PHASE}" → docs/screenshots/${PHASE}/`);
   try {
     for (const scene of SCENES) {
       if (ONLY && scene.id !== ONLY) continue;

@@ -7,8 +7,6 @@ import { useVault } from '../data/VaultContext.jsx';
 import { MODEL_VERSION } from '../engine/registry.js';
 import SearchBox from './SearchBox.jsx';
 import Freshness from './Freshness.jsx';
-import ThemeControl from './ThemeControl.jsx';
-import LanguagePicker from './LanguagePicker.jsx';
 
 /* The header used to carry, in order: the logo, a build label reading
    "v4 · OSM MAP · COMPANY SPREAD", the full product name, three unlabelled
@@ -26,7 +24,7 @@ import LanguagePicker from './LanguagePicker.jsx';
    looking at rather than to do something. */
 
 export default function Header({
-  lang, setLang, setSel, setShowGuide, setShowBriefing, tourTarget, documented = false, companyId, onCompanyChange,
+  lang, setLang, setSel, setShowGuide, setShowBriefing, tourTarget,
 }) {
   const { data, engine } = useVault();
   const { COMPANIES, COUNTRY_NAMES } = data;
@@ -34,7 +32,7 @@ export default function Header({
 
   /* Counted from the snapshot, not typed in. */
   const scope = useMemo(() => {
-    const stages = engine?.STAGES || data.STAGES || [];
+    const stages = engine.STAGES || data.STAGES || [];
     const countryIds = Object.keys(COUNTRY_NAMES || {});
     const scored = countryIds.filter((id) => stages.some((st) => (st.shares || {})[id] > 0));
     return {
@@ -48,20 +46,10 @@ export default function Header({
     };
   }, [engine, data, COMPANIES, COUNTRY_NAMES]);
 
-  const datasetAsOf = engine?.MODEL_PRIORS?.datasetAsOf ?? data.META?.snapshotDate ?? null;
-
-  if (documented) return <header className="dashboard-header" style={{ padding: '16px 24px', display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 18, background: C.panel, borderBottom: `1px solid ${C.line}` }}>
-    <a href="index.html" aria-label="SSCIM home"><img src="sscim-logo.png" alt="SSCIM" style={{ width: 88, filter: C.logoFilter }} /></a>
-    <div><strong>Supply chain intelligence</strong><div style={{ color: C.dim, fontSize: 12 }}>Data through {datasetAsOf} · <Freshness /></div></div>
-    <label style={{ marginLeft: 'auto' }}>Company{' '}<select aria-label="Select company" value={companyId} onChange={e => onCompanyChange(e.target.value)}>
-      {[...COMPANIES].sort((a,b) => a.name.localeCompare(b.name)).map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
-    </select></label>
-    <ThemeControl />
-  </header>;
+  const datasetAsOf = engine.MODEL_PRIORS?.datasetAsOf ?? null;
 
   return (
     <header
-      className="dashboard-header"
       style={{
         borderBottom: `1px solid ${color.border.default}`,
         padding: `${space.sm + 2}px ${space.lg}px`,
@@ -69,7 +57,7 @@ export default function Header({
         flexWrap: 'wrap',
         gap: space.md,
         alignItems: 'center',
-        background: color.surface.panel,
+        background: color.surface.page,
       }}
     >
       <a
@@ -80,24 +68,21 @@ export default function Header({
         <img
           src="sscim-logo.png"
           alt="SSCIM"
-          style={{ display: 'block', width: 88, height: 'auto', filter: C.logoFilter }}
+          style={{ display: 'block', width: 88, height: 'auto', filter: 'grayscale(1) brightness(0) invert(1)' }}
         />
       </a>
-
-      <div className="dashboard-brand"><strong>{t('Supply chain intelligence')}</strong><span>{t('Semiconductor research workspace')}</span></div>
 
       {/* One status, not seven fields. The dataset date and how stale it is
           are the two things worth knowing at a glance; the rest is in About. */}
       <div style={{ display: 'flex', alignItems: 'center', gap: space.sm, minWidth: 0 }}>
         <span style={{ ...typeStyle.meta, ...tabular, color: color.text.secondary, whiteSpace: 'nowrap' }}>
-          {datasetAsOf ? t('Data to {date}', { date: datasetAsOf }) : t('Data snapshot')}
+          {datasetAsOf ? `Data to ${datasetAsOf}` : 'Data snapshot'}
         </span>
         <Freshness />
       </div>
 
-      <div className="dashboard-actions" style={{ marginLeft: 'auto', display: 'flex', gap: space.sm, alignItems: 'center', flexWrap: 'wrap' }}>
-        <ThemeControl />
-        <LanguagePicker />
+      <div style={{ marginLeft: 'auto', display: 'flex', gap: space.sm, alignItems: 'center', flexWrap: 'wrap' }}>
+        <LanguagePicker lang={lang} setLang={setLang} />
         <SearchBox setSel={setSel} />
         <Button variant="quiet" size="sm" onClick={() => setShowGuide(true)}>
           {t('Help')}
@@ -120,6 +105,57 @@ export default function Header({
         />
       </div>
     </header>
+  );
+}
+
+/* Four languages, as a labelled group rather than four loose buttons. The
+   codes are the language's own name, which is what a reader scanning for
+   their language looks for. */
+function LanguagePicker({ lang, setLang }) {
+  const LANGS = [['en', 'EN', 'English'], ['zh', '简', '简体中文'], ['tw', '繁', '繁體中文'], ['ja', '日', '日本語']];
+  return (
+    <div
+      role="radiogroup"
+      aria-label="Language"
+      style={{
+        display: 'flex',
+        gap: 2,
+        padding: 2,
+        background: color.surface.sunken,
+        border: `1px solid ${color.border.control}`,
+        borderRadius: radius.md,
+      }}
+    >
+      {LANGS.map(([l, short, full]) => {
+        const active = lang === l;
+        return (
+          <button
+            key={l}
+            type="button"
+            role="radio"
+            aria-checked={active}
+            aria-label={full}
+            title={full}
+            onClick={() => setLang(l)}
+            className="ui-button"
+            style={{
+              background: active ? color.state.accent : 'transparent',
+              color: active ? color.text.onAccent : color.text.secondary,
+              border: 'none',
+              borderRadius: radius.sm,
+              padding: `0 ${space.sm}px`,
+              minHeight: 24,
+              fontSize: font.size.meta,
+              fontWeight: active ? font.weight.semibold : font.weight.regular,
+              fontFamily: 'inherit',
+              cursor: 'pointer',
+            }}
+          >
+            {short}
+          </button>
+        );
+      })}
+    </div>
   );
 }
 
@@ -173,7 +209,7 @@ function AboutMenu({ open, setOpen, scope, datasetAsOf, tourTarget }) {
             background: color.surface.panel,
             border: `1px solid ${color.border.default}`,
             borderRadius: radius.lg,
-            boxShadow: C.overlay,
+            boxShadow: '0 8px 28px rgba(0,0,0,.45)',
             padding: space.lg,
           }}
         >

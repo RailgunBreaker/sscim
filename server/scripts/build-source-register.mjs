@@ -125,7 +125,7 @@ function secEntries(event) {
       register: `accession no. ${d.accession}`,
       date: longDate(d.filingDate),
       url: d.url,
-      accessed: d.verifiedAt || d.accessed || null,
+      accessed: today,
     }),
   }));
 }
@@ -144,7 +144,7 @@ function resolvedEntries(event) {
       register: d.citation ? d.citation.replace(/\bFR\b/, 'Fed. Reg.') : null,
       date: longDate(d.publicationDate),
       url: d.url,
-      accessed: d.verifiedAt || d.accessed || null,
+      accessed: today,
     }),
   }));
 }
@@ -171,7 +171,7 @@ function citationFor(event) {
         title: meta.title,
         date: longDate(meta.published || meta.dateISO || event.date_iso),
         url,
-        accessed: meta?.verifiedAt || null,
+        accessed: today,
       }),
     };
   }
@@ -184,7 +184,7 @@ function citationFor(event) {
         container: 'Federal Register',
         date: longDate(meta.dateISO || event.date_iso),
         url,
-        accessed: meta?.verifiedAt || null,
+        accessed: today,
       }),
     };
   }
@@ -196,7 +196,7 @@ function citationFor(event) {
         description: `Event page ${url.split('/').pop()}${meta.magnitude ? `, M${meta.magnitude}` : ''}${meta.place ? `, ${meta.place}` : ''}`,
         date: longDate(meta.dateISO || event.date_iso),
         url,
-        accessed: meta?.verifiedAt || null,
+        accessed: today,
       }),
     };
   }

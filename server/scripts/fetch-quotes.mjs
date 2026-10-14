@@ -9,17 +9,8 @@
 
    Run from server/:  node scripts/fetch-quotes.mjs
    Then re-export the snapshot:  cd ../app && npm run snapshot  */
-import { writeSync } from 'node:fs';
 import { refreshQuotes } from '../src/quotes.js';
 
 const { ok, total, unlisted, asOf, missing } = await refreshQuotes();
-writeSync(1, `Quotes refreshed: ${ok}/${total} listed companies (${unlisted} unlisted, no quote by design). As of ${asOf}.
-`);
-if (missing.length) writeSync(2, `No quote returned for: ${missing.join(', ')}
-`);
-
-/* Writes its output synchronously and exits explicitly, for the same reasons
-   as build-vault-snapshot.mjs. It matters a little more here: this step is
-   `|| echo ::warning::` in CI, so a native crash would have been reported as a
-   failed quote refresh rather than as the addon crash it was. */
-process.exit(0);
+console.log(`Quotes refreshed: ${ok}/${total} listed companies (${unlisted} unlisted, no quote by design). As of ${asOf}.`);
+if (missing.length) console.warn(`No quote returned for: ${missing.join(', ')}`);

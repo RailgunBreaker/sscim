@@ -1,13 +1,17 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
-import { buildOperationalVault } from './operationalVault.js';
+import { buildEngine } from '../engine/index.js';
+import { buildVaultData } from './buildVaultData.js';
 import { reconcileBundle, staleLiveMessage } from './reconcileBundle.js';
-import snapshot from './operational-snapshot.json';
+import { buildFacilityNetwork } from '../engine/facilityNetwork.js';
+import snapshot from './vault-snapshot.json';
 
 /* ====================================================================
    The vault: all company/stage/customer/policy/event/owner data lives
    in the backend's SQLite database (server/), not in the JS bundle.
-   This context refreshes the bundle and exposes reviewed evidence to the
-   dashboard. The legacy score and inferred-facility engines are not run.
+   This context fetches it once on load and builds the derived engine
+   (risk scores, shock propagation, rankings) from whatever comes back —
+   so updating the data means writing to the vault's admin API, not
+   editing and redeploying this app.
 
    Fallback: if no vault API is reachable (e.g. the GitHub Pages deploy,
    which is static-only), this falls back to `vault-snapshot.json` — a
@@ -19,7 +23,7 @@ import snapshot from './operational-snapshot.json';
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8787';
 
-export const VaultCtx = createContext(null);
+const VaultCtx = createContext(null);
 
 function buildVaultState(rawBundle, source) {
   /* A live API can be older than the build talking to it — it answers 200
@@ -33,16 +37,39 @@ function buildVaultState(rawBundle, source) {
     ? reconcileBundle(rawBundle, snapshot)
     : { bundle: rawBundle, filled: [], dropped: 0, stale: false };
 
-  const data = buildOperationalVault(bundle);
+  const data = buildVaultData(bundle);
   data.LIVE_GAPS = { filled, dropped, stale, message: staleLiveMessage({ filled, dropped }) };
   if (stale) {
     console.warn(`SSCIM: ${staleLiveMessage({ filled, dropped })}`);
   }
-  return { status: 'ready', data, engine: null, source, error: null };
+  const engine = buildEngine({
+    STAGES: data.STAGES, FLOW_EDGES: data.FLOW_EDGES, COMPANIES: data.COMPANIES,
+    CUSTOMERS: data.CUSTOMERS, POLICIES: data.POLICIES, EVENTS: data.EVENTS, OWNERS: data.OWNERS,
+    datasetAsOf: bundle.meta?.snapshotDate,
+  });
+  /* The site-to-site network is composed here rather than inside buildEngine
+     because it needs both halves: the facility layer (data) and the engine's
+     own propagation. buildEngine's input signature stays unchanged, and the
+     network remains a derived view over the two — never an engine input.
+     Memoized per supplier stage: ~24 propagations, not one per site pair. */
+  const reachCache = {};
+  data.FACILITY_NETWORK = buildFacilityNetwork({
+    layer: data.FACILITY_LAYER,
+    CUSTOMERS: data.CUSTOMERS,
+    stageIds: data.STAGES.map((s) => s.id),
+    dependence: (supplierStage, customerStage) => {
+      const field = (reachCache[supplierStage] ||= engine.propagateTrace(supplierStage, 1, 'downstream').field);
+      return field[customerStage] ?? 0;
+    },
+  });
+  return { status: 'ready', data, engine, source, error: null };
 }
 
-/* Quotes and the evidence bundle refresh independently every minute. A failed
-   bundle refresh retains the last successful data and exposes its status. */
+/* Only quotes are polled. Everything else in the vault changes when a human or
+   the pipeline changes it, so re-fetching it on a timer would be churn; market
+   prices move on their own. Quotes are display metadata and never an engine
+   input, so refreshing them cannot alter a score — the engine is deliberately
+   left untouched here rather than rebuilt. */
 const QUOTE_POLL_MS = 60_000;
 
 export function VaultProvider({ children }) {
@@ -50,7 +77,7 @@ export function VaultProvider({ children }) {
 
   useEffect(() => {
     let cancelled = false;
-    fetch(`${API_BASE}/api/bundle`, { signal: AbortSignal.timeout(15000) })
+    fetch(`${API_BASE}/api/bundle`)
       .then((r) => {
         if (!r.ok) throw new Error(`Vault API returned ${r.status}`);
         return r.json();
@@ -65,27 +92,6 @@ export function VaultProvider({ children }) {
         setState(buildVaultState(snapshot, 'static'));
       });
     return () => { cancelled = true; };
-  }, []);
-
-  // Refresh reviewed incidents as well as quotes. An API connection alone did
-  // not previously refresh the news dataset after the initial page load.
-  useEffect(() => {
-    let cancelled = false, pending = false;
-    const poll = async () => {
-      if (pending) return;
-      pending = true;
-      try {
-        const response = await fetch(`${API_BASE}/api/bundle`, { signal: AbortSignal.timeout(15000) });
-        if (!response.ok) throw new Error(`bundle ${response.status}`);
-        const bundle = await response.json();
-        if (!cancelled) setState(buildVaultState(bundle, 'live'));
-      } catch {
-        if (!cancelled) setState(previous => previous.data ? { ...previous,
-          data: { ...previous.data, REFRESH_FAILED: true } } : previous);
-      } finally { pending = false; }
-    };
-    const timer = setInterval(poll, 60_000);
-    return () => { cancelled = true; clearInterval(timer); };
   }, []);
 
   useEffect(() => {

@@ -13,34 +13,6 @@ export const db = new Database(DB_PATH);
 db.pragma('journal_mode = WAL');
 db.pragma('foreign_keys = ON');
 
-/* CLOSE THE DATABASE ON EXIT.
-
-   No consumer of this module ever closed the vault. Closing it here checkpoints
-   the WAL and drops the -wal/-shm sidecars, so the committed .db file is
-   complete. This is hygiene, not a crash fix — see the note below.
-
-   WHAT CRASHED CI, AND WHAT ACTUALLY FIXED IT. `npm run snapshot` aborted on
-   the runner with:
-
-     Assertion failed: (env) != nullptr   at ../src/api/hooks.cc:142
-     Statement::~Statement() [better_sqlite3.node]
-     Aborted (core dumped)                exit code 134
-
-   better-sqlite3 11.x registered its addon cleanup through the raw
-   node::AddEnvironmentCleanupHook(isolate, ...) API. When V8 collects a
-   discarded Statement wrapper, the destructor runs inside a GC callback with
-   no entered context, node::Environment::GetCurrent(isolate) returns null, and
-   the matching RemoveEnvironmentCleanupHook asserts. Any garbage Statement can
-   trigger it, so it depends purely on when a GC happens to run — which is why
-   the runner hit it and the same Node major never did locally.
-
-   Neither closing the database nor exiting explicitly can prevent that: the
-   crash happens mid-run, at a GC we do not control. The fix was upgrading to
-   better-sqlite3 13, which registers through node-addon-api
-   (env.AddCleanupHook) and no longer calls the asserting API at all. It also
-   ships Node-API prebuilds, so CI stops rebuilding the addon from source. */
-process.once('exit', () => { try { if (db.open) db.close(); } catch { /* already closed */ } });
-
 /* Core entity tables use a *_json column for naturally nested per-entity
    attributes (a stage's country-share map, a company's stage-stake map,
    an event's stage/country/timeline arrays) — idiomatic for this shape of
@@ -153,17 +125,6 @@ CREATE TABLE IF NOT EXISTS scenarios (
   name       TEXT NOT NULL,
   desc       TEXT,
   event_json TEXT
-);
-
--- Append-only claim reviews. Original data remain recoverable independently
--- of corrected public prose and the administrative classification workflow.
-CREATE TABLE IF NOT EXISTS event_evidence (
-  event_id TEXT NOT NULL,
-  revision TEXT NOT NULL,
-  evidence_json TEXT NOT NULL,
-  original_record_json TEXT NOT NULL,
-  recorded_at TEXT NOT NULL DEFAULT (datetime('now')),
-  PRIMARY KEY (event_id, revision)
 );
 
 CREATE TABLE IF NOT EXISTS data_notes (

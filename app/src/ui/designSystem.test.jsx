@@ -17,7 +17,7 @@ import { createRoot } from 'react-dom/client';
 import { act } from 'react';
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true;
-import { C, THEMES } from '../theme.js';
+import { C } from '../theme.js';
 import { color, font, control, space, typeStyle } from './tokens.js';
 import { Button, IconButton, SegmentedControl, Tabs, Panel, SectionHeader, StatusBadge, Metric, Disclosure, EmptyState } from './primitives.jsx';
 import { I18N } from '../i18n/index.js';
@@ -36,13 +36,11 @@ const contrast = (a, b) => {
   return (Math.max(la, lb) + 0.05) / (Math.min(la, lb) + 0.05);
 };
 
-
+const SURFACES = { page: C.bg, panel: C.panel, sunken: C.panel2 };
 const AA_NORMAL = 4.5;
 const AA_LARGE = 3.0;
 
-describe.each(Object.entries(THEMES))('%s theme contrast (WCAG AA)', (name, palette) => {
-  const C = palette;
-  const SURFACES = { page: C.bg, panel: C.panel, sunken: C.panel2 };
+describe('colour contrast (WCAG AA)', () => {
   it('computes a known ratio correctly, so the check itself is trustworthy', () => {
     expect(contrast('#FFFFFF', '#000000')).toBeCloseTo(21, 1);
     expect(contrast('#000000', '#000000')).toBeCloseTo(1, 5);
@@ -66,7 +64,7 @@ describe.each(Object.entries(THEMES))('%s theme contrast (WCAG AA)', (name, pale
   }
 
   it('rejects the old muted value, so it cannot be restored unnoticed', () => {
-    expect(contrast('#5A6478', THEMES.dark.panel)).toBeLessThan(AA_NORMAL);
+    expect(contrast('#5A6478', C.panel)).toBeLessThan(AA_NORMAL);
     expect(C.faint).not.toBe('#5A6478');
   });
 
@@ -77,7 +75,7 @@ describe.each(Object.entries(THEMES))('%s theme contrast (WCAG AA)', (name, pale
   });
 
   it('text on the copper fill passes AA, since primary buttons use it', () => {
-    expect(contrast(C.onAccent, C.copper)).toBeGreaterThanOrEqual(AA_NORMAL);
+    expect(contrast(color.text.onAccent, C.copper)).toBeGreaterThanOrEqual(AA_NORMAL);
   });
 });
 

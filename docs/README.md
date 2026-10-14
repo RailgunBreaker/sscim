@@ -2,18 +2,7 @@
 
 SSCIM is an explainable research tool for exploring how a semiconductor disruption may move through a modeled supply chain. It combines a world map, a directed stage graph, a facility network, company footprints, and reviewed historical events over a single computational engine.
 
-The application now opens with [documented observations and supplier disclosures](OBSERVED_DATA.md), including a public-source fab-capacity dataset. The assumption model is available through **Explore assumption model**. Observed data, conditional input-exposure calculations, and research scores have separate evidence requirements.
-
-SSCIM includes a [historically tested TSMC revenue nowcast](PREDICTIVE_VALIDATION.md). The supply-chain research model remains uncalibrated. SSCIM does not provide a live trading signal, measured trade-flow model or investment advice.
-
-An hourly local workflow now collects, evaluates and exports the evidence
-described in [structured evidence and prospective operations](STRUCTURED_EVIDENCE.md):
-every analytical dataset is exported to a queryable JSON/SQLite catalog, one
-prospective revenue forecast is captured and pending, and four disclosed-loss
-accounting scopes are reconciled in [chain loss accounting](CHAIN_LOSS_ACCOUNTING.md).
-A scoped [recovery-duration fit](RECOVERY_CALIBRATION.md) over six reported
-factory recoveries is available for research and promotes no global parameter.
-Prospective accuracy and chain-wide loss remain unestablished.
+**SSCIM is not** a live trading signal, a prediction engine, a measured trade-flow model, or investment advice.
 
 ## What it is for
 
@@ -71,9 +60,6 @@ Read the explanation, source, confidence label, and assumptions before using any
 | Know what enters the model | [Data sources, inputs, and outputs](DATA_SOURCES_AND_OUTPUTS.md) |
 | See what earlier releases delivered and what comes next | [Project roadmap](MODEL_ROADMAP.md) |
 | Follow evidence to publication | [Data pipeline](computation-demo/DATA_PIPELINE.md) |
-| See what is collected, scored and exported today | [Structured evidence and prospective operations](STRUCTURED_EVIDENCE.md) |
-| Follow a disclosed loss through its accounting scope | [Chain loss accounting](CHAIN_LOSS_ACCOUNTING.md) |
-| Check the recovery-duration fit and why it is not promoted | [Recovery duration calibration](RECOVERY_CALIBRATION.md) |
 | Find any document quickly | [Documentation reference](DOCUMENTATION_REFERENCE.md) |
 
 ## Project status and roadmap
@@ -100,7 +86,7 @@ Country coverage has two tiers and the interface distinguishes them: some countr
 
 Facility significance is an **analyst ordinal (1–5), not measured capacity**, so every share derived from it is a share of the modeled sample rather than of world output.
 
-The research model does not consume measured inventory, bills of materials or qualification constraints. The separate [observed-data workspace](OBSERVED_DATA.md) contains 48 UMC capacity records, 16 recovery observations, 16 reported financial outcomes, six earlier issuer forecasts, 14 company relationships and one reported manufacturing route. This remains incomplete coverage and does not establish chain-wide predictive accuracy. See [spec §9](MODEL_V7_SPEC.md#9-validation-status) and the [synthetic parameter recovery note](computation-demo/validation/SYNTHETIC_PARAMETER_RECOVERY.md) for the limits of model validation.
+The model has no facility-level capacity, inventory, bill-of-materials, qualification, or recovery-time data. A real capacity-constrained shock, such as a fab physically destroyed, would propagate differently than this model predicts. See the [project roadmap](MODEL_ROADMAP.md) for the full list of what calibration would require, [spec §9](MODEL_V7_SPEC.md#9-validation-status) for the status of each validation activity separately, and the [synthetic parameter recovery note](computation-demo/validation/SYNTHETIC_PARAMETER_RECOVERY.md) for what that test does and does not establish.
 
 ## Contributing
 
@@ -108,7 +94,7 @@ Submit evidence with a stable source, a date, a bounded claim, the affected stag
 
 **Automatic approval is opt-in and off by default.** With `SSCIM_TRIAGE_AUTO_APPROVE` unset, every relevant candidate waits for a person. Setting it to `on` enables bounded unattended approval (High confidence only, no duplicate flag, never without a draft); anything approved that way is recorded with `provenance='automatic'` and its source line says *"AI-drafted, automatically approved by triage — not human-reviewed"*. No reviewer identity is ever invented for an unattended approval. `SELECT * FROM events WHERE provenance='automatic'` is the complete list of what went in that way.
 
-Automatic **rejection** is configured separately (`SSCIM_TRIAGE_AUTO_REJECT`) and also defaults off. Relevant and irrelevant proposals wait for review unless their respective automatic action is explicitly enabled. Automatic operational approval additionally requires a matching source passage classified as observed evidence.
+Automatic **rejection** is configured separately (`SSCIM_TRIAGE_AUTO_REJECT`, default on). The asymmetry is deliberate: a wrongly rejected candidate stays in the queue with its reason attached and costs one glance to recover, while a wrongly approved one is already published and already moving the index.
 
 Internal review notes — candidate identifiers, approve/reject commands, the publication log — stay in the `event_candidates` table behind the admin token and never reach a public field. A test over the generated snapshot fails the build if one does.
 
@@ -121,8 +107,3 @@ The architecture draws framing from network economics, industrial organization, 
 ## Languages
 
 [日本語](README.ja.md) · [简体中文](README.zh.md)
-
-
-## Public research review correction — 2026-09-06
-
-Application patch 0.7.2 retains the v7.1 model identifier and global defaults; the data revision is `public-review-2026-09-06`. The factual baseline excludes unresolved claims independently of confidence. Exposure magnitudes remain explicit assumptions. Company coefficients have unresolved denominators and rankings are illustrative. Recovery evidence applies only to the documented component after publication. Historical calculations are **current-model retrospective replay**, distinct from archived contemporaneous outputs and genuine point-in-time validation requiring dated input vintages. Missing coverage and neutral scores do not establish safety. See the [implementation report](PUBLIC_RESEARCH_REVIEW.md) and [canonical specification](MODEL_V7_SPEC.md).

@@ -35,8 +35,7 @@ export function tokenize(title) {
   return [...new Set(
     String(title || '')
       .toLowerCase()
-      .normalize('NFKC')
-      .replace(/[^\p{L}\p{N}]+/gu, ' ')
+      .replace(/[^a-z0-9]+/g, ' ')
       .split(' ')
       .filter((w) => w.length >= 3 && !STOPWORDS.has(w)),
   )].sort();

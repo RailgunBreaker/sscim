@@ -23,7 +23,6 @@ export default defineConfig({
   base: './',
   define: { __APP_VERSION__: JSON.stringify(pkg.version) },
   build: {
-    manifest: true,
     // Land the build artifact outside app/ at the repo root, keeping app/ pure source.
     outDir: '../dist-app',
     emptyOutDir: true,
@@ -35,7 +34,6 @@ export default defineConfig({
         dashboard: resolve(__dirname, 'sscim-app.html'),
         admin: resolve(__dirname, 'admin.html'),
         docs: resolve(__dirname, 'docs.html'),
-        document: resolve(__dirname, 'src/docs/page.jsx'),
       },
     },
   },

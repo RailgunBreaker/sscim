@@ -2,7 +2,7 @@
   "name": "sscim-app",
   "private": true,
   "license": "UNLICENSED",
-  "version": "0.7.2",
+  "version": "0.7.1",
   "type": "module",
   "scripts": {
     "predev": "npm run snapshot && npm run docs",
@@ -29,10 +29,8 @@
     "audit:licenses": "node scripts/license-audit.mjs",
     "digest": "node scripts/model-digest.mjs",
     "recovery": "node ../docs/computation-demo/validation/mle-validation.mjs",
-    "smoke": "node scripts/evidence-browser-smoke.mjs && node scripts/pilot-browser-smoke.mjs",
-    "stats": "node scripts/build-landing-stats.mjs",
-    "review:report": "node scripts/build-public-review.mjs",
-    "review:evidence": "node ../server/scripts/sync-evidence.mjs && node ../server/scripts/build-review-evidence.mjs && node ../server/scripts/review-measurements.mjs && node ../server/scripts/build-source-register.mjs && node ../server/scripts/build-evidence-coverage.mjs"
+    "smoke": "node scripts/browser-smoke.mjs",
+    "stats": "node scripts/build-landing-stats.mjs"
   },
   "dependencies": {
     "katex": "^0.16.9",

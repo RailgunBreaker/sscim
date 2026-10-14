@@ -1,5 +1,3 @@
-import { t } from '../i18n/index.js';
-import { formatDate } from '../i18n/locale.js';
 import { useMemo, useState } from 'react';
 import { C } from '../theme.js';
 import { useVault } from '../data/VaultContext.jsx';
@@ -51,7 +49,7 @@ export default function EventFeed({ sel, setSel, engine, events }) {
   );
 
   const matches = useMemo(
-    () => sortEventsChronologically(filterEvents(list, filters, { assumptionOf: (e) => ({ ...getEventAssumption(e.id), operational: eventField(e).scored }) })),
+    () => sortEventsChronologically(filterEvents(list, filters, { assumptionOf: (e) => getEventAssumption(e.id) })),
     [list, filters],
   );
 
@@ -66,91 +64,93 @@ export default function EventFeed({ sel, setSel, engine, events }) {
       {/* ---- search and filters ---- */}
       <div style={{ display: 'grid', gap: 6, margin: '10px 0 8px' }}>
         <input type="search" value={filters.query} onChange={(e) => patch({ query: e.target.value })}
-          placeholder={t('Search events — title, summary, stage, country…')} aria-label={t('Search events')}
+          placeholder="Search events — title, summary, stage, country…" aria-label="Search events"
           style={{ width: '100%', background: C.panel2, border: `1px solid ${C.line}`, borderRadius: 4, color: C.text, fontFamily: 'inherit', fontSize: 12, padding: '6px 9px' }} />
 
         <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', alignItems: 'center' }}>
           <label style={selWrap}>
-            <span className="mono" style={selLabel}>{t('Type')}</span>
-            <select value={filters.type} onChange={(e) => patch({ type: e.target.value })} style={selectStyle} aria-label={t('Filter by event type')}>
-              <option value="all">{t('All types')}</option>
-              {types.map((type) => <option key={type} value={type}>{t(type)}</option>)}
+            <span className="mono" style={selLabel}>Type</span>
+            <select value={filters.type} onChange={(e) => patch({ type: e.target.value })} style={selectStyle} aria-label="Filter by event type">
+              <option value="all">All types</option>
+              {types.map((t) => <option key={t} value={t}>{t}</option>)}
             </select>
           </label>
           <label style={selWrap}>
-            <span className="mono" style={selLabel}>{t('Scoring')}</span>
-            <select value={filters.scored} onChange={(e) => patch({ scored: e.target.value })} style={selectStyle} aria-label={t('Filter by whether the event is scored')}>
-              <option value="all">{t('Scored and excluded')}</option>
-              <option value="scored">{t('Scored only')}</option>
-              <option value="excluded">{t('Excluded from score only')}</option>
+            <span className="mono" style={selLabel}>Scoring</span>
+            <select value={filters.scored} onChange={(e) => patch({ scored: e.target.value })} style={selectStyle} aria-label="Filter by whether the event is scored">
+              <option value="all">Scored and excluded</option>
+              <option value="scored">Scored only</option>
+              <option value="excluded">Excluded from score only</option>
             </select>
           </label>
           <label style={selWrap}>
-            <span className="mono" style={selLabel}>{t('Direction')}</span>
-            <select value={filters.direction} onChange={(e) => patch({ direction: e.target.value })} style={selectStyle} aria-label={t('Filter by direction')}>
-              <option value="all">{t('Any direction')}</option>
-              <option value="adverse">{t('Adverse')}</option>
-              <option value="mitigating">{t('Mitigating')}</option>
-              <option value="mixed">{t('Mixed')}</option>
+            <span className="mono" style={selLabel}>Direction</span>
+            <select value={filters.direction} onChange={(e) => patch({ direction: e.target.value })} style={selectStyle} aria-label="Filter by direction">
+              <option value="all">Any direction</option>
+              <option value="adverse">Adverse</option>
+              <option value="mitigating">Mitigating</option>
+              <option value="mixed">Mixed</option>
             </select>
           </label>
           <label style={selWrap}>
-            <span className="mono" style={selLabel}>{t('Date range')}</span>
-            <select value={filters.within} onChange={(e) => patch({ within: e.target.value })} style={selectStyle} aria-label={t('Filter by date range')}>
-              <option value="all">{t('All dates')}</option>
-              <option value="7">{t('Last 7 days')}</option>
-              <option value="30">{t('Last 30 days')}</option>
-              <option value="90">{t('Last 90 days')}</option>
-              <option value="365">{t('Last year')}</option>
+            <span className="mono" style={selLabel}>Date range</span>
+            <select value={filters.within} onChange={(e) => patch({ within: e.target.value })} style={selectStyle} aria-label="Filter by date range">
+              <option value="all">All dates</option>
+              <option value="7">Last 7 days</option>
+              <option value="30">Last 30 days</option>
+              <option value="90">Last 90 days</option>
+              <option value="365">Last year</option>
             </select>
           </label>
           {active && (
-            <button type="button" onClick={() => { setFilters(EMPTY_EVENT_FILTERS); setLimit(PAGE); }} style={chipStyle}>{t('Clear filters')}</button>
+            <button type="button" onClick={() => { setFilters(EMPTY_EVENT_FILTERS); setLimit(PAGE); }} style={chipStyle}>
+              Clear filters
+            </button>
           )}
         </div>
       </div>
 
       <div className="mono" aria-live="polite" style={{ fontSize: 12, color: C.copper, marginBottom: 8, fontWeight: 600 }}>
-        {t(matches.length === 1 ? '{count} matching event' : '{count} matching events', { count: matches.length })}
-        {active ? t(' of {total}', { total: list.length }) : ''}
-        {remaining > 0 ? t(' · showing the {count} most recent', { count: visible.length }) : ''}
-        <span style={{ color: C.faint, fontWeight: 400 }}> · {t('newest first')}</span>
+        {matches.length} matching event{matches.length === 1 ? '' : 's'}
+        {active ? ` of ${list.length}` : ''}
+        {remaining > 0 ? ` · showing the ${visible.length} most recent` : ''}
+        <span style={{ color: C.faint, fontWeight: 400 }}> · newest first</span>
       </div>
 
       <div className="mono" style={{ fontSize: 12, color: C.faint, marginBottom: 8, lineHeight: 1.5 }}>
-        {t('Event index explanation')} <span>{t('Excluded event explanation')}</span>
+        &quot;index&quot; = this event&apos;s own operational-impact display index (0–10, 5 = neutral, &gt;5 net adverse,
+        &lt;5 net mitigating) — propagated through the graph alone, not combined with other events.{' '}
+        <span style={{ color: C.faint }}>&quot;excluded from score&quot; = a hazard-signal/mixed/strategic event, shown
+        but not scored — see its card for why.</span>
       </div>
-
-      <p style={{ color: C.faint, fontSize: 12 }}>{t('Source text is shown in its original language.')}</p>
 
       {matches.length === 0 && (
         <div className="mono" style={{ fontSize: 12, color: C.faint, lineHeight: 1.7, padding: '10px 0' }}>
-          {t('No event matches these filters. {count} events are in the current snapshot — clear the filters to see them.', { count: list.length })}
+          No event matches these filters. {list.length} events are in the current snapshot — clear the filters to see them.
         </div>
       )}
 
       {visible.map((e) => {
         const isActive = sel.type === 'event' && sel.id === e.id;
         const assumption = getEventAssumption(e.id);
-        const result = eventField(e);
-        const ownIndex = toDisplayIndex(operationalIndex(result.field));
+        const ownIndex = toDisplayIndex(operationalIndex(eventField(e).field));
         return (
           <div key={e.id} className="evcard" onClick={() => setSel({ type: 'event', id: e.id })}
             role="button" tabIndex={0} onKeyDown={onEnterSpace(() => setSel({ type: 'event', id: e.id }))}
             aria-label={`${e.type} event, ${e.date}: ${e.title}`}
-            style={{ border: `1px solid ${isActive ? C.copper : C.line}`, background: isActive ? C.raised : C.panel, borderRadius: 6, padding: '8px 10px', marginBottom: 8 }}>
+            style={{ border: `1px solid ${isActive ? C.copper : C.line}`, background: isActive ? '#1A2132' : C.panel, borderRadius: 6, padding: '8px 10px', marginBottom: 8 }}>
             <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
               <span className="mono" style={{ fontSize: 12, color: TYPE_COLORS[e.type] || C.copper, border: `1px solid ${TYPE_COLORS[e.type] || C.copper}`, borderRadius: 3, padding: '1px 6px' }}>
-                {t(e.type)}
+                {e.type}
               </span>
-              <span className="mono" style={{ fontSize: 12, color: C.faint }}>{formatDate(e.dateISO || e.date)}</span>
+              <span className="mono" style={{ fontSize: 12, color: C.faint }}>{e.date}</span>
               {/* The tooltip is publicClassificationNote(), never assumption.reason:
                   the raw field can hold internal review-workflow text. */}
-              <span className="mono" style={{ fontSize: 12, color: result.scored ? C.copper : C.faint, marginLeft: 'auto' }}
-                title={result.scored
+              <span className="mono" style={{ fontSize: 12, color: assumption.operational ? C.copper : C.faint, marginLeft: 'auto' }}
+                title={assumption.operational
                   ? 'Operational-impact display index for this event alone: 0–10, 5=neutral, above 5=net adverse, below 5=net mitigating.'
-                  : `Excluded or inactive: ${result.source?.unscoredReason || publicClassificationNote(e.id)}`}>
-                {result.scored ? t('index {value} / 10', { value: ownIndex.toFixed(2) }) : t('excluded or inactive')}
+                  : publicClassificationNote(e.id)}>
+                {assumption.operational ? `index ${ownIndex.toFixed(2)} / 10` : 'excluded from score'}
               </span>
             </div>
             <div style={{ fontSize: 13, fontWeight: 600, marginTop: 5, lineHeight: 1.35 }}>{e.title}</div>
@@ -161,19 +161,19 @@ export default function EventFeed({ sel, setSel, engine, events }) {
       {remaining > 0 && (
         <div style={{ display: 'flex', gap: 7, alignItems: 'center', flexWrap: 'wrap', padding: '4px 0 10px' }}>
           <button type="button" onClick={() => setLimit((l) => l + PAGE)} style={{ ...chipStyle, borderColor: C.copper, color: C.copper }}>
-            {t('Show {count} more', { count: Math.min(PAGE, remaining) })}
+            Show {Math.min(PAGE, remaining)} more
           </button>
           <button type="button" onClick={() => setLimit(matches.length)} style={chipStyle}>
-            {t('Show all {count}', { count: matches.length })}
+            Show all {matches.length}
           </button>
           <span className="mono" style={{ fontSize: 12, color: C.amber }}>
-            {t(remaining === 1 ? '{count} older event not shown yet' : '{count} older events not shown yet', { count: remaining })}
+            {remaining} older event{remaining === 1 ? '' : 's'} not shown yet
           </span>
         </div>
       )}
       {remaining === 0 && matches.length > PAGE && (
         <div className="mono" style={{ fontSize: 12, color: C.faint, padding: '4px 0 10px' }}>
-          {t('End of the feed — all {count} matching events are listed above.', { count: matches.length })}
+          End of the feed — all {matches.length} matching events are listed above.
         </div>
       )}
     </>

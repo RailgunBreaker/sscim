@@ -45,13 +45,6 @@ const VIEWPORTS = [
   { name: '1920x1080', width: 1920, height: 1080 },
 ];
 
-/* Pinned rather than inherited. Playwright's default context is light, so
-   every --shots capture came out light regardless of the product's own
-   default (theme.js falls back to dark when the OS states no preference),
-   and a Playwright upgrade could have flipped the whole record silently.
-   The document checks below drive both themes explicitly by clicking. */
-const SCHEME = 'dark';
-
 const results = [];
 const pass = (name, detail = '') => { results.push({ ok: true, name, detail }); console.log(`  PASS  ${name}${detail ? ` — ${detail}` : ''}`); };
 const fail = (name, detail = '') => { results.push({ ok: false, name, detail }); console.log(`  FAIL  ${name}${detail ? ` — ${detail}` : ''}`); };
@@ -141,25 +134,6 @@ async function openDashboard(page, base, hash = '') {
      a real navigation to exercise the restore path at all. */
   nav += 1;
   await page.goto(`${base}/sscim-app.html?nav=${nav}${hash}`, { waitUntil: 'load' });
-
-  /* THE APP NO LONGER OPENS ON THE DASHBOARD. It opens on the observed-evidence
-     workspace, and the dashboard — with the footer, the lens bar and every
-     Layer 3 tab this file goes on to check — mounts only when the reader asks
-     for the assumption model. Waiting for the footer straight after the
-     navigation therefore timed out at the first viewport for as long as that
-     opening view has existed.
-
-     Waiting for this control before clicking it is also the assertion that the
-     opening view rendered at all: if the workspace is broken, this throws here
-     rather than somewhere further down in a dashboard check.
-
-     The click does not cost us the shareable-state tests. The dashboard reads
-     the URL hash once on ITS mount, which is this click and not the page load,
-     so a ?nav=N#fac=... navigation still restores exactly as it did before. */
-  const openResearch = page.locator('[data-testid="open-research"]');
-  await openResearch.waitFor({ state: 'visible', timeout: 30000 });
-  await openResearch.click();
-
   /* The footer only renders once the vault has resolved (live or static
      fallback), so it is the one selector that means "the dashboard is up"
      at every viewport — Layer 3 itself is behind a tab below 1080px. */
@@ -186,7 +160,7 @@ async function main() {
   try {
     for (const vp of VIEWPORTS) {
       console.log(`\n── ${vp.name} ─────────────────────────────`);
-      const context = await browser.newContext({ viewport: { width: vp.width, height: vp.height }, colorScheme: SCHEME });
+      const context = await browser.newContext({ viewport: { width: vp.width, height: vp.height } });
       const page = await context.newPage();
       page.on('console', (m) => {
         if (m.type() !== 'error') return;
@@ -304,7 +278,7 @@ async function main() {
 
     /* ---- deep checks, one viewport ---- */
     console.log('\n── deep checks (1920x1080) ─────────────');
-    const context = await browser.newContext({ viewport: { width: 1920, height: 1080 }, colorScheme: SCHEME });
+    const context = await browser.newContext({ viewport: { width: 1920, height: 1080 } });
     const page = await context.newPage();
     page.on('pageerror', (e) => consoleErrors.push(`deep: ${e.message}`));
     await openDashboard(page, base);
@@ -447,7 +421,7 @@ async function main() {
 
     /* ---- the four Layer-1 views, and history review ---- */
     console.log('\n── views and history review ────────');
-    const vctx = await browser.newContext({ viewport: { width: 1600, height: 1000 }, colorScheme: SCHEME });
+    const vctx = await browser.newContext({ viewport: { width: 1600, height: 1000 } });
     const vp = await vctx.newPage();
     vp.on('pageerror', (e) => consoleErrors.push(`views: ${e.message}`));
     await openDashboard(vp, base);
@@ -534,7 +508,7 @@ async function main() {
 
     /* ---- accessibility: keyboard reach and announced state ---- */
     console.log('\n── accessibility ──────────────────────');
-    const actx = await browser.newContext({ viewport: { width: 1366, height: 936 }, colorScheme: SCHEME });
+    const actx = await browser.newContext({ viewport: { width: 1366, height: 936 } });
     const ap = await actx.newPage();
     ap.on('pageerror', (e) => consoleErrors.push(`a11y: ${e.message}`));
     await openDashboard(ap, base);
@@ -617,30 +591,35 @@ async function main() {
 
     /* ---- landing page: every language, real buttons, honest figures ---- */
     console.log('\n── landing page ────────────────────────');
-    const lctx = await browser.newContext({ viewport: { width: 1366, height: 936 }, colorScheme: SCHEME });
+    const lctx = await browser.newContext({ viewport: { width: 1366, height: 936 } });
     const lp = await lctx.newPage();
     lp.on('pageerror', (e) => consoleErrors.push(`landing: ${e.message}`));
     await lp.goto(`${base}/index.html`, { waitUntil: 'load' });
     await lp.waitForSelector('footer', { timeout: 20000 });
     await lp.waitForTimeout(400);
 
-    const language = lp.locator('header select');
-    check(await language.locator('option').count() === 4, 'four language options');
-    await language.focus();
+    const langButtons = lp.locator('.langbar button');
+    check(await langButtons.count() === 4, 'four language selectors, as real buttons', `${await langButtons.count()}`);
+    check(await lp.locator('.langbar b').count() === 0, 'no clickable <b> elements left in the language bar');
+
+    // Keyboard reachable — the whole point of the conversion.
+    await lp.locator('.langbar button').first().focus();
     const focused = await lp.evaluate(() => document.activeElement?.tagName);
-    check(focused === 'SELECT', 'the language control takes keyboard focus', focused);
-    for (const [code, locale] of [['en', 'en-US'], ['zh', 'zh-CN'], ['tw', 'zh-TW'], ['ja', 'ja-JP']]) {
-      await language.selectOption(code);
+    check(focused === 'BUTTON', 'the language control takes keyboard focus', focused);
+
+    for (const i of [0, 1, 2, 3]) {
+      const btn = langButtons.nth(i);
+      const label = (await btn.innerText()).trim();
+      await btn.click();
       await lp.waitForTimeout(250);
+      const pressed = await btn.getAttribute('aria-pressed');
       const body = await lp.locator('body').innerText();
-      check(await language.inputValue() === code && body.length > 500, `language "${code}" renders`, `${body.length} chars`);
-      check(await lp.locator('html').getAttribute('lang') === locale, `document language is ${locale}`);
+      check(pressed === 'true' && body.length > 500, `language "${label}" renders`, `${body.length} chars`);
       const ov = await lp.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
-      check(ov <= 2, `language "${code}": no horizontal overflow`, `${ov}px`);
+      check(ov <= 2, `language "${label}": no horizontal overflow`, `${ov}px`);
     }
-    await lp.reload({ waitUntil: 'load' });
-    check(await language.inputValue() === 'ja', 'language persists after reload');
-    await language.selectOption('en');
+
+    await langButtons.first().click();
     await lp.waitForTimeout(250);
     const landing = await lp.locator('body').innerText();
     /* The stale claims. 244 was the count when the vault held 275; the
@@ -655,47 +634,6 @@ async function main() {
     check(/What it actually does/i.test(landing), 'the page lists what the product actually does');
     await shot(lp, 'landing-1366x936');
     await lctx.close();
-
-    const dctx = await browser.newContext({ viewport: { width: 1366, height: 936 }, colorScheme: SCHEME });
-    const dp = await dctx.newPage();
-    dp.on('pageerror', (e) => consoleErrors.push(`documentation: ${e.message}`));
-    for (const mode of ['light', 'dark']) {
-      await dp.goto(`${base}/docs.html`, { waitUntil: 'load' });
-      await dp.waitForSelector('.docs-header select');
-      await dp.locator('.theme-control button').nth(mode === 'light' ? 0 : 1).click();
-      await dp.locator('.docs-header select').selectOption('ja');
-      const cards = await dp.locator('.card').count();
-      check(cards > 0 && await dp.locator('.card time[datetime]').count() === cards, 'every library document has a modified date');
-      const libraryBg = await dp.evaluate(() => getComputedStyle(document.body).backgroundColor);
-      await dp.goto(`${base}/docs/computation-demo/validation/SYNTHETIC_PARAMETER_RECOVERY.md.html`, { waitUntil: 'load' });
-      await dp.waitForSelector('.docs-header select');
-      check(await dp.locator('html').getAttribute('data-theme') === mode, `document preserves ${mode} theme`);
-      check(await dp.evaluate(() => getComputedStyle(document.body).backgroundColor) === libraryBg, `document and library share ${mode} palette`);
-      check(await dp.locator('.docs-header select').inputValue() === 'ja', 'document preserves language preference');
-      check(await dp.locator('.content-header time[datetime]').count() === 1, 'document has a machine-readable modified date');
-      check(await dp.locator('[data-doc-label="Last modified"]').innerText() !== 'Last modified', 'document date label is localized');
-      for (const width of [1366, 375]) {
-        await dp.setViewportSize({ width, height: 936 });
-        const overflow = await dp.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
-        check(overflow <= 2, `document ${mode} at ${width}px: no horizontal overflow`, `${overflow}px`);
-        await shot(dp, `document-${mode}-${width}`);
-      }
-      await dp.setViewportSize({ width: 1366, height: 936 });
-    }
-    /* Markdown <img src> is repo-relative and rewriteLinks does not touch it,
-       so a published page renders its pictures only if the build copied the
-       files. It did not, and every screenshot in the published README was a
-       404 that looked fine on GitHub — where the file simply exists. Assert
-       the pixels, not the markup: naturalWidth is 0 for an image that failed. */
-    const rp = await dctx.newPage();
-    await rp.goto(`${base}/README.md.html`, { waitUntil: 'load' });
-    const images = await rp.evaluate(() => [...document.querySelectorAll('.markdown img')]
-      .map((img) => ({ src: img.getAttribute('src'), ok: img.complete && img.naturalWidth > 0 })));
-    const broken = images.filter((i) => !i.ok).map((i) => i.src);
-    check(images.length > 0 && broken.length === 0, 'every image in the published README loads',
-      broken.length ? `broken: ${broken.join(', ')}` : `${images.length} images`);
-    await rp.close();
-    await dctx.close();
 
     check(consoleErrors.length === 0, 'no SSCIM console errors', consoleErrors.slice(0, 3).join(' | '));
   } finally {

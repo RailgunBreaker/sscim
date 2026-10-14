@@ -11,13 +11,12 @@
    is missing or empty (e.g. a fresh clone before the .db was ever committed),
    it is bootstrapped once from server/src/seed-data.js. Also checkpoints the
    WAL so the .db file on disk is complete and safe to commit. */
-import { writeFileSync, writeSync } from 'node:fs';
+import { writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 import { db } from '../../server/src/db.js';
 import { seedIfEmpty } from '../../server/src/seed-logic.js';
 import { buildBundle } from '../../server/src/bundle.js';
-import { publicBundle } from '../../server/src/public-bundle.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -33,20 +32,4 @@ db.pragma('wal_checkpoint(TRUNCATE)');
 
 const outPath = resolve(__dirname, '../src/data/vault-snapshot.json');
 writeFileSync(outPath, JSON.stringify(bundle), 'utf8');
-writeFileSync(resolve(__dirname, '../src/data/operational-snapshot.json'), JSON.stringify(publicBundle(bundle)), 'utf8');
-
-/* SYNCHRONOUS WRITE, THEN AN EXPLICIT EXIT. Neither is the fix for the CI
-   abort that used to kill this step — that was better-sqlite3 11 asserting in
-   a GC callback, and the cure was upgrading it (see server/src/db.js). Both
-   are kept because they are worth having anyway:
-
-   writeSync, because stdout on a pipe is asynchronous, so a crash anywhere
-   after console.log would discard the line and leave a failed CI step with no
-   record of what it had done — exactly how that abort first presented.
-
-   process.exit(0), because it runs the 'exit' listeners, which close the vault
-   and checkpoint the WAL, and then leaves without a heap teardown that has to
-   destroy native objects correctly. */
-writeSync(1, `Wrote static vault snapshot from database: ${outPath} (${bundle.companies.length} companies, ${bundle.stages.length} stages, ${bundle.events.length} events)
-`);
-process.exit(0);
+console.log(`Wrote static vault snapshot from database: ${outPath} (${bundle.companies.length} companies, ${bundle.stages.length} stages, ${bundle.events.length} events)`);

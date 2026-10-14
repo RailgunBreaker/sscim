@@ -47,13 +47,13 @@ export default function LiveBar({ model, whatChanged, hazard, onClearHazard, sou
   const baselineDelta7d = baselineChainIndex - prev7;
   const isStatic = source === 'static';
 
-  const tone = scenarioActive ? { bg: C.panel2, border: C.amber, text: C.amber, label: 'Hazard applied' }
-    : reviewing ? { bg: C.panel2, border: C.copperDim, text: C.copper, label: 'History review' }
+  const tone = scenarioActive ? { bg: '#2A1E14', border: C.amber, text: C.amber, label: 'Hazard applied' }
+    : reviewing ? { bg: '#161A26', border: C.copperDim, text: C.copper, label: 'History review' }
       : isStatic ? { bg: C.panel2, border: C.line, text: C.dim, label: 'Static snapshot' }
         : { bg: C.panel2, border: C.line, text: C.dim, label: 'Live vault' };
 
   const sourceNote = isStatic
-    ? `Static snapshot — the vault API is not reachable from here, so this is the dataset frozen into the build (data as of ${model.datasetAsOf}). These research scores use incomplete evidence and assumed coefficients; they update when the site is rebuilt.`
+    ? `Static snapshot — the vault API is not reachable from here, so this is the dataset frozen into the build (data as of ${model.datasetAsOf}). Figures are real and complete; they do not update until the site is rebuilt.`
     : `Live vault — figures are read from the vault API (data as of ${model.datasetAsOf}).`;
 
   /* HIERARCHY. This row answers, in order: what is the current reading,
@@ -65,25 +65,15 @@ export default function LiveBar({ model, whatChanged, hazard, onClearHazard, sou
   return (
     <div style={{
       background: tone.bg, borderBottom: `1px solid ${tone.border}`,
-      padding: '20px 24px', color: tone.text, lineHeight: 1.45,
+      padding: '10px 16px', color: tone.text, lineHeight: 1.45,
       display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap',
     }}>
       {/* 1 — the current result, and what KIND of reading it is */}
-      {/* WRAPS RATHER THAN OVERFLOWS. This group was flexShrink: 0, so it held
-          its max-content width whatever the viewport. That was invisible while
-          the label read "Chain index"; renaming it "Research chain index" took
-          the group to 387px, wider than the 327px a 375px screen leaves after
-          this row's 24px padding, and the whole page gained 36px of horizontal
-          scroll. Wrapping is the fix rather than shrinking: the 32px reading is
-          the number the reader came for and must never be compressed, so the
-          group keeps its intrinsic sizing and simply takes a second line when
-          one will not do. Above ~435px nothing moves — group 2 grows into the
-          free space, so this one is never squeezed. */}
-      <span style={{ display: 'flex', alignItems: 'baseline', gap: 8, flexWrap: 'wrap', minWidth: 0 }}>
+      <span style={{ display: 'flex', alignItems: 'baseline', gap: 8, flexShrink: 0 }}>
         <span style={{ fontSize: 12, color: C.faint }}>
-          {t(reviewing || scenarioActive ? tone.label : 'Research chain index')}
+          {reviewing || scenarioActive ? tone.label : 'Chain index'}
         </span>
-        <b className="mono" style={{ fontSize: 32, fontWeight: 600, lineHeight: 1.1, color: riskColor(activeChainIndex) }}>
+        <b className="mono" style={{ fontSize: 26, fontWeight: 600, lineHeight: 1.1, color: riskColor(activeChainIndex) }}>
           {activeChainIndex.toFixed(2)}
         </b>
         {scenarioActive ? (
@@ -92,7 +82,7 @@ export default function LiveBar({ model, whatChanged, hazard, onClearHazard, sou
           </span>
         ) : (
           <span className="mono" style={{ fontSize: 13, color: C.dim }}>
-            {baselineDelta7d >= 0 ? '+' : ''}{Number.isFinite(baselineDelta7d) ? baselineDelta7d.toFixed(2) : '—'} {t('over 7 days')}
+            {baselineDelta7d >= 0 ? '+' : ''}{Number.isFinite(baselineDelta7d) ? baselineDelta7d.toFixed(2) : '—'} over 7 days
           </span>
         )}
         <Spark data={history} />
@@ -100,12 +90,12 @@ export default function LiveBar({ model, whatChanged, hazard, onClearHazard, sou
 
       {/* 2 — what moved it */}
       <span style={{ flex: 1, minWidth: 240, fontSize: 13 }}>
-        <span style={{ color: C.faint }}>{t('What changed:')}</span>{' '}{whatChanged}
+        <span style={{ color: C.faint }}>What changed: </span>{whatChanged}
       </span>
 
       {/* 3 — where it came from, and the one action */}
       <span style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0, fontSize: 12, color: C.faint }}>
-        <span>{t(eventsInWindow === 1 ? '{count} event in window' : '{count} events in window', { count: eventsInWindow })}</span>
+        <span>{eventsInWindow} event{eventsInWindow === 1 ? '' : 's'} in window</span>
         <span
           title={sourceNote}
           style={{
@@ -114,13 +104,15 @@ export default function LiveBar({ model, whatChanged, hazard, onClearHazard, sou
           }}
         >
           <span aria-hidden="true" style={{ width: 6, height: 6, borderRadius: '50%', background: tone.text }} />
-          {t(isStatic ? 'Static snapshot' : 'Live vault')}
+          {isStatic ? 'Static snapshot' : 'Live vault'}
           {` · ${model.datasetAsOf}`}
         </span>
         {scenarioActive && onClearHazard && (
           <button type="button" onClick={onClearHazard} className="ui-button"
             title={hazard?.desc || 'Remove the hazard overlay and return to the observed reading'}
-            style={{ fontSize: 13, padding: '5px 12px', borderRadius: 5, fontFamily: 'inherit', cursor: 'pointer', fontWeight: 600, background: C.amber, color: C.onAccent, border: `1px solid ${C.amber}` }}>{t('Clear hazard')}</button>
+            style={{ fontSize: 13, padding: '5px 12px', borderRadius: 5, fontFamily: 'inherit', cursor: 'pointer', fontWeight: 600, background: C.amber, color: '#0C111C', border: `1px solid ${C.amber}` }}>
+            Clear hazard
+          </button>
         )}
       </span>
     </div>

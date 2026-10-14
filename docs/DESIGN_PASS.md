@@ -1,20 +1,11 @@
 # Interface design pass — before and after
 
-> **WARNING - HISTORICAL DOCUMENT - INTERFACE PASS 0.7.1**
->
-> This page records a completed interface pass against application `0.7.1`
-> and dataset `2026-09-04`. It is kept for the record and must not be read as
-> a description of the current interface, dataset or output digest. The digest
-> quoted below is the one that was current at the time; the current model is
-> `sscim-model-v7.1-exposure-robustness` and its live digest is recorded in
-> [`MODEL_ARCHIVE.md`](../../MODEL_ARCHIVE.md).
-
 Application `0.7.1`, model `sscim-model-v7.1-exposure-robustness`, dataset
 `2026-09-04`.
 
 **No model output changed.** The output digest is identical before and after
 (`sha256:9b0feb59…`, `npm run digest`), and a test asserts it against the value
-recorded in [`MODEL_ARCHIVE.md`](../../MODEL_ARCHIVE.md). That digest covers the
+recorded in [`MODEL_ARCHIVE.md`](MODEL_ARCHIVE.md). That digest covers the
 declared parameters, the structural weights, the headline index and envelope,
 every stage's structural and network terms, all 109 company criticality scores,
 every country score and the whole computed history.
@@ -23,10 +14,6 @@ every country score and the whole computed history.
 
 Captured by `npm run shots`, which drives the built artifact at four viewports
 with animation disabled, so two runs of one build produce the same images.
-The theme is pinned rather than inherited from the harness — these are the
-dark theme, which is what the product falls back to when the operating
-system states no preference; `npm run shots -- --scheme light` captures the
-light record.
 
 | | Before | After |
 | --- | --- | --- |

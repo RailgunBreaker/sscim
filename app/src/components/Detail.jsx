@@ -1,7 +1,6 @@
 import { C } from '../theme.js';
 import { useVault } from '../data/VaultContext.jsx';
 import { getEventAssumption } from '../engine/event-assumptions.js';
-import { factualEligibility } from '../engine/evidence.js';
 import { riskColor, riskLabel, confColor, TYPE_COLORS } from '../utils/colors.js';
 import { onEnterSpace } from '../utils/a11y.js';
 import { STAGE_INTRO, introForCompany, introForCountry } from '../data/glossary.js';
@@ -18,7 +17,6 @@ import CustomerSpreadTree from './CustomerSpreadTree.jsx';
 import EventSites from './EventSites.jsx';
 import FacilityDetail from './FacilityDetail.jsx';
 import TrackButton from './TrackButton.jsx';
-import { ReportedCompanyEvidence } from './ReportedEvidence.jsx';
 
 const Field = ({ k, v, copper }) => (
   <div style={{ marginBottom: 6 }}>
@@ -62,7 +60,6 @@ export default function Detail({ sel, setSel, model, scenario, onResetScenario, 
     const assumption = getEventAssumption(e.id);
     const { field, magnitude, source } = eventField(e);
     const ownIndex = toDisplayIndex(operationalIndex(field));
-    const eligibility = factualEligibility(e, engine.MODEL_PRIORS.datasetAsOf);
     return (
       <div>
         <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: 6 }}>
@@ -71,13 +68,8 @@ export default function Detail({ sel, setSel, model, scenario, onResetScenario, 
         </div>
         <h3 style={{ margin: "6px 0", fontSize: 15, lineHeight: 1.35 }}>{e.title}</h3>
         <p style={{ margin: "0 0 8px", fontSize: 12.5, color: C.dim, lineHeight: 1.5 }}>{e.summary}</p>
-        <div style={{ fontSize: 12, color: eligibility.eligible ? C.dim : C.amber, marginBottom: 8, lineHeight: 1.5 }}>
-          Factual baseline: {eligibility.eligible ? 'eligible' : 'excluded'} — {eligibility.reason}.
-          {' '}Occurrence: {e.evidence?.occurrence?.status || 'unresolved'}; exposure: {e.evidence?.exposure?.status || 'assumed'}; operational status: {e.evidence?.operationalStatus?.status || 'unresolved'}.
-          {(e.evidence?.sources || []).map((s, i) => <div key={i}><a href={s.url} target="_blank" rel="noreferrer" style={{ color: C.copper }}>{s.publisher || 'Source'} · {s.documentIdentifier || 'identifier unknown'}</a>{' '}— {s.claimStatus}; {s.supportingSection || 'supporting section unknown'}</div>)}
-        </div>
         {!assumption.operational && (
-          <div className="mono" style={{ fontSize: 12, color: C.amber, background: C.panel2, border: `1px solid ${C.copperDim}`, borderRadius: 5, padding: "6px 9px", marginBottom: 6, lineHeight: 1.5 }}>
+          <div className="mono" style={{ fontSize: 12, color: C.amber, background: "#2A1E14", border: `1px solid ${C.copperDim}`, borderRadius: 5, padding: "6px 9px", marginBottom: 6, lineHeight: 1.5 }}>
             Excluded from the operational impact score — {assumption.reason}
           </div>
         )}
@@ -192,19 +184,16 @@ export default function Detail({ sel, setSel, model, scenario, onResetScenario, 
         </div>
         <div style={{ margin: "5px 0 0" }}><Quote quote={(QUOTES || {})[co.id]} /></div>
         <p style={{ margin: "6px 0 4px", fontSize: 12.5, color: C.dim, lineHeight: 1.55 }}>{introForCompany(co, { STAGE_BY_ID, COUNTRY_NAMES, CUSTOMERS, SUPPLIERS })}</p>
-        <ReportedCompanyEvidence companyId={co.id} />
-        <p style={{ fontSize: 12, color: C.amber }}>The research scores below use assumed stage shares and stage propagation. They do not use the documented company graph above and do not estimate observed company losses.</p>
         <div className="mono" style={{ margin: "8px 0", fontSize: 12, display: "flex", flexWrap: "wrap", gap: 14 }}>
           <span>Systemic criticality <b style={{ fontSize: 16, color: riskColor(criticality) }}>{criticality.toFixed(2)}</b><span style={{ color: C.faint }}>/10</span></span>
           <span>Vulnerability <b style={{ fontSize: 16, color: riskColor(vulnerability) }}>{vulnerability.toFixed(2)}</b><span style={{ color: C.faint }}>/10 (share-independent)</span></span>
           <span>Contribution <b style={{ fontSize: 16, color: C.copper }}>{contribution.toFixed(3)}</b><span style={{ color: C.faint }}> (share-weighted)</span></span>
         </div>
         <div className="mono" style={{ fontSize: 12, color: C.faint, marginBottom: 8, lineHeight: 1.5 }}>
-          Criticality = modeled chain effect if this company's production were fully disrupted (economic-stage-weighted, then scaled against the most critical company in the snapshot — so 10 means "the most systemically critical company here," not a theoretical ceiling no company can reach). Vulnerability = average adverse impact across its stages, independent of market share — a small and a large single-stage company can share this number. Contribution = assumed-coefficient-weighted modeled effect; share does not cancel here.
-          <Tex tex={"\\mathrm{criticality}_c=\\mathrm{clamp}_{10}\\!\\left(10\\cdot\\frac{\\mathrm{raw}_c}{\\max_k \\mathrm{raw}_k}\\right),\\quad \\mathrm{raw}_c=\\frac{\\sum_n \\max(0,\\mathrm{field}_n)\\cdot w_n}{\\sum_n w_n}"} />
+          Criticality = modeled chain effect if this company's production were fully disrupted (network-influence-weighted, then scaled against the most critical company in the snapshot — so 10 means "the most systemically critical company here," not a theoretical ceiling no company can reach). Vulnerability = average adverse impact across its stages, independent of market share — a small and a large single-stage company can share this number. Contribution = market-share-weighted modeled effect; share does not cancel here.
+          <Tex tex={"\\mathrm{criticality}_c=\\mathrm{clamp}_{10}\\!\\left(10\\cdot\\frac{\\mathrm{raw}_c}{\\max_k \\mathrm{raw}_k}\\right),\\quad \\mathrm{raw}_c=\\frac{\\sum_n \\max(0,\\mathrm{field}_n)\\cdot NI_n}{\\sum_n NI_n}"} />
         </div>
-        <div style={{ fontSize: 12, color: C.amber, lineHeight: 1.5 }}>Illustrative company ranking: exposure coefficients are analyst priors with unresolved measurement denominators. HQ is domicile, not manufacturing location. <a href="docs/reference/MEASUREMENT-BASIS.md.html" style={{ color: C.copper }}>Measurement basis</a></div>
-        <div className="mono" style={{ fontSize: 12, color: C.dim, margin: "8px 0 4px" }}>MODELED STAGE EXPOSURE (ASSUMED COEFFICIENT)</div>
+        <div className="mono" style={{ fontSize: 12, color: C.dim, margin: "8px 0 4px" }}>PRODUCTION FOOTPRINT (WITHIN-STAGE SHARE)</div>
         {Object.entries(co.stakes).sort((a, b) => b[1] - a[1]).map(([sid, sh]) => (
           <div key={sid} role="button" tabIndex={0} style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4, cursor: "pointer" }} onClick={() => setSel({ type: "stage", id: sid })} onKeyDown={onEnterSpace(() => setSel({ type: "stage", id: sid }))}>
             <span className="mono" style={{ fontSize: 12, color: C.dim, width: 160, flexShrink: 0 }}>{STAGE_BY_ID[sid].name}</span>

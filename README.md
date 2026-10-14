@@ -1,98 +1,11 @@
 # SSCIM — Semiconductor Supply Chain Intelligence Map
 
-A semiconductor evidence and supplier-investigation workspace. The current
-dashboard shows documented relationships, reviewed occurrences, reported
-operations, and scoped disruption-loss evidence. The earlier propagation
-engine remains available as archived research; it does not drive the dashboard.
-
-The **Investigations** tab supports a single-operator local pilot: define a
-supplier watchlist and monitoring objective, link an investigation to a source,
-record actions, and track expected deliveries and partial receipts. Connect with
-the API's existing `ADMIN_TOKEN` from `server/.env`. The token is held only in
-memory while this view is open. Private records and their revision history live
-in the ignored `server/data/private/pilot.db`, outside the public vault,
-snapshots, and structured evidence export. Use **Export private records** for a
-separate JSON copy. This is not a multi-user or tenant-isolated service.
-
-The same tab includes a public-disclosure pilot for Western Digital, Sandisk
-and TSMC. **Activate disclosure pilot** fixes its start time, 30-day checkpoint
-and 48-hour review target, adds three source-backed historical investigations,
-and connects the existing filing collector to an actionable review queue.
-These time targets are operating choices, not calibrated model parameters.
-Investigate, defer or dismiss a candidate with a reason; decisions preserve
-source revisions and timestamps. Changed source content requires a new review.
-The existing collector populates the queue through `run-operations.mjs`, even
-with the app closed. Collection snapshots retain matched and unmatched checks
-and retrieval failures in the private export. Reload the workspace to see new
-output. Historical backfills remain distinct from
-documents published after activation. Review throughput does not measure
-prediction accuracy, incident recall or operational benefit; those still need
-independent evaluation and observed outcomes. Pilot issuers may be selected
-inside Investigations even when they are absent from the public company map.
-
-**Filing accuracy audit**, in the same tab, freezes every check in a selected
-collection run. The collector now archives matched and unmatched filing bodies
-with SHA-256 fingerprints and the detector version. Reviewers can read that
-frozen source inside the app and record a relevance judgment, sections reviewed,
-supporting text, rationale and reviewer provenance. Historical positive controls
-are excluded from the audit denominator. Missing or uncertain reviews prevent
-complete-run scoring, and AI-assisted/operator reviews never qualify as external
-validation. Once every regular filing has a conclusive declared external review,
-the app reports agreement, precision and recall for that census only. Reviewer
-identity and independence remain operator-declared; these are not independently
-authenticated accuracy claims or evidence of predictive performance. Corrections
-retain earlier judgments. Private audit records are included in the private
-workspace export; archived filing copies remain local in
-`artifacts/collected/filing-audit/` and should be retained with that export.
-AI screening notes can also appear alongside a frozen case as **unscored drafts**.
-The local private file `server/data/private/filing-screening-drafts.json` holds
-these notes. Their source fingerprints and excerpts are checked before display;
-they never create judgments or reduce the external review requirement. The audit
-separately shows review origin, current classifications and outstanding external
-reviews, including a warning when no positive filing has been identified.
-
-The audit's **External reviewer handoff** downloads a source package and blank
-JSON response template without detector outputs, AI notes, earlier judgments or
-historical controls. No message or file is sent automatically. A reviewer returns
-only the completed response template; the app previews it without writes before
-the operator imports it. Imports check case identity, frozen source fingerprints,
-evidence text and record versions. An invalid entry rolls back the entire import;
-retries do not duplicate judgments. Partial responses leave the remaining cases
-pending. Completing this filing census means recording all qualifying external
-reviews, resolving uncertainty and checking the scoped results; it does not
-complete predictive validation or establish losses across the whole supply chain.
-
-The public API and the dashboard's operational snapshot exclude legacy stage
-scores, assumed company links, generated event narratives, and research
-briefings. Pilot delivery metrics describe the operator's recorded sample;
-they do not attribute delays to an incident or validate predictive accuracy.
+An explainable research tool for tracing how a semiconductor disruption moves
+through a modeled supply chain. Pick a plant, an event, a stage or a country,
+and see what it touches — with the propagation arithmetic shown rather than
+hidden behind a single risk score.
 
 **Live deployment:** <https://railgunbreaker.github.io/sscim/>
-
-The current local evidence workspace includes primary-source observations,
-reported downstream shortage losses, a scoped historical revenue benchmark and
-the first pending prospective forecast. All current analytical datasets are
-exported to a queryable JSON/SQLite catalog. See
-[structured evidence and prospective operations](docs/STRUCTURED_EVIDENCE.md)
-for scope, source links, files and reproduction commands. Prospective accuracy
-and complete chain-wide loss remain unestablished.
-
-An hourly Windows task now collects and scores local evidence. Automotive
-sector-wide losses are available as explicitly labeled external estimates;
-overlapping issuer and sector losses cannot be added together. Run the full
-workflow manually with `node server/scripts/run-operations.mjs`.
-
-[Chain loss accounting](docs/CHAIN_LOSS_ACCOUNTING.md) holds the four scopes
-built on that ledger: reconciliation of disclosed issuer scopes, supplier
-allocation across recall and contamination costs, physical production losses
-that survive a recovery date, and semiconductor reimbursement follow-up with a
-filing-discovery queue. Unknown supplier attribution stays explicit, and the
-four scopes are never added together.
-
-[Recovery duration calibration](docs/RECOVERY_CALIBRATION.md) fits six reported
-factory recoveries across five incidents. It beats the 60-day global default in
-the one 2026 temporal test and loses to the issuer's own target; **no global
-parameter is promoted.**
 
 **SSCIM is not** a live trading signal, a prediction engine, a measured
 trade-flow model, or investment advice. Every propagation coefficient is a
@@ -101,7 +14,7 @@ fitted to nothing.
 
 ---
 
-## Historical research screenshots
+## Screenshots
 
 | | |
 | --- | --- |
@@ -110,11 +23,10 @@ fitted to nothing.
 | **Facility Playground · TSMC Fab 18** — 53 inbound and 7 outbound relationships, with the visible count stated exactly and the table beside it reaching every one | ![TSMC Fab 18](docs/screenshots/playground-tsmc-fab18.png) |
 | **Facility Playground · ASML, two hops** — multi-hop traversal, upstream left, downstream right | ![ASML two hops](docs/screenshots/playground-asml-2hop.png) |
 | **Mobile** — search, graph, filters and details stack | ![Mobile playground](docs/screenshots/playground-mobile-375x812.png) |
-| **Documentation** — every Markdown file in the repository is published as its own page, sharing the app's theme and language, each dated from its own Git history | ![Documentation](docs/screenshots/document-dark-1366.png) |
 
 ---
 
-## Archived research features
+## What it does
 
 - **Facility Playground** — pick one of 275 named plants and trace the modeled
   network around it: suppliers left, customers right, one hop or three or
@@ -127,7 +39,7 @@ fitted to nothing.
 - **Functional-centre topology** — 126 country × stage centres and 1,030
   modeled connections, with routes, reachability, betweenness, and reversible
   node/edge removal.
-- **History review** — current-model retrospective replay on past dates, recomputed by
+- **History review** — the chain as it stood on any past date, recomputed by
   engine replay rather than read from a stored series.
 - **Hazard screening** — which named plants a footprint touches, what share of
   each chain step they carry, and which modeled links it would sever.
@@ -376,8 +288,3 @@ here as all-rights-reserved.
 this blocks, why it was not resolved, the options, the two decisions that travel
 with it (the curated dataset's terms, and inbound contribution terms), and the
 five steps that close it.
-
-
-## Public research review correction — 2026-09-06
-
-Application patch 0.7.2 retains the v7.1 model identifier and global defaults; the data revision is `public-review-2026-09-06`. The factual baseline excludes unresolved claims independently of confidence. Exposure magnitudes remain explicit assumptions. Company coefficients have unresolved denominators and rankings are illustrative. Recovery evidence applies only to the documented component after publication. Historical calculations are **current-model retrospective replay**, distinct from archived contemporaneous outputs and genuine point-in-time validation requiring dated input vintages. Missing coverage and neutral scores do not establish safety. See the [implementation report](docs/PUBLIC_RESEARCH_REVIEW.md) and [canonical specification](docs/MODEL_V7_SPEC.md).

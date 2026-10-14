@@ -154,12 +154,12 @@ export default function DecadeHistory({ onSelectEvent }) {
         <div style={{ display: 'flex', gap: 3, marginLeft: 'auto' }}>
           {[['impact', 'Impact'], ['date', 'Date']].map(([k, label]) => (
             <button key={k} type="button" aria-pressed={sort === k} onClick={() => setSort(k)} className="mono"
-              style={{ border: `1px solid ${sort === k ? C.copper : C.line}`, background: sort === k ? C.selected : 'transparent', color: sort === k ? C.copper : C.dim, borderRadius: 4, fontSize: 12, padding: '5px 10px', cursor: 'pointer', fontFamily: 'inherit' }}>
+              style={{ border: `1px solid ${sort === k ? C.copper : C.line}`, background: sort === k ? 'rgba(201,138,63,.14)' : 'transparent', color: sort === k ? C.copper : C.dim, borderRadius: 4, fontSize: 12, padding: '5px 10px', cursor: 'pointer', fontFamily: 'inherit' }}>
               {label}
             </button>
           ))}
           <button type="button" aria-pressed={!scoredOnly} onClick={() => setScoredOnly((v) => !v)} className="mono"
-            style={{ border: `1px solid ${!scoredOnly ? C.copper : C.line}`, background: !scoredOnly ? C.selected : 'transparent', color: !scoredOnly ? C.copper : C.dim, borderRadius: 4, fontSize: 12, padding: '5px 10px', cursor: 'pointer', fontFamily: 'inherit' }}>
+            style={{ border: `1px solid ${!scoredOnly ? C.copper : C.line}`, background: !scoredOnly ? 'rgba(201,138,63,.14)' : 'transparent', color: !scoredOnly ? C.copper : C.dim, borderRadius: 4, fontSize: 12, padding: '5px 10px', cursor: 'pointer', fontFamily: 'inherit' }}>
             {scoredOnly ? 'Scored only' : 'All events'}
           </button>
         </div>
@@ -241,8 +241,7 @@ export default function DecadeHistory({ onSelectEvent }) {
         </table>
       </div>
 
-      <div className="mono" style={{ fontSize: 12, color: C.dim, marginBottom: 6 }}>Tested incident-removal differences by type</div>
-      <div style={{ fontSize: 12, color: C.faint, lineHeight: 1.6, marginBottom: 6 }}>Sums compare removals on different incident dates. They are descriptive totals, not additive shares of one headline or cumulative real-world loss.</div>
+      <div className="mono" style={{ fontSize: 12, color: C.dim, marginBottom: 6 }}>Which kind of shock drove it</div>
       <div style={{ marginBottom: 10 }}>
         {analysis.byType.map((r) => {
           const width = Math.max(1, Math.abs(r.total) / Math.max(...analysis.byType.map((q) => Math.abs(q.total))) * 100);

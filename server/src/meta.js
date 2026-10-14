@@ -31,7 +31,6 @@ export function setSnapshotDate(dateISO) {
 export function getMetaBundle() {
   return {
     snapshotDate: getSnapshotDate(),
-    dataRevision: getMeta('data_revision'),
     lastRunAt: getMeta('last_run_at'),
     lastRunStatus: getMeta('last_run_status'),
     generatedAt: new Date().toISOString(),

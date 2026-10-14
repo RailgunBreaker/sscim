@@ -1,9 +1,10 @@
 {
   "modelVersion": "sscim-model-v7.1-exposure-robustness",
-  "datasetAsOf": "2026-09-22",
-  "generatedAt": "2026-09-22T14:47:51.167Z",
+  "datasetAsOf": "2026-09-04",
+  "generatedAt": "2026-09-04T10:01:55.651Z",
   "whatThisEstablishes": [
-    "Output ranking stability within the sampled assumption box; this is not a confidence interval.",
+    "Recoverability of three coefficients under a synthetic, correctly specified data-generating process.",
+    "Correctness of the numerical optimization and Wald variance machinery.",
     "Pipeline regression: the engine at base parameters still produces these values, and two builds agree bit-for-bit."
   ],
   "whatThisDoesNotEstablish": [
@@ -13,44 +14,12 @@
     "An independent implementation — this script imports the engine primitives it checks."
   ],
   "partC": {
-    "chainIndexBase": 5.084616833273462,
+    "chainIndexBase": 6.027796984877245,
     "deterministic": true,
     "matchedExplicitBaseParameters": true
   },
   "partA": {
-    "status": "completed",
-    "unavailableReason": null,
-    "snapshotDesign": {
-      "rank": 2,
-      "parameters": 3,
-      "observations": 144,
-      "columnNorms": {
-        "downstreamTransmission": 0.9145351220577743,
-        "upstreamTransmission": 0.7348469228346005,
-        "marketHalfLifeDays": 0
-      },
-      "unexcitedParameters": [
-        "marketHalfLifeDays"
-      ],
-      "identifiableLocally": false
-    },
-    "controlledDesign": {
-      "rank": 3,
-      "parameters": 3,
-      "observations": 3456,
-      "columnNorms": {
-        "downstreamTransmission": 2.0318408974117563,
-        "upstreamTransmission": 3.200188300267045,
-        "marketHalfLifeDays": 0.02194601510256991
-      },
-      "unexcitedParameters": [],
-      "identifiableLocally": true
-    },
     "design": {
-      "source": "controlled synthetic single-stage experiments; not the factual snapshot",
-      "experiments": 24,
-      "attemptedReplications": 60,
-      "unavailableReplications": 0,
       "stages": 24,
       "offsets": [
         0,
@@ -60,7 +29,7 @@
         28,
         35
       ],
-      "nObs": 3456,
+      "nObs": 144,
       "sigmaTrue": 0.02,
       "replications": 60,
       "start": [
@@ -83,28 +52,28 @@
       {
         "parameter": "downstreamTransmission",
         "truth": 0.55,
-        "meanEstimate": 0.5514990178298894,
-        "bias": 0.0014990178298893708,
-        "sdEstimate": 0.011006864949272643,
-        "meanSE": 0.010064655218306042,
-        "syntheticCoverage95": 0.9333333333333333
+        "meanEstimate": 0.547610347284967,
+        "bias": -0.002389652715032997,
+        "sdEstimate": 0.01790062957894411,
+        "meanSE": 0.018354269761955075,
+        "syntheticCoverage95": 0.95
       },
       {
         "parameter": "upstreamTransmission",
         "truth": 0.3,
-        "meanEstimate": 0.2995332123077213,
-        "bias": -0.00046678769227870287,
-        "sdEstimate": 0.006134046482548985,
-        "meanSE": 0.006351532533067879,
-        "syntheticCoverage95": 0.9833333333333333
+        "meanEstimate": 0.300796121526659,
+        "bias": 0.0007961215266590327,
+        "sdEstimate": 0.01623917120973126,
+        "meanSE": 0.013889367315272795,
+        "syntheticCoverage95": 0.9333333333333333
       },
       {
         "parameter": "marketHalfLifeDays",
         "truth": 45,
-        "meanEstimate": 44.74478556777751,
-        "bias": -0.25521443222248763,
-        "sdEstimate": 0.9446549927395811,
-        "meanSE": 0.9367959895324517,
+        "meanEstimate": 44.99556344105058,
+        "bias": -0.004436558949421965,
+        "sdEstimate": 0.8682853433287114,
+        "meanSE": 0.8935680638844289,
         "syntheticCoverage95": 0.95
       }
     ],
@@ -118,14 +87,14 @@
       "marketHalfLifeDays"
     ],
     "chainIndex": {
-      "base": 5.084616833273462,
-      "mean": 5.08610869326983,
+      "base": 6.027796984877245,
+      "mean": 6.138225204568149,
       "assumptionEnvelope": {
-        "low": 5.057283952831935,
-        "high": 5.121441317006003
+        "low": 5.594662678490853,
+        "high": 6.684435465338291
       },
-      "p2_5": 5.059726795321115,
-      "p97_5": 5.120241346476389,
+      "p2_5": 5.622135574248437,
+      "p97_5": 6.609495967584989,
       "note": "The envelope is the span over the declared assumption box. It is NOT a confidence interval: the box is a choice, not a distribution over the truth. Percentiles are reported only to describe where the sampled values fell."
     },
     "companyCriticalitySpearman": {

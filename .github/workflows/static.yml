@@ -19,11 +19,6 @@ on:
   push:
     branches: ["main"]
   workflow_dispatch:
-    inputs:
-      deploy:
-        description: 'Publish the verified build to Pages'
-        type: boolean
-        default: false
   schedule:
     # Daily rebuild so the bundled stock quotes (price/PE) stay fresh on the
     # static deploy even without a commit — see "Refresh stock quotes" below.
@@ -44,9 +39,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          # Document dates come from each file's history, not checkout time.
-          fetch-depth: 0
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -129,19 +121,15 @@ jobs:
           CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
         run: npm run smoke
 
-      # Main pushes and schedules publish; manual runs can opt into build-only.
       - name: Setup Pages
-        if: github.ref == 'refs/heads/main' && (github.event_name != 'workflow_dispatch' || inputs.deploy)
         uses: actions/configure-pages@v5
 
       - name: Upload artifact
-        if: github.ref == 'refs/heads/main' && (github.event_name != 'workflow_dispatch' || inputs.deploy)
         uses: actions/upload-pages-artifact@v3
         with:
           path: dist-app
 
   deploy:
-    if: github.ref == 'refs/heads/main' && (github.event_name != 'workflow_dispatch' || inputs.deploy)
     needs: build
     environment:
       name: github-pages

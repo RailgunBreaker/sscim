@@ -49,22 +49,8 @@ export function reconcileBundle(live, snapshot) {
   const out = { ...live };
   const filled = [];
 
-  // Explicitly empty observed data can represent a withdrawal. Only a missing
-  // section may use the snapshot, and that provenance remains visible.
-  if (out.observedData == null && snapshot.observedData != null) {
-    out.observedData = snapshot.observedData;
-    filled.push('observedData');
-  }
-  if (out.revenueValidation == null && snapshot.revenueValidation != null) {
-    out.revenueValidation = snapshot.revenueValidation;
-    filled.push('revenueValidation');
-  }
-  for (const key of ['chainLossVerification','operatingEvidence','operatingValidation','sourceAvailability','revenueCurrent','chainLossEvidence','lossReconciliations','supplierLossAllocations','semiconductorLossFollowup','recoveryCalibration','physicalLosses','lagTwoValidation','lossFilingMonitor','prospectivePerformance','prospectiveNewsPerformance','structuredCatalog','prospectiveNowcasts']) {
-    if (out[key] == null && snapshot[key] != null) { out[key] = snapshot[key]; filled.push(key); }
-  }
-
   for (const key of FILLABLE) {
-    if ((live.meta?.dataPolicy === 'reviewed-operational-v1' ? out[key] == null : isEmpty(out[key])) && !isEmpty(snapshot[key])) {
+    if (isEmpty(out[key]) && !isEmpty(snapshot[key])) {
       out[key] = snapshot[key];
       filled.push(key);
     }

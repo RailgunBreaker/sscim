@@ -35,28 +35,6 @@ Every meaningful statement is traceable to exactly one of three things: **a sour
 | Candidate feeds | USGS, Federal Register, news | — | **Discovery only.** A candidate is not an event and never reaches the model unreviewed. |
 | Market quotes | 92 of 109 listed companies | — | Yahoo Finance. **Display metadata only — never an engine input.** |
 
-### Observed evidence collected beside the model
-
-These datasets are collected and evaluated separately from the research model.
-None of them is an engine input: no coefficient in `app/src/engine/priors.js`
-is fitted to any of them.
-
-| Dataset | What it holds | Documented in |
-| --- | --- | --- |
-| `reference/observed-data.json` | Fab capacity, recovery observations, reported outcomes, issuer forecasts, relationships | [Observed data](OBSERVED_DATA.md) |
-| `reference/tsmc-monthly-revenue.json`, `reference/tsmc-revenue-current.json` | 163 monthly revenue observations against their original SEC vintages | [Predictive validation](PREDICTIVE_VALIDATION.md) |
-| `reference/revenue-prediction-protocol.json`, `reference/prospective-protocol.json`, `reference/prospective-release-schedule.json` | The recorded protocols and the issuer's release calendar | [Predictive validation](PREDICTIVE_VALIDATION.md), [Structured evidence](STRUCTURED_EVIDENCE.md) |
-| `prospective/` | Captured prospective forecasts with their input, protocol and engine hashes | [Structured evidence](STRUCTURED_EVIDENCE.md) |
-| `reference/chain-loss-evidence.json` | Reported downstream shortage losses, issuer forecasts and external sector estimates | [Structured evidence](STRUCTURED_EVIDENCE.md) |
-| `reference/loss-reconciliations.json`, `reference/supplier-loss-allocations.json`, `reference/physical-losses.json`, `reference/semiconductor-loss-followup.json` | The four disclosed-loss accounting scopes | [Chain loss accounting](CHAIN_LOSS_ACCOUNTING.md) |
-| `reference/recovery-durations.json`, `reference/recovery-calibration-protocol.json` | Six reported factory recoveries and the fitting protocol | [Recovery calibration](RECOVERY_CALIBRATION.md) |
-| `reference/structured-evidence.schema.json`, `artifacts/structured/` | The queryable JSON/SQLite catalog of every dataset above | [Structured evidence](STRUCTURED_EVIDENCE.md) |
-| `operational-monitor/` | The news baseline and the SEC filing-candidate queue | [Structured evidence](STRUCTURED_EVIDENCE.md), [Chain loss accounting](CHAIN_LOSS_ACCOUNTING.md) |
-
-Each evaluator writes one report under `docs/benchmarks/`. The reports are
-outputs of stated protocols over stated sources; they are not model outputs and
-do not calibrate any parameter.
-
 ### What is deliberately absent
 
 No bill of materials, no inventory days, no capacity or utilization figures, no time-to-recover, no qualification relationships, no alternative-supplier counts. The dependence matrices are equal-allocation priors derived from graph degree precisely *because* none of that data exists here. See the [Model roadmap](MODEL_ROADMAP.md) for what acquiring it would involve.
@@ -74,7 +52,7 @@ A country marker cannot answer the question an earthquake asks, because a hazard
 
 A hazard footprint runs through the identical propagation engine every recorded event uses, so its Δ is comparable with the index it modifies. Severity stays the operator's input: the site layer says what is exposed, not how hard it was hit.
 
-**The hazard overlay is now the only hypothesis the dashboard states.** The preset scenario library, the draft composer, the scenario builder modal and the propagation playback controls have been removed. What replaced them is not another way to invent an event but the question the data can actually answer: *history review*, which re-derives the whole model — map, stage fields, country readings, index — using the current network and model for a past date, using the engine's own back-dating rule. A reviewed date is a current-model retrospective replay; a hazard is a bounded screening hypothesis you place yourself. The interface keeps the three states (live, reviewed, hazard) visually distinct because the worst failure mode of a model like this is a reader quoting a hypothetical number as an observed one.
+**The hazard overlay is now the only hypothesis the dashboard states.** The preset scenario library, the draft composer, the scenario builder modal and the propagation playback controls have been removed. What replaced them is not another way to invent an event but the question the data can actually answer: *history review*, which re-derives the whole model — map, stage fields, country readings, index — as it stood on any past date, using the engine's own back-dating rule. A reviewed date is a real past state of the record; a hazard is a bounded screening hypothesis you place yourself. The interface keeps the three states (live, reviewed, hazard) visually distinct because the worst failure mode of a model like this is a reader quoting a hypothetical number as an observed one.
 
 ### Every site has a standardized profile
 
@@ -128,9 +106,6 @@ The dashboard's HISTORY panel reports this directly, as the correlation between 
 | Sensitivity envelope (low/base/high) | The same computation at ±30% on transmission and half-life | A confidence interval — it is not one |
 | Briefing | A textual summary generated from current model state | Independent reporting or investment research |
 | Static snapshot | A versioned dataset deployed to the public site | A continuously live database |
-| Evidence evaluations under `docs/benchmarks/` | Results of a recorded protocol over reviewed sources — historical revenue error, loss reconciliation checks, recovery-duration fit | Model output, calibration of any parameter, or prospective performance |
-| Captured prospective forecast | One recorded forecast with hashed inputs, awaiting its outcome | A scored result — it contributes neither error nor coverage until its outcome is disclosed |
-| Structured catalog (`artifacts/structured/`) | The same analytical datasets in queryable JSON and SQLite, with per-record evidence status | A count of independent evidence — records repeat across datasets by design |
 
 ## Data quality, stated plainly
 
@@ -144,8 +119,3 @@ This is a meaningfully improved snapshot, not a fully sourced production databas
 - [Data pipeline](computation-demo/DATA_PIPELINE.md) — each input's candidate feed and its automation ceiling.
 - [Real-data example](computation-demo/REAL_DATA_EXAMPLE.md) — an end-to-end run on genuinely fetched data.
 - [Model roadmap](MODEL_ROADMAP.md) — the missing data layer.
-
-
-## Public research review correction — 2026-09-06
-
-Application patch 0.7.2 retains the v7.1 model identifier and global defaults; the data revision is `public-review-2026-09-06`. The factual baseline excludes unresolved claims independently of confidence. Exposure magnitudes remain explicit assumptions. Company coefficients have unresolved denominators and rankings are illustrative. Recovery evidence applies only to the documented component after publication. Historical calculations are **current-model retrospective replay**, distinct from archived contemporaneous outputs and genuine point-in-time validation requiring dated input vintages. Missing coverage and neutral scores do not establish safety. See the [implementation report](PUBLIC_RESEARCH_REVIEW.md) and [canonical specification](MODEL_V7_SPEC.md).

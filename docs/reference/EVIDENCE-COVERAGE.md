@@ -1,7 +1,7 @@
 # Evidence coverage
 
-*Generated from the vault by `server/scripts/build-evidence-coverage.mjs`. Last generated: 2026-09-22.*
-*Model version: `sscim-model-v7.1-exposure-robustness` · snapshot date: 2026-09-22 · canonical specification: [MODEL_V7_SPEC.md](../MODEL_V7_SPEC.md).*
+*Generated from the vault by `server/scripts/build-evidence-coverage.mjs`. Last generated: 2026-09-03.*
+*Model version: `sscim-model-v7.1-exposure-robustness` · snapshot date: 2026-09-04 · canonical specification: [MODEL_V7_SPEC.md](../MODEL_V7_SPEC.md).*
 
 How much of this dataset carries a source, counted from
 `server/data/sscim.db` rather than asserted. The companion
@@ -20,7 +20,7 @@ each is stated with its own scope.
 | **Graph integrity** | The stage graph is acyclic and connected; declared shares sum sensibly | Enforced on every build; residuals reported as warnings | Nothing about whether any value is correct |
 | **Citation completeness** | Whether each figure carries a source, and how complete that source is | Counted below | Whether the source supports the claim |
 | **Source quality** | Whether the source is authoritative for the claim attached to it | Recorded per entry where a curator has judged it; see the evidence-tier notes | Not inferred from the presence of a URL |
-| **Factual validation** | Whether each attached claim is supported | 4 occurrence claims reviewed against original documents; numerical exposure remains assumed | No independent outcome calibration or comprehensive coverage |
+| **Factual validation** | Whether the number is correct | **Not established.** No figure in this dataset has been checked against an independent measurement | Everything |
 
 A passing data audit means the records are *well-formed and internally
 consistent*. It is a structural audit. It is not factual validation, and
@@ -30,32 +30,13 @@ this project does not claim otherwise.
 
 | Class | Count | Share | What the record carries |
 | --- | ---: | ---: | --- |
-| **Full** | 24 | 14% | A URL is present; this count does not establish access or claim support |
+| **Full** | 20 | 12% | A resolvable URL, plus the feed or publisher that supplied it |
 | **Legal** | 2 | 1% | An exact *Federal Register* volume and page — complete by Chicago's convention for government material |
-| **Short** | 141 | 84% | Issuing body, document type and date only. Hand-curated historical records for which no published document was found |
+| **Short** | 145 | 87% | Issuing body, document type and date only. Hand-curated historical records for which no published document was found |
 | **Uncited** | 0 | 0% | No source recorded |
 
 See the [source register](SOURCE-REGISTER.md) for each entry, and for why a
 short entry stays short rather than acquiring an invented title.
-
-### Resolved citations and factual baseline eligibility
-
-Raw source URLs: **24/167**. Separately resolved bibliographic records: **40/167**. Union of raw URL or separately resolved citation: **63/167**. These overlap and must not be added. The source register uses the resolved entries when available; the raw table above counts only the original source field.
-
-Verified occurrence claims: **4/167**. Factual-baseline eligible at 2026-09-22: **3/167**. Eligibility does not imply nonzero persistence: a recovered site can be eligible and inactive. Other records remain context or unresolved. A lower index after exclusion is a data correction, not evidence of lower real-world risk.
-
-| Record | Occurrence | Operational status | Exposure | Factual eligibility |
-| --- | --- | --- | --- | --- |
-| e1 | unresolved | unknown | assumed | excluded |
-| h2510_truce | verified | verified_scoped | assumed | eligible |
-| h2512_memory | unresolved | unknown | assumed | excluded |
-| h2603_memorypeak | unresolved | unknown | assumed | excluded |
-| h2606_subs | verified | verified_scoped | assumed | excluded |
-| h2607_kumamoto | verified | verified_scoped | assumed | eligible |
-| x2508_veurevoke | verified | partially_verified | assumed | eligible |
-| p260807_man0807 | unresolved | unknown | assumed | excluded |
-
-Numeric denominators and original values: [measurement basis](MEASUREMENT-BASIS.md). Claim sources, exact locations, information dates and provenance: [event evidence ledger](event-evidence.json). Source existence is distinct from claim verification.
 
 ### How each event was approved
 
