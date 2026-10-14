@@ -1,4 +1,10 @@
 node_modules/
+.vite/
+artifacts/
+server/data/backups/
+server/data/operations/
+server/data/private/
+app/src/data/operational-snapshot.json
 dist-app/
 dist/
 # The vault database (server/data/sscim.db) IS committed — it is the single

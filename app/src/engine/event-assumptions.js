@@ -29,6 +29,14 @@ export const UNCLASSIFIED_ASSUMPTION = Object.freeze({
 });
 
 export const EVENT_ASSUMPTIONS = Object.freeze({
+  ...Object.fromEntries([
+    'n260907_intel_highna', 'n260910_tsmc_revenue', 'n260928_vsmc_opening',
+    'n260930_micron_results', 'n261008_gf_interposers', 'n261008_tsmc_revenue',
+    'n261008_samsung_guidance',
+  ].map((id) => [id, Object.freeze({
+    direction: 'mixed', channel: 'downstream', operational: false,
+    reason: 'Company announcement retained as news context. No quantified disruption or signed operational exposure is established by this release.',
+  })])),
   p260820_web147f: Object.freeze({ direction: "mitigating", channel: "upstream", operational: false, reason: "A decade-long R&D capital commitment with no near-term output. No wafer capacity is added, removed, or shifted in the reporting period, so realized operational scale is essentially nil — severity 2. Direction is mitigating only in the long run (additional U.S. memory/packaging R&D capability); operational=false because this is a long-term strategic/investment signal, not a change in effect." }),
 
   p260820_web17aa: Object.freeze({ direction: "mitigating", channel: "upstream", operational: false, reason: "A pre-construction sequencing change on a fab whose production target is 2030. Nothing is built, installed, or producing, and no existing output is affected, so realized operational scale is near zero — severity 2. Direction is mitigating in the long run (potential added U.S. leading-edge foundry capacity), but operational=false: this is an announced-but-not-in-effect capacity signal, and it is explicitly contingent on a customer that does not yet exist." }),

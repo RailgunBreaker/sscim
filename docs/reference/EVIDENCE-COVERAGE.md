@@ -1,7 +1,7 @@
 # Evidence coverage
 
-*Generated from the vault by `server/scripts/build-evidence-coverage.mjs`. Last generated: 2026-09-03.*
-*Model version: `sscim-model-v7.1-exposure-robustness` · snapshot date: 2026-09-04 · canonical specification: [MODEL_V7_SPEC.md](../MODEL_V7_SPEC.md).*
+*Generated from the vault by `server/scripts/build-evidence-coverage.mjs`. Last generated: 2026-10-14.*
+*Model version: `sscim-model-v7.1-exposure-robustness` · snapshot date: 2026-10-14 · canonical specification: [MODEL_V7_SPEC.md](../MODEL_V7_SPEC.md).*
 
 How much of this dataset carries a source, counted from
 `server/data/sscim.db` rather than asserted. The companion
@@ -26,13 +26,13 @@ A passing data audit means the records are *well-formed and internally
 consistent*. It is a structural audit. It is not factual validation, and
 this project does not claim otherwise.
 
-## Events — 167 records
+## Events — 174 records
 
 | Class | Count | Share | What the record carries |
 | --- | ---: | ---: | --- |
-| **Full** | 20 | 12% | A resolvable URL, plus the feed or publisher that supplied it |
+| **Full** | 27 | 16% | A resolvable URL, plus the feed or publisher that supplied it |
 | **Legal** | 2 | 1% | An exact *Federal Register* volume and page — complete by Chicago's convention for government material |
-| **Short** | 145 | 87% | Issuing body, document type and date only. Hand-curated historical records for which no published document was found |
+| **Short** | 145 | 83% | Issuing body, document type and date only. Hand-curated historical records for which no published document was found |
 | **Uncited** | 0 | 0% | No source recorded |
 
 See the [source register](SOURCE-REGISTER.md) for each entry, and for why a
@@ -47,6 +47,7 @@ Provenance is recorded per event, not implied by the source string.
 | **human** | 19 | A person approved it through the admin surface |
 | **automatic** | 1 | Automatic triage approved it unattended. The source line says so; no reviewer identity is invented |
 | **curated** | 147 | Hand-authored in the seed data, never in the review queue |
+| **ai** | 7 | AI source review of news announcements; not human-reviewed |
 | **legacy** | 0 | Predates the provenance column; how it was approved is not recorded |
 
 Automatic approval is **opt-in and off by default**

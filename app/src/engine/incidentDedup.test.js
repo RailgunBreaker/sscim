@@ -155,11 +155,16 @@ describe('the incident table itself', () => {
    silently.
    ================================================================== */
 describe('the published index, with the real snapshot', () => {
-  const data = buildVaultData(snapshot);
+  // Exercise the incident while active, independently of the live snapshot date.
+  const fixtureDate = '2026-09-04';
+  const shift = (Date.parse(snapshot.meta.snapshotDate) - Date.parse(fixtureDate)) / 86400000;
+  const fixture = { ...snapshot, meta: { ...snapshot.meta, snapshotDate: fixtureDate },
+    events: snapshot.events.map((e) => ({ ...e, daysAgo: e.daysAgo - shift })) };
+  const data = buildVaultData(fixture);
   const engine = buildEngine({
     STAGES: data.STAGES, FLOW_EDGES: data.FLOW_EDGES, COMPANIES: data.COMPANIES,
     CUSTOMERS: data.CUSTOMERS, POLICIES: data.POLICIES, EVENTS: data.EVENTS, OWNERS: data.OWNERS,
-    datasetAsOf: snapshot.meta?.snapshotDate,
+    datasetAsOf: fixtureDate,
   });
   const idx = (evs) => engine.toDisplayIndex(engine.operationalIndex(engine.operationalField(evs)));
 

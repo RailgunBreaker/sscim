@@ -25,6 +25,17 @@
 
 export const RELEASES = [
   {
+    id: 'research-restore-2026-10-14',
+    date: '2026-10-14',
+    version: 'v0.7.1',
+    title: 'Research dashboard restored; news catch-up',
+    lede: 'Restored the September 4 research dashboard, facility network and model from 79289b1, retaining its historical assumptions and data limitations.',
+    changes: [
+      { kind: 'changed', text: 'Returned to the original map, supply-chain propagation, history and facility playground. The later operational-evidence collection workflow is retired for this checkout.' },
+      { kind: 'data', text: 'Added seven primary-source news announcements from September 7 to October 8, checked through October 14, 2026. This is a selected catch-up, not exhaustive news coverage. New announcements are display-only and carry no invented disruption score.' },
+    ],
+  },
+  {
     id: 'model-v7',
     date: '2026-09-04',
     version: 'v0.7',

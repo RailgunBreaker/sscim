@@ -173,6 +173,7 @@ Provenance is recorded per event, not implied by the source string.
 | **human** | ${provenance.human || 0} | A person approved it through the admin surface |
 | **automatic** | ${provenance.automatic || 0} | Automatic triage approved it unattended. The source line says so; no reviewer identity is invented |
 | **curated** | ${provenance.curated || 0} | Hand-authored in the seed data, never in the review queue |
+| **ai** | ${provenance.ai || 0} | AI source review of news announcements; not human-reviewed |
 | **legacy** | ${provenance.legacy || 0} | Predates the provenance column; how it was approved is not recorded |
 
 Automatic approval is **opt-in and off by default**

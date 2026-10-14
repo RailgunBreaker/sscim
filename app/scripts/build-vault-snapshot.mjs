@@ -32,4 +32,5 @@ db.pragma('wal_checkpoint(TRUNCATE)');
 
 const outPath = resolve(__dirname, '../src/data/vault-snapshot.json');
 writeFileSync(outPath, JSON.stringify(bundle), 'utf8');
+db.close();
 console.log(`Wrote static vault snapshot from database: ${outPath} (${bundle.companies.length} companies, ${bundle.stages.length} stages, ${bundle.events.length} events)`);

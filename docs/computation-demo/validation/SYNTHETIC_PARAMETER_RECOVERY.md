@@ -16,9 +16,9 @@ together and must agree. `npm run docs:verify` fails if they do not.
 | | |
 | --- | --- |
 | Model version | `sscim-model-v7.1-exposure-robustness` |
-| Dataset as-of | `2026-09-04` |
-| Base chain index | 6.027797 |
-| Assumption envelope (Part B) | [5.594663, 6.684435] over 200 draws |
+| Dataset as-of | `2026-10-14` |
+| Base chain index | 5.567586 |
+| Assumption envelope (Part B) | [5.236428, 6.223177] over 200 draws |
 | Structural Spearman vs base | mean 0.9971, min 0.9930 |
 | Company-criticality Spearman vs base | mean 0.9896, min 0.9569 |
 | Modal top-five companies held in | 71.5% of draws |

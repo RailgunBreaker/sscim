@@ -1,5 +1,9 @@
 # SSCIM — Semiconductor Supply Chain Intelligence Map
 
+Restored to the September 4 research structure on October 14, 2026, with a
+selected news catch-up through that date. The custom evidence collector is
+retired for this checkout. See [restore notes](docs/RESTORE_2026-10-14.md).
+
 An explainable research tool for tracing how a semiconductor disruption moves
 through a modeled supply chain. Pick a plant, an event, a stage or a country,
 and see what it touches — with the propagation arithmetic shown rather than

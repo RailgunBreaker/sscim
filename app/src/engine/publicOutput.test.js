@@ -109,7 +109,7 @@ describe('event provenance is truthful in the published bundle', () => {
 
   it('records a provenance value for every event', () => {
     events.forEach((e) => {
-      expect(['human', 'automatic', 'curated', 'legacy'], `${e.id}: ${e.provenance}`).toContain(e.provenance);
+      expect(['human', 'automatic', 'curated', 'legacy', 'ai'], `${e.id}: ${e.provenance}`).toContain(e.provenance);
     });
   });
 
@@ -126,6 +126,15 @@ describe('event provenance is truthful in the published bundle', () => {
   it('does not invent a reviewer identity for an automatic approval', () => {
     events.filter((e) => e.provenance === 'automatic')
       .forEach((e) => expect(e.reviewedBy, e.id).toBe('auto-triage'));
+  });
+
+  it('labels AI-reviewed news without claiming human review or a scored effect', () => {
+    const news = events.filter((e) => e.provenance === 'ai');
+    expect(news.length).toBe(7);
+    news.forEach((e) => {
+      expect(e.source).toMatch(/AI source review; not human-reviewed/);
+      expect(e.reviewedBy).toBe('Codex source review');
+    });
   });
 
   it('leaves the human-reviewed claim intact where a person did review it', () => {

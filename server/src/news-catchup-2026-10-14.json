@@ -1,0 +1,51 @@
+[
+  {
+    "id": "n260907_intel_highna", "date": "2026-09-07",
+    "title": "Intel and ASML report progress on High NA EUV manufacturing",
+    "summary": "Intel reports more than one million wafers processed across certification, testing, research and selected production layers. The announcement describes manufacturing readiness, not a measured industry-wide capacity increase.",
+    "source": "https://www.intel.com/content/www/us/en/newsroom/news/intel-foundry/intel-foundry-asml-accelerate-industry-readiness-for-high-na-euv.html",
+    "stages": ["litho", "adv_fab"], "countries": ["us", "nl"]
+  },
+  {
+    "id": "n260910_tsmc_revenue", "date": "2026-09-10",
+    "title": "TSMC reports August revenue of NT$514.81 billion",
+    "summary": "TSMC reports consolidated August revenue up 10.1% month on month and 53.3% year on year. Revenue is a financial observation and does not identify physical wafer output or a supply disruption.",
+    "source": "https://pr.tsmc.com/english/news/3340",
+    "stages": ["adv_fab", "mature_fab"], "countries": ["tw"]
+  },
+  {
+    "id": "n260928_vsmc_opening", "date": "2026-09-28",
+    "title": "VSMC opens its first 300mm fab in Singapore",
+    "summary": "NXP and VIS announce the opening of their VSMC fab in Tampines. The stated target is 44,000 wafers per month by 2029; that future target is not current production capacity.",
+    "source": "https://www.nxp.com/company/about-nxp/newsroom/NW-VSMC-V4",
+    "stages": ["mature_fab", "analog"], "countries": ["sg", "tw", "nl"]
+  },
+  {
+    "id": "n260930_micron_results", "date": "2026-09-30",
+    "title": "Micron publishes fiscal fourth-quarter and full-year 2026 results",
+    "summary": "Micron reports record fiscal 2026 results and plans increased investment in technology, products and manufacturing. These company financial results do not establish the magnitude of a physical memory shortage or its downstream effects.",
+    "source": "https://investors.micron.com/news/press-release/2026/Micron-Technology-Inc--Reports-Record-Fiscal-Fourth-Quarter-and-Full-Year-2026-Results/default.aspx",
+    "stages": ["memory_fab", "hbm"], "countries": ["us"]
+  },
+  {
+    "id": "n261008_gf_interposers", "date": "2026-10-08",
+    "title": "GlobalFoundries and TSMC agree on US silicon-interposer supply",
+    "summary": "GlobalFoundries announces a multi-year $2 billion manufacturing agreement for TSMC's CoWoS packaging ecosystem, with capacity expansion planned in Malta, New York. The announcement does not quantify currently available additional output.",
+    "source": "https://gf.com/news-and-events/news/globalfoundries-reaches-agreement-to-establish-us-based-supply-of-silicon-interposers-for-advanced-ai-packaging/",
+    "stages": ["adv_pkg", "substrates"], "countries": ["us", "tw"]
+  },
+  {
+    "id": "n261008_tsmc_revenue", "date": "2026-10-08",
+    "title": "TSMC reports September revenue of NT$511.86 billion",
+    "summary": "TSMC reports September consolidated revenue down 0.6% month on month and up 54.6% year on year. This is a revenue release, not the third-quarter earnings release scheduled for October 15.",
+    "source": "https://pr.tsmc.com/english/news/3343",
+    "stages": ["adv_fab", "mature_fab"], "countries": ["tw"]
+  },
+  {
+    "id": "n261008_samsung_guidance", "date": "2026-10-08",
+    "title": "Samsung issues preliminary third-quarter 2026 earnings guidance",
+    "summary": "Samsung publishes consolidated third-quarter sales and operating-profit estimates. These preliminary company-wide figures are not semiconductor-segment results or measurements of fabrication output.",
+    "source": "https://news.samsung.com/global/samsung-electronics-announces-earnings-guidance-for-third-quarter-2026",
+    "stages": ["memory_fab", "adv_fab"], "countries": ["kr"]
+  }
+]
