@@ -16,7 +16,28 @@ import { findMarkdownDocs, appDir } from './lib/find-markdown.mjs';
 
 const output = path.join(appDir, 'src', 'docs', 'generated-library.js');
 const manifestOutput = path.join(appDir, 'public', 'docs-manifest.json');
-const docs = (await findMarkdownDocs()).map(({ path: p, title, tags }) => ({ path: p, title, tags }));
+/* The index carries more than a filename now, because a library that
+   lists sixty paths makes the reader open documents to find out what they
+   are. A one-line summary, a length, a date and the document's own
+   headings let them decide from the list — and the headings are what make
+   the search box find a document by something inside it rather than only
+   by a title the reader would have to already know. */
+const docs = (await findMarkdownDocs()).map(({ path: p, title, tags, summary, words, readingMinutes, modified, headings }) => ({
+  path: p,
+  title,
+  tags,
+  summary,
+  words,
+  readingMinutes,
+  modified,
+  /* Levels 2 and 3. Level 2 alone indexed 369 headings and missed most of
+     what a reader actually searches for — "half-life" is a level-3
+     heading and returned nothing. Including level 3 takes the index to
+     626 headings for about 15KB more in a manifest fetched once. Level 4
+     is left out: it is mostly parameter names, which the specification's
+     own tables already serve better. */
+  headings: headings.filter((h) => h.level === 2 || h.level === 3).map((h) => h.text).slice(0, 40),
+}));
 
 await mkdir(path.dirname(output), { recursive: true });
 await mkdir(path.dirname(manifestOutput), { recursive: true });

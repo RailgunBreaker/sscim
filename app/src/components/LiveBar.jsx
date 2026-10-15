@@ -47,8 +47,8 @@ export default function LiveBar({ model, whatChanged, hazard, onClearHazard, sou
   const baselineDelta7d = baselineChainIndex - prev7;
   const isStatic = source === 'static';
 
-  const tone = scenarioActive ? { bg: '#2A1E14', border: C.amber, text: C.amber, label: 'Hazard applied' }
-    : reviewing ? { bg: '#161A26', border: C.copperDim, text: C.copper, label: 'History review' }
+  const tone = scenarioActive ? { bg: '#2B2318', border: C.amber, text: C.amber, label: 'Hazard applied' }
+    : reviewing ? { bg: '#191E24', border: C.copperDim, text: C.copper, label: 'History review' }
       : isStatic ? { bg: C.panel2, border: C.line, text: C.dim, label: 'Static snapshot' }
         : { bg: C.panel2, border: C.line, text: C.dim, label: 'Live vault' };
 
@@ -110,7 +110,7 @@ export default function LiveBar({ model, whatChanged, hazard, onClearHazard, sou
         {scenarioActive && onClearHazard && (
           <button type="button" onClick={onClearHazard} className="ui-button"
             title={hazard?.desc || 'Remove the hazard overlay and return to the observed reading'}
-            style={{ fontSize: 13, padding: '5px 12px', borderRadius: 5, fontFamily: 'inherit', cursor: 'pointer', fontWeight: 600, background: C.amber, color: '#0C111C', border: `1px solid ${C.amber}` }}>
+            style={{ fontSize: 13, padding: '5px 12px', borderRadius: 5, fontFamily: 'inherit', cursor: 'pointer', fontWeight: 600, background: C.amber, color: '#101214', border: `1px solid ${C.amber}` }}>
             Clear hazard
           </button>
         )}

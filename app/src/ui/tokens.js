@@ -3,17 +3,17 @@
 
    theme.js holds the raw palette and stays as it is, because fifty files
    import `C` from it. This adds a layer of MEANING on top: components ask
-   for `text.muted` or `state.adverse`, not for `#8C96A8`. A colour with a
+   for `text.muted` or `state.adverse`, not for `#99A1AA`. A colour with a
    name can be reasoned about and audited; a hex literal repeated across
    forty files cannot.
 
-   The one raw value that changed is `faint`. At #5A6478 it scored 2.89:1
-   on the panel background — below WCAG AA for normal text, and it was
-   being used for 9-10px essential metadata. It is now #79849A: the same
-   hue and saturation, lightened until it passes (4.57:1 on panel, 5.02:1
-   on the page). Nothing else in the palette moved.
+   The palette itself lives in theme.js and is documented there. What
+   this file adds is the vocabulary: `raised`, `selected`, `control` and
+   the washes are DERIVED from the accent rather than typed, so moving
+   the accent moves them too.
    ==================================================================== */
-import { C } from '../theme.js';
+import { C, accentWash } from '../theme.js';
+import { FONT_SANS, FONT_MONO, FONT_TEXT } from './css.js';
 
 /* ---------------------------------------------------------------- colour */
 
@@ -24,10 +24,10 @@ export const color = {
     page: C.bg,
     sunken: C.panel2,
     panel: C.panel,
-    raised: '#1A2235',
+    raised: '#21262B',
     /* A wash for a selected or active row: readable, and not a box. */
-    selected: 'rgba(201,138,63,.12)',
-    hover: 'rgba(255,255,255,.035)',
+    selected: accentWash(0.14),
+    hover: 'rgba(255,255,255,.04)',
   },
 
   text: {
@@ -37,7 +37,7 @@ export const color = {
        must never mean "unreadable". */
     muted: C.faint,
     /* On a copper fill. */
-    onAccent: '#0C111C',
+    onAccent: '#101214',
     accent: C.copper,
   },
 
@@ -58,7 +58,7 @@ export const color = {
     /* The single boundary of a panel. */
     default: C.line,
     /* An interactive control at rest. */
-    control: '#2E3B54',
+    control: '#353C44',
     /* Selection, focus, and things the reader is acting on. */
     strong: C.copper,
   },
@@ -73,6 +73,9 @@ export const space = { xs: 4, sm: 8, md: 12, lg: 16, xl: 24, xxl: 32 };
 
 /* ---------------------------------------------------------- typography */
 
+/* The stacks live in css.js, which is also where the stylesheet that
+   every page loads declares them as custom properties. One home. */
+
 /* WHY THESE SIZES. Essential content was routinely set at 9-11px with
    1-2px of letter-spacing, which reads as a debug overlay rather than a
    document. The floor for anything a user must read is 12px, and 11px is
@@ -82,10 +85,15 @@ export const font = {
   /* One family. The old `.mono` class named a monospace font and then set
      a sans-serif, which is why numbers never aligned. Tabular figures are
      what was actually wanted, and they are a font FEATURE, not a family. */
-  sans: 'Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+  sans: FONT_SANS,
   /* Real monospace, for content that behaves like code: identifiers,
      digests, file paths. Not for numbers — those get tabular figures. */
-  mono: 'ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", monospace',
+  mono: FONT_MONO,
+  /* Long-form reading only — the documentation reader and the guide. A
+     text face rather than a UI face, and it is the same family KaTeX sets
+     its math in, so prose and equations stop looking like two documents
+     spliced together. */
+  text: FONT_TEXT,
 
   size: {
     display: 30,   // landing hero only
@@ -111,7 +119,7 @@ export const tabular = { fontVariantNumeric: 'tabular-nums' };
 
 /* ------------------------------------------------------------- shape */
 
-export const radius = { sm: 3, md: 5, lg: 8, pill: 999 };
+export const radius = { sm: 4, md: 6, lg: 10, pill: 999 };
 
 /* One height per control class, so that a row of mixed controls lines up
    without anyone nudging padding. 32px is the desktop control; 44px is the
@@ -122,7 +130,7 @@ export const control = { sm: 26, md: 32, lg: 38, touch: 44 };
    elevation. Reserved for things that genuinely float above the page. */
 export const shadow = {
   none: 'none',
-  overlay: '0 8px 28px rgba(0,0,0,.45)',
+  overlay: '0 10px 34px rgba(0,0,0,.5)',
 };
 
 /* A focus ring must be visible against every surface, and must not be

@@ -40,7 +40,7 @@ export default function Pane({ title, hint, children, id, highlight }) {
           flexWrap: 'wrap',
         }}
       >
-        <h2 style={{ ...typeStyle.heading, fontSize: font.size.body, margin: 0 }}>{t(title)}</h2>
+        <h2 style={{ ...typeStyle.heading, fontSize: font.size.secondary, margin: 0 }}>{t(title)}</h2>
         {hint && <span style={{ ...typeStyle.meta }}>{t(hint)}</span>}
       </div>
       <div style={{ flex: 1, minHeight: 0, minWidth: 0 }}>{children}</div>

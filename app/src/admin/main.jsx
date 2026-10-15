@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
+/* The palette and the stylesheet come from the one place that holds them.
+   This file used to carry its own copy of the palette, which is how it
+   ended up with a `faint` that failed contrast months after the shared
+   value was fixed. */
+import { C } from '../theme.js';
+import { BASE_CSS, FONT_SANS } from '../ui/css.js';
 
 const API = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8787';
-const C = { bg: '#0C111C', panel: '#141B2B', panel2: '#0F1626', line: '#243149', copper: '#C98A3F', text: '#E9E4D8', dim: '#8C96A8', faint: '#5A6478', red: '#E25C4A', green: '#4FA97F', amber: '#DFA83D' };
-const styles = `*{box-sizing:border-box}body{margin:0;background:${C.bg};color:${C.text};font-family:Inter,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}button,input,textarea{font:inherit}button:focus-visible{outline:2px solid ${C.copper};outline-offset:2px}`;
+const styles = BASE_CSS;
 const button = (primary = false, danger = false) => ({ border: `1px solid ${danger ? C.red : primary ? C.copper : C.line}`, background: primary ? C.copper : 'transparent', color: danger ? C.red : primary ? C.bg : C.dim, borderRadius: 6, padding: '8px 11px', fontWeight: 650, fontSize: 12, cursor: 'pointer' });
 
 async function api(path, token, options = {}) {
@@ -55,7 +60,7 @@ const GROUPS = [
 ];
 
 function CandidateRow({ item, verdict, selected, checked, onSelect, onCheck }) {
-  return <div style={{ display: 'flex', alignItems: 'flex-start', gap: 8, borderBottom: `1px solid ${C.line}`, background: selected ? 'rgba(201,138,63,.1)' : 'transparent', padding: '9px 10px' }}>
+  return <div style={{ display: 'flex', alignItems: 'flex-start', gap: 8, borderBottom: `1px solid ${C.line}`, background: selected ? 'rgba(127,163,216,.1)' : 'transparent', padding: '9px 10px' }}>
     {onCheck && <input type="checkbox" checked={checked} onChange={onCheck} aria-label={`Select ${titleOf(item)}`} style={{ marginTop: 4, accentColor: C.copper, cursor: 'pointer' }} />}
     <button onClick={onSelect} style={{ flex: 1, minWidth: 0, display: 'block', textAlign: 'left', border: 'none', background: 'transparent', color: C.text, cursor: 'pointer', padding: 0 }}>
       <div style={{ color: C.copper, fontSize: 12 }}>{item.date_iso} · {item.source_feed}</div>
@@ -209,7 +214,7 @@ const EDIT_FIELDS = [
 
 function EventRow({ event, selected, checked, onSelect, onCheck }) {
   const d = event.removalDelta;
-  return <div style={{ display: 'flex', alignItems: 'flex-start', gap: 8, borderBottom: `1px solid ${C.line}`, background: selected ? 'rgba(201,138,63,.1)' : 'transparent', padding: '9px 10px' }}>
+  return <div style={{ display: 'flex', alignItems: 'flex-start', gap: 8, borderBottom: `1px solid ${C.line}`, background: selected ? 'rgba(127,163,216,.1)' : 'transparent', padding: '9px 10px' }}>
     <input type="checkbox" checked={checked} onChange={onCheck} aria-label={`Select ${event.title}`} style={{ marginTop: 4, accentColor: C.copper, cursor: 'pointer' }} />
     <button onClick={onSelect} style={{ flex: 1, minWidth: 0, display: 'block', textAlign: 'left', border: 'none', background: 'transparent', color: C.text, cursor: 'pointer', padding: 0 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', gap: 8 }}>

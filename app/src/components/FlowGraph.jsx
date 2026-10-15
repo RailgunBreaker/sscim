@@ -94,7 +94,7 @@ export default function FlowGraph({ sel, setSel, hl, model, scenarioActive, pb, 
               <path d="M0,0 L10,5 L0,10 z" fill={C.copper} />
             </marker>
           </defs>
-          {TIER_LABELS.map(([label, x]) => <text key={label} x={x} y={16} textAnchor="middle" className="mono" fill={C.faint} fontSize="8.5" letterSpacing="2">{label}</text>)}
+          {TIER_LABELS.map(([label, x]) => <text key={label} x={x} y={16} textAnchor="middle" className="mono" fill={C.faint} fontSize="11">{label}</text>)}
           {FLOW_EDGES.map(([a, b], i) => {
             const sa = STAGE_BY_ID[a], sb = STAGE_BY_ID[b];
             const coeff = D[b]?.[a] ?? 0;
@@ -156,17 +156,17 @@ export default function FlowGraph({ sel, setSel, hl, model, scenarioActive, pb, 
                 {isSel && <rect x={st.x - 51} y={st.y - 24} width={102} height={48} rx={7} fill="none" stroke={C.copper} strokeWidth={2} />}
                 {pbNew && <rect className="pulse" x={st.x - 51} y={st.y - 24} width={102} height={48} rx={7} fill="none" stroke={C.copper} strokeWidth={2} />}
                 <rect x={st.x - 47} y={st.y - 20} width={94} height={40} rx={5}
-                  fill={active || hoverLit ? '#1B2436' : C.panel} stroke={isSel ? C.text : active ? col : hoverLit ? C.copper : C.line} strokeWidth={isSel ? 1.6 : 0.6 + ni / 8} />
+                  fill={active || hoverLit ? '#232A31' : C.panel} stroke={isSel ? C.text : active ? col : hoverLit ? C.copper : C.line} strokeWidth={isSel ? 1.6 : 0.6 + ni / 8} />
                 <circle cx={st.x - 37} cy={st.y - 10} r={2 + ni / 3.2} fill={col}>
                   {(active || pbNew) && <animate attributeName="opacity" values="1;.4;1" dur="1.6s" repeatCount="indefinite" />}
                 </circle>
-                <text x={st.x + 3} y={st.y - 3} textAnchor="middle" fill={C.text} fontSize="9.5" fontWeight="600">
+                <text x={st.x + 3} y={st.y - 3} textAnchor="middle" fill={C.text} fontSize="11" fontWeight="600">
                   {st.name.length > 19 ? st.name.slice(0, 18) + '…' : st.name}
                 </text>
-                <text x={st.x - 14} y={st.y + 12} textAnchor="middle" fill={col} fontSize="9.5" className="mono" fontWeight="600">
+                <text x={st.x - 14} y={st.y + 12} textAnchor="middle" fill={col} fontSize="11" className="mono" fontWeight="600">
                   {badge}{extraDelta}
                 </text>
-                <text x={st.x + 30} y={st.y + 12} textAnchor="middle" fill={C.faint} fontSize="8" className="mono">
+                <text x={st.x + 30} y={st.y + 12} textAnchor="middle" fill={C.faint} fontSize="11" className="mono">
                   NI {ni.toFixed(1)}
                 </text>
               </g>

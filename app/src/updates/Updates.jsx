@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { RELEASES, KIND_LABEL, KIND_COLOR } from '../data/releases.js';
 import { T, LANG_LABELS } from './i18n.js';
 import SiteMap from '../components/SiteMap.jsx';
+import ThemeToggle from '../components/ThemeToggle.jsx';
+import { BASE_CSS, FOOT_CSS } from '../ui/css.js';
 
 /* ====================================================================
    Updates — the public changelog.
@@ -18,50 +20,67 @@ import SiteMap from '../components/SiteMap.jsx';
    notes into three languages would produce three subtly different
    accounts of what the model does, which is precisely the kind of drift
    this project spends its effort avoiding.
+
+   ON THE PRESENTATION. Each change used to be a bordered card with a
+   coloured, letter-spaced, 8.5px all-caps pill welded to its left edge —
+   a hundred boxes and a hundred pills down one page. The kind is now a
+   word in a fixed column with a small dot beside it, and the changes
+   share one set of hairline rules. The timeline rail stays, because a
+   changelog is a sequence and the rail is the one piece of decoration
+   here that says so.
    ==================================================================== */
 
 const STYLE = `
-  :root{--bg:#0C111C;--panel:#141B2B;--panel2:#0F1626;--line:#243149;--copper:#C98A3F;--copperDim:#8A6230;--red:#E25C4A;--amber:#DFA83D;--green:#4FA97F;--text:#E9E4D8;--dim:#8C96A8;--faint:#5A6478}
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--bg);color:var(--text);font-family:Inter,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}
-  .mono{font-family:inherit;font-variant-numeric:tabular-nums}
-  .wrap{max-width:880px;margin:0 auto;padding:0 20px}
-  a{color:var(--copper);text-decoration:none}
-  a:hover{text-decoration:underline}
-  header{border-bottom:1px solid var(--line);padding:14px 0;position:sticky;top:0;background:rgba(12,17,28,.92);backdrop-filter:blur(6px);z-index:10}
-  header .wrap{display:flex;align-items:center;gap:12px;flex-wrap:wrap;max-width:980px}
-  .logo{display:flex;align-items:center}.logo img{display:block;width:104px;height:auto;filter:grayscale(1) brightness(0) invert(1)}
-  .tag{font-size:10px;letter-spacing:2px;color:var(--copper)}
-  .btn{display:inline-block;border-radius:5px;padding:8px 16px;font-weight:700;font-size:13.5px;border:1px solid var(--copper);transition:transform .15s ease,box-shadow .15s ease}
-  .btn.solid{background:var(--copper);color:#0C111C}
-  .btn:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(201,138,63,.22);text-decoration:none}
-  .langbar b{cursor:pointer;border:1px solid var(--line);border-radius:3px;padding:2px 7px;font-size:10px;color:var(--faint);font-weight:700}
-  .langbar b.on{background:var(--copper);color:#0C111C;border-color:var(--copper)}
-  .hero{padding:46px 0 30px;border-bottom:1px solid var(--line)}
-  .hero h1{font-size:clamp(26px,4.5vw,38px);line-height:1.15;margin-bottom:10px}
-  .hero h1 em{color:var(--copper);font-style:normal}
-  .lede{color:var(--dim);font-size:15.5px;max-width:660px}
-  .note{border-left:3px solid var(--copperDim);background:var(--panel2);padding:9px 13px;font-size:12px;color:var(--dim);margin:18px 0 0;border-radius:0 5px 5px 0;max-width:660px}
+${BASE_CSS}
+${FOOT_CSS}
 
-  .timeline{position:relative;padding:34px 0 10px}
-  .timeline::before{content:"";position:absolute;left:9px;top:0;bottom:0;width:1px;background:var(--line)}
-  .rel{position:relative;padding:0 0 34px 40px}
-  .rel::before{content:"";position:absolute;left:3px;top:6px;width:13px;height:13px;border-radius:50%;background:var(--bg);border:2px solid var(--copperDim)}
-  .rel.first::before{border-color:var(--copper);box-shadow:0 0 0 4px rgba(201,138,63,.16)}
-  .relhead{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:4px}
-  .date{font-size:11px;letter-spacing:1.2px;color:var(--copper)}
-  .ver{font-size:10px;letter-spacing:1px;color:var(--faint);border:1px solid var(--line);border-radius:3px;padding:1px 6px}
-  .newest{font-size:9.5px;letter-spacing:1.2px;color:#0C111C;background:var(--copper);border-radius:3px;padding:2px 7px;font-weight:700}
-  .rel h2{font-size:19px;line-height:1.3;margin:2px 0 6px}
-  .rel .relled{color:var(--dim);font-size:14px;margin-bottom:14px;max-width:640px}
-  ul.changes{list-style:none;display:grid;gap:9px}
-  ul.changes li{display:flex;gap:10px;align-items:flex-start;background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:10px 13px}
-  .kind{flex-shrink:0;font-size:8.5px;letter-spacing:1.1px;font-weight:700;border-radius:3px;padding:2px 6px;margin-top:2px;min-width:62px;text-align:center}
-  .changes p{font-size:13px;color:var(--dim);line-height:1.6}
-  .limits{margin-top:12px;border:1px solid var(--copperDim);background:rgba(223,168,61,.055);border-radius:6px;padding:11px 14px;font-size:12.5px;color:var(--amber);line-height:1.65}
-  .limits b{display:block;font-size:9px;letter-spacing:1.6px;margin-bottom:4px}
-  @media (max-width:640px){header .wrap{gap:8px}.rel{padding-left:30px}.timeline::before{left:6px}.rel::before{left:0}ul.changes li{flex-direction:column;gap:5px}.kind{min-width:0;align-self:flex-start}}
+.lead-in{padding:var(--s7) 0 var(--s5);border-bottom:1px solid var(--rule)}
+.lead-in h1{font-size:clamp(28px,3.4vw,40px);line-height:1.1;letter-spacing:-.022em}
+.lead-in h1 em{font-style:normal;color:var(--accent)}
+.lead-in .lede{margin-top:var(--s4);max-width:58ch}
+
+.timeline{position:relative;padding:var(--s6) 0 var(--s5);max-width:860px}
+.timeline::before{content:"";position:absolute;left:5px;top:0;bottom:var(--s6);width:1px;background:var(--rule)}
+
+.rel{position:relative;padding:0 0 var(--s7) var(--s6)}
+.rel::before{
+  content:"";position:absolute;left:0;top:7px;width:11px;height:11px;border-radius:50%;
+  background:var(--page);border:2px solid var(--control);
+}
+.rel.first::before{border-color:var(--accent);background:var(--accent)}
+.relhead{display:flex;align-items:baseline;gap:var(--s3);flex-wrap:wrap}
+.relhead time{font-size:var(--t-meta);color:var(--ink-3);font-variant-numeric:tabular-nums}
+.relhead .ver{font-family:var(--mono);font-size:var(--t-meta);color:var(--ink-3)}
+.relhead .newest{font-size:var(--t-meta);color:var(--accent);font-weight:600}
+.rel h2{font-size:var(--t-h2);line-height:1.22;margin:var(--s2) 0 var(--s3);max-width:34ch}
+.rel .relled{font-size:var(--t-body);color:var(--ink-2);line-height:1.6;max-width:66ch;margin-bottom:var(--s4)}
+
+.changes{list-style:none;margin:0;padding:0;border-top:1px solid var(--rule)}
+.changes > li{
+  display:grid;grid-template-columns:7.5rem minmax(0,1fr);gap:var(--s2) var(--s4);
+  padding:var(--s3) 0;border-bottom:1px solid var(--rule-soft);align-items:baseline;
+}
+.changes .kind{display:inline-flex;align-items:center;gap:7px;font-size:var(--t-meta);color:var(--ink-3)}
+.changes .kind i{width:6px;height:6px;border-radius:50%;flex-shrink:0;display:inline-block}
+.changes p{font-size:var(--t-small);color:var(--ink-2);line-height:1.6;margin:0}
+
+.limits{margin-top:var(--s4);border-left:2px solid var(--warning);padding:var(--s2) 0 var(--s2) var(--s4);max-width:72ch}
+.limits b{display:block;font-size:var(--t-meta);color:var(--ink-3);margin-bottom:3px;font-weight:600}
+.limits{font-size:var(--t-small);color:var(--ink-2);line-height:1.65}
+
+.langbar{display:flex;gap:2px;padding:2px;background:var(--sunken);border:1px solid var(--control);border-radius:var(--r2)}
+.langbar button{min-height:26px;padding:0 9px;border:0;border-radius:var(--r1);background:transparent;color:var(--ink-2);font-size:var(--t-meta);cursor:pointer}
+.langbar button:hover{color:var(--ink)}
+.langbar button[aria-pressed="true"]{background:var(--accent);color:var(--on-accent);font-weight:600}
+
+@media(max-width:640px){
+  .langbar button{min-height:40px}
+  .rel{padding-left:var(--s5)}
+  .changes > li{grid-template-columns:minmax(0,1fr);gap:var(--s1)}
+}
 `;
+
+const LANG_NAMES = { en: 'English', zh: '简体中文 — Simplified Chinese', tw: '繁體中文 — Traditional Chinese', ja: '日本語 — Japanese' };
 
 export default function Updates() {
   const [lang, setLang] = useState('en');
@@ -71,37 +90,47 @@ export default function Updates() {
     <>
       <style>{STYLE}</style>
 
-      <header>
-        <div className="wrap">
-          <a className="logo" href="index.html" aria-label="SSCIM home"><img src="sscim-logo.png" alt="SSCIM" /></a>
-          <span className="tag mono">{t('tag')}</span>
-          <span className="langbar mono" style={{ marginLeft: 'auto', display: 'flex', gap: 3 }}>
-            {Object.entries(LANG_LABELS).map(([l, label]) => (
-              <b key={l} className={lang === l ? 'on' : ''} onClick={() => setLang(l)}>{label}</b>
-            ))}
-          </span>
-          <a href="intro.html" style={{ fontSize: 13 }}>{t('navGuide')}</a>
-          <a href="docs.html" style={{ fontSize: 13 }}>{t('navDocs')}</a>
-          <a className="btn solid" href="sscim-app.html">{t('navDashboard')}</a>
+      <header className="site-head">
+        <div className="shell bar">
+          <a className="brand" href="index.html" aria-label="SSCIM home"><img src="sscim-logo.png" alt="SSCIM" /></a>
+          <nav className="crumbs" aria-label="Breadcrumb">
+            <a href="index.html">SSCIM</a>
+            <span className="sep" aria-hidden="true">/</span>
+            <span className="here" aria-current="page">Updates</span>
+          </nav>
+          <nav className="site-nav" aria-label="Site">
+            <div className="langbar" role="group" aria-label="Language">
+              {Object.entries(LANG_LABELS).map(([l, label]) => (
+                <button key={l} type="button" aria-pressed={lang === l}
+                  aria-label={LANG_NAMES[l] || label} onClick={() => setLang(l)}>
+                  {label}
+                </button>
+              ))}
+            </div>
+            <a href="intro.html">{t('navGuide')}</a>
+            <a href="docs.html">{t('navDocs')}</a>
+            <ThemeToggle />
+            <a className="btn btn-primary btn-sm" href="sscim-app.html">{t('navDashboard')}</a>
+          </nav>
         </div>
       </header>
 
-      <div className="hero">
-        <div className="wrap">
+      <div className="lead-in">
+        <div className="shell">
           <h1>{t('h1a')} <em>{t('h1b')}</em></h1>
           <p className="lede">{t('lede')}</p>
-          <div className="note">{t('noteEnglish')}</div>
+          <p className="note" style={{ marginTop: 'var(--s4)', maxWidth: '66ch' }}>{t('noteEnglish')}</p>
         </div>
       </div>
 
-      <div className="wrap">
+      <div className="shell">
         <div className="timeline">
           {RELEASES.map((rel, i) => (
             <article key={rel.id} id={rel.id} className={`rel${i === 0 ? ' first' : ''}`}>
               <div className="relhead">
-                <time className="date mono" dateTime={rel.date}>{rel.date}</time>
-                <span className="ver mono">{rel.version}</span>
-                {i === 0 && <span className="newest mono">{t('newest')}</span>}
+                <time dateTime={rel.date}>{rel.date}</time>
+                <span className="ver">{rel.version}</span>
+                {i === 0 && <span className="newest">{t('newest')}</span>}
               </div>
               <h2>{rel.title}</h2>
               <p className="relled">{rel.lede}</p>
@@ -109,10 +138,11 @@ export default function Updates() {
               <ul className="changes">
                 {rel.changes.map((ch) => (
                   <li key={ch.text}>
-                    <span className="kind mono" style={{
-                      color: KIND_COLOR[ch.kind],
-                      border: `1px solid ${KIND_COLOR[ch.kind]}`,
-                    }}>
+                    {/* The word carries the meaning; the dot only helps the
+                        eye group them. Nobody has to tell the colours
+                        apart to read this page. */}
+                    <span className="kind">
+                      <i aria-hidden="true" style={{ background: KIND_COLOR[ch.kind] }} />
                       {KIND_LABEL[ch.kind]}
                     </span>
                     <p>{ch.text}</p>
@@ -121,16 +151,16 @@ export default function Updates() {
               </ul>
 
               {rel.limits && (
-                <div className="limits">
-                  <b className="mono">{t('limitsLabel')}</b>
+                <p className="limits">
+                  <b>{t('limitsLabel')}</b>
                   {rel.limits}
-                </div>
+                </p>
               )}
             </article>
           ))}
         </div>
 
-        <p style={{ color: 'var(--faint)', fontSize: 12, paddingBottom: 6 }}>
+        <p className="meta" style={{ paddingBottom: 'var(--s5)' }}>
           {t('sourceNote')}{' '}
           <a href="docs/MODEL_ROADMAP.md.html">{t('roadmapLink')}</a>.
         </p>

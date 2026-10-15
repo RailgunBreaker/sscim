@@ -137,23 +137,27 @@ export const RELEASES = [
   },
 ];
 
+/* Sentence case. Shouting a five-letter taxonomy label beside every one
+   of a hundred changelog lines is a lot of shouting for no information. */
 export const KIND_LABEL = Object.freeze({
-  added: 'ADDED',
-  changed: 'CHANGED',
-  removed: 'REMOVED',
-  data: 'DATA',
-  fixed: 'FIXED',
+  added: 'Added',
+  changed: 'Changed',
+  removed: 'Removed',
+  data: 'Data',
+  fixed: 'Fixed',
 });
 
-/* Colour per kind. `removed` deliberately reads as neutral rather than as an
-   error: taking a feature out because it encouraged a misreading is good
-   news, and colouring it red would say the opposite. */
+/* Colour per kind, used as a small marker beside the label — never as the
+   only thing carrying the meaning, because the label is right there.
+   `removed` deliberately reads as neutral rather than as an error: taking
+   a feature out because it encouraged a misreading is good news, and
+   colouring it red would say the opposite. */
 export const KIND_COLOR = Object.freeze({
-  added: '#4FA97F',
-  changed: '#C98A3F',
-  removed: '#8C96A8',
+  added: '#4FAE86',
+  changed: '#7FA3D8',
+  removed: '#99A1AA',
   data: '#DFA83D',
-  fixed: '#8A6230',
+  fixed: '#4E6A96',
 });
 
 export const LATEST_RELEASE = RELEASES[0];

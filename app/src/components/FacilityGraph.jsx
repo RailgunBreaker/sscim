@@ -457,7 +457,7 @@ export default function FacilityGraph({
                 already-opened ones. */}
             <circle className={onFrontier && !isExpanded ? 'fg-frontier' : undefined}
               r="7.5" fill={C.panel} stroke={isExpanded ? C.copper : C.line} strokeWidth="1" />
-            <text y="3.5" textAnchor="middle" fill={isExpanded ? C.copper : C.dim} fontSize="10">{isExpanded ? '−' : '+'}</text>
+            <text y="3.5" textAnchor="middle" fill={isExpanded ? C.copper : C.dim} fontSize="11">{isExpanded ? '−' : '+'}</text>
           </g>
         )}
       </g>
@@ -552,10 +552,10 @@ export default function FacilityGraph({
 
         <style>{GRAPH_STYLE}</style>
 
-        <text x={16} y={20} fill={C.faint} fontSize="10" letterSpacing="1.2">
+        <text x={16} y={20} fill={C.faint} fontSize="11">
           ← SUPPLIED BY ({upShown === upTotal ? upTotal : `${upShown} of ${upTotal}`})
         </text>
-        <text x={layout.width - 16} y={20} textAnchor="end" fill={C.faint} fontSize="10" letterSpacing="1.2">
+        <text x={layout.width - 16} y={20} textAnchor="end" fill={C.faint} fontSize="11">
           SUPPLIES → ({downShown === downTotal ? downTotal : `${downShown} of ${downTotal}`})
         </text>
 
@@ -579,17 +579,17 @@ export default function FacilityGraph({
         <text x={layout.cx} y={layout.cy + 54} textAnchor="middle" fill={C.text} fontSize="13" fontWeight="700">
           {focus.name.length > 42 ? `${focus.name.slice(0, 41)}…` : focus.name}
         </text>
-        <text x={layout.cx} y={layout.cy + 68} textAnchor="middle" fill={C.copper} fontSize="10">
+        <text x={layout.cx} y={layout.cy + 68} textAnchor="middle" fill={C.copper} fontSize="11">
           {FACILITY_KIND_LABEL[focus.kind] || focus.kind} · {COMPANY_BY_ID[focus.company]?.name || focus.company}
         </text>
 
         {deeperHidden > 0 && (
-          <text x={layout.cx} y={layout.height - 26} textAnchor="middle" fill={C.amber} fontSize="10">
+          <text x={layout.cx} y={layout.height - 26} textAnchor="middle" fill={C.amber} fontSize="11">
             {`${deeperHidden} more facilities at hop 2 or deeper are reachable but not drawn — centre on a nearer plant to see its own connections in full`}
           </text>
         )}
         {anyCapped && (
-          <text x={layout.cx} y={layout.height - 12} textAnchor="middle" fill={C.amber} fontSize="10">
+          <text x={layout.cx} y={layout.height - 12} textAnchor="middle" fill={C.amber} fontSize="11">
             {`showing the strongest ${upShown} of ${upTotal} suppliers and ${downShown} of ${downTotal} customers — the table below lists every direct connection of this plant`}
           </text>
         )}

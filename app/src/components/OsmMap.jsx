@@ -541,7 +541,7 @@ export default function OsmMap({ model, hl, lensOverride, onApplyHazard }) {
           title={`Show the ${FACILITY_LAYER.FACILITIES.length} modeled plants. Drawn at every zoom; markers grow as you zoom in.`}
           className="ui-button"
           style={{ fontSize: 13, padding: '6px 12px', borderRadius: 5, fontFamily: 'inherit', cursor: 'pointer',
-            background: sitesOn ? C.copper : 'transparent', color: sitesOn ? '#0C111C' : C.dim,
+            background: sitesOn ? C.copper : 'transparent', color: sitesOn ? '#101214' : C.dim,
             border: `1px solid ${sitesOn ? C.copper : C.line}`, fontWeight: sitesOn ? 700 : 400 }}>
           Sites
         </button>
@@ -549,7 +549,7 @@ export default function OsmMap({ model, hl, lensOverride, onApplyHazard }) {
           title="Draw the modeled site-to-site links. Pin a plant to see only its own links."
           className="ui-button"
           style={{ fontSize: 13, padding: '6px 12px', borderRadius: 5, fontFamily: 'inherit', cursor: 'pointer',
-            background: linksOn ? C.copperDim : 'transparent', color: linksOn ? '#0C111C' : C.dim,
+            background: linksOn ? C.copperDim : 'transparent', color: linksOn ? '#101214' : C.dim,
             border: `1px solid ${linksOn ? C.copperDim : C.line}`, fontWeight: linksOn ? 700 : 400 }}>
           Links
         </button>
@@ -557,7 +557,7 @@ export default function OsmMap({ model, hl, lensOverride, onApplyHazard }) {
           title="Click the map to place a hazard epicentre and see which plants fall inside the radius"
           className="ui-button"
           style={{ fontSize: 13, padding: '6px 12px', borderRadius: 5, fontFamily: 'inherit', cursor: 'pointer',
-            background: hazardMode ? C.amber : 'transparent', color: hazardMode ? '#0C111C' : C.dim,
+            background: hazardMode ? C.amber : 'transparent', color: hazardMode ? '#101214' : C.dim,
             border: `1px solid ${hazardMode ? C.amber : C.line}`, fontWeight: hazardMode ? 700 : 400 }}>
           Hazard
         </button>

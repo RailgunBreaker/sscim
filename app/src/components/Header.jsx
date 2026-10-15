@@ -52,7 +52,7 @@ export default function Header({
     <header
       style={{
         borderBottom: `1px solid ${color.border.default}`,
-        padding: `${space.sm + 2}px ${space.lg}px`,
+        padding: `${space.md}px ${space.lg}px`,
         display: 'flex',
         flexWrap: 'wrap',
         gap: space.md,
@@ -68,7 +68,7 @@ export default function Header({
         <img
           src="sscim-logo.png"
           alt="SSCIM"
-          style={{ display: 'block', width: 88, height: 'auto', filter: 'grayscale(1) brightness(0) invert(1)' }}
+          style={{ display: 'block', width: 84, height: 'auto', filter: 'grayscale(1) brightness(0) invert(1)' }}
         />
       </a>
 

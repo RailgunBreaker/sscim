@@ -69,7 +69,7 @@ export default function Detail({ sel, setSel, model, scenario, onResetScenario, 
         <h3 style={{ margin: "6px 0", fontSize: 15, lineHeight: 1.35 }}>{e.title}</h3>
         <p style={{ margin: "0 0 8px", fontSize: 12.5, color: C.dim, lineHeight: 1.5 }}>{e.summary}</p>
         {!assumption.operational && (
-          <div className="mono" style={{ fontSize: 12, color: C.amber, background: "#2A1E14", border: `1px solid ${C.copperDim}`, borderRadius: 5, padding: "6px 9px", marginBottom: 6, lineHeight: 1.5 }}>
+          <div className="mono" style={{ fontSize: 12, color: C.amber, background: "#2B2318", border: `1px solid ${C.copperDim}`, borderRadius: 5, padding: "6px 9px", marginBottom: 6, lineHeight: 1.5 }}>
             Excluded from the operational impact score — {assumption.reason}
           </div>
         )}

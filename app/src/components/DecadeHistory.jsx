@@ -119,12 +119,12 @@ export default function DecadeHistory({ onSelectEvent }) {
           {chart.years.map((t) => (
             <g key={t.yr}>
               <line x1={t.px} y1={PT + RUG} x2={t.px} y2={H - PB} stroke={C.line} strokeWidth="1" />
-              <text x={t.px} y={H - 6} textAnchor="middle" fill={C.faint} fontSize="8">{`'${String(t.yr).slice(2)}`}</text>
+              <text x={t.px} y={H - 6} textAnchor="middle" fill={C.faint} fontSize="11">{`'${String(t.yr).slice(2)}`}</text>
             </g>
           ))}
           <line x1={PL} y1={chart.y(NEUTRAL_INDEX)} x2={W - PR} y2={chart.y(NEUTRAL_INDEX)} stroke={C.line} />
           {[chart.yMax - 0.1, NEUTRAL_INDEX].map((v) => (
-            <text key={v} x="2" y={chart.y(v) + 3} fill={C.faint} fontSize="8">{v.toFixed(1)}</text>
+            <text key={v} x="2" y={chart.y(v) + 3} fill={C.faint} fontSize="11">{v.toFixed(1)}</text>
           ))}
           {chart.rug.map((r) => (
             <line key={r.id} x1={r.px} y1={PT + RUG - 1} x2={r.px} y2={PT + RUG - 1 - r.h} stroke={C.faint} strokeWidth="1" opacity="0.55" />
@@ -154,12 +154,12 @@ export default function DecadeHistory({ onSelectEvent }) {
         <div style={{ display: 'flex', gap: 3, marginLeft: 'auto' }}>
           {[['impact', 'Impact'], ['date', 'Date']].map(([k, label]) => (
             <button key={k} type="button" aria-pressed={sort === k} onClick={() => setSort(k)} className="mono"
-              style={{ border: `1px solid ${sort === k ? C.copper : C.line}`, background: sort === k ? 'rgba(201,138,63,.14)' : 'transparent', color: sort === k ? C.copper : C.dim, borderRadius: 4, fontSize: 12, padding: '5px 10px', cursor: 'pointer', fontFamily: 'inherit' }}>
+              style={{ border: `1px solid ${sort === k ? C.copper : C.line}`, background: sort === k ? 'rgba(127,163,216,.14)' : 'transparent', color: sort === k ? C.copper : C.dim, borderRadius: 4, fontSize: 12, padding: '5px 10px', cursor: 'pointer', fontFamily: 'inherit' }}>
               {label}
             </button>
           ))}
           <button type="button" aria-pressed={!scoredOnly} onClick={() => setScoredOnly((v) => !v)} className="mono"
-            style={{ border: `1px solid ${!scoredOnly ? C.copper : C.line}`, background: !scoredOnly ? 'rgba(201,138,63,.14)' : 'transparent', color: !scoredOnly ? C.copper : C.dim, borderRadius: 4, fontSize: 12, padding: '5px 10px', cursor: 'pointer', fontFamily: 'inherit' }}>
+            style={{ border: `1px solid ${!scoredOnly ? C.copper : C.line}`, background: !scoredOnly ? 'rgba(127,163,216,.14)' : 'transparent', color: !scoredOnly ? C.copper : C.dim, borderRadius: 4, fontSize: 12, padding: '5px 10px', cursor: 'pointer', fontFamily: 'inherit' }}>
             {scoredOnly ? 'Scored only' : 'All events'}
           </button>
         </div>

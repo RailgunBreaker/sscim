@@ -67,6 +67,17 @@ const SCENES = [
      this scene captured the flow graph and claimed to be showing a
      facility detail. */
   { id: 'mobile-facility-detail', page: 'sscim-app.html', hash: '#view=playground&fac=tsmc_fab18', viewports: ['375x812'], paneTab: 'Map', what: 'Mobile facility selection and detail' },
+
+  /* The reading side of the site, which this record did not cover at all
+     — which is precisely how it ended up with five different palettes
+     and a 120-character measure while the dashboard was being watched
+     screenshot by screenshot. Both themes, because both ship. */
+  { id: 'guide', page: 'intro.html', what: 'Guide and methodology' },
+  { id: 'updates', page: 'updates.html', viewports: ['1366x936', '375x812'], what: 'Changelog' },
+  { id: 'library', page: 'docs.html', what: 'Documentation library' },
+  { id: 'library-filtered', page: 'docs.html', hash: '#q=half-life&group=none', viewports: ['1366x936'], what: 'Library, searched across section headings' },
+  { id: 'document', page: 'docs/METHODOLOGY.md.html', what: 'A document page' },
+  { id: 'document-paper', page: 'docs/METHODOLOGY.md.html', theme: 'light', viewports: ['1366x936'], what: 'A document page, paper theme' },
 ];
 
 /* Anything that moves makes two captures of the same state differ. */
@@ -113,6 +124,13 @@ async function capture(browser, vp, scene) {
   const page = await context.newPage();
   page.on('console', () => {});
   page.on('pageerror', () => {});
+
+  /* The reading theme is remembered in localStorage and applied by an
+     inline script before first paint, so it has to be seeded on the
+     origin BEFORE the page is opened rather than toggled after. */
+  await page.addInitScript((theme) => {
+    try { window.localStorage.setItem('sscim-theme', theme); } catch { /* ignore */ }
+  }, scene.theme || 'dark');
 
   nav += 1;
   const url = `${base}/${scene.page}?shot=${nav}${scene.hash ?? ''}`;

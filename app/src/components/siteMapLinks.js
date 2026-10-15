@@ -49,6 +49,7 @@ export const SITE_SECTIONS = [
       { href: 'docs/SYSTEM_ARCHITECTURE.md.html', label: 'System architecture', note: 'How the pieces fit together' },
       { href: 'docs/DEVELOPER_GUIDE.md.html', label: 'Developer guide', note: 'Running and extending it' },
       { href: 'docs/NETWORK_ARCHITECTURE.md.html', label: 'Network architecture', note: 'The multi-layer graph' },
+      { href: 'docs/DESIGN_SYSTEM.md.html', label: 'Design system', note: 'The palette, the type scale and the two reading themes' },
       { href: 'https://github.com/RailgunBreaker/sscim', label: 'Source repository ↗', note: 'Every figure is checkable', external: true },
     ],
   },

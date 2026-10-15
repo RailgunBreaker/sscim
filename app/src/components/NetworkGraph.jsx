@@ -21,8 +21,26 @@ const H = 580;
 
 // Tier palette (Inputs & IP → End markets). Colour is paired with tier
 // labels + stage text, never the only channel.
-const TIER_COLORS = ['#6EA8FE', '#63C7B2', '#C98A3F', '#E0A458', '#D46A6A', '#B57EDC', '#8FBF6A'];
-const tierColor = (tierId) => TIER_COLORS[tierId % TIER_COLORS.length] || C.copper;
+/* THE TIER RAMP — one hue, seven steps, light downstream.
+
+   It used to be seven unrelated hues: blue, teal, copper, orange, red,
+   violet, green. Two things were wrong with that. Tiers are ORDERED
+   (Inputs & IP through to End markets), and seven arbitrary hues say they
+   are not — a rainbow encodes identity, and identity is the wrong job
+   here. Worse, three of those hues were the state colours: a tier was
+   painted the same red as "this is deteriorating" and the next one the
+   same green as "this is mitigating", on a risk map.
+
+   So it is now a single-hue ordinal ramp, dark upstream to light
+   downstream, which matches the direction the model propagates in. The
+   steps were validated as an ordinal ramp against this pane's background
+   (#101214): lightness is monotone, every adjacent gap clears 0.06 in
+   OKLab L, and the darkest step holds 2.14:1 against the surface. Tier is
+   also carried by the column position, the column label and each node's
+   accessible name, so it is never colour alone. */
+const TIER_RAMP = ['#154a8c', '#2063b4', '#3480da', '#679fe9', '#97c1f3', '#c7defa', '#eef5fe'];
+const TIER_COLORS = TIER_RAMP;
+const tierColor = (tierId) => TIER_RAMP[tierId % TIER_RAMP.length] || C.accent;
 
 export default function NetworkGraph({ baseGraph, filters = {}, pb = null }) {
   const { engine } = useVault();
@@ -133,7 +151,7 @@ export default function NetworkGraph({ baseGraph, filters = {}, pb = null }) {
             const anyInTier = analysis.centres.find((c) => c.tierId === t.tierId);
             const x = anyInTier ? pos[anyInTier.id]?.x : null;
             if (x == null) return null;
-            return <text key={t.tierId} x={x} y={16} textAnchor="middle" className="mono" fill={C.faint} fontSize="8.5" letterSpacing="1.5">{t.tierLabel}</text>;
+            return <text key={t.tierId} x={x} y={16} textAnchor="middle" className="mono" fill={C.faint} fontSize="11">{t.tierLabel}</text>;
           })}
 
           {/* edges */}
@@ -193,11 +211,11 @@ export default function NetworkGraph({ baseGraph, filters = {}, pb = null }) {
                   <g>
                     <circle r={r + 7} fill="none" stroke={C.copper} strokeWidth={1.6} />
                     <circle cx={r + 4} cy={-r - 4} r={6} fill={C.copper} />
-                    <text x={r + 4} y={-r - 1.5} textAnchor="middle" fill="#0C111C" fontSize="8" fontWeight="700" style={{ pointerEvents: 'none' }}>{routeHopIndex[c.id] + 1}</text>
+                    <text x={r + 4} y={-r - 1.5} textAnchor="middle" fill="#101214" fontSize="11" fontWeight="700" style={{ pointerEvents: 'none' }}>{routeHopIndex[c.id] + 1}</text>
                   </g>
                 )}
                 {(isSel || isHov || isMulti || routeCentreIds.has(c.id) || r > 8) && (
-                  <text x={0} y={-r - 4} textAnchor="middle" fill={isRemoved ? C.faint : C.text} fontSize="8.5" fontWeight="600" style={{ pointerEvents: 'none' }}>
+                  <text x={0} y={-r - 4} textAnchor="middle" fill={isRemoved ? C.faint : C.text} fontSize="11" fontWeight="600" style={{ pointerEvents: 'none' }}>
                     {centreLabel(c)}
                   </text>
                 )}

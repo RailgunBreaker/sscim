@@ -34,9 +34,9 @@ export const T = {
     ja: 'リリースノートは英語でのみ管理しています。技術的なリリースノートを複数言語に翻訳すると、モデルの挙動について微妙に異なる複数の説明が生まれます。本プロジェクトは説明がただ一つであることに依拠しています。',
   },
 
-  newest: { en: 'NEWEST', zh: '最新', tw: '最新', ja: '最新' },
+  newest: { en: 'Newest', zh: '最新', tw: '最新', ja: '最新' },
   limitsLabel: {
-    en: 'WHAT THIS STILL DOES NOT KNOW',
+    en: 'What this still does not know',
     zh: '此功能仍然不知道什么',
     tw: '此功能仍然不知道什麼',
     ja: 'この機能が依然として把握していないこと',

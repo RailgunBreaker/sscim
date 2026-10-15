@@ -53,7 +53,7 @@ export default function CountryList({ model }) {
                    for selection. */
                 border: on ? `1px solid ${C.copper}` : '1px solid transparent',
                 borderBottom: on ? `1px solid ${C.copper}` : `1px solid ${C.line}`,
-                background: on ? 'rgba(201,138,63,.12)' : 'transparent',
+                background: on ? 'rgba(127,163,216,.12)' : 'transparent',
                 color: C.text,
               }}>
               <span aria-hidden style={{ fontSize: 14 }}>{flagEmoji(id)}</span>

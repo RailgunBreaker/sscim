@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { C } from './theme.js';
+import { BASE_CSS, FOOT_CSS, FONT_SANS } from './ui/css.js';
 import { t, setLangV } from './i18n/index.js';
 import { VaultProvider, useVault } from './data/VaultContext.jsx';
 import { WatchlistProvider } from './interaction/WatchlistContext.jsx';
@@ -30,20 +31,19 @@ import Briefing from './components/Briefing.jsx';
 import SiteMap from './components/SiteMap.jsx';
 import FacilityPlayground from './components/FacilityPlayground.jsx';
 
-const GLOBAL_STYLE = `
-  * { box-sizing: border-box; }
-  ::-webkit-scrollbar { width: 6px; height: 6px; }
-  ::-webkit-scrollbar-thumb { background: ${C.line}; border-radius: 3px; }
+/* The dashboard loads the SAME stylesheet as every other page (palette,
+   type scale, controls, focus ring, scrollbars, footer), and adds only
+   what is specific to an instrument: the map, the graphs, the tour
+   highlight. The reset, the focus definition and the tabular-figures
+   class used to be declared here as well as on four other pages, in four
+   slightly different versions. */
+const GLOBAL_STYLE = BASE_CSS + FOOT_CSS + `
   .node { cursor: pointer; transition: opacity .25s; }
   .evcard { cursor: pointer; transition: border-color .2s; }
   .evcard:hover { border-color: ${C.copper} !important; }
-  /* ONE focus definition, applied to everything focusable. A control
-     without a visible focus ring is unusable from a keyboard, so this is
-     deliberately broad rather than opt-in. */
-  button:focus-visible, a:focus-visible, [role="tab"]:focus-visible, [role="radio"]:focus-visible,
-  input:focus-visible, select:focus-visible, summary:focus-visible, .node:focus-visible {
-    outline: 2px solid ${C.copper}; outline-offset: 2px; border-radius: 3px;
-  }
+  /* The shared stylesheet covers everything focusable through :is(); an
+     SVG graph node is not in that list, because it is a <g>. */
+  .node:focus-visible { outline: 2px solid ${C.copper}; outline-offset: 2px; }
   /* Interactive things respond to a pointer; non-interactive rows do not.
      Every row looking hoverable was a large part of why the dashboard read
      as a wall of buttons. */
@@ -56,23 +56,18 @@ const GLOBAL_STYLE = `
   .pulse { animation: pulse 1.4s ease-in-out infinite; }
   @media (prefers-reduced-motion: reduce) { .pulse { animation: none !important; } }
   @keyframes pulse { 0%,100% { opacity:.4 } 50% { opacity:1 } }
-  /* Historically named for a monospace family it never set. What every
-     call site actually wanted is figures that line up in a column, which
-     is a font FEATURE and not a family. Kept under the old name because
-     fifty files use it; it no longer pretends to be monospace. */
-  .mono { font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1; }
   .sscim-map { background: ${C.panel2}; }
-  .sscim-map .osm-soft { filter: brightness(.75) invert(1) contrast(1.1) hue-rotate(200deg) saturate(.3); }
-  .sscim-map .leaflet-control-attribution { background: rgba(12,17,28,.8); color: ${C.faint}; font-size: 9px; }
+  .sscim-map .osm-soft { filter: brightness(.78) invert(1) contrast(1.06) hue-rotate(185deg) saturate(.22); }
+  .sscim-map .leaflet-control-attribution { background: rgba(16,18,20,.82); color: ${C.faint}; font-size: 11px; }
   .sscim-map .leaflet-control-attribution a { color: ${C.copperDim}; }
-  .sscim-tip { background: ${C.panel} !important; color: ${C.text} !important; border: 1px solid ${C.line} !important; border-radius: 4px; font-family: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 11px; padding: 3px 7px; box-shadow: none !important; }
+  .sscim-tip { background: ${C.panel} !important; color: ${C.text} !important; border: 1px solid ${C.line} !important; border-radius: 4px; font-family: ${FONT_SANS}; font-size: 11px; padding: 3px 7px; box-shadow: none !important; }
   .sscim-tip::before { display: none; }
   .sscim-tip.leaflet-popup .leaflet-popup-content-wrapper { background: ${C.panel}; color: ${C.text}; border: 1px solid ${C.copperDim}; border-radius: 6px; box-shadow: 0 6px 20px rgba(0,0,0,.4); }
-  .sscim-tip.leaflet-popup .leaflet-popup-content { margin: 10px 12px; font-family: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  .sscim-tip.leaflet-popup .leaflet-popup-content { margin: 10px 12px; font-family: ${FONT_SANS}; }
   .sscim-tip.leaflet-popup .leaflet-popup-tip { background: ${C.panel}; box-shadow: none; }
   .sscim-tip.leaflet-popup .leaflet-popup-close-button { color: ${C.faint} !important; }
   .sscim-tip.leaflet-popup .leaflet-popup-close-button:hover { color: ${C.copper} !important; }
-  .sscim-label { background: transparent !important; border: none !important; box-shadow: none !important; color: ${C.text}; font-family: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 11px; font-weight: 600; text-shadow: 0 0 4px #000; white-space: nowrap; }
+  .sscim-label { background: transparent !important; border: none !important; box-shadow: none !important; color: ${C.text}; font-family: ${FONT_SANS}; font-size: 11px; font-weight: 600; text-shadow: 0 0 4px #000; white-space: nowrap; }
   /* Facility markers are divIcons carrying an SVG glyph (utils/facilityIcon.js).
      Leaflet's default .leaflet-div-icon paints a white box behind them, which
      would put a paper square under every one of the 244 plants. */
@@ -84,7 +79,7 @@ const GLOBAL_STYLE = `
      (zIndex 1200): a target and the card sitting at the same z-index
      tier was exactly what made the "Next" card disappear behind a
      highlighted pane whenever the two visually overlapped. */
-  .tour-target { position: relative; z-index: 2; scroll-margin: 90px; border-radius: 6px; outline: 3px solid ${C.copper}; outline-offset: 2px; box-shadow: 0 0 0 6px rgba(201,138,63,.18), 0 0 28px rgba(201,138,63,.35); animation: tourPulse 1.7s ease-in-out infinite; }
+  .tour-target { position: relative; z-index: 2; scroll-margin: 90px; border-radius: 6px; outline: 3px solid ${C.copper}; outline-offset: 2px; box-shadow: 0 0 0 6px rgba(127,163,216,.18), 0 0 28px rgba(127,163,216,.35); animation: tourPulse 1.7s ease-in-out infinite; }
   @keyframes tourPulse { 0%,100% { outline-color: ${C.copper}; } 50% { outline-color: ${C.amber}; } }
   @media (prefers-reduced-motion: reduce) { .tour-target { animation: none !important; } }
   /* --- Small-screen (≈375–560px) refinements (task §12 mobile) ---
@@ -118,7 +113,7 @@ function VaultGate() {
   const { status, error } = useVault();
   if (status === 'error') {
     return (
-      <div style={{ minHeight: "100vh", background: C.bg, color: C.text, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: 'Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif', padding: 24, textAlign: "center" }}>
+      <div style={{ minHeight: "100vh", background: C.bg, color: C.text, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: FONT_SANS, padding: 24, textAlign: "center" }}>
         <style>{GLOBAL_STYLE}</style>
         <div>
           <div style={{ fontSize: 18, fontWeight: 700, marginBottom: 8 }}>Can't load the SSCIM vault</div>
@@ -129,7 +124,7 @@ function VaultGate() {
   }
   if (status !== 'ready') {
     return (
-      <div style={{ minHeight: "100vh", background: C.bg, color: C.dim, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: 'Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif' }}>
+      <div style={{ minHeight: "100vh", background: C.bg, color: C.dim, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: FONT_SANS }}>
         <style>{GLOBAL_STYLE}</style>
         <div className="mono">Loading SSCIM vault…</div>
       </div>
@@ -456,7 +451,7 @@ function DashboardBody() {
         : 'Facilities and country exposure';
 
   return (
-    <div style={{ minHeight: "100vh", background: C.bg, color: C.text, fontFamily: 'Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif' }}>
+    <div style={{ minHeight: "100vh", background: C.bg, color: C.text, fontFamily: FONT_SANS }}>
       <style>{GLOBAL_STYLE}</style>
 
       <Header

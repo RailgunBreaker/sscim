@@ -115,7 +115,7 @@ export const T = {
     tw: '產品可直接回答的三類問題，每一步推導都可查看。',
     ja: '本製品が直接答える三つの問い。各ステップの導出を確認できます。',
   },
-  card1K: { en: 'EVENT → CHAIN', zh: '事件 → 供应链', tw: '事件 → 供應鏈', ja: 'イベント → チェーン' },
+  card1K: { en: 'Event → chain', zh: '事件 → 供应链', tw: '事件 → 供應鏈', ja: 'イベント → チェーン' },
   card1H: {
     en: '"BIS just expanded AI-chip rules. Who is exposed?"',
     zh: '"BIS 刚扩大了 AI 芯片管制规则，谁会受到影响？"',
@@ -128,7 +128,7 @@ export const T = {
     tw: '事件從其申報的嚴重度與發生時間開始衰減，再沿方向性的輸入依賴與供應商收入代理指標向外傳導——邏輯/AI → 封裝 → 系統——每一跳都附有具名公司與建模出的貢獻數值。',
     ja: 'イベントは申告された深刻度と経過日数から減衰し、方向性を持つ入力依存性・サプライヤー収益プロキシに沿って——ロジック/AI → パッケージング → システムへと——伝播します。各ホップで具体的な企業名とモデル化された寄与度が示されます。',
   },
-  card2K: { en: 'COMPANY → CHAIN', zh: '公司 → 供应链', tw: '公司 → 供應鏈', ja: '企業 → チェーン' },
+  card2K: { en: 'Company → chain', zh: '公司 → 供应链', tw: '公司 → 供應鏈', ja: '企業 → チェーン' },
   card2H: {
     en: '"If ASML is disrupted, how far does it spread?"',
     zh: '"如果 ASML 中断，影响会传多远？"',
@@ -148,7 +148,7 @@ export const T = {
      run and no one-tap hypothetical. What actually exists is a hazard
      radius you place on the map yourself, and a briefing generator over
      the current reading. That is what this card now describes. */
-  card3K: { en: 'HAZARD → BRIEFING', zh: '灾害 → 简报', tw: '災害 → 簡報', ja: 'ハザード → ブリーフィング' },
+  card3K: { en: 'Hazard → briefing', zh: '灾害 → 简报', tw: '災害 → 簡報', ja: 'ハザード → ブリーフィング' },
   card3H: {
     en: '"What does a quake here actually cut?"',
     zh: '「这里发生地震会切断什么？」',
@@ -164,7 +164,7 @@ export const T = {
 
   /* The Facility Playground — the product's headline capability, and
      previously not mentioned on this page at all. */
-  card4K: { en: 'FACILITY PLAYGROUND', zh: '厂址推演台', tw: '廠址推演台', ja: 'ファシリティ・プレイグラウンド' },
+  card4K: { en: 'Facility Playground', zh: '厂址推演台', tw: '廠址推演台', ja: 'ファシリティ・プレイグラウンド' },
   card4Hd: {
     en: '"Who feeds TSMC Fab 18, and who feeds them?"',
     zh: '「谁在为台积电 18 厂供货？他们的上游又是谁？」',
@@ -185,7 +185,7 @@ export const T = {
     tw: '供應鏈並非雙邊關係。SSCIM 圍繞「國家×環節」的功能中心來組織，並透過建模的環節邊相連，讓你直接追蹤路線、施加衝擊並分析網路。這是建模的連通性，而非經核實的實物運輸。',
     ja: 'サプライチェーンは二国間関係ではありません。SSCIMは「国 × 工程」の機能センターを軸に構成し、モデル化された工程エッジで結び、経路の追跡・衝撃の付与・ネットワーク分析を直接行えます。モデル化された連結性であり、検証された出荷ではありません。',
   },
-  cardN1K: { en: 'FUNCTIONAL CENTRES', zh: '功能中心', tw: '功能中心', ja: '機能センター' },
+  cardN1K: { en: 'Functional centres', zh: '功能中心', tw: '功能中心', ja: '機能センター' },
   cardN1H: { en: 'One country, many functions', zh: '一国多能', tw: '一國多能', ja: '一国に複数の機能' },
   cardN1P: {
     en: `The map organises around country × stage functional centres and the stage edges that connect them — ${n('centres')} centres, ${n('centreEdges')} modeled stage-mediated connections — so a single country shows the several semiconductor functions it performs, not one dot.`,
@@ -193,7 +193,7 @@ export const T = {
     tw: `地圖圍繞「國家×環節」的功能中心及連接它們的環節邊組織——${n('centres')} 個功能中心、${n('centreEdges')} 條建模的環節中介連接——因此單一國家會顯示它承擔的多項半導體功能，而非一個圓點。`,
     ja: `地図は「国 × 工程」の機能センターと、それらをつなぐ工程エッジを軸に構成されます——${n('centres')}センター、${n('centreEdges')}のモデル化された工程媒介の接続——ひとつの国が担う複数の半導体機能が示され、単なる点にはなりません。`,
   },
-  cardN2K: { en: 'PLANTS & HAZARDS', zh: '工厂与灾害', tw: '工廠與災害', ja: '工場とハザード' },
+  cardN2K: { en: 'Plants & hazards', zh: '工厂与灾害', tw: '工廠與災害', ja: '工場とハザード' },
   cardN2H: { en: 'Down to the individual plant', zh: '细化到单座工厂', tw: '細化到單座工廠', ja: '個々の工場まで' },
   cardN2P: {
     en: `${n('facilities')} named sites across all ${n('companies')} modeled companies — what each plant makes and which chain steps it feeds. Drop a hazard radius anywhere and the readout names the plants inside it and the share of each step they carry. Significance is an analyst ordinal, not capacity, and every share is a share of the modeled sample.`,

@@ -3,61 +3,111 @@ import { T, LANG_LABELS } from './i18n.js';
 import Tex from '../components/Tex.jsx';
 import NewsTicker from '../components/NewsTicker.jsx';
 import SiteMap from '../components/SiteMap.jsx';
+import ThemeToggle from '../components/ThemeToggle.jsx';
+import { BASE_CSS, FOOT_CSS } from '../ui/css.js';
+
+/* ====================================================================
+   Intro — how to read the dashboard without misreading it.
+
+   This is long-form reading, so it is set like a document: a text face at
+   a reading measure, with the page's own sections tracked in a sticky
+   rail, and the paper theme available. It is the same treatment as the
+   generated documentation pages, because it is the same kind of thing —
+   it was simply hand-written rather than compiled from Markdown.
+
+   WHAT WAS REMOVED, and why. The hero carried two pieces of pure
+   decoration: a 340px ring rotating on a twelve-second loop, and a row of
+   six bars pulsing like an audio equaliser. Neither encoded anything.
+   Both are the clearest possible signal that a page was assembled for
+   effect rather than designed for a reader, and they were the first thing
+   anyone saw. The language buttons were also clickable <b> elements,
+   which no keyboard could reach; they are buttons now, like the ones on
+   the landing page.
+   ==================================================================== */
 
 const STYLE = `
-  :root{--bg:#0C111C;--panel:#141B2B;--panel2:#0F1626;--line:#243149;--copper:#C98A3F;--copperDim:#8A6230;--red:#E25C4A;--amber:#DFA83D;--green:#4FA97F;--text:#E9E4D8;--dim:#8C96A8;--faint:#5A6478}
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--bg);color:var(--text);font-family:Inter,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}
-  .mono{font-family:inherit;font-variant-numeric:tabular-nums}
-  .wrap{max-width:820px;margin:0 auto;padding:0 20px}
-  a{color:var(--copper);text-decoration:none}
-  header{border-bottom:1px solid var(--line);padding:14px 0;position:sticky;top:0;background:rgba(12,17,28,.92);backdrop-filter:blur(6px);z-index:10}
-  header .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;max-width:980px}
-  .header-brand,.header-actions{display:flex;align-items:center;gap:10px;min-width:0}.header-actions{margin-left:auto;flex-wrap:wrap;justify-content:flex-end}
-  .logo{display:flex;align-items:center}.logo img{display:block;width:104px;height:auto;filter:grayscale(1) brightness(0) invert(1)}
-  .badge{font-size:10px;letter-spacing:1.2px;color:var(--amber);border:1px solid var(--amber);border-radius:3px;padding:2px 7px;font-family:inherit;font-weight:600;white-space:nowrap}
-  .btn{display:inline-block;border-radius:5px;padding:8px 16px;font-weight:700;font-size:13.5px;border:1px solid var(--copper);transition:transform .15s ease,box-shadow .15s ease}
-  .btn.solid{background:var(--copper);color:#0C111C}
-  .btn:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(201,138,63,.22)}
-  .intro-hero{position:relative;overflow:hidden;padding:52px 0 34px}.intro-hero::before{content:'';position:absolute;width:340px;height:340px;right:-80px;top:-80px;border:1px solid rgba(201,138,63,.22);border-radius:50%;box-shadow:0 0 0 38px rgba(201,138,63,.035),0 0 0 76px rgba(201,138,63,.02);animation:orbit 12s linear infinite}.intro-hero>*{position:relative}.signal{display:flex;gap:7px;align-items:end;height:32px;margin:20px 0 0}.signal i{width:5px;background:var(--copper);border-radius:8px;opacity:.75;animation:signal 1.6s ease-in-out infinite}.signal i:nth-child(2){height:70%;animation-delay:.15s}.signal i:nth-child(3){height:42%;animation-delay:.3s}.signal i:nth-child(4){height:100%;animation-delay:.45s}.signal i:nth-child(5){height:56%;animation-delay:.6s}.signal i:nth-child(6){height:80%;animation-delay:.75s}@keyframes signal{0%,100%{transform:scaleY(.45);opacity:.3}50%{transform:scaleY(1);opacity:1}}@keyframes orbit{to{transform:rotate(360deg)}}@media(prefers-reduced-motion:reduce){.intro-hero::before,.signal i{animation:none}}
-  h1{font-size:clamp(26px,4.5vw,38px);line-height:1.15;margin:48px 0 10px}
-  h1 em{color:var(--copper);font-style:normal}
-  .lede{color:var(--dim);font-size:16px;max-width:640px;margin-bottom:8px}
-  h2{font-size:21px;margin:44px 0 12px;padding-top:20px;border-top:1px solid var(--line)}
-  h3{font-size:15px;margin:18px 0 4px}
-  p{color:var(--dim);font-size:14px;margin-bottom:10px}
-  p strong{color:var(--text)}
-  .k{font-size:9.5px;letter-spacing:2px;color:var(--copper)}
-  .card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:16px 18px;margin:14px 0}
-  .step{display:flex;gap:12px;margin:16px 0}
-  .step .n{flex-shrink:0;width:26px;height:26px;border-radius:5px;background:var(--copper);color:#0C111C;font-weight:700;display:flex;align-items:center;justify-content:center;font-size:13px;font-family:inherit}
-  .step h3{margin:0 0 3px}
-  .step p{margin-bottom:4px}
-  .tip{border-left:3px solid var(--copper);background:var(--panel2);padding:8px 12px;font-size:12.5px;color:var(--dim);margin:8px 0;border-radius:0 5px 5px 0}
-  .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--dim);margin:10px 0}
-  .legend span::before{content:"●";margin-right:5px}
-  .g::before{color:var(--green)} .a::before{color:var(--amber)} .r::before{color:var(--red)} .c::before{color:var(--copper)}
-  .formula{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:12px 14px;font-size:11.5px;overflow-x:auto;margin:10px 0}
-  .formula > div + div{margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}
-  .langbar b{cursor:pointer;border:1px solid var(--line);border-radius:3px;padding:2px 7px;font-size:10px;color:var(--faint);font-weight:700;transition:background .15s ease,color .15s ease}
-  .langbar b.on{background:var(--copper);color:#0C111C;border-color:var(--copper)}
-  .disclaimer{border:1px solid var(--copperDim);background:rgba(223,168,61,.06);border-radius:6px;padding:12px 14px;color:var(--amber);font-size:11.5px;line-height:1.7;margin:14px 0}
-  footer{margin-top:56px;padding:24px 0;border-top:1px solid var(--line);font-size:10.5px;color:var(--faint);line-height:1.7}
-  @media (max-width:700px){header .wrap{gap:8px}.header-actions{width:100%;margin-left:0}.badge{display:none}}@media (max-width:440px){.header-actions{gap:7px}.header-actions a{font-size:12px}.header-actions .btn{padding:7px 10px}.langbar b{padding:2px 5px}}
+${BASE_CSS}
+${FOOT_CSS}
+
+.guide{display:grid;grid-template-columns:minmax(0,1fr) 200px;gap:var(--s7);max-width:1080px;margin:0 auto;padding:var(--s6) var(--s5) var(--s8);align-items:start}
+
+.lead-in{padding-bottom:var(--s5);margin-bottom:var(--s5);border-bottom:1px solid var(--rule)}
+.lead-in h1{font-size:clamp(28px,3.4vw,40px);line-height:1.1;letter-spacing:-.022em;max-width:26ch}
+.lead-in h1 em{font-style:normal;color:var(--accent)}
+.lead-in .lede{margin-top:var(--s4);max-width:58ch}
+
+/* Sections are separated by space and one rule, not by a border-top on
+   every heading plus 20px of padding above it. */
+.prose h2{margin-top:2.4em}
+
+/* A numbered step. The number is a figure in the margin, not a filled
+   square: a copper-filled rounded box with a bold white numeral in it is
+   the visual language of an onboarding tour, and this is a reference. */
+.steps{counter-reset:step;margin-top:var(--s5);border-top:1px solid var(--rule)}
+.steps > li{
+  counter-increment:step;
+  display:grid;grid-template-columns:2.25rem minmax(0,1fr);gap:var(--s4);
+  padding:var(--s5) 0;border-bottom:1px solid var(--rule-soft);
+}
+.steps > li::before{
+  content:counter(step);
+  font-family:var(--sans);font-variant-numeric:tabular-nums;
+  font-size:var(--t-h3);font-weight:600;color:var(--accent);line-height:1.25;
+}
+.steps h3{font-family:var(--sans);font-size:var(--t-h4);margin:0 0 var(--s2)}
+.steps p{font-size:var(--t-small);color:var(--ink-2);line-height:1.65;margin:0;max-width:66ch}
+.steps p+p{margin-top:var(--s2)}
+.steps .tip{margin-top:var(--s3);border-left:2px solid var(--accent-dim);padding-left:var(--s3);font-size:var(--t-meta);color:var(--ink-2);line-height:1.6;max-width:62ch}
+
+/* The three layers of the dashboard, which is the one thing a reader has
+   to hold in their head before anything else makes sense. */
+.layers{margin-top:var(--s4);border:1px solid var(--rule);border-radius:var(--r3);overflow:hidden}
+.layers > p{padding:var(--s4);font-size:var(--t-small);color:var(--ink-2);line-height:1.6;margin:0}
+.layers > p+p{border-top:1px solid var(--rule-soft)}
+.layers b,.layers strong{color:var(--ink);font-weight:600}
+
+.legend{display:flex;gap:var(--s5);flex-wrap:wrap;margin-top:var(--s4);font-size:var(--t-small);color:var(--ink-2)}
+.legend span{display:inline-flex;align-items:center;gap:7px}
+.legend span::before{content:"";width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.legend .g::before{background:var(--mitigating)}
+.legend .a::before{background:var(--warning)}
+.legend .r::before{background:var(--adverse)}
+.legend .c::before{background:var(--accent)}
+
+.specimen{margin-top:var(--s4);background:var(--sunken);border:1px solid var(--rule);border-radius:var(--r3);padding:var(--s5);overflow-x:auto}
+.specimen > div + div{margin-top:var(--s4);padding-top:var(--s4);border-top:1px solid var(--rule)}
+
+.caveat{margin-top:var(--s4);border-left:2px solid var(--warning);padding:var(--s2) 0 var(--s2) var(--s4);font-size:var(--t-small);color:var(--ink-2);line-height:1.7;max-width:76ch}
+.caveat b,.caveat strong{color:var(--ink)}
+
+.on-this-page{position:sticky;top:76px;max-height:calc(100vh - 104px);overflow:auto}
+.on-this-page p{font-size:var(--t-meta);font-weight:600;color:var(--ink-3);margin:0 0 var(--s2);padding-left:var(--s3)}
+.on-this-page ul{list-style:none;margin:0;padding:0;border-left:1px solid var(--rule)}
+.on-this-page a{display:block;padding:4px var(--s3);margin-left:-1px;border-left:2px solid transparent;color:var(--ink-3);font-size:var(--t-meta);line-height:1.4}
+.on-this-page a:hover{color:var(--ink);text-decoration:none}
+
+.langbar{display:flex;gap:2px;padding:2px;background:var(--sunken);border:1px solid var(--control);border-radius:var(--r2)}
+.langbar button{min-height:26px;padding:0 9px;border:0;border-radius:var(--r1);background:transparent;color:var(--ink-2);font-size:var(--t-meta);cursor:pointer}
+.langbar button:hover{color:var(--ink)}
+.langbar button[aria-pressed="true"]{background:var(--accent);color:var(--on-accent);font-weight:600}
+
+@media(max-width:1000px){.guide{grid-template-columns:minmax(0,1fr)}.on-this-page{display:none}}
+@media(max-width:640px){.langbar button{min-height:40px}.steps > li{grid-template-columns:1.75rem minmax(0,1fr);gap:var(--s3)}}
 `;
 
 const Html = ({ tag: Tag = 'span', html, ...rest }) => <Tag {...rest} dangerouslySetInnerHTML={{ __html: html }} />;
 
-function Step({ n, titleKey, tipKey, bodyKey, t }) {
+const LANG_NAMES = { en: 'English', zh: '简体中文 — Simplified Chinese', tw: '繁體中文 — Traditional Chinese', ja: '日本語 — Japanese' };
+
+function Step({ titleKey, tipKey, bodyKey, t }) {
   return (
-    <div className="step">
-      <div className="n">{n}</div>
+    <li>
       <div>
         <h3>{t(titleKey)}</h3>
         <Html tag="p" html={t(bodyKey)} />
-        {tipKey && <div className="tip">{t(tipKey)}</div>}
+        {tipKey && <p className="tip">{t(tipKey)}</p>}
       </div>
-    </div>
+    </li>
   );
 }
 
@@ -65,91 +115,118 @@ export default function Intro() {
   const [lang, setLang] = useState('en');
   const t = (key) => T[key][lang] ?? T[key].en;
 
+  const SECTIONS = [
+    ['what', t('h2_1')],
+    ['reading', t('h2_2')],
+    ['steps', t('h2_3')],
+    ['maths', t('h2_4')],
+    ['limits', t('h2_5')],
+  ];
+
   return (
     <>
       <style>{STYLE}</style>
 
-      <header>
-        <div className="wrap">
-          <div className="header-brand">
-            <a className="logo" href="index.html" aria-label="SSCIM home"><img src="sscim-logo.png" alt="SSCIM" /></a>
-            <span className="k mono">INTRODUCTION & USER GUIDE</span>
-            <span className="badge">SSCIM INTELLIGENCE</span>
-          </div>
-          <div className="header-actions">
-            <span className="langbar mono" style={{ display: 'flex', gap: 3 }}>
+      <header className="site-head">
+        <div className="shell bar">
+          <a className="brand" href="index.html" aria-label="SSCIM home"><img src="sscim-logo.png" alt="SSCIM" /></a>
+          <nav className="crumbs" aria-label="Breadcrumb">
+            <a href="index.html">SSCIM</a>
+            <span className="sep" aria-hidden="true">/</span>
+            <span className="here" aria-current="page">Guide</span>
+          </nav>
+          <nav className="site-nav" aria-label="Site">
+            <div className="langbar" role="group" aria-label="Language">
               {Object.entries(LANG_LABELS).map(([l, label]) => (
-                <b key={l} className={lang === l ? 'on' : ''} onClick={() => setLang(l)}>{label}</b>
+                <button key={l} type="button" aria-pressed={lang === l}
+                  aria-label={LANG_NAMES[l] || label} onClick={() => setLang(l)}>
+                  {label}
+                </button>
               ))}
-            </span>
-            <a href="index.html">{t('navHome')}</a>
-            <a href="docs.html">Docs</a>
-            <a className="btn solid" href="sscim-app.html">{t('launchDashboard')}</a>
-          </div>
+            </div>
+            <a href="docs.html">Documentation</a>
+            <a href="updates.html">Updates</a>
+            <ThemeToggle />
+            <a className="btn btn-primary btn-sm" href="sscim-app.html">{t('launchDashboard')}</a>
+          </nav>
         </div>
       </header>
 
       <NewsTicker />
 
-      <div className="wrap intro-hero">
-        <Html tag="h1" html={t('h1')} />
-        <p className="lede">{t('currentLede')}</p>
-        <div className="signal" aria-hidden="true"><i /><i /><i /><i /><i /><i /></div>
+      <div className="guide">
+        <main>
+          <div className="lead-in">
+            <Html tag="h1" html={t('h1')} />
+            <p className="lede">{t('currentLede')}</p>
+          </div>
 
-        <h2>{t('h2_1')}</h2>
-        <p>{t('s1p1')}</p>
-        <p>{t('s1p2')}</p>
-        <div className="card">
-          <Html tag="p" html={t('layer1')} />
-          <Html tag="p" html={t('layer2')} />
-          <Html tag="p" html={t('layer3')} />
-        </div>
-        <div className="card">
-          <Html tag="p" html={t('netCard')} />
-        </div>
-        <p>{t('s1Under')}</p>
+          <div className="prose">
+            <h2 id="what">{t('h2_1')}</h2>
+            <p>{t('s1p1')}</p>
+            <p>{t('s1p2')}</p>
+            <div className="layers">
+              <Html tag="p" html={t('layer1')} />
+              <Html tag="p" html={t('layer2')} />
+              <Html tag="p" html={t('layer3')} />
+            </div>
+            <div className="layers" style={{ marginTop: 'var(--s3)' }}>
+              <Html tag="p" html={t('netCard')} />
+            </div>
+            <p>{t('s1Under')}</p>
 
-        <h2>{t('h2_2')}</h2>
-        <div className="legend">
-          <span className="g">{t('legendG')}</span>
-          <span className="a">{t('legendA')}</span>
-          <span className="r">{t('legendR')}</span>
-          <span className="c">{t('legendC')}</span>
-        </div>
-        <Html tag="p" html={t('s2Body')} />
+            <h2 id="reading">{t('h2_2')}</h2>
+            <div className="legend">
+              <span className="g">{t('legendG')}</span>
+              <span className="a">{t('legendA')}</span>
+              <span className="r">{t('legendR')}</span>
+              <span className="c">{t('legendC')}</span>
+            </div>
+            <Html tag="p" html={t('s2Body')} />
 
-        <h2>{t('h2_3')}</h2>
+            <h2 id="steps">{t('h2_3')}</h2>
+          </div>
 
-        <Step n="1" titleKey="step1" tipKey="tip1" bodyKey="step1Body" t={t} />
-        <Step n="2" titleKey="step2" bodyKey="step2Body" t={t} />
-        <Step n="3" titleKey="step3" tipKey="tip3" bodyKey="step3Body" t={t} />
-        <Step n="4" titleKey="step4" bodyKey="step4Body" t={t} />
-        <Step n="5" titleKey="step5" bodyKey="step5Body" t={t} />
-        <Step n="6" titleKey="step5b" bodyKey="step5bBody" t={t} />
-        <Step n="7" titleKey="step6" bodyKey="step6Body" t={t} />
-        <Step n="8" titleKey="step7" bodyKey="step7Body" t={t} />
+          <ol className="steps bare">
+            <Step titleKey="step1" tipKey="tip1" bodyKey="step1Body" t={t} />
+            <Step titleKey="step2" bodyKey="step2Body" t={t} />
+            <Step titleKey="step3" tipKey="tip3" bodyKey="step3Body" t={t} />
+            <Step titleKey="step4" bodyKey="step4Body" t={t} />
+            <Step titleKey="step5" bodyKey="step5Body" t={t} />
+            <Step titleKey="step5b" bodyKey="step5bBody" t={t} />
+            <Step titleKey="step6" bodyKey="step6Body" t={t} />
+            <Step titleKey="step7" bodyKey="step7Body" t={t} />
+          </ol>
 
-        <h2>{t('h2_4')}</h2>
-        <div className="formula mono">
-          <div><Tex tex={"\\text{struct}_s = w_{\\text{ni}}NI_s + w_{\\text{geo}}GEO_s + w_{\\text{pol}}POL_s + w_{\\nu}(10\\nu_s) + w_{\\text{mkt}}\\,\\text{mkt}_s"} block /></div>
-          <div><Tex tex={"z_{e,s} = d_{e,s}\\,g(q_e)\\,\\alpha_{e,s}\\,R_e(t)"} block /></div>
-          <div><Tex tex={"x^{d}_{b}=\\operatorname{clip}_{[0,1]}\\Big(z_b+\\textstyle\\sum_{a\\in IN(b)}D_{ba}x^{d}_{a}\\Big),\\qquad p_{s}=\\operatorname{clip}_{[-1,1]}\\big[z_s+(x^{d}_{s}-z_s)+(x^{u}_{s}-z_s)\\big]"} block /></div>
-        </div>
-        <Html tag="p" html={t('s4Body')} />
+          <div className="prose">
+            <h2 id="maths">{t('h2_4')}</h2>
+            <div className="specimen">
+              <div><Tex tex={"\\text{struct}_s = w_{\\text{ni}}NI_s + w_{\\text{geo}}GEO_s + w_{\\text{pol}}POL_s + w_{\\nu}(10\\nu_s) + w_{\\text{mkt}}\\,\\text{mkt}_s"} block /></div>
+              <div><Tex tex={"z_{e,s} = d_{e,s}\\,g(q_e)\\,\\alpha_{e,s}\\,R_e(t)"} block /></div>
+              <div><Tex tex={"x^{d}_{b}=\\operatorname{clip}_{[0,1]}\\Big(z_b+\\textstyle\\sum_{a\\in IN(b)}D_{ba}x^{d}_{a}\\Big),\\qquad p_{s}=\\operatorname{clip}_{[-1,1]}\\big[z_s+(x^{d}_{s}-z_s)+(x^{u}_{s}-z_s)\\big]"} block /></div>
+            </div>
+            <Html tag="p" html={t('s4Body')} />
 
-        <h2>{t('h2_5')}</h2>
-        <div className="disclaimer">
-          <Html tag="span" html={t('currentDisclaimer')} />
-        </div>
+            <h2 id="limits">{t('h2_5')}</h2>
+            <Html tag="div" className="caveat" html={t('currentDisclaimer')} />
+          </div>
 
-        <p style={{ marginTop: 28 }}><a className="btn solid" href="sscim-app.html">{t('launchDashboardBottom')}</a></p>
+          <p style={{ marginTop: 'var(--s6)' }}>
+            <a className="btn btn-primary" href="sscim-app.html">{t('launchDashboardBottom')}</a>
+          </p>
+
+          <p className="meta" style={{ marginTop: 'var(--s6)', paddingTop: 'var(--s4)', borderTop: '1px solid var(--rule)', maxWidth: '86ch', lineHeight: 1.7 }}>
+            {t('currentFooter')}
+          </p>
+        </main>
+
+        <nav className="on-this-page" aria-label="On this page">
+          <p>On this page</p>
+          <ul>
+            {SECTIONS.map(([id, label]) => <li key={id}><a href={`#${id}`}>{label}</a></li>)}
+          </ul>
+        </nav>
       </div>
-
-      <footer>
-        <div className="wrap">
-          <p>{t('currentFooter')}</p>
-        </div>
-      </footer>
 
       <SiteMap current="intro" />
     </>
