@@ -1,9 +1,202 @@
 {
   "meta": {
-    "generated": "2026-11-22",
-    "count": 360
+    "generated": "2026-11-23",
+    "count": 491
   },
   "edges": [
+    {
+      "supplier": "advantest-corporation",
+      "customer": "advanced-semiconductor-engineering-technology-holding-co-ltd",
+      "products": [
+        "Test equipment"
+      ],
+      "sources": [
+        "asx-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": []
+    },
+    {
+      "supplier": "all-ring-tech-co-ltd",
+      "customer": "advanced-semiconductor-engineering-technology-holding-co-ltd",
+      "products": [
+        "Packaging and assembly equipment"
+      ],
+      "sources": [
+        "asx-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": []
+    },
+    {
+      "supplier": "grand-process-technology-corp",
+      "customer": "advanced-semiconductor-engineering-technology-holding-co-ltd",
+      "products": [
+        "Packaging and assembly equipment"
+      ],
+      "sources": [
+        "asx-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": []
+    },
+    {
+      "supplier": "kinsus-interconnect-technology-corp",
+      "customer": "advanced-semiconductor-engineering-technology-holding-co-ltd",
+      "products": [
+        "IC packaging substrates"
+      ],
+      "sources": [
+        "asx-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Named among a limited set of substrate suppliers in a disclosure about shortage risk."
+      ]
+    },
+    {
+      "supplier": "lam-research-corporation",
+      "customer": "advanced-semiconductor-engineering-technology-holding-co-ltd",
+      "products": [
+        "Packaging and assembly equipment"
+      ],
+      "sources": [
+        "asx-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": []
+    },
+    {
+      "supplier": "marketech-international-corp",
+      "customer": "advanced-semiconductor-engineering-technology-holding-co-ltd",
+      "products": [
+        "Packaging and assembly equipment"
+      ],
+      "sources": [
+        "asx-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": []
+    },
+    {
+      "supplier": "nan-ya-pcb-corporation",
+      "customer": "advanced-semiconductor-engineering-technology-holding-co-ltd",
+      "products": [
+        "IC packaging substrates"
+      ],
+      "sources": [
+        "asx-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Named among a limited set of substrate suppliers in a disclosure about shortage risk."
+      ]
+    },
+    {
+      "supplier": "taiwan-semiconductor-manufacturing-company-limited",
+      "customer": "advanced-semiconductor-engineering-technology-holding-co-ltd",
+      "products": [
+        "Foundry services reached through a strategic alliance"
+      ],
+      "sources": [
+        "asx-20f-2025-tsmc"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "ASE describes an alliance that gives its customers access to TSMC foundry services alongside ASE packaging and test. Not a disclosed purchase of wafers by ASE."
+      ]
+    },
+    {
+      "supplier": "teradyne-inc",
+      "customer": "advanced-semiconductor-engineering-technology-holding-co-ltd",
+      "products": [
+        "Test equipment"
+      ],
+      "sources": [
+        "asx-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": []
+    },
+    {
+      "supplier": "tokyo-electron-limited",
+      "customer": "advanced-semiconductor-engineering-technology-holding-co-ltd",
+      "products": [
+        "Packaging and assembly equipment",
+        "Test equipment"
+      ],
+      "sources": [
+        "asx-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": []
+    },
+    {
+      "supplier": "unimicron-technology-corporation",
+      "customer": "advanced-semiconductor-engineering-technology-holding-co-ltd",
+      "products": [
+        "IC packaging substrates"
+      ],
+      "sources": [
+        "asx-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Named among a limited set of substrate suppliers in a disclosure about shortage risk."
+      ]
+    },
+    {
+      "supplier": "system-nvidia",
+      "customer": "aivres-systems",
+      "products": [
+        "Blackwell platform products for server systems"
+      ],
+      "sources": [
+        "nvidia-blackwell-2024-systems"
+      ],
+      "years": [
+        2024
+      ],
+      "details": [
+        "Announced in March 2024 as \"expected to deliver\" servers based on Blackwell. Delivery and current status are not established by the release."
+      ]
+    },
+    {
+      "supplier": "taiwan-semiconductor-manufacturing-company-limited",
+      "customer": "analog-devices-incorporated",
+      "products": [
+        "Wafer foundry"
+      ],
+      "sources": [
+        "adi-10k-fy2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": []
+    },
     {
       "supplier": "3m",
       "customer": "apple-inc",
@@ -1464,15 +1657,20 @@
       "supplier": "nxp-semiconductors-n-v",
       "customer": "apple-inc",
       "products": [
-        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly",
+        "Named among the ten largest end customers"
       ],
       "sources": [
-        "apple-sl-fy2023"
+        "apple-sl-fy2023",
+        "nxpi-10k-2025-customers"
       ],
       "years": [
-        2023
+        2023,
+        2025
       ],
-      "details": []
+      "details": [
+        "Some of the ten are supplied through distributors rather than directly."
+      ]
     },
     {
       "supplier": "on-semiconductor-corporation",
@@ -1646,15 +1844,20 @@
       "supplier": "qualcomm-incorporated",
       "customer": "apple-inc",
       "products": [
-        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly",
+        "Named as a customer above 10% of consolidated revenues"
       ],
       "sources": [
-        "apple-sl-fy2023"
+        "apple-sl-fy2023",
+        "qcom-10k-fy2026"
       ],
       "years": [
-        2023
+        2023,
+        2026
       ],
-      "details": []
+      "details": [
+        "Revenue concentration disclosure. It records that the customer is material to Qualcomm, not what Qualcomm supplies."
+      ]
     },
     {
       "supplier": "quanta-computer-incorporated",
@@ -1996,15 +2199,20 @@
       "supplier": "skyworks-solutions-incorporated",
       "customer": "apple-inc",
       "products": [
-        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly",
+        "Radio-frequency front-end components"
       ],
       "sources": [
-        "apple-sl-fy2023"
+        "apple-sl-fy2023",
+        "swks-10k-fy2026"
       ],
       "years": [
-        2023
+        2023,
+        2026
       ],
-      "details": []
+      "details": [
+        "Reaches Apple through distributors and contract manufacturers rather than as a single direct account."
+      ]
     },
     {
       "supplier": "solvay-s-a",
@@ -2038,15 +2246,20 @@
       "supplier": "stmicroelectronics-n-v",
       "customer": "apple-inc",
       "products": [
-        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly",
+        "Named among major customers"
       ],
       "sources": [
-        "apple-sl-fy2023"
+        "apple-sl-fy2023",
+        "stm-20f-2025"
       ],
       "years": [
-        2023
+        2023,
+        2025
       ],
-      "details": []
+      "details": [
+        "Named as the largest customer, at 17.7% of total revenues in 2025."
+      ]
     },
     {
       "supplier": "stora-enso-oyj",
@@ -2623,6 +2836,82 @@
       "details": []
     },
     {
+      "supplier": "ichor-holdings-ltd",
+      "customer": "applied-materials-inc",
+      "products": [
+        "Fluid-delivery and gas-delivery subsystems"
+      ],
+      "sources": [
+        "ichr-10k-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": []
+    },
+    {
+      "supplier": "ultra-clean-holdings-inc",
+      "customer": "applied-materials-inc",
+      "products": [
+        "Gas-delivery and fluid subsystems for wafer-fab equipment"
+      ],
+      "sources": [
+        "uctt-10k-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Applied Materials was 21.7% of Ultra Clean revenue in fiscal 2025."
+      ]
+    },
+    {
+      "supplier": "nxp-semiconductors-n-v",
+      "customer": "aptiv-plc",
+      "products": [
+        "Named among the ten largest end customers"
+      ],
+      "sources": [
+        "nxpi-10k-2025-customers"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Some of the ten are supplied through distributors rather than directly."
+      ]
+    },
+    {
+      "supplier": "chipmos-technologies-inc",
+      "customer": "asahi-kasei-microdevices-corp",
+      "products": [
+        "Assembly and test"
+      ],
+      "sources": [
+        "imos-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Named among the top 15 customers by revenue, listed alphabetically."
+      ]
+    },
+    {
+      "supplier": "ichor-holdings-ltd",
+      "customer": "asml-holding-n-v",
+      "products": [
+        "Fluid-delivery and gas-delivery subsystems"
+      ],
+      "sources": [
+        "ichr-10k-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": []
+    },
+    {
       "supplier": "nts-group",
       "customer": "asml-holding-n-v",
       "products": [
@@ -2642,33 +2931,536 @@
       "supplier": "trumpf",
       "customer": "asml-holding-n-v",
       "products": [
-        "EUV high-energy drive laser"
+        "EUV high-energy drive laser",
+        "CO2 drive laser for EUV light generation — joint development"
       ],
       "sources": [
-        "trumpf-asml-2025"
+        "trumpf-asml-2025",
+        "trumpf-euv-lithography"
+      ],
+      "years": [
+        2025,
+        2026
+      ],
+      "details": [
+        "ASML Supplier Award 2025, \"Technology\" category, for the laser driving the next EUV generation.",
+        "Characterised by TRUMPF as joint development and close cooperation, not as a supply contract. ASML’s own annual report does not name TRUMPF among its suppliers."
+      ]
+    },
+    {
+      "supplier": "ultra-clean-holdings-inc",
+      "customer": "asml-holding-n-v",
+      "products": [
+        "Subsystems and components"
+      ],
+      "sources": [
+        "uctt-10k-2025"
       ],
       "years": [
         2025
       ],
       "details": [
-        "ASML Supplier Award 2025, \"Technology\" category, for the laser driving the next EUV generation."
+        "Named among the customers above 10% of gross accounts receivable, which is a balance-sheet concentration rather than a revenue share."
       ]
     },
     {
       "supplier": "zeiss-semiconductor-manufacturing-technology-carl-zeiss-smt-gmbh",
       "customer": "asml-holding-n-v",
       "products": [
-        "Lenses, mirrors, collectors and other optical components — sole source"
+        "Lenses, mirrors, collectors and other optical components — sole source",
+        "Lenses, mirrors, illuminators, collectors and other critical optics"
       ],
       "sources": [
         "asml-20f-2014",
-        "asml-20f-2024"
+        "asml-20f-2024",
+        "asml-20f-2025"
       ],
       "years": [
-        2014
+        2014,
+        2025
       ],
       "details": [
-        "ASML's own filing calls Zeiss its single supplier of these components and puts Zeiss at 27.4% of aggregate cost of sales in 2014. The single-source structure, not the dated percentage, is what this edge records."
+        "ASML's own filing calls Zeiss its single supplier of these components and puts Zeiss at 27.4% of aggregate cost of sales in 2014. The single-source structure, not the dated percentage, is what this edge records.",
+        "Disclosed as the sole supplier of optics under an exclusive arrangement, and as a cap on ASML’s own system output."
+      ]
+    },
+    {
+      "supplier": "system-nvidia",
+      "customer": "asrock-rack-inc",
+      "products": [
+        "Blackwell platform products for server systems"
+      ],
+      "sources": [
+        "nvidia-blackwell-2024-systems"
+      ],
+      "years": [
+        2024
+      ],
+      "details": [
+        "Announced in March 2024 as \"expected to deliver\" servers based on Blackwell. Delivery and current status are not established by the release."
+      ]
+    },
+    {
+      "supplier": "system-nvidia",
+      "customer": "asus-asustek-computer-inc",
+      "products": [
+        "Blackwell platform products for server systems"
+      ],
+      "sources": [
+        "nvidia-blackwell-2024-systems"
+      ],
+      "years": [
+        2024
+      ],
+      "details": [
+        "Announced in March 2024 as \"expected to deliver\" servers based on Blackwell. Delivery and current status are not established by the release."
+      ]
+    },
+    {
+      "supplier": "nxp-semiconductors-n-v",
+      "customer": "aumovio-se",
+      "products": [
+        "Named among the ten largest end customers"
+      ],
+      "sources": [
+        "nxpi-10k-2025-customers"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Some of the ten are supplied through distributors rather than directly."
+      ]
+    },
+    {
+      "supplier": "advanced-semiconductor-engineering-technology-holding-co-ltd",
+      "customer": "broadcom-limited",
+      "products": [
+        "Assembly and test"
+      ],
+      "sources": [
+        "avgo-10k-fy2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "amkor-technology-incorporated",
+      "customer": "broadcom-limited",
+      "products": [
+        "Assembly and test"
+      ],
+      "sources": [
+        "avgo-10k-fy2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "hon-hai-precision-industry-company-limited-foxconn",
+      "customer": "broadcom-limited",
+      "products": [
+        "Assembly and test"
+      ],
+      "sources": [
+        "avgo-10k-fy2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "siliconware-precision-industries-co-ltd",
+      "customer": "broadcom-limited",
+      "products": [
+        "Assembly and test"
+      ],
+      "sources": [
+        "avgo-10k-fy2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "taiwan-semiconductor-manufacturing-company-limited",
+      "customer": "broadcom-limited",
+      "products": [
+        "Wafer foundry",
+        "Assembly and test"
+      ],
+      "sources": [
+        "avgo-10k-fy2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": [
+        "A risk factor in the same filing puts TSMC at about 95% of the wafers manufactured by Broadcom’s contract manufacturers in fiscal 2024."
+      ]
+    },
+    {
+      "supplier": "chipmos-technologies-inc",
+      "customer": "chipone-technology-beijing",
+      "products": [
+        "Assembly and test"
+      ],
+      "sources": [
+        "imos-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Named among the top 15 customers by revenue, listed alphabetically."
+      ]
+    },
+    {
+      "supplier": "system-nvidia",
+      "customer": "cisco-systems-inc",
+      "products": [
+        "Blackwell platform products for server systems"
+      ],
+      "sources": [
+        "nvidia-blackwell-2024-systems"
+      ],
+      "years": [
+        2024
+      ],
+      "details": [
+        "Announced in March 2024 as \"expected to deliver\" servers based on Blackwell. Delivery and current status are not established by the release."
+      ]
+    },
+    {
+      "supplier": "alpha-and-omega-semiconductor-limited",
+      "customer": "compal-electronics-incorporated",
+      "products": [
+        "Power semiconductors and power-management ICs"
+      ],
+      "sources": [
+        "aosl-10k-fy2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "stmicroelectronics-n-v",
+      "customer": "continental-ag",
+      "products": [
+        "Named among major customers"
+      ],
+      "sources": [
+        "stm-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": []
+    },
+    {
+      "supplier": "system-nvidia",
+      "customer": "dell-technologies-inc",
+      "products": [
+        "Blackwell platform products for server systems"
+      ],
+      "sources": [
+        "nvidia-blackwell-2024-systems"
+      ],
+      "years": [
+        2024
+      ],
+      "details": [
+        "Announced in March 2024 as \"expected to deliver\" servers based on Blackwell. Delivery and current status are not established by the release."
+      ]
+    },
+    {
+      "supplier": "alpha-and-omega-semiconductor-limited",
+      "customer": "delta-electronics-incorporated",
+      "products": [
+        "Power semiconductors and power-management ICs"
+      ],
+      "sources": [
+        "aosl-10k-fy2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "chipmos-technologies-inc",
+      "customer": "elite-semiconductor-microelectronics-technology",
+      "products": [
+        "Assembly and test"
+      ],
+      "sources": [
+        "imos-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Named among the top 15 customers by revenue, listed alphabetically."
+      ]
+    },
+    {
+      "supplier": "system-nvidia",
+      "customer": "eviden-atos",
+      "products": [
+        "Blackwell platform products for server systems"
+      ],
+      "sources": [
+        "nvidia-blackwell-2024-systems"
+      ],
+      "years": [
+        2024
+      ],
+      "details": [
+        "Announced in March 2024 as \"expected to deliver\" servers based on Blackwell. Delivery and current status are not established by the release."
+      ]
+    },
+    {
+      "supplier": "system-nvidia",
+      "customer": "gigabyte-technology-co-ltd",
+      "products": [
+        "Blackwell platform products for server systems"
+      ],
+      "sources": [
+        "nvidia-blackwell-2024-systems"
+      ],
+      "years": [
+        2024
+      ],
+      "details": [
+        "Announced in March 2024 as \"expected to deliver\" servers based on Blackwell. Delivery and current status are not established by the release."
+      ]
+    },
+    {
+      "supplier": "chipmos-technologies-inc",
+      "customer": "gigadevice-semiconductor-incorporated",
+      "products": [
+        "Assembly and test"
+      ],
+      "sources": [
+        "imos-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Named among the top 15 customers by revenue, listed alphabetically."
+      ]
+    },
+    {
+      "supplier": "nxp-semiconductors-n-v",
+      "customer": "harman-international",
+      "products": [
+        "Named among the ten largest end customers"
+      ],
+      "sources": [
+        "nxpi-10k-2025-customers"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Some of the ten are supplied through distributors rather than directly."
+      ]
+    },
+    {
+      "supplier": "system-nvidia",
+      "customer": "hewlett-packard-enterprise-company",
+      "products": [
+        "Blackwell platform products for server systems"
+      ],
+      "sources": [
+        "nvidia-blackwell-2024-systems"
+      ],
+      "years": [
+        2024
+      ],
+      "details": [
+        "Announced in March 2024 as \"expected to deliver\" servers based on Blackwell. Delivery and current status are not established by the release."
+      ]
+    },
+    {
+      "supplier": "ardentec-corp",
+      "customer": "himax-technologies-inc",
+      "products": [
+        "Wafer and final test"
+      ],
+      "sources": [
+        "himx-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": []
+    },
+    {
+      "supplier": "chipbond-technology-corp",
+      "customer": "himax-technologies-inc",
+      "products": [
+        "TAB and COG assembly and test"
+      ],
+      "sources": [
+        "himx-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": []
+    },
+    {
+      "supplier": "chipmos-technologies-inc",
+      "customer": "himax-technologies-inc",
+      "products": [
+        "Assembly and test"
+      ],
+      "sources": [
+        "imos-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Named among the top 15 customers by revenue, listed alphabetically."
+      ]
+    },
+    {
+      "supplier": "macronix-international-co-ltd",
+      "customer": "himax-technologies-inc",
+      "products": [
+        "High-voltage CMOS wafer foundry for display drivers"
+      ],
+      "sources": [
+        "himx-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Named among foundries used \"in the past few years\"; current supply is not established by the filing."
+      ]
+    },
+    {
+      "supplier": "powerchip-semiconductor-manufacturing-corp",
+      "customer": "himax-technologies-inc",
+      "products": [
+        "High-voltage CMOS wafer foundry for display drivers"
+      ],
+      "sources": [
+        "himx-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Named among foundries used \"in the past few years\"; current supply is not established by the filing."
+      ]
+    },
+    {
+      "supplier": "sk-hynix-system-ic",
+      "customer": "himax-technologies-inc",
+      "products": [
+        "High-voltage CMOS wafer foundry for display drivers"
+      ],
+      "sources": [
+        "himx-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Named among foundries used \"in the past few years\"; current supply is not established by the filing."
+      ]
+    },
+    {
+      "supplier": "system-gf",
+      "customer": "himax-technologies-inc",
+      "products": [
+        "High-voltage CMOS wafer foundry for display drivers"
+      ],
+      "sources": [
+        "himx-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Named among foundries used \"in the past few years\"; current supply is not established by the filing."
+      ]
+    },
+    {
+      "supplier": "system-nexchip",
+      "customer": "himax-technologies-inc",
+      "products": [
+        "High-voltage CMOS wafer foundry for display drivers"
+      ],
+      "sources": [
+        "himx-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Named among foundries used \"in the past few years\"; current supply is not established by the filing."
+      ]
+    },
+    {
+      "supplier": "system-vis",
+      "customer": "himax-technologies-inc",
+      "products": [
+        "High-voltage CMOS wafer foundry for display drivers"
+      ],
+      "sources": [
+        "himx-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Named among foundries used \"in the past few years\"; current supply is not established by the filing."
+      ]
+    },
+    {
+      "supplier": "taiwan-semiconductor-manufacturing-company-limited",
+      "customer": "himax-technologies-inc",
+      "products": [
+        "High-voltage CMOS wafer foundry for display drivers"
+      ],
+      "sources": [
+        "himx-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Named among foundries used \"in the past few years\"; current supply is not established by the filing."
+      ]
+    },
+    {
+      "supplier": "united-microelectronics-corporation",
+      "customer": "himax-technologies-inc",
+      "products": [
+        "High-voltage CMOS wafer foundry for display drivers"
+      ],
+      "sources": [
+        "himx-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Named among foundries used \"in the past few years\"; current supply is not established by the filing."
       ]
     },
     {
@@ -2689,6 +3481,36 @@
       ]
     },
     {
+      "supplier": "alpha-and-omega-semiconductor-limited",
+      "customer": "hon-hai-precision-industry-company-limited-foxconn",
+      "products": [
+        "Power semiconductors and power-management ICs"
+      ],
+      "sources": [
+        "aosl-10k-fy2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "system-nvidia",
+      "customer": "hon-hai-precision-industry-company-limited-foxconn",
+      "products": [
+        "Blackwell platform products for server systems"
+      ],
+      "sources": [
+        "nvidia-blackwell-2024-systems"
+      ],
+      "years": [
+        2024
+      ],
+      "details": [
+        "Announced in March 2024 as \"expected to deliver\" servers based on Blackwell. Delivery and current status are not established by the release."
+      ]
+    },
+    {
       "supplier": "hisilicon-technologies-co-ltd",
       "customer": "huawei-technologies-co-ltd",
       "products": [
@@ -2702,6 +3524,54 @@
       ],
       "details": [
         "Affiliation established by the U.S. rule that added Huawei's non-U.S. affiliates, HiSilicon among them, to the Entity List."
+      ]
+    },
+    {
+      "supplier": "nxp-semiconductors-n-v",
+      "customer": "hyundai-motor-company",
+      "products": [
+        "Named among the ten largest end customers"
+      ],
+      "sources": [
+        "nxpi-10k-2025-customers"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Some of the ten are supplied through distributors rather than directly."
+      ]
+    },
+    {
+      "supplier": "chipmos-technologies-inc",
+      "customer": "ili-technology-corp",
+      "products": [
+        "Assembly and test"
+      ],
+      "sources": [
+        "imos-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Named among the top 15 customers by revenue, listed alphabetically."
+      ]
+    },
+    {
+      "supplier": "chipmos-technologies-inc",
+      "customer": "integrated-circuit-solution-inc",
+      "products": [
+        "Assembly and test"
+      ],
+      "sources": [
+        "imos-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Named among the top 15 customers by revenue, listed alphabetically."
       ]
     },
     {
@@ -2959,17 +3829,21 @@
       "customer": "intel-corporation",
       "products": [
         "Excellence in Sort Test Development",
-        "Distinguished Supplier Award (Distinguished)"
+        "Distinguished Supplier Award (Distinguished)",
+        "Probe cards and test systems"
       ],
       "sources": [
         "intel-epic-2026",
-        "intel-epic-2024"
+        "intel-epic-2024",
+        "form-10k-2025"
       ],
       "years": [
         2024,
         2026
       ],
-      "details": []
+      "details": [
+        "Above 10% of revenue in fiscal 2024 and 2023; below the disclosure threshold in fiscal 2025."
+      ]
     },
     {
       "supplier": "gcon-inc",
@@ -3383,6 +4257,22 @@
       "details": []
     },
     {
+      "supplier": "system-synopsys",
+      "customer": "intel-corporation",
+      "products": [
+        "Intellectual property portfolio developed for Intel 3 and Intel 18A"
+      ],
+      "sources": [
+        "intel-tower-foundry-2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": [
+        "A separate agreement disclosed in the same release, to develop a portfolio of intellectual property on Intel 3 and Intel 18A."
+      ]
+    },
+    {
       "supplier": "taiwan-semiconductor-manufacturing-company-limited",
       "customer": "intel-corporation",
       "products": [
@@ -3549,15 +4439,21 @@
       "supplier": "united-microelectronics-corporation",
       "customer": "intel-corporation",
       "products": [
-        "Excellence in Quality Management"
+        "Excellence in Quality Management",
+        "Wafer foundry services"
       ],
       "sources": [
-        "intel-epic-2026"
+        "intel-epic-2026",
+        "umc-20f-2025"
       ],
       "years": [
-        2026
+        2026,
+        2025
       ],
-      "details": []
+      "details": [
+        "Named among primary customers as a integrated device manufacturer.",
+        "The filing separately describes a collaboration providing for a long-term agreement between UMC and Intel."
+      ]
     },
     {
       "supplier": "ust",
@@ -3644,6 +4540,36 @@
       "details": []
     },
     {
+      "supplier": "system-nvidia",
+      "customer": "inventec-corporation",
+      "products": [
+        "Blackwell platform products for server systems"
+      ],
+      "sources": [
+        "nvidia-blackwell-2024-systems"
+      ],
+      "years": [
+        2024
+      ],
+      "details": [
+        "Announced in March 2024 as \"expected to deliver\" servers based on Blackwell. Delivery and current status are not established by the release."
+      ]
+    },
+    {
+      "supplier": "silicon-motion-technology-corp",
+      "customer": "kioxia-holdings-corporation",
+      "products": [
+        "NAND flash controller chips"
+      ],
+      "sources": [
+        "simo-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": []
+    },
+    {
       "supplier": "celestica-electronics-sdn-bhd",
       "customer": "lam-research-corporation",
       "products": [
@@ -3682,6 +4608,20 @@
       ],
       "years": [
         2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "ichor-holdings-ltd",
+      "customer": "lam-research-corporation",
+      "products": [
+        "Fluid-delivery and gas-delivery subsystems"
+      ],
+      "sources": [
+        "ichr-10k-2025"
+      ],
+      "years": [
+        2025
       ],
       "details": []
     },
@@ -3756,6 +4696,22 @@
       "details": []
     },
     {
+      "supplier": "ultra-clean-holdings-inc",
+      "customer": "lam-research-corporation",
+      "products": [
+        "Gas-delivery and fluid subsystems for wafer-fab equipment"
+      ],
+      "sources": [
+        "uctt-10k-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Lam Research was 37.0% of Ultra Clean revenue in fiscal 2025."
+      ]
+    },
+    {
       "supplier": "venture-corporation-limited",
       "customer": "lam-research-corporation",
       "products": [
@@ -3766,6 +4722,82 @@
       ],
       "years": [
         2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "nxp-semiconductors-n-v",
+      "customer": "lg-electronics-automotive",
+      "products": [
+        "Named among the ten largest end customers"
+      ],
+      "sources": [
+        "nxpi-10k-2025-customers"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Some of the ten are supplied through distributors rather than directly."
+      ]
+    },
+    {
+      "supplier": "chipmos-technologies-inc",
+      "customer": "macronix-international-co-ltd",
+      "products": [
+        "Assembly and test"
+      ],
+      "sources": [
+        "imos-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Named among the top 15 customers by revenue, listed alphabetically."
+      ]
+    },
+    {
+      "supplier": "semiconductor-manufacturing-international-corporation",
+      "customer": "microchip-technology-incorporated",
+      "products": [
+        "Wafer manufacturing"
+      ],
+      "sources": [
+        "mchp-10k-fy2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "chipmos-technologies-inc",
+      "customer": "micron-technology-incorporated",
+      "products": [
+        "Assembly and test"
+      ],
+      "sources": [
+        "imos-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Named among the top 15 customers by revenue, listed alphabetically."
+      ]
+    },
+    {
+      "supplier": "silicon-motion-technology-corp",
+      "customer": "micron-technology-incorporated",
+      "products": [
+        "NAND flash controller chips"
+      ],
+      "sources": [
+        "simo-20f-2025"
+      ],
+      "years": [
+        2025
       ],
       "details": []
     },
@@ -3816,6 +4848,337 @@
       "details": []
     },
     {
+      "supplier": "stmicroelectronics-n-v",
+      "customer": "mobileye-global-inc",
+      "products": [
+        "Named among major customers"
+      ],
+      "sources": [
+        "stm-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": []
+    },
+    {
+      "supplier": "chipmos-technologies-inc",
+      "customer": "novatek-microelectronics-corp",
+      "products": [
+        "Assembly and test"
+      ],
+      "sources": [
+        "imos-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Named among the top 15 customers by revenue, listed alphabetically."
+      ]
+    },
+    {
+      "supplier": "united-microelectronics-corporation",
+      "customer": "novatek-microelectronics-corp",
+      "products": [
+        "Wafer foundry services"
+      ],
+      "sources": [
+        "umc-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Named among primary customers as a fabless design company."
+      ]
+    },
+    {
+      "supplier": "system-vis",
+      "customer": "nxp-semiconductors-n-v",
+      "products": [
+        "Joint-venture wafer capacity (VSMC)"
+      ],
+      "sources": [
+        "nxpi-10k-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "NXP is entitled to 40% of VSMC capacity. VSMC in Singapore was targeting initial production in 2027 at the time of filing."
+      ]
+    },
+    {
+      "supplier": "taiwan-semiconductor-manufacturing-company-limited",
+      "customer": "nxp-semiconductors-n-v",
+      "products": [
+        "Joint-venture wafer capacity (SSMC, ESMC)"
+      ],
+      "sources": [
+        "nxpi-10k-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "A capacity entitlement through jointly owned fabs, not a merchant foundry contract. ESMC in Dresden was targeting initial production in 2028 at the time of filing."
+      ]
+    },
+    {
+      "supplier": "system-nvidia",
+      "customer": "pegatron-corporation",
+      "products": [
+        "Blackwell platform products for server systems"
+      ],
+      "sources": [
+        "nvidia-blackwell-2024-systems"
+      ],
+      "years": [
+        2024
+      ],
+      "details": [
+        "Announced in March 2024 as \"expected to deliver\" servers based on Blackwell. Delivery and current status are not established by the release."
+      ]
+    },
+    {
+      "supplier": "chipmos-technologies-inc",
+      "customer": "phison-electronics-corp",
+      "products": [
+        "Assembly and test"
+      ],
+      "sources": [
+        "imos-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Named among the top 15 customers by revenue, listed alphabetically."
+      ]
+    },
+    {
+      "supplier": "system-nvidia",
+      "customer": "qct-quanta-cloud-technology",
+      "products": [
+        "Blackwell platform products for server systems"
+      ],
+      "sources": [
+        "nvidia-blackwell-2024-systems"
+      ],
+      "years": [
+        2024
+      ],
+      "details": [
+        "Announced in March 2024 as \"expected to deliver\" servers based on Blackwell. Delivery and current status are not established by the release."
+      ]
+    },
+    {
+      "supplier": "advanced-semiconductor-engineering-technology-holding-co-ltd",
+      "customer": "qualcomm-incorporated",
+      "products": [
+        "Semiconductor assembly and test"
+      ],
+      "sources": [
+        "qcom-10k-fy2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "amkor-technology-incorporated",
+      "customer": "qualcomm-incorporated",
+      "products": [
+        "Semiconductor assembly and test"
+      ],
+      "sources": [
+        "qcom-10k-fy2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "micron-technology-incorporated",
+      "customer": "qualcomm-incorporated",
+      "products": [
+        "Memory components"
+      ],
+      "sources": [
+        "qcom-10k-fy2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "samsung-electronics-company-limited",
+      "customer": "qualcomm-incorporated",
+      "products": [
+        "Wafer foundry",
+        "Memory components"
+      ],
+      "sources": [
+        "qcom-10k-fy2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "siliconware-precision-industries-co-ltd",
+      "customer": "qualcomm-incorporated",
+      "products": [
+        "Semiconductor assembly and test"
+      ],
+      "sources": [
+        "qcom-10k-fy2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "stats-chippac-pte-ltd",
+      "customer": "qualcomm-incorporated",
+      "products": [
+        "Semiconductor assembly and test"
+      ],
+      "sources": [
+        "qcom-10k-fy2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "system-gf",
+      "customer": "qualcomm-incorporated",
+      "products": [
+        "Wafer foundry"
+      ],
+      "sources": [
+        "qcom-10k-fy2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "taiwan-semiconductor-manufacturing-company-limited",
+      "customer": "qualcomm-incorporated",
+      "products": [
+        "Wafer foundry"
+      ],
+      "sources": [
+        "qcom-10k-fy2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "alpha-and-omega-semiconductor-limited",
+      "customer": "quanta-computer-incorporated",
+      "products": [
+        "Power semiconductors and power-management ICs"
+      ],
+      "sources": [
+        "aosl-10k-fy2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "chipmos-technologies-inc",
+      "customer": "raydium-semiconductor-corp",
+      "products": [
+        "Assembly and test"
+      ],
+      "sources": [
+        "imos-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Named among the top 15 customers by revenue, listed alphabetically."
+      ]
+    },
+    {
+      "supplier": "united-microelectronics-corporation",
+      "customer": "realtek-semiconductor-corp",
+      "products": [
+        "Wafer foundry services"
+      ],
+      "sources": [
+        "umc-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Named among primary customers as a fabless design company."
+      ]
+    },
+    {
+      "supplier": "nxp-semiconductors-n-v",
+      "customer": "robert-bosch-gmbh",
+      "products": [
+        "Named among the ten largest end customers"
+      ],
+      "sources": [
+        "nxpi-10k-2025-customers"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Some of the ten are supplied through distributors rather than directly."
+      ]
+    },
+    {
+      "supplier": "stmicroelectronics-n-v",
+      "customer": "robert-bosch-gmbh",
+      "products": [
+        "Named among major customers"
+      ],
+      "sources": [
+        "stm-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": []
+    },
+    {
+      "supplier": "formfactor-incorporated",
+      "customer": "samsung-electronics-company-limited",
+      "products": [
+        "Probe cards and test systems"
+      ],
+      "sources": [
+        "form-10k-2025"
+      ],
+      "years": [
+        2024
+      ],
+      "details": [
+        "Crossed 10% of revenue in a single quarter rather than for the full year."
+      ]
+    },
+    {
       "supplier": "fujifilm-holdings-corporation",
       "customer": "samsung-electronics-company-limited",
       "products": [
@@ -3829,6 +5192,82 @@
       ],
       "details": [
         "Samsung \"Most Valuable Partner Award\" at Material Day 2025. Fujifilm says 14 firms were honoured but names only itself, so the other 13 edges cannot be drawn."
+      ]
+    },
+    {
+      "supplier": "nxp-semiconductors-n-v",
+      "customer": "samsung-electronics-company-limited",
+      "products": [
+        "Named among the ten largest end customers"
+      ],
+      "sources": [
+        "nxpi-10k-2025-customers"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Some of the ten are supplied through distributors rather than directly."
+      ]
+    },
+    {
+      "supplier": "onto-innovation-inc",
+      "customer": "samsung-electronics-company-limited",
+      "products": [
+        "Metrology and inspection systems"
+      ],
+      "sources": [
+        "onto-10k-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": []
+    },
+    {
+      "supplier": "qualcomm-incorporated",
+      "customer": "samsung-electronics-company-limited",
+      "products": [
+        "Named as a customer above 10% of consolidated revenues"
+      ],
+      "sources": [
+        "qcom-10k-fy2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": [
+        "Samsung is disclosed as both a foundry/memory supplier and a customer above 10% of revenue. The two are separate relationships."
+      ]
+    },
+    {
+      "supplier": "stmicroelectronics-n-v",
+      "customer": "samsung-electronics-company-limited",
+      "products": [
+        "Named among major customers"
+      ],
+      "sources": [
+        "stm-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": []
+    },
+    {
+      "supplier": "system-airproducts",
+      "customer": "samsung-electronics-company-limited",
+      "products": [
+        "Nitrogen, oxygen, argon and hydrogen for the Pyeongtaek fab"
+      ],
+      "sources": [
+        "airproducts-samsung-2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": [
+        "Contracted in April 2026; the production facilities are expected to come onstream in phases from 2028 through 2030, so supply had not begun at the time of the announcement."
       ]
     },
     {
@@ -3892,6 +5331,38 @@
       ]
     },
     {
+      "supplier": "formfactor-incorporated",
+      "customer": "sk-hynix-incorporated",
+      "products": [
+        "Probe cards and test systems"
+      ],
+      "sources": [
+        "form-10k-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "SK hynix was 22.9% of FormFactor revenue in fiscal 2025."
+      ]
+    },
+    {
+      "supplier": "silicon-motion-technology-corp",
+      "customer": "sk-hynix-incorporated",
+      "products": [
+        "NAND flash controller chips"
+      ],
+      "sources": [
+        "simo-20f-2025"
+      ],
+      "years": [
+        2023
+      ],
+      "details": [
+        "Above 10% of revenue in 2023; not among the customers named for 2024 or 2025."
+      ]
+    },
+    {
       "supplier": "system-sksiltron",
       "customer": "sk-hynix-incorporated",
       "products": [
@@ -3906,6 +5377,20 @@
       "details": [
         "Historical supplier award; ongoing supply has not been verified."
       ]
+    },
+    {
+      "supplier": "stmicroelectronics-n-v",
+      "customer": "space-exploration-technologies-corp",
+      "products": [
+        "Named among major customers"
+      ],
+      "sources": [
+        "stm-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": []
     },
     {
       "supplier": "system-entegris",
@@ -4054,6 +5539,36 @@
       "details": []
     },
     {
+      "supplier": "nxp-semiconductors-n-v",
+      "customer": "system-denso",
+      "products": [
+        "Named among the ten largest end customers"
+      ],
+      "sources": [
+        "nxpi-10k-2025-customers"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Some of the ten are supplied through distributors rather than directly."
+      ]
+    },
+    {
+      "supplier": "stmicroelectronics-n-v",
+      "customer": "system-denso",
+      "products": [
+        "Named among major customers"
+      ],
+      "sources": [
+        "stm-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": []
+    },
+    {
       "supplier": "system-nvidia",
       "customer": "system-google",
       "products": [
@@ -4070,19 +5585,108 @@
       ]
     },
     {
+      "supplier": "canon-inc",
+      "customer": "system-hp",
+      "products": [
+        "Laser printer engines and laser toner cartridges"
+      ],
+      "sources": [
+        "hpq-10k-fy2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": []
+    },
+    {
+      "supplier": "intel-corporation",
+      "customer": "system-hp",
+      "products": [
+        "Processors and GPUs for PCs and workstations"
+      ],
+      "sources": [
+        "hpq-10k-fy2025-processors"
+      ],
+      "years": [
+        2025
+      ],
+      "details": []
+    },
+    {
+      "supplier": "stmicroelectronics-n-v",
+      "customer": "system-hp",
+      "products": [
+        "Named among major customers"
+      ],
+      "sources": [
+        "stm-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": []
+    },
+    {
+      "supplier": "system-amd",
+      "customer": "system-hp",
+      "products": [
+        "Processors and GPUs for PCs and workstations"
+      ],
+      "sources": [
+        "hpq-10k-fy2025-processors"
+      ],
+      "years": [
+        2025
+      ],
+      "details": []
+    },
+    {
+      "supplier": "system-nvidia",
+      "customer": "system-hp",
+      "products": [
+        "Processors and GPUs for PCs and workstations"
+      ],
+      "sources": [
+        "hpq-10k-fy2025-processors"
+      ],
+      "years": [
+        2025
+      ],
+      "details": []
+    },
+    {
       "supplier": "system-nvidia",
       "customer": "system-lenovo",
       "products": [
-        "Blackwell platform — announced adoption / system integration"
+        "Blackwell platform — announced adoption / system integration",
+        "Blackwell platform products for server systems"
       ],
       "sources": [
-        "nvidia-blackwell-2024"
+        "nvidia-blackwell-2024",
+        "nvidia-blackwell-2024-systems"
       ],
       "years": [
         2024
       ],
       "details": [
-        "Announced plans in March 2024; delivery and current deployment status are not verified."
+        "Announced plans in March 2024; delivery and current deployment status are not verified.",
+        "Announced in March 2024 as \"expected to deliver\" servers based on Blackwell. Delivery and current status are not established by the release."
+      ]
+    },
+    {
+      "supplier": "chipmos-technologies-inc",
+      "customer": "system-mediatek",
+      "products": [
+        "Assembly and test"
+      ],
+      "sources": [
+        "imos-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Named among the top 15 customers by revenue, listed alphabetically."
       ]
     },
     {
@@ -4112,6 +5716,22 @@
         2023
       ],
       "details": []
+    },
+    {
+      "supplier": "united-microelectronics-corporation",
+      "customer": "system-mediatek",
+      "products": [
+        "Wafer foundry services"
+      ],
+      "sources": [
+        "umc-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Named among primary customers as a fabless design company."
+      ]
     },
     {
       "supplier": "system-nvidia",
@@ -4144,6 +5764,36 @@
       "details": [
         "Announced plans in March 2024; delivery and current deployment status are not verified."
       ]
+    },
+    {
+      "supplier": "chipmos-technologies-inc",
+      "customer": "system-nanya",
+      "products": [
+        "Assembly and test"
+      ],
+      "sources": [
+        "imos-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Named among the top 15 customers by revenue, listed alphabetically."
+      ]
+    },
+    {
+      "supplier": "coherent-corporation",
+      "customer": "system-nvidia",
+      "products": [
+        "Lasers and optical networking products"
+      ],
+      "sources": [
+        "cohr-10k-fy2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": []
     },
     {
       "supplier": "hon-hai-precision-industry-company-limited-foxconn",
@@ -4230,6 +5880,22 @@
       "details": []
     },
     {
+      "supplier": "system-ibm_res",
+      "customer": "system-rapidus",
+      "products": [
+        "2nm node process technology and chiplet packaging technology"
+      ],
+      "sources": [
+        "ibm-rapidus-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": [
+        "A joint development partnership in both parties’ words. The 2024 release’s \"Rapidus will receive packaging technology from IBM\" is the clearest statement that technology moves from IBM to Rapidus; no goods, price or royalty is disclosed."
+      ]
+    },
+    {
       "supplier": "wacker-chemie-ag",
       "customer": "system-siltronic",
       "products": [
@@ -4244,20 +5910,73 @@
       "details": []
     },
     {
+      "supplier": "intel-corporation",
+      "customer": "system-supermicro",
+      "products": [
+        "Processors and accelerators for system platforms"
+      ],
+      "sources": [
+        "smci-10k-fy2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": [
+        "Disclosed as a development collaboration with a processor vendor rather than as a procurement contract."
+      ]
+    },
+    {
+      "supplier": "system-amd",
+      "customer": "system-supermicro",
+      "products": [
+        "Processors and accelerators for system platforms"
+      ],
+      "sources": [
+        "smci-10k-fy2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": [
+        "Disclosed as a development collaboration with a processor vendor rather than as a procurement contract."
+      ]
+    },
+    {
       "supplier": "system-nvidia",
       "customer": "system-supermicro",
       "products": [
-        "Blackwell platform — announced adoption / system integration"
+        "Blackwell platform — announced adoption / system integration",
+        "Processors and accelerators for system platforms",
+        "Blackwell platform products for server systems"
       ],
       "sources": [
-        "nvidia-blackwell-2024"
+        "nvidia-blackwell-2024",
+        "smci-10k-fy2026",
+        "nvidia-blackwell-2024-systems"
       ],
       "years": [
-        2024
+        2024,
+        2026
       ],
       "details": [
-        "Announced plans in March 2024; delivery and current deployment status are not verified."
+        "Announced plans in March 2024; delivery and current deployment status are not verified.",
+        "Disclosed as a development collaboration with a processor vendor rather than as a procurement contract.",
+        "Announced in March 2024 as \"expected to deliver\" servers based on Blackwell. Delivery and current status are not established by the release."
       ]
+    },
+    {
+      "supplier": "stmicroelectronics-n-v",
+      "customer": "system-tesla",
+      "products": [
+        "Named among major customers"
+      ],
+      "sources": [
+        "stm-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": []
     },
     {
       "supplier": "system-nvidia",
@@ -4273,6 +5992,54 @@
       ],
       "details": [
         "Announced plans in March 2024; delivery and current deployment status are not verified."
+      ]
+    },
+    {
+      "supplier": "intel-corporation",
+      "customer": "system-tower",
+      "products": [
+        "65nm power-management BCD and other process flows, with 300mm capacity at Fab 11X"
+      ],
+      "sources": [
+        "intel-tower-foundry-2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": [
+        "An announced agreement as of September 2023, with qualification planned for 2024. Tower committed up to $300 million for equipment and received a corridor of over 600,000 photo layers per month."
+      ]
+    },
+    {
+      "supplier": "stmicroelectronics-n-v",
+      "customer": "system-tower",
+      "products": [
+        "300mm manufacturing capacity shared at the facility ST is establishing in Italy"
+      ],
+      "sources": [
+        "intel-tower-foundry-2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": [
+        "Stated in Tower’s own company boilerplate in this release, which describes Tower as sharing a 300mm facility being established in Italy by STMicroelectronics. No volume or commercial term is disclosed."
+      ]
+    },
+    {
+      "supplier": "qualcomm-incorporated",
+      "customer": "system-xiaomi",
+      "products": [
+        "Named as a customer above 10% of consolidated revenues"
+      ],
+      "sources": [
+        "qcom-10k-fy2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Named in the fiscal 2025 filing. Xiaomi is not among the 10%-or-more customers named in the fiscal 2026 filing."
       ]
     },
     {
@@ -4538,6 +6305,22 @@
       "details": []
     },
     {
+      "supplier": "formfactor-incorporated",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Probe cards and test systems"
+      ],
+      "sources": [
+        "form-10k-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Crossed 10% of revenue in a single quarter rather than for the full year."
+      ]
+    },
+    {
       "supplier": "fu-tsu-construction-co-ltd",
       "customer": "taiwan-semiconductor-manufacturing-company-limited",
       "products": [
@@ -4660,12 +6443,14 @@
       "products": [
         "Excellent Technology and Production Support and Excellence in Green Manufacturing",
         "Excellent Production Support",
-        "Excellent Technology Collaboration and Production Support"
+        "Excellent Technology Collaboration and Production Support",
+        "Process control and inspection systems"
       ],
       "sources": [
         "tsmc-scm-2026",
         "tsmc-scm-2025",
-        "tsmc-scm-2024"
+        "tsmc-scm-2024",
+        "klac-10k-fy2026"
       ],
       "years": [
         2024,
@@ -4830,10 +6615,12 @@
       "supplier": "onto-innovation-inc",
       "customer": "taiwan-semiconductor-manufacturing-company-limited",
       "products": [
-        "Excellent Production Support"
+        "Excellent Production Support",
+        "Metrology and inspection systems"
       ],
       "sources": [
-        "tsmc-scm-2025"
+        "tsmc-scm-2025",
+        "onto-10k-2025"
       ],
       "years": [
         2025
@@ -5039,6 +6826,74 @@
       "details": []
     },
     {
+      "supplier": "system-cadence",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "EDA tools certified under the TSMC EDA Tool Certification Program"
+      ],
+      "sources": [
+        "tsmc-eda-alliance"
+      ],
+      "years": [
+        2026
+      ],
+      "details": [
+        "A certification and ecosystem relationship in TSMC’s own words, not a disclosed purchase. The tools are certified against TSMC processes so that TSMC’s design customers can use them; the page does not say TSMC buys them."
+      ]
+    },
+    {
+      "supplier": "system-entegris",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Filtration, materials handling and advanced materials"
+      ],
+      "sources": [
+        "entg-10k-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "TSMC was 16% of Entegris net sales in 2025. This supersedes nothing: the older Entegris award records remain separate, dated evidence."
+      ]
+    },
+    {
+      "supplier": "system-siemens_eda",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "EDA tools certified under the TSMC EDA Tool Certification Program"
+      ],
+      "sources": [
+        "tsmc-eda-alliance"
+      ],
+      "years": [
+        2026
+      ],
+      "details": [
+        "A certification and ecosystem relationship in TSMC’s own words, not a disclosed purchase. The tools are certified against TSMC processes so that TSMC’s design customers can use them; the page does not say TSMC buys them."
+      ]
+    },
+    {
+      "supplier": "system-synopsys",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "EDA tools certified under the TSMC EDA Tool Certification Program",
+        "Certified analog and digital design flows and signoff verification for TSMC processes"
+      ],
+      "sources": [
+        "tsmc-eda-alliance",
+        "synopsys-tsmc-2025"
+      ],
+      "years": [
+        2026,
+        2025
+      ],
+      "details": [
+        "A certification and ecosystem relationship in TSMC’s own words, not a disclosed purchase. The tools are certified against TSMC processes so that TSMC’s design customers can use them; the page does not say TSMC buys them.",
+        "Certification of design flows against TSMC processes, in Synopsys’ own words. Not a disclosed purchase of tools by TSMC."
+      ]
+    },
+    {
       "supplier": "taiwan-pulp-and-paper-corporation",
       "customer": "taiwan-semiconductor-manufacturing-company-limited",
       "products": [
@@ -5221,6 +7076,64 @@
       ]
     },
     {
+      "supplier": "united-microelectronics-corporation",
+      "customer": "texas-instruments-incorporated",
+      "products": [
+        "Wafer foundry services"
+      ],
+      "sources": [
+        "umc-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Named among primary customers as a integrated device manufacturer."
+      ]
+    },
+    {
+      "supplier": "shin-etsu-handotai-co-ltd",
+      "customer": "united-microelectronics-corporation",
+      "products": [
+        "Silicon wafers"
+      ],
+      "sources": [
+        "umc-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": []
+    },
+    {
+      "supplier": "soitec-sa",
+      "customer": "united-microelectronics-corporation",
+      "products": [
+        "Engineered substrates"
+      ],
+      "sources": [
+        "umc-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": []
+    },
+    {
+      "supplier": "sumco-corporation",
+      "customer": "united-microelectronics-corporation",
+      "products": [
+        "Silicon wafers"
+      ],
+      "sources": [
+        "umc-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": []
+    },
+    {
       "supplier": "system-entegris",
       "customer": "united-microelectronics-corporation",
       "products": [
@@ -5234,6 +7147,144 @@
       ],
       "details": [
         "Historical supplier recognition; ongoing supply and product scope have not been verified."
+      ]
+    },
+    {
+      "supplier": "system-globalwafers",
+      "customer": "united-microelectronics-corporation",
+      "products": [
+        "Silicon wafers"
+      ],
+      "sources": [
+        "umc-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": []
+    },
+    {
+      "supplier": "system-imec",
+      "customer": "united-microelectronics-corporation",
+      "products": [
+        "iSiPP300 silicon photonics process technology licence"
+      ],
+      "sources": [
+        "umc-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "A technology licence rather than a shipment of goods: imec supplies the process, not the silicon."
+      ]
+    },
+    {
+      "supplier": "nxp-semiconductors-n-v",
+      "customer": "visteon-corp",
+      "products": [
+        "Named among the ten largest end customers"
+      ],
+      "sources": [
+        "nxpi-10k-2025-customers"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Some of the ten are supplied through distributors rather than directly."
+      ]
+    },
+    {
+      "supplier": "stmicroelectronics-n-v",
+      "customer": "vitesco-technologies",
+      "products": [
+        "Named among major customers"
+      ],
+      "sources": [
+        "stm-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": []
+    },
+    {
+      "supplier": "chipmos-technologies-inc",
+      "customer": "winbond-electronics-corporation",
+      "products": [
+        "Assembly and test"
+      ],
+      "sources": [
+        "imos-20f-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Named among the top 15 customers by revenue, listed alphabetically."
+      ]
+    },
+    {
+      "supplier": "alpha-and-omega-semiconductor-limited",
+      "customer": "wistron-corporation",
+      "products": [
+        "Power semiconductors and power-management ICs"
+      ],
+      "sources": [
+        "aosl-10k-fy2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "system-nvidia",
+      "customer": "wistron-corporation",
+      "products": [
+        "Blackwell platform products for server systems"
+      ],
+      "sources": [
+        "nvidia-blackwell-2024-systems"
+      ],
+      "years": [
+        2024
+      ],
+      "details": [
+        "Announced in March 2024 as \"expected to deliver\" servers based on Blackwell. Delivery and current status are not established by the release."
+      ]
+    },
+    {
+      "supplier": "system-nvidia",
+      "customer": "wiwynn-corporation",
+      "products": [
+        "Blackwell platform products for server systems"
+      ],
+      "sources": [
+        "nvidia-blackwell-2024-systems"
+      ],
+      "years": [
+        2024
+      ],
+      "details": [
+        "Announced in March 2024 as \"expected to deliver\" servers based on Blackwell. Delivery and current status are not established by the release."
+      ]
+    },
+    {
+      "supplier": "system-nvidia",
+      "customer": "zt-systems",
+      "products": [
+        "Blackwell platform products for server systems"
+      ],
+      "sources": [
+        "nvidia-blackwell-2024-systems"
+      ],
+      "years": [
+        2024
+      ],
+      "details": [
+        "Announced in March 2024 as \"expected to deliver\" servers based on Blackwell. Delivery and current status are not established by the release."
       ]
     }
   ]

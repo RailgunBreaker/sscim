@@ -332,7 +332,13 @@ export default function SupplierTierExplorer({ compact = false, onSelectVaultCom
           anchorTiers={anchorTiers} selectedKey={selectedKey}
           onFocus={inspect} onSelectLink={(k) => setSelectedKey(k === selectedKey ? null : k)}
           overlay={<>
-            <Legend colourBy={colourBy} index={viewIndex} anchorTiers={anchorTiers} />
+            <Legend colourBy={colourBy} index={viewIndex} anchorTiers={anchorTiers}
+              root={root} rootTier={index.tier[rootId]}
+              onOpenRoot={() => {
+                setProfileId(rootId);
+                setDetailId(rootId);
+                requestAnimationFrame(() => document.getElementById('chain-company-profile')?.scrollIntoView({ block: 'start' }));
+              }} />
             {(selectedLink || detailId) && <div style={{ marginTop: 20, borderTop: `1px solid ${C.line}`, paddingTop: 16 }}>
               <Button variant="quiet" size="sm" onClick={() => { setSelectedKey(null); setDetailId(null); setProfileId(null); }}>Clear selection</Button>
               {selectedLink
@@ -477,37 +483,68 @@ function Preamble({ index }) {
   );
 }
 
-function Legend({ colourBy, index, anchorTiers }) {
+/* The legend, and the overlay's resting state.
+
+   It lives inside the canvas, so it is written as a narrow column
+   rather than the wide strip a legend under a chart would be. It also
+   carries the one sentence a reader needs before trusting a position —
+   what horizontal placement means under the current layout — because
+   that is the claim the picture makes most quietly. */
+function Legend({ colourBy, index, anchorTiers, root, rootTier, onOpenRoot }) {
   const dot = (bg) => (
-    <span aria-hidden="true" style={{ width: 9, height: 9, borderRadius: '50%', background: bg, display: 'inline-block' }} />
+    <span aria-hidden="true" style={{ width: 9, height: 9, borderRadius: '50%', background: bg, display: 'inline-block', flex: 'none' }} />
   );
+  const row = { display: 'flex', gap: 7, alignItems: 'center', fontSize: 12, color: C.dim, marginBottom: 4 };
+  const head = { fontSize: 12, letterSpacing: '.07em', textTransform: 'uppercase', color: C.faint, margin: '12px 0 6px', fontWeight: 600 };
+
   return (
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, fontSize: 12, color: C.faint, alignItems: 'center' }}>
-      <h3 style={{ width: '100%', margin: 0, color: C.text, fontSize: 15 }}>Graph legend</h3>
-      <div style={{ width: '100%', color: C.text, fontSize: 13 }}>Supplier &rarr; Customer</div>
-      <p style={{ margin: 0, lineHeight: 1.6 }}>Arrows point from the supplier to its customer. Click a connection to read its source.</p>
-      <p style={{ margin: 0, lineHeight: 1.6 }}>Larger dots have more documented relationships. Rings mark firms with further suppliers beyond this depth.</p>
-      <span style={{ width: '100%', color: C.faint, lineHeight: 1.6 }}>
-        {anchorTiers
-          ? 'Each tier is held to its own band, upstream on the left and downstream on the right of the selected company. Everything else is the simulation.'
-          : 'Free layout: position means only how the firms connect to each other. Nothing about left or right is a claim.'}
-      </span>
+    <div>
+      <div style={{ display: 'flex', justifyContent: 'space-between', gap: 8, alignItems: 'baseline' }}>
+        <h3 style={{ margin: 0, fontSize: 14, fontWeight: 600, color: C.text }}>{root.name}</h3>
+        {/* The dataset-wide tier, not this view's hop count, which would
+            read "tier 0" for whichever firm happens to be centred. It is
+            undefined for a firm no documented path from a focal buyer
+            reaches, and that has to be said rather than printed as
+            "tier undefined". */}
+        <span className="mono" style={{ fontSize: 12, color: C.faint, flex: 'none' }}
+          title={rootTier == null
+            ? 'No documented path reaches this firm from a focal buyer, so it has no derived tier.'
+            : 'Shortest documented distance from a focal buyer.'}>
+          {rootTier == null ? 'tier not derived' : `tier ${rootTier}`}
+        </span>
+      </div>
+      <p style={{ margin: '5px 0 0', fontSize: 12, color: C.faint, lineHeight: 1.55 }}>
+        Centred firm. Click any firm to read its record here; click a connection to open the document behind it.
+      </p>
+      <Button variant="quiet" size="sm" style={{ marginTop: 7 }} onClick={onOpenRoot}>
+        Open this firm&apos;s record
+      </Button>
+
+      <h4 style={head}>{colourBy === 'tier' ? 'Colour — documented distance' : 'Colour — chain position'}</h4>
       {colourBy === 'tier'
         ? Array.from({ length: index.maxTier + 1 }, (_, t) => (
-          <span key={t} style={{ display: 'inline-flex', gap: 6, alignItems: 'center' }}>
-            {dot(tierFill(t))}{t === 0 ? 'Level 0 — selected company' : `Level ${t}`}
-          </span>
+          <div key={t} style={row}>{dot(tierFill(t))}{t === 0 ? 'Tier 0 — focal buyer' : `Tier ${t}`}</div>
         ))
         : CHAIN_GROUPS.map((g) => (
-          <span key={g} style={{ display: 'inline-flex', gap: 6, alignItems: 'center' }}>{dot(GROUP_FILL[g])}{g}</span>
+          <div key={g} style={row}>{dot(GROUP_FILL[g])}{g}</div>
         ))}
-      <span style={{ width: '100%', height: 0 }} />
+
+      <h4 style={head}>Line — who said so</h4>
       {Object.entries(EVIDENCE_CLASSES).map(([k, v]) => (
-        <span key={k} style={{ display: 'inline-flex', gap: 6, alignItems: 'center' }}>
-          <svg width="26" height="8" aria-hidden="true"><line x1="1" y1="4" x2="25" y2="4" stroke={C.dim} strokeWidth="1.4" strokeDasharray={v.dash || undefined} /></svg>
+        <div key={k} style={row}>
+          <svg width="26" height="8" aria-hidden="true" style={{ flex: 'none' }}>
+            <line x1="1" y1="4" x2="25" y2="4" stroke={C.dim} strokeWidth="1.4" strokeDasharray={v.dash || undefined} />
+          </svg>
           {v.label}
-        </span>
+        </div>
       ))}
+
+      <h4 style={head}>What position means</h4>
+      <p style={{ margin: 0, fontSize: 12, color: C.faint, lineHeight: 1.6 }}>
+        {anchorTiers
+          ? 'Each tier is held to its own band, upstream on the left, so horizontal position means documented distance. Everything else is the simulation.'
+          : 'Free layout: position means only how the firms connect to each other. Nothing about left or right is a claim.'}
+      </p>
     </div>
   );
 }

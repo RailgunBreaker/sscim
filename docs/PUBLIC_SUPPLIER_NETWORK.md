@@ -9,11 +9,13 @@ The public graph is separate from the propagation model defined in
 | Record | Current count |
 | --- | ---: |
 | System companies eligible for tracking and centring | 109 |
-| Companies with profiles in the public registry | 362 |
-| Documented supplier-to-customer relationships | 360 |
-| Public source documents | 35 |
-| System companies with a documented connection | 73 |
-| System companies with no documented connection | 36 |
+| Companies with profiles in the public registry | 407 |
+| Documented supplier-to-customer relationships | 491 |
+| Public source documents | 69 |
+| System companies with a documented connection | 87 |
+| System companies with a second documented level | 68 |
+| System companies with a third documented level | 60 |
+| System companies with no documented connection | 22 |
 
 Registration is not evidence of a supplier relationship. All 109 system
 companies are selectable, including those with evidence gaps. Other firms
@@ -22,8 +24,45 @@ companies or receive modeled scores. Multiple legal entities may map to one
 system company; their public relationships remain separate.
 
 These counts describe the curated dataset, not the semiconductor industry.
-Three-level exploration is supported wherever the recorded paths reach that
-far; it does not mean every system company has three documented levels.
+The level counts are generated, not asserted: `meta.documentedLevels` in
+`publicSupplierTiers.json` is computed from the edges at authoring time, and
+`supplierTiers.test.js` holds floors under each figure so coverage cannot
+regress unnoticed. Levels are counted upstream and downstream together,
+because a buyer's chain runs upstream and a materials supplier's runs
+downstream.
+
+### Why the third level stops where it does
+
+Twenty-two system companies have no documented counterparty, and 49 reach a
+second level but not a third. That shortfall is mostly structural, not a
+backlog:
+
+- **Brands and hyperscalers end the chain.** Apple, Volkswagen and Alibaba
+  Cloud buy; nothing public records them selling components onward, so their
+  graph runs in one direction only.
+- **Materials, metrology and equipment firms start it.** Nothing publishes who
+  supplies a metrology-tool maker. The lithography branch reaches a real third
+  level only because ASML's 20-F discloses Carl Zeiss SMT as its sole supplier
+  of optics under an exclusive arrangement — a disclosure with no parallel
+  elsewhere in this dataset.
+- **Disclosure thresholds hide the middle.** A filing names a customer when it
+  passes roughly 10% of revenue. Photronics reports "Customer A, B and C";
+  Teradyne, MKS, Advanced Energy and Kulicke & Soffa also disclose
+  concentration without names.
+- **Export controls close one region.** YMTC, CXMT, Hua Hong, NAURA, AMEC,
+  Cambricon, Biren, UNISOC, Empyrean and NSIG have no documented counterparty
+  here. Microchip's 10-K states the shape of the hole precisely: "Some of our
+  products are manufactured at SMIC, and some of our suppliers buy products
+  manufactured at YMTC." The first clause names a pair and became an edge; the
+  second discloses a dependence on YMTC without naming which supplier, so it
+  could not.
+
+Two firms are absent for a plainer reason: Marvell's and STMicroelectronics'
+newsrooms refuse automated fetches (HTTP 403 and 473), so releases that would
+document their foundry relationships could not be read and were not cited from
+memory. Marvell's own 10-K names no foundry, saying only "independent
+foundries" and subcontractors "primarily located in Taiwan, Canada, Korea,
+Singapore and China".
 
 ## Explore the chain
 
@@ -93,6 +132,7 @@ Chaining disclosures from different years does not establish simultaneous trade.
 | --- | --- |
 | `supplier-tiers/author-dataset.mjs` | Original company, relationship and source tables; writes generated datasets |
 | `supplier-tiers/expand-system.mjs` | Adds the system-company registry and researched extensions without importing modeled links |
+| `supplier-tiers/expand-filings.mjs` | Relationships named in annual securities filings and company releases; resolves firms by normalised name so a second spelling cannot create a duplicate node |
 | `supplier-tiers/data/company-crosswalk.json` | Reviewed mapping from public legal entities to system IDs |
 | `supplier-tiers/data/{companies,edges,sources}.json` | Generated research outputs |
 | `app/src/data/publicSupplierTiers.json` | Generated application dataset |

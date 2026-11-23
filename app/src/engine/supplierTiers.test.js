@@ -238,3 +238,122 @@ describe('search and suggestions', () => {
     expect(searchCompanies(index, '   ')).toEqual([]);
   });
 });
+
+describe('the securities-filing coverage pass', () => {
+  /* The filings pass exists to give the system's firms a chain beyond
+     the handful of buyers whose supplier lists seeded the dataset.
+     These tests guard the two ways that pass could have gone wrong:
+     by inventing relationships out of names that merely co-occur, and
+     by quietly losing the coverage it bought. */
+
+  const vaultIds = new Set(SNAPSHOT.companies.map((c) => c.id));
+  const nodeFor = (vaultId) =>
+    Object.keys(PUBLIC_SUPPLIER_TIERS.companies)
+      .find((id) => PUBLIC_SUPPLIER_TIERS.companies[id].vaultId === vaultId);
+
+  const levels = (root) => {
+    const up = {};
+    const down = {};
+    for (const e of PUBLIC_SUPPLIER_TIERS.edges) {
+      (up[e.customer] ||= []).push(e.supplier);
+      (down[e.supplier] ||= []).push(e.customer);
+    }
+    const walk = (adj) => {
+      const seen = new Set([root]);
+      let frontier = [root];
+      const counts = [];
+      for (let i = 0; i < 3; i += 1) {
+        const next = [];
+        for (const n of frontier) for (const m of adj[n] || []) if (!seen.has(m)) { seen.add(m); next.push(m); }
+        counts.push(next.length);
+        frontier = next;
+      }
+      return counts;
+    };
+    const u = walk(up);
+    const d = walk(down);
+    return [u[0] + d[0], u[1] + d[1], u[2] + d[2]];
+  };
+
+  const coverage = (depth) =>
+    [...vaultIds].filter((v) => {
+      const n = nodeFor(v);
+      return n && levels(n)[depth] > 0;
+    }).length;
+
+  /* Floors, not exact counts: the dataset should be able to grow
+     without editing a number here, but it must never silently shrink. */
+  it('gives most system companies a documented first step', () => {
+    expect(coverage(0)).toBeGreaterThanOrEqual(87);
+  });
+
+  it('carries a second level for the majority of them', () => {
+    expect(coverage(1)).toBeGreaterThanOrEqual(68);
+  });
+
+  it('carries a third level for the majority of them', () => {
+    expect(coverage(2)).toBeGreaterThanOrEqual(60);
+  });
+
+  /* The single largest way this pass could have gone wrong. Micron's
+     10-K names Samsung, SK hynix, Kioxia, Sandisk, CXMT and YMTC in one
+     sentence — as its COMPETITORS. Reading a filing for names rather
+     than for relationships would have produced six false edges from
+     that sentence alone. */
+  it('never turned a competitor list into supply', () => {
+    const micron = nodeFor('micron');
+    const rivals = ['skhynix', 'kioxia', 'cxmt', 'ymtc'].map(nodeFor).filter(Boolean);
+    for (const r of rivals) {
+      const edge = PUBLIC_SUPPLIER_TIERS.edges.find(
+        (e) => (e.supplier === micron && e.customer === r) || (e.supplier === r && e.customer === micron),
+      );
+      expect(edge, `${r} must not be wired to Micron from a competitor list`).toBeFalsy();
+    }
+  });
+
+  /* Relationships that are documented but are NOT purchases are allowed
+     in, because they are real dependencies. They must carry their
+     qualification where a reader will see it, or they overstate. */
+  it('qualifies every relationship that is not a disclosed purchase', () => {
+    const notPurchases = ['tsmc-eda-alliance', 'trumpf-euv-lithography', 'ibm-rapidus-2024', 'synopsys-tsmc-2025'];
+    for (const e of PUBLIC_SUPPLIER_TIERS.edges) {
+      if (!e.sources.some((s) => notPurchases.includes(s))) continue;
+      expect(e.details.join(' '), `${e.supplier} -> ${e.customer}`)
+        .toMatch(/not a disclosed purchase|joint development|certification|does not say TSMC buys/i);
+    }
+  });
+
+  /* Two pairs of firms share a group name and nothing else. Merging
+     either pair would manufacture a chain for a company that was never
+     named in the document. */
+  it('keeps same-named but distinct firms on separate nodes', () => {
+    /* The left of each pair is identified by its vault id rather than
+       by name, because the system's own label for the DRAM maker is
+       just "Nanya". */
+    const pairs = [
+      ['nanya', /Nan Ya|Printed Circuit/i],
+      ['hp', /Hewlett Packard Enterprise/i],
+    ];
+    for (const [vaultId, other] of pairs) {
+      const left = nodeFor(vaultId);
+      expect(left, `${vaultId} missing from the registry`).toBeTruthy();
+      const right = Object.entries(PUBLIC_SUPPLIER_TIERS.companies).filter(([, c]) => other.test(c.name));
+      expect(right.length, `no counterpart matching ${other}`).toBeGreaterThan(0);
+      for (const [idB] of right) expect(idB, `${vaultId} must stay distinct`).not.toBe(left);
+    }
+
+    /* And the distinct firms must not have been merged into each other
+       either: Nan Ya PCB keeps its own node with its own edges. */
+    const pcb = Object.entries(PUBLIC_SUPPLIER_TIERS.companies).find(([, c]) => /Nan Ya PCB/i.test(c.name));
+    expect(pcb, 'Nan Ya PCB should be in the registry').toBeTruthy();
+    expect(PUBLIC_SUPPLIER_TIERS.edges.some((e) => e.supplier === pcb[0])).toBe(true);
+  });
+
+  it('gives every filing-derived source a quote naming the parties', () => {
+    for (const [id, s] of Object.entries(PUBLIC_SUPPLIER_TIERS.sources)) {
+      if (s.seen !== 'fetched') continue;
+      if (!s.quote) continue;
+      expect(s.quote.length, `${id} quote is too short to carry a relationship`).toBeGreaterThan(30);
+    }
+  });
+});

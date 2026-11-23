@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import {
   companyProfile, companyControl, controlSentence, documentedChain,
   controlCoverage, documentedCoverage, CONTROL_TYPES, PASSIVE_MANAGERS, publicCompanyProfile,
+  publicCompanyName,
 } from './companyProfile.js';
 import COMPANY_CONTROL from '../data/companyControl.json';
 import snapshot from '../data/vault-snapshot.json';
@@ -221,10 +222,27 @@ describe('the documented chain crosswalk', () => {
 
   it('keeps Nanya Technology and Nan Ya PCB apart', () => {
     /* One makes DRAM, the other makes substrates. They share a group
-       name and nothing else, and mapping them together would invent a
-       documented chain for a company that has none. */
+       name and nothing else, and mapping them together would invent
+       relationships for a firm that was never named.
+
+       Nanya Technology now HAS a documented chain — ChipMOS names it
+       among its top customers — so this no longer tests for absence.
+       It tests the thing that actually matters: that the chain it has
+       is its own. Nan Ya Printed Circuit Board is named as a substrate
+       supplier to ASE in ASE's 20-F, and that relationship must never
+       appear on the DRAM maker's profile. */
     const doc = documentedChain('nanya');
-    expect(doc.covered).toBe(false);
+    const related = [...doc.suppliers, ...doc.customers];
+    expect(related.length, 'ChipMOS names Nanya Technology, so it has a chain').toBeGreaterThan(0);
+
+    const names = related.flatMap((e) => [publicCompanyName(e.supplier), publicCompanyName(e.customer)]);
+    for (const n of names) {
+      expect(n, 'Nan Ya PCB must not appear anywhere on Nanya Technology').not.toMatch(/Printed Circuit/i);
+    }
+    /* Nan Ya PCB's one documented relationship is as a substrate
+       supplier to ASE. If the two firms were ever merged into one node,
+       ASE would surface here. */
+    expect(names.some((n) => /Advanced Semiconductor Engineering|ASE Technology/i.test(n))).toBe(false);
   });
 
   it('carries a source for every documented relationship it returns', () => {

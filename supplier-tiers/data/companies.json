@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Public multi-tier semiconductor supplier graph",
-    "generated": "2026-11-22",
+    "generated": "2026-11-23",
     "focal": [
       "apple-inc",
       "huawei-technologies-co-ltd"
@@ -13,7 +13,10 @@
       "An edge records that a relationship was publicly named in a given year. It carries no volume, no revenue share, no contract and no direction of dependence.",
       "Absence of an edge is absence of a public document naming the pair, not absence of a relationship. The upstream of firms under export control is close to unobservable this way, and that is visible in the graph as an almost empty Huawei branch.",
       "Country is the group parent's home jurisdiction, which is what filings and policy documents key on. It is not where the plant is.",
-      "Shin-Etsu Chemical and Shin-Etsu Handotai are kept as separate nodes because the award lists name them separately; Handotai is the wafer subsidiary of Chemical."
+      "Shin-Etsu Chemical and Shin-Etsu Handotai are kept as separate nodes because the award lists name them separately; Handotai is the wafer subsidiary of Chemical.",
+      "Securities filings name a customer only when the law or convention makes them: typically above 10% of revenue. A supplier's second-largest customer at 9% is invisible, and many filers disclose concentration without names at all — Photronics reports 'Customer A, B and C', and Teradyne, MKS, Advanced Energy and Kulicke & Soffa do the same. Applied Materials, Lam, TSMC and Intel name no counterparties in their own filings; where they appear here with suppliers, it is because the firms selling into them had to disclose it.",
+      "A few relationships are documented but are not purchases, and they say so on their own edge. TSMC's EDA Tool Certification Program, the ASML-ZEISS-TRUMPF co-development of EUV, the IBM-Rapidus joint development, and ASE's foundry alliance with TSMC are each named by both parties without any document describing a sale. They are recorded because they are real dependencies, and qualified because they are not invoices.",
+      "A three-level chain is not reachable for every firm even in principle, and the shortfall is structural rather than a research gap. Brands and hyperscalers sit at the end of the chain and have no customers to walk to. Materials, metrology and equipment firms sit at the start, and nothing publishes who supplies a metrology-tool maker. The lithography branch reaches a genuine third level only because ASML discloses Carl Zeiss SMT as its sole optics supplier — a disclosure with no parallel anywhere else in this dataset."
     ],
     "layers": {
       "equipment": "Wafer-fab equipment",
@@ -71,7 +74,38 @@
       "P3-regulatory": "A government document establishes the relationship"
     },
     "systemCompanyCount": 109,
-    "coverageReviewed": "2026-11-23"
+    "coverageReviewed": "2026-11-23",
+    "documentedLevels": {
+      "tracked": 109,
+      "level1": 87,
+      "level2": 68,
+      "level3": 60,
+      "noDocumentedCounterparty": [
+        "alibaba",
+        "amec",
+        "ansys",
+        "biren",
+        "cambricon",
+        "cxmt",
+        "dupont",
+        "empyrean",
+        "huahong",
+        "ibiden",
+        "inari",
+        "leti",
+        "marvell",
+        "naura",
+        "nsig",
+        "pti",
+        "shinko",
+        "skmaterials",
+        "tnsc",
+        "unisoc",
+        "vw",
+        "ymtc"
+      ],
+      "note": "Levels are steps away from the firm in the documented graph, counted upstream and downstream together. A firm with no documented counterparty is one that no public document read for this dataset names in a supply relationship; see meta.limits for why that is a finding rather than a gap."
+    }
   },
   "companies": {
     "apple-inc": {
@@ -2430,7 +2464,7 @@
       "name": "Ansys",
       "country": "us",
       "layer": "services",
-      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "role": "Simulation and analysis software. Acquired by Synopsys, which recorded the acquisition as closing on 17 July 2025 in its fiscal 2025 Form 10-K. No public document found for this dataset names an Ansys supply relationship with a tracked firm.",
       "vaultId": "ansys",
       "aliases": [
         "Ansys",
@@ -2827,6 +2861,276 @@
       "country": "de",
       "layer": "materials",
       "role": "Chemical manufacturer supplying polysilicon used to produce silicon wafers."
+    },
+    "ichor-holdings-ltd": {
+      "name": "Ichor Holdings, Ltd.",
+      "country": "us",
+      "layer": "equipment",
+      "role": "Fluid-delivery and gas-delivery subsystems for wafer-fab equipment makers."
+    },
+    "teradyne-inc": {
+      "name": "Teradyne, Inc.",
+      "country": "us",
+      "layer": "equipment",
+      "role": "Automated test equipment for finished chips."
+    },
+    "grand-process-technology-corp": {
+      "name": "Grand Process Technology Corporation",
+      "country": "tw",
+      "layer": "equipment",
+      "role": "Wet-process and cleaning equipment for packaging lines."
+    },
+    "soitec-sa": {
+      "name": "Soitec S.A.",
+      "country": "fr",
+      "layer": "wafers",
+      "role": "Engineered substrates, including silicon-on-insulator wafers."
+    },
+    "silicon-motion-technology-corp": {
+      "name": "Silicon Motion Technology Corporation",
+      "country": "tw",
+      "layer": "ic_other",
+      "role": "NAND flash controller chips sold to memory makers and module houses."
+    },
+    "chipmos-technologies-inc": {
+      "name": "ChipMOS TECHNOLOGIES INC.",
+      "country": "tw",
+      "layer": "osat_test",
+      "role": "Assembly and test, concentrated in display-driver and memory packaging."
+    },
+    "stats-chippac-pte-ltd": {
+      "name": "STATS ChipPAC Pte. Ltd.",
+      "country": "sg",
+      "layer": "osat_test",
+      "role": "Assembly and test provider; acquired by JCET Group, which is tracked separately."
+    },
+    "kinsus-interconnect-technology-corp": {
+      "name": "Kinsus Interconnect Technology Corporation",
+      "country": "tw",
+      "layer": "substrates_pcb",
+      "role": "IC packaging substrates."
+    },
+    "himax-technologies-inc": {
+      "name": "Himax Technologies, Inc.",
+      "country": "tw",
+      "layer": "display_camera",
+      "role": "Display driver ICs and optical sensing, sold into panel and camera modules."
+    },
+    "macronix-international-co-ltd": {
+      "name": "Macronix International Co., Ltd.",
+      "country": "tw",
+      "layer": "memory",
+      "role": "NOR and NAND flash memory, with its own fabs."
+    },
+    "powerchip-semiconductor-manufacturing-corp": {
+      "name": "Powerchip Semiconductor Manufacturing Corporation (PSMC)",
+      "country": "tw",
+      "layer": "foundry_idm",
+      "role": "Mature-node foundry."
+    },
+    "sk-hynix-system-ic": {
+      "name": "SK hynix system ic",
+      "country": "kr",
+      "layer": "foundry_idm",
+      "role": "Mature-node foundry subsidiary of SK hynix, named as \"SKHYSI\" in customer filings."
+    },
+    "realtek-semiconductor-corp": {
+      "name": "Realtek Semiconductor Corp.",
+      "country": "tw",
+      "layer": "ic_other",
+      "role": "Networking, audio and interface ICs."
+    },
+    "novatek-microelectronics-corp": {
+      "name": "Novatek Microelectronics Corp.",
+      "country": "tw",
+      "layer": "ic_other",
+      "role": "Display driver and timing-controller ICs."
+    },
+    "phison-electronics-corp": {
+      "name": "Phison Electronics Corp.",
+      "country": "tw",
+      "layer": "ic_other",
+      "role": "NAND flash controllers and storage modules."
+    },
+    "raydium-semiconductor-corp": {
+      "name": "Raydium Semiconductor Corporation",
+      "country": "tw",
+      "layer": "ic_other",
+      "role": "Display driver and touch controller ICs."
+    },
+    "elite-semiconductor-microelectronics-technology": {
+      "name": "Elite Semiconductor Microelectronics Technology Inc.",
+      "country": "tw",
+      "layer": "memory",
+      "role": "Specialty DRAM and memory products."
+    },
+    "chipone-technology-beijing": {
+      "name": "Chipone Technology (Beijing) Co., Ltd.",
+      "country": "cn",
+      "layer": "display_camera",
+      "role": "Display driver ICs."
+    },
+    "ili-technology-corp": {
+      "name": "ILI Technology Corporation",
+      "country": "tw",
+      "layer": "display_camera",
+      "role": "Display driver ICs."
+    },
+    "integrated-circuit-solution-inc": {
+      "name": "Integrated Circuit Solution Inc.",
+      "country": "tw",
+      "layer": "memory",
+      "role": "Specialty memory and mixed-signal ICs."
+    },
+    "asahi-kasei-microdevices-corp": {
+      "name": "Asahi Kasei Microdevices Corporation",
+      "country": "jp",
+      "layer": "ic_other",
+      "role": "Analog, sensor and audio ICs."
+    },
+    "chipbond-technology-corp": {
+      "name": "Chipbond Technology Corporation",
+      "country": "tw",
+      "layer": "osat_test",
+      "role": "Gold bumping and display-driver packaging."
+    },
+    "ardentec-corp": {
+      "name": "Ardentec Corporation",
+      "country": "tw",
+      "layer": "osat_test",
+      "role": "Wafer and final test services."
+    },
+    "continental-ag": {
+      "name": "Continental AG",
+      "country": "de",
+      "layer": "mechanical",
+      "role": "Automotive systems supplier."
+    },
+    "aumovio-se": {
+      "name": "Aumovio SE",
+      "country": "de",
+      "layer": "mechanical",
+      "role": "Automotive electronics business separated from Continental."
+    },
+    "vitesco-technologies": {
+      "name": "Vitesco Technologies",
+      "country": "de",
+      "layer": "mechanical",
+      "role": "Automotive powertrain electronics."
+    },
+    "aptiv-plc": {
+      "name": "Aptiv PLC",
+      "country": "ie",
+      "layer": "mechanical",
+      "role": "Vehicle electrical architecture and components."
+    },
+    "visteon-corp": {
+      "name": "Visteon Corporation",
+      "country": "us",
+      "layer": "mechanical",
+      "role": "Vehicle cockpit electronics."
+    },
+    "harman-international": {
+      "name": "Harman Auto",
+      "country": "us",
+      "layer": "mechanical",
+      "role": "Automotive audio and connected-car electronics; a Samsung subsidiary."
+    },
+    "hyundai-motor-company": {
+      "name": "Hyundai",
+      "country": "kr",
+      "layer": "brand",
+      "role": "Vehicle manufacturer."
+    },
+    "lg-electronics-automotive": {
+      "name": "LGE Automotive",
+      "country": "kr",
+      "layer": "mechanical",
+      "role": "Automotive component business of LG Electronics."
+    },
+    "mobileye-global-inc": {
+      "name": "Mobileye",
+      "country": "il",
+      "layer": "ic_other",
+      "role": "Driver-assistance chips and systems."
+    },
+    "space-exploration-technologies-corp": {
+      "name": "SpaceX",
+      "country": "us",
+      "layer": "brand",
+      "role": "Launch vehicles and satellite constellation."
+    },
+    "qct-quanta-cloud-technology": {
+      "name": "QCT",
+      "country": "tw",
+      "layer": "assembly",
+      "role": "Server systems builder, named as \"QCT\" in NVIDIA’s Blackwell release. The dataset does not assert a corporate link to Quanta Computer, which is tracked separately, because the release does not state one."
+    },
+    "wiwynn-corporation": {
+      "name": "Wiwynn",
+      "country": "tw",
+      "layer": "assembly",
+      "role": "Data-centre server and rack systems builder."
+    },
+    "inventec-corporation": {
+      "name": "Inventec",
+      "country": "tw",
+      "layer": "assembly",
+      "role": "Notebook and server ODM."
+    },
+    "zt-systems": {
+      "name": "ZT Systems",
+      "country": "us",
+      "layer": "assembly",
+      "role": "Data-centre server and rack integration."
+    },
+    "asus-asustek-computer-inc": {
+      "name": "ASUS",
+      "country": "tw",
+      "layer": "assembly",
+      "role": "PC and server systems builder."
+    },
+    "gigabyte-technology-co-ltd": {
+      "name": "GIGABYTE",
+      "country": "tw",
+      "layer": "assembly",
+      "role": "Motherboards and server systems."
+    },
+    "dell-technologies-inc": {
+      "name": "Dell Technologies",
+      "country": "us",
+      "layer": "brand",
+      "role": "PC, server and storage systems vendor."
+    },
+    "hewlett-packard-enterprise-company": {
+      "name": "Hewlett Packard Enterprise",
+      "country": "us",
+      "layer": "brand",
+      "role": "Enterprise server and networking vendor. A different company from HP Inc., which is tracked separately."
+    },
+    "cisco-systems-inc": {
+      "name": "Cisco",
+      "country": "us",
+      "layer": "brand",
+      "role": "Networking and data-centre systems vendor."
+    },
+    "aivres-systems": {
+      "name": "Aivres",
+      "country": "us",
+      "layer": "assembly",
+      "role": "Data-centre server systems builder."
+    },
+    "asrock-rack-inc": {
+      "name": "ASRock Rack",
+      "country": "tw",
+      "layer": "assembly",
+      "role": "Server motherboards and systems."
+    },
+    "eviden-atos": {
+      "name": "Eviden",
+      "country": "fr",
+      "layer": "assembly",
+      "role": "High-performance computing systems integrator."
     }
   }
 }

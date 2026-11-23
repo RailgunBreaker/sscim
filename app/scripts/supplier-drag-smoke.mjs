@@ -9,7 +9,11 @@ try {
   await page.goto(`${process.env.PREVIEW_URL || 'http://127.0.0.1:5173'}/sscim-app.html`);
   await page.getByRole('radio', { name: 'Network', exact: true }).click();
   await page.getByRole('searchbox', { name: 'Find a system company' }).fill('NVIDIA');
-  await page.getByRole('button', { name: 'NVIDIA', exact: true }).click();
+  /* Scoped to the supplier network. A bare name lookup also matches the
+     NVIDIA button in the Intelligence panel, which is a different part
+     of the page and not what this test drags. */
+  const network = page.locator('section[aria-label="Public supplier network"]');
+  await network.getByRole('button', { name: 'NVIDIA', exact: true }).click();
   const node = page.locator('.stg-node').filter({ has: page.locator('title', { hasText: /^NVIDIA\n/ }) });
   const dot = node.locator('.stg-dot');
   await dot.scrollIntoViewIfNeeded();
