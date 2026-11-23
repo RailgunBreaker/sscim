@@ -10,6 +10,7 @@ import Tex from './Tex.jsx';
 import { Disclosure } from '../ui/primitives.jsx';
 import Logo from './Logo.jsx';
 import Quote from './Quote.jsx';
+import StockChart from './StockChart.jsx';
 import Chip from './Chip.jsx';
 import SpreadTree from './SpreadTree.jsx';
 import UpstreamTree from './UpstreamTree.jsx';
@@ -33,7 +34,7 @@ const MetricTag = ({ kind }) => {
 
 export default function Detail({ sel, setSel, model, scenario, onResetScenario, onPlayScenario, scenarioActive, baseGraph }) {
   const { data: vault, engine } = useVault();
-  const { COMPANY_BY_ID, COMPANIES, COUNTRY_NAMES, SUPPLIERS, CUSTOMERS, EVENTS, POLICIES, OWNERS, QUOTES } = vault;
+  const { COMPANY_BY_ID, COMPANIES, COUNTRY_NAMES, SUPPLIERS, CUSTOMERS, EVENTS, POLICIES, OWNERS, QUOTES, QUOTE_HISTORY } = vault;
   const {
     STAGE_BY_ID, NETWORK_INFLUENCE, NETWORK_INFLUENCE_RANK, STRUCTURAL_VULNERABILITY, STRUCTURAL_WEIGHTS,
     structuralComponents, COUNTRY_LINKS, eventField, operationalIndex, toDisplayIndex,
@@ -184,6 +185,13 @@ export default function Detail({ sel, setSel, model, scenario, onResetScenario, 
           <span className="mono" style={{ fontSize: 12, color: C.copper, marginLeft: "auto" }}>criticality rank #{rank} of {COMPANIES.length}</span>
         </div>
         <div style={{ margin: "5px 0 0" }}><Quote quote={(QUOTES || {})[co.id]} /></div>
+        {/* The price line, under the quote it belongs to. Display
+            metadata on the same terms: no price reaches the engine. */}
+        {(QUOTE_HISTORY || {})[co.id] && (
+          <div style={{ margin: "8px 0 0" }}>
+            <StockChart quote={(QUOTES || {})[co.id]} history={QUOTE_HISTORY[co.id]} />
+          </div>
+        )}
         <div className="mono" style={{ margin: "8px 0", fontSize: 12, display: "flex", flexWrap: "wrap", gap: 14 }}>
           <span>Systemic criticality <b style={{ fontSize: 16, color: riskColor(criticality) }}>{criticality.toFixed(2)}</b><span style={{ color: C.faint }}>/10</span></span>
           <span>Vulnerability <b style={{ fontSize: 16, color: riskColor(vulnerability) }}>{vulnerability.toFixed(2)}</b><span style={{ color: C.faint }}>/10 (share-independent)</span></span>

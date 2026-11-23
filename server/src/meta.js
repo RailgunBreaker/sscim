@@ -33,6 +33,11 @@ export function getMetaBundle() {
     snapshotDate: getSnapshotDate(),
     lastRunAt: getMeta('last_run_at'),
     lastRunStatus: getMeta('last_run_status'),
+    /* How far the news record has actually been swept. Distinct from the
+       snapshot date, which only says what the model was dated to: a
+       reader is entitled to know whether a quiet week means nothing
+       happened or that nobody looked. */
+    newsCheckedThrough: getMeta('news_checked_through'),
     generatedAt: new Date().toISOString(),
   };
 }

@@ -63,8 +63,8 @@ output surface** instead:
 | | |
 | --- | --- |
 | Model | `sscim-model-v7.1-exposure-robustness` |
-| Dataset | `2026-10-14` |
-| Output digest | `sha256:b17270ee0450c1836f86d5242ee32b6a8cf1c2522d1350caff20ae92cf955724` |
+| Dataset | `2026-11-23` |
+| Output digest | `sha256:8acb3b78c9b77968bb73706166a79914b466beb43a6fcbe7a20d0be4c853cc18` |
 <!-- END GENERATED: model-digest -->
 
 Recompute it with `npm run digest`. It covers the declared parameter values,

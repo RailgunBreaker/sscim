@@ -130,10 +130,27 @@ describe('event provenance is truthful in the published bundle', () => {
 
   it('labels AI-reviewed news without claiming human review or a scored effect', () => {
     const news = events.filter((e) => e.provenance === 'ai');
-    expect(news.length).toBe(7);
+    /* Two catch-up passes so far: 7 records through 2026-10-14 and 10
+       through 2026-11-23. The count is asserted exactly, and raising it
+       is meant to be a deliberate act when a pass is applied — an
+       AI-sourced record appearing without anyone noticing is precisely
+       what this test exists to prevent. */
+    expect(news.length).toBe(17);
     news.forEach((e) => {
-      expect(e.source).toMatch(/AI source review; not human-reviewed/);
-      expect(e.reviewedBy).toBe('Codex source review');
+      expect(e.source, e.id).toMatch(/AI source review; not human-reviewed/);
+      expect(e.reviewedBy, e.id).toBe('Codex source review');
+    });
+  });
+
+  it('keeps every AI-sourced record out of the score', () => {
+    /* The load-bearing half of the claim above. A model-run source pass
+       can establish that something was published; it cannot decide what
+       it means for the index, so none of its records may carry a
+       quantified impact. */
+    events.filter((e) => e.provenance === 'ai').forEach((e) => {
+      expect(e.first, e.id).toMatch(/No quantified disruption impact assigned/);
+      expect(e.second, e.id).toMatch(/No downstream impact quantified/);
+      expect(e.sev, e.id).toBeLessThanOrEqual(1);
     });
   });
 

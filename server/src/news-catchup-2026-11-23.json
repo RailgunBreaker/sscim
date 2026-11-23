@@ -1,0 +1,72 @@
+[
+  {
+    "id": "n261015_tsmc_q3", "date": "2026-10-15",
+    "title": "TSMC reports third-quarter 2026 results and raises its full-year outlook",
+    "summary": "TSMC reports Q3 revenue of US$46.72 billion, up 41.2% year on year, with net income of NT$763.06 billion and diluted EPS of NT$29.43. Advanced nodes carried the quarter: 2nm was 8% of wafer revenue, 3nm 33% and 5nm 28%. Fourth-quarter guidance is US$52.3-54.3 billion and 2026 capital spending is guided to US$60-64 billion. These are financial results and a spending plan; neither establishes current physical wafer output nor a supply disruption.",
+    "source": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-10/526b65af7305df2dde6b9ece6812b1fdf1e49f9b/3Q26%20EarningsRelease.pdf",
+    "stages": ["adv_fab", "mature_fab", "adv_pkg"], "countries": ["tw"]
+  },
+  {
+    "id": "n261020_trendforce_memory", "date": "2026-10-20",
+    "title": "TrendForce projects a further quarter of memory contract-price increases in Q4 2026",
+    "summary": "TrendForce projects conventional DRAM contract prices up 10-15% quarter on quarter in Q4 2026 and NAND flash up 15-20%, attributing the pressure chiefly to cloud providers expanding procurement for AI infrastructure. A later note puts the blended DRAM figure nearer 20% once HBM is included. Contract-price forecasts are a market observation from a research house, not a measured shortage and not a statement about physical memory output.",
+    "source": "https://www.guru3d.com/story/dram-and-nand-contract-prices-forecast-to-rise-as-much-as-in-q4-2026/",
+    "stages": ["memory_fab", "hbm"], "countries": ["kr", "us"]
+  },
+  {
+    "id": "n261112_nvidia_ceo", "date": "2026-11-12",
+    "title": "Jensen Huang resigns as NVIDIA chief executive; Colette Kress named interim CEO",
+    "summary": "NVIDIA co-founder Jensen Huang resigns as chief executive. Chief financial officer Colette Kress is named interim CEO and the board begins a formal external search; the board chair states there is no intention to reinstate Huang. Reporting is secondary and the company did not address the circumstances of the resignation on its subsequent earnings call. A change of corporate control affects governance, not production capacity.",
+    "source": "https://trendspider.com/blog/nvidia-nvda-q3-fy2027-earnings-beat-jensen-huang-exit/",
+    "stages": ["design", "logic_ai"], "countries": ["us"]
+  },
+  {
+    "id": "n261117_nvidia_q3", "date": "2026-11-17",
+    "title": "NVIDIA reports third-quarter fiscal 2027 results and withdraws China from its outlook",
+    "summary": "NVIDIA reports quarterly revenue of about US$115.8 billion, roughly double the prior year, and guides to about US$130 billion for the fourth quarter. Interim CEO Colette Kress states that NVIDIA will stop selling H200 accelerators into China; the company shipped about US$2.4 billion of Hopper datacentre product to China during the quarter and its guidance now assumes zero China datacentre compute revenue. The withdrawal is a commercial and regulatory consequence, not a change in manufacturing capacity.",
+    "source": "https://longbridge.com/en/news/305894260",
+    "stages": ["logic_ai", "design", "m_ai"], "countries": ["us", "cn"]
+  },
+  {
+    "id": "n261118_china_response", "date": "2026-11-18",
+    "title": "Beijing calls the new US chip rule economic coercion; Malaysia instructs data centres to comply",
+    "summary": "China's foreign ministry characterises the incoming US export rule as economic coercion. Malaysia, newly named in the rule's licensing scope, instructs domestic data-centre operators to comply. Both are stated positions by governments, not measured effects on supply.",
+    "source": "https://www.techtimes.com/articles/330982/20261118/beijing-calls-us-chip-export-rule-economic-coercion-malaysia-tells-data-centers-comply.htm",
+    "stages": ["logic_ai", "m_ai"], "countries": ["cn", "my", "us"]
+  },
+  {
+    "id": "n261118_cn_licence_applications", "date": "2026-11-18",
+    "title": "Alibaba, Tencent, Baidu and BYD apply for licences to buy advanced US chips",
+    "summary": "Four Chinese technology groups are reported to have filed licence applications to purchase advanced US semiconductors under the new rule. Applications are requests, not approvals; no licence grant, volume or timing is established by this report.",
+    "source": "https://cryptobriefing.com/alibaba-tencent-baidu-byd-us-chip-applications/",
+    "stages": ["logic_ai", "m_ai"], "countries": ["cn", "us"]
+  },
+  {
+    "id": "n261119_bis_remote_access", "date": "2026-11-19",
+    "title": "US export rule on remote access to advanced semiconductors takes effect, rescinding the AI Diffusion framework",
+    "summary": "The Bureau of Industry and Security issues an interim final rule, 'Addressing Remote Access to Advanced Semiconductors', effective on Federal Register publication on 19 November 2026 and reported at 91 FR 74970. It requires licences for advanced chips reaching data centres that provide significant compute to entities in China and other arms-embargoed destinations, including through indirect or remote access, and extends licensing to shipments to Indonesia, Malaysia, Singapore, Thailand and Brazil as diversion risks. Data centres already serving covered customers have 90 days to obtain a licence. Foundries and packagers must now presume an advanced chip is controlled unless they can show otherwise, which removes the self-verification route they had used to clear Chinese designs. The rule formally rescinds the earlier Framework for AI Diffusion. Secondary legal analysis; the Federal Register text itself was not retrieved for this record, and the rule's effect on volumes is not quantified here.",
+    "source": "https://www.sidley.com/en/insights/newsupdates/2026/11/new-export-controls-on-advanced-chips-close-remote-compute-access-loopholes-five-key-takeaways",
+    "stages": ["logic_ai", "adv_fab", "adv_pkg", "osat", "m_ai"], "countries": ["us", "cn", "sg", "my", "th"]
+  },
+  {
+    "id": "n261119_sia_statement", "date": "2026-11-19",
+    "title": "Semiconductor Industry Association responds to the remote-access export rule",
+    "summary": "The SIA says it is still evaluating the impact of the interim final rule while welcoming a more targeted approach than the rescinded diffusion framework. An industry-body statement records a position, not an effect.",
+    "source": "https://www.semiconductors.org/?p=32008",
+    "stages": ["logic_ai", "m_ai"], "countries": ["us"]
+  },
+  {
+    "id": "n261120_tsmc_samsung_china_halt", "date": "2026-11-20",
+    "title": "TSMC and Samsung suspend some advanced chip orders from Chinese customers as the rule takes effect",
+    "summary": "Reuters and the Financial Times report that TSMC has told affected Chinese customers to stop ordering at 16nm and below without a US export licence, leaving them to 28nm and 40nm work that avoids high-bandwidth memory and advanced packaging. Samsung is reported to have notified Chinese customers of suspended processor shipments while licences are sought. Customers named in reporting include Baidu's Kunlun unit, ByteDance, Xiaomi, Oppo and Vivo. Reports conflict on whether TSMC has confirmed the halt, and neither the number of affected customers nor the value of the orders at risk has been disclosed.",
+    "source": "https://www.taiwannews.com.tw/news/6478978",
+    "stages": ["adv_fab", "mature_fab", "adv_pkg", "hbm", "logic_ai"], "countries": ["tw", "kr", "cn", "us"]
+  },
+  {
+    "id": "n261120_chip_selloff", "date": "2026-11-20",
+    "title": "Global semiconductor equities sell off sharply",
+    "summary": "Semiconductor equities fall hard across Asia and the United States. Reported moves for the session include NVIDIA down about 14%, AMD about 13%, TSMC's US listing about 9% and the Taiwan market more than 6%. Commentary attributes the move to doubts about the financing and return on AI capital spending, the NVIDIA leadership change and a reported SEC inquiry, the new export controls, and a hawkish rate outlook. Equity prices are market observations and are never an input to this model's index.",
+    "source": "https://finance.biggo.com/news/93a8feda-f6ea-40e1-b9b4-f8aa3528fc17",
+    "stages": ["logic_ai", "m_ai", "design"], "countries": ["us", "tw", "kr"]
+  }
+]

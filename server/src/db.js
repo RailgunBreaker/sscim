@@ -213,6 +213,25 @@ CREATE TABLE IF NOT EXISTS quotes (
   as_of       TEXT NOT NULL    -- ISO timestamp of the fetch
 );
 
+-- Price history behind the per-company chart. One row per company per range,
+-- the series stored as compact JSON rather than a row per point: a point table
+-- would be ~30,000 rows that are only ever read whole, per company, in order.
+--
+-- Two ranges are kept because they answer different questions. Intraday is
+-- the last session at five-minute resolution, which is what makes a chart feel
+-- live; daily is a year of closes, which is what gives it context. Display
+-- metadata only, exactly like the quotes table: the risk engine reads neither.
+CREATE TABLE IF NOT EXISTS quote_history (
+  company_id TEXT NOT NULL REFERENCES companies(id),
+  range      TEXT NOT NULL,   -- 'intraday' | 'daily'
+  points     TEXT NOT NULL,   -- JSON [[epochSeconds, close], ...], ascending
+  prev_close REAL,            -- the chart's own baseline, for the zero line
+  currency   TEXT,
+  as_of      TEXT NOT NULL,
+  PRIMARY KEY (company_id, range)
+);
+
+
 -- Daily briefing archive. Each pipeline run stores the baseline briefing it
 -- generated, so "what the model said on this date" is a record rather than
 -- something only reconstructable by checking out an old commit. Keyed by the
@@ -269,6 +288,21 @@ for (const [table, column, ddl] of [
      incident is the primary (scored); the rest are updates or recovery
      reports, kept with their citations but not independently scored. */
   ['events', 'incident_id', 'ALTER TABLE events ADD COLUMN incident_id TEXT'],
+  /* A quote needs TWO timestamps, because they answer different questions and
+     a quote carrying only one of them misleads on a weekend or a holiday.
+       as_of       when WE fetched it — how stale our copy is
+       market_time when the price last TRADED — how old the price is, which
+                   on a Sunday is two days older than the fetch
+     Shown "as of 30 seconds ago" for a Friday close, a reader would
+     reasonably think the market was open. market_state and market_time are
+     what let the interface say "At close, Nov 20" the way an ordinary quote
+     screen does, and prev_close/change_abs are the rest of what one shows. */
+  ['quotes', 'change_abs', 'ALTER TABLE quotes ADD COLUMN change_abs REAL'],
+  ['quotes', 'prev_close', 'ALTER TABLE quotes ADD COLUMN prev_close REAL'],
+  ['quotes', 'market_state', 'ALTER TABLE quotes ADD COLUMN market_state TEXT'],
+  ['quotes', 'market_time', 'ALTER TABLE quotes ADD COLUMN market_time TEXT'],
+  ['quotes', 'exchange', 'ALTER TABLE quotes ADD COLUMN exchange TEXT'],
+
   ['events', 'incident_role', 'ALTER TABLE events ADD COLUMN incident_role TEXT'],
 ]) {
   const has = db.prepare(`PRAGMA table_info(${table})`).all().some((c) => c.name === column);

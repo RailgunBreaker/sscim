@@ -83,6 +83,79 @@ export function getQuotes() {
     out[q.company_id] = {
       ticker: q.ticker, price: q.price, currency: q.currency, changePct: q.change_pct,
       trailingPE: q.trailing_pe, forwardPE: q.forward_pe, marketCap: q.market_cap, asOf: q.as_of,
+      /* `asOf` is our fetch time; `marketTime` is when the price last traded.
+         Both ship, because on a weekend they are two days apart and a quote
+         screen that shows only the first one claims a liveness it lacks. */
+      change: q.change_abs, prevClose: q.prev_close,
+      marketState: q.market_state, marketTime: q.market_time, exchange: q.exchange,
+    };
+  }
+  return out;
+}
+
+/* Price history for the per-company chart, encoded compactly.
+
+   Stored verbose ([[epochSeconds, close], ...]) the 184 series are 535KB,
+   which would more than double a 455KB snapshot for a chart. The
+   timestamps are the bulk of that and they are regular, so each series
+   ships as a base time, a step unit and integer offsets in that unit:
+
+     { t0, unit, o: [0, 1, 2, 5, 6, ...], v: [178.88, ...] }
+
+   Offsets rather than a fixed stride because trading days are not
+   regular — weekends and holidays leave gaps, and a fixed stride would
+   silently shift every point after the first long weekend.
+
+   That is 287KB, and numeric arrays compress hard over the wire. */
+const gcd = (a, b) => (b ? gcd(b, a % b) : a);
+
+/* The step unit is the GCD of the actual gaps, not an assumed 300 or
+   86400.
+
+   Assuming the nominal interval loses data: a Taiwan session that had
+   just opened returned points 5 minutes and then ~2 minutes apart, and
+   dividing by 300 rounded two distinct trades onto the same offset — a
+   silently dropped point and a series that no longer ascended in time.
+   The GCD divides every real gap exactly, so the encoding is lossless
+   by construction while staying 300 or 86400 for the regular series
+   that are almost all of them. */
+function encodeSeries(pts) {
+  const t0 = pts[0][0];
+  let unit = 0;
+  for (let i = 1; i < pts.length; i += 1) {
+    const gap = pts[i][0] - pts[i - 1][0];
+    if (gap > 0) unit = gcd(unit, gap);
+  }
+  if (!unit) unit = 1;
+  return {
+    t0,
+    unit,
+    o: pts.map((p) => (p[0] - t0) / unit),
+    v: pts.map((p) => p[1]),
+  };
+}
+
+export function getQuoteHistory() {
+  const out = {};
+  for (const r of db.prepare('SELECT * FROM quote_history').all()) {
+    let pts;
+    try { pts = JSON.parse(r.points); } catch { continue; }
+    if (!Array.isArray(pts) || !pts.length) continue;
+    /* Duplicate timestamps do occur in the upstream feed. Keeping the
+       last value for a given second is arbitrary but consistent, and it
+       is better than an out-of-order line. */
+    const seen = new Map();
+    for (const p of pts) {
+      if (!Array.isArray(p) || !Number.isFinite(p[0]) || !Number.isFinite(p[1])) continue;
+      seen.set(p[0], p[1]);
+    }
+    const clean = [...seen.entries()].sort((a, b) => a[0] - b[0]);
+    if (clean.length < 2) continue;
+    (out[r.company_id] ||= {})[r.range] = {
+      ...encodeSeries(clean),
+      prevClose: r.prev_close,
+      currency: r.currency,
+      asOf: r.as_of,
     };
   }
   return out;
@@ -144,6 +217,7 @@ export function buildBundle() {
     scenarios: getScenarios(),
     dataNotes: getDataNotes(),
     quotes: getQuotes(),
+    quoteHistory: getQuoteHistory(),
     briefings: getBriefingIndex(),
     briefingBodies: getBriefingBodies(),
     meta: getMetaBundle(),

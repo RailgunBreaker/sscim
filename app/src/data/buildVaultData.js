@@ -37,6 +37,10 @@ export function buildVaultData(bundle) {
     OWNERS: bundle.owners,
     DATA_NOTES: bundle.dataNotes,
     QUOTES: bundle.quotes || {}, // market quotes (price/PE) — display metadata, never an engine input
+    /* Price history behind the per-company chart, compactly encoded
+       (see server/src/bundle.js). Display metadata on the same terms
+       as QUOTES: the engine never reads a price. */
+    QUOTE_HISTORY: bundle.quoteHistory || {},
     META: bundle.meta || {},     // snapshot date + last pipeline run, for the freshness readout
     BRIEFINGS: bundle.briefings || [],           // archive index (no bodies)
     BRIEFING_BODIES: bundle.briefingBodies || {}, // recent bodies, for the static deploy

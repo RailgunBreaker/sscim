@@ -68,11 +68,15 @@ export async function refreshQuotes() {
     results.push(...await fetchBatch(symbols.slice(i, i + 40), session));
   }
 
-  const upsert = db.prepare(`INSERT INTO quotes (company_id, ticker, price, currency, change_pct, trailing_pe, forward_pe, market_cap, as_of)
-    VALUES (@company_id, @ticker, @price, @currency, @change_pct, @trailing_pe, @forward_pe, @market_cap, @as_of)
+  const upsert = db.prepare(`INSERT INTO quotes (company_id, ticker, price, currency, change_pct, trailing_pe, forward_pe, market_cap, as_of,
+      change_abs, prev_close, market_state, market_time, exchange)
+    VALUES (@company_id, @ticker, @price, @currency, @change_pct, @trailing_pe, @forward_pe, @market_cap, @as_of,
+      @change_abs, @prev_close, @market_state, @market_time, @exchange)
     ON CONFLICT(company_id) DO UPDATE SET ticker=excluded.ticker, price=excluded.price, currency=excluded.currency,
       change_pct=excluded.change_pct, trailing_pe=excluded.trailing_pe, forward_pe=excluded.forward_pe,
-      market_cap=excluded.market_cap, as_of=excluded.as_of`);
+      market_cap=excluded.market_cap, as_of=excluded.as_of, change_abs=excluded.change_abs,
+      prev_close=excluded.prev_close, market_state=excluded.market_state,
+      market_time=excluded.market_time, exchange=excluded.exchange`);
 
   const asOf = new Date().toISOString();
   let ok = 0;
@@ -86,6 +90,17 @@ export async function refreshQuotes() {
         change_pct: q.regularMarketChangePercent ?? null,
         trailing_pe: q.trailingPE ?? null, forward_pe: q.forwardPE ?? null,
         market_cap: q.marketCap ?? null, as_of: asOf,
+        change_abs: q.regularMarketChange ?? null,
+        prev_close: q.regularMarketPreviousClose ?? null,
+        /* Yahoo's marketState is REGULAR / PRE / POST / CLOSED / PREPRE /
+           POSTPOST. Stored raw: the interface decides the wording, and a
+           value we have not seen before should surface rather than be
+           silently mapped to "closed". */
+        market_state: q.marketState ?? null,
+        /* Seconds since epoch at the exchange, not at our clock. */
+        market_time: Number.isFinite(q.regularMarketTime)
+          ? new Date(q.regularMarketTime * 1000).toISOString() : null,
+        exchange: q.fullExchangeName ?? q.exchange ?? null,
       });
       ok++;
     }
@@ -94,6 +109,75 @@ export async function refreshQuotes() {
 
   const missing = symbols.filter((s) => !results.some((q) => q.symbol === s && q.regularMarketPrice != null));
   return { ok, total: symbols.length, unlisted: Object.keys(COMPANY_TICKERS).length - symbols.length, asOf, missing };
+}
+
+/* ----------------------------------------------------------------
+   Price history, for the per-company chart.
+
+   Yahoo's chart endpoint needs no crumb, so this is a plain GET per
+   symbol rather than a batch. 92 sequential requests is slow but this
+   runs from the pipeline, not from a request path, and hammering the
+   upstream in parallel is how an unauthenticated endpoint starts
+   returning 429s.
+
+   Stored rounded: a close is quoted to the cent, and shipping
+   125.52999877929688 into a static bundle 30,000 times is a quarter of
+   a megabyte of float noise nobody can see on a 200px chart.
+   ---------------------------------------------------------------- */
+const HISTORY_RANGES = {
+  intraday: { range: '1d', interval: '5m' },
+  daily: { range: '1y', interval: '1d' },
+};
+
+async function fetchSeries(symbol, { range, interval }) {
+  const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}?range=${range}&interval=${interval}`;
+  const r = await fetch(url, { headers: UA });
+  if (!r.ok) throw new Error(`chart ${symbol} ${range}: HTTP ${r.status}`);
+  const result = (await r.json())?.chart?.result?.[0];
+  if (!result) throw new Error(`chart ${symbol} ${range}: no result`);
+  const ts = result.timestamp || [];
+  const close = result.indicators?.quote?.[0]?.close || [];
+  const points = [];
+  for (let i = 0; i < ts.length; i += 1) {
+    const v = close[i];
+    /* Gaps are real — a halted or thinly traded symbol has null closes —
+       and are dropped rather than interpolated, because a drawn line
+       through invented points is a claim about prices that did not
+       happen. */
+    if (v == null || !Number.isFinite(v)) continue;
+    points.push([ts[i], Math.round(v * 100) / 100]);
+  }
+  return { points, prevClose: result.meta?.chartPreviousClose ?? null, currency: result.meta?.currency ?? null };
+}
+
+export async function refreshQuoteHistory({ onProgress } = {}) {
+  const entries = Object.entries(COMPANY_TICKERS).filter(([, sym]) => sym);
+  const upsert = db.prepare(`INSERT INTO quote_history (company_id, range, points, prev_close, currency, as_of)
+    VALUES (@company_id, @range, @points, @prev_close, @currency, @as_of)
+    ON CONFLICT(company_id, range) DO UPDATE SET points=excluded.points,
+      prev_close=excluded.prev_close, currency=excluded.currency, as_of=excluded.as_of`);
+
+  const asOf = new Date().toISOString();
+  let ok = 0;
+  const failed = [];
+  for (const [companyId, symbol] of entries) {
+    for (const [name, spec] of Object.entries(HISTORY_RANGES)) {
+      try {
+        const { points, prevClose, currency } = await fetchSeries(symbol, spec);
+        if (!points.length) { failed.push(`${symbol}/${name}: empty`); continue; }
+        upsert.run({
+          company_id: companyId, range: name, points: JSON.stringify(points),
+          prev_close: prevClose, currency, as_of: asOf,
+        });
+        ok += 1;
+      } catch (e) {
+        failed.push(`${symbol}/${name}: ${e.message}`);
+      }
+    }
+    onProgress?.(companyId);
+  }
+  db.pragma('wal_checkpoint(TRUNCATE)');
+  return { ok, total: entries.length * Object.keys(HISTORY_RANGES).length, failed, asOf };
 }
 
 /* Fire-and-forget refresh for the read path: never awaited by the request, so
