@@ -434,7 +434,11 @@ async function main() {
        toggle is checked separately below. */
     for (const [label, expect] of [
       ['Map', /World map/i],
-      ['Network', /Functional-centre network/i],
+      /* This pane used to hold the functional-centre topology graph. It
+         now holds the public supplier network: firm-to-firm
+         relationships each named in a public document, in place of
+         1,030 connections the engine composed from declared priors. */
+      ['Network', /Public supplier network/i],
       ['Facilities', /Facility network/i],
     ]) {
       const btn = vp.locator('[role="radiogroup"][aria-label="Workspace"] [role="radio"]').filter({ hasText: new RegExp(`^${label}$`, 'i') }).first();

@@ -181,7 +181,7 @@ describe('App smoke (static snapshot, Leaflet mocked)', () => {
     container.remove();
   });
 
-  it('restores topology view from the URL hash and mounts the functional-centre network', async () => {
+  it('restores the network view from the URL hash and mounts the public supplier network', async () => {
     window.location.hash = '#view=topology';
     const container = document.createElement('div');
     document.body.appendChild(container);
@@ -191,8 +191,15 @@ describe('App smoke (static snapshot, Leaflet mocked)', () => {
     await flush(0);
 
     const text = container.textContent || '';
-    // The topology renderer (functional-centre network) should be on screen.
-    expect(text.toUpperCase()).toContain('FUNCTIONAL-CENTRE NETWORK');
+    /* This pane used to hold the functional-centre topology graph, whose
+       1,030 connections were all composed by the engine from declared
+       priors. It now holds the public supplier network, where every edge
+       cites a document naming both parties. The hash key is still
+       `topology` so old links keep working. */
+    expect(text.toUpperCase()).toContain('PUBLIC SUPPLIER NETWORK');
+    expect(text.toUpperCase()).not.toContain('FUNCTIONAL-CENTRE NETWORK');
+    // The lens must arrive with its provenance rule stated, not just a graph.
+    expect(text).toMatch(/named in a public document/i);
 
     await act(async () => { root.unmount(); });
     container.remove();

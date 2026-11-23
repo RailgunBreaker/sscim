@@ -4,6 +4,10 @@ SSCIM is an explainable research tool for exploring how a semiconductor disrupti
 
 **SSCIM is not** a live trading signal, a prediction engine, a measured trade-flow model, or investment advice.
 
+## Public supplier network
+
+The [Network guide](PUBLIC_SUPPLIER_NETWORK.md) covers the current company graph, profiles for every registry firm, the fixed 109-company tracking scope, levels 1-3, citation paths and drag animation. Coverage gaps are shown explicitly.
+
 ## What it is for
 
 - **General readers** — understand why a material, equipment supplier, fab, or region can matter far beyond its own borders. Start with the [public guide](PUBLIC_GUIDE.md).

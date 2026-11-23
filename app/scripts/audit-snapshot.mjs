@@ -24,6 +24,9 @@ import { ACTIVE_HORIZON_DAYS } from '../src/engine/event-model.js';
 import { buildFacilityLayer } from '../src/engine/facilities.js';
 import { buildFacilityNetwork } from '../src/engine/facilityNetwork.js';
 import { facilityIntro } from '../src/engine/facilityProfile.js';
+import {
+  companyIntro, companyControl, controlCoverage, documentedCoverage, PASSIVE_MANAGERS,
+} from '../src/engine/companyProfile.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const SNAPSHOT_PATH = resolve(__dirname, '../src/data/vault-snapshot.json');
@@ -194,6 +197,58 @@ function main() {
     if (noOutput.length) {
       warn(`${noOutput.length} facilit(ies) carry no output description, so their profile omits the "what it makes" sentence: ${noOutput.map((f) => f.id).join(', ')}`);
     }
+  }
+
+  /* ---- company profiles and control ----
+     The same stub check the facility layer gets, plus the one rule the
+     control dataset exists to enforce: a passive index manager is a
+     custodian of other people's money and must never be recorded as a
+     company's controller. If that ever becomes possible, the dataset has
+     turned back into the shareholder table it replaced. */
+  {
+    const companyCtx = {
+      COMPANY_BY_ID: Object.fromEntries(bundle.companies.map((c) => [c.id, c])),
+      COUNTRY_NAMES: bundle.countryNames || {},
+      STAGE_BY_ID: Object.fromEntries(bundle.stages.map((s) => [s.id, s])),
+      CUSTOMERS: bundle.customers || {},
+      SUPPLIERS: (() => {
+        const out = {};
+        for (const [s, rows] of Object.entries(bundle.customers || {})) {
+          for (const [c, r] of rows) (out[c] ||= []).push([s, r]);
+        }
+        return out;
+      })(),
+      COMPANY_RANK: [],
+    };
+
+    const noControl = bundle.companies.filter((c) => !companyControl(c.id));
+    if (noControl.length) {
+      err(`${noControl.length}/${bundle.companies.length} compan(ies) have no control record: ${noControl.map((c) => c.id).join(', ')}`);
+    }
+
+    const stubCompanyProfiles = bundle.companies.filter((c) => {
+      try { return companyIntro(c, companyCtx).length < 80; } catch { return true; }
+    });
+    if (stubCompanyProfiles.length) {
+      err(`${stubCompanyProfiles.length} compan(ies) produce an empty or stub standardized profile: ${stubCompanyProfiles.map((c) => c.id).join(', ')}`);
+    }
+
+    const passiveAsController = bundle.companies.filter((c) => {
+      const ctl = companyControl(c.id);
+      return ctl?.controller && PASSIVE_MANAGERS.some((p) => ctl.controller.includes(p));
+    });
+    if (passiveAsController.length) {
+      err(`${passiveAsController.length} compan(ies) name a passive index manager as their controller, which is a custodian, not a controller: ${passiveAsController.map((c) => c.id).join(', ')}`);
+    }
+
+    const cov = controlCoverage(bundle.companies);
+    const widely = cov.byType.widely_held || 0;
+    warn(`control: ${widely}/${cov.total} compan(ies) have NO controller — the largest holders are passive index managers. This is a finding, not a coverage gap`);
+    if (cov.lowConfidence) {
+      warn(`control: ${cov.lowConfidence} compan(ies) carry a low-confidence (tier D) control judgement — the mechanism is believed real, the current holder unverified`);
+    }
+    const docCov = documentedCoverage(bundle.companies);
+    warn(`public record: ${docCov.covered}/${docCov.total} modeled compan(ies) are named in at least one public supplier document; the rest have no documented chain, which reflects disclosure practice rather than trade`);
   }
 
   bundle.policies.forEach((p) => {

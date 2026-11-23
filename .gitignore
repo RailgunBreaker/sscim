@@ -30,3 +30,6 @@ server/logs/
 
 # Transient verification-run logs
 app/*.log
+
+# Local browser verification captures, downloaded references and logs
+app/scratch/

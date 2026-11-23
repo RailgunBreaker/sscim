@@ -1,0 +1,5240 @@
+{
+  "meta": {
+    "generated": "2026-11-22",
+    "count": 360
+  },
+  "edges": [
+    {
+      "supplier": "3m",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "aac-acoustic-technologies-holdings-incorporated",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "advanced-semiconductor-engineering-technology-holding-co-ltd",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "agc-incorporated",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "akm-meadville-electronics-xiamen-company-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "alpha-and-omega-semiconductor-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "alps-alpine-company-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "amkor-technology-incorporated",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "amphenol-corporation",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "ams-osram-ag",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "analog-devices-incorporated",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "at-and-s-austria-technologie-and-systemtechnik-ag",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "baoji-titanium-industry-co-ltd",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "baotou-inst-magnetic-new-materials-co-ltd",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "beijing-zhong-ke-san-huan-high-tech-co-ltd",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "bichamp-cutting-technology-hunan-co-ltd",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "biel-crystal-manufactory-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "boe-technology-group-company-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "boyd-corporation",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "broadcom-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "bumchun-precision-company-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "byd-company-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "career-technology-mfg-company-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "catcher-technology-company-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "cathay-tat-ming-hk-company-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "cheng-uei-precision-industry-company-limited-foxlink",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "chengdu-homin-technology-company-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "china-circuit-technology-shantou-corporation",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "cirrus-logic-incorporated",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "cn-innovations-holdings-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "coherent-corporation",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "compal-electronics-incorporated",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "compeq-manufacturing-company-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "corning-incorporated",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "cosmosupplylab-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "cowell-e-holdings-incorporated",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "crystal-optech-co-ltd",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "cymmetrik-enterprise-company-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "delta-electronics-incorporated",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "derkwoo-electronics-company-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "dexerials-corporation",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "diodes-incorporated",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "dynapack-international-technology-corporation",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "flex-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "flexium-interconnect-incorporated",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "fujian-nanping-aluminium-company-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "fujikura-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "general-interface-solution-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "genius-electronic-optical-company-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "gigadevice-semiconductor-incorporated",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "global-lighting-technologies",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "goertek-incorporated",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "golden-arrow-printing-company-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "hama-naka-shoukin-industry-company-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "henkel-ag-and-company-kgaa",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "hi-p-international-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "hirose-electric-company-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "hon-hai-precision-industry-company-limited-foxconn",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "idemia-group",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "inb-electronics-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "infineon-technologies-ag",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "intel-corporation",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "interplex-holdings-pte-ltd",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "j-pond-industry-dongguan-company-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "jabil-incorporated",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "japan-aviation-electronics-industry-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "japan-display-incorporated",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "jcet-group-company-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "jiangsu-kangrui-new-material-technology-co-ltd",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "jiuquan-iron-and-steel-group-co-ltd",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "jones-tech-plc",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "jx-nippon-mining-and-metals-corporation-eneos-holding",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "kam-kiu-aluminium-products-group-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "keiwa-inc",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "kioxia-holdings-corporation",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "knowles-corporation",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "kunshan-kersen-science-and-technology-company-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "kyocera-corporation",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "largan-precision-company-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "lens-technology-company-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "lg-display-company-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "lg-energy-solution",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "lg-innotek-company-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "lingyi-itech-guangdong-company",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "lite-on-technology-corporation",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "luen-fung-group",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "lumentum-holdings-incorporated",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "lumileds-holding-b-v",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "luxshare-precision-industry-company-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "lx-semicon-co-ltd",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "marian-incorporated",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "microchip-technology-incorporated",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "micron-technology-incorporated",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "minebeamitsumi-incorporated",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "molex-incorporated",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "murata-manufacturing-company-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "nan-ya-pcb-corporation",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "nanofilm-technologies-international-private-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "nichia-corporation",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "nidec-corporation",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "nissha-company-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "nitto-denko-corporation",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "nok-corporation",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "nordic-semiconductor-asa",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "nxp-semiconductors-n-v",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "on-semiconductor-corporation",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "paishing-technology-company",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "parade-technologies-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "pegatron-corporation",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "phone-in-mag-electronics-company-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "pioneer-material-precision-tech-company-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "platinum-optics-technology-incorporated",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "posco-international",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "power-integrations-incorporated",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "primax-electronics-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "qorvo-incorporated",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "quadrant-solutions",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "qualcomm-incorporated",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "quanta-computer-incorporated",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "r-r-donnelley-and-sons-company",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "radiant-opto-electronics-corporation",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "renesas-electronics-corporation",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "robert-bosch-gmbh",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "rohm-company-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "sabic-saudi-arabian-oil-company",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "samsung-electro-mechanics-company-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "samsung-electronics-company-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "samsung-sdi-company-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "san-an-optoelectronics-co-ltd",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "shandong-innovation-group",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "shanghai-industrial-holdings-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "sharp-corporation",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "shenzhen-bsc-technology-co-ltd",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "shenzhen-desay-battery-technology-company-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "shenzhen-everwin-precision-technology-company-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "shenzhen-forceblack-technology-co-ltd",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "shenzhen-linkconn-electronics-co-ltd",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "shenzhen-sunway-communication-company-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "shenzhen-yuto-packaging-technology-company-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "shin-zu-shing-company-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "simplo-technology-company-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "sk-hynix-incorporated",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "skyworks-solutions-incorporated",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "solvay-s-a",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "sony-corporation",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "stmicroelectronics-n-v",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "stora-enso-oyj",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "sumida-corporation",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "sumitomo-chemical-company-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "sumitomo-electric-industries-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "sunny-optical-technology-co-ltd",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "sunrex-technology-corporation",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "sunwoda-electronic-company-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "suzhou-anjie-technology-company-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "suzhou-dongshan-precision-manufacturing-company-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "suzhou-zhongjiemai-panel-industry-technology-company-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "synaptics-incorporated",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "taiwan-hodaka-technology-company-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "taiwan-semiconductor-manufacturing-company-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "taiwan-surface-mounting-technology-corporation",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "taiyo-yuden-company-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "tata-electronics",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "tdk-corporation",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "texas-instruments-incorporated",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "tongda-group-holdings-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "toyoda-gosei-co-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "tpk-holding-company-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "trinseo-s-a",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "tripod-technology-corporation",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "tsujiden-company-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "txc-corporation",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "unimicron-technology-corporation",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "unisteel-technology-limited-sfs-group",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "unitech-printed-circuit-board-corporation",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "united-test-and-assembly-center-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "varta-microbattery-gmbh",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "viavi-solutions-incorporated",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "western-digital-corporation",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "winbond-electronics-corporation",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "wingtech-technology-co-ltd",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "wistron-corporation",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "yageo-corporation",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "young-poong-corporation",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "zhejiang-tony-electronic-co-ltd",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "zhen-ding-technology-holding-limited",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "zhenghe-group",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "zhuhai-cosmx-battery-co-ltd",
+      "customer": "apple-inc",
+      "products": [
+        "Named in Apple's supplier list for direct materials, manufacturing or assembly"
+      ],
+      "sources": [
+        "apple-sl-fy2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "nts-group",
+      "customer": "asml-holding-n-v",
+      "products": [
+        "High-precision mechatronic production"
+      ],
+      "sources": [
+        "nts-asml-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "ASML Supplier Award 2025, \"Cost\" category. The specific module is not named by the source."
+      ]
+    },
+    {
+      "supplier": "trumpf",
+      "customer": "asml-holding-n-v",
+      "products": [
+        "EUV high-energy drive laser"
+      ],
+      "sources": [
+        "trumpf-asml-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "ASML Supplier Award 2025, \"Technology\" category, for the laser driving the next EUV generation."
+      ]
+    },
+    {
+      "supplier": "zeiss-semiconductor-manufacturing-technology-carl-zeiss-smt-gmbh",
+      "customer": "asml-holding-n-v",
+      "products": [
+        "Lenses, mirrors, collectors and other optical components — sole source"
+      ],
+      "sources": [
+        "asml-20f-2014",
+        "asml-20f-2024"
+      ],
+      "years": [
+        2014
+      ],
+      "details": [
+        "ASML's own filing calls Zeiss its single supplier of these components and puts Zeiss at 27.4% of aggregate cost of sales in 2014. The single-source structure, not the dated percentage, is what this edge records."
+      ]
+    },
+    {
+      "supplier": "semiconductor-manufacturing-international-corporation",
+      "customer": "hisilicon-technologies-co-ltd",
+      "products": [
+        "7nm-class logic (N+2) — Kirin 9000s"
+      ],
+      "sources": [
+        "techinsights-smic-n2",
+        "techinsights-smic-7nm-card"
+      ],
+      "years": [
+        2023
+      ],
+      "details": [
+        "Established by die analysis, not by disclosure. Neither party has confirmed it. This is the only kind of evidence left once export controls make the relationship unspeakable for both sides."
+      ]
+    },
+    {
+      "supplier": "hisilicon-technologies-co-ltd",
+      "customer": "huawei-technologies-co-ltd",
+      "products": [
+        "In-house SoC design (Kirin, Kunpeng, Ascend)"
+      ],
+      "sources": [
+        "fr-huawei-2020-08"
+      ],
+      "years": [
+        2020
+      ],
+      "details": [
+        "Affiliation established by the U.S. rule that added Huawei's non-U.S. affiliates, HiSilicon among them, to the Entity List."
+      ]
+    },
+    {
+      "supplier": "aem-holdings-ltd",
+      "customer": "intel-corporation",
+      "products": [
+        "Excellence in Business Enablement"
+      ],
+      "sources": [
+        "intel-epic-2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "agc-incorporated",
+      "customer": "intel-corporation",
+      "products": [
+        "Excellence in Technology Partnership on EUV Mask Blanks",
+        "Distinguished Supplier Award (Distinguished)"
+      ],
+      "sources": [
+        "intel-epic-2026",
+        "intel-epic-2024"
+      ],
+      "years": [
+        2024,
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "applied-materials-inc",
+      "customer": "intel-corporation",
+      "products": [
+        "Excellence in Technology Development",
+        "Distinguished Supplier Award (Distinguished)"
+      ],
+      "sources": [
+        "intel-epic-2026",
+        "intel-epic-2024"
+      ],
+      "years": [
+        2024,
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "asm-international-n-v",
+      "customer": "intel-corporation",
+      "products": [
+        "Excellence in Technology Development",
+        "Outstanding Supplier Award (Outstanding)"
+      ],
+      "sources": [
+        "intel-epic-2026",
+        "intel-epic-2024"
+      ],
+      "years": [
+        2024,
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "asml-holding-n-v",
+      "customer": "intel-corporation",
+      "products": [
+        "Excellence in Business Enablement",
+        "Distinguished Supplier Award (Distinguished)"
+      ],
+      "sources": [
+        "intel-epic-2026",
+        "intel-epic-2024"
+      ],
+      "years": [
+        2024,
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "asmpt-limited",
+      "customer": "intel-corporation",
+      "products": [
+        "Excellence in Business Collaboration"
+      ],
+      "sources": [
+        "intel-epic-2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "bechtel",
+      "customer": "intel-corporation",
+      "products": [
+        "Excellence in Construction Management"
+      ],
+      "sources": [
+        "intel-epic-2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "brewer-science-inc",
+      "customer": "intel-corporation",
+      "products": [
+        "Distinguished Supplier Award (Distinguished)"
+      ],
+      "sources": [
+        "intel-epic-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "c-hawk-technology-intl-inc",
+      "customer": "intel-corporation",
+      "products": [
+        "Excellence in Alternate Source HVM Plastic Parts Supply"
+      ],
+      "sources": [
+        "intel-epic-2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "camtek",
+      "customer": "intel-corporation",
+      "products": [
+        "Excellence in Business Enablement"
+      ],
+      "sources": [
+        "intel-epic-2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "compass-group-usa",
+      "customer": "intel-corporation",
+      "products": [
+        "Distinguished Supplier Award (Distinguished)"
+      ],
+      "sources": [
+        "intel-epic-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "daewon-semiconductor-packaging-industrial-co-ltd",
+      "customer": "intel-corporation",
+      "products": [
+        "Valued Supplier Award — Innovation (Valued)"
+      ],
+      "sources": [
+        "intel-epic-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "deloitte-touche-tohmatsu-limited",
+      "customer": "intel-corporation",
+      "products": [
+        "Excellence in ERP Implementation & Operations Enablement"
+      ],
+      "sources": [
+        "intel-epic-2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "disco-corporation",
+      "customer": "intel-corporation",
+      "products": [
+        "Excellence in Technology Development and Sustainability"
+      ],
+      "sources": [
+        "intel-epic-2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "ds-techno-co-ltd",
+      "customer": "intel-corporation",
+      "products": [
+        "Excellence in Quartz Parts Cost and Performance"
+      ],
+      "sources": [
+        "intel-epic-2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "dsv-global-transport-and-logistics",
+      "customer": "intel-corporation",
+      "products": [
+        "Distinguished Supplier Award (Distinguished)"
+      ],
+      "sources": [
+        "intel-epic-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "ekk-eagle-america-inc",
+      "customer": "intel-corporation",
+      "products": [
+        "Excellence in O-Ring/Seal Cost, Technology Leadership and Manufacturing"
+      ],
+      "sources": [
+        "intel-epic-2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "formfactor-incorporated",
+      "customer": "intel-corporation",
+      "products": [
+        "Excellence in Sort Test Development",
+        "Distinguished Supplier Award (Distinguished)"
+      ],
+      "sources": [
+        "intel-epic-2026",
+        "intel-epic-2024"
+      ],
+      "years": [
+        2024,
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "gcon-inc",
+      "customer": "intel-corporation",
+      "products": [
+        "Valued Supplier Award — Quality (Valued)"
+      ],
+      "sources": [
+        "intel-epic-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "gigaphoton-inc",
+      "customer": "intel-corporation",
+      "products": [
+        "Distinguished Supplier Award (Distinguished)"
+      ],
+      "sources": [
+        "intel-epic-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "hcltech",
+      "customer": "intel-corporation",
+      "products": [
+        "Excellence in Strategic 360 Collaboration for Product Engineering Services",
+        "Outstanding Supplier Award (Outstanding)"
+      ],
+      "sources": [
+        "intel-epic-2026",
+        "intel-epic-2024"
+      ],
+      "years": [
+        2024,
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "hitachi-high-tech-corporation",
+      "customer": "intel-corporation",
+      "products": [
+        "Valued Supplier Award — Technology (Valued)"
+      ],
+      "sources": [
+        "intel-epic-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "infineon-technologies-ag",
+      "customer": "intel-corporation",
+      "products": [
+        "Excellence in Platform Power Management Solutions for Server, AI, Client, Network, and Graphics Products"
+      ],
+      "sources": [
+        "intel-epic-2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "jiangxi-redboard-technology-co-ltd",
+      "customer": "intel-corporation",
+      "products": [
+        "Excellence in Quality and Supply Flexibility",
+        "Distinguished Supplier Award (Distinguished)"
+      ],
+      "sources": [
+        "intel-epic-2026",
+        "intel-epic-2024"
+      ],
+      "years": [
+        2024,
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "jll",
+      "customer": "intel-corporation",
+      "products": [
+        "Distinguished with Safety Distinction (Distinguished)"
+      ],
+      "sources": [
+        "intel-epic-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "jx-advanced-metals-corporation",
+      "customer": "intel-corporation",
+      "products": [
+        "Distinguished Supplier Award (Distinguished)"
+      ],
+      "sources": [
+        "intel-epic-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "kellyocg",
+      "customer": "intel-corporation",
+      "products": [
+        "Valued Supplier Award — Supplier Diversity (Valued)"
+      ],
+      "sources": [
+        "intel-epic-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "keysight-technologies-inc",
+      "customer": "intel-corporation",
+      "products": [
+        "Valued Supplier Award — Technology (Valued)"
+      ],
+      "sources": [
+        "intel-epic-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "kla-corporation",
+      "customer": "intel-corporation",
+      "products": [
+        "Excellence in Technology Development",
+        "Distinguished Supplier Award (Distinguished)"
+      ],
+      "sources": [
+        "intel-epic-2026",
+        "intel-epic-2024"
+      ],
+      "years": [
+        2024,
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "kokusai-electric-corporation",
+      "customer": "intel-corporation",
+      "products": [
+        "Excellence in Local R&D Investment to Enable Next Generation Diffusion Technology",
+        "Distinguished Supplier Award (Distinguished)"
+      ],
+      "sources": [
+        "intel-epic-2026",
+        "intel-epic-2024"
+      ],
+      "years": [
+        2024,
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "lam-research-corporation",
+      "customer": "intel-corporation",
+      "products": [
+        "Excellence in Sustainability Support",
+        "Distinguished Supplier Award (Distinguished)"
+      ],
+      "sources": [
+        "intel-epic-2026",
+        "intel-epic-2024"
+      ],
+      "years": [
+        2024,
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "lasertec-corporation",
+      "customer": "intel-corporation",
+      "products": [
+        "Excellence in EUV Mask Technology Development",
+        "Distinguished Supplier Award (Distinguished)"
+      ],
+      "sources": [
+        "intel-epic-2026",
+        "intel-epic-2024"
+      ],
+      "years": [
+        2024,
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "moduslink-corporation",
+      "customer": "intel-corporation",
+      "products": [
+        "Excellence in Strategic Partnership"
+      ],
+      "sources": [
+        "intel-epic-2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "moses-lake-industries-inc-tama-chemicals",
+      "customer": "intel-corporation",
+      "products": [
+        "Distinguished Supplier Award (Distinguished)"
+      ],
+      "sources": [
+        "intel-epic-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "msr-fsr-llc",
+      "customer": "intel-corporation",
+      "products": [
+        "Excellence in Parts Clean Technology and Cost"
+      ],
+      "sources": [
+        "intel-epic-2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "murata-machinery-ltd",
+      "customer": "intel-corporation",
+      "products": [
+        "Excellence in Manufacturing Automation",
+        "Distinguished Supplier Award (Distinguished)"
+      ],
+      "sources": [
+        "intel-epic-2026",
+        "intel-epic-2024"
+      ],
+      "years": [
+        2024,
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "namics-corporation",
+      "customer": "intel-corporation",
+      "products": [
+        "Excellence in Underfill Development",
+        "Distinguished Supplier Award (Distinguished)"
+      ],
+      "sources": [
+        "intel-epic-2026",
+        "intel-epic-2024"
+      ],
+      "years": [
+        2024,
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "nikon-corporation",
+      "customer": "intel-corporation",
+      "products": [
+        "Distinguished with Safety Distinction (Distinguished)"
+      ],
+      "sources": [
+        "intel-epic-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "nova-ltd",
+      "customer": "intel-corporation",
+      "products": [
+        "Excellence in Integrated CMP Metrology Solutions"
+      ],
+      "sources": [
+        "intel-epic-2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "saigon-fabrication-ltd",
+      "customer": "intel-corporation",
+      "products": [
+        "Excellence in Manufacturing, Cost and Local for Local"
+      ],
+      "sources": [
+        "intel-epic-2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "securitas-usa-inc",
+      "customer": "intel-corporation",
+      "products": [
+        "Excellence in Site Support Services",
+        "Outstanding Supplier Award (Outstanding)"
+      ],
+      "sources": [
+        "intel-epic-2026",
+        "intel-epic-2024"
+      ],
+      "years": [
+        2024,
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "senju-metal-industry-co-ltd",
+      "customer": "intel-corporation",
+      "products": [
+        "Excellence in Solder Materials Development",
+        "Outstanding Supplier Award (Outstanding)"
+      ],
+      "sources": [
+        "intel-epic-2026",
+        "intel-epic-2024"
+      ],
+      "years": [
+        2024,
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "shin-etsu-chemical-co-ltd",
+      "customer": "intel-corporation",
+      "products": [
+        "Distinguished Supplier Award (Distinguished)"
+      ],
+      "sources": [
+        "intel-epic-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "siliconware-precision-industries-co-ltd",
+      "customer": "intel-corporation",
+      "products": [
+        "Excellence in Delivery and Cycle Time",
+        "Distinguished Supplier Award (Distinguished)"
+      ],
+      "sources": [
+        "intel-epic-2026",
+        "intel-epic-2024"
+      ],
+      "years": [
+        2024,
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "system-siltronic",
+      "customer": "intel-corporation",
+      "products": [
+        "Silicon wafers — supplier award"
+      ],
+      "sources": [
+        "siltronic-awards-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": []
+    },
+    {
+      "supplier": "taiwan-semiconductor-manufacturing-company-limited",
+      "customer": "intel-corporation",
+      "products": [
+        "Outstanding Supplier Award (Outstanding)"
+      ],
+      "sources": [
+        "intel-epic-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "technoprobe-s-p-a",
+      "customer": "intel-corporation",
+      "products": [
+        "Distinguished Supplier Award (Distinguished)"
+      ],
+      "sources": [
+        "intel-epic-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "tessolve-semiconductor-private-limited",
+      "customer": "intel-corporation",
+      "products": [
+        "Excellence in Advanced Packaging and Post-Silicon Test"
+      ],
+      "sources": [
+        "intel-epic-2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "the-peer-group-inc",
+      "customer": "intel-corporation",
+      "products": [
+        "Distinguished Supplier Award (Distinguished)"
+      ],
+      "sources": [
+        "intel-epic-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "tkg-solmics-co-ltd",
+      "customer": "intel-corporation",
+      "products": [
+        "Excellence in Silicon Parts, Cost, Quality and Technology"
+      ],
+      "sources": [
+        "intel-epic-2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "tokyo-electron-limited",
+      "customer": "intel-corporation",
+      "products": [
+        "Excellence in Technology Development and Sustainability",
+        "Outstanding with Sustainability Distinction (Outstanding)"
+      ],
+      "sources": [
+        "intel-epic-2026",
+        "intel-epic-2024"
+      ],
+      "years": [
+        2024,
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "tosoh-quartz-inc",
+      "customer": "intel-corporation",
+      "products": [
+        "Excellence in Quartz Parts Quality, Technology and Availability",
+        "Distinguished Supplier Award (Distinguished)"
+      ],
+      "sources": [
+        "intel-epic-2026",
+        "intel-epic-2024"
+      ],
+      "years": [
+        2024,
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "tosoh-smd-inc",
+      "customer": "intel-corporation",
+      "products": [
+        "Distinguished Supplier Award (Distinguished)"
+      ],
+      "sources": [
+        "intel-epic-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "u-p-pro",
+      "customer": "intel-corporation",
+      "products": [
+        "Excellence in VMI Cost and Operational Performance"
+      ],
+      "sources": [
+        "intel-epic-2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "ultra-clean-holdings-inc",
+      "customer": "intel-corporation",
+      "products": [
+        "Excellence in Parts Clean Cost, Quality and Delivery Performance",
+        "Distinguished Supplier Award (Distinguished)"
+      ],
+      "sources": [
+        "intel-epic-2026",
+        "intel-epic-2024"
+      ],
+      "years": [
+        2024,
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "unimicron-technology-corporation",
+      "customer": "intel-corporation",
+      "products": [
+        "Distinguished Supplier Award (Distinguished)"
+      ],
+      "sources": [
+        "intel-epic-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "united-microelectronics-corporation",
+      "customer": "intel-corporation",
+      "products": [
+        "Excellence in Quality Management"
+      ],
+      "sources": [
+        "intel-epic-2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "ust",
+      "customer": "intel-corporation",
+      "products": [
+        "Excellence in Engineering Services Quality and Lab Readiness"
+      ],
+      "sources": [
+        "intel-epic-2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "valex-corp",
+      "customer": "intel-corporation",
+      "products": [
+        "Distinguished Supplier Award (Distinguished)"
+      ],
+      "sources": [
+        "intel-epic-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "veeco-instruments-inc",
+      "customer": "intel-corporation",
+      "products": [
+        "Excellence in Anneal Technology"
+      ],
+      "sources": [
+        "intel-epic-2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "veolia-north-america",
+      "customer": "intel-corporation",
+      "products": [
+        "Distinguished Supplier Award (Distinguished)"
+      ],
+      "sources": [
+        "intel-epic-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "wipro-limited",
+      "customer": "intel-corporation",
+      "products": [
+        "Excellence in Engineering Services Quality and Go-to-Market Enablement"
+      ],
+      "sources": [
+        "intel-epic-2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "wonik-qnc",
+      "customer": "intel-corporation",
+      "products": [
+        "Excellence in Quartz Parts Quality, Technology, Availability and Cost"
+      ],
+      "sources": [
+        "intel-epic-2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "celestica-electronics-sdn-bhd",
+      "customer": "lam-research-corporation",
+      "products": [
+        "Excellence in Operational Execution (No Demand Unmet) Award"
+      ],
+      "sources": [
+        "lam-supplier-awards-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "cryowest-inc",
+      "customer": "lam-research-corporation",
+      "products": [
+        "Rapid Prototype Materials Performance Award"
+      ],
+      "sources": [
+        "lam-supplier-awards-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "easys-s-r-o",
+      "customer": "lam-research-corporation",
+      "products": [
+        "Excellence in Quality Award"
+      ],
+      "sources": [
+        "lam-supplier-awards-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "inficon-ag",
+      "customer": "lam-research-corporation",
+      "products": [
+        "New Product Introduction Performance Award"
+      ],
+      "sources": [
+        "lam-supplier-awards-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "texon-co-ltd",
+      "customer": "lam-research-corporation",
+      "products": [
+        "Excellence in Operational Execution (No Demand Unmet) Award"
+      ],
+      "sources": [
+        "lam-supplier-awards-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "times-microwave-systems-inc-an-amphenol-company",
+      "customer": "lam-research-corporation",
+      "products": [
+        "New Product Introduction Performance Award"
+      ],
+      "sources": [
+        "lam-supplier-awards-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "tokai-carbon-korea",
+      "customer": "lam-research-corporation",
+      "products": [
+        "New Product Introduction Performance Award"
+      ],
+      "sources": [
+        "lam-supplier-awards-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "toto-ltd",
+      "customer": "lam-research-corporation",
+      "products": [
+        "Environmental, Social and Governance (ESG) Excellence Award"
+      ],
+      "sources": [
+        "lam-supplier-awards-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "venture-corporation-limited",
+      "customer": "lam-research-corporation",
+      "products": [
+        "Rapid Prototype Materials Performance Award"
+      ],
+      "sources": [
+        "lam-supplier-awards-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "system-airliquide",
+      "customer": "micron-technology-incorporated",
+      "products": [
+        "Ultra-pure nitrogen and other gases"
+      ],
+      "sources": [
+        "airliquide-micron-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": [
+        "Contract announcement; operational start has not been independently verified."
+      ]
+    },
+    {
+      "supplier": "system-globalwafers",
+      "customer": "micron-technology-incorporated",
+      "products": [
+        "Raw silicon wafers"
+      ],
+      "sources": [
+        "globalwafers-micron-2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": [
+        "Existing product supply disclosed; planned ten-year agreement is not recorded as completed."
+      ]
+    },
+    {
+      "supplier": "system-siltronic",
+      "customer": "micron-technology-incorporated",
+      "products": [
+        "Silicon wafers — supplier award"
+      ],
+      "sources": [
+        "siltronic-awards-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": []
+    },
+    {
+      "supplier": "fujifilm-holdings-corporation",
+      "customer": "samsung-electronics-company-limited",
+      "products": [
+        "Advanced semiconductor materials"
+      ],
+      "sources": [
+        "fujifilm-samsung-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Samsung \"Most Valuable Partner Award\" at Material Day 2025. Fujifilm says 14 firms were honoured but names only itself, so the other 13 edges cannot be drawn."
+      ]
+    },
+    {
+      "supplier": "system-entegris",
+      "customer": "samsung-electronics-company-limited",
+      "products": [
+        "Supplier award; specific supplied product not stated"
+      ],
+      "sources": [
+        "entegris-award-history"
+      ],
+      "years": [
+        2015
+      ],
+      "details": [
+        "Historical supplier recognition; ongoing supply and product scope have not been verified."
+      ]
+    },
+    {
+      "supplier": "system-linde",
+      "customer": "samsung-electronics-company-limited",
+      "products": [
+        "High-purity industrial gases"
+      ],
+      "sources": [
+        "linde-samsung-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": []
+    },
+    {
+      "supplier": "system-siltronic",
+      "customer": "samsung-electronics-company-limited",
+      "products": [
+        "Silicon wafers — supplier award"
+      ],
+      "sources": [
+        "siltronic-awards-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": []
+    },
+    {
+      "supplier": "system-sksiltron",
+      "customer": "samsung-electronics-company-limited",
+      "products": [
+        "Silicon wafers — historical supplier recognition"
+      ],
+      "sources": [
+        "sksiltron-award-history"
+      ],
+      "years": [
+        2015
+      ],
+      "details": [
+        "Historical supplier award; ongoing supply has not been verified."
+      ]
+    },
+    {
+      "supplier": "system-sksiltron",
+      "customer": "sk-hynix-incorporated",
+      "products": [
+        "Silicon wafers — historical supplier recognition"
+      ],
+      "sources": [
+        "sksiltron-award-history"
+      ],
+      "years": [
+        2014
+      ],
+      "details": [
+        "Historical supplier award; ongoing supply has not been verified."
+      ]
+    },
+    {
+      "supplier": "system-entegris",
+      "customer": "stmicroelectronics-n-v",
+      "products": [
+        "Supplier award; specific supplied product not stated"
+      ],
+      "sources": [
+        "entegris-award-history"
+      ],
+      "years": [
+        2014
+      ],
+      "details": [
+        "Historical supplier recognition; ongoing supply and product scope have not been verified."
+      ]
+    },
+    {
+      "supplier": "system-siltronic",
+      "customer": "stmicroelectronics-n-v",
+      "products": [
+        "Silicon wafers — supplier award"
+      ],
+      "sources": [
+        "siltronic-awards-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": []
+    },
+    {
+      "supplier": "system-sksiltron",
+      "customer": "stmicroelectronics-n-v",
+      "products": [
+        "Silicon wafers — historical supplier recognition"
+      ],
+      "sources": [
+        "sksiltron-award-history"
+      ],
+      "years": [
+        2018
+      ],
+      "details": [
+        "Historical supplier award; ongoing supply has not been verified."
+      ]
+    },
+    {
+      "supplier": "system-nvidia",
+      "customer": "system-amazon",
+      "products": [
+        "Blackwell platform — announced adoption / system integration"
+      ],
+      "sources": [
+        "nvidia-blackwell-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": [
+        "Announced plans in March 2024; delivery and current deployment status are not verified."
+      ]
+    },
+    {
+      "supplier": "samsung-electronics-company-limited",
+      "customer": "system-amd",
+      "products": [
+        "Programmable logic wafers"
+      ],
+      "sources": [
+        "amd-10k-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "siliconware-precision-industries-co-ltd",
+      "customer": "system-amd",
+      "products": [
+        "Assembly, testing, marking and packaging"
+      ],
+      "sources": [
+        "amd-10k-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "system-gf",
+      "customer": "system-amd",
+      "products": [
+        "12 nm and 14 nm HPC wafers"
+      ],
+      "sources": [
+        "amd-10k-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "system-kyec",
+      "customer": "system-amd",
+      "products": [
+        "Assembly, testing, marking and packaging"
+      ],
+      "sources": [
+        "amd-10k-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "taiwan-semiconductor-manufacturing-company-limited",
+      "customer": "system-amd",
+      "products": [
+        "HPC, FPGA, Adaptive SoC and programmable logic wafers"
+      ],
+      "sources": [
+        "amd-10k-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "united-microelectronics-corporation",
+      "customer": "system-amd",
+      "products": [
+        "Programmable logic wafers"
+      ],
+      "sources": [
+        "amd-10k-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "system-nvidia",
+      "customer": "system-google",
+      "products": [
+        "Blackwell platform — announced adoption / system integration"
+      ],
+      "sources": [
+        "nvidia-blackwell-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": [
+        "Announced plans in March 2024; delivery and current deployment status are not verified."
+      ]
+    },
+    {
+      "supplier": "system-nvidia",
+      "customer": "system-lenovo",
+      "products": [
+        "Blackwell platform — announced adoption / system integration"
+      ],
+      "sources": [
+        "nvidia-blackwell-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": [
+        "Announced plans in March 2024; delivery and current deployment status are not verified."
+      ]
+    },
+    {
+      "supplier": "system-arm",
+      "customer": "system-mediatek",
+      "products": [
+        "Cortex-X4 and Cortex-A720 CPU IP"
+      ],
+      "sources": [
+        "mediatek-dimensity-9300"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "taiwan-semiconductor-manufacturing-company-limited",
+      "customer": "system-mediatek",
+      "products": [
+        "4 nm Dimensity 9300 manufacturing"
+      ],
+      "sources": [
+        "mediatek-dimensity-9300"
+      ],
+      "years": [
+        2023
+      ],
+      "details": []
+    },
+    {
+      "supplier": "system-nvidia",
+      "customer": "system-meta",
+      "products": [
+        "Blackwell platform — announced adoption / system integration"
+      ],
+      "sources": [
+        "nvidia-blackwell-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": [
+        "Announced plans in March 2024; delivery and current deployment status are not verified."
+      ]
+    },
+    {
+      "supplier": "system-nvidia",
+      "customer": "system-microsoft",
+      "products": [
+        "Blackwell platform — announced adoption / system integration"
+      ],
+      "sources": [
+        "nvidia-blackwell-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": [
+        "Announced plans in March 2024; delivery and current deployment status are not verified."
+      ]
+    },
+    {
+      "supplier": "hon-hai-precision-industry-company-limited-foxconn",
+      "customer": "system-nvidia",
+      "products": [
+        "Assembly, testing and packaging"
+      ],
+      "sources": [
+        "nvidia-supply-fy2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "micron-technology-incorporated",
+      "customer": "system-nvidia",
+      "products": [
+        "Memory"
+      ],
+      "sources": [
+        "nvidia-supply-fy2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "samsung-electronics-company-limited",
+      "customer": "system-nvidia",
+      "products": [
+        "Semiconductor wafers and memory"
+      ],
+      "sources": [
+        "nvidia-supply-fy2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "sk-hynix-incorporated",
+      "customer": "system-nvidia",
+      "products": [
+        "Memory"
+      ],
+      "sources": [
+        "nvidia-supply-fy2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "taiwan-semiconductor-manufacturing-company-limited",
+      "customer": "system-nvidia",
+      "products": [
+        "Semiconductor wafers"
+      ],
+      "sources": [
+        "nvidia-supply-fy2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "wistron-corporation",
+      "customer": "system-nvidia",
+      "products": [
+        "Assembly, testing and packaging"
+      ],
+      "sources": [
+        "nvidia-supply-fy2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "wacker-chemie-ag",
+      "customer": "system-siltronic",
+      "products": [
+        "Polysilicon for silicon wafer production"
+      ],
+      "sources": [
+        "wacker-ar2024-siltronic"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "system-nvidia",
+      "customer": "system-supermicro",
+      "products": [
+        "Blackwell platform — announced adoption / system integration"
+      ],
+      "sources": [
+        "nvidia-blackwell-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": [
+        "Announced plans in March 2024; delivery and current deployment status are not verified."
+      ]
+    },
+    {
+      "supplier": "system-nvidia",
+      "customer": "system-tesla",
+      "products": [
+        "Blackwell platform — announced adoption / system integration"
+      ],
+      "sources": [
+        "nvidia-blackwell-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": [
+        "Announced plans in March 2024; delivery and current deployment status are not verified."
+      ]
+    },
+    {
+      "supplier": "abb-ltd",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellence in Construction Safety"
+      ],
+      "sources": [
+        "tsmc-scm-2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "advantest-corporation",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellent Production Support"
+      ],
+      "sources": [
+        "tsmc-scm-2026",
+        "tsmc-scm-2025"
+      ],
+      "years": [
+        2025,
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "all-ring-tech-co-ltd",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellent Production Support"
+      ],
+      "sources": [
+        "tsmc-scm-2026",
+        "tsmc-scm-2025"
+      ],
+      "years": [
+        2025,
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "applied-materials-inc",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellent Technology and Production Support",
+        "Excellent Contribution in Green Manufacturing and Excellent Technology Development and Production Support",
+        "Excellent Technology Collaboration"
+      ],
+      "sources": [
+        "tsmc-scm-2026",
+        "tsmc-scm-2025",
+        "tsmc-scm-2024"
+      ],
+      "years": [
+        2024,
+        2025,
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "asahi-kasei-corporation",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellent Technology Development and Production Support",
+        "Excellent Technology Collaboration and Production Support in Advanced Packaging"
+      ],
+      "sources": [
+        "tsmc-scm-2025",
+        "tsmc-scm-2024"
+      ],
+      "years": [
+        2024,
+        2025
+      ],
+      "details": []
+    },
+    {
+      "supplier": "asm-international-n-v",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellent Production Support and Excellence in Green Manufacturing",
+        "Excellent Production Support"
+      ],
+      "sources": [
+        "tsmc-scm-2026",
+        "tsmc-scm-2024"
+      ],
+      "years": [
+        2024,
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "asml-holding-n-v",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellent Technology and Production Support and Excellent Globalization Support",
+        "Excellent Contribution in Green Manufacturing and Excellent Production Support",
+        "Excellent Production Support"
+      ],
+      "sources": [
+        "tsmc-scm-2026",
+        "tsmc-scm-2025",
+        "tsmc-scm-2024"
+      ],
+      "years": [
+        2024,
+        2025,
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "austin-commercial-lp",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellence in Construction Safety",
+        "Excellence in New Fab Construction"
+      ],
+      "sources": [
+        "tsmc-scm-2026",
+        "tsmc-scm-2025"
+      ],
+      "years": [
+        2025,
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "canon-inc",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellent Production Support",
+        "Excellent Production Support in Advanced Packaging"
+      ],
+      "sources": [
+        "tsmc-scm-2025",
+        "tsmc-scm-2024"
+      ],
+      "years": [
+        2024,
+        2025
+      ],
+      "details": []
+    },
+    {
+      "supplier": "chang-chun-petrochemical-co-ltd",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellent Production Support"
+      ],
+      "sources": [
+        "tsmc-scm-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": []
+    },
+    {
+      "supplier": "china-steel-structure-co-ltd",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellence in New Fab Construction"
+      ],
+      "sources": [
+        "tsmc-scm-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": []
+    },
+    {
+      "supplier": "csun-g2c-alliance",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellent Production Support"
+      ],
+      "sources": [
+        "tsmc-scm-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": []
+    },
+    {
+      "supplier": "dacin-construction-co-ltd",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellence in Fab Construction",
+        "Excellent Performance in New Fab Construction"
+      ],
+      "sources": [
+        "tsmc-scm-2026",
+        "tsmc-scm-2024"
+      ],
+      "years": [
+        2024,
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "daifuku-co-ltd",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellence in Fab Automation"
+      ],
+      "sources": [
+        "tsmc-scm-2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "disco-corporation",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellent Production Support",
+        "Excellent Production Support in Advanced Packaging"
+      ],
+      "sources": [
+        "tsmc-scm-2026",
+        "tsmc-scm-2025",
+        "tsmc-scm-2024"
+      ],
+      "years": [
+        2024,
+        2025,
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "ebara-corporation",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellent Production Support"
+      ],
+      "sources": [
+        "tsmc-scm-2026",
+        "tsmc-scm-2025"
+      ],
+      "years": [
+        2025,
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "fu-tsu-construction-co-ltd",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellence in New Fab Construction"
+      ],
+      "sources": [
+        "tsmc-scm-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": []
+    },
+    {
+      "supplier": "fujimi-incorporated",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellent Technology and Production Support"
+      ],
+      "sources": [
+        "tsmc-scm-2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "gold-stone-development-co-ltd",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellence in Fab Construction"
+      ],
+      "sources": [
+        "tsmc-scm-2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "hsingmien-industry-co-ltd",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellent Production Support"
+      ],
+      "sources": [
+        "tsmc-scm-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "jentech-precision-industrial-co-ltd",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellent Production Support"
+      ],
+      "sources": [
+        "tsmc-scm-2026",
+        "tsmc-scm-2025"
+      ],
+      "years": [
+        2025,
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "jsr-corporation",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellent Technology Development and Production Support"
+      ],
+      "sources": [
+        "tsmc-scm-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": []
+    },
+    {
+      "supplier": "jx-advanced-metals-corporation",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellent Production Support",
+        "Excellent Technology Collaboration and Production Support"
+      ],
+      "sources": [
+        "tsmc-scm-2026",
+        "tsmc-scm-2024"
+      ],
+      "years": [
+        2024,
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "kedge-construction-co-ltd",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellence in Fab Construction"
+      ],
+      "sources": [
+        "tsmc-scm-2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "kla-corporation",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellent Technology and Production Support and Excellence in Green Manufacturing",
+        "Excellent Production Support",
+        "Excellent Technology Collaboration and Production Support"
+      ],
+      "sources": [
+        "tsmc-scm-2026",
+        "tsmc-scm-2025",
+        "tsmc-scm-2024"
+      ],
+      "years": [
+        2024,
+        2025,
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "kokusai-electric-corporation",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellent Production Support"
+      ],
+      "sources": [
+        "tsmc-scm-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": []
+    },
+    {
+      "supplier": "lam-research-corporation",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellent Technology and Production Support and Excellent Globalization Support",
+        "Excellent Technology Development and Production Support",
+        "Excellent Contribution in Green Manufacturing and Excellent Technology Collaboration and Production Support"
+      ],
+      "sources": [
+        "tsmc-scm-2026",
+        "tsmc-scm-2025",
+        "tsmc-scm-2024"
+      ],
+      "years": [
+        2024,
+        2025,
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "lasertec-corporation",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellent Production Support"
+      ],
+      "sources": [
+        "tsmc-scm-2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "lcy-group",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellent Contribution in Green Manufacturing"
+      ],
+      "sources": [
+        "tsmc-scm-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "lee-ming-construction-co-ltd",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellence in Construction Safety"
+      ],
+      "sources": [
+        "tsmc-scm-2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "marketech-international-corp",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellent Safety Performance in New Fab Construction"
+      ],
+      "sources": [
+        "tsmc-scm-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": []
+    },
+    {
+      "supplier": "merck",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellent Contribution in Green Manufacturing"
+      ],
+      "sources": [
+        "tsmc-scm-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": []
+    },
+    {
+      "supplier": "murata-machinery-ltd",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellence in New Fab Automation",
+        "Excellent Performance in Fab Automation"
+      ],
+      "sources": [
+        "tsmc-scm-2025",
+        "tsmc-scm-2024"
+      ],
+      "years": [
+        2024,
+        2025
+      ],
+      "details": []
+    },
+    {
+      "supplier": "namics-corporation",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellent Production Support",
+        "Excellent Technology Collaboration and Production Support in Advanced Packaging"
+      ],
+      "sources": [
+        "tsmc-scm-2026",
+        "tsmc-scm-2024"
+      ],
+      "years": [
+        2024,
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "nuflare-technology-inc",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Distinguished Mask Writer Collaboration"
+      ],
+      "sources": [
+        "tsmc-scm-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "onto-innovation-inc",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellent Production Support"
+      ],
+      "sources": [
+        "tsmc-scm-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": []
+    },
+    {
+      "supplier": "organo-technology-co-ltd",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellent Performance in New Fab Construction"
+      ],
+      "sources": [
+        "tsmc-scm-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "pegatron-corporation",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellent IT Service"
+      ],
+      "sources": [
+        "tsmc-scm-2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "resonac-corporation",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellent Production Support",
+        "Excellent Technology Development and Production Support"
+      ],
+      "sources": [
+        "tsmc-scm-2026",
+        "tsmc-scm-2025"
+      ],
+      "years": [
+        2025,
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "retech-environmental-solutions-co-ltd",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellence in Green Manufacturing"
+      ],
+      "sources": [
+        "tsmc-scm-2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "scientech-corporation",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellent Production Support in Advanced Packaging"
+      ],
+      "sources": [
+        "tsmc-scm-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "screen-semiconductor-solutions-co-ltd",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellent Production Support",
+        "Excellent Contribution in Green Manufacturing and Excellent Production Support"
+      ],
+      "sources": [
+        "tsmc-scm-2026",
+        "tsmc-scm-2025",
+        "tsmc-scm-2024"
+      ],
+      "years": [
+        2024,
+        2025,
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "shibaura-mechatronics-corporation",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellent Production Support in Advanced Packaging"
+      ],
+      "sources": [
+        "tsmc-scm-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "shin-etsu-chemical-co-ltd",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellent Production Support"
+      ],
+      "sources": [
+        "tsmc-scm-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "shin-etsu-handotai-co-ltd",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellent Technology and Production Support",
+        "Excellent Technology Development and Production Support"
+      ],
+      "sources": [
+        "tsmc-scm-2026",
+        "tsmc-scm-2025"
+      ],
+      "years": [
+        2025,
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "shiny-chemical-industrial-co",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellence in Green Manufacturing"
+      ],
+      "sources": [
+        "tsmc-scm-2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "siliconware-precision-industries-co-ltd",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellent Turnkey Production Support"
+      ],
+      "sources": [
+        "tsmc-scm-2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "sumco-corporation",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellent Production Support",
+        "Excellent Contribution in Green Manufacturing and Excellent Production Support"
+      ],
+      "sources": [
+        "tsmc-scm-2026",
+        "tsmc-scm-2025",
+        "tsmc-scm-2024"
+      ],
+      "years": [
+        2024,
+        2025,
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "sunlit",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellent Production Support"
+      ],
+      "sources": [
+        "tsmc-scm-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": []
+    },
+    {
+      "supplier": "taiwan-pulp-and-paper-corporation",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellent Production Support"
+      ],
+      "sources": [
+        "tsmc-scm-2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "taiwan-puritic-corp",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellence in Fab Construction",
+        "Excellence in New Fab Construction"
+      ],
+      "sources": [
+        "tsmc-scm-2026",
+        "tsmc-scm-2025"
+      ],
+      "years": [
+        2025,
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "tasa-construction-corporation",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellent Safety Performance in New Fab Construction"
+      ],
+      "sources": [
+        "tsmc-scm-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": []
+    },
+    {
+      "supplier": "technoprobe-s-p-a",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellent Production Support"
+      ],
+      "sources": [
+        "tsmc-scm-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "tokyo-electron-limited",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellent Production Support",
+        "Excellent Technology Collaboration and Production Support"
+      ],
+      "sources": [
+        "tsmc-scm-2026",
+        "tsmc-scm-2024"
+      ],
+      "years": [
+        2024,
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "tokyo-ohka-kogyo-co-ltd",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellent Technology and Production Support and Excellent Globalization Support",
+        "Novel Technology Collaboration"
+      ],
+      "sources": [
+        "tsmc-scm-2026",
+        "tsmc-scm-2024"
+      ],
+      "years": [
+        2024,
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "topco-quartz-products-co-ltd",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellent Production Support"
+      ],
+      "sources": [
+        "tsmc-scm-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "tung-kang-steel-structure-corp",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellent Performance in New Fab Construction"
+      ],
+      "sources": [
+        "tsmc-scm-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": []
+    },
+    {
+      "supplier": "ulvac-inc",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellent Production Support"
+      ],
+      "sources": [
+        "tsmc-scm-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": []
+    },
+    {
+      "supplier": "united-integrated-services-co-ltd",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellent Globalization Support",
+        "Excellent Performance in New Fab Construction"
+      ],
+      "sources": [
+        "tsmc-scm-2026",
+        "tsmc-scm-2024"
+      ],
+      "years": [
+        2024,
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "v5-technologies-co-ltd",
+      "customer": "taiwan-semiconductor-manufacturing-company-limited",
+      "products": [
+        "Excellent Production Support"
+      ],
+      "sources": [
+        "tsmc-scm-2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": []
+    },
+    {
+      "supplier": "system-sksiltron",
+      "customer": "texas-instruments-incorporated",
+      "products": [
+        "Silicon wafers — historical supplier recognition"
+      ],
+      "sources": [
+        "sksiltron-award-history"
+      ],
+      "years": [
+        2017
+      ],
+      "details": [
+        "Historical supplier award; ongoing supply has not been verified."
+      ]
+    },
+    {
+      "supplier": "system-entegris",
+      "customer": "united-microelectronics-corporation",
+      "products": [
+        "Supplier award; specific supplied product not stated"
+      ],
+      "sources": [
+        "entegris-award-history"
+      ],
+      "years": [
+        2010
+      ],
+      "details": [
+        "Historical supplier recognition; ongoing supply and product scope have not been verified."
+      ]
+    }
+  ]
+}

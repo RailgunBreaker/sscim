@@ -1,0 +1,373 @@
+{
+  "meta": {
+    "generated": "2026-11-22"
+  },
+  "sources": {
+    "apple-sl-fy2023": {
+      "publisher": "Apple Inc.",
+      "title": "Supplier List (fiscal year 2023)",
+      "kind": "Buyer-published supplier list",
+      "url": "https://s203.q4cdn.com/367071867/files/doc_downloads/2024/04/Apple-Supplier-List.pdf",
+      "published": "2024-04",
+      "evidence": "P1-buyer",
+      "seen": "fetched",
+      "retrieved": "2026-11-22",
+      "quote": "The Apple supplier list represents 98 percent of our direct spend for materials, manufacturing, and assembly of our products worldwide for fiscal year 2023.",
+      "note": "187 supplier names machine-extracted from the PDF's supplier-name column with pdftotext; the extraction is kept verbatim in data/raw-apple-supplier-list-fy2023.txt, minus three page-footer fragments the column capture caught."
+    },
+    "apple-supplier-responsibility": {
+      "publisher": "Apple Inc.",
+      "title": "Supply Chain Innovation (supplier responsibility index)",
+      "kind": "Company page",
+      "url": "https://www.apple.com/supplier-responsibility/",
+      "evidence": "P1-buyer",
+      "seen": "fetched",
+      "retrieved": "2026-11-22",
+      "note": "Index page the supplier list is published from."
+    },
+    "tsmc-scm-2026": {
+      "publisher": "TSMC",
+      "title": "TSMC 2026 Supply Chain Management Forum Presents Awards to Outstanding Suppliers",
+      "kind": "Buyer-published supplier award list",
+      "url": "https://pr.tsmc.com/english/news/3355",
+      "published": "2026-11-17",
+      "evidence": "P1-buyer",
+      "seen": "fetched",
+      "retrieved": "2026-11-22",
+      "quote": "This year's evaluation placed greater emphasis on overall performance in construction safety, sustainability, global support, and localization"
+    },
+    "tsmc-scm-2025": {
+      "publisher": "TSMC",
+      "title": "TSMC 2025 Supply Chain Management Forum Presents Awards to Outstanding Suppliers",
+      "kind": "Buyer-published supplier award list",
+      "url": "https://pr.tsmc.com/english/news/3274",
+      "published": "2025-11-28",
+      "evidence": "P1-buyer",
+      "seen": "fetched",
+      "retrieved": "2026-11-22",
+      "quote": "recognizing suppliers for their outstanding performance in driving improvements and efficiencies across the supply chain"
+    },
+    "tsmc-scm-2024": {
+      "publisher": "TSMC",
+      "title": "TSMC 2024 Supply Chain Management Forum Presents Awards to Outstanding Suppliers",
+      "kind": "Buyer-published supplier award list",
+      "url": "https://pr.tsmc.com/english/news/3192",
+      "published": "2024-12-02",
+      "evidence": "P1-buyer",
+      "seen": "fetched",
+      "retrieved": "2026-11-22",
+      "quote": "commend suppliers with outstanding performance in the innovation, technology collaboration, global production support"
+    },
+    "intel-epic-2026": {
+      "publisher": "Intel Corporation",
+      "title": "Intel Announces 2026 EPIC Supplier Award Recipients",
+      "kind": "Buyer-published supplier award list",
+      "url": "https://www.intel.com/content/www/us/en/newsroom/news/corporate/intel-announces-2026-epic-supplier-award-recipients.html",
+      "published": "2026-03-19",
+      "evidence": "P1-buyer",
+      "seen": "fetched",
+      "retrieved": "2026-11-22",
+      "quote": "Of the thousands of Intel suppliers around the world, only a few hundred qualify to participate in the EPIC Supplier Program."
+    },
+    "intel-epic-2024": {
+      "publisher": "Intel Corporation",
+      "title": "Intel Announces 2024 EPIC Supplier Program Award Recipients",
+      "kind": "Buyer-published supplier award list",
+      "url": "https://www.intel.com/content/www/us/en/newsroom/news/intel-announces-2024-epic-supplier-program-award-recipients.html",
+      "published": "2024-03-28",
+      "evidence": "P1-buyer",
+      "seen": "fetched",
+      "retrieved": "2026-11-22",
+      "note": "Three award classes: Outstanding, Distinguished, Valued."
+    },
+    "intel-epic-program": {
+      "publisher": "Intel Corporation",
+      "title": "Excellence, Partnership, Inclusion and Continuous Improvement (EPIC) Program",
+      "kind": "Company page",
+      "url": "https://www.intel.com/content/www/us/en/supplier/governance/quality/epic.htm",
+      "evidence": "P1-buyer",
+      "seen": "search-indexed",
+      "note": "Defines the programme the award lists are drawn from."
+    },
+    "trumpf-asml-2025": {
+      "publisher": "TRUMPF (carried by Photonics Online)",
+      "title": "ASML Honors TRUMPF For New EUV Laser",
+      "kind": "Supplier-published award announcement",
+      "url": "https://www.photonicsonline.com/doc/asml-honors-trumpf-for-new-euv-laser-0001",
+      "published": "2025-10-24",
+      "evidence": "P1-supplier",
+      "seen": "fetched",
+      "retrieved": "2026-11-22",
+      "quote": "The Dutch technology company ASML yesterday honored TRUMPF with its prestigious Supplier Award in the \"Technology\" category."
+    },
+    "nts-asml-2025": {
+      "publisher": "NPM Capital (on NTS Group)",
+      "title": "NTS Group wins ASML Supplier Award for global production strategy",
+      "kind": "Supplier-published award announcement",
+      "url": "https://www.npm-capital.com/en/news/nts-group-wins-asml-supplier-award-for-global-production-strategy?hsLang=en",
+      "published": "2025-11-21",
+      "evidence": "P1-supplier",
+      "seen": "fetched",
+      "retrieved": "2026-11-22",
+      "quote": "NTS Group was awarded a Supplier Award in the category Cost during the annual ASML Suppliers Day."
+    },
+    "asml-20f-2014": {
+      "publisher": "ASML Holding N.V.",
+      "title": "Annual Report on Form 20-F, FY2014",
+      "kind": "Securities filing",
+      "url": "https://www.sec.gov/Archives/edgar/data/0000937966/000119312515042676/d737660d20f.htm",
+      "published": "2015-02",
+      "evidence": "P1-self",
+      "seen": "search-indexed",
+      "quote": "single supplier of lenses, mirrors, collectors and other optical components … 27.4% of our aggregate cost of sales were purchased from Zeiss",
+      "note": "The clearest filed statement of the Zeiss dependency and its size. Dated — the share will have moved — but the single-source structure is the point."
+    },
+    "asml-20f-2024": {
+      "publisher": "ASML Holding N.V.",
+      "title": "Annual Report on Form 20-F, FY2024",
+      "kind": "Securities filing",
+      "url": "https://www.sec.gov/Archives/edgar/data/937966/000093796625000009/asml-20241231.htm",
+      "published": "2025-03-05",
+      "evidence": "P1-self",
+      "seen": "search-indexed"
+    },
+    "asml-berlin": {
+      "publisher": "ASML",
+      "title": "ASML Berlin",
+      "kind": "Company page",
+      "url": "https://asml.com/en/asml-berlin",
+      "evidence": "P1-self",
+      "seen": "search-indexed",
+      "quote": "manufactures many key components for our extreme ultraviolet (EUV) and deep ultraviolet (DUV) systems, including wafer tables and clamps, reticle chucks and mirror blocks",
+      "note": "Berliner Glas, acquired by ASML in November 2020 — an upstream supplier that became an internal site. Recorded as internalised, not as an arm's-length edge."
+    },
+    "asml-supply-chain-2023": {
+      "publisher": "ASML",
+      "title": "6 ingredients of a robust supply chain",
+      "kind": "Company page",
+      "url": "https://www.asml.com/en/company/stories/2023/6-ingredients-robust-supply-chain",
+      "published": "2023",
+      "evidence": "P1-self",
+      "seen": "search-indexed"
+    },
+    "tsmc-ar-2024-customers": {
+      "publisher": "TSMC",
+      "title": "2024 Annual Report — customers accounting for at least 10% of consolidated net revenue",
+      "kind": "Annual report",
+      "url": "https://investor.tsmc.com/static/annualReports/2024/english/ebook/files/basic-html/page112.html",
+      "published": "2025-04",
+      "evidence": "P1-self",
+      "seen": "search-indexed",
+      "note": "Reports Customer A at 22% of 2024 net revenue — ANONYMISED. Establishes concentration, names nobody. No edge can be drawn from it."
+    },
+    "tsmc-ar-2024-risk": {
+      "publisher": "TSMC",
+      "title": "2024 Annual Report — customer concentration risk factor",
+      "kind": "Annual report",
+      "url": "https://investor.tsmc.com/static/annualReports/2024/english/ebook/files/basic-html/page140.html",
+      "published": "2025-04",
+      "evidence": "P1-self",
+      "seen": "search-indexed"
+    },
+    "nvda-10k-fy2025": {
+      "publisher": "NVIDIA Corporation",
+      "title": "Annual Report on Form 10-K, fiscal 2025",
+      "kind": "Securities filing",
+      "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000023/nvda-20250126.htm",
+      "published": "2025-02-26",
+      "evidence": "P1-self",
+      "seen": "search-indexed",
+      "note": "Direct Customer A 12%, B and C 11% each of FY2025 revenue — ANONYMISED. Establishes concentration, names nobody. No edge can be drawn from it."
+    },
+    "techinsights-smic-n2": {
+      "publisher": "TechInsights",
+      "title": "TechInsights finds SMIC 7nm (N+2) in Huawei Mate 60 Pro",
+      "kind": "Teardown / reverse-engineering report",
+      "url": "https://www.techinsights.com/blog/techinsights-finds-smic-7nm-n2-huawei-mate-60-pro",
+      "published": "2023-09",
+      "evidence": "P2-institutional",
+      "seen": "search-indexed",
+      "note": "Physical die analysis, not a disclosure — the one class of evidence that still works when neither party will confirm the relationship."
+    },
+    "techinsights-smic-7nm-card": {
+      "publisher": "TechInsights",
+      "title": "China's SMIC Plays 7 nm Card",
+      "kind": "Teardown / reverse-engineering report",
+      "url": "https://www.techinsights.com/blog/chinas-smic-plays-7-nm-card",
+      "evidence": "P2-institutional",
+      "seen": "search-indexed"
+    },
+    "fr-huawei-2020-08": {
+      "publisher": "U.S. Federal Register (Bureau of Industry and Security)",
+      "title": "Addition of Huawei Non-U.S. Affiliates to the Entity List, the Removal of Temporary General License, and Amendments to General Prohibition Three (85 FR 51596)",
+      "kind": "Rule",
+      "url": "https://www.federalregister.gov/documents/2020/08/20/2020-18213/addition-of-huawei-non-us-affiliates-to-the-entity-list-the-removal-of-temporary-general-license-and",
+      "published": "2020-08-20",
+      "evidence": "P3-regulatory",
+      "seen": "search-indexed",
+      "note": "Names Huawei's non-U.S. affiliates, HiSilicon among them — a government document establishing corporate affiliation."
+    },
+    "fr-fdpr-2020-05": {
+      "publisher": "U.S. Federal Register (Bureau of Industry and Security)",
+      "title": "Export Administration Regulations: Amendments to General Prohibition Three (Foreign-Produced Direct Product Rule) and the Entity List (85 FR 29849)",
+      "kind": "Interim final rule",
+      "url": "https://www.govinfo.gov/content/pkg/FR-2020-05-19/html/2020-10856.htm",
+      "published": "2020-05-19",
+      "evidence": "P3-regulatory",
+      "seen": "search-indexed",
+      "note": "The rule that severed Huawei's foundry access and is the direct cause of the empty upstream recorded here."
+    },
+    "fujifilm-samsung-2025": {
+      "publisher": "Fujifilm Holdings",
+      "title": "Fujifilm receives Samsung Electronics \"Most Valuable Partner Award\" at Material Day 2025",
+      "kind": "Supplier-published award announcement",
+      "url": "https://www.fujifilm.com/kr/en/news/hq/13138",
+      "published": "2025-11-18",
+      "evidence": "P1-supplier",
+      "seen": "search-indexed",
+      "note": "Fujifilm states 14 companies were honoured; it names only itself, so only its own edge is recorded."
+    },
+    "lam-supplier-awards-2024": {
+      "publisher": "Lam Research (carried by 3D InCites)",
+      "title": "Lam Research Honors Suppliers with 2024 Excellence Awards",
+      "kind": "Buyer-published supplier award list",
+      "url": "https://www.3dincites.com/2024/09/lam-research-honors-global-suppliers-with-2024-excellence-awards/",
+      "published": "2024-09-23",
+      "evidence": "P1-buyer",
+      "seen": "fetched",
+      "retrieved": "2026-11-22",
+      "quote": "Lam Research Corp. today announced this year's recipients of its annual Supplier Excellence Awards, recognizing nine companies from around the world for performance across a range of categories.",
+      "note": "Reaches a third documented step: these are suppliers to an equipment maker that is itself named as a supplier to TSMC and Intel. The release names the award category but never the product, so no edge from it claims one. Lam's 2023 list exists but was only available here as a summary rather than verbatim text, so it was left out."
+    },
+    "semi-wafer-2025": {
+      "publisher": "SEMI",
+      "title": "SEMI Reports 2025 Annual Worldwide Silicon Wafer Shipments and Revenue Results",
+      "kind": "Industry association statistics",
+      "url": "https://www.semi.org/en/semi-press-release/semi-reports-2025-annual-worldwide-silicon-wafer-shipments-and-revenue-results",
+      "evidence": "P2-institutional",
+      "seen": "search-indexed",
+      "note": "Context for the wafer layer. Carries no firm-to-firm relationship, so it backs no edge."
+    },
+    "nvidia-supply-fy2024": {
+      "publisher": "NVIDIA",
+      "title": "FY2024 Sustainability Report — Responsible Supply Chain, page 19",
+      "url": "https://images.nvidia.com/aem-dam/Solutions/documents/FY2024-NVIDIA-Corporate-Sustainability-Report.pdf",
+      "published": "2024",
+      "evidence": "P1-buyer",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-23",
+      "note": "Historical company disclosure; not a verification of current contracts."
+    },
+    "amd-10k-2024": {
+      "publisher": "AMD",
+      "title": "2024 Form 10-K — Manufacturing Arrangements and Assembly and Test Facilities",
+      "url": "https://ir.amd.com/financial-information/sec-filings/content/0000002488-25-000012/amd-20241228.htm",
+      "published": "2025-02-05",
+      "evidence": "P1-self",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-23",
+      "note": "Manufacturing counterparties disclosed for fiscal 2024."
+    },
+    "mediatek-dimensity-9300": {
+      "publisher": "MediaTek",
+      "title": "Dimensity 9300 announcement",
+      "url": "https://www.mediatek.com/press-room/mediateks-new-all-big-core-design-for-flagship-dimensity-9300-chipset-maximizes-smartphone-performance-and-efficiency",
+      "published": "2023-11-06",
+      "evidence": "P1-buyer",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-23",
+      "note": "Product-specific manufacturing process and CPU IP disclosure."
+    },
+    "nvidia-blackwell-2024": {
+      "publisher": "NVIDIA",
+      "title": "Blackwell platform launch — named adopters and system partners",
+      "url": "https://nvidianews.nvidia.com/news/nvidia-blackwell-platform-arrives-to-power-a-new-era-of-computing/",
+      "published": "2024-03-18",
+      "evidence": "P1-supplier",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-23",
+      "note": "Announced adoption and planned availability, not proof of delivered shipments or a direct procurement contract."
+    },
+    "linde-samsung-2025": {
+      "publisher": "Linde",
+      "title": "Expanded gas supply to Samsung in South Korea",
+      "url": "https://www.linde.com/news-and-media/2025/linde-to-expand-supply-of-industrial-gases-to-samsung-in-south-korea",
+      "published": "2025-04-29",
+      "evidence": "P1-supplier",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-23",
+      "note": "Existing supply and announced expansion at Pyeongtaek."
+    },
+    "airliquide-micron-2024": {
+      "publisher": "Air Liquide",
+      "title": "Idaho industrial gas supply contract for Micron",
+      "url": "https://www.airliquide.com/group/press-releases-news/2024-06-05/air-liquide-signed-major-contract-support-semiconductor-industry-us-investment-more-250-million",
+      "published": "2024-06-05",
+      "evidence": "P1-supplier",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-23",
+      "note": "Announced long-term contract; facility operation was expected by end 2025."
+    },
+    "globalwafers-micron-2026": {
+      "publisher": "GlobalWafers",
+      "title": "Micron long-term supply cooperation and proposed financing",
+      "url": "https://www.sas-globalwafers.com/en/gwc_news_en_20261103-1/",
+      "published": "2026-11-03",
+      "evidence": "P1-supplier",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-23",
+      "note": "Describes existing supply arrangements and a planned ten-year agreement. Financing and future commitments are proposals."
+    },
+    "siltronic-awards-2025": {
+      "publisher": "Siltronic",
+      "title": "April 2026 investor presentation, page 23 — 2025 supplier awards",
+      "url": "https://www.siltronic.com/fileadmin/investorrelations/2026/Q1/20260429_SiltronicInvestorPresentation_.pdf",
+      "published": "2026-04-29",
+      "evidence": "P1-supplier",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-23",
+      "note": "Supplier awards identify counterparties; they do not establish purchase volumes or current contracts."
+    },
+    "sksiltron-award-history": {
+      "publisher": "SK Siltron",
+      "title": "Corporate award history — named wafer customers",
+      "url": "https://www.sksiltron.com/en/company/award.do",
+      "published": "",
+      "evidence": "P1-supplier",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-23",
+      "note": "Historical awards dated 2014–2018. They are not evidence of current supply."
+    },
+    "entegris-award-history": {
+      "publisher": "Entegris",
+      "title": "Corporate history — supplier awards",
+      "url": "https://www.entegris.com/en/home/about-us/corporate-overview.html",
+      "published": "",
+      "evidence": "P1-supplier",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-23",
+      "note": "Dated corporate timeline records awards from UMC (2010), STMicroelectronics (2014) and Samsung (2015)."
+    },
+    "wacker-ar2024-siltronic": {
+      "publisher": "Wacker Chemie",
+      "title": "Annual Report 2024 — supply to Siltronic",
+      "url": "https://reports.wacker.com/2024/annual-report/_assets/downloads/entire-wacker-ar24.pdf",
+      "published": "2025",
+      "evidence": "P1-self",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-23",
+      "note": "Annual report identifies polysilicon supply to Siltronic."
+    }
+  }
+}

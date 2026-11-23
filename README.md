@@ -38,11 +38,22 @@ fitted to nothing.
   anything, walk back and forward, filter by company / country / stage /
   relationship type / strength, and open any connection to see exactly which
   company edge and which stage reach produced it.
+- **Public supplier network** - explore 362 registered firms and 360 cited
+  relationships from any of the 109 system companies. Levels 1-3 measure
+  distance from the selected company; each connection points supplier to
+  customer and opens its evidence. A persistent legend, level lists and
+  shortest citation paths explain the graph. Dragging a node animates its
+  neighbours while keeping the node under the pointer, then settles on release.
+- **A profile for every chain company** - all 362 use the standard profile
+  format. Tracking and modeled scores remain limited to the 109 system
+  companies; outside firms provide context and explicitly mark unknown control
+  fields. Of the 109, 73 have documented connections and 36 have evidence gaps.
+  Modeled relationships and public disclosures stay separate. See the
+  [public supplier network guide](docs/PUBLIC_SUPPLIER_NETWORK.md).
 - **Geographic view** — every plant on a world map with the modeled links
   between them, and a hazard radius you can drop anywhere.
-- **Functional-centre topology** — 126 country × stage centres and 1,030
-  modeled connections, with routes, reachability, betweenness, and reversible
-  node/edge removal.
+- **Modeled functional-centre engine** - retained for propagation calculations;
+  the visible Network workspace now shows public company relationships.
 - **History review** — the chain as it stood on any past date, recomputed by
   engine replay rather than read from a stored series.
 - **Hazard screening** — which named plants a footprint touches, what share of
@@ -251,6 +262,7 @@ snapshot still there as the fallback.
 | | |
 | --- | --- |
 | [Project overview](docs/README.md) | What SSCIM is, in one page ([日本語](docs/README.ja.md) · [简体中文](docs/README.zh.md)) |
+| [Public supplier network](docs/PUBLIC_SUPPLIER_NETWORK.md) | Company profiles, levels, coverage, interaction and authoring |
 | [Public guide](docs/PUBLIC_GUIDE.md) | Plain-language walkthrough |
 | [Methodology](docs/METHODOLOGY.md) | Every formula and declared prior |
 | [**Model v7 specification**](docs/MODEL_V7_SPEC.md) | The canonical definition: notation, every formula, the parameter register, fallbacks, a reproducible worked example, validation status |

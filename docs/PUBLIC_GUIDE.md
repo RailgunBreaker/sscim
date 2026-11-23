@@ -4,8 +4,11 @@
 every number described here is in the
 [model specification](MODEL_V7_SPEC.md).
 
-
 This guide assumes no background in semiconductors, networks, or statistics. It explains what you are looking at, what each number does and does not mean, and how to avoid the misreadings the interface makes easy.
+
+## Public supplier network
+
+Choose Network to explore the 109 system companies and their documented first-, second- and third-level relationships. All 362 registry firms have profiles; outside firms provide context only. Arrows point supplier to customer. Drag a node and its neighbours move with the simulation, then settle. See the [network guide](PUBLIC_SUPPLIER_NETWORK.md) for profiles, controls and evidence limits.
 
 ## The one-paragraph version
 

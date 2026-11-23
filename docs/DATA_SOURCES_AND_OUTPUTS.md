@@ -26,7 +26,9 @@ Every meaningful statement is traceable to exactly one of three things: **a sour
 | Facility geography | 275 sites, 24 countries, all 109 companies | C + D | Named plants with operator, coordinates, what they make, and the stages they feed. Site identity and rough location are Tier C (public company site listings); the `scale` 1–5 significance ordinal is Tier D and is **the only field the impact math uses**. Coordinates are site/city approximations good to a few km. Coverage is a **curated sample, not a census** — an empty hazard radius means no site *in this sample*. Eight of the 24 countries are **host-only**: they carry no stage share, contribute nothing to any score, and exist so that real plants (Infineon Villach, ST Catania, onsemi Rožnov, Micron Sanand, IBM Bromont) can be mapped at all. Before they were added, the country list was a scoring list being used as a geography list, and the map implied the industry stopped at sixteen borders. |
 | Site-to-site network | ~890 modeled links | — | **Derived, not input.** Composed from the company `customers` edges and the stage flow graph — see below. No dataset here records which plant ships to which plant. |
 | Customer relationships | 243 supplier→customer edges | C + B | Disclosed customer concentration plus trade-press estimates, top customers only. This is *supplier-revenue share*, which is **not** buyer input-dependence — the two directions are different quantities and are modeled separately. |
+| Public supplier tiers | 362 registered firms, 360 named relationships, 35 documents | C | **Separate dataset, separate lens, no engine input.** Every edge cites a public document naming *both* parties. Carries no weights and feeds no score. See below. |
 | Ownership | 75 shareholder rows | C | 13F filings, annual reports, exchange disclosures. Ages quickly; the most compliance-sensitive dataset here. |
+| Company control | 109 of 109 companies | C / B / D | **Who can actually direct the company**, which is a different question from who holds the most shares. Reference only; feeds no score. See below. |
 | Policy instruments | 7 | C + D | Rule texts are Tier C; the severity score and the 0.4 additional-instrument discount are Tier D judgments. |
 | Historical events | 147 code-defined (6 illustrative, 141 sourced over ten years, Aug 2016 → Jul 2026) plus reviewed pipeline events | B / C | Dated, cited, human-reviewed before publication. Ages derive from an authoritative `dateISO`, never hand-maintained. Coverage is uneven by year and thickens toward the present — see the density caveat below. |
 | Event classifications | one per event id | D | Direction, channel, and whether it counts toward the score. Hand-curated in `event-assumptions.js`; **never inferred from headline text at runtime**. |
@@ -34,6 +36,127 @@ Every meaningful statement is traceable to exactly one of three things: **a sour
 | Model priors | transmission, half-life, weights, specificity floor, tolerance | D | Explicit assumptions in `app/src/engine/priors.js`. Not fitted parameters. |
 | Candidate feeds | USGS, Federal Register, news | — | **Discovery only.** A candidate is not an event and never reaches the model unreviewed. |
 | Market quotes | 92 of 109 listed companies | — | Yahoo Finance. **Display metadata only — never an engine input.** |
+
+### The public supplier-tier dataset, and why it is kept apart
+
+Everything else in this model is *composed*: a facility link is built from a
+company supply share and stage reachability, and the coefficients that join
+them are declared priors. That is the right construction for propagation, and
+it is stated plainly throughout. It does not answer a different question a
+reader is entitled to ask — **who has anybody actually said supplies whom, in
+public, on the record.**
+
+`supplier-tiers/` holds a dataset that answers only that question, under one
+rule: **every edge cites a public document that names both parties.** No stage
+composition, no reachability, no share, no prior. The sources are buyer-published
+supplier lists (Apple's), buyer-published supplier award lists (TSMC's, Intel's,
+Lam Research's), supplier-published award announcements (TRUMPF's and NTS's of
+ASML, Fujifilm's of Samsung), securities filings that name a counterparty
+(ASML on Zeiss), teardown analysis (TechInsights on SMIC silicon in a Huawei
+handset), and government rules that establish an affiliation (the Entity List
+additions). If no document names the pair, there is no edge.
+
+It reaches **three documented steps**: Apple names TSMC and Intel; TSMC and
+Intel name ASML and Lam Research; ASML and Lam name Zeiss, TRUMPF, NTS, TOTO,
+INFICON and the rest.
+
+Four consequences the interface has to carry, because each is a way to be
+misled:
+
+- **There are no weights.** A named relationship is a named relationship.
+  Nothing records how much moves, so nothing is drawn as if it did — node size
+  encodes *how many drawn relationships involve a firm*, which is a fact about disclosure.
+- **Level is distance, not rank.** Level 2 means two shortest documented steps
+  from the selected company. The selected company is Level 0; upstream and
+  downstream directions are explored separately. Levels are not importance.
+- **Absence is absence of a document, not of a relationship.** Firms under
+  export control are close to unobservable this way. Huawei's upstream here is
+  two edges — one teardown, one government rule — and that emptiness is the
+  most honest thing in the dataset.
+- **The lists are selective.** Apple's covers 98% of direct spend by value and
+  omits everything indirect; award lists name winners, not suppliers.
+
+The dataset feeds **no score, no index and no propagation**. It powers the
+Network workspace and company-profile evidence sections. Regenerate it with
+`node supplier-tiers/author-dataset.mjs`; this also runs `expand-system.mjs` and
+preserves the reviewed company crosswalk. Every edge must cite a registered
+source. The 109 system companies are the tracking set, while contextual firms
+have profiles without tracking controls or modeled scores. See the
+[public supplier network guide](PUBLIC_SUPPLIER_NETWORK.md) for operation,
+authoring, animation and checks.
+
+### Control is not the same as the largest shareholding
+
+The `OWNERS` table lists the largest disclosed shareholders for 27 companies.
+For most large listed firms it reads "Vanguard 9%, BlackRock 8%, State Street
+4%", and a reader scanning it concludes that BlackRock controls Micron. It
+does not. Those are **passive index managers** holding shares for fund
+investors: custodians, not directors of the business. Meanwhile the companies
+that genuinely *are* controlled — by a state, a parent, a founder with a
+special share class, a foundation — were largely missing from that table,
+because control there is not expressed as a big line in a 13F.
+
+`company-control/` records **control** for all 109 companies: who can direct
+the company, through what mechanism, and — where the answer is *nobody* — it
+says so rather than naming the largest passive holder and letting the reader
+infer. "Actual controller" is not loose phrasing: in Chinese listed-company
+disclosure it is a defined term (实际控制人) that issuers must state, and
+several entries quote that disclosure, including the firms that disclose they
+have **no** actual controller.
+
+What the current snapshot finds:
+
+| Finding | Count |
+| --- | --- |
+| No controller — widely held | 49 |
+| Founder or family controlled | 13 |
+| Subsidiary of another company | 12 |
+| State-controlled | 12 |
+| Strategic blockholder | 9 |
+| Consortium-controlled | 4 |
+| Dual-class voting control | 3 |
+| Public research institute | 2 |
+| Division, not a company | 2 |
+| Foundation-controlled | 1 |
+| Partnership board control | 1 |
+| Control not established here | 1 |
+
+Four rules the audit enforces:
+
+- **A passive index manager is never recorded as a controller.** If that ever
+  becomes possible the dataset has turned back into the shareholder table it
+  replaced, so `npm run audit:data` fails on it.
+- **"Widely held" is a positive finding, not a gap.** It means no shareholder
+  controls the company — not that the research was not done.
+- **A percentage appears only where control runs through one.** Founder,
+  foundation, partnership and dual-class control often do not, and a missing
+  percentage there is correct rather than absent.
+- **Tier-D entries are flagged low confidence** (7 of 109): the mechanism is
+  believed real, the current holder unverified.
+
+Control is also the most perishable data in this project. Stakes move,
+consortia sell down, and a company that was state-controlled last year may not
+be this year.
+
+### Every company has a standardized profile
+
+All 362 public-registry companies use the standard profile format in
+`app/src/engine/companyProfile.js`. The 109 system-company profiles retain their
+control records, modeled stages and tracking controls. Other profiles describe
+chain context, mark unresearched control fields explicitly and carry no modeled
+shares or criticality rank.
+
+The base fact table is shared; public profiles also show chain position,
+tracking scope, source count and disclosure years. Named counterparties open
+profiles. Public legal-entity relationships stay separate even where more than
+one legal entity maps to a system company.
+
+Of the 109 system companies, **73 have a documented connection and 36 have
+none**. Registration does not establish relationship evidence, and a profile
+with unknown fields does not imply completed ownership research. The modeled
+chain and documented chain are shown separately. Historical awards and planned
+supply agreements retain their dates and qualification; a multi-step path does
+not prove those relationships were active simultaneously.
 
 ### What is deliberately absent
 

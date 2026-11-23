@@ -19,11 +19,7 @@ import TabBar from './components/TabBar.jsx';
 import Pane from './components/Pane.jsx';
 import OsmMap from './components/OsmMap.jsx';
 import FlowGraph from './components/FlowGraph.jsx';
-import NetworkGraph from './components/NetworkGraph.jsx';
-import NetworkToolbar from './components/NetworkToolbar.jsx';
-import NetworkRoutePanel from './components/NetworkRoutePanel.jsx';
-import NetworkAnalysisPanel from './components/NetworkAnalysisPanel.jsx';
-import NetworkComparePanel from './components/NetworkComparePanel.jsx';
+import SupplierTierExplorer from './components/SupplierTierExplorer.jsx';
 import { buildBaseGraph } from './engine/network.js';
 import Intel from './components/Intel.jsx';
 import Guide from './components/Guide.jsx';
@@ -426,7 +422,30 @@ function DashboardBody() {
   // Layer-1 content follows the view mode (§9): world map, functional-centre
   // topology network, or both stacked.
   const mapPane = <OsmMap model={displayModel} hl={hl} onApplyHazard={setHazard} />;
-  const networkPane = <><NetworkGraph baseGraph={baseGraph} /><NetworkRoutePanel baseGraph={baseGraph} /><NetworkAnalysisPanel baseGraph={baseGraph} /><NetworkComparePanel baseGraph={baseGraph} /></>;
+  /* The network pane is the PUBLIC SUPPLIER NETWORK.
+
+     It replaced the functional-centre topology graph, which drew 126
+     country x stage centres and 1,030 modeled connections with tools to
+     remove a centre, apply a shock and compare the result. Every one of
+     those connections was composed by the engine from a stage flow and a
+     declared prior; none of them was a relationship anybody had stated
+     in public. The graph was therefore a picture of the model's own
+     assumptions, and a reader could not tell, from the picture, which
+     parts rested on evidence.
+
+     What is here instead is the opposite construction: firm-to-firm
+     relationships, each one named in a public document that cites both
+     parties, each one opening that document. No weights, because none
+     were published; no shock tools, because there is no propagation
+     model attached to it to shock. */
+  const networkPane = (
+    <SupplierTierExplorer
+      /* Clicking a firm here lights its stages in the Industry flow pane
+         beside it, so the documented relationship and the modeled
+         position are legible in one glance rather than two views. */
+      onSelectVaultCompany={(id) => setSel({ type: 'company', id })}
+    />
+  );
   /* The Facility Playground is a first-class view alongside Geographic,
      Topology and Split — not a tab inside the Layer-3 sidebar. It takes
      the full pane width because a facility network past one hop has
@@ -441,11 +460,11 @@ function DashboardBody() {
   /* Descriptive names, sentence case. The hint is a separate line rather
      than a clause welded onto the title, and it keeps the modelled-not-
      measured qualification where a reader meets the graph. */
-  const workspaceTitle = viewMode === 'topology' ? 'Functional-centre network'
+  const workspaceTitle = viewMode === 'topology' ? 'Public supplier network'
     : viewMode === 'playground' ? 'Facility network'
       : viewMode === 'split' ? 'World map and network'
         : 'World map';
-  const workspaceHint = viewMode === 'topology' ? 'Modeled stage-mediated connectivity, not measured trade'
+  const workspaceHint = viewMode === 'topology' ? 'Firm relationships named in public documents — every edge opens its source'
     : viewMode === 'playground' ? 'Modeled plant-to-plant relationships, not confirmed shipments or contracts'
       : viewMode === 'split' ? 'Both views of the same selection'
         : 'Facilities and country exposure';
@@ -464,7 +483,6 @@ function DashboardBody() {
       <TimeMachine asOfDaysAgo={asOfDaysAgo} setAsOfDaysAgo={setAsOfDaysAgo} setSel={setSel}
         selectedId={sel.type === 'event' ? sel.id : null} />
       <LensBar scenarioName={scenario?.name} />
-      {viewMode !== 'geographic' && viewMode !== 'playground' && <NetworkToolbar />}
 
       {!wide && <TabBar panes={panes} tab={tab} setTab={setTab} />}
 

@@ -17,6 +17,7 @@ import CustomerSpreadTree from './CustomerSpreadTree.jsx';
 import EventSites from './EventSites.jsx';
 import FacilityDetail from './FacilityDetail.jsx';
 import TrackButton from './TrackButton.jsx';
+import CompanyProfile from './CompanyProfile.jsx';
 
 const Field = ({ k, v, copper }) => (
   <div style={{ marginBottom: 6 }}>
@@ -183,7 +184,6 @@ export default function Detail({ sel, setSel, model, scenario, onResetScenario, 
           <span className="mono" style={{ fontSize: 12, color: C.copper, marginLeft: "auto" }}>criticality rank #{rank} of {COMPANIES.length}</span>
         </div>
         <div style={{ margin: "5px 0 0" }}><Quote quote={(QUOTES || {})[co.id]} /></div>
-        <p style={{ margin: "6px 0 4px", fontSize: 12.5, color: C.dim, lineHeight: 1.55 }}>{introForCompany(co, { STAGE_BY_ID, COUNTRY_NAMES, CUSTOMERS, SUPPLIERS })}</p>
         <div className="mono" style={{ margin: "8px 0", fontSize: 12, display: "flex", flexWrap: "wrap", gap: 14 }}>
           <span>Systemic criticality <b style={{ fontSize: 16, color: riskColor(criticality) }}>{criticality.toFixed(2)}</b><span style={{ color: C.faint }}>/10</span></span>
           <span>Vulnerability <b style={{ fontSize: 16, color: riskColor(vulnerability) }}>{vulnerability.toFixed(2)}</b><span style={{ color: C.faint }}>/10 (share-independent)</span></span>
@@ -193,56 +193,13 @@ export default function Detail({ sel, setSel, model, scenario, onResetScenario, 
           Criticality = modeled chain effect if this company's production were fully disrupted (network-influence-weighted, then scaled against the most critical company in the snapshot — so 10 means "the most systemically critical company here," not a theoretical ceiling no company can reach). Vulnerability = average adverse impact across its stages, independent of market share — a small and a large single-stage company can share this number. Contribution = market-share-weighted modeled effect; share does not cancel here.
           <Tex tex={"\\mathrm{criticality}_c=\\mathrm{clamp}_{10}\\!\\left(10\\cdot\\frac{\\mathrm{raw}_c}{\\max_k \\mathrm{raw}_k}\\right),\\quad \\mathrm{raw}_c=\\frac{\\sum_n \\max(0,\\mathrm{field}_n)\\cdot NI_n}{\\sum_n NI_n}"} />
         </div>
-        <div className="mono" style={{ fontSize: 12, color: C.dim, margin: "8px 0 4px" }}>PRODUCTION FOOTPRINT (WITHIN-STAGE SHARE)</div>
-        {Object.entries(co.stakes).sort((a, b) => b[1] - a[1]).map(([sid, sh]) => (
-          <div key={sid} role="button" tabIndex={0} style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4, cursor: "pointer" }} onClick={() => setSel({ type: "stage", id: sid })} onKeyDown={onEnterSpace(() => setSel({ type: "stage", id: sid }))}>
-            <span className="mono" style={{ fontSize: 12, color: C.dim, width: 160, flexShrink: 0 }}>{STAGE_BY_ID[sid].name}</span>
-            <div style={{ flex: 1, height: 6, background: C.panel, borderRadius: 3, overflow: "hidden" }}>
-              <div style={{ width: `${sh * 100}%`, height: "100%", background: C.copper, opacity: 0.8 }} />
-            </div>
-            <span className="mono" style={{ fontSize: 12, width: 34, textAlign: "right", color: C.copper }}>{(sh * 100).toFixed(0)}%</span>
-          </div>
-        ))}
-
-        {(CUSTOMERS[co.id] || []).length > 0 && (
-          <>
-            <div className="mono" style={{ fontSize: 12, color: C.dim, margin: "10px 0 4px" }}>Customers — share of {co.name} sales (supplier-revenue share)</div>
-            {(CUSTOMERS[co.id] || []).map(([c2, r]) => (
-              <div key={c2} role="button" tabIndex={0} style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 3, cursor: "pointer" }} onClick={() => setSel({ type: "company", id: c2 })} onKeyDown={onEnterSpace(() => setSel({ type: "company", id: c2 }))}>
-                <span className="mono" style={{ fontSize: 12, color: C.text, width: 160, flexShrink: 0 }}>{COMPANY_BY_ID[c2].name}</span>
-                <div style={{ flex: 1, height: 5, background: C.panel, borderRadius: 3, overflow: "hidden" }}>
-                  <div style={{ width: `${r * 100}%`, height: "100%", background: C.green, opacity: 0.6 }} />
-                </div>
-                <span className="mono" style={{ fontSize: 12, width: 34, textAlign: "right", color: C.dim }}>{(r * 100).toFixed(0)}%</span>
-              </div>
-            ))}
-          </>
-        )}
-        {(SUPPLIERS[co.id] || []).length > 0 && (
-          <>
-            <div className="mono" style={{ fontSize: 12, color: C.dim, margin: "10px 0 4px" }}>Key suppliers — their sales share to {co.name}</div>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 5 }}>
-              {(SUPPLIERS[co.id] || []).slice(0, 8).map(([sup, r]) => (
-                <Chip key={sup} label={`${COMPANY_BY_ID[sup].name} ${(r * 100).toFixed(0)}%`} onClick={() => setSel({ type: "company", id: sup })} />
-              ))}
-            </div>
-          </>
-        )}
-
-        {(OWNERS[co.id] || []).length > 0 && (
-          <>
-            <div className="mono" style={{ fontSize: 12, color: C.dim, margin: "10px 0 4px" }}>MAJOR SHAREHOLDERS (PUBLIC FILINGS)</div>
-            {(OWNERS[co.id] || []).map(([o, sh]) => (
-              <div key={o} style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 3 }}>
-                <span className="mono" style={{ fontSize: 12, color: /gov|SOE|METI/.test(o) ? C.amber : C.text, width: 180, flexShrink: 0 }}>{o}</span>
-                <div style={{ flex: 1, height: 5, background: C.panel, borderRadius: 3, overflow: "hidden" }}>
-                  <div style={{ width: `${Math.min(100, sh * 100)}%`, height: "100%", background: /gov|SOE|METI/.test(o) ? C.amber : C.copper, opacity: 0.7 }} />
-                </div>
-                <span className="mono" style={{ fontSize: 12, width: 40, textAlign: "right", color: C.dim }}>{(sh * 100).toFixed(1)}%</span>
-              </div>
-            ))}
-          </>
-        )}
+        {/* Everything a reader can ask ABOUT THE COMPANY — what it is,
+            who controls it, and its chain under both readings — is
+            generated by engine/companyProfile.js from the same fields for
+            all 109, so no two profiles can drift apart in wording. What
+            stays above is the ENGINE OUTPUT for this company, which is a
+            different kind of claim and keeps its own formula. */}
+        <CompanyProfile companyId={co.id} setSel={setSel} showHeader={false} />
         <UpstreamTree cid={co.id} setSel={setSel} />
         <CustomerSpreadTree cid={co.id} field={model.activeField} setSel={setSel} />
         <SpreadTree sourceStages={Object.keys(co.stakes)} field={field} exclude={co.id} setSel={setSel} title="STAGE-LEVEL SPREAD (CRITICALITY VIEW)" />

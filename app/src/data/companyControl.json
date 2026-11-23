@@ -1,0 +1,992 @@
+{
+  "meta": {
+    "generated": "2026-11-22",
+    "companies": 109,
+    "rule": "Records who can actually direct the company, not who holds the most shares. Passive index managers are never recorded as controllers; where nobody controls the company, that is stated as the finding.",
+    "passiveManagers": [
+      "Vanguard",
+      "BlackRock",
+      "State Street",
+      "Fidelity (FMR)",
+      "Capital Group",
+      "Geode",
+      "Norges Bank",
+      "Baillie Gifford",
+      "Nomura AM",
+      "Master Trust Bank of Japan (nominee)",
+      "Custody Bank of Japan (nominee)"
+    ],
+    "types": {
+      "parent": {
+        "label": "Subsidiary",
+        "short": "parent",
+        "meaning": "Majority- or wholly-owned by another company, which decides."
+      },
+      "state": {
+        "label": "State-controlled",
+        "short": "state",
+        "meaning": "A government, sovereign fund or state investment vehicle holds control or a decisive bloc."
+      },
+      "founder": {
+        "label": "Founder or family controlled",
+        "short": "founder",
+        "meaning": "A founder, family or their holding vehicles exercise control, whether or not they hold a majority of the economics."
+      },
+      "dual_class": {
+        "label": "Dual-class voting control",
+        "short": "dual class",
+        "meaning": "Voting power is detached from economic ownership by a special share class, so a small economic stake controls the company."
+      },
+      "foundation": {
+        "label": "Foundation-controlled",
+        "short": "foundation",
+        "meaning": "A charitable or industrial foundation holds the capital, with voting exercised separately."
+      },
+      "consortium": {
+        "label": "Consortium-controlled",
+        "short": "consortium",
+        "meaning": "Control is held jointly by a defined group of investors under an agreement."
+      },
+      "strategic": {
+        "label": "Strategic blockholder",
+        "short": "strategic",
+        "meaning": "A corporate holder with a large, non-passive stake short of a majority — influential, and not a custodian."
+      },
+      "partnership": {
+        "label": "Partnership board control",
+        "short": "partnership",
+        "meaning": "A defined partnership body nominates a majority of the board regardless of shareholding."
+      },
+      "institute": {
+        "label": "Public research institute",
+        "short": "institute",
+        "meaning": "Not an investor-owned company: a public or non-profit research organisation."
+      },
+      "division": {
+        "label": "Division, not a company",
+        "short": "division",
+        "meaning": "Not a separate legal entity in its own right — a unit of its parent."
+      },
+      "widely_held": {
+        "label": "No controller — widely held",
+        "short": "widely held",
+        "meaning": "No shareholder controls it. The largest holders are passive index managers, which are custodians of other people's money, not directors of the business."
+      },
+      "unestablished": {
+        "label": "Control not established here",
+        "short": "not established",
+        "meaning": "This dataset could not establish control from a public source it was willing to cite."
+      }
+    },
+    "counts": {
+      "parent": 12,
+      "institute": 2,
+      "widely_held": 49,
+      "division": 2,
+      "state": 12,
+      "strategic": 9,
+      "founder": 13,
+      "consortium": 4,
+      "foundation": 1,
+      "dual_class": 3,
+      "unestablished": 1,
+      "partnership": 1
+    },
+    "limits": [
+      "Control is a point-in-time fact and the most perishable data in this project. Stakes move, consortia sell down, and a company that was state-controlled last year may not be this year.",
+      "A percentage is recorded only where control genuinely runs through one. Founder, foundation, partnership and dual-class control often do not, and a missing percentage there is correct rather than absent.",
+      "‘Widely held’ is a positive finding, not a gap: it means no shareholder controls the company. It does not mean the research was not done.",
+      "Entries at evidence tier D are flagged low confidence. They name a mechanism this dataset believes is real without a filing it was willing to cite for the current holder.",
+      "This dataset feeds no score, no index and no propagation. It is reference material."
+    ]
+  },
+  "control": {
+    "arm": {
+      "type": "parent",
+      "controller": "SoftBank Group",
+      "stake": 0.88,
+      "basis": "SoftBank retained the large majority of Arm after the September 2023 IPO floated a small minority.",
+      "tier": "C",
+      "confidence": "stated"
+    },
+    "imec": {
+      "type": "institute",
+      "controller": "imec (an independent non-profit research institute, Flanders)",
+      "stake": null,
+      "basis": "A Flemish public research institute funded by government and an industry affiliate programme — it has no controlling shareholder because it has no shareholders in the ordinary sense.",
+      "tier": "C",
+      "confidence": "stated"
+    },
+    "synopsys": {
+      "type": "widely_held",
+      "controller": null,
+      "stake": null,
+      "basis": "No controlling shareholder. The largest holders are passive index managers.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "cadence": {
+      "type": "widely_held",
+      "controller": null,
+      "stake": null,
+      "basis": "No controlling shareholder. The largest holders are passive index managers.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "siemens_eda": {
+      "type": "division",
+      "controller": "Siemens AG",
+      "stake": null,
+      "basis": "Siemens EDA is the former Mentor Graphics, operating inside Siemens Digital Industries Software. It is a business unit, not an independent company.",
+      "tier": "C",
+      "confidence": "stated"
+    },
+    "nvidia": {
+      "type": "widely_held",
+      "controller": null,
+      "stake": null,
+      "basis": "No controlling shareholder. The founder-CEO holds a low single-digit stake, which is influence, not control.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "amd": {
+      "type": "widely_held",
+      "controller": null,
+      "stake": null,
+      "basis": "No controlling shareholder; largest holders are passive index managers.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "qualcomm": {
+      "type": "widely_held",
+      "controller": null,
+      "stake": null,
+      "basis": "No controlling shareholder; largest holders are passive index managers.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "apple": {
+      "type": "widely_held",
+      "controller": null,
+      "stake": null,
+      "basis": "No controlling shareholder. Berkshire Hathaway's position is large in money terms and small in percentage, and is not a control stake.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "mediatek": {
+      "type": "widely_held",
+      "controller": null,
+      "stake": null,
+      "basis": "No controlling shareholder; founders retain influence through board representation rather than a控制 bloc.",
+      "tier": "D",
+      "confidence": "low",
+      "note": "Founder influence is real but not expressible as a control stake, so it is not recorded as one."
+    },
+    "hisilicon": {
+      "type": "parent",
+      "controller": "Huawei Technologies",
+      "stake": 1,
+      "basis": "A wholly-owned fabless design subsidiary of Huawei. The U.S. Entity List rule of August 2020 names it among Huawei's affiliates.",
+      "tier": "C",
+      "confidence": "stated"
+    },
+    "shinetsu": {
+      "type": "widely_held",
+      "controller": null,
+      "stake": null,
+      "basis": "No controlling shareholder; largest holders are institutions and nominee trusts.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "sumco": {
+      "type": "widely_held",
+      "controller": null,
+      "stake": null,
+      "basis": "No controlling shareholder. Its founding parents, Sumitomo Metal Industries and Mitsubishi Materials, reduced their stakes after listing.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "globalwafers": {
+      "type": "parent",
+      "controller": "Sino-American Silicon Products (SAS)",
+      "stake": 0.5,
+      "basis": "GlobalWafers was spun out of SAS, which retains roughly half the shares and board control.",
+      "tier": "C",
+      "confidence": "stated"
+    },
+    "jsr": {
+      "type": "state",
+      "controller": "Japan Investment Corporation (JIC), a government-backed fund",
+      "stake": 0.84,
+      "basis": "JIC's vehicle JICC-02 completed a tender offer for about 84% of JSR in April 2024, taking it private. An explicitly industrial-policy acquisition of a photoresist leader.",
+      "tier": "C",
+      "confidence": "stated"
+    },
+    "tok": {
+      "type": "widely_held",
+      "controller": null,
+      "stake": null,
+      "basis": "No controlling shareholder; largest holders are institutions and nominee trusts.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "linde": {
+      "type": "widely_held",
+      "controller": null,
+      "stake": null,
+      "basis": "No controlling shareholder; largest holders are passive index managers.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "airliquide": {
+      "type": "widely_held",
+      "controller": null,
+      "stake": null,
+      "basis": "No controlling shareholder; a notably dispersed register including a large retail shareholder base.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "ibiden": {
+      "type": "widely_held",
+      "controller": null,
+      "stake": null,
+      "basis": "No controlling shareholder; largest holders are institutions and nominee trusts.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "unimicron": {
+      "type": "strategic",
+      "controller": "United Microelectronics (UMC) group affiliates",
+      "stake": null,
+      "basis": "Unimicron was founded out of the UMC group, whose affiliates remain among the largest identified holders.",
+      "tier": "D",
+      "confidence": "low",
+      "note": "The current aggregate affiliate holding is not clearly disclosed; recorded as a strategic bloc rather than control."
+    },
+    "asml": {
+      "type": "widely_held",
+      "controller": null,
+      "stake": null,
+      "basis": "No controlling shareholder. Dutch law and ASML's own structure leave no blockholder; its export exposure is to state policy, not state ownership.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "nikon": {
+      "type": "widely_held",
+      "controller": null,
+      "stake": null,
+      "basis": "No controlling shareholder; largest holders are institutions and nominee trusts.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "canon": {
+      "type": "widely_held",
+      "controller": null,
+      "stake": null,
+      "basis": "No controlling shareholder; largest holders are institutions and nominee trusts.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "amat": {
+      "type": "widely_held",
+      "controller": null,
+      "stake": null,
+      "basis": "No controlling shareholder; largest holders are passive index managers.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "tel": {
+      "type": "widely_held",
+      "controller": null,
+      "stake": null,
+      "basis": "No controlling shareholder. Its two largest lines are Japanese nominee trust banks, which are custodial accounts rather than beneficial owners.",
+      "tier": "C",
+      "confidence": "stated"
+    },
+    "lam": {
+      "type": "widely_held",
+      "controller": null,
+      "stake": null,
+      "basis": "No controlling shareholder; largest holders are passive index managers.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "kla": {
+      "type": "widely_held",
+      "controller": null,
+      "stake": null,
+      "basis": "No controlling shareholder; largest holders are passive index managers.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "tsmc": {
+      "type": "widely_held",
+      "controller": null,
+      "stake": null,
+      "basis": "No controlling shareholder. Taiwan's National Development Fund is the largest single holder at roughly 6.4% — a government anchor stake that does not amount to control.",
+      "tier": "C",
+      "confidence": "stated"
+    },
+    "samsung": {
+      "type": "founder",
+      "controller": "the Lee family, through Samsung Group affiliate cross-holdings",
+      "stake": null,
+      "basis": "Control runs through a web of affiliate holdings (notably Samsung Life and Samsung C&T) rather than a direct majority.",
+      "tier": "C",
+      "confidence": "stated"
+    },
+    "intel": {
+      "type": "widely_held",
+      "controller": null,
+      "stake": null,
+      "basis": "No controlling shareholder. The U.S. government took roughly 9.9% in 2025 by converting CHIPS Act funding into common equity — the largest single holder, and still not control.",
+      "tier": "C",
+      "confidence": "stated"
+    },
+    "rapidus": {
+      "type": "consortium",
+      "controller": "the Japanese government (NEDO) with a 32-company industrial consortium",
+      "stake": null,
+      "basis": "Built as a national project: state funding with a golden-share arrangement alongside Toyota, Sony, SoftBank, Kioxia, NTT, NEC, MUFG and others.",
+      "tier": "C",
+      "confidence": "stated"
+    },
+    "smic": {
+      "type": "state",
+      "controller": "Chinese state investment vehicles acting together (China IC Big Fund, Datang Telecom, Shanghai IC Fund)",
+      "stake": null,
+      "basis": "SMIC discloses no single controlling shareholder; its largest holders are state vehicles whose combined bloc is decisive.",
+      "tier": "C",
+      "confidence": "stated",
+      "note": "Recorded as state-controlled on the combined bloc, with the no-single-controller disclosure stated alongside."
+    },
+    "umc": {
+      "type": "widely_held",
+      "controller": null,
+      "stake": null,
+      "basis": "No controlling shareholder; a dispersed register typical of older Taiwanese listings.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "gf": {
+      "type": "state",
+      "controller": "Mubadala Investment Company (Abu Dhabi sovereign wealth fund)",
+      "stake": 0.8,
+      "basis": "Mubadala has been GlobalFoundries' majority owner since before the 2021 IPO and remains so after it.",
+      "tier": "C",
+      "confidence": "stated"
+    },
+    "ti": {
+      "type": "widely_held",
+      "controller": null,
+      "stake": null,
+      "basis": "No controlling shareholder; largest holders are passive index managers.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "infineon": {
+      "type": "widely_held",
+      "controller": null,
+      "stake": null,
+      "basis": "No controlling shareholder; largest holders are passive index managers.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "st": {
+      "type": "state",
+      "controller": "the French and Italian governments jointly, through ST Holding N.V.",
+      "stake": 0.275,
+      "basis": "A shareholders' agreement between the two states gives joint control of roughly 27.5% of the capital. One of the few chip firms under explicit dual-state control.",
+      "tier": "C",
+      "confidence": "stated"
+    },
+    "tower": {
+      "type": "widely_held",
+      "controller": null,
+      "stake": null,
+      "basis": "No controlling shareholder. Intel's agreed acquisition was abandoned in 2023, leaving Tower independent and dispersed.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "skhynix": {
+      "type": "parent",
+      "controller": "SK Square, within the SK Group (Chey family)",
+      "stake": 0.205,
+      "basis": "SK Square holds about 20.5%, which is the controlling bloc inside Korea's chaebol holding structure.",
+      "tier": "C",
+      "confidence": "stated"
+    },
+    "micron": {
+      "type": "widely_held",
+      "controller": null,
+      "stake": null,
+      "basis": "No controlling shareholder; largest holders are passive index managers.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "ymtc": {
+      "type": "state",
+      "controller": "Hubei provincial state vehicles with the China IC Big Fund",
+      "stake": null,
+      "basis": "Yangtze Memory is a provincial-state project, funded through Hubei development vehicles and the national fund.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "cxmt": {
+      "type": "state",
+      "controller": "Hefei municipal state investment vehicles",
+      "stake": null,
+      "basis": "ChangXin Memory was built as a Hefei municipal project and remains state-anchored.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "kioxia": {
+      "type": "consortium",
+      "controller": "a Bain Capital-led consortium, with Toshiba as the second holder",
+      "stake": 0.51,
+      "basis": "Bain retained roughly half and Toshiba roughly a third after the December 2024 IPO; SK hynix is reported as the third-largest holder.",
+      "tier": "B",
+      "confidence": "stated",
+      "note": "Reported post-IPO percentages differ between sources, and one report of a full Bain exit could not be confirmed. Treat the figure as approximate."
+    },
+    "ase": {
+      "type": "founder",
+      "controller": "the Chang family (founder Jason Chang and affiliates)",
+      "stake": null,
+      "basis": "ASE Technology Holding is founder-controlled through family and affiliate holdings rather than a single majority line.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "amkor": {
+      "type": "founder",
+      "controller": "the Kim family (founder James Kim and family trusts)",
+      "stake": 0.5,
+      "basis": "The founding family holds about half the shares, which is outright control of a listed OSAT.",
+      "tier": "C",
+      "confidence": "stated"
+    },
+    "jcet": {
+      "type": "state",
+      "controller": "the China IC Big Fund and state-linked holders",
+      "stake": null,
+      "basis": "The national fund has been JCET's largest shareholder; the disclosed controller has changed with successive transfers between state-linked vehicles.",
+      "tier": "D",
+      "confidence": "low",
+      "note": "Flagged low confidence: the controlling entity has moved more than once and the current disclosure was not verified here."
+    },
+    "foxconn": {
+      "type": "widely_held",
+      "controller": null,
+      "stake": null,
+      "basis": "No controlling shareholder any longer. The founder's family stake has fallen to mid-single digits, and family holding companies disclosed disposing of their remaining Hon Hai shares in December 2025.",
+      "tier": "B",
+      "confidence": "stated",
+      "note": "Foxconn is widely read as founder-controlled; on the current register it is not."
+    },
+    "ibm_res": {
+      "type": "division",
+      "controller": "IBM",
+      "stake": null,
+      "basis": "IBM Research is a division of IBM, not a separate company. It has no ownership of its own.",
+      "tier": "C",
+      "confidence": "stated"
+    },
+    "leti": {
+      "type": "institute",
+      "controller": "CEA (French Alternative Energies and Atomic Energy Commission)",
+      "stake": null,
+      "basis": "CEA-Leti is an institute of the CEA, a French state research body.",
+      "tier": "C",
+      "confidence": "stated"
+    },
+    "ansys": {
+      "type": "parent",
+      "controller": "Synopsys",
+      "stake": 1,
+      "basis": "Synopsys completed its acquisition of Ansys in 2025; Ansys no longer reports independently.",
+      "tier": "C",
+      "confidence": "stated"
+    },
+    "empyrean": {
+      "type": "state",
+      "controller": "China Electronics Corporation (central state-owned group)",
+      "stake": null,
+      "basis": "Empyrean's disclosed controlling chain runs to CEC, a centrally administered state-owned enterprise.",
+      "tier": "B",
+      "confidence": "stated",
+      "note": "The intermediate holding entities have changed with successive restructurings; the state root is the stable part."
+    },
+    "broadcom": {
+      "type": "widely_held",
+      "controller": null,
+      "stake": null,
+      "basis": "No controlling shareholder. Leadership influence is strong and is not an ownership stake.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "marvell": {
+      "type": "widely_held",
+      "controller": null,
+      "stake": null,
+      "basis": "No controlling shareholder; largest holders are passive index managers.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "unisoc": {
+      "type": "consortium",
+      "controller": "the post-restructuring Tsinghua Unigroup consortium (JAC Capital / Wise Road Capital)",
+      "stake": null,
+      "basis": "UNISOC sits under Tsinghua Unigroup, whose 2022 court-supervised restructuring transferred control to an investor consortium.",
+      "tier": "B",
+      "confidence": "stated",
+      "note": "The consortium's internal split is not fully public; the fact of consortium control is."
+    },
+    "sksiltron": {
+      "type": "parent",
+      "controller": "SK Inc. (SK Group)",
+      "stake": 0.51,
+      "basis": "SK Inc. holds a controlling stake; SK Siltron is a member company of the SK chaebol.",
+      "tier": "C",
+      "confidence": "stated"
+    },
+    "siltronic": {
+      "type": "strategic",
+      "controller": "Wacker Chemie AG",
+      "stake": 0.308,
+      "basis": "Wacker holds roughly 30.8% — short of a majority, but the decisive bloc, and Siltronic was carved out of Wacker.",
+      "tier": "C",
+      "confidence": "stated"
+    },
+    "nsig": {
+      "type": "state",
+      "controller": "Shanghai state investment vehicles with the China National IC Industry Investment Fund",
+      "stake": null,
+      "basis": "National Silicon Industry Group is a Shanghai state-sponsored consolidation of China's wafer industry.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "sumitomo_chem": {
+      "type": "widely_held",
+      "controller": null,
+      "stake": null,
+      "basis": "No controlling shareholder. Sumitomo group affiliation is a keiretsu relationship, not a control stake.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "dupont": {
+      "type": "widely_held",
+      "controller": null,
+      "stake": null,
+      "basis": "No controlling shareholder; largest holders are passive index managers.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "resonac": {
+      "type": "widely_held",
+      "controller": null,
+      "stake": null,
+      "basis": "No controlling shareholder. Formerly Showa Denko.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "tnsc": {
+      "type": "parent",
+      "controller": "Mitsubishi Chemical Group",
+      "stake": 0.506,
+      "basis": "Nippon Sanso Holdings, the parent of Taiyo Nippon Sanso, is majority-held by Mitsubishi Chemical Group.",
+      "tier": "C",
+      "confidence": "stated"
+    },
+    "airproducts": {
+      "type": "widely_held",
+      "controller": null,
+      "stake": null,
+      "basis": "No controlling shareholder; largest holders are passive index managers.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "skmaterials": {
+      "type": "parent",
+      "controller": "SK Inc. (SK Group)",
+      "stake": null,
+      "basis": "SK Materials was merged into SK Inc. in 2021 and operates as part of the SK group's materials arm.",
+      "tier": "C",
+      "confidence": "stated"
+    },
+    "shinko": {
+      "type": "consortium",
+      "controller": "a Japan Investment Corporation-led consortium (JIC 80%, Dai Nippon Printing 15%, Mitsui Chemicals 5%)",
+      "stake": 0.8,
+      "basis": "Acquired from Fujitsu by the JIC-led consortium; the tender offer completed and the company delisted in 2025.",
+      "tier": "C",
+      "confidence": "stated"
+    },
+    "samsungem": {
+      "type": "strategic",
+      "controller": "Samsung Electronics and the wider Samsung Group (Lee family)",
+      "stake": 0.237,
+      "basis": "Samsung Electronics holds roughly 23.7% of Samsung Electro-Mechanics, inside the Lee family's group structure.",
+      "tier": "C",
+      "confidence": "stated"
+    },
+    "ats": {
+      "type": "founder",
+      "controller": "the Androsch and Dörflinger private foundations, acting under a syndicate agreement",
+      "stake": 0.4,
+      "basis": "Two Austrian private foundations hold roughly 40% jointly and syndicate their votes.",
+      "tier": "C",
+      "confidence": "stated",
+      "note": "The model files AT&S under Germany; the company is Austrian."
+    },
+    "asmi": {
+      "type": "widely_held",
+      "controller": null,
+      "stake": null,
+      "basis": "No controlling shareholder; largest holders are passive index managers.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "kokusai": {
+      "type": "strategic",
+      "controller": "KKR",
+      "stake": null,
+      "basis": "KKR bought Kokusai Electric from Hitachi, listed it in 2023 and has been selling down a large residual stake.",
+      "tier": "B",
+      "confidence": "stated",
+      "note": "The residual percentage moves with each sell-down, so no figure is recorded."
+    },
+    "naura": {
+      "type": "state",
+      "controller": "Beijing Electronics Holding (a Beijing municipal state-owned enterprise)",
+      "stake": null,
+      "basis": "NAURA's disclosed actual controller chain runs to the Beijing municipal state assets administration.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "amec": {
+      "type": "widely_held",
+      "controller": null,
+      "stake": null,
+      "basis": "AMEC states in its own A-share disclosure that it has NO controlling shareholder and NO actual controller (无实际控制人) — an unusual and deliberate structure for a Chinese equipment maker.",
+      "tier": "C",
+      "confidence": "stated"
+    },
+    "hitachiht": {
+      "type": "parent",
+      "controller": "Hitachi, Ltd.",
+      "stake": 1,
+      "basis": "Hitachi High-Tech was taken fully private by Hitachi in 2020 and is a wholly-owned subsidiary.",
+      "tier": "C",
+      "confidence": "stated"
+    },
+    "ebara": {
+      "type": "widely_held",
+      "controller": null,
+      "stake": null,
+      "basis": "No controlling shareholder; largest holders are institutions and nominee trusts.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "entegris": {
+      "type": "widely_held",
+      "controller": null,
+      "stake": null,
+      "basis": "No controlling shareholder; largest holders are passive index managers.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "onto": {
+      "type": "widely_held",
+      "controller": null,
+      "stake": null,
+      "basis": "No controlling shareholder; largest holders are passive index managers.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "nova": {
+      "type": "widely_held",
+      "controller": null,
+      "stake": null,
+      "basis": "No controlling shareholder; largest holders are passive index managers.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "huahong": {
+      "type": "state",
+      "controller": "Shanghai Hua Hong (Group), a Shanghai state-owned enterprise",
+      "stake": null,
+      "basis": "Hua Hong Semiconductor's controlling chain runs to the Shanghai state assets administration.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "vis": {
+      "type": "strategic",
+      "controller": "TSMC",
+      "stake": 0.28,
+      "basis": "TSMC holds roughly 28% of Vanguard International Semiconductor, its largest shareholder, and the two have a long-standing operational relationship.",
+      "tier": "C",
+      "confidence": "stated"
+    },
+    "nexchip": {
+      "type": "state",
+      "controller": "Hefei municipal state capital vehicles",
+      "stake": null,
+      "basis": "Nexchip was established as a Hefei municipal joint venture and remains state-anchored.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "sonysemi": {
+      "type": "parent",
+      "controller": "Sony Group",
+      "stake": 1,
+      "basis": "Sony Semiconductor Solutions is a wholly-owned subsidiary of Sony Group.",
+      "tier": "C",
+      "confidence": "stated"
+    },
+    "renesas": {
+      "type": "widely_held",
+      "controller": null,
+      "stake": null,
+      "basis": "No controlling shareholder following the INCJ sell-down. Denso and Toyota retain strategic stakes well short of control.",
+      "tier": "B",
+      "confidence": "stated",
+      "note": "Control here moved materially over the last decade; the current state is dispersed."
+    },
+    "bosch": {
+      "type": "foundation",
+      "controller": "Robert Bosch Stiftung, with voting exercised by Robert Bosch Industrietreuhand KG",
+      "stake": 0.92,
+      "basis": "The foundation holds about 92% of the capital while the voting rights sit with an industrial trust — capital and control deliberately separated, and the reason Bosch answers to no public market.",
+      "tier": "C",
+      "confidence": "stated"
+    },
+    "nanya": {
+      "type": "strategic",
+      "controller": "Formosa Plastics Group",
+      "stake": null,
+      "basis": "Nanya Technology is a Formosa Plastics group company; group entities hold the decisive bloc.",
+      "tier": "C",
+      "confidence": "stated"
+    },
+    "winbond": {
+      "type": "founder",
+      "controller": "the Jiao family through Walsin Lihwa and affiliates",
+      "stake": null,
+      "basis": "Winbond sits inside the Walsin group, controlled by the founding family.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "google": {
+      "type": "dual_class",
+      "controller": "Larry Page and Sergey Brin, through Class B super-voting shares",
+      "stake": null,
+      "basis": "The founders hold roughly a majority of voting power on a far smaller economic stake — the textbook case of votes detached from ownership.",
+      "tier": "C",
+      "confidence": "stated"
+    },
+    "amazon": {
+      "type": "widely_held",
+      "controller": null,
+      "stake": null,
+      "basis": "No controlling shareholder. The founder remains the largest individual holder at under a tenth, which is influence rather than control.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "cambricon": {
+      "type": "founder",
+      "controller": "Chen Tianshi (founder)",
+      "stake": null,
+      "basis": "Disclosed in its A-share filings as the actual controller (实际控制人).",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "biren": {
+      "type": "unestablished",
+      "controller": null,
+      "stake": null,
+      "basis": "A private, venture-funded company. Its shareholder register is not public in enough detail to name a controller.",
+      "tier": "D",
+      "confidence": "low",
+      "note": "Named here as unestablished rather than guessed."
+    },
+    "onsemi": {
+      "type": "widely_held",
+      "controller": null,
+      "stake": null,
+      "basis": "No controlling shareholder; largest holders are passive index managers.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "adi": {
+      "type": "widely_held",
+      "controller": null,
+      "stake": null,
+      "basis": "No controlling shareholder; largest holders are passive index managers.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "nxp": {
+      "type": "widely_held",
+      "controller": null,
+      "stake": null,
+      "basis": "No controlling shareholder. The private-equity consortium that once owned it exited long ago.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "microchip": {
+      "type": "widely_held",
+      "controller": null,
+      "stake": null,
+      "basis": "No controlling shareholder; largest holders are passive index managers.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "spil": {
+      "type": "parent",
+      "controller": "ASE Technology Holding",
+      "stake": 1,
+      "basis": "SPIL has been a wholly-owned ASE subsidiary since 2018; its output is consolidated into ASE's accounts.",
+      "tier": "C",
+      "confidence": "stated"
+    },
+    "pti": {
+      "type": "founder",
+      "controller": "the founding management group (D.K. Tsai and affiliates)",
+      "stake": null,
+      "basis": "Powertech is founder-led with management and affiliate holdings forming the largest bloc.",
+      "tier": "D",
+      "confidence": "low",
+      "note": "Flagged low confidence: no single disclosed controlling shareholder was verified here."
+    },
+    "utac": {
+      "type": "parent",
+      "controller": "Wise Road Capital",
+      "stake": null,
+      "basis": "UTAC Holdings was acquired by Wise Road Capital in 2020 and is privately held by it.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "kyec": {
+      "type": "widely_held",
+      "controller": null,
+      "stake": null,
+      "basis": "No controlling shareholder identified; a dispersed Taiwanese register.",
+      "tier": "D",
+      "confidence": "low",
+      "note": "Flagged low confidence: dispersed registers are easy to mistake for an absence of research."
+    },
+    "inari": {
+      "type": "strategic",
+      "controller": "Insas Berhad",
+      "stake": 0.2,
+      "basis": "Insas Berhad holds roughly a fifth of Inari Amertron and is its anchor shareholder.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "quanta": {
+      "type": "founder",
+      "controller": "Barry Lam (co-founder and chairman) with affiliated holdings",
+      "stake": null,
+      "basis": "Founder-led, with the chairman's holdings forming the largest identified bloc.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "wistron": {
+      "type": "founder",
+      "controller": "the founding management group",
+      "stake": null,
+      "basis": "Spun out of Acer and run by its founding management; no single majority holder.",
+      "tier": "D",
+      "confidence": "low",
+      "note": "Flagged low confidence: recorded as founder-led influence rather than verified control."
+    },
+    "supermicro": {
+      "type": "founder",
+      "controller": "Charles Liang (co-founder and CEO) with family holdings",
+      "stake": null,
+      "basis": "The founder-CEO holds the largest single block, well short of a majority but decisive in practice.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "luxshare": {
+      "type": "founder",
+      "controller": "Wang Laichun and Wang Laisheng, through Luxshare Limited",
+      "stake": null,
+      "basis": "Disclosed in Luxshare's A-share filings as the actual controllers (实际控制人).",
+      "tier": "C",
+      "confidence": "stated"
+    },
+    "microsoft": {
+      "type": "widely_held",
+      "controller": null,
+      "stake": null,
+      "basis": "No controlling shareholder. A former CEO is the largest individual holder at a few percent.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "meta": {
+      "type": "dual_class",
+      "controller": "Mark Zuckerberg, through Class B super-voting shares",
+      "stake": null,
+      "basis": "Roughly 61% of voting power on an economic stake near 13%.",
+      "tier": "C",
+      "confidence": "stated"
+    },
+    "alibaba": {
+      "type": "partnership",
+      "controller": "the Alibaba Partnership",
+      "stake": null,
+      "basis": "The Partnership has the right to nominate a majority of the board, so board control does not follow shareholding. SoftBank and Altaba were historically the largest holders without controlling it.",
+      "tier": "C",
+      "confidence": "stated"
+    },
+    "tesla": {
+      "type": "founder",
+      "controller": "Elon Musk",
+      "stake": null,
+      "basis": "The founder-CEO is by far the largest individual holder and exercises decisive influence without a majority.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "denso": {
+      "type": "strategic",
+      "controller": "the Toyota Group (Toyota Motor and Toyota Industries)",
+      "stake": 0.33,
+      "basis": "Toyota Motor holds roughly a quarter and Toyota Industries a further slice; Denso is a core Toyota group supplier.",
+      "tier": "C",
+      "confidence": "stated"
+    },
+    "vw": {
+      "type": "founder",
+      "controller": "Porsche SE (the Porsche and Piëch families), with the State of Lower Saxony holding a statutory blocking minority",
+      "stake": 0.53,
+      "basis": "Porsche SE holds about 53% of voting rights; the VW Law gives Lower Saxony's ~20% a blocking power no ordinary 20% would carry. Family control and state veto in the same company.",
+      "tier": "C",
+      "confidence": "stated"
+    },
+    "xiaomi": {
+      "type": "dual_class",
+      "controller": "Lei Jun (founder), through weighted voting rights",
+      "stake": null,
+      "basis": "Xiaomi's dual-class structure under the Hong Kong WVR regime gives the founder voting control on a minority economic stake.",
+      "tier": "C",
+      "confidence": "stated"
+    },
+    "lenovo": {
+      "type": "strategic",
+      "controller": "Legend Holdings, in which the Chinese Academy of Sciences holds an indirect stake",
+      "stake": null,
+      "basis": "Legend Holdings is the largest shareholder; the state connection is indirect, through Legend rather than through Lenovo.",
+      "tier": "B",
+      "confidence": "stated"
+    },
+    "hp": {
+      "type": "widely_held",
+      "controller": null,
+      "stake": null,
+      "basis": "No controlling shareholder; largest holders are passive index managers.",
+      "tier": "B",
+      "confidence": "stated"
+    }
+  }
+}

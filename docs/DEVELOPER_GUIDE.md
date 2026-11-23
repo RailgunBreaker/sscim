@@ -2,6 +2,10 @@
 
 Local setup, code layout, the data flow, and the rules that keep the published site honest.
 
+## Public supplier network development
+
+The Network workspace uses SupplierTierExplorer and SupplierTierGraph. Supplier data is authored in supplier-tiers/author-dataset.mjs and expand-system.mjs; generated application data is publicSupplierTiers.json. The [network guide](PUBLIC_SUPPLIER_NETWORK.md#authoring-and-implementation) lists the data flow, regeneration commands and drag regression. Temporary browser captures, downloads and logs belong in app/scratch/ and are not committed.
+
 ## Repository layout
 
 ```

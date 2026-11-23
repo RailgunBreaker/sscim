@@ -1,0 +1,2832 @@
+{
+  "meta": {
+    "title": "Public multi-tier semiconductor supplier graph",
+    "generated": "2026-11-22",
+    "focal": [
+      "apple-inc",
+      "huawei-technologies-co-ltd"
+    ],
+    "rule": "Every edge cites a public document that names both parties. Nothing is inferred from a process flow, a market-share estimate, or a prior.",
+    "tierRule": "Tier is derived at build time as the shortest upstream distance from a focal buyer. It is not stored, so changing the focal set re-tiers the graph.",
+    "limits": [
+      "Buyer-published supplier lists and award lists are selective. Apple's covers 98% of direct spend by value and omits everything indirect; TSMC's and Intel's name award winners, which is a subset of their suppliers, not a census.",
+      "An edge records that a relationship was publicly named in a given year. It carries no volume, no revenue share, no contract and no direction of dependence.",
+      "Absence of an edge is absence of a public document naming the pair, not absence of a relationship. The upstream of firms under export control is close to unobservable this way, and that is visible in the graph as an almost empty Huawei branch.",
+      "Country is the group parent's home jurisdiction, which is what filings and policy documents key on. It is not where the plant is.",
+      "Shin-Etsu Chemical and Shin-Etsu Handotai are kept as separate nodes because the award lists name them separately; Handotai is the wafer subsidiary of Chemical."
+    ],
+    "layers": {
+      "equipment": "Wafer-fab equipment",
+      "optics_laser": "Optics, lasers, light sources",
+      "wafers": "Silicon wafers",
+      "photomask": "Photomasks and blanks",
+      "materials": "Process materials and chemicals",
+      "metals": "Metals, targets, quartz, parts",
+      "foundry_idm": "Foundry and IDM",
+      "memory": "Memory",
+      "ic_other": "Other ICs — fabless, analog, RF, power, sensor",
+      "osat_test": "Packaging, assembly and test",
+      "substrates_pcb": "Substrates and PCB",
+      "passives": "Passive and discrete components",
+      "display_camera": "Display, camera and optical modules",
+      "mechanical": "Mechanical, enclosure, battery, other",
+      "assembly": "Final assembly (ODM/EMS)",
+      "brand": "Brand / system owner",
+      "construction": "Fab construction and facilities",
+      "services": "IT and business services"
+    },
+    "countries": {
+      "us": "United States",
+      "jp": "Japan",
+      "tw": "Taiwan",
+      "kr": "South Korea",
+      "cn": "China",
+      "nl": "Netherlands",
+      "de": "Germany",
+      "at": "Austria",
+      "fr": "France",
+      "be": "Belgium",
+      "ch": "Switzerland",
+      "it": "Italy",
+      "ie": "Ireland",
+      "uk": "United Kingdom",
+      "fi": "Finland",
+      "no": "Norway",
+      "se": "Sweden",
+      "dk": "Denmark",
+      "sg": "Singapore",
+      "my": "Malaysia",
+      "vn": "Vietnam",
+      "in": "India",
+      "il": "Israel",
+      "ca": "Canada",
+      "hk": "Hong Kong",
+      "sa": "Saudi Arabia"
+    },
+    "evidenceClasses": {
+      "P1-buyer": "The buyer publishes its supplier's name",
+      "P1-supplier": "The supplier publishes its customer's name",
+      "P1-self": "A company's own filing names its counterparty",
+      "P2-institutional": "A research house identifies the pair, typically by teardown",
+      "P3-regulatory": "A government document establishes the relationship"
+    },
+    "systemCompanyCount": 109,
+    "coverageReviewed": "2026-11-23"
+  },
+  "companies": {
+    "apple-inc": {
+      "name": "Apple Inc.",
+      "country": "us",
+      "layer": "brand",
+      "role": "Smartphone, PC and silicon designer; publishes its own supplier list",
+      "vaultId": "apple",
+      "aliases": [
+        "Apple (silicon)",
+        "apple"
+      ]
+    },
+    "huawei-technologies-co-ltd": {
+      "name": "Huawei Technologies Co., Ltd.",
+      "country": "cn",
+      "layer": "brand",
+      "role": "Network equipment and handset maker; Entity-Listed since 2019",
+      "annotations": [
+        {
+          "text": "On the U.S. Entity List since 2019; the May 2020 foreign-produced direct product rule cut off foundry access for its designs.",
+          "sources": [
+            "fr-fdpr-2020-05",
+            "fr-huawei-2020-08"
+          ]
+        }
+      ]
+    },
+    "hisilicon-technologies-co-ltd": {
+      "name": "HiSilicon Technologies Co., Ltd.",
+      "country": "cn",
+      "layer": "ic_other",
+      "role": "Huawei's fabless design arm",
+      "vaultId": "hisilicon",
+      "aliases": [
+        "HiSilicon (Huawei)",
+        "hisilicon"
+      ]
+    },
+    "taiwan-semiconductor-manufacturing-company-limited": {
+      "name": "Taiwan Semiconductor Manufacturing Company Limited",
+      "country": "tw",
+      "layer": "foundry_idm",
+      "role": "Leading-edge logic foundry",
+      "annotations": [
+        {
+          "text": "Reports one customer at 22% of 2024 net revenue, and its top ten at about 76%, without naming any of them. The concentration is disclosed; the identities are not.",
+          "sources": [
+            "tsmc-ar-2024-customers",
+            "tsmc-ar-2024-risk"
+          ]
+        }
+      ],
+      "vaultId": "tsmc",
+      "aliases": [
+        "TSMC",
+        "tsmc"
+      ]
+    },
+    "intel-corporation": {
+      "name": "Intel Corporation",
+      "country": "us",
+      "layer": "foundry_idm",
+      "role": "IDM and foundry",
+      "vaultId": "intel",
+      "aliases": [
+        "Intel",
+        "intel"
+      ]
+    },
+    "asml-holding-n-v": {
+      "name": "ASML Holding N.V.",
+      "country": "nl",
+      "layer": "equipment",
+      "role": "Lithography systems; sole EUV supplier",
+      "annotations": [
+        {
+          "text": "Berliner Glas, which makes wafer tables and clamps, reticle chucks and mirror blocks, was acquired by ASML in November 2020 — an upstream supplier internalised rather than an arm's-length one.",
+          "sources": [
+            "asml-berlin"
+          ]
+        }
+      ],
+      "vaultId": "asml",
+      "aliases": [
+        "ASML",
+        "asml"
+      ]
+    },
+    "samsung-electronics-company-limited": {
+      "name": "Samsung Electronics Company Limited",
+      "country": "kr",
+      "layer": "memory",
+      "role": "Memory, foundry and display",
+      "vaultId": "samsung",
+      "aliases": [
+        "Samsung",
+        "samsung"
+      ]
+    },
+    "semiconductor-manufacturing-international-corporation": {
+      "name": "Semiconductor Manufacturing International Corporation",
+      "country": "cn",
+      "layer": "foundry_idm",
+      "role": "China's largest foundry; Entity-Listed since 2020",
+      "annotations": [
+        {
+          "text": "Added to the U.S. Entity List in December 2020 under the military-civil fusion rationale.",
+          "sources": [
+            "fr-huawei-2020-08"
+          ]
+        }
+      ],
+      "vaultId": "smic",
+      "aliases": [
+        "SMIC",
+        "smic"
+      ]
+    },
+    "3m": {
+      "name": "3M",
+      "country": "us",
+      "layer": "materials",
+      "role": "Adhesives, films, abrasives"
+    },
+    "aac-acoustic-technologies-holdings-incorporated": {
+      "name": "AAC Acoustic Technologies Holdings Incorporated",
+      "country": "cn",
+      "layer": "passives",
+      "role": "Acoustic components"
+    },
+    "advanced-semiconductor-engineering-technology-holding-co-ltd": {
+      "name": "Advanced Semiconductor Engineering Technology Holding Co., Ltd.",
+      "country": "tw",
+      "layer": "osat_test",
+      "role": "World's largest OSAT",
+      "vaultId": "ase",
+      "aliases": [
+        "ASE",
+        "ase"
+      ]
+    },
+    "agc-incorporated": {
+      "name": "AGC Incorporated",
+      "country": "jp",
+      "layer": "photomask",
+      "role": "Glass, and EUV mask blanks"
+    },
+    "akm-meadville-electronics-xiamen-company-limited": {
+      "name": "AKM Meadville Electronics (Xiamen) Company Limited",
+      "country": "cn",
+      "layer": "substrates_pcb",
+      "role": "PCB"
+    },
+    "alpha-and-omega-semiconductor-limited": {
+      "name": "Alpha and Omega Semiconductor Limited",
+      "country": "us",
+      "layer": "ic_other",
+      "role": "Power discretes"
+    },
+    "alps-alpine-company-limited": {
+      "name": "Alps Alpine Company Limited",
+      "country": "jp",
+      "layer": "passives",
+      "role": "Electromechanical components, sensors"
+    },
+    "amkor-technology-incorporated": {
+      "name": "Amkor Technology Incorporated",
+      "country": "us",
+      "layer": "osat_test",
+      "role": "OSAT",
+      "vaultId": "amkor",
+      "aliases": [
+        "Amkor",
+        "amkor"
+      ]
+    },
+    "amphenol-corporation": {
+      "name": "Amphenol Corporation",
+      "country": "us",
+      "layer": "passives",
+      "role": "Connectors"
+    },
+    "ams-osram-ag": {
+      "name": "ams-OSRAM AG",
+      "country": "at",
+      "layer": "ic_other",
+      "role": "Optical sensors and LED"
+    },
+    "analog-devices-incorporated": {
+      "name": "Analog Devices Incorporated",
+      "country": "us",
+      "layer": "ic_other",
+      "role": "Analog and mixed-signal IDM",
+      "vaultId": "adi",
+      "aliases": [
+        "Analog Devices",
+        "adi"
+      ]
+    },
+    "at-and-s-austria-technologie-and-systemtechnik-ag": {
+      "name": "AT & S Austria Technologie & Systemtechnik AG",
+      "country": "at",
+      "layer": "substrates_pcb",
+      "role": "IC substrates and HDI PCB",
+      "vaultId": "ats",
+      "aliases": [
+        "AT&S",
+        "ats"
+      ]
+    },
+    "baoji-titanium-industry-co-ltd": {
+      "name": "Baoji Titanium Industry Co., Ltd.",
+      "country": "cn",
+      "layer": "metals",
+      "role": "Titanium"
+    },
+    "baotou-inst-magnetic-new-materials-co-ltd": {
+      "name": "Baotou Inst Magnetic New Materials Co., Ltd.",
+      "country": "cn",
+      "layer": "materials",
+      "role": "Magnetic materials"
+    },
+    "beijing-zhong-ke-san-huan-high-tech-co-ltd": {
+      "name": "Beijing Zhong Ke San Huan High-Tech Co., Ltd.",
+      "country": "cn",
+      "layer": "materials",
+      "role": "Rare-earth magnets"
+    },
+    "bichamp-cutting-technology-hunan-co-ltd": {
+      "name": "Bichamp Cutting Technology (Hunan) Co., Ltd",
+      "country": "cn",
+      "layer": "mechanical",
+      "role": "Cutting tools"
+    },
+    "biel-crystal-manufactory-limited": {
+      "name": "Biel Crystal Manufactory Limited",
+      "country": "cn",
+      "layer": "display_camera",
+      "role": "Cover glass"
+    },
+    "boe-technology-group-company-limited": {
+      "name": "BOE Technology Group Company Limited",
+      "country": "cn",
+      "layer": "display_camera",
+      "role": "Display panels"
+    },
+    "boyd-corporation": {
+      "name": "Boyd Corporation",
+      "country": "us",
+      "layer": "materials",
+      "role": "Thermal and sealing"
+    },
+    "broadcom-limited": {
+      "name": "Broadcom Limited",
+      "country": "us",
+      "layer": "ic_other",
+      "role": "RF front-end, connectivity, custom ASIC",
+      "vaultId": "broadcom",
+      "aliases": [
+        "Broadcom",
+        "broadcom"
+      ]
+    },
+    "bumchun-precision-company-limited": {
+      "name": "Bumchun Precision Company Limited",
+      "country": "kr",
+      "layer": "mechanical",
+      "role": "Precision metal parts"
+    },
+    "byd-company-limited": {
+      "name": "BYD Company Limited",
+      "country": "cn",
+      "layer": "assembly",
+      "role": "Assembly and batteries"
+    },
+    "career-technology-mfg-company-limited": {
+      "name": "Career Technology (Mfg.) Company Limited",
+      "country": "tw",
+      "layer": "substrates_pcb",
+      "role": "Flexible PCB"
+    },
+    "catcher-technology-company-limited": {
+      "name": "Catcher Technology Company Limited",
+      "country": "tw",
+      "layer": "mechanical",
+      "role": "Metal enclosures"
+    },
+    "cathay-tat-ming-hk-company-limited": {
+      "name": "Cathay Tat Ming (HK) Company Limited",
+      "country": "cn",
+      "layer": "mechanical",
+      "role": "Metal parts"
+    },
+    "cheng-uei-precision-industry-company-limited-foxlink": {
+      "name": "Cheng Uei Precision Industry Company Limited (Foxlink)",
+      "country": "tw",
+      "layer": "passives",
+      "role": "Connectors and cables"
+    },
+    "chengdu-homin-technology-company-limited": {
+      "name": "Chengdu Homin Technology Company Limited",
+      "country": "cn",
+      "layer": "mechanical",
+      "role": "Precision components"
+    },
+    "china-circuit-technology-shantou-corporation": {
+      "name": "China Circuit Technology (Shantou) Corporation",
+      "country": "cn",
+      "layer": "substrates_pcb",
+      "role": "PCB"
+    },
+    "cirrus-logic-incorporated": {
+      "name": "Cirrus Logic Incorporated",
+      "country": "us",
+      "layer": "ic_other",
+      "role": "Audio and mixed-signal fabless"
+    },
+    "cn-innovations-holdings-limited": {
+      "name": "CN Innovations Holdings Limited",
+      "country": "cn",
+      "layer": "mechanical",
+      "role": "Precision metal and plastic"
+    },
+    "coherent-corporation": {
+      "name": "Coherent Corporation",
+      "country": "us",
+      "layer": "optics_laser",
+      "role": "Lasers and photonics"
+    },
+    "compal-electronics-incorporated": {
+      "name": "Compal Electronics Incorporated",
+      "country": "tw",
+      "layer": "assembly",
+      "role": "ODM"
+    },
+    "compeq-manufacturing-company-limited": {
+      "name": "Compeq Manufacturing Company Limited",
+      "country": "tw",
+      "layer": "substrates_pcb",
+      "role": "PCB and substrates"
+    },
+    "corning-incorporated": {
+      "name": "Corning Incorporated",
+      "country": "us",
+      "layer": "display_camera",
+      "role": "Specialty glass"
+    },
+    "cosmosupplylab-limited": {
+      "name": "Cosmosupplylab Limited",
+      "country": "cn",
+      "layer": "mechanical",
+      "role": "Components"
+    },
+    "cowell-e-holdings-incorporated": {
+      "name": "Cowell E Holdings Incorporated",
+      "country": "kr",
+      "layer": "display_camera",
+      "role": "Camera modules"
+    },
+    "crystal-optech-co-ltd": {
+      "name": "Crystal-Optech Co., Ltd.",
+      "country": "cn",
+      "layer": "display_camera",
+      "role": "Optical filters and coatings"
+    },
+    "cymmetrik-enterprise-company-limited": {
+      "name": "CymMetrik Enterprise Company Limited",
+      "country": "cn",
+      "layer": "mechanical",
+      "role": "Printing and packaging"
+    },
+    "delta-electronics-incorporated": {
+      "name": "Delta Electronics Incorporated",
+      "country": "tw",
+      "layer": "passives",
+      "role": "Power supplies and components"
+    },
+    "derkwoo-electronics-company-limited": {
+      "name": "Derkwoo Electronics Company Limited",
+      "country": "kr",
+      "layer": "passives",
+      "role": "Electronic components"
+    },
+    "dexerials-corporation": {
+      "name": "Dexerials Corporation",
+      "country": "jp",
+      "layer": "materials",
+      "role": "Optical adhesives and films"
+    },
+    "diodes-incorporated": {
+      "name": "Diodes Incorporated",
+      "country": "us",
+      "layer": "ic_other",
+      "role": "Discrete and analog IDM"
+    },
+    "dynapack-international-technology-corporation": {
+      "name": "Dynapack International Technology Corporation",
+      "country": "tw",
+      "layer": "mechanical",
+      "role": "Battery packs"
+    },
+    "flex-limited": {
+      "name": "Flex Limited",
+      "country": "sg",
+      "layer": "assembly",
+      "role": "EMS"
+    },
+    "flexium-interconnect-incorporated": {
+      "name": "Flexium Interconnect Incorporated",
+      "country": "tw",
+      "layer": "substrates_pcb",
+      "role": "Flexible PCB"
+    },
+    "fujian-nanping-aluminium-company-limited": {
+      "name": "Fujian Nanping Aluminium Company Limited",
+      "country": "cn",
+      "layer": "metals",
+      "role": "Aluminium"
+    },
+    "fujikura-limited": {
+      "name": "Fujikura Limited",
+      "country": "jp",
+      "layer": "substrates_pcb",
+      "role": "Flexible PCB and connectors"
+    },
+    "general-interface-solution-limited": {
+      "name": "General Interface Solution Limited",
+      "country": "tw",
+      "layer": "display_camera",
+      "role": "Touch and display modules"
+    },
+    "genius-electronic-optical-company-limited": {
+      "name": "Genius Electronic Optical Company Limited",
+      "country": "tw",
+      "layer": "display_camera",
+      "role": "Camera lenses"
+    },
+    "gigadevice-semiconductor-incorporated": {
+      "name": "GigaDevice Semiconductor Incorporated",
+      "country": "cn",
+      "layer": "memory",
+      "role": "NOR flash and MCU fabless"
+    },
+    "global-lighting-technologies": {
+      "name": "Global Lighting Technologies",
+      "country": "tw",
+      "layer": "display_camera",
+      "role": "Backlight"
+    },
+    "goertek-incorporated": {
+      "name": "GoerTek Incorporated",
+      "country": "cn",
+      "layer": "assembly",
+      "role": "Acoustics and module assembly"
+    },
+    "golden-arrow-printing-company-limited": {
+      "name": "Golden Arrow Printing Company Limited",
+      "country": "cn",
+      "layer": "mechanical",
+      "role": "Printing and packaging"
+    },
+    "hama-naka-shoukin-industry-company-limited": {
+      "name": "Hama Naka Shoukin Industry Company Limited",
+      "country": "jp",
+      "layer": "metals",
+      "role": "Metal processing"
+    },
+    "henkel-ag-and-company-kgaa": {
+      "name": "Henkel AG & Company, KGaA",
+      "country": "de",
+      "layer": "materials",
+      "role": "Adhesives and surface treatment"
+    },
+    "hi-p-international-limited": {
+      "name": "Hi-P International Limited",
+      "country": "sg",
+      "layer": "mechanical",
+      "role": "Precision mechanics"
+    },
+    "hirose-electric-company-limited": {
+      "name": "Hirose Electric Company Limited",
+      "country": "jp",
+      "layer": "passives",
+      "role": "Connectors"
+    },
+    "hon-hai-precision-industry-company-limited-foxconn": {
+      "name": "Hon Hai Precision Industry Company Limited (Foxconn)",
+      "country": "tw",
+      "layer": "assembly",
+      "role": "Largest contract assembler",
+      "vaultId": "foxconn",
+      "aliases": [
+        "Foxconn",
+        "foxconn"
+      ]
+    },
+    "idemia-group": {
+      "name": "IDEMIA Group",
+      "country": "fr",
+      "layer": "services",
+      "role": "Secure identity"
+    },
+    "inb-electronics-limited": {
+      "name": "INB Electronics Limited",
+      "country": "cn",
+      "layer": "passives",
+      "role": "Electronic components"
+    },
+    "infineon-technologies-ag": {
+      "name": "Infineon Technologies AG",
+      "country": "de",
+      "layer": "foundry_idm",
+      "role": "Power and automotive IDM",
+      "vaultId": "infineon",
+      "aliases": [
+        "Infineon",
+        "infineon"
+      ]
+    },
+    "interplex-holdings-pte-ltd": {
+      "name": "Interplex Holdings Pte. Ltd.",
+      "country": "sg",
+      "layer": "passives",
+      "role": "Interconnect"
+    },
+    "j-pond-industry-dongguan-company-limited": {
+      "name": "J.Pond Industry (Dongguan) Company Limited",
+      "country": "cn",
+      "layer": "mechanical",
+      "role": "Precision parts"
+    },
+    "jabil-incorporated": {
+      "name": "Jabil Incorporated",
+      "country": "us",
+      "layer": "assembly",
+      "role": "EMS"
+    },
+    "japan-aviation-electronics-industry-limited": {
+      "name": "Japan Aviation Electronics Industry Limited",
+      "country": "jp",
+      "layer": "passives",
+      "role": "Connectors"
+    },
+    "japan-display-incorporated": {
+      "name": "Japan Display Incorporated",
+      "country": "jp",
+      "layer": "display_camera",
+      "role": "Display panels"
+    },
+    "jcet-group-company-limited": {
+      "name": "JCET Group Company Limited",
+      "country": "cn",
+      "layer": "osat_test",
+      "role": "OSAT",
+      "vaultId": "jcet",
+      "aliases": [
+        "JCET",
+        "jcet"
+      ]
+    },
+    "jiangsu-kangrui-new-material-technology-co-ltd": {
+      "name": "Jiangsu Kangrui New Material Technology Co.,Ltd.",
+      "country": "cn",
+      "layer": "materials",
+      "role": "New materials"
+    },
+    "jiuquan-iron-and-steel-group-co-ltd": {
+      "name": "Jiuquan Iron & Steel (Group) Co., Ltd.",
+      "country": "cn",
+      "layer": "metals",
+      "role": "Steel"
+    },
+    "jones-tech-plc": {
+      "name": "Jones Tech PLC",
+      "country": "cn",
+      "layer": "materials",
+      "role": "EMI shielding and thermal"
+    },
+    "jx-nippon-mining-and-metals-corporation-eneos-holding": {
+      "name": "JX Nippon Mining & Metals Corporation (Eneos Holding)",
+      "country": "jp",
+      "layer": "metals",
+      "role": "Sputtering targets and high-purity metals"
+    },
+    "kam-kiu-aluminium-products-group-limited": {
+      "name": "Kam Kiu Aluminium Products Group Limited",
+      "country": "cn",
+      "layer": "metals",
+      "role": "Aluminium extrusion"
+    },
+    "keiwa-inc": {
+      "name": "Keiwa Inc.",
+      "country": "jp",
+      "layer": "display_camera",
+      "role": "Optical films"
+    },
+    "kioxia-holdings-corporation": {
+      "name": "Kioxia Holdings Corporation",
+      "country": "jp",
+      "layer": "memory",
+      "role": "NAND flash",
+      "vaultId": "kioxia",
+      "aliases": [
+        "Kioxia",
+        "kioxia"
+      ]
+    },
+    "knowles-corporation": {
+      "name": "Knowles Corporation",
+      "country": "us",
+      "layer": "passives",
+      "role": "MEMS microphones and capacitors"
+    },
+    "kunshan-kersen-science-and-technology-company-limited": {
+      "name": "Kunshan Kersen Science and Technology Company Limited",
+      "country": "cn",
+      "layer": "mechanical",
+      "role": "Precision metal"
+    },
+    "kyocera-corporation": {
+      "name": "Kyocera Corporation",
+      "country": "jp",
+      "layer": "substrates_pcb",
+      "role": "Ceramic packages and components"
+    },
+    "largan-precision-company-limited": {
+      "name": "Largan Precision Company Limited",
+      "country": "tw",
+      "layer": "display_camera",
+      "role": "Camera lenses"
+    },
+    "lens-technology-company-limited": {
+      "name": "Lens Technology Company Limited",
+      "country": "cn",
+      "layer": "display_camera",
+      "role": "Cover glass"
+    },
+    "lg-energy-solution": {
+      "name": "LG Energy Solution",
+      "country": "kr",
+      "layer": "mechanical",
+      "role": "Batteries"
+    },
+    "lg-display-company-limited": {
+      "name": "LG Display Company Limited",
+      "country": "kr",
+      "layer": "display_camera",
+      "role": "Display panels"
+    },
+    "lg-innotek-company-limited": {
+      "name": "LG Innotek Company Limited",
+      "country": "kr",
+      "layer": "display_camera",
+      "role": "Camera modules and substrates"
+    },
+    "lingyi-itech-guangdong-company": {
+      "name": "Lingyi iTech (Guangdong) Company",
+      "country": "cn",
+      "layer": "mechanical",
+      "role": "Precision parts"
+    },
+    "lite-on-technology-corporation": {
+      "name": "Lite-On Technology Corporation",
+      "country": "tw",
+      "layer": "passives",
+      "role": "Optoelectronics and power"
+    },
+    "luen-fung-group": {
+      "name": "Luen Fung Group",
+      "country": "cn",
+      "layer": "mechanical",
+      "role": "Metal parts"
+    },
+    "lumentum-holdings-incorporated": {
+      "name": "Lumentum Holdings Incorporated",
+      "country": "us",
+      "layer": "optics_laser",
+      "role": "Lasers and photonics"
+    },
+    "lumileds-holding-b-v": {
+      "name": "Lumileds Holding B.V.",
+      "country": "nl",
+      "layer": "ic_other",
+      "role": "LED"
+    },
+    "luxshare-precision-industry-company-limited": {
+      "name": "Luxshare Precision Industry Company Limited",
+      "country": "cn",
+      "layer": "assembly",
+      "role": "Connectors and assembly",
+      "vaultId": "luxshare",
+      "aliases": [
+        "Luxshare",
+        "luxshare"
+      ]
+    },
+    "lx-semicon-co-ltd": {
+      "name": "LX Semicon Co., Ltd.",
+      "country": "kr",
+      "layer": "ic_other",
+      "role": "Display driver ICs"
+    },
+    "marian-incorporated": {
+      "name": "Marian Incorporated",
+      "country": "us",
+      "layer": "materials",
+      "role": "Converted materials"
+    },
+    "microchip-technology-incorporated": {
+      "name": "MicroChip Technology Incorporated",
+      "country": "us",
+      "layer": "foundry_idm",
+      "role": "Microcontroller IDM",
+      "vaultId": "microchip",
+      "aliases": [
+        "Microchip",
+        "microchip"
+      ]
+    },
+    "micron-technology-incorporated": {
+      "name": "Micron Technology Incorporated",
+      "country": "us",
+      "layer": "memory",
+      "role": "DRAM and NAND",
+      "vaultId": "micron",
+      "aliases": [
+        "Micron",
+        "micron"
+      ]
+    },
+    "minebeamitsumi-incorporated": {
+      "name": "MinebeaMitsumi Incorporated",
+      "country": "jp",
+      "layer": "passives",
+      "role": "Precision components and devices"
+    },
+    "molex-incorporated": {
+      "name": "Molex Incorporated",
+      "country": "us",
+      "layer": "passives",
+      "role": "Connectors"
+    },
+    "murata-manufacturing-company-limited": {
+      "name": "Murata Manufacturing Company Limited",
+      "country": "jp",
+      "layer": "passives",
+      "role": "MLCC and RF modules"
+    },
+    "nanofilm-technologies-international-private-limited": {
+      "name": "Nanofilm Technologies International Private Limited",
+      "country": "sg",
+      "layer": "materials",
+      "role": "Vacuum coatings"
+    },
+    "nan-ya-pcb-corporation": {
+      "name": "Nan Ya PCB Corporation",
+      "country": "tw",
+      "layer": "substrates_pcb",
+      "role": "IC substrates and PCB"
+    },
+    "nichia-corporation": {
+      "name": "Nichia Corporation",
+      "country": "jp",
+      "layer": "ic_other",
+      "role": "LED and phosphors"
+    },
+    "nidec-corporation": {
+      "name": "Nidec Corporation",
+      "country": "jp",
+      "layer": "mechanical",
+      "role": "Motors"
+    },
+    "nissha-company-limited": {
+      "name": "Nissha Company Limited",
+      "country": "jp",
+      "layer": "display_camera",
+      "role": "Touch sensors and decoration"
+    },
+    "nitto-denko-corporation": {
+      "name": "Nitto Denko Corporation",
+      "country": "jp",
+      "layer": "materials",
+      "role": "Tapes, films, optical materials"
+    },
+    "nok-corporation": {
+      "name": "NOK Corporation",
+      "country": "jp",
+      "layer": "materials",
+      "role": "Seals and flexible circuits"
+    },
+    "nordic-semiconductor-asa": {
+      "name": "Nordic Semiconductor ASA",
+      "country": "no",
+      "layer": "ic_other",
+      "role": "Low-power wireless fabless"
+    },
+    "nxp-semiconductors-n-v": {
+      "name": "NXP Semiconductors N.V.",
+      "country": "nl",
+      "layer": "foundry_idm",
+      "role": "Automotive and secure-connectivity IDM",
+      "vaultId": "nxp",
+      "aliases": [
+        "NXP",
+        "nxp"
+      ]
+    },
+    "on-semiconductor-corporation": {
+      "name": "ON Semiconductor Corporation",
+      "country": "us",
+      "layer": "foundry_idm",
+      "role": "Power and sensing IDM",
+      "vaultId": "onsemi",
+      "aliases": [
+        "onsemi"
+      ]
+    },
+    "paishing-technology-company": {
+      "name": "Paishing Technology Company",
+      "country": "tw",
+      "layer": "mechanical",
+      "role": "Precision parts"
+    },
+    "parade-technologies-limited": {
+      "name": "Parade Technologies Limited",
+      "country": "tw",
+      "layer": "ic_other",
+      "role": "Display interface fabless"
+    },
+    "pegatron-corporation": {
+      "name": "Pegatron Corporation",
+      "country": "tw",
+      "layer": "assembly",
+      "role": "ODM"
+    },
+    "phone-in-mag-electronics-company-limited": {
+      "name": "Phone In Mag-Electronics Company Limited",
+      "country": "cn",
+      "layer": "passives",
+      "role": "Magnetic components"
+    },
+    "pioneer-material-precision-tech-company-limited": {
+      "name": "Pioneer Material Precision Tech Company Limited",
+      "country": "cn",
+      "layer": "materials",
+      "role": "Precision materials"
+    },
+    "platinum-optics-technology-incorporated": {
+      "name": "Platinum Optics Technology Incorporated",
+      "country": "tw",
+      "layer": "display_camera",
+      "role": "Optical filters"
+    },
+    "posco-international": {
+      "name": "POSCO International",
+      "country": "kr",
+      "layer": "metals",
+      "role": "Steel and trading"
+    },
+    "power-integrations-incorporated": {
+      "name": "Power Integrations Incorporated",
+      "country": "us",
+      "layer": "ic_other",
+      "role": "Power conversion fabless"
+    },
+    "primax-electronics-limited": {
+      "name": "Primax Electronics Limited",
+      "country": "tw",
+      "layer": "assembly",
+      "role": "Acoustic and peripheral ODM"
+    },
+    "qorvo-incorporated": {
+      "name": "Qorvo Incorporated",
+      "country": "us",
+      "layer": "ic_other",
+      "role": "RF front-end IDM"
+    },
+    "quadrant-solutions": {
+      "name": "Quadrant Solutions",
+      "country": "us",
+      "layer": "materials",
+      "role": "Magnetic materials"
+    },
+    "qualcomm-incorporated": {
+      "name": "Qualcomm Incorporated",
+      "country": "us",
+      "layer": "ic_other",
+      "role": "Mobile SoC and modem fabless",
+      "vaultId": "qualcomm",
+      "aliases": [
+        "Qualcomm",
+        "qualcomm"
+      ]
+    },
+    "quanta-computer-incorporated": {
+      "name": "Quanta Computer Incorporated",
+      "country": "tw",
+      "layer": "assembly",
+      "role": "ODM; AI server assembly",
+      "vaultId": "quanta",
+      "aliases": [
+        "Quanta",
+        "quanta"
+      ]
+    },
+    "r-r-donnelley-and-sons-company": {
+      "name": "R.R. Donnelley and Sons Company",
+      "country": "us",
+      "layer": "mechanical",
+      "role": "Printing and packaging"
+    },
+    "radiant-opto-electronics-corporation": {
+      "name": "Radiant Opto-Electronics Corporation",
+      "country": "tw",
+      "layer": "display_camera",
+      "role": "Backlight modules"
+    },
+    "renesas-electronics-corporation": {
+      "name": "Renesas Electronics Corporation",
+      "country": "jp",
+      "layer": "foundry_idm",
+      "role": "MCU and analog IDM",
+      "vaultId": "renesas",
+      "aliases": [
+        "Renesas",
+        "renesas"
+      ]
+    },
+    "robert-bosch-gmbh": {
+      "name": "Robert Bosch GmbH",
+      "country": "de",
+      "layer": "foundry_idm",
+      "role": "Automotive IDM and MEMS",
+      "vaultId": "bosch",
+      "aliases": [
+        "Bosch",
+        "bosch"
+      ]
+    },
+    "rohm-company-limited": {
+      "name": "Rohm Company Limited",
+      "country": "jp",
+      "layer": "foundry_idm",
+      "role": "Power and analog IDM"
+    },
+    "sabic-saudi-arabian-oil-company": {
+      "name": "SABIC - Saudi Arabian Oil Company",
+      "country": "sa",
+      "layer": "materials",
+      "role": "Petrochemicals and polymers"
+    },
+    "samsung-electro-mechanics-company-limited": {
+      "name": "Samsung Electro-Mechanics Company Limited",
+      "country": "kr",
+      "layer": "substrates_pcb",
+      "role": "Substrates, MLCC, camera modules",
+      "vaultId": "samsungem",
+      "aliases": [
+        "Samsung Electro-Mech",
+        "samsungem"
+      ]
+    },
+    "samsung-sdi-company-limited": {
+      "name": "Samsung SDI Company Limited",
+      "country": "kr",
+      "layer": "mechanical",
+      "role": "Batteries"
+    },
+    "san-an-optoelectronics-co-ltd": {
+      "name": "San'an Optoelectronics Co., Ltd.",
+      "country": "cn",
+      "layer": "ic_other",
+      "role": "Compound semiconductors and LED"
+    },
+    "shandong-innovation-group": {
+      "name": "Shandong Innovation Group",
+      "country": "cn",
+      "layer": "metals",
+      "role": "Aluminium"
+    },
+    "shanghai-industrial-holdings-limited": {
+      "name": "Shanghai Industrial Holdings Limited",
+      "country": "cn",
+      "layer": "materials",
+      "role": "Industrial materials"
+    },
+    "sharp-corporation": {
+      "name": "Sharp Corporation",
+      "country": "jp",
+      "layer": "display_camera",
+      "role": "Displays and camera modules"
+    },
+    "shenzhen-bsc-technology-co-ltd": {
+      "name": "Shenzhen BSC technology Co., Ltd.",
+      "country": "cn",
+      "layer": "mechanical",
+      "role": "Precision components"
+    },
+    "shenzhen-desay-battery-technology-company-limited": {
+      "name": "Shenzhen Desay Battery Technology Company Limited",
+      "country": "cn",
+      "layer": "mechanical",
+      "role": "Battery packs"
+    },
+    "shenzhen-everwin-precision-technology-company-limited": {
+      "name": "Shenzhen Everwin Precision Technology Company Limited",
+      "country": "cn",
+      "layer": "mechanical",
+      "role": "Precision structural parts"
+    },
+    "shenzhen-forceblack-technology-co-ltd": {
+      "name": "Shenzhen Forceblack Technology Co., Ltd",
+      "country": "cn",
+      "layer": "mechanical",
+      "role": "Components"
+    },
+    "shenzhen-linkconn-electronics-co-ltd": {
+      "name": "Shenzhen Linkconn Electronics Co., Ltd.",
+      "country": "cn",
+      "layer": "passives",
+      "role": "Connectors"
+    },
+    "shenzhen-sunway-communication-company-limited": {
+      "name": "Shenzhen Sunway Communication Company Limited",
+      "country": "cn",
+      "layer": "passives",
+      "role": "Antennas and RF modules"
+    },
+    "shenzhen-yuto-packaging-technology-company-limited": {
+      "name": "Shenzhen YUTO Packaging Technology Company Limited",
+      "country": "cn",
+      "layer": "mechanical",
+      "role": "Packaging"
+    },
+    "shin-zu-shing-company-limited": {
+      "name": "Shin Zu Shing Company Limited",
+      "country": "tw",
+      "layer": "mechanical",
+      "role": "Hinges and precision metal"
+    },
+    "simplo-technology-company-limited": {
+      "name": "Simplo Technology Company Limited",
+      "country": "tw",
+      "layer": "mechanical",
+      "role": "Battery packs"
+    },
+    "sk-hynix-incorporated": {
+      "name": "SK hynix Incorporated",
+      "country": "kr",
+      "layer": "memory",
+      "role": "DRAM, NAND and HBM",
+      "vaultId": "skhynix",
+      "aliases": [
+        "SK hynix",
+        "skhynix"
+      ]
+    },
+    "skyworks-solutions-incorporated": {
+      "name": "Skyworks Solutions Incorporated",
+      "country": "us",
+      "layer": "ic_other",
+      "role": "RF front-end IDM"
+    },
+    "solvay-s-a": {
+      "name": "Solvay S.A.",
+      "country": "be",
+      "layer": "materials",
+      "role": "Specialty chemicals"
+    },
+    "sony-corporation": {
+      "name": "Sony Corporation",
+      "country": "jp",
+      "layer": "ic_other",
+      "role": "CMOS image sensors",
+      "vaultId": "sonysemi",
+      "aliases": [
+        "Sony Semiconductor",
+        "sonysemi"
+      ]
+    },
+    "stmicroelectronics-n-v": {
+      "name": "STMicroelectronics N.V.",
+      "country": "ch",
+      "layer": "foundry_idm",
+      "role": "Analog, MEMS and power IDM",
+      "vaultId": "st",
+      "aliases": [
+        "STMicro",
+        "st"
+      ]
+    },
+    "stora-enso-oyj": {
+      "name": "Stora Enso Oyj",
+      "country": "fi",
+      "layer": "mechanical",
+      "role": "Paper and fibre packaging"
+    },
+    "sumida-corporation": {
+      "name": "Sumida Corporation",
+      "country": "jp",
+      "layer": "passives",
+      "role": "Inductors and coils"
+    },
+    "sumitomo-chemical-company-limited": {
+      "name": "Sumitomo Chemical Company Limited",
+      "country": "jp",
+      "layer": "materials",
+      "role": "Photoresist and electronic chemicals",
+      "vaultId": "sumitomo_chem",
+      "aliases": [
+        "Sumitomo Chemical",
+        "sumitomo_chem"
+      ]
+    },
+    "sumitomo-electric-industries-limited": {
+      "name": "Sumitomo Electric Industries Limited",
+      "country": "jp",
+      "layer": "substrates_pcb",
+      "role": "Flexible circuits and compound substrates"
+    },
+    "sunny-optical-technology-co-ltd": {
+      "name": "Sunny Optical Technology Co., Ltd.",
+      "country": "cn",
+      "layer": "display_camera",
+      "role": "Lenses and camera modules"
+    },
+    "sunrex-technology-corporation": {
+      "name": "Sunrex Technology Corporation",
+      "country": "tw",
+      "layer": "mechanical",
+      "role": "Input devices"
+    },
+    "sunwoda-electronic-company-limited": {
+      "name": "Sunwoda Electronic Company Limited",
+      "country": "cn",
+      "layer": "mechanical",
+      "role": "Battery packs"
+    },
+    "suzhou-anjie-technology-company-limited": {
+      "name": "Suzhou Anjie Technology Company Limited",
+      "country": "cn",
+      "layer": "materials",
+      "role": "Functional materials"
+    },
+    "suzhou-dongshan-precision-manufacturing-company-limited": {
+      "name": "Suzhou Dongshan Precision Manufacturing Company Limited",
+      "country": "cn",
+      "layer": "substrates_pcb",
+      "role": "PCB and precision parts"
+    },
+    "suzhou-zhongjiemai-panel-industry-technology-company-limited": {
+      "name": "Suzhou Zhongjiemai Panel Industry Technology Company Limited",
+      "country": "cn",
+      "layer": "display_camera",
+      "role": "Panel components"
+    },
+    "synaptics-incorporated": {
+      "name": "Synaptics Incorporated",
+      "country": "us",
+      "layer": "ic_other",
+      "role": "Touch and display fabless"
+    },
+    "taiwan-hodaka-technology-company-limited": {
+      "name": "Taiwan Hodaka Technology Company Limited",
+      "country": "tw",
+      "layer": "mechanical",
+      "role": "Precision parts"
+    },
+    "taiwan-surface-mounting-technology-corporation": {
+      "name": "Taiwan Surface Mounting Technology Corporation",
+      "country": "tw",
+      "layer": "assembly",
+      "role": "SMT assembly"
+    },
+    "taiyo-yuden-company-limited": {
+      "name": "Taiyo Yuden Company Limited",
+      "country": "jp",
+      "layer": "passives",
+      "role": "MLCC and inductors"
+    },
+    "tata-electronics": {
+      "name": "Tata Electronics",
+      "country": "in",
+      "layer": "assembly",
+      "role": "Assembly; building fab and OSAT capacity"
+    },
+    "tdk-corporation": {
+      "name": "TDK Corporation",
+      "country": "jp",
+      "layer": "passives",
+      "role": "Passives, sensors, batteries"
+    },
+    "texas-instruments-incorporated": {
+      "name": "Texas Instruments Incorporated",
+      "country": "us",
+      "layer": "foundry_idm",
+      "role": "Analog and embedded IDM",
+      "vaultId": "ti",
+      "aliases": [
+        "Texas Instruments",
+        "ti"
+      ]
+    },
+    "tongda-group-holdings-limited": {
+      "name": "Tongda Group Holdings Limited",
+      "country": "cn",
+      "layer": "mechanical",
+      "role": "Structural parts"
+    },
+    "toyoda-gosei-co-limited": {
+      "name": "Toyoda Gosei Co., Limited",
+      "country": "jp",
+      "layer": "materials",
+      "role": "Polymers and LED"
+    },
+    "tpk-holding-company-limited": {
+      "name": "TPK Holding Company Limited",
+      "country": "tw",
+      "layer": "display_camera",
+      "role": "Touch panels"
+    },
+    "trinseo-s-a": {
+      "name": "Trinseo S.A.",
+      "country": "ie",
+      "layer": "materials",
+      "role": "Polymers and latex"
+    },
+    "tripod-technology-corporation": {
+      "name": "Tripod Technology Corporation",
+      "country": "tw",
+      "layer": "substrates_pcb",
+      "role": "PCB"
+    },
+    "tsujiden-company-limited": {
+      "name": "Tsujiden Company Limited",
+      "country": "jp",
+      "layer": "display_camera",
+      "role": "Optical films"
+    },
+    "txc-corporation": {
+      "name": "TXC Corporation",
+      "country": "tw",
+      "layer": "passives",
+      "role": "Crystal oscillators"
+    },
+    "unimicron-technology-corporation": {
+      "name": "Unimicron Technology Corporation",
+      "country": "tw",
+      "layer": "substrates_pcb",
+      "role": "ABF and IC substrates",
+      "vaultId": "unimicron",
+      "aliases": [
+        "Unimicron",
+        "unimicron"
+      ]
+    },
+    "unisteel-technology-limited-sfs-group": {
+      "name": "Unisteel Technology Limited (SFS Group)",
+      "country": "sg",
+      "layer": "mechanical",
+      "role": "Precision fasteners"
+    },
+    "unitech-printed-circuit-board-corporation": {
+      "name": "Unitech Printed Circuit Board Corporation",
+      "country": "tw",
+      "layer": "substrates_pcb",
+      "role": "PCB"
+    },
+    "united-test-and-assembly-center-limited": {
+      "name": "United Test and Assembly Center Limited",
+      "country": "sg",
+      "layer": "osat_test",
+      "role": "OSAT",
+      "vaultId": "utac",
+      "aliases": [
+        "UTAC",
+        "utac"
+      ]
+    },
+    "varta-microbattery-gmbh": {
+      "name": "VARTA Microbattery GmbH",
+      "country": "de",
+      "layer": "mechanical",
+      "role": "Micro batteries"
+    },
+    "viavi-solutions-incorporated": {
+      "name": "Viavi Solutions Incorporated",
+      "country": "us",
+      "layer": "optics_laser",
+      "role": "Optical filters and test"
+    },
+    "western-digital-corporation": {
+      "name": "Western Digital Corporation",
+      "country": "us",
+      "layer": "memory",
+      "role": "NAND and storage"
+    },
+    "winbond-electronics-corporation": {
+      "name": "Winbond Electronics Corporation",
+      "country": "tw",
+      "layer": "memory",
+      "role": "Specialty DRAM and flash",
+      "vaultId": "winbond",
+      "aliases": [
+        "Winbond",
+        "winbond"
+      ]
+    },
+    "wingtech-technology-co-ltd": {
+      "name": "Wingtech Technology Co., Ltd.",
+      "country": "cn",
+      "layer": "assembly",
+      "role": "ODM; owner of Nexperia"
+    },
+    "wistron-corporation": {
+      "name": "Wistron Corporation",
+      "country": "tw",
+      "layer": "assembly",
+      "role": "ODM",
+      "vaultId": "wistron",
+      "aliases": [
+        "Wistron",
+        "wistron"
+      ]
+    },
+    "yageo-corporation": {
+      "name": "Yageo Corporation",
+      "country": "tw",
+      "layer": "passives",
+      "role": "Resistors and MLCC"
+    },
+    "young-poong-corporation": {
+      "name": "Young Poong Corporation",
+      "country": "kr",
+      "layer": "metals",
+      "role": "Smelting and electronics"
+    },
+    "zhejiang-tony-electronic-co-ltd": {
+      "name": "Zhejiang Tony Electronic Co., Ltd.",
+      "country": "cn",
+      "layer": "passives",
+      "role": "Electronic components"
+    },
+    "zhen-ding-technology-holding-limited": {
+      "name": "Zhen Ding Technology Holding Limited",
+      "country": "tw",
+      "layer": "substrates_pcb",
+      "role": "Flexible PCB and substrates"
+    },
+    "zhenghe-group": {
+      "name": "Zhenghe Group",
+      "country": "cn",
+      "layer": "mechanical",
+      "role": "Structural parts"
+    },
+    "zhuhai-cosmx-battery-co-ltd": {
+      "name": "Zhuhai CosMX Battery Co., Ltd.",
+      "country": "cn",
+      "layer": "mechanical",
+      "role": "Lithium batteries"
+    },
+    "abb-ltd": {
+      "name": "ABB Ltd.",
+      "country": "ch",
+      "layer": "construction",
+      "role": "Electrification and automation"
+    },
+    "advantest-corporation": {
+      "name": "ADVANTEST CORPORATION",
+      "country": "jp",
+      "layer": "equipment",
+      "role": "Automated test equipment"
+    },
+    "aem-holdings-ltd": {
+      "name": "AEM Holdings Ltd.",
+      "country": "sg",
+      "layer": "equipment",
+      "role": "Test handling and burn-in"
+    },
+    "all-ring-tech-co-ltd": {
+      "name": "All Ring Tech Co., Ltd.",
+      "country": "tw",
+      "layer": "equipment",
+      "role": "Automation equipment"
+    },
+    "applied-materials-inc": {
+      "name": "Applied Materials, Inc.",
+      "country": "us",
+      "layer": "equipment",
+      "role": "Deposition, etch, CMP, metrology",
+      "vaultId": "amat",
+      "aliases": [
+        "Applied Materials",
+        "amat"
+      ]
+    },
+    "asm-international-n-v": {
+      "name": "ASM International N.V.",
+      "country": "nl",
+      "layer": "equipment",
+      "role": "ALD and epitaxy",
+      "vaultId": "asmi",
+      "aliases": [
+        "ASM International",
+        "asmi"
+      ]
+    },
+    "asmpt-limited": {
+      "name": "ASMPT Limited",
+      "country": "hk",
+      "layer": "equipment",
+      "role": "Back-end assembly and packaging equipment"
+    },
+    "austin-commercial-lp": {
+      "name": "Austin Commercial, LP.",
+      "country": "us",
+      "layer": "construction",
+      "role": "Fab construction"
+    },
+    "bechtel": {
+      "name": "Bechtel",
+      "country": "us",
+      "layer": "construction",
+      "role": "Engineering and construction"
+    },
+    "brewer-science-inc": {
+      "name": "Brewer Science, Inc.",
+      "country": "us",
+      "layer": "materials",
+      "role": "Lithography and bonding materials"
+    },
+    "camtek": {
+      "name": "Camtek",
+      "country": "il",
+      "layer": "equipment",
+      "role": "Inspection and metrology"
+    },
+    "canon-inc": {
+      "name": "Canon Inc.",
+      "country": "jp",
+      "layer": "equipment",
+      "role": "Lithography and packaging equipment",
+      "vaultId": "canon",
+      "aliases": [
+        "Canon",
+        "canon"
+      ]
+    },
+    "c-hawk-technology-intl-inc": {
+      "name": "C-HAWK Technology Intl, Inc.",
+      "country": "tw",
+      "layer": "metals",
+      "role": "High-precision plastic parts"
+    },
+    "chang-chun-petrochemical-co-ltd": {
+      "name": "Chang Chun Petrochemical Co., Ltd.",
+      "country": "tw",
+      "layer": "materials",
+      "role": "Electronic chemicals and copper foil"
+    },
+    "china-steel-structure-co-ltd": {
+      "name": "China Steel Structure Co., Ltd.",
+      "country": "tw",
+      "layer": "construction",
+      "role": "Steel structures"
+    },
+    "compass-group-usa": {
+      "name": "Compass Group USA",
+      "country": "us",
+      "layer": "services",
+      "role": "Food services"
+    },
+    "csun-g2c-alliance": {
+      "name": "CSUN / G2C+ Alliance",
+      "country": "tw",
+      "layer": "construction",
+      "role": "Construction alliance"
+    },
+    "dacin-construction-co-ltd": {
+      "name": "DACIN Construction Co., Ltd.",
+      "country": "tw",
+      "layer": "construction",
+      "role": "Fab construction"
+    },
+    "daewon-semiconductor-packaging-industrial-co-ltd": {
+      "name": "Daewon Semiconductor Packaging Industrial Co., Ltd.",
+      "country": "kr",
+      "layer": "osat_test",
+      "role": "Packaging materials and services"
+    },
+    "daifuku-co-ltd": {
+      "name": "Daifuku Co., Ltd.",
+      "country": "jp",
+      "layer": "equipment",
+      "role": "Fab automation and material handling"
+    },
+    "deloitte-touche-tohmatsu-limited": {
+      "name": "Deloitte Touche Tohmatsu Limited",
+      "country": "uk",
+      "layer": "services",
+      "role": "Professional services"
+    },
+    "disco-corporation": {
+      "name": "DISCO Corporation",
+      "country": "jp",
+      "layer": "equipment",
+      "role": "Dicing, grinding, polishing"
+    },
+    "ds-techno-co-ltd": {
+      "name": "DS TECHNO CO., LTD.",
+      "country": "kr",
+      "layer": "metals",
+      "role": "Quartz parts"
+    },
+    "dsv-global-transport-and-logistics": {
+      "name": "DSV Global Transport and Logistics",
+      "country": "dk",
+      "layer": "services",
+      "role": "Logistics"
+    },
+    "ebara-corporation": {
+      "name": "EBARA CORPORATION",
+      "country": "jp",
+      "layer": "equipment",
+      "role": "CMP and vacuum pumps",
+      "vaultId": "ebara",
+      "aliases": [
+        "Ebara",
+        "ebara"
+      ]
+    },
+    "ekk-eagle-america-inc": {
+      "name": "EKK EAGLE AMERICA, INC.",
+      "country": "jp",
+      "layer": "metals",
+      "role": "O-rings and seals"
+    },
+    "formfactor-incorporated": {
+      "name": "FormFactor, Incorporated",
+      "country": "us",
+      "layer": "equipment",
+      "role": "Probe cards and test"
+    },
+    "fu-tsu-construction-co-ltd": {
+      "name": "Fu Tsu Construction Co., Ltd.",
+      "country": "tw",
+      "layer": "construction",
+      "role": "Fab construction"
+    },
+    "fujimi-incorporated": {
+      "name": "FUJIMI INCORPORATED",
+      "country": "jp",
+      "layer": "materials",
+      "role": "CMP slurries and abrasives"
+    },
+    "gcon-inc": {
+      "name": "GCON, Inc.",
+      "country": "us",
+      "layer": "construction",
+      "role": "Construction"
+    },
+    "gigaphoton-inc": {
+      "name": "GIGAPHOTON, INC.",
+      "country": "jp",
+      "layer": "optics_laser",
+      "role": "Excimer light sources"
+    },
+    "gold-stone-development-co-ltd": {
+      "name": "GOLD STONE DEVELOPMENT CO., LTD.",
+      "country": "tw",
+      "layer": "construction",
+      "role": "Fab construction"
+    },
+    "hcltech": {
+      "name": "HCLTech",
+      "country": "in",
+      "layer": "services",
+      "role": "Engineering and IT services"
+    },
+    "hitachi-high-tech-corporation": {
+      "name": "Hitachi High-Tech Corporation",
+      "country": "jp",
+      "layer": "equipment",
+      "role": "Etch and metrology",
+      "vaultId": "hitachiht",
+      "aliases": [
+        "Hitachi High-Tech",
+        "hitachiht"
+      ]
+    },
+    "hsingmien-industry-co-ltd": {
+      "name": "HSINGMIEN INDUSTRY CO.,LTD.",
+      "country": "tw",
+      "layer": "metals",
+      "role": "Industrial supply"
+    },
+    "jentech-precision-industrial-co-ltd": {
+      "name": "Jentech Precision Industrial Co., Ltd",
+      "country": "tw",
+      "layer": "metals",
+      "role": "Precision fab parts"
+    },
+    "jiangxi-redboard-technology-co-ltd": {
+      "name": "JiangXi Redboard Technology Co., Ltd.",
+      "country": "cn",
+      "layer": "substrates_pcb",
+      "role": "PCB"
+    },
+    "jll": {
+      "name": "JLL",
+      "country": "us",
+      "layer": "services",
+      "role": "Facilities management"
+    },
+    "jsr-corporation": {
+      "name": "JSR Corporation",
+      "country": "jp",
+      "layer": "materials",
+      "role": "Photoresists",
+      "vaultId": "jsr",
+      "aliases": [
+        "JSR",
+        "jsr"
+      ]
+    },
+    "jx-advanced-metals-corporation": {
+      "name": "JX Advanced Metals Corporation",
+      "country": "jp",
+      "layer": "metals",
+      "role": "Sputtering targets and high-purity metals"
+    },
+    "kedge-construction-co-ltd": {
+      "name": "Kedge Construction Co., Ltd.",
+      "country": "tw",
+      "layer": "construction",
+      "role": "Fab construction"
+    },
+    "kellyocg": {
+      "name": "KellyOCG",
+      "country": "us",
+      "layer": "services",
+      "role": "Workforce solutions"
+    },
+    "keysight-technologies-inc": {
+      "name": "Keysight Technologies, Inc.",
+      "country": "us",
+      "layer": "equipment",
+      "role": "Test and measurement"
+    },
+    "kla-corporation": {
+      "name": "KLA Corporation",
+      "country": "us",
+      "layer": "equipment",
+      "role": "Process control, inspection, metrology",
+      "vaultId": "kla",
+      "aliases": [
+        "KLA",
+        "kla"
+      ]
+    },
+    "kokusai-electric-corporation": {
+      "name": "KOKUSAI ELECTRIC CORPORATION",
+      "country": "jp",
+      "layer": "equipment",
+      "role": "Thermal processing and ALD",
+      "vaultId": "kokusai",
+      "aliases": [
+        "Kokusai Electric",
+        "kokusai"
+      ]
+    },
+    "lam-research-corporation": {
+      "name": "Lam Research Corporation",
+      "country": "us",
+      "layer": "equipment",
+      "role": "Etch and deposition",
+      "vaultId": "lam",
+      "aliases": [
+        "Lam Research",
+        "lam"
+      ]
+    },
+    "lasertec-corporation": {
+      "name": "Lasertec Corporation",
+      "country": "jp",
+      "layer": "equipment",
+      "role": "EUV mask inspection"
+    },
+    "lcy-group": {
+      "name": "LCY Group",
+      "country": "tw",
+      "layer": "materials",
+      "role": "Electronic chemicals and solvents"
+    },
+    "lee-ming-construction-co-ltd": {
+      "name": "LEE MING Construction Co.LTD",
+      "country": "tw",
+      "layer": "construction",
+      "role": "Construction"
+    },
+    "marketech-international-corp": {
+      "name": "Marketech International Corp.",
+      "country": "tw",
+      "layer": "construction",
+      "role": "Fab systems integration"
+    },
+    "merck": {
+      "name": "Merck",
+      "country": "de",
+      "layer": "materials",
+      "role": "Electronic materials"
+    },
+    "moduslink-corporation": {
+      "name": "ModusLink Corporation",
+      "country": "us",
+      "layer": "services",
+      "role": "Supply-chain services"
+    },
+    "moses-lake-industries-inc-tama-chemicals": {
+      "name": "Moses Lake Industries, Inc. (TAMA Chemicals)",
+      "country": "us",
+      "layer": "materials",
+      "role": "High-purity process chemicals"
+    },
+    "msr-fsr-llc": {
+      "name": "MSR-FSR LLC",
+      "country": "us",
+      "layer": "metals",
+      "role": "Parts cleaning and refurbishment"
+    },
+    "murata-machinery-ltd": {
+      "name": "Murata Machinery, Ltd.",
+      "country": "jp",
+      "layer": "equipment",
+      "role": "Fab automation and material handling"
+    },
+    "namics-corporation": {
+      "name": "NAMICS CORPORATION",
+      "country": "jp",
+      "layer": "materials",
+      "role": "Underfills and encapsulants"
+    },
+    "nikon-corporation": {
+      "name": "Nikon Corporation",
+      "country": "jp",
+      "layer": "equipment",
+      "role": "Lithography and metrology",
+      "vaultId": "nikon",
+      "aliases": [
+        "Nikon",
+        "nikon"
+      ]
+    },
+    "nova-ltd": {
+      "name": "Nova Ltd.",
+      "country": "il",
+      "layer": "equipment",
+      "role": "Metrology",
+      "vaultId": "nova",
+      "aliases": [
+        "Nova",
+        "nova"
+      ]
+    },
+    "nts-group": {
+      "name": "NTS Group",
+      "country": "nl",
+      "layer": "equipment",
+      "role": "High-precision mechatronic modules"
+    },
+    "nuflare-technology-inc": {
+      "name": "NuFlare Technology, Inc.",
+      "country": "jp",
+      "layer": "photomask",
+      "role": "Mask writers"
+    },
+    "onto-innovation-inc": {
+      "name": "Onto Innovation Inc.",
+      "country": "us",
+      "layer": "equipment",
+      "role": "Inspection and metrology",
+      "vaultId": "onto",
+      "aliases": [
+        "Onto Innovation",
+        "onto"
+      ]
+    },
+    "organo-technology-co-ltd": {
+      "name": "Organo Technology Co., Ltd.",
+      "country": "jp",
+      "layer": "construction",
+      "role": "Ultrapure water systems"
+    },
+    "retech-environmental-solutions-co-ltd": {
+      "name": "RETECH ENVIRONMENTAL SOLUTIONS CO., LTD.",
+      "country": "tw",
+      "layer": "construction",
+      "role": "Environmental and abatement"
+    },
+    "resonac-corporation": {
+      "name": "Resonac Corporation",
+      "country": "jp",
+      "layer": "materials",
+      "role": "Packaging materials and specialty chemicals",
+      "vaultId": "resonac",
+      "aliases": [
+        "Resonac",
+        "resonac"
+      ]
+    },
+    "saigon-fabrication-ltd": {
+      "name": "Saigon Fabrication Ltd",
+      "country": "vn",
+      "layer": "metals",
+      "role": "Fabricated parts"
+    },
+    "scientech-corporation": {
+      "name": "Scientech Corporation",
+      "country": "tw",
+      "layer": "equipment",
+      "role": "Equipment and parts supply"
+    },
+    "screen-semiconductor-solutions-co-ltd": {
+      "name": "SCREEN Semiconductor Solutions Co., Ltd.",
+      "country": "jp",
+      "layer": "equipment",
+      "role": "Cleaning and coat/develop"
+    },
+    "securitas-usa-inc": {
+      "name": "Securitas USA, Inc.",
+      "country": "se",
+      "layer": "services",
+      "role": "Site security"
+    },
+    "senju-metal-industry-co-ltd": {
+      "name": "Senju Metal Industry Co., Ltd.",
+      "country": "jp",
+      "layer": "materials",
+      "role": "Solder materials"
+    },
+    "shibaura-mechatronics-corporation": {
+      "name": "SHIBAURA MECHATRONICS CORPORATION",
+      "country": "jp",
+      "layer": "equipment",
+      "role": "Cleaning and vacuum equipment"
+    },
+    "shin-etsu-chemical-co-ltd": {
+      "name": "Shin-Etsu Chemical Co., Ltd.",
+      "country": "jp",
+      "layer": "materials",
+      "role": "Photoresist, silicones, rare earths; parent of SEH",
+      "vaultId": "shinetsu",
+      "aliases": [
+        "Shin-Etsu",
+        "shinetsu"
+      ]
+    },
+    "shin-etsu-handotai-co-ltd": {
+      "name": "Shin-Etsu Handotai Co., Ltd.",
+      "country": "jp",
+      "layer": "wafers",
+      "role": "Silicon wafers — largest supplier",
+      "vaultId": "shinetsu",
+      "aliases": [
+        "Shin-Etsu",
+        "shinetsu"
+      ]
+    },
+    "shiny-chemical-industrial-co": {
+      "name": "Shiny Chemical Industrial Co.",
+      "country": "tw",
+      "layer": "materials",
+      "role": "Electronic-grade solvents"
+    },
+    "siliconware-precision-industries-co-ltd": {
+      "name": "Siliconware Precision Industries Co., Ltd.",
+      "country": "tw",
+      "layer": "osat_test",
+      "role": "OSAT; ASE subsidiary",
+      "vaultId": "spil",
+      "aliases": [
+        "SPIL",
+        "spil"
+      ]
+    },
+    "sumco-corporation": {
+      "name": "SUMCO CORPORATION",
+      "country": "jp",
+      "layer": "wafers",
+      "role": "Silicon wafers",
+      "vaultId": "sumco",
+      "aliases": [
+        "SUMCO",
+        "sumco"
+      ]
+    },
+    "sunlit": {
+      "name": "Sunlit",
+      "country": "tw",
+      "layer": "metals",
+      "role": "Industrial materials"
+    },
+    "taiwan-pulp-and-paper-corporation": {
+      "name": "Taiwan Pulp and Paper Corporation",
+      "country": "tw",
+      "layer": "mechanical",
+      "role": "Industrial paper"
+    },
+    "taiwan-puritic-corp": {
+      "name": "Taiwan Puritic Corp.",
+      "country": "tw",
+      "layer": "construction",
+      "role": "Cleanroom and purity systems"
+    },
+    "tasa-construction-corporation": {
+      "name": "TASA Construction Corporation",
+      "country": "tw",
+      "layer": "construction",
+      "role": "Fab construction"
+    },
+    "technoprobe-s-p-a": {
+      "name": "Technoprobe S.p.A",
+      "country": "it",
+      "layer": "equipment",
+      "role": "Probe cards"
+    },
+    "tessolve-semiconductor-private-limited": {
+      "name": "Tessolve Semiconductor Private Limited",
+      "country": "in",
+      "layer": "osat_test",
+      "role": "Test and packaging engineering"
+    },
+    "the-peer-group-inc": {
+      "name": "The PEER Group Inc.",
+      "country": "ca",
+      "layer": "services",
+      "role": "Fab control software"
+    },
+    "tkg-solmics-co-ltd": {
+      "name": "TKG Solmics Co., Ltd.",
+      "country": "kr",
+      "layer": "metals",
+      "role": "Silicon and ceramic fab parts"
+    },
+    "tokyo-electron-limited": {
+      "name": "Tokyo Electron Limited",
+      "country": "jp",
+      "layer": "equipment",
+      "role": "Coat/develop, etch, deposition",
+      "vaultId": "tel",
+      "aliases": [
+        "Tokyo Electron",
+        "tel"
+      ]
+    },
+    "tokyo-ohka-kogyo-co-ltd": {
+      "name": "Tokyo Ohka Kogyo Co., Ltd.",
+      "country": "jp",
+      "layer": "materials",
+      "role": "Photoresists",
+      "vaultId": "tok",
+      "aliases": [
+        "TOK",
+        "tok"
+      ]
+    },
+    "topco-quartz-products-co-ltd": {
+      "name": "TOPCO QUARTZ PRODUCTS CO., LTD.",
+      "country": "tw",
+      "layer": "metals",
+      "role": "Quartz parts"
+    },
+    "tosoh-quartz-inc": {
+      "name": "Tosoh Quartz, Inc.",
+      "country": "jp",
+      "layer": "metals",
+      "role": "Quartz parts"
+    },
+    "tosoh-smd-inc": {
+      "name": "Tosoh SMD, Inc.",
+      "country": "jp",
+      "layer": "metals",
+      "role": "Sputtering targets"
+    },
+    "trumpf": {
+      "name": "TRUMPF",
+      "country": "de",
+      "layer": "optics_laser",
+      "role": "EUV drive laser"
+    },
+    "tung-kang-steel-structure-corp": {
+      "name": "TUNG KANG STEEL STRUCTURE CORP",
+      "country": "tw",
+      "layer": "construction",
+      "role": "Steel structures"
+    },
+    "ulvac-inc": {
+      "name": "ULVAC, Inc.",
+      "country": "jp",
+      "layer": "equipment",
+      "role": "Vacuum and deposition"
+    },
+    "ultra-clean-holdings-inc": {
+      "name": "Ultra Clean Holdings, Inc.",
+      "country": "us",
+      "layer": "equipment",
+      "role": "Subsystems and parts cleaning"
+    },
+    "united-integrated-services-co-ltd": {
+      "name": "United Integrated Services Co., Ltd.",
+      "country": "tw",
+      "layer": "construction",
+      "role": "Cleanroom and fab engineering"
+    },
+    "united-microelectronics-corporation": {
+      "name": "United Microelectronics Corporation",
+      "country": "tw",
+      "layer": "foundry_idm",
+      "role": "Mature-node foundry",
+      "vaultId": "umc",
+      "aliases": [
+        "UMC",
+        "umc"
+      ]
+    },
+    "u-p-pro": {
+      "name": "U.P.Pro",
+      "country": "us",
+      "layer": "services",
+      "role": "Vendor-managed inventory"
+    },
+    "ust": {
+      "name": "UST",
+      "country": "us",
+      "layer": "services",
+      "role": "Engineering services"
+    },
+    "v5-technologies-co-ltd": {
+      "name": "V5 TECHNOLOGIES CO., LTD.",
+      "country": "tw",
+      "layer": "metals",
+      "role": "Fab parts and materials"
+    },
+    "valex-corp": {
+      "name": "Valex Corp.",
+      "country": "us",
+      "layer": "metals",
+      "role": "High-purity gas tubing"
+    },
+    "veeco-instruments-inc": {
+      "name": "Veeco Instruments Inc.",
+      "country": "us",
+      "layer": "equipment",
+      "role": "Anneal, deposition, lithography"
+    },
+    "veolia-north-america": {
+      "name": "Veolia North America",
+      "country": "fr",
+      "layer": "construction",
+      "role": "Water and waste treatment"
+    },
+    "wipro-limited": {
+      "name": "Wipro Limited",
+      "country": "in",
+      "layer": "services",
+      "role": "Engineering and IT services"
+    },
+    "wonik-qnc": {
+      "name": "Wonik QnC",
+      "country": "kr",
+      "layer": "metals",
+      "role": "Quartz parts"
+    },
+    "zeiss-semiconductor-manufacturing-technology-carl-zeiss-smt-gmbh": {
+      "name": "Zeiss Semiconductor Manufacturing Technology (Carl Zeiss SMT GmbH)",
+      "country": "de",
+      "layer": "optics_laser",
+      "role": "EUV and DUV optics — ASML's sole optics supplier"
+    },
+    "fujifilm-holdings-corporation": {
+      "name": "FUJIFILM Holdings Corporation",
+      "country": "jp",
+      "layer": "materials",
+      "role": "Photoresists and electronic materials"
+    },
+    "celestica-electronics-sdn-bhd": {
+      "name": "Celestica Electronics SDN. BHD",
+      "country": "ca",
+      "layer": "equipment",
+      "role": "Named by Lam Research for operational execution; the source does not state what it supplies"
+    },
+    "texon-co-ltd": {
+      "name": "Texon Co. Ltd",
+      "country": "zz",
+      "layer": "equipment",
+      "role": "Named by Lam Research for operational execution; the source does not state what it supplies"
+    },
+    "toto-ltd": {
+      "name": "TOTO Ltd.",
+      "country": "jp",
+      "layer": "equipment",
+      "role": "Named by Lam Research for ESG performance; the source does not state what it supplies"
+    },
+    "easys-s-r-o": {
+      "name": "Easys s.r.o.",
+      "country": "cz",
+      "layer": "equipment",
+      "role": "Named by Lam Research for quality; the source does not state what it supplies"
+    },
+    "cryowest-inc": {
+      "name": "CryoWest, Inc.",
+      "country": "us",
+      "layer": "equipment",
+      "role": "Named by Lam Research for rapid prototype materials; the source does not state what it supplies"
+    },
+    "venture-corporation-limited": {
+      "name": "Venture Corporation Limited",
+      "country": "sg",
+      "layer": "equipment",
+      "role": "Named by Lam Research for rapid prototype materials; the source does not state what it supplies"
+    },
+    "inficon-ag": {
+      "name": "INFICON AG",
+      "country": "ch",
+      "layer": "equipment",
+      "role": "Named by Lam Research for new product introduction; the source does not state what it supplies"
+    },
+    "tokai-carbon-korea": {
+      "name": "TOKAI CARBON KOREA",
+      "country": "kr",
+      "layer": "equipment",
+      "role": "Named by Lam Research for new product introduction; the source does not state what it supplies"
+    },
+    "times-microwave-systems-inc-an-amphenol-company": {
+      "name": "Times Microwave Systems, Inc., an Amphenol Company",
+      "country": "us",
+      "layer": "equipment",
+      "role": "Named by Lam Research for new product introduction; the source does not state what it supplies"
+    },
+    "asahi-kasei-corporation": {
+      "name": "Asahi Kasei Corporation",
+      "country": "jp",
+      "layer": "materials",
+      "role": "Advanced packaging materials and chemicals"
+    },
+    "system-arm": {
+      "name": "Arm",
+      "country": "uk",
+      "layer": "services",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "arm",
+      "aliases": [
+        "Arm",
+        "arm"
+      ]
+    },
+    "system-imec": {
+      "name": "imec",
+      "country": "be",
+      "layer": "services",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "imec",
+      "aliases": [
+        "imec"
+      ]
+    },
+    "system-synopsys": {
+      "name": "Synopsys",
+      "country": "us",
+      "layer": "services",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "synopsys",
+      "aliases": [
+        "Synopsys",
+        "synopsys"
+      ]
+    },
+    "system-cadence": {
+      "name": "Cadence",
+      "country": "us",
+      "layer": "services",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "cadence",
+      "aliases": [
+        "Cadence",
+        "cadence"
+      ]
+    },
+    "system-siemens_eda": {
+      "name": "Siemens EDA",
+      "country": "de",
+      "layer": "services",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "siemens_eda",
+      "aliases": [
+        "Siemens EDA",
+        "siemens_eda"
+      ]
+    },
+    "system-nvidia": {
+      "name": "NVIDIA",
+      "country": "us",
+      "layer": "ic_other",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "nvidia",
+      "aliases": [
+        "NVIDIA",
+        "nvidia"
+      ]
+    },
+    "system-amd": {
+      "name": "AMD",
+      "country": "us",
+      "layer": "ic_other",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "amd",
+      "aliases": [
+        "AMD",
+        "amd"
+      ]
+    },
+    "system-mediatek": {
+      "name": "MediaTek",
+      "country": "tw",
+      "layer": "ic_other",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "mediatek",
+      "aliases": [
+        "MediaTek",
+        "mediatek"
+      ]
+    },
+    "system-globalwafers": {
+      "name": "GlobalWafers",
+      "country": "tw",
+      "layer": "wafers",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "globalwafers",
+      "aliases": [
+        "GlobalWafers",
+        "globalwafers"
+      ]
+    },
+    "system-linde": {
+      "name": "Linde",
+      "country": "de",
+      "layer": "materials",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "linde",
+      "aliases": [
+        "Linde",
+        "linde"
+      ]
+    },
+    "system-airliquide": {
+      "name": "Air Liquide",
+      "country": "fr",
+      "layer": "materials",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "airliquide",
+      "aliases": [
+        "Air Liquide",
+        "airliquide"
+      ]
+    },
+    "system-ibiden": {
+      "name": "Ibiden",
+      "country": "jp",
+      "layer": "substrates_pcb",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "ibiden",
+      "aliases": [
+        "Ibiden",
+        "ibiden"
+      ]
+    },
+    "system-rapidus": {
+      "name": "Rapidus",
+      "country": "jp",
+      "layer": "foundry_idm",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "rapidus",
+      "aliases": [
+        "Rapidus",
+        "rapidus"
+      ]
+    },
+    "system-gf": {
+      "name": "GlobalFoundries",
+      "country": "us",
+      "layer": "foundry_idm",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "gf",
+      "aliases": [
+        "GlobalFoundries",
+        "gf"
+      ]
+    },
+    "system-tower": {
+      "name": "Tower Semi",
+      "country": "il",
+      "layer": "foundry_idm",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "tower",
+      "aliases": [
+        "Tower Semi",
+        "tower"
+      ]
+    },
+    "system-ymtc": {
+      "name": "YMTC",
+      "country": "cn",
+      "layer": "memory",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "ymtc",
+      "aliases": [
+        "YMTC",
+        "ymtc"
+      ]
+    },
+    "system-cxmt": {
+      "name": "CXMT",
+      "country": "cn",
+      "layer": "memory",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "cxmt",
+      "aliases": [
+        "CXMT",
+        "cxmt"
+      ]
+    },
+    "system-ibm_res": {
+      "name": "IBM Research",
+      "country": "us",
+      "layer": "services",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "ibm_res",
+      "aliases": [
+        "IBM Research",
+        "ibm_res"
+      ]
+    },
+    "system-leti": {
+      "name": "CEA-Leti",
+      "country": "fr",
+      "layer": "services",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "leti",
+      "aliases": [
+        "CEA-Leti",
+        "leti"
+      ]
+    },
+    "system-ansys": {
+      "name": "Ansys",
+      "country": "us",
+      "layer": "services",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "ansys",
+      "aliases": [
+        "Ansys",
+        "ansys"
+      ]
+    },
+    "system-empyrean": {
+      "name": "Empyrean",
+      "country": "cn",
+      "layer": "services",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "empyrean",
+      "aliases": [
+        "Empyrean",
+        "empyrean"
+      ]
+    },
+    "system-marvell": {
+      "name": "Marvell",
+      "country": "us",
+      "layer": "ic_other",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "marvell",
+      "aliases": [
+        "Marvell",
+        "marvell"
+      ]
+    },
+    "system-unisoc": {
+      "name": "UNISOC",
+      "country": "cn",
+      "layer": "ic_other",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "unisoc",
+      "aliases": [
+        "UNISOC",
+        "unisoc"
+      ]
+    },
+    "system-sksiltron": {
+      "name": "SK Siltron",
+      "country": "kr",
+      "layer": "wafers",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "sksiltron",
+      "aliases": [
+        "SK Siltron",
+        "sksiltron"
+      ]
+    },
+    "system-siltronic": {
+      "name": "Siltronic",
+      "country": "de",
+      "layer": "wafers",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "siltronic",
+      "aliases": [
+        "Siltronic",
+        "siltronic"
+      ]
+    },
+    "system-nsig": {
+      "name": "NSIG",
+      "country": "cn",
+      "layer": "wafers",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "nsig",
+      "aliases": [
+        "NSIG",
+        "nsig"
+      ]
+    },
+    "system-dupont": {
+      "name": "DuPont",
+      "country": "us",
+      "layer": "materials",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "dupont",
+      "aliases": [
+        "DuPont",
+        "dupont"
+      ]
+    },
+    "system-tnsc": {
+      "name": "Taiyo Nippon Sanso",
+      "country": "jp",
+      "layer": "materials",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "tnsc",
+      "aliases": [
+        "Taiyo Nippon Sanso",
+        "tnsc"
+      ]
+    },
+    "system-airproducts": {
+      "name": "Air Products",
+      "country": "us",
+      "layer": "materials",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "airproducts",
+      "aliases": [
+        "Air Products",
+        "airproducts"
+      ]
+    },
+    "system-skmaterials": {
+      "name": "SK Materials",
+      "country": "kr",
+      "layer": "materials",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "skmaterials",
+      "aliases": [
+        "SK Materials",
+        "skmaterials"
+      ]
+    },
+    "system-shinko": {
+      "name": "Shinko Electric",
+      "country": "jp",
+      "layer": "substrates_pcb",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "shinko",
+      "aliases": [
+        "Shinko Electric",
+        "shinko"
+      ]
+    },
+    "system-naura": {
+      "name": "NAURA",
+      "country": "cn",
+      "layer": "equipment",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "naura",
+      "aliases": [
+        "NAURA",
+        "naura"
+      ]
+    },
+    "system-amec": {
+      "name": "AMEC",
+      "country": "cn",
+      "layer": "equipment",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "amec",
+      "aliases": [
+        "AMEC",
+        "amec"
+      ]
+    },
+    "system-entegris": {
+      "name": "Entegris",
+      "country": "us",
+      "layer": "equipment",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "entegris",
+      "aliases": [
+        "Entegris",
+        "entegris"
+      ]
+    },
+    "system-huahong": {
+      "name": "Hua Hong",
+      "country": "cn",
+      "layer": "foundry_idm",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "huahong",
+      "aliases": [
+        "Hua Hong",
+        "huahong"
+      ]
+    },
+    "system-vis": {
+      "name": "Vanguard (VIS)",
+      "country": "tw",
+      "layer": "foundry_idm",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "vis",
+      "aliases": [
+        "Vanguard (VIS)",
+        "vis"
+      ]
+    },
+    "system-nexchip": {
+      "name": "Nexchip",
+      "country": "cn",
+      "layer": "foundry_idm",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "nexchip",
+      "aliases": [
+        "Nexchip",
+        "nexchip"
+      ]
+    },
+    "system-nanya": {
+      "name": "Nanya",
+      "country": "tw",
+      "layer": "memory",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "nanya",
+      "aliases": [
+        "Nanya",
+        "nanya"
+      ]
+    },
+    "system-google": {
+      "name": "Google (TPU/Cloud)",
+      "country": "us",
+      "layer": "ic_other",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "google",
+      "aliases": [
+        "Google (TPU/Cloud)",
+        "google"
+      ]
+    },
+    "system-amazon": {
+      "name": "Amazon (AWS)",
+      "country": "us",
+      "layer": "ic_other",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "amazon",
+      "aliases": [
+        "Amazon (AWS)",
+        "amazon"
+      ]
+    },
+    "system-cambricon": {
+      "name": "Cambricon",
+      "country": "cn",
+      "layer": "ic_other",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "cambricon",
+      "aliases": [
+        "Cambricon",
+        "cambricon"
+      ]
+    },
+    "system-biren": {
+      "name": "Biren",
+      "country": "cn",
+      "layer": "ic_other",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "biren",
+      "aliases": [
+        "Biren",
+        "biren"
+      ]
+    },
+    "system-pti": {
+      "name": "Powertech (PTI)",
+      "country": "tw",
+      "layer": "osat_test",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "pti",
+      "aliases": [
+        "Powertech (PTI)",
+        "pti"
+      ]
+    },
+    "system-kyec": {
+      "name": "KYEC",
+      "country": "tw",
+      "layer": "osat_test",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "kyec",
+      "aliases": [
+        "KYEC",
+        "kyec"
+      ]
+    },
+    "system-inari": {
+      "name": "Inari Amertron",
+      "country": "my",
+      "layer": "osat_test",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "inari",
+      "aliases": [
+        "Inari Amertron",
+        "inari"
+      ]
+    },
+    "system-supermicro": {
+      "name": "Supermicro",
+      "country": "us",
+      "layer": "assembly",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "supermicro",
+      "aliases": [
+        "Supermicro",
+        "supermicro"
+      ]
+    },
+    "system-microsoft": {
+      "name": "Microsoft (Azure)",
+      "country": "us",
+      "layer": "brand",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "microsoft",
+      "aliases": [
+        "Microsoft (Azure)",
+        "microsoft"
+      ]
+    },
+    "system-meta": {
+      "name": "Meta",
+      "country": "us",
+      "layer": "brand",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "meta",
+      "aliases": [
+        "Meta",
+        "meta"
+      ]
+    },
+    "system-alibaba": {
+      "name": "Alibaba Cloud",
+      "country": "cn",
+      "layer": "brand",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "alibaba",
+      "aliases": [
+        "Alibaba Cloud",
+        "alibaba"
+      ]
+    },
+    "system-tesla": {
+      "name": "Tesla",
+      "country": "us",
+      "layer": "brand",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "tesla",
+      "aliases": [
+        "Tesla",
+        "tesla"
+      ]
+    },
+    "system-denso": {
+      "name": "Toyota / Denso",
+      "country": "jp",
+      "layer": "brand",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "denso",
+      "aliases": [
+        "Toyota / Denso",
+        "denso"
+      ]
+    },
+    "system-vw": {
+      "name": "VW Group",
+      "country": "de",
+      "layer": "brand",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "vw",
+      "aliases": [
+        "VW Group",
+        "vw"
+      ]
+    },
+    "system-xiaomi": {
+      "name": "Xiaomi",
+      "country": "cn",
+      "layer": "brand",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "xiaomi",
+      "aliases": [
+        "Xiaomi",
+        "xiaomi"
+      ]
+    },
+    "system-lenovo": {
+      "name": "Lenovo",
+      "country": "cn",
+      "layer": "brand",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "lenovo",
+      "aliases": [
+        "Lenovo",
+        "lenovo"
+      ]
+    },
+    "system-hp": {
+      "name": "HP",
+      "country": "us",
+      "layer": "brand",
+      "role": "Company tracked in the system; public relationship coverage is shown separately.",
+      "vaultId": "hp",
+      "aliases": [
+        "HP",
+        "hp"
+      ]
+    },
+    "wacker-chemie-ag": {
+      "name": "Wacker Chemie AG",
+      "country": "de",
+      "layer": "materials",
+      "role": "Chemical manufacturer supplying polysilicon used to produce silicon wafers."
+    }
+  }
+}

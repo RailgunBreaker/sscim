@@ -1,5 +1,9 @@
 # SSCIM system architecture
 
+## Current Network workspace
+
+The visible Network view now renders the public supplier graph. The previous NetworkGraph, NetworkToolbar, NetworkRoutePanel, NetworkAnalysisPanel and NetworkComparePanel components have been removed. The modeled functional-centre engine remains available to the existing model. Public edges feed no propagation score. Company profiles cover all registry firms, but only the 109 system identities are tracked. See [Public supplier network](PUBLIC_SUPPLIER_NETWORK.md) for the current component and data architecture.
+
 ## The shape of the system in one idea
 
 One machine owns the data and is the only writer. It fetches, drafts, verifies, and pushes. GitHub Pages serves a static site built from what it pushed. **Nothing accepts an inbound connection** — no port forwarding, no dynamic DNS, no public service on a desktop.
