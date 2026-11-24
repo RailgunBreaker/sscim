@@ -3,6 +3,23 @@ import { interactionReducer, initInteraction, lensAvailable, sameSel, isDraftSou
 
 const S = (type, id) => ({ type, id });
 
+describe('profile to public network navigation', () => {
+  it('opens either direction without replacing the company selection and permits repeated visits', () => {
+    const initial = initInteraction(S('company', 'amd'));
+    const action = { type: 'OPEN_PUBLIC_NETWORK', payload: { id: 'system-amd', direction: 'downstream' } };
+    const next = interactionReducer(initial, action);
+    expect(next.viewMode).toBe('topology');
+    expect(next.selected).toEqual(initial.selected);
+    expect(next.publicNetworkRequest).toEqual({ id: 'system-amd', direction: 'downstream', revision: 1 });
+    expect(interactionReducer(next, action).publicNetworkRequest.revision).toBe(2);
+  });
+  it('rejects malformed navigation requests', () => {
+    const s = initInteraction(null);
+    expect(interactionReducer(s, { type: 'OPEN_PUBLIC_NETWORK', payload: { direction: 'both' } })).toBe(s);
+    expect(interactionReducer(s, { type: 'OPEN_PUBLIC_NETWORK', payload: { id: 'x', direction: 'sideways' } })).toBe(s);
+  });
+});
+
 describe('interactionReducer — selection', () => {
   it('SELECT pins a selection and pushes the previous one onto the back-stack', () => {
     let s = initInteraction(S('event', 'e1'));

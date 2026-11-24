@@ -1,4 +1,5 @@
-import { useMemo, useState, useCallback } from 'react';
+import { useMemo, useState, useCallback, useEffect, useRef } from 'react';
+import { useInteraction } from '../interaction/InteractionContext.jsx';
 import { C, accentWash } from '../theme.js';
 import { Button, SegmentedControl, Disclosure, StatusBadge } from '../ui/primitives.jsx';
 import {
@@ -35,12 +36,13 @@ const chip = {
 };
 
 export default function SupplierTierExplorer({ compact = false, onSelectVaultCompany }) {
+  const { state: { publicNetworkRequest } } = useInteraction();
   const index = useMemo(() => buildSupplierIndex(), []);
 
   const coverage = useMemo(() => systemCompanyCoverage(index), [index]);
   const [rootId, setRootId] = useState(null);
   const [trail, setTrail] = useState([]);
-  const [direction, setDirection] = useState('upstream');
+  const [direction, setDirection] = useState('both');
   const [hops, setHops] = useState(3);
   const [colourBy, setColourBy] = useState('tier');
   const [anchorTiers, setAnchorTiers] = useState(true);
@@ -56,6 +58,18 @@ export default function SupplierTierExplorer({ compact = false, onSelectVaultCom
      treating one click as both. */
   const [detailId, setDetailId] = useState(null);
   const [profileId, setProfileId] = useState(null);
+  const workspaceRef = useRef(null);
+  useEffect(() => {
+    if (rootId) workspaceRef.current?.scrollIntoView({ block: 'start' });
+  }, [rootId, publicNetworkRequest]);
+  useEffect(() => {
+    if (!publicNetworkRequest || !index.companies[publicNetworkRequest.id]) return;
+    setRootId(publicNetworkRequest.id);
+    setDirection(publicNetworkRequest.direction);
+    setHops(3);
+    setTrail([]); setSelectedKey(null); setDetailId(null); setProfileId(null);
+    setHiddenGroups(new Set());
+  }, [publicNetworkRequest, index]);
 
   const groups = useMemo(
     () => (hiddenGroups.size ? new Set(CHAIN_GROUPS.filter((g) => !hiddenGroups.has(g))) : null),
@@ -153,7 +167,7 @@ export default function SupplierTierExplorer({ compact = false, onSelectVaultCom
     return (
       <div style={{ padding: compact ? 0 : '4px 2px' }}>
         <Preamble index={index} />
-        <CompanyDirectory index={index} coverage={coverage} onFocus={focus} />
+        <CompanyDirectory index={index} coverage={coverage} onFocus={(id, dir) => { setDirection(dir); focus(id); }} onProfile={setProfileId} />
         {profileId && <ChainCompanyProfile id={profileId} onOpen={setProfileId} onClose={() => setProfileId(null)} />}
         <label htmlFor="st-search" style={{ display: 'block', fontSize: 12, color: C.faint, margin: '0 0 5px' }}>
           Find a firm among all {Object.keys(index.companies).length} registered firms
@@ -215,7 +229,11 @@ export default function SupplierTierExplorer({ compact = false, onSelectVaultCom
   };
 
   return (
-    <div style={{ display: 'grid', gap: 12, minWidth: 0 }}>
+    <div ref={workspaceRef} style={{ display: 'grid', gap: 12, minWidth: 0, scrollMarginTop: 70 }}>
+      <details>
+        <summary style={{ cursor: 'pointer', color: C.accent }}>Browse all {coverage.length} tracked companies</summary>
+        <CompanyDirectory index={index} coverage={coverage} onFocus={(id, dir) => { setDirection(dir); focus(id); }} onProfile={setProfileId} />
+      </details>
       <label style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 10, color: C.dim }}>
         Centre company
         <select aria-label="Centre company" value={rootId} onChange={e => focus(e.target.value)}
@@ -223,6 +241,7 @@ export default function SupplierTierExplorer({ compact = false, onSelectVaultCom
           <optgroup label="Companies tracked in the system">
             {coverage.map(c => <option key={c.id} value={c.id}>{c.name}{c.documented ? '' : ' — evidence gap'}</option>)}
           </optgroup>
+          {!index.companies[rootId].vaultId && <option value={rootId}>{root.name} (context company)</option>}
         </select>
         <Button variant="quiet" size="sm" onClick={() => { setProfileId(rootId); setDetailId(rootId); }}>Company profile</Button>
       </label>
@@ -421,7 +440,7 @@ function ChainCompanyProfile({ id, onOpen, onClose }) {
   </section>;
 }
 
-function CompanyDirectory({ index, coverage, onFocus }) {
+function CompanyDirectory({ index, coverage, onFocus, onProfile }) {
   const [query, setQuery] = useState('');
   const [gapsOnly, setGapsOnly] = useState(false);
   const [coverageDirection, setCoverageDirection] = useState('upstream');
@@ -461,7 +480,8 @@ function CompanyDirectory({ index, coverage, onFocus }) {
         <thead><tr>{['Company', 'Level 1', 'Level 2', 'Level 3', 'Customers', 'Coverage'].map(h =>
           <th key={h} style={{ padding: 8, color: C.dim }}>{h}</th>)}</tr></thead>
         <tbody>{rows.slice(0, limit).map(c => <tr key={c.id} style={{ borderTop: `1px solid ${C.line}` }}>
-          <td style={{ padding: 8 }}><button type="button" style={{ ...chip, color: C.accent }} onClick={() => onFocus(c.id)}>{c.name}</button></td>
+          <td style={{ padding: 8 }}><button type="button" style={{ ...chip, color: C.accent }} onClick={() => onFocus(c.id, coverageDirection)}>{c.name}</button>
+            <button type="button" style={chip} aria-label={`View ${c.name} profile`} onClick={() => onProfile(c.id)}>Profile</button></td>
           {levelsOf(c).map((n, i) => <td key={i} style={{ padding: 8, color: C.text }}>{n}</td>)}
           <td style={{ padding: 8, color: C.text }}>{c.customers}</td>
           <td style={{ padding: 8, color: C.faint }}>{!c.documented ? 'No connections documented' : levelsOf(c)[2] ? 'Reaches level 3' : levelsOf(c)[1] ? 'Missing level 3' : levelsOf(c)[0] ? 'Missing levels 2–3' : `No ${coverageDirection} paths`}</td>

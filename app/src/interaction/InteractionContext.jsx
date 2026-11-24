@@ -47,6 +47,7 @@ export function InteractionProvider({ defaultSelected = null, children }) {
     cmpToggle: (entity) => dispatch({ type: 'CMP_TOGGLE', payload: entity }),
     cmpClear: () => dispatch({ type: 'CMP_CLEAR' }),
     setViewMode: (mode) => dispatch({ type: 'SET_VIEW_MODE', payload: mode }),
+    openPublicNetwork: (id, direction = 'both') => dispatch({ type: 'OPEN_PUBLIC_NETWORK', payload: { id, direction } }),
     setScenarioActive: (active) => dispatch({ type: 'SET_SCENARIO_ACTIVE', payload: active }),
     playback: (patch) => dispatch({ type: 'PLAYBACK', payload: patch }),
     // draft scenario composition (§10)

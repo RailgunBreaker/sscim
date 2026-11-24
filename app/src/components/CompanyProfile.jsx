@@ -7,6 +7,8 @@ import {
 import Logo from './Logo.jsx';
 import Chip from './Chip.jsx';
 import TrackButton from './TrackButton.jsx';
+import { useInteraction } from '../interaction/InteractionContext.jsx';
+import { Button } from '../ui/primitives.jsx';
 
 /* ====================================================================
    CompanyProfile — the profile panel for one company.
@@ -43,6 +45,7 @@ const Head = ({ children }) => (
 );
 
 export default function CompanyProfile({ companyId, publicCompanyId, onOpenPublicCompany, setSel, showHeader = true }) {
+  const { openPublicNetwork } = useInteraction();
   const { data, engine } = useVault();
   const { COMPANY_BY_ID, COUNTRY_NAMES, CUSTOMERS, SUPPLIERS } = data;
   /* COMPANY_RANK is a derived ordering, so it lives on the engine rather
@@ -106,6 +109,14 @@ export default function CompanyProfile({ companyId, publicCompanyId, onOpenPubli
       <div className="mono" style={{ fontSize: 12, color: C.dim, margin: '3px 0 0' }}>{profile.headline}</div>
 
       <p style={{ margin: '9px 0 0', fontSize: 12.5, color: C.dim, lineHeight: 1.6 }}>{profile.intro}</p>
+      <div role="group" aria-label="Explore company network" style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 12 }}>
+        {[
+          ['upstream', `Suppliers (${doc.suppliers.length})`],
+          ['downstream', `Customers (${doc.customers.length})`],
+          ['both', 'Full network'],
+        ].map(([direction, label]) => <Button key={direction} variant="quiet" size="sm"
+          onClick={() => openPublicNetwork(publicCompanyId || publicCompanyIdForSystem(company.id), direction)}>{label}</Button>)}
+      </div>
 
       {/* ---- control ---- */}
       <Head>Who actually controls it</Head>

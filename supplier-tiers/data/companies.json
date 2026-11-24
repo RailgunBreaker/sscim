@@ -3160,6 +3160,54 @@
       "country": "cn",
       "layer": "services",
       "role": "Component cleaning and surface-treatment services. Chinese legal name: 安徽富乐德科技发展股份有限公司."
+    },
+    "toyota-motor-corporation": {
+      "name": "Toyota Motor Corporation",
+      "country": "jp",
+      "layer": "brand",
+      "role": "Vehicle manufacturer; NVIDIA DRIVE adopter"
+    },
+    "aurora-innovation-inc": {
+      "name": "Aurora Innovation",
+      "country": "us",
+      "layer": "brand",
+      "role": "Autonomous-driving systems developer"
+    },
+    "rivian-automotive-inc": {
+      "name": "Rivian Automotive",
+      "country": "us",
+      "layer": "brand",
+      "role": "Electric vehicle manufacturer"
+    },
+    "tencent-holdings": {
+      "name": "Tencent",
+      "country": "cn",
+      "layer": "services",
+      "role": "Cloud services operator"
+    },
+    "akamai-technologies": {
+      "name": "Akamai Technologies",
+      "country": "us",
+      "layer": "services",
+      "role": "Cloud and content delivery services"
+    },
+    "servicenow-inc": {
+      "name": "ServiceNow",
+      "country": "us",
+      "layer": "services",
+      "role": "Enterprise software and cloud services"
+    },
+    "verizon-communications": {
+      "name": "Verizon Communications",
+      "country": "us",
+      "layer": "services",
+      "role": "Telecommunications operator"
+    },
+    "visa-inc": {
+      "name": "Visa",
+      "country": "us",
+      "layer": "services",
+      "role": "Payments network operator"
     }
   }
 }

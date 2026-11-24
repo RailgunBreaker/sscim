@@ -1004,6 +1004,39 @@
       "seen": "fetched",
       "retrieved": "2026-11-25"
     },
+    "amd-q4-2024-downstream": {
+      "publisher": "AMD",
+      "title": "Q4 2024 earnings presentation, slides 23-24",
+      "url": "https://ir.amd.com/financial-information/sec-filings/content/0000002488-25-000009/amdq424earningsslidesfin.htm",
+      "published": "2025-02-04",
+      "evidence": "P1-supplier",
+      "note": "Names cloud launches, enterprise deployments and server platforms. Adoption does not disclose direct purchasing channels or volumes.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "nvidia-drive-customers-2025": {
+      "publisher": "NVIDIA",
+      "title": "Toyota, Aurora and Continental adopt NVIDIA DRIVE",
+      "url": "https://nvidianews.nvidia.com/news/toyota-aurora-continental-nvidia-drive",
+      "published": "2025-01-06",
+      "evidence": "P1-supplier",
+      "note": "Named automotive platform adoption and development. Continental mass manufacture of Aurora Driver was planned for 2027, not confirmed production.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "infineon-rivian-r2-2025": {
+      "publisher": "Infineon Technologies",
+      "title": "Power modules for Rivian R2 traction inverters",
+      "url": "https://www.infineon.com/technology-news/2025/infatv202505-108",
+      "published": "2025-05-19",
+      "evidence": "P1-supplier",
+      "note": "Announced HybridPACK Drive G2, AURIX TC3x and OPTIREG supply for R2, expected to start in 2026. Actual start not confirmed by this source.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
     "renesas-tsmc-2012-outsourcing": {
       "publisher": "Renesas",
       "title": "TSMC microcontroller manufacturing agreement",

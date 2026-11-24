@@ -9,9 +9,9 @@ The public graph is separate from the propagation model defined in
 | Record | Current count |
 | --- | ---: |
 | System companies eligible for tracking and centring | 109 |
-| Companies with profiles in the public registry | 414 |
-| Documented relationships | 545 |
-| Public source documents | 95 |
+| Companies with profiles in the public registry | 422 |
+| Documented relationships | 564 |
+| Public source documents | 98 |
 | System companies with a documented connection | 109 |
 | System companies reaching level 2 in either direction | 92 |
 | System companies reaching level 3 in either direction | 76 |
@@ -182,11 +182,32 @@ position, camera stability, eventual settling and browser errors. Engine tests
 also cover all-company profile coverage, the 109-company tracking boundary,
 three-step citation paths, cycles and depth limits.
 
+## Profile and customer navigation
+
+Every company profile offers Suppliers, Customers and Full network actions.
+They open that company at three documented steps in the chosen direction,
+including when the profile belongs to an untracked contextual firm. On small
+screens the workspace tab opens automatically. The tracked-company directory
+remains accessible above an open graph; each row also opens the company profile.
+Choosing a company in the directory respects its upstream/downstream filter.
+
+The downstream expansion adds 19 distinct connections from three primary
+disclosures: AMD's Q4 2024 presentation, NVIDIA's January 2025 DRIVE announcement,
+and Infineon's May 2025 Rivian R2 supply announcement. Named adopters include
+cloud providers, server manufacturers, enterprise users and vehicle makers.
+Enterprise adoption does not establish a direct chip purchase; future vehicle
+programs remain labeled as announcements. Eight new contextual companies have
+profiles without expanding the 109-company tracked set. Toyota Motor is kept
+separate from the model's Toyota / Denso grouping.
+
+This expansion increases downstream breadth; it does not close the remaining
+second- and third-level coverage gaps reported above.
+
 ## Profile audit: 2026-11-25
 
-All 414 public-network company records resolve to a profile with a name,
+All 422 public-network company records resolve to a profile with a name,
 introduction and relationship source references. The 110 mapped registry nodes
-represent exactly 109 distinct tracked system companies; the other 304 profiles
+represent exactly 109 distinct tracked system companies; the other 312 profiles
 provide contextual supplier/customer information. Every tracked company has a
 control record. Contextual profiles have no modeled exposure, control record or
 tracking eligibility: profile availability does not mean ownership research is

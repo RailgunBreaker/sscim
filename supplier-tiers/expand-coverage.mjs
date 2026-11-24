@@ -146,6 +146,44 @@ export function expandCoverage(data) {
   for (const customer of ['naura', 'amec']) edge('torlens-precision-jiangsu', customer, 'Precision semiconductor-equipment process components', 'torlens-2026-ipo-response', 2025, 'Named customer sales in the 2022 to first-half-2025 disclosure.');
   edge('donghelong-kunshan', 'torlens-precision-jiangsu', 'Yttria coating and sealing services', 'torlens-2026-ipo-response', 2025, 'Named paid surface-treatment subcontractor, including first-half-2025 purchases.');
   edge('anhui-fude-technology', 'torlens-precision-jiangsu', 'Thermal spray and sandblasting services', 'torlens-2026-ipo-response', 2025, 'Named paid surface-treatment subcontractor; a service dependency, not a wafer or chip shipment.');
+  // Downstream adoption and end-use: retain the named entity rather than
+  // attributing its purchases to a similarly named tracked subsidiary.
+  firm('toyota-motor-corporation', 'Toyota Motor Corporation', 'jp', 'brand', 'Vehicle manufacturer; NVIDIA DRIVE adopter');
+  firm('aurora-innovation-inc', 'Aurora Innovation', 'us', 'brand', 'Autonomous-driving systems developer');
+  firm('rivian-automotive-inc', 'Rivian Automotive', 'us', 'brand', 'Electric vehicle manufacturer');
+  firm('tencent-holdings', 'Tencent', 'cn', 'services', 'Cloud services operator');
+  firm('akamai-technologies', 'Akamai Technologies', 'us', 'services', 'Cloud and content delivery services');
+  firm('servicenow-inc', 'ServiceNow', 'us', 'services', 'Enterprise software and cloud services');
+  firm('verizon-communications', 'Verizon Communications', 'us', 'services', 'Telecommunications operator');
+  firm('visa-inc', 'Visa', 'us', 'services', 'Payments network operator');
+
+  source('amd-q4-2024-downstream', 'AMD', 'Q4 2024 earnings presentation, slides 23-24',
+    'https://ir.amd.com/financial-information/sec-filings/content/0000002488-25-000009/amdq424earningsslidesfin.htm', '2025-02-04', 'P1-supplier',
+    'Names cloud launches, enterprise deployments and server platforms. Adoption does not disclose direct purchasing channels or volumes.');
+  for (const customer of ['microsoft', 'google', 'amazon', 'alibaba', 'tencent-holdings']) {
+    edge('amd', customer, 'AMD-powered cloud compute instances', 'amd-q4-2024-downstream', 2024,
+      'Named Q4 2024 cloud instance launches. Product adoption; procurement through OEMs or distributors is not specified.');
+  }
+  for (const customer of ['cisco-systems-inc', 'dell-technologies-inc', 'hewlett-packard-enterprise-company', 'lenovo', 'supermicro']) {
+    edge('amd', customer, 'EPYC Turin server platforms', 'amd-q4-2024-downstream', 2024,
+      'Named OEM/ODM platform launches in Q4 2024; no shipment volume or exclusive sourcing inferred.');
+  }
+  for (const customer of ['akamai-technologies', 'servicenow-inc', 'verizon-communications', 'visa-inc']) {
+    edge('amd', customer, 'Enterprise deployments of AMD computing', 'amd-q4-2024-downstream', 2024,
+      'Named enterprise deployment in supplier earnings presentation; end user, not necessarily a direct chip purchaser.');
+  }
+  source('nvidia-drive-customers-2025', 'NVIDIA', 'Toyota, Aurora and Continental adopt NVIDIA DRIVE',
+    'https://nvidianews.nvidia.com/news/toyota-aurora-continental-nvidia-drive', '2025-01-06', 'P1-supplier',
+    'Named automotive platform adoption and development. Continental mass manufacture of Aurora Driver was planned for 2027, not confirmed production.');
+  for (const customer of ['toyota-motor-corporation', 'aurora-innovation-inc', 'continental-ag', 'rivian-automotive-inc', 'byd-company-limited']) {
+    edge('nvidia', customer, 'NVIDIA DRIVE automated-driving computing', 'nvidia-drive-customers-2025', 2025,
+      'Named platform adoption/development roadmap. This does not establish completed vehicle shipments or direct purchasing terms.');
+  }
+  source('infineon-rivian-r2-2025', 'Infineon Technologies', 'Power modules for Rivian R2 traction inverters',
+    'https://www.infineon.com/technology-news/2025/infatv202505-108', '2025-05-19', 'P1-supplier',
+    'Announced HybridPACK Drive G2, AURIX TC3x and OPTIREG supply for R2, expected to start in 2026. Actual start not confirmed by this source.');
+  edge('infineon', 'rivian-automotive-inc', 'Traction inverter power modules, microcontrollers and power management ICs', 'infineon-rivian-r2-2025', 2025,
+    'Announced future supply for the R2 platform; 2026 start was an expectation in May 2025, not verified deliveries.');
   data.edges.sort((a, b) => a.customer.localeCompare(b.customer) || a.supplier.localeCompare(b.supplier));
   source('renesas-tsmc-2012-outsourcing', 'Renesas', 'TSMC microcontroller manufacturing agreement',
     'https://www.renesas.com/en/about/newsroom/renesas-electronics-and-tsmc-collaborate-construct-ecosystem-microcontrollers', '2012-05-28', 'P1-buyer',

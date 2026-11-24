@@ -175,6 +175,9 @@ function DashboardBody() {
   const sel = state.selected || fallbackSel || { type: 'none', id: null };
 
   const [tab, setTab] = useState("flow");
+  useEffect(() => {
+    if (state.publicNetworkRequest) setTab('map');
+  }, [state.publicNetworkRequest]);
   const [feedTab, setFeedTab] = useState("events");
   const [wide, setWide] = useState(true);
   const [showBriefing, setShowBriefing] = useState(false);

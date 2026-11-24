@@ -1096,6 +1096,39 @@
       "seen": "fetched",
       "retrieved": "2026-11-25"
     },
+    "amd-q4-2024-downstream": {
+      "publisher": "AMD",
+      "title": "Q4 2024 earnings presentation, slides 23-24",
+      "url": "https://ir.amd.com/financial-information/sec-filings/content/0000002488-25-000009/amdq424earningsslidesfin.htm",
+      "published": "2025-02-04",
+      "evidence": "P1-supplier",
+      "note": "Names cloud launches, enterprise deployments and server platforms. Adoption does not disclose direct purchasing channels or volumes.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "nvidia-drive-customers-2025": {
+      "publisher": "NVIDIA",
+      "title": "Toyota, Aurora and Continental adopt NVIDIA DRIVE",
+      "url": "https://nvidianews.nvidia.com/news/toyota-aurora-continental-nvidia-drive",
+      "published": "2025-01-06",
+      "evidence": "P1-supplier",
+      "note": "Named automotive platform adoption and development. Continental mass manufacture of Aurora Driver was planned for 2027, not confirmed production.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "infineon-rivian-r2-2025": {
+      "publisher": "Infineon Technologies",
+      "title": "Power modules for Rivian R2 traction inverters",
+      "url": "https://www.infineon.com/technology-news/2025/infatv202505-108",
+      "published": "2025-05-19",
+      "evidence": "P1-supplier",
+      "note": "Announced HybridPACK Drive G2, AURIX TC3x and OPTIREG supply for R2, expected to start in 2026. Actual start not confirmed by this source.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
     "renesas-tsmc-2012-outsourcing": {
       "publisher": "Renesas",
       "title": "TSMC microcontroller manufacturing agreement",
@@ -4218,6 +4251,54 @@
       "country": "cn",
       "layer": "services",
       "role": "Component cleaning and surface-treatment services. Chinese legal name: 安徽富乐德科技发展股份有限公司."
+    },
+    "toyota-motor-corporation": {
+      "name": "Toyota Motor Corporation",
+      "country": "jp",
+      "layer": "brand",
+      "role": "Vehicle manufacturer; NVIDIA DRIVE adopter"
+    },
+    "aurora-innovation-inc": {
+      "name": "Aurora Innovation",
+      "country": "us",
+      "layer": "brand",
+      "role": "Autonomous-driving systems developer"
+    },
+    "rivian-automotive-inc": {
+      "name": "Rivian Automotive",
+      "country": "us",
+      "layer": "brand",
+      "role": "Electric vehicle manufacturer"
+    },
+    "tencent-holdings": {
+      "name": "Tencent",
+      "country": "cn",
+      "layer": "services",
+      "role": "Cloud services operator"
+    },
+    "akamai-technologies": {
+      "name": "Akamai Technologies",
+      "country": "us",
+      "layer": "services",
+      "role": "Cloud and content delivery services"
+    },
+    "servicenow-inc": {
+      "name": "ServiceNow",
+      "country": "us",
+      "layer": "services",
+      "role": "Enterprise software and cloud services"
+    },
+    "verizon-communications": {
+      "name": "Verizon Communications",
+      "country": "us",
+      "layer": "services",
+      "role": "Telecommunications operator"
+    },
+    "visa-inc": {
+      "name": "Visa",
+      "country": "us",
+      "layer": "services",
+      "role": "Payments network operator"
     }
   },
   "edges": [
@@ -4398,6 +4479,22 @@
       ],
       "details": [
         "Announced in March 2024 as \"expected to deliver\" servers based on Blackwell. Delivery and current status are not established by the release."
+      ]
+    },
+    {
+      "supplier": "system-amd",
+      "customer": "akamai-technologies",
+      "products": [
+        "Enterprise deployments of AMD computing"
+      ],
+      "sources": [
+        "amd-q4-2024-downstream"
+      ],
+      "years": [
+        2024
+      ],
+      "details": [
+        "Named enterprise deployment in supplier earnings presentation; end user, not necessarily a direct chip purchaser."
       ]
     },
     {
@@ -7266,6 +7363,22 @@
       ]
     },
     {
+      "supplier": "system-nvidia",
+      "customer": "aurora-innovation-inc",
+      "products": [
+        "NVIDIA DRIVE automated-driving computing"
+      ],
+      "sources": [
+        "nvidia-drive-customers-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Named platform adoption/development roadmap. This does not establish completed vehicle shipments or direct purchasing terms."
+      ]
+    },
+    {
       "supplier": "advanced-semiconductor-engineering-technology-holding-co-ltd",
       "customer": "broadcom-limited",
       "products": [
@@ -7371,6 +7484,22 @@
       ]
     },
     {
+      "supplier": "system-nvidia",
+      "customer": "byd-company-limited",
+      "products": [
+        "NVIDIA DRIVE automated-driving computing"
+      ],
+      "sources": [
+        "nvidia-drive-customers-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Named platform adoption/development roadmap. This does not establish completed vehicle shipments or direct purchasing terms."
+      ]
+    },
+    {
       "supplier": "chipmos-technologies-inc",
       "customer": "chipone-technology-beijing",
       "products": [
@@ -7384,6 +7513,22 @@
       ],
       "details": [
         "Named among the top 15 customers by revenue, listed alphabetically."
+      ]
+    },
+    {
+      "supplier": "system-amd",
+      "customer": "cisco-systems-inc",
+      "products": [
+        "EPYC Turin server platforms"
+      ],
+      "sources": [
+        "amd-q4-2024-downstream"
+      ],
+      "years": [
+        2024
+      ],
+      "details": [
+        "Named OEM/ODM platform launches in Q4 2024; no shipment volume or exclusive sourcing inferred."
       ]
     },
     {
@@ -7429,6 +7574,38 @@
         2025
       ],
       "details": []
+    },
+    {
+      "supplier": "system-nvidia",
+      "customer": "continental-ag",
+      "products": [
+        "NVIDIA DRIVE automated-driving computing"
+      ],
+      "sources": [
+        "nvidia-drive-customers-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Named platform adoption/development roadmap. This does not establish completed vehicle shipments or direct purchasing terms."
+      ]
+    },
+    {
+      "supplier": "system-amd",
+      "customer": "dell-technologies-inc",
+      "products": [
+        "EPYC Turin server platforms"
+      ],
+      "sources": [
+        "amd-q4-2024-downstream"
+      ],
+      "years": [
+        2024
+      ],
+      "details": [
+        "Named OEM/ODM platform launches in Q4 2024; no shipment volume or exclusive sourcing inferred."
+      ]
     },
     {
       "supplier": "system-nvidia",
@@ -7538,6 +7715,22 @@
       ],
       "details": [
         "Some of the ten are supplied through distributors rather than directly."
+      ]
+    },
+    {
+      "supplier": "system-amd",
+      "customer": "hewlett-packard-enterprise-company",
+      "products": [
+        "EPYC Turin server platforms"
+      ],
+      "sources": [
+        "amd-q4-2024-downstream"
+      ],
+      "years": [
+        2024
+      ],
+      "details": [
+        "Named OEM/ODM platform launches in Q4 2024; no shipment volume or exclusive sourcing inferred."
       ]
     },
     {
@@ -9574,6 +9767,38 @@
       ]
     },
     {
+      "supplier": "infineon-technologies-ag",
+      "customer": "rivian-automotive-inc",
+      "products": [
+        "Traction inverter power modules, microcontrollers and power management ICs"
+      ],
+      "sources": [
+        "infineon-rivian-r2-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Announced future supply for the R2 platform; 2026 start was an expectation in May 2025, not verified deliveries."
+      ]
+    },
+    {
+      "supplier": "system-nvidia",
+      "customer": "rivian-automotive-inc",
+      "products": [
+        "NVIDIA DRIVE automated-driving computing"
+      ],
+      "sources": [
+        "nvidia-drive-customers-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Named platform adoption/development roadmap. This does not establish completed vehicle shipments or direct purchasing terms."
+      ]
+    },
+    {
       "supplier": "arteris-ip",
       "customer": "robert-bosch-gmbh",
       "products": [
@@ -9820,6 +10045,22 @@
       ]
     },
     {
+      "supplier": "system-amd",
+      "customer": "servicenow-inc",
+      "products": [
+        "Enterprise deployments of AMD computing"
+      ],
+      "sources": [
+        "amd-q4-2024-downstream"
+      ],
+      "years": [
+        2024
+      ],
+      "details": [
+        "Named enterprise deployment in supplier earnings presentation; end user, not necessarily a direct chip purchaser."
+      ]
+    },
+    {
       "supplier": "formfactor-incorporated",
       "customer": "sk-hynix-incorporated",
       "products": [
@@ -9976,6 +10217,22 @@
       ]
     },
     {
+      "supplier": "system-amd",
+      "customer": "system-alibaba",
+      "products": [
+        "AMD-powered cloud compute instances"
+      ],
+      "sources": [
+        "amd-q4-2024-downstream"
+      ],
+      "years": [
+        2024
+      ],
+      "details": [
+        "Named Q4 2024 cloud instance launches. Product adoption; procurement through OEMs or distributors is not specified."
+      ]
+    },
+    {
       "supplier": "system-nvidia",
       "customer": "system-alibaba",
       "products": [
@@ -9989,6 +10246,22 @@
       ],
       "details": [
         "Historical adoption by Alibaba Cloud. The announcement does not disclose the procurement intermediary or current shipments."
+      ]
+    },
+    {
+      "supplier": "system-amd",
+      "customer": "system-amazon",
+      "products": [
+        "AMD-powered cloud compute instances"
+      ],
+      "sources": [
+        "amd-q4-2024-downstream"
+      ],
+      "years": [
+        2024
+      ],
+      "details": [
+        "Named Q4 2024 cloud instance launches. Product adoption; procurement through OEMs or distributors is not specified."
       ]
     },
     {
@@ -10222,6 +10495,22 @@
       ]
     },
     {
+      "supplier": "system-amd",
+      "customer": "system-google",
+      "products": [
+        "AMD-powered cloud compute instances"
+      ],
+      "sources": [
+        "amd-q4-2024-downstream"
+      ],
+      "years": [
+        2024
+      ],
+      "details": [
+        "Named Q4 2024 cloud instance launches. Product adoption; procurement through OEMs or distributors is not specified."
+      ]
+    },
+    {
       "supplier": "system-nvidia",
       "customer": "system-google",
       "products": [
@@ -10372,6 +10661,22 @@
       ]
     },
     {
+      "supplier": "system-amd",
+      "customer": "system-lenovo",
+      "products": [
+        "EPYC Turin server platforms"
+      ],
+      "sources": [
+        "amd-q4-2024-downstream"
+      ],
+      "years": [
+        2024
+      ],
+      "details": [
+        "Named OEM/ODM platform launches in Q4 2024; no shipment volume or exclusive sourcing inferred."
+      ]
+    },
+    {
       "supplier": "system-nvidia",
       "customer": "system-lenovo",
       "products": [
@@ -10496,6 +10801,22 @@
       ],
       "details": [
         "Announced plans in March 2024; delivery and current deployment status are not verified."
+      ]
+    },
+    {
+      "supplier": "system-amd",
+      "customer": "system-microsoft",
+      "products": [
+        "AMD-powered cloud compute instances"
+      ],
+      "sources": [
+        "amd-q4-2024-downstream"
+      ],
+      "years": [
+        2024
+      ],
+      "details": [
+        "Named Q4 2024 cloud instance launches. Product adoption; procurement through OEMs or distributors is not specified."
       ]
     },
     {
@@ -10740,16 +11061,20 @@
       "supplier": "system-amd",
       "customer": "system-supermicro",
       "products": [
-        "Processors and accelerators for system platforms"
+        "Processors and accelerators for system platforms",
+        "EPYC Turin server platforms"
       ],
       "sources": [
-        "smci-10k-fy2026"
+        "smci-10k-fy2026",
+        "amd-q4-2024-downstream"
       ],
       "years": [
-        2026
+        2026,
+        2024
       ],
       "details": [
-        "Disclosed as a development collaboration with a processor vendor rather than as a procurement contract."
+        "Disclosed as a development collaboration with a processor vendor rather than as a procurement contract.",
+        "Named OEM/ODM platform launches in Q4 2024; no shipment volume or exclusive sourcing inferred."
       ]
     },
     {
@@ -12061,6 +12386,22 @@
       "details": []
     },
     {
+      "supplier": "system-amd",
+      "customer": "tencent-holdings",
+      "products": [
+        "AMD-powered cloud compute instances"
+      ],
+      "sources": [
+        "amd-q4-2024-downstream"
+      ],
+      "years": [
+        2024
+      ],
+      "details": [
+        "Named Q4 2024 cloud instance launches. Product adoption; procurement through OEMs or distributors is not specified."
+      ]
+    },
+    {
       "supplier": "arteris-ip",
       "customer": "texas-instruments-incorporated",
       "products": [
@@ -12138,6 +12479,22 @@
       ],
       "details": [
         "Named paid surface-treatment subcontractor, including first-half-2025 purchases."
+      ]
+    },
+    {
+      "supplier": "system-nvidia",
+      "customer": "toyota-motor-corporation",
+      "products": [
+        "NVIDIA DRIVE automated-driving computing"
+      ],
+      "sources": [
+        "nvidia-drive-customers-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Named platform adoption/development roadmap. This does not establish completed vehicle shipments or direct purchasing terms."
       ]
     },
     {
@@ -12242,6 +12599,38 @@
       ],
       "details": [
         "Named customer in issuer-supplied information in the bond trustee filing. No specific wafer size or volume assigned to individual customers."
+      ]
+    },
+    {
+      "supplier": "system-amd",
+      "customer": "verizon-communications",
+      "products": [
+        "Enterprise deployments of AMD computing"
+      ],
+      "sources": [
+        "amd-q4-2024-downstream"
+      ],
+      "years": [
+        2024
+      ],
+      "details": [
+        "Named enterprise deployment in supplier earnings presentation; end user, not necessarily a direct chip purchaser."
+      ]
+    },
+    {
+      "supplier": "system-amd",
+      "customer": "visa-inc",
+      "products": [
+        "Enterprise deployments of AMD computing"
+      ],
+      "sources": [
+        "amd-q4-2024-downstream"
+      ],
+      "years": [
+        2024
+      ],
+      "details": [
+        "Named enterprise deployment in supplier earnings presentation; end user, not necessarily a direct chip purchaser."
       ]
     },
     {

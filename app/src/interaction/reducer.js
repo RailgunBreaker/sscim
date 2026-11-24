@@ -189,6 +189,14 @@ export function interactionReducer(state, action) {
     case 'SET_FOCUSED_PATH':
       return { ...state, focusedPath: action.payload };
 
+    case 'OPEN_PUBLIC_NETWORK': {
+      const { id, direction = 'both' } = action.payload || {};
+      if (!id || !FACILITY_DIRECTIONS.includes(direction)) return state;
+      return { ...state, viewMode: 'topology', publicNetworkRequest: {
+        id, direction, revision: (state.publicNetworkRequest?.revision || 0) + 1,
+      } };
+    }
+
     case 'SET_VIEW_MODE': {
       const viewMode = action.payload;
       if (!VIEW_MODES.includes(viewMode)) return state;
