@@ -215,7 +215,7 @@ describe('the documented chain crosswalk', () => {
   });
 
   it('reports no coverage, rather than an empty list, where nothing names the firm', () => {
-    const doc = documentedChain('cambricon');
+    const doc = documentedChain('unregistered-fixture-company');
     expect(doc.covered).toBe(false);
     expect(doc.suppliers).toEqual([]);
   });
@@ -261,9 +261,9 @@ describe('coverage is reported, not implied', () => {
     expect(cov.byType.missing).toBeUndefined();
   });
 
-  it('counts how many companies the public record reaches, and it is a minority', () => {
+  it('reports a documented connection for all 109 tracked companies', () => {
     const cov = documentedCoverage(COMPANIES);
-    expect(cov.covered).toBeGreaterThan(30);
-    expect(cov.covered).toBeLessThan(cov.total);
+    expect(cov.total).toBe(109);
+    expect(cov.covered).toBe(cov.total);
   });
 });

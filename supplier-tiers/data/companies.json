@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Public multi-tier semiconductor supplier graph",
-    "generated": "2026-11-23",
+    "generated": "2026-11-24",
     "focal": [
       "apple-inc",
       "huawei-technologies-co-ltd"
@@ -14,9 +14,9 @@
       "Absence of an edge is absence of a public document naming the pair, not absence of a relationship. The upstream of firms under export control is close to unobservable this way, and that is visible in the graph as an almost empty Huawei branch.",
       "Country is the group parent's home jurisdiction, which is what filings and policy documents key on. It is not where the plant is.",
       "Shin-Etsu Chemical and Shin-Etsu Handotai are kept as separate nodes because the award lists name them separately; Handotai is the wafer subsidiary of Chemical.",
-      "Securities filings name a customer only when the law or convention makes them: typically above 10% of revenue. A supplier's second-largest customer at 9% is invisible, and many filers disclose concentration without names at all — Photronics reports 'Customer A, B and C', and Teradyne, MKS, Advanced Energy and Kulicke & Soffa do the same. Applied Materials, Lam, TSMC and Intel name no counterparties in their own filings; where they appear here with suppliers, it is because the firms selling into them had to disclose it.",
+      "Disclosure thresholds and anonymised concentration tables can hide counterparties. Other filings explicitly name suppliers or customers, including Advanced Energy and Marvell in this dataset. Absence from one filing is not proof of absence from public sources.",
       "A few relationships are documented but are not purchases, and they say so on their own edge. TSMC's EDA Tool Certification Program, the ASML-ZEISS-TRUMPF co-development of EUV, the IBM-Rapidus joint development, and ASE's foundry alliance with TSMC are each named by both parties without any document describing a sale. They are recorded because they are real dependencies, and qualified because they are not invoices.",
-      "A three-level chain is not reachable for every firm even in principle, and the shortfall is structural rather than a research gap. Brands and hyperscalers sit at the end of the chain and have no customers to walk to. Materials, metrology and equipment firms sit at the start, and nothing publishes who supplies a metrology-tool maker. The lithography branch reaches a genuine third level only because ASML discloses Carl Zeiss SMT as its sole optics supplier — a disclosure with no parallel anywhere else in this dataset."
+      "Three-level coverage is incomplete and remains a research backlog. Each direction is measured separately. Historical, announced and design-enablement dependencies do not prove current shipments or a product-specific bill of materials; combining dated links does not establish simultaneous trade."
     ],
     "layers": {
       "equipment": "Wafer-fab equipment",
@@ -74,37 +74,24 @@
       "P3-regulatory": "A government document establishes the relationship"
     },
     "systemCompanyCount": 109,
-    "coverageReviewed": "2026-11-23",
+    "coverageReviewed": "2026-11-25",
     "documentedLevels": {
       "tracked": 109,
-      "level1": 87,
-      "level2": 68,
-      "level3": 60,
-      "noDocumentedCounterparty": [
-        "alibaba",
-        "amec",
-        "ansys",
-        "biren",
-        "cambricon",
-        "cxmt",
-        "dupont",
-        "empyrean",
-        "huahong",
-        "ibiden",
-        "inari",
-        "leti",
-        "marvell",
-        "naura",
-        "nsig",
-        "pti",
-        "shinko",
-        "skmaterials",
-        "tnsc",
-        "unisoc",
-        "vw",
-        "ymtc"
+      "level1": 109,
+      "level2": 92,
+      "level3": 76,
+      "upstream": [
+        59,
+        46,
+        34
       ],
-      "note": "Levels are steps away from the firm in the documented graph, counted upstream and downstream together. A firm with no documented counterparty is one that no public document read for this dataset names in a supply relationship; see meta.limits for why that is a finding rather than a gap."
+      "downstream": [
+        82,
+        59,
+        49
+      ],
+      "noDocumentedCounterparty": [],
+      "note": "Exact shortest-distance coverage, walking each direction separately. Combined coverage means at least one direction reaches that level. Missing paths are research gaps in this dataset, not proof that no supplier exists. Historical, planned and design-enablement links remain qualified by their evidence; paths do not establish simultaneous shipments or a product bill of materials."
     }
   },
   "companies": {
@@ -2464,7 +2451,7 @@
       "name": "Ansys",
       "country": "us",
       "layer": "services",
-      "role": "Simulation and analysis software. Acquired by Synopsys, which recorded the acquisition as closing on 17 July 2025 in its fiscal 2025 Form 10-K. No public document found for this dataset names an Ansys supply relationship with a tracked firm.",
+      "role": "Simulation and analysis software, including TSMC-certified power-integrity and thermal tools. Acquired by Synopsys in July 2025; retained as a tracked system company.",
       "vaultId": "ansys",
       "aliases": [
         "Ansys",
@@ -3131,6 +3118,48 @@
       "country": "fr",
       "layer": "assembly",
       "role": "High-performance computing systems integrator."
+    },
+    "advanced-energy-industries": {
+      "name": "Advanced Energy Industries, Inc.",
+      "country": "us",
+      "layer": "equipment",
+      "role": "Precision power-conversion and control equipment; named revenue customers include Applied Materials and Lam Research."
+    },
+    "hubei-xingfu-electronic-materials": {
+      "name": "Hubei Xingfu Electronic Materials Co., Ltd.",
+      "country": "cn",
+      "layer": "materials",
+      "role": "Electronic-grade wet chemicals for semiconductor manufacturing."
+    },
+    "hubei-xingfa-chemicals": {
+      "name": "Hubei Xingfa Chemicals Group Co., Ltd.",
+      "country": "cn",
+      "layer": "materials",
+      "role": "Chemical raw materials, including yellow phosphorus supplied to Xingfu."
+    },
+    "arteris-ip": {
+      "name": "Arteris, Inc.",
+      "country": "us",
+      "layer": "services",
+      "role": "Licenses network-on-chip interconnect intellectual property for semiconductor designs."
+    },
+    "torlens-precision-jiangsu": {
+      "name": "Torlens Precision Manufacturing (Jiangsu) Co., Ltd.",
+      "country": "cn",
+      "layer": "equipment",
+      "role": "Precision chambers and process components for semiconductor equipment. Chinese legal name: 托伦斯精密制造（江苏）股份有限公司."
+    },
+    "donghelong-kunshan": {
+      "name": "Donghelong (Kunshan) Electronics Co., Ltd.",
+      "country": "cn",
+      "layer": "services",
+      "role": "Outsourced yttria coating and sealing of semiconductor equipment components. Chinese legal name: 东贺隆（昆山）电子有限公司."
+    },
+    "anhui-fude-technology": {
+      "name": "Anhui Fude Technology Development Co., Ltd.",
+      "country": "cn",
+      "layer": "services",
+      "role": "Component cleaning and surface-treatment services. Chinese legal name: 安徽富乐德科技发展股份有限公司."
     }
   }
 }

@@ -333,7 +333,7 @@ export default function SupplierTierExplorer({ compact = false, onSelectVaultCom
           onFocus={inspect} onSelectLink={(k) => setSelectedKey(k === selectedKey ? null : k)}
           overlay={<>
             <Legend colourBy={colourBy} index={viewIndex} anchorTiers={anchorTiers}
-              root={root} rootTier={index.tier[rootId]}
+              root={root}
               onOpenRoot={() => {
                 setProfileId(rootId);
                 setDetailId(rootId);
@@ -424,15 +424,20 @@ function ChainCompanyProfile({ id, onOpen, onClose }) {
 function CompanyDirectory({ index, coverage, onFocus }) {
   const [query, setQuery] = useState('');
   const [gapsOnly, setGapsOnly] = useState(false);
+  const [coverageDirection, setCoverageDirection] = useState('upstream');
+  const [missingLevel, setMissingLevel] = useState('');
   const [limit, setLimit] = useState(15);
+  const levelsOf = c => coverageDirection === 'upstream' ? c.levels : c.downstreamLevels;
   const rows = coverage.filter(c => (!gapsOnly || !c.documented)
+    && (!missingLevel || !levelsOf(c)[Number(missingLevel) - 1])
     && [c.name, index.companies[c.id].name].join(' ').toLowerCase().includes(query.toLowerCase()));
   const documented = coverage.filter(c => c.documented).length;
   return <section aria-label="System company coverage" style={{ margin: '16px 0 24px', border: `1px solid ${C.line}`, borderRadius: 6, padding: 14 }}>
     <h3 style={{ margin: '0 0 8px', fontSize: 15 }}>Track every system company</h3>
     <p style={{ fontSize: 12, color: C.dim, lineHeight: 1.6 }}>
       {coverage.length} companies available · {documented} with documented connections · {coverage.length - documented} evidence gaps.
-      Levels count distinct upstream firms at their shortest distance from each company. A zero means no path recorded here.
+      {' '}Levels count distinct {coverageDirection} firms at their shortest distance from each company. A zero means no path recorded here.
+      <br />Level 2: {coverage.filter(c => levelsOf(c)[1]).length}/{coverage.length} companies · Level 3: {coverage.filter(c => levelsOf(c)[2]).length}/{coverage.length} companies in this direction.
     </p>
     <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, marginBottom: 12 }}>
       <input type="search" aria-label="Find a system company" placeholder="Find NVIDIA, AMD, TSMC…" value={query}
@@ -440,6 +445,16 @@ function CompanyDirectory({ index, coverage, onFocus }) {
         style={{ padding: 8, maxWidth: '100%', background: C.panel, color: C.text, border: `1px solid ${C.line}` }} />
       <label style={{ fontSize: 12, color: C.dim }}><input type="checkbox" checked={gapsOnly}
         onChange={e => { setGapsOnly(e.target.checked); setLimit(15); }} /> Evidence gaps only</label>
+      <label style={{ fontSize: 12, color: C.dim }}>Coverage direction{' '}
+        <select aria-label="Coverage direction" value={coverageDirection} onChange={e => { setCoverageDirection(e.target.value); setLimit(15); }}>
+          <option value="upstream">Upstream suppliers</option><option value="downstream">Downstream customers</option>
+        </select>
+      </label>
+      <label style={{ fontSize: 12, color: C.dim }}>Missing paths{' '}
+        <select aria-label="Missing documented level" value={missingLevel} onChange={e => { setMissingLevel(e.target.value); setLimit(15); }}>
+          <option value="">All companies</option><option value="2">Missing level 2</option><option value="3">Missing level 3</option>
+        </select>
+      </label>
     </div>
     <div style={{ overflowX: 'auto' }}>
       <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12, textAlign: 'left' }}>
@@ -447,9 +462,9 @@ function CompanyDirectory({ index, coverage, onFocus }) {
           <th key={h} style={{ padding: 8, color: C.dim }}>{h}</th>)}</tr></thead>
         <tbody>{rows.slice(0, limit).map(c => <tr key={c.id} style={{ borderTop: `1px solid ${C.line}` }}>
           <td style={{ padding: 8 }}><button type="button" style={{ ...chip, color: C.accent }} onClick={() => onFocus(c.id)}>{c.name}</button></td>
-          {c.levels.map((n, i) => <td key={i} style={{ padding: 8, color: C.text }}>{n}</td>)}
+          {levelsOf(c).map((n, i) => <td key={i} style={{ padding: 8, color: C.text }}>{n}</td>)}
           <td style={{ padding: 8, color: C.text }}>{c.customers}</td>
-          <td style={{ padding: 8, color: C.faint }}>{c.documented ? 'Public sources' : 'No connections documented'}</td>
+          <td style={{ padding: 8, color: C.faint }}>{!c.documented ? 'No connections documented' : levelsOf(c)[2] ? 'Reaches level 3' : levelsOf(c)[1] ? 'Missing level 3' : levelsOf(c)[0] ? 'Missing levels 2–3' : `No ${coverageDirection} paths`}</td>
         </tr>)}</tbody>
       </table>
     </div>
@@ -490,7 +505,7 @@ function Preamble({ index }) {
    carries the one sentence a reader needs before trusting a position —
    what horizontal placement means under the current layout — because
    that is the claim the picture makes most quietly. */
-function Legend({ colourBy, index, anchorTiers, root, rootTier, onOpenRoot }) {
+function Legend({ colourBy, index, anchorTiers, root, onOpenRoot }) {
   const dot = (bg) => (
     <span aria-hidden="true" style={{ width: 9, height: 9, borderRadius: '50%', background: bg, display: 'inline-block', flex: 'none' }} />
   );
@@ -501,16 +516,9 @@ function Legend({ colourBy, index, anchorTiers, root, rootTier, onOpenRoot }) {
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', gap: 8, alignItems: 'baseline' }}>
         <h3 style={{ margin: 0, fontSize: 14, fontWeight: 600, color: C.text }}>{root.name}</h3>
-        {/* The dataset-wide tier, not this view's hop count, which would
-            read "tier 0" for whichever firm happens to be centred. It is
-            undefined for a firm no documented path from a focal buyer
-            reaches, and that has to be said rather than printed as
-            "tier undefined". */}
         <span className="mono" style={{ fontSize: 12, color: C.faint, flex: 'none' }}
-          title={rootTier == null
-            ? 'No documented path reaches this firm from a focal buyer, so it has no derived tier.'
-            : 'Shortest documented distance from a focal buyer.'}>
-          {rootTier == null ? 'tier not derived' : `tier ${rootTier}`}
+          title="Distances are measured from this selected company.">
+          Level 0
         </span>
       </div>
       <p style={{ margin: '5px 0 0', fontSize: 12, color: C.faint, lineHeight: 1.55 }}>
@@ -523,7 +531,7 @@ function Legend({ colourBy, index, anchorTiers, root, rootTier, onOpenRoot }) {
       <h4 style={head}>{colourBy === 'tier' ? 'Colour — documented distance' : 'Colour — chain position'}</h4>
       {colourBy === 'tier'
         ? Array.from({ length: index.maxTier + 1 }, (_, t) => (
-          <div key={t} style={row}>{dot(tierFill(t))}{t === 0 ? 'Tier 0 — focal buyer' : `Tier ${t}`}</div>
+          <div key={t} style={row}>{dot(tierFill(t))}{t === 0 ? 'Level 0 — selected company' : `Level ${t}`}</div>
         ))
         : CHAIN_GROUPS.map((g) => (
           <div key={g} style={row}>{dot(GROUP_FILL[g])}{g}</div>

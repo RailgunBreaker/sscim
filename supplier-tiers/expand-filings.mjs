@@ -37,14 +37,9 @@
      - BIOGRAPHIES. "Prior to joining, Ms. — served at Lam Research"
        names two parties and establishes nothing.
 
-   HONEST ABSENCES WORTH KEEPING. Several filings were read and yielded
-   nothing, which is a finding rather than a failure: Photronics
-   anonymises its customers as "Customer A, B and C"; Teradyne, MKS,
-   Advanced Energy and Kulicke & Soffa do the same; Applied Materials,
-   Lam, TSMC and Intel name no counterparties in their own filings;
-   Marvell says only "independent foundries" and subcontractors
-   "primarily located in Taiwan, Canada, Korea, Singapore and China".
-   Those firms are not better connected here than the evidence allows.
+   This pass is a dated research snapshot, not a claim that missing
+   counterparties cannot be found. expand-coverage.mjs adds later-checked
+   disclosures, including named Marvell and Advanced Energy counterparties.
 
    Every source below was fetched from SEC EDGAR and read for this
    dataset; the quote on each is verbatim from the filing.
@@ -772,54 +767,7 @@ export function expandFilings(data) {
 
   data.edges.sort((a, b) => a.customer.localeCompare(b.customer) || a.supplier.localeCompare(b.supplier));
 
-  /* Publish the coverage the dataset actually achieves, computed from
-     the edges rather than asserted in prose, so the number in the
-     interface cannot drift from the graph. "Levels" are counted in both
-     directions from each tracked firm: a buyer's chain runs upstream, a
-     materials supplier's runs downstream, and most firms have some of
-     each. */
-  const upAdj = {};
-  const downAdj = {};
-  for (const e of data.edges) {
-    (upAdj[e.customer] ||= []).push(e.supplier);
-    (downAdj[e.supplier] ||= []).push(e.customer);
-  }
-  const reach = (root) => {
-    const walk = (adj) => {
-      const seen = new Set([root]);
-      let frontier = [root];
-      const counts = [];
-      for (let i = 0; i < 3; i += 1) {
-        const next = [];
-        for (const n of frontier) for (const m of adj[n] || []) if (!seen.has(m)) { seen.add(m); next.push(m); }
-        counts.push(next.length);
-        frontier = next;
-      }
-      return counts;
-    };
-    const u = walk(upAdj);
-    const d = walk(downAdj);
-    return [u[0] + d[0], u[1] + d[1], u[2] + d[2]];
-  };
-
-  const tracked = [...new Set(Object.values(data.companies).map((c) => c.vaultId).filter(Boolean))];
-  const nodeOf = {};
-  for (const [id, c] of Object.entries(data.companies)) if (c.vaultId && !nodeOf[c.vaultId]) nodeOf[c.vaultId] = id;
-  const counts = [0, 0, 0];
-  const unnamed = [];
-  for (const v of tracked) {
-    const r = reach(nodeOf[v]);
-    for (let i = 0; i < 3; i += 1) if (r[i] > 0) counts[i] += 1;
-    if (r[0] === 0) unnamed.push(v);
-  }
-  data.meta.documentedLevels = {
-    tracked: tracked.length,
-    level1: counts[0],
-    level2: counts[1],
-    level3: counts[2],
-    noDocumentedCounterparty: unnamed.sort(),
-    note: 'Levels are steps away from the firm in the documented graph, counted upstream and downstream together. A firm with no documented counterparty is one that no public document read for this dataset names in a supply relationship; see meta.limits for why that is a finding rather than a gap.',
-  };
-
+  // The authoring pipeline computes coverage after every expansion pass,
+  // using coverage.mjs shared with the application directory.
   return data;
 }

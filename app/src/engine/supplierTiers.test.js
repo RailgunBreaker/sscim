@@ -6,6 +6,8 @@ import {
 } from './supplierTiers.js';
 import PUBLIC_SUPPLIER_TIERS from '../data/publicSupplierTiers.json';
 import SNAPSHOT from '../data/vault-snapshot.json';
+import COVERAGE from '../../../supplier-tiers/data/coverage.json';
+import { supplierCoverage, coverageSummary } from '../../../supplier-tiers/coverage.mjs';
 
 const index = buildSupplierIndex();
 
@@ -13,7 +15,7 @@ describe('system-wide three-level tracking', () => {
   it('makes every system company discoverable, including evidence gaps', () => {
     const rows = systemCompanyCoverage(index);
     expect(rows.map(r => r.vaultId).sort()).toEqual(SNAPSHOT.companies.map(c => c.id).sort());
-    expect(companyCoverage(index, 'system-cambricon').documented).toBe(false);
+    expect(companyCoverage(index, 'system-cambricon').documented).toBe(true);
     expect(searchCompanies(index, 'NVIDIA')).toContain('system-nvidia');
     expect(searchCompanies(index, 'TSMC')).toContain('taiwan-semiconductor-manufacturing-company-limited');
   });
@@ -52,6 +54,63 @@ describe('system-wide three-level tracking', () => {
     const both = traverseSuppliers(fixture, 'r', { direction: 'both', hops: 3 });
     expect(both.nodes.map(n => n.id)).toContain('c');
     expect(new Set(both.nodes.map(n => n.id)).size).toBe(both.nodes.length);
+  });
+});
+
+describe('all 109 company coverage ledger', () => {
+  it('connects every tracked company without expanding the tracked set', () => {
+    const rows = systemCompanyCoverage(index);
+    expect(rows).toHaveLength(109);
+    expect(rows.every(r => r.documented)).toBe(true);
+    expect(rows.map(r => r.vaultId).sort()).toEqual(SNAPSHOT.companies.map(c => c.id).sort());
+    expect(index.companies['torlens-precision-jiangsu'].vaultId).toBeUndefined();
+    expect(index.companies['arteris-ip'].vaultId).toBeUndefined();
+  });
+
+  it('keeps authoring metadata, ledger and browser coverage identical', () => {
+    const rows = systemCompanyCoverage(index);
+    expect(rows).toEqual(COVERAGE.companies);
+    expect(coverageSummary(rows)).toEqual(PUBLIC_SUPPLIER_TIERS.meta.documentedLevels);
+    expect(COVERAGE.summary).toEqual(coverageSummary(rows));
+  });
+
+  it('matches each directional level to the actual traversal and proves every example path', () => {
+    for (const row of systemCompanyCoverage(index)) for (const direction of ['upstream', 'downstream']) {
+      const counts = direction === 'upstream' ? row.levels : row.downstreamLevels;
+      const paths = direction === 'upstream' ? row.upstreamPaths : row.downstreamPaths;
+      const traversal = traverseSuppliers(index, row.id, { direction, hops: 3 });
+      counts.forEach((count, i) => {
+        expect(count).toBe(traversal.nodes.filter(n => Math.abs(n.hop) === i + 1).length);
+        const path = paths[i];
+        if (!count) { expect(path).toBeNull(); return; }
+        expect(path).toHaveLength(i + 2);
+        expect(path[0]).toBe(row.id);
+        expect(new Set(path).size).toBe(path.length);
+        for (let j = 1; j < path.length; j++) {
+          const supplier = direction === 'upstream' ? path[j] : path[j - 1];
+          const customer = direction === 'upstream' ? path[j - 1] : path[j];
+          const edge = index.edges.find(e => e.supplier === supplier && e.customer === customer);
+          expect(edge.sources.every(s => index.sources[s])).toBe(true);
+        }
+      });
+    }
+  });
+
+  it('does not count cycles, reverse direction, or merge separate legal entities', () => {
+    const companies = Object.fromEntries(['r', 'a', 'b', 'c', 'isolated'].map(id => [id, { name: id, vaultId: id === 'isolated' ? 'r' : id }]));
+    const edges = [['a', 'r'], ['r', 'b'], ['b', 'a'], ['a', 'c']].map(([supplier, customer]) => ({ supplier, customer }));
+    const row = supplierCoverage(companies, edges).find(r => r.vaultId === 'r');
+    expect(row.id).toBe('r');
+    expect(row.levels).toEqual([1, 1, 0]);
+    expect(row.downstreamLevels).toEqual([1, 1, 1]);
+    expect(row.downstreamPaths[2]).toEqual(['r', 'b', 'a', 'c']);
+  });
+
+  it('retains missing depths instead of treating registration as full coverage', () => {
+    const biren = systemCompanyCoverage(index).find(r => r.vaultId === 'biren');
+    expect(biren.documented).toBe(true);
+    expect(biren.missingUpstreamLevels).toEqual([2, 3]);
+    expect(biren.missingDownstreamLevels).toEqual([1, 2, 3]);
   });
 });
 

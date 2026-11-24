@@ -30,6 +30,8 @@
 
 import { expandSystem } from './expand-system.mjs';
 import { expandFilings } from './expand-filings.mjs';
+import { expandCoverage } from './expand-coverage.mjs';
+import { supplierCoverage, coverageSummary } from './coverage.mjs';
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -1119,9 +1121,9 @@ const meta = {
     "Absence of an edge is absence of a public document naming the pair, not absence of a relationship. The upstream of firms under export control is close to unobservable this way, and that is visible in the graph as an almost empty Huawei branch.",
     "Country is the group parent's home jurisdiction, which is what filings and policy documents key on. It is not where the plant is.",
     "Shin-Etsu Chemical and Shin-Etsu Handotai are kept as separate nodes because the award lists name them separately; Handotai is the wafer subsidiary of Chemical.",
-    "Securities filings name a customer only when the law or convention makes them: typically above 10% of revenue. A supplier's second-largest customer at 9% is invisible, and many filers disclose concentration without names at all — Photronics reports 'Customer A, B and C', and Teradyne, MKS, Advanced Energy and Kulicke & Soffa do the same. Applied Materials, Lam, TSMC and Intel name no counterparties in their own filings; where they appear here with suppliers, it is because the firms selling into them had to disclose it.",
+    "Disclosure thresholds and anonymised concentration tables can hide counterparties. Other filings explicitly name suppliers or customers, including Advanced Energy and Marvell in this dataset. Absence from one filing is not proof of absence from public sources.",
     "A few relationships are documented but are not purchases, and they say so on their own edge. TSMC's EDA Tool Certification Program, the ASML-ZEISS-TRUMPF co-development of EUV, the IBM-Rapidus joint development, and ASE's foundry alliance with TSMC are each named by both parties without any document describing a sale. They are recorded because they are real dependencies, and qualified because they are not invoices.",
-    "A three-level chain is not reachable for every firm even in principle, and the shortfall is structural rather than a research gap. Brands and hyperscalers sit at the end of the chain and have no customers to walk to. Materials, metrology and equipment firms sit at the start, and nothing publishes who supplies a metrology-tool maker. The lithography branch reaches a genuine third level only because ASML discloses Carl Zeiss SMT as its sole optics supplier — a disclosure with no parallel anywhere else in this dataset.",
+    "Three-level coverage is incomplete and remains a research backlog. Each direction is measured separately. Historical, announced and design-enablement dependencies do not prove current shipments or a product-specific bill of materials; combining dated links does not establish simultaneous trade.",
   ],
   layers: LAYERS,
   countries: {
@@ -1142,6 +1144,9 @@ const meta = {
 
 expandSystem({ meta, sources: SOURCES, companies, edges });
 expandFilings({ meta, sources: SOURCES, companies, edges });
+expandCoverage({ meta, sources: SOURCES, companies, edges });
+const coverage = supplierCoverage(companies, edges);
+meta.documentedLevels = coverageSummary(coverage);
 
 mkdirSync(DATA, { recursive: true });
 const write = (file, obj) => {
@@ -1151,6 +1156,7 @@ const write = (file, obj) => {
 write("sources.json", { meta: { generated: meta.generated }, sources: SOURCES });
 write("companies.json", { meta, companies });
 write("edges.json", { meta: { generated: meta.generated, count: edges.length }, edges });
+write("coverage.json", { reviewed: meta.coverageReviewed, summary: meta.documentedLevels, companies: coverage });
 
 /* The dashboard reads one generated file rather than three, so the
    dataset cannot drift from what the app ships. JSON rather than a JS

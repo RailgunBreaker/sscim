@@ -1,6 +1,6 @@
 # Public supplier network
 
-Updated 2026-11-23. This guide describes the current **Network** workspace.
+Updated 2026-11-25. This guide describes the current **Network** workspace.
 The public graph is separate from the propagation model defined in
 [Model v7](MODEL_V7_SPEC.md); its connections feed no risk score or index.
 
@@ -9,68 +9,71 @@ The public graph is separate from the propagation model defined in
 | Record | Current count |
 | --- | ---: |
 | System companies eligible for tracking and centring | 109 |
-| Companies with profiles in the public registry | 407 |
-| Documented supplier-to-customer relationships | 491 |
-| Public source documents | 69 |
-| System companies with a documented connection | 87 |
-| System companies with a second documented level | 68 |
-| System companies with a third documented level | 60 |
-| System companies with no documented connection | 22 |
+| Companies with profiles in the public registry | 414 |
+| Documented relationships | 545 |
+| Public source documents | 95 |
+| System companies with a documented connection | 109 |
+| System companies reaching level 2 in either direction | 92 |
+| System companies reaching level 3 in either direction | 76 |
+| System companies with no documented connection | 0 |
 
-Registration is not evidence of a supplier relationship. All 109 system
-companies are selectable, including those with evidence gaps. Other firms
-provide chain context and have profiles, but cannot become additional tracked
-companies or receive modeled scores. Multiple legal entities may map to one
-system company; their public relationships remain separate.
+All 109 tracked companies now have at least one sourced connection. **This is
+not complete three-level coverage**: 17 still lack level 2 in either direction,
+and 33 lack level 3. The additional registry companies provide context and
+profiles; they do not acquire tracking controls or modeled scores.
 
-These counts describe the curated dataset, not the semiconductor industry.
-The level counts are generated, not asserted: `meta.documentedLevels` in
-`publicSupplierTiers.json` is computed from the edges at authoring time, and
-`supplierTiers.test.js` holds floors under each figure so coverage cannot
-regress unnoticed. Levels are counted upstream and downstream together,
-because a buyer's chain runs upstream and a materials supplier's runs
-downstream.
+| Direction | Level 1 | Level 2 | Level 3 |
+| --- | ---: | ---: | ---: |
+| Upstream suppliers | 59 | 46 | 34 |
+| Downstream customers | 82 | 59 | 49 |
+| At least one direction | 109 | 92 | 76 |
 
-### Why the third level stops where it does
+Each count is the number of tracked companies with at least one firm at that
+exact shortest distance. A company can appear in both directional rows; those
+rows must not be added. Walks never reverse direction to find a longer chain.
+Multiple legal entities remain separate; the directory selects the entity with
+the most documented direct connections for each tracked company.
 
-Twenty-two system companies have no documented counterparty, and 49 reach a
-second level but not a third. That shortfall is mostly structural, not a
-backlog:
+The authoring pipeline and browser share `supplier-tiers/coverage.mjs`.
+`data/coverage.json` contains all 109 companies, separate directional counts,
+missing levels, and an example path at each reachable depth. Tests verify every
+path against cited edges and compare the ledger with the browser calculation.
 
-- **Brands and hyperscalers end the chain.** Apple, Volkswagen and Alibaba
-  Cloud buy; nothing public records them selling components onward, so their
-  graph runs in one direction only.
-- **Materials, metrology and equipment firms start it.** Nothing publishes who
-  supplies a metrology-tool maker. The lithography branch reaches a real third
-  level only because ASML's 20-F discloses Carl Zeiss SMT as its sole supplier
-  of optics under an exclusive arrangement — a disclosure with no parallel
-  elsewhere in this dataset.
-- **Disclosure thresholds hide the middle.** A filing names a customer when it
-  passes roughly 10% of revenue. Photronics reports "Customer A, B and C";
-  Teradyne, MKS, Advanced Energy and Kulicke & Soffa also disclose
-  concentration without names.
-- **Export controls close one region.** YMTC, CXMT, Hua Hong, NAURA, AMEC,
-  Cambricon, Biren, UNISOC, Empyrean and NSIG have no documented counterparty
-  here. Microchip's 10-K states the shape of the hole precisely: "Some of our
-  products are manufactured at SMIC, and some of our suppliers buy products
-  manufactured at YMTC." The first clause names a pair and became an edge; the
-  second discloses a dependence on YMTC without naming which supplier, so it
-  could not.
+### Evidence and remaining research
 
-Two firms are absent for a plainer reason: Marvell's and STMicroelectronics'
-newsrooms refuse automated fetches (HTTP 403 and 473), so releases that would
-document their foundry relationships could not be read and were not cited from
-memory. Marvell's own 10-K names no foundry, saying only "independent
-foundries" and subcontractors "primarily located in Taiwan, Canada, Korea,
-Singapore and China".
+Missing depths are a research backlog, not proof that longer chains cannot
+exist. This pass corrected earlier blanket claims about anonymous disclosures:
+Marvell's August 2026 filing names TSMC, and Advanced Energy's 2024 revenue note
+names Applied Materials and Lam. Chinese company filings and joint releases also
+provide named customers and subcontractors.
+
+Sources include supplier awards, recorded sales, equipment delivery, historical
+IP licenses, announced adoption and design-tool certification. Each connection
+retains its source date and qualifications. A certified design tool is not a
+reported purchase, an announced platform is not a verified delivery, and a
+historical customer award does not establish present supply. Company-level paths
+can combine different products and years: they do not establish a simultaneous
+physical flow or a product bill of materials.
+
+The November 25 pass adds 54 unique relationships and 26 documents. Examples
+include Marvell manufacturing, Ibiden customers, Inari testing, Empyrean software,
+NSIG wafers, Xingfu chemicals, Torlens components and subcontractors, Arteris IP,
+and SK Materials' historical subsidiary supply. All contextual firms have the
+standard public-company profile; unresearched ownership remains unknown.
+
+Remaining third-level gaps (in both directions):
+
+AMEC, AT&S, Biren, Cambricon, CEA-Leti, CXMT, Empyrean, HiSilicon (Huawei), Hitachi High-Tech, Hua Hong, IBM Research, Inari Amertron, JCET, Kioxia, KYEC, Luxshare, Microchip, Nanya, NAURA, Nexchip, Nikon, Nova, onsemi, Rapidus, Samsung Electro-Mech, Shinko Electric, SMIC, Sony Semiconductor, Sumitomo Chemical, UNISOC, UTAC, Winbond, YMTC.
 
 ## Explore the chain
 
 1. Open the dashboard and choose **Network**. On narrow screens, also select
    the **Map** pane tab if the Industry flow pane is currently open.
-2. Find a company in the system directory. Its Level 1, 2 and 3 columns show
-   distinct upstream firms at each shortest distance; Customers counts direct
-   documented customers. The evidence-gap filter finds companies with no links.
+2. Find a company in the system directory. Use **Coverage direction** to compare upstream suppliers and downstream
+   customers. Level columns show distinct firms at each shortest distance.
+   **Missing paths** filters companies without level 2 or level 3 in that
+   direction. **Evidence gaps only** finds companies with no connections;
+   currently that filter returns none. Customers always counts direct customers.
 3. Choose upstream, downstream or both, then Level 1, + Level 2, + Level 3 or
    All. The default is three steps. Large All traversals require a second click.
 4. Open a level list and select a firm to read its profile and one shortest
@@ -134,7 +137,9 @@ Chaining disclosures from different years does not establish simultaneous trade.
 | `supplier-tiers/expand-system.mjs` | Adds the system-company registry and researched extensions without importing modeled links |
 | `supplier-tiers/expand-filings.mjs` | Relationships named in annual securities filings and company releases; resolves firms by normalised name so a second spelling cannot create a duplicate node |
 | `supplier-tiers/data/company-crosswalk.json` | Reviewed mapping from public legal entities to system IDs |
-| `supplier-tiers/data/{companies,edges,sources}.json` | Generated research outputs |
+| `supplier-tiers/expand-coverage.mjs` | November 25 primary-source expansion and explicit historical/announced relationship qualifications |
+| `supplier-tiers/coverage.mjs` | Shared directional coverage and example-path calculation |
+| `supplier-tiers/data/{companies,edges,sources,coverage}.json` | Generated research outputs and all-company coverage ledger |
 | `app/src/data/publicSupplierTiers.json` | Generated application dataset |
 | `company-control/author-control.mjs` | Established system-company control records |
 | `app/src/engine/supplierTiers.js` | Indexing, directional traversal, coverage and shortest citation paths |

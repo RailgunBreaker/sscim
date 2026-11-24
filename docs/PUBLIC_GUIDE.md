@@ -8,7 +8,7 @@ This guide assumes no background in semiconductors, networks, or statistics. It 
 
 ## Public supplier network
 
-Choose Network to explore the 109 system companies and their documented first-, second- and third-level relationships. All 362 registry firms have profiles; outside firms provide context only. Arrows point supplier to customer. Drag a node and its neighbours move with the simulation, then settle. See the [network guide](PUBLIC_SUPPLIER_NETWORK.md) for profiles, controls and evidence limits.
+Choose Network to explore the 109 system companies and their documented first-, second- and third-level relationships. All 414 registry firms have profiles; outside firms provide context only. Arrows point supplier to customer. Drag a node and its neighbours move with the simulation, then settle. See the [network guide](PUBLIC_SUPPLIER_NETWORK.md) for profiles, controls and evidence limits.
 
 ## The one-paragraph version
 

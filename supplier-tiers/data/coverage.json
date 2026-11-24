@@ -1,0 +1,5011 @@
+{
+  "reviewed": "2026-11-25",
+  "summary": {
+    "tracked": 109,
+    "level1": 109,
+    "level2": 92,
+    "level3": 76,
+    "upstream": [
+      59,
+      46,
+      34
+    ],
+    "downstream": [
+      82,
+      59,
+      49
+    ],
+    "noDocumentedCounterparty": [],
+    "note": "Exact shortest-distance coverage, walking each direction separately. Combined coverage means at least one direction reaches that level. Missing paths are research gaps in this dataset, not proof that no supplier exists. Historical, planned and design-enablement links remain qualified by their evidence; paths do not establish simultaneous shipments or a product bill of materials."
+  },
+  "companies": [
+    {
+      "id": "system-airliquide",
+      "vaultId": "airliquide",
+      "name": "Air Liquide",
+      "suppliers": 0,
+      "customers": 2,
+      "documented": true,
+      "levels": [
+        0,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        2,
+        14,
+        37
+      ],
+      "upstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "system-airliquide",
+          "micron-technology-incorporated"
+        ],
+        [
+          "system-airliquide",
+          "micron-technology-incorporated",
+          "apple-inc"
+        ],
+        [
+          "system-airliquide",
+          "micron-technology-incorporated",
+          "qualcomm-incorporated",
+          "samsung-electronics-company-limited"
+        ]
+      ],
+      "missingUpstreamLevels": [
+        1,
+        2,
+        3
+      ],
+      "missingDownstreamLevels": []
+    },
+    {
+      "id": "system-airproducts",
+      "vaultId": "airproducts",
+      "name": "Air Products",
+      "suppliers": 0,
+      "customers": 2,
+      "documented": true,
+      "levels": [
+        0,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        2,
+        14,
+        36
+      ],
+      "upstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "system-airproducts",
+          "samsung-electronics-company-limited"
+        ],
+        [
+          "system-airproducts",
+          "samsung-electronics-company-limited",
+          "apple-inc"
+        ],
+        [
+          "system-airproducts",
+          "samsung-electronics-company-limited",
+          "qualcomm-incorporated",
+          "system-vw"
+        ]
+      ],
+      "missingUpstreamLevels": [
+        1,
+        2,
+        3
+      ],
+      "missingDownstreamLevels": []
+    },
+    {
+      "id": "system-alibaba",
+      "vaultId": "alibaba",
+      "name": "Alibaba Cloud",
+      "suppliers": 1,
+      "customers": 0,
+      "documented": true,
+      "levels": [
+        1,
+        9,
+        85
+      ],
+      "downstreamLevels": [
+        0,
+        0,
+        0
+      ],
+      "upstreamPaths": [
+        [
+          "system-alibaba",
+          "system-nvidia"
+        ],
+        [
+          "system-alibaba",
+          "system-nvidia",
+          "coherent-corporation"
+        ],
+        [
+          "system-alibaba",
+          "system-nvidia",
+          "hon-hai-precision-industry-company-limited-foxconn",
+          "alpha-and-omega-semiconductor-limited"
+        ]
+      ],
+      "downstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "missingUpstreamLevels": [],
+      "missingDownstreamLevels": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "id": "system-amazon",
+      "vaultId": "amazon",
+      "name": "Amazon (AWS)",
+      "suppliers": 1,
+      "customers": 0,
+      "documented": true,
+      "levels": [
+        1,
+        9,
+        85
+      ],
+      "downstreamLevels": [
+        0,
+        0,
+        0
+      ],
+      "upstreamPaths": [
+        [
+          "system-amazon",
+          "system-nvidia"
+        ],
+        [
+          "system-amazon",
+          "system-nvidia",
+          "coherent-corporation"
+        ],
+        [
+          "system-amazon",
+          "system-nvidia",
+          "hon-hai-precision-industry-company-limited-foxconn",
+          "alpha-and-omega-semiconductor-limited"
+        ]
+      ],
+      "downstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "missingUpstreamLevels": [],
+      "missingDownstreamLevels": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "id": "system-amd",
+      "vaultId": "amd",
+      "name": "AMD",
+      "suppliers": 7,
+      "customers": 2,
+      "documented": true,
+      "levels": [
+        7,
+        81,
+        22
+      ],
+      "downstreamLevels": [
+        2,
+        0,
+        0
+      ],
+      "upstreamPaths": [
+        [
+          "system-amd",
+          "samsung-electronics-company-limited"
+        ],
+        [
+          "system-amd",
+          "samsung-electronics-company-limited",
+          "arteris-ip"
+        ],
+        [
+          "system-amd",
+          "samsung-electronics-company-limited",
+          "nxp-semiconductors-n-v",
+          "system-vis"
+        ]
+      ],
+      "downstreamPaths": [
+        [
+          "system-amd",
+          "system-hp"
+        ],
+        null,
+        null
+      ],
+      "missingUpstreamLevels": [],
+      "missingDownstreamLevels": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "system-amec",
+      "vaultId": "amec",
+      "name": "AMEC",
+      "suppliers": 1,
+      "customers": 0,
+      "documented": true,
+      "levels": [
+        1,
+        2,
+        0
+      ],
+      "downstreamLevels": [
+        0,
+        0,
+        0
+      ],
+      "upstreamPaths": [
+        [
+          "system-amec",
+          "torlens-precision-jiangsu"
+        ],
+        [
+          "system-amec",
+          "torlens-precision-jiangsu",
+          "anhui-fude-technology"
+        ],
+        null
+      ],
+      "downstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "missingUpstreamLevels": [
+        3
+      ],
+      "missingDownstreamLevels": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "id": "amkor-technology-incorporated",
+      "vaultId": "amkor",
+      "name": "Amkor",
+      "suppliers": 0,
+      "customers": 3,
+      "documented": true,
+      "levels": [
+        0,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        3,
+        3,
+        2
+      ],
+      "upstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "amkor-technology-incorporated",
+          "apple-inc"
+        ],
+        [
+          "amkor-technology-incorporated",
+          "qualcomm-incorporated",
+          "samsung-electronics-company-limited"
+        ],
+        [
+          "amkor-technology-incorporated",
+          "qualcomm-incorporated",
+          "samsung-electronics-company-limited",
+          "system-amd"
+        ]
+      ],
+      "missingUpstreamLevels": [
+        1,
+        2,
+        3
+      ],
+      "missingDownstreamLevels": []
+    },
+    {
+      "id": "analog-devices-incorporated",
+      "vaultId": "adi",
+      "name": "Analog Devices",
+      "suppliers": 1,
+      "customers": 1,
+      "documented": true,
+      "levels": [
+        1,
+        72,
+        16
+      ],
+      "downstreamLevels": [
+        1,
+        0,
+        0
+      ],
+      "upstreamPaths": [
+        [
+          "analog-devices-incorporated",
+          "taiwan-semiconductor-manufacturing-company-limited"
+        ],
+        [
+          "analog-devices-incorporated",
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "abb-ltd"
+        ],
+        [
+          "analog-devices-incorporated",
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "applied-materials-inc",
+          "advanced-energy-industries"
+        ]
+      ],
+      "downstreamPaths": [
+        [
+          "analog-devices-incorporated",
+          "apple-inc"
+        ],
+        null,
+        null
+      ],
+      "missingUpstreamLevels": [],
+      "missingDownstreamLevels": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "system-ansys",
+      "vaultId": "ansys",
+      "name": "Ansys",
+      "suppliers": 0,
+      "customers": 1,
+      "documented": true,
+      "levels": [
+        0,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        1,
+        14,
+        37
+      ],
+      "upstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "system-ansys",
+          "taiwan-semiconductor-manufacturing-company-limited"
+        ],
+        [
+          "system-ansys",
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "advanced-semiconductor-engineering-technology-holding-co-ltd"
+        ],
+        [
+          "system-ansys",
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "intel-corporation",
+          "system-hp"
+        ]
+      ],
+      "missingUpstreamLevels": [
+        1,
+        2,
+        3
+      ],
+      "missingDownstreamLevels": []
+    },
+    {
+      "id": "apple-inc",
+      "vaultId": "apple",
+      "name": "Apple (silicon)",
+      "suppliers": 187,
+      "customers": 0,
+      "documented": true,
+      "levels": [
+        187,
+        133,
+        18
+      ],
+      "downstreamLevels": [
+        0,
+        0,
+        0
+      ],
+      "upstreamPaths": [
+        [
+          "apple-inc",
+          "3m"
+        ],
+        [
+          "apple-inc",
+          "advanced-semiconductor-engineering-technology-holding-co-ltd",
+          "advantest-corporation"
+        ],
+        [
+          "apple-inc",
+          "advanced-semiconductor-engineering-technology-holding-co-ltd",
+          "lam-research-corporation",
+          "advanced-energy-industries"
+        ]
+      ],
+      "downstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "missingUpstreamLevels": [],
+      "missingDownstreamLevels": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "id": "applied-materials-inc",
+      "vaultId": "amat",
+      "name": "Applied Materials",
+      "suppliers": 3,
+      "customers": 3,
+      "documented": true,
+      "levels": [
+        3,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        3,
+        16,
+        34
+      ],
+      "upstreamPaths": [
+        [
+          "applied-materials-inc",
+          "advanced-energy-industries"
+        ],
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "applied-materials-inc",
+          "intel-corporation"
+        ],
+        [
+          "applied-materials-inc",
+          "intel-corporation",
+          "apple-inc"
+        ],
+        [
+          "applied-materials-inc",
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "nxp-semiconductors-n-v",
+          "aptiv-plc"
+        ]
+      ],
+      "missingUpstreamLevels": [
+        2,
+        3
+      ],
+      "missingDownstreamLevels": []
+    },
+    {
+      "id": "system-arm",
+      "vaultId": "arm",
+      "name": "Arm",
+      "suppliers": 0,
+      "customers": 3,
+      "documented": true,
+      "levels": [
+        0,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        3,
+        25,
+        3
+      ],
+      "upstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "system-arm",
+          "system-mediatek"
+        ],
+        [
+          "system-arm",
+          "system-nvidia",
+          "aivres-systems"
+        ],
+        [
+          "system-arm",
+          "system-nvidia",
+          "hon-hai-precision-industry-company-limited-foxconn",
+          "apple-inc"
+        ]
+      ],
+      "missingUpstreamLevels": [
+        1,
+        2,
+        3
+      ],
+      "missingDownstreamLevels": []
+    },
+    {
+      "id": "advanced-semiconductor-engineering-technology-holding-co-ltd",
+      "vaultId": "ase",
+      "name": "ASE",
+      "suppliers": 11,
+      "customers": 3,
+      "documented": true,
+      "levels": [
+        11,
+        79,
+        4
+      ],
+      "downstreamLevels": [
+        3,
+        3,
+        2
+      ],
+      "upstreamPaths": [
+        [
+          "advanced-semiconductor-engineering-technology-holding-co-ltd",
+          "advantest-corporation"
+        ],
+        [
+          "advanced-semiconductor-engineering-technology-holding-co-ltd",
+          "lam-research-corporation",
+          "advanced-energy-industries"
+        ],
+        [
+          "advanced-semiconductor-engineering-technology-holding-co-ltd",
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "asml-holding-n-v",
+          "nts-group"
+        ]
+      ],
+      "downstreamPaths": [
+        [
+          "advanced-semiconductor-engineering-technology-holding-co-ltd",
+          "apple-inc"
+        ],
+        [
+          "advanced-semiconductor-engineering-technology-holding-co-ltd",
+          "qualcomm-incorporated",
+          "samsung-electronics-company-limited"
+        ],
+        [
+          "advanced-semiconductor-engineering-technology-holding-co-ltd",
+          "qualcomm-incorporated",
+          "samsung-electronics-company-limited",
+          "system-amd"
+        ]
+      ],
+      "missingUpstreamLevels": [],
+      "missingDownstreamLevels": []
+    },
+    {
+      "id": "asm-international-n-v",
+      "vaultId": "asmi",
+      "name": "ASM International",
+      "suppliers": 0,
+      "customers": 2,
+      "documented": true,
+      "levels": [
+        0,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        2,
+        16,
+        34
+      ],
+      "upstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "asm-international-n-v",
+          "intel-corporation"
+        ],
+        [
+          "asm-international-n-v",
+          "intel-corporation",
+          "apple-inc"
+        ],
+        [
+          "asm-international-n-v",
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "nxp-semiconductors-n-v",
+          "aptiv-plc"
+        ]
+      ],
+      "missingUpstreamLevels": [
+        1,
+        2,
+        3
+      ],
+      "missingDownstreamLevels": []
+    },
+    {
+      "id": "asml-holding-n-v",
+      "vaultId": "asml",
+      "name": "ASML",
+      "suppliers": 5,
+      "customers": 4,
+      "documented": true,
+      "levels": [
+        5,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        4,
+        17,
+        37
+      ],
+      "upstreamPaths": [
+        [
+          "asml-holding-n-v",
+          "ichor-holdings-ltd"
+        ],
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "asml-holding-n-v",
+          "intel-corporation"
+        ],
+        [
+          "asml-holding-n-v",
+          "intel-corporation",
+          "apple-inc"
+        ],
+        [
+          "asml-holding-n-v",
+          "system-imec",
+          "united-microelectronics-corporation",
+          "novatek-microelectronics-corp"
+        ]
+      ],
+      "missingUpstreamLevels": [
+        2,
+        3
+      ],
+      "missingDownstreamLevels": []
+    },
+    {
+      "id": "at-and-s-austria-technologie-and-systemtechnik-ag",
+      "vaultId": "ats",
+      "name": "AT&S",
+      "suppliers": 0,
+      "customers": 1,
+      "documented": true,
+      "levels": [
+        0,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        1,
+        0,
+        0
+      ],
+      "upstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "at-and-s-austria-technologie-and-systemtechnik-ag",
+          "apple-inc"
+        ],
+        null,
+        null
+      ],
+      "missingUpstreamLevels": [
+        1,
+        2,
+        3
+      ],
+      "missingDownstreamLevels": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "system-biren",
+      "vaultId": "biren",
+      "name": "Biren",
+      "suppliers": 1,
+      "customers": 0,
+      "documented": true,
+      "levels": [
+        1,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        0,
+        0,
+        0
+      ],
+      "upstreamPaths": [
+        [
+          "system-biren",
+          "arteris-ip"
+        ],
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "missingUpstreamLevels": [
+        2,
+        3
+      ],
+      "missingDownstreamLevels": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "id": "robert-bosch-gmbh",
+      "vaultId": "bosch",
+      "name": "Bosch",
+      "suppliers": 3,
+      "customers": 1,
+      "documented": true,
+      "levels": [
+        3,
+        6,
+        71
+      ],
+      "downstreamLevels": [
+        1,
+        0,
+        0
+      ],
+      "upstreamPaths": [
+        [
+          "robert-bosch-gmbh",
+          "arteris-ip"
+        ],
+        [
+          "robert-bosch-gmbh",
+          "nxp-semiconductors-n-v",
+          "system-vis"
+        ],
+        [
+          "robert-bosch-gmbh",
+          "nxp-semiconductors-n-v",
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "abb-ltd"
+        ]
+      ],
+      "downstreamPaths": [
+        [
+          "robert-bosch-gmbh",
+          "apple-inc"
+        ],
+        null,
+        null
+      ],
+      "missingUpstreamLevels": [],
+      "missingDownstreamLevels": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "broadcom-limited",
+      "vaultId": "broadcom",
+      "name": "Broadcom",
+      "suppliers": 7,
+      "customers": 1,
+      "documented": true,
+      "levels": [
+        7,
+        78,
+        22
+      ],
+      "downstreamLevels": [
+        1,
+        0,
+        0
+      ],
+      "upstreamPaths": [
+        [
+          "broadcom-limited",
+          "advanced-semiconductor-engineering-technology-holding-co-ltd"
+        ],
+        [
+          "broadcom-limited",
+          "advanced-semiconductor-engineering-technology-holding-co-ltd",
+          "advantest-corporation"
+        ],
+        [
+          "broadcom-limited",
+          "advanced-semiconductor-engineering-technology-holding-co-ltd",
+          "lam-research-corporation",
+          "advanced-energy-industries"
+        ]
+      ],
+      "downstreamPaths": [
+        [
+          "broadcom-limited",
+          "apple-inc"
+        ],
+        null,
+        null
+      ],
+      "missingUpstreamLevels": [],
+      "missingDownstreamLevels": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "system-cadence",
+      "vaultId": "cadence",
+      "name": "Cadence",
+      "suppliers": 0,
+      "customers": 1,
+      "documented": true,
+      "levels": [
+        0,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        1,
+        14,
+        37
+      ],
+      "upstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "system-cadence",
+          "taiwan-semiconductor-manufacturing-company-limited"
+        ],
+        [
+          "system-cadence",
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "advanced-semiconductor-engineering-technology-holding-co-ltd"
+        ],
+        [
+          "system-cadence",
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "intel-corporation",
+          "system-hp"
+        ]
+      ],
+      "missingUpstreamLevels": [
+        1,
+        2,
+        3
+      ],
+      "missingDownstreamLevels": []
+    },
+    {
+      "id": "system-cambricon",
+      "vaultId": "cambricon",
+      "name": "Cambricon",
+      "suppliers": 1,
+      "customers": 0,
+      "documented": true,
+      "levels": [
+        1,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        0,
+        0,
+        0
+      ],
+      "upstreamPaths": [
+        [
+          "system-cambricon",
+          "arteris-ip"
+        ],
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "missingUpstreamLevels": [
+        2,
+        3
+      ],
+      "missingDownstreamLevels": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "id": "canon-inc",
+      "vaultId": "canon",
+      "name": "Canon",
+      "suppliers": 0,
+      "customers": 2,
+      "documented": true,
+      "levels": [
+        0,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        2,
+        14,
+        36
+      ],
+      "upstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "canon-inc",
+          "system-hp"
+        ],
+        [
+          "canon-inc",
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "advanced-semiconductor-engineering-technology-holding-co-ltd"
+        ],
+        [
+          "canon-inc",
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "intel-corporation",
+          "system-supermicro"
+        ]
+      ],
+      "missingUpstreamLevels": [
+        1,
+        2,
+        3
+      ],
+      "missingDownstreamLevels": []
+    },
+    {
+      "id": "system-leti",
+      "vaultId": "leti",
+      "name": "CEA-Leti",
+      "suppliers": 1,
+      "customers": 0,
+      "documented": true,
+      "levels": [
+        1,
+        3,
+        0
+      ],
+      "downstreamLevels": [
+        0,
+        0,
+        0
+      ],
+      "upstreamPaths": [
+        [
+          "system-leti",
+          "applied-materials-inc"
+        ],
+        [
+          "system-leti",
+          "applied-materials-inc",
+          "advanced-energy-industries"
+        ],
+        null
+      ],
+      "downstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "missingUpstreamLevels": [
+        3
+      ],
+      "missingDownstreamLevels": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "id": "system-cxmt",
+      "vaultId": "cxmt",
+      "name": "CXMT",
+      "suppliers": 1,
+      "customers": 0,
+      "documented": true,
+      "levels": [
+        1,
+        1,
+        0
+      ],
+      "downstreamLevels": [
+        0,
+        0,
+        0
+      ],
+      "upstreamPaths": [
+        [
+          "system-cxmt",
+          "hubei-xingfu-electronic-materials"
+        ],
+        [
+          "system-cxmt",
+          "hubei-xingfu-electronic-materials",
+          "hubei-xingfa-chemicals"
+        ],
+        null
+      ],
+      "downstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "missingUpstreamLevels": [
+        3
+      ],
+      "missingDownstreamLevels": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "id": "system-dupont",
+      "vaultId": "dupont",
+      "name": "DuPont",
+      "suppliers": 0,
+      "customers": 1,
+      "documented": true,
+      "levels": [
+        0,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        1,
+        14,
+        37
+      ],
+      "upstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "system-dupont",
+          "taiwan-semiconductor-manufacturing-company-limited"
+        ],
+        [
+          "system-dupont",
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "advanced-semiconductor-engineering-technology-holding-co-ltd"
+        ],
+        [
+          "system-dupont",
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "intel-corporation",
+          "system-hp"
+        ]
+      ],
+      "missingUpstreamLevels": [
+        1,
+        2,
+        3
+      ],
+      "missingDownstreamLevels": []
+    },
+    {
+      "id": "ebara-corporation",
+      "vaultId": "ebara",
+      "name": "Ebara",
+      "suppliers": 0,
+      "customers": 1,
+      "documented": true,
+      "levels": [
+        0,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        1,
+        14,
+        37
+      ],
+      "upstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "ebara-corporation",
+          "taiwan-semiconductor-manufacturing-company-limited"
+        ],
+        [
+          "ebara-corporation",
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "advanced-semiconductor-engineering-technology-holding-co-ltd"
+        ],
+        [
+          "ebara-corporation",
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "intel-corporation",
+          "system-hp"
+        ]
+      ],
+      "missingUpstreamLevels": [
+        1,
+        2,
+        3
+      ],
+      "missingDownstreamLevels": []
+    },
+    {
+      "id": "system-empyrean",
+      "vaultId": "empyrean",
+      "name": "Empyrean",
+      "suppliers": 0,
+      "customers": 1,
+      "documented": true,
+      "levels": [
+        0,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        1,
+        0,
+        0
+      ],
+      "upstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "system-empyrean",
+          "system-huahong"
+        ],
+        null,
+        null
+      ],
+      "missingUpstreamLevels": [
+        1,
+        2,
+        3
+      ],
+      "missingDownstreamLevels": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "system-entegris",
+      "vaultId": "entegris",
+      "name": "Entegris",
+      "suppliers": 0,
+      "customers": 4,
+      "documented": true,
+      "levels": [
+        0,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        4,
+        26,
+        31
+      ],
+      "upstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "system-entegris",
+          "samsung-electronics-company-limited"
+        ],
+        [
+          "system-entegris",
+          "samsung-electronics-company-limited",
+          "apple-inc"
+        ],
+        [
+          "system-entegris",
+          "samsung-electronics-company-limited",
+          "qualcomm-incorporated",
+          "system-vw"
+        ]
+      ],
+      "missingUpstreamLevels": [
+        1,
+        2,
+        3
+      ],
+      "missingDownstreamLevels": []
+    },
+    {
+      "id": "hon-hai-precision-industry-company-limited-foxconn",
+      "vaultId": "foxconn",
+      "name": "Foxconn",
+      "suppliers": 2,
+      "customers": 3,
+      "documented": true,
+      "levels": [
+        2,
+        8,
+        84
+      ],
+      "downstreamLevels": [
+        3,
+        24,
+        1
+      ],
+      "upstreamPaths": [
+        [
+          "hon-hai-precision-industry-company-limited-foxconn",
+          "alpha-and-omega-semiconductor-limited"
+        ],
+        [
+          "hon-hai-precision-industry-company-limited-foxconn",
+          "system-nvidia",
+          "coherent-corporation"
+        ],
+        [
+          "hon-hai-precision-industry-company-limited-foxconn",
+          "system-nvidia",
+          "micron-technology-incorporated",
+          "chipmos-technologies-inc"
+        ]
+      ],
+      "downstreamPaths": [
+        [
+          "hon-hai-precision-industry-company-limited-foxconn",
+          "apple-inc"
+        ],
+        [
+          "hon-hai-precision-industry-company-limited-foxconn",
+          "system-nvidia",
+          "aivres-systems"
+        ],
+        [
+          "hon-hai-precision-industry-company-limited-foxconn",
+          "system-nvidia",
+          "pegatron-corporation",
+          "taiwan-semiconductor-manufacturing-company-limited"
+        ]
+      ],
+      "missingUpstreamLevels": [],
+      "missingDownstreamLevels": []
+    },
+    {
+      "id": "system-gf",
+      "vaultId": "gf",
+      "name": "GlobalFoundries",
+      "suppliers": 1,
+      "customers": 3,
+      "documented": true,
+      "levels": [
+        1,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        3,
+        6,
+        1
+      ],
+      "upstreamPaths": [
+        [
+          "system-gf",
+          "system-nsig"
+        ],
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "system-gf",
+          "himax-technologies-inc"
+        ],
+        [
+          "system-gf",
+          "qualcomm-incorporated",
+          "apple-inc"
+        ],
+        [
+          "system-gf",
+          "qualcomm-incorporated",
+          "samsung-electronics-company-limited",
+          "system-nvidia"
+        ]
+      ],
+      "missingUpstreamLevels": [
+        2,
+        3
+      ],
+      "missingDownstreamLevels": []
+    },
+    {
+      "id": "system-globalwafers",
+      "vaultId": "globalwafers",
+      "name": "GlobalWafers",
+      "suppliers": 0,
+      "customers": 2,
+      "documented": true,
+      "levels": [
+        0,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        2,
+        10,
+        29
+      ],
+      "upstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "system-globalwafers",
+          "micron-technology-incorporated"
+        ],
+        [
+          "system-globalwafers",
+          "micron-technology-incorporated",
+          "apple-inc"
+        ],
+        [
+          "system-globalwafers",
+          "micron-technology-incorporated",
+          "qualcomm-incorporated",
+          "samsung-electronics-company-limited"
+        ]
+      ],
+      "missingUpstreamLevels": [
+        1,
+        2,
+        3
+      ],
+      "missingDownstreamLevels": []
+    },
+    {
+      "id": "system-google",
+      "vaultId": "google",
+      "name": "Google (TPU/Cloud)",
+      "suppliers": 1,
+      "customers": 0,
+      "documented": true,
+      "levels": [
+        1,
+        9,
+        85
+      ],
+      "downstreamLevels": [
+        0,
+        0,
+        0
+      ],
+      "upstreamPaths": [
+        [
+          "system-google",
+          "system-nvidia"
+        ],
+        [
+          "system-google",
+          "system-nvidia",
+          "coherent-corporation"
+        ],
+        [
+          "system-google",
+          "system-nvidia",
+          "hon-hai-precision-industry-company-limited-foxconn",
+          "alpha-and-omega-semiconductor-limited"
+        ]
+      ],
+      "downstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "missingUpstreamLevels": [],
+      "missingDownstreamLevels": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "id": "hisilicon-technologies-co-ltd",
+      "vaultId": "hisilicon",
+      "name": "HiSilicon (Huawei)",
+      "suppliers": 1,
+      "customers": 1,
+      "documented": true,
+      "levels": [
+        1,
+        1,
+        0
+      ],
+      "downstreamLevels": [
+        1,
+        0,
+        0
+      ],
+      "upstreamPaths": [
+        [
+          "hisilicon-technologies-co-ltd",
+          "semiconductor-manufacturing-international-corporation"
+        ],
+        [
+          "hisilicon-technologies-co-ltd",
+          "semiconductor-manufacturing-international-corporation",
+          "system-nsig"
+        ],
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "hisilicon-technologies-co-ltd",
+          "huawei-technologies-co-ltd"
+        ],
+        null,
+        null
+      ],
+      "missingUpstreamLevels": [
+        3
+      ],
+      "missingDownstreamLevels": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "hitachi-high-tech-corporation",
+      "vaultId": "hitachiht",
+      "name": "Hitachi High-Tech",
+      "suppliers": 0,
+      "customers": 1,
+      "documented": true,
+      "levels": [
+        0,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        1,
+        4,
+        0
+      ],
+      "upstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "hitachi-high-tech-corporation",
+          "intel-corporation"
+        ],
+        [
+          "hitachi-high-tech-corporation",
+          "intel-corporation",
+          "apple-inc"
+        ],
+        null
+      ],
+      "missingUpstreamLevels": [
+        1,
+        2,
+        3
+      ],
+      "missingDownstreamLevels": [
+        3
+      ]
+    },
+    {
+      "id": "system-hp",
+      "vaultId": "hp",
+      "name": "HP",
+      "suppliers": 5,
+      "customers": 0,
+      "documented": true,
+      "levels": [
+        5,
+        79,
+        78
+      ],
+      "downstreamLevels": [
+        0,
+        0,
+        0
+      ],
+      "upstreamPaths": [
+        [
+          "system-hp",
+          "canon-inc"
+        ],
+        [
+          "system-hp",
+          "intel-corporation",
+          "aem-holdings-ltd"
+        ],
+        [
+          "system-hp",
+          "intel-corporation",
+          "applied-materials-inc",
+          "advanced-energy-industries"
+        ]
+      ],
+      "downstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "missingUpstreamLevels": [],
+      "missingDownstreamLevels": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "id": "system-huahong",
+      "vaultId": "huahong",
+      "name": "Hua Hong",
+      "suppliers": 3,
+      "customers": 0,
+      "documented": true,
+      "levels": [
+        3,
+        1,
+        0
+      ],
+      "downstreamLevels": [
+        0,
+        0,
+        0
+      ],
+      "upstreamPaths": [
+        [
+          "system-huahong",
+          "hubei-xingfu-electronic-materials"
+        ],
+        [
+          "system-huahong",
+          "hubei-xingfu-electronic-materials",
+          "hubei-xingfa-chemicals"
+        ],
+        null
+      ],
+      "downstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "missingUpstreamLevels": [
+        3
+      ],
+      "missingDownstreamLevels": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "id": "system-ibiden",
+      "vaultId": "ibiden",
+      "name": "Ibiden",
+      "suppliers": 0,
+      "customers": 3,
+      "documented": true,
+      "levels": [
+        0,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        3,
+        27,
+        2
+      ],
+      "upstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "system-ibiden",
+          "intel-corporation"
+        ],
+        [
+          "system-ibiden",
+          "intel-corporation",
+          "apple-inc"
+        ],
+        [
+          "system-ibiden",
+          "system-nvidia",
+          "hon-hai-precision-industry-company-limited-foxconn",
+          "broadcom-limited"
+        ]
+      ],
+      "missingUpstreamLevels": [
+        1,
+        2,
+        3
+      ],
+      "missingDownstreamLevels": []
+    },
+    {
+      "id": "system-ibm_res",
+      "vaultId": "ibm_res",
+      "name": "IBM Research",
+      "suppliers": 0,
+      "customers": 1,
+      "documented": true,
+      "levels": [
+        0,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        1,
+        0,
+        0
+      ],
+      "upstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "system-ibm_res",
+          "system-rapidus"
+        ],
+        null,
+        null
+      ],
+      "missingUpstreamLevels": [
+        1,
+        2,
+        3
+      ],
+      "missingDownstreamLevels": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "system-imec",
+      "vaultId": "imec",
+      "name": "imec",
+      "suppliers": 1,
+      "customers": 1,
+      "documented": true,
+      "levels": [
+        1,
+        5,
+        0
+      ],
+      "downstreamLevels": [
+        1,
+        7,
+        4
+      ],
+      "upstreamPaths": [
+        [
+          "system-imec",
+          "asml-holding-n-v"
+        ],
+        [
+          "system-imec",
+          "asml-holding-n-v",
+          "ichor-holdings-ltd"
+        ],
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "system-imec",
+          "united-microelectronics-corporation"
+        ],
+        [
+          "system-imec",
+          "united-microelectronics-corporation",
+          "himax-technologies-inc"
+        ],
+        [
+          "system-imec",
+          "united-microelectronics-corporation",
+          "intel-corporation",
+          "apple-inc"
+        ]
+      ],
+      "missingUpstreamLevels": [
+        3
+      ],
+      "missingDownstreamLevels": []
+    },
+    {
+      "id": "system-inari",
+      "vaultId": "inari",
+      "name": "Inari Amertron",
+      "suppliers": 0,
+      "customers": 1,
+      "documented": true,
+      "levels": [
+        0,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        1,
+        1,
+        0
+      ],
+      "upstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "system-inari",
+          "broadcom-limited"
+        ],
+        [
+          "system-inari",
+          "broadcom-limited",
+          "apple-inc"
+        ],
+        null
+      ],
+      "missingUpstreamLevels": [
+        1,
+        2,
+        3
+      ],
+      "missingDownstreamLevels": [
+        3
+      ]
+    },
+    {
+      "id": "infineon-technologies-ag",
+      "vaultId": "infineon",
+      "name": "Infineon",
+      "suppliers": 1,
+      "customers": 2,
+      "documented": true,
+      "levels": [
+        1,
+        72,
+        16
+      ],
+      "downstreamLevels": [
+        2,
+        3,
+        0
+      ],
+      "upstreamPaths": [
+        [
+          "infineon-technologies-ag",
+          "taiwan-semiconductor-manufacturing-company-limited"
+        ],
+        [
+          "infineon-technologies-ag",
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "abb-ltd"
+        ],
+        [
+          "infineon-technologies-ag",
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "applied-materials-inc",
+          "advanced-energy-industries"
+        ]
+      ],
+      "downstreamPaths": [
+        [
+          "infineon-technologies-ag",
+          "apple-inc"
+        ],
+        [
+          "infineon-technologies-ag",
+          "intel-corporation",
+          "system-hp"
+        ],
+        null
+      ],
+      "missingUpstreamLevels": [],
+      "missingDownstreamLevels": [
+        3
+      ]
+    },
+    {
+      "id": "intel-corporation",
+      "vaultId": "intel",
+      "name": "Intel",
+      "suppliers": 66,
+      "customers": 4,
+      "documented": true,
+      "levels": [
+        66,
+        73,
+        1
+      ],
+      "downstreamLevels": [
+        4,
+        0,
+        0
+      ],
+      "upstreamPaths": [
+        [
+          "intel-corporation",
+          "aem-holdings-ltd"
+        ],
+        [
+          "intel-corporation",
+          "applied-materials-inc",
+          "advanced-energy-industries"
+        ],
+        [
+          "intel-corporation",
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "pegatron-corporation",
+          "system-nvidia"
+        ]
+      ],
+      "downstreamPaths": [
+        [
+          "intel-corporation",
+          "apple-inc"
+        ],
+        null,
+        null
+      ],
+      "missingUpstreamLevels": [],
+      "missingDownstreamLevels": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "jcet-group-company-limited",
+      "vaultId": "jcet",
+      "name": "JCET",
+      "suppliers": 0,
+      "customers": 1,
+      "documented": true,
+      "levels": [
+        0,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        1,
+        0,
+        0
+      ],
+      "upstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "jcet-group-company-limited",
+          "apple-inc"
+        ],
+        null,
+        null
+      ],
+      "missingUpstreamLevels": [
+        1,
+        2,
+        3
+      ],
+      "missingDownstreamLevels": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "jsr-corporation",
+      "vaultId": "jsr",
+      "name": "JSR",
+      "suppliers": 0,
+      "customers": 1,
+      "documented": true,
+      "levels": [
+        0,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        1,
+        14,
+        37
+      ],
+      "upstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "jsr-corporation",
+          "taiwan-semiconductor-manufacturing-company-limited"
+        ],
+        [
+          "jsr-corporation",
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "advanced-semiconductor-engineering-technology-holding-co-ltd"
+        ],
+        [
+          "jsr-corporation",
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "intel-corporation",
+          "system-hp"
+        ]
+      ],
+      "missingUpstreamLevels": [
+        1,
+        2,
+        3
+      ],
+      "missingDownstreamLevels": []
+    },
+    {
+      "id": "kioxia-holdings-corporation",
+      "vaultId": "kioxia",
+      "name": "Kioxia",
+      "suppliers": 1,
+      "customers": 1,
+      "documented": true,
+      "levels": [
+        1,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        1,
+        0,
+        0
+      ],
+      "upstreamPaths": [
+        [
+          "kioxia-holdings-corporation",
+          "silicon-motion-technology-corp"
+        ],
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "kioxia-holdings-corporation",
+          "apple-inc"
+        ],
+        null,
+        null
+      ],
+      "missingUpstreamLevels": [
+        2,
+        3
+      ],
+      "missingDownstreamLevels": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "kla-corporation",
+      "vaultId": "kla",
+      "name": "KLA",
+      "suppliers": 0,
+      "customers": 2,
+      "documented": true,
+      "levels": [
+        0,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        2,
+        16,
+        34
+      ],
+      "upstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "kla-corporation",
+          "intel-corporation"
+        ],
+        [
+          "kla-corporation",
+          "intel-corporation",
+          "apple-inc"
+        ],
+        [
+          "kla-corporation",
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "nxp-semiconductors-n-v",
+          "aptiv-plc"
+        ]
+      ],
+      "missingUpstreamLevels": [
+        1,
+        2,
+        3
+      ],
+      "missingDownstreamLevels": []
+    },
+    {
+      "id": "kokusai-electric-corporation",
+      "vaultId": "kokusai",
+      "name": "Kokusai Electric",
+      "suppliers": 0,
+      "customers": 2,
+      "documented": true,
+      "levels": [
+        0,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        2,
+        16,
+        34
+      ],
+      "upstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "kokusai-electric-corporation",
+          "intel-corporation"
+        ],
+        [
+          "kokusai-electric-corporation",
+          "intel-corporation",
+          "apple-inc"
+        ],
+        [
+          "kokusai-electric-corporation",
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "nxp-semiconductors-n-v",
+          "aptiv-plc"
+        ]
+      ],
+      "missingUpstreamLevels": [
+        1,
+        2,
+        3
+      ],
+      "missingDownstreamLevels": []
+    },
+    {
+      "id": "system-kyec",
+      "vaultId": "kyec",
+      "name": "KYEC",
+      "suppliers": 0,
+      "customers": 1,
+      "documented": true,
+      "levels": [
+        0,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        1,
+        2,
+        0
+      ],
+      "upstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "system-kyec",
+          "system-amd"
+        ],
+        [
+          "system-kyec",
+          "system-amd",
+          "system-hp"
+        ],
+        null
+      ],
+      "missingUpstreamLevels": [
+        1,
+        2,
+        3
+      ],
+      "missingDownstreamLevels": [
+        3
+      ]
+    },
+    {
+      "id": "lam-research-corporation",
+      "vaultId": "lam",
+      "name": "Lam Research",
+      "suppliers": 12,
+      "customers": 3,
+      "documented": true,
+      "levels": [
+        12,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        3,
+        15,
+        34
+      ],
+      "upstreamPaths": [
+        [
+          "lam-research-corporation",
+          "advanced-energy-industries"
+        ],
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "lam-research-corporation",
+          "advanced-semiconductor-engineering-technology-holding-co-ltd"
+        ],
+        [
+          "lam-research-corporation",
+          "advanced-semiconductor-engineering-technology-holding-co-ltd",
+          "apple-inc"
+        ],
+        [
+          "lam-research-corporation",
+          "advanced-semiconductor-engineering-technology-holding-co-ltd",
+          "qualcomm-incorporated",
+          "samsung-electronics-company-limited"
+        ]
+      ],
+      "missingUpstreamLevels": [
+        2,
+        3
+      ],
+      "missingDownstreamLevels": []
+    },
+    {
+      "id": "system-lenovo",
+      "vaultId": "lenovo",
+      "name": "Lenovo",
+      "suppliers": 1,
+      "customers": 0,
+      "documented": true,
+      "levels": [
+        1,
+        9,
+        85
+      ],
+      "downstreamLevels": [
+        0,
+        0,
+        0
+      ],
+      "upstreamPaths": [
+        [
+          "system-lenovo",
+          "system-nvidia"
+        ],
+        [
+          "system-lenovo",
+          "system-nvidia",
+          "coherent-corporation"
+        ],
+        [
+          "system-lenovo",
+          "system-nvidia",
+          "hon-hai-precision-industry-company-limited-foxconn",
+          "alpha-and-omega-semiconductor-limited"
+        ]
+      ],
+      "downstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "missingUpstreamLevels": [],
+      "missingDownstreamLevels": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "id": "system-linde",
+      "vaultId": "linde",
+      "name": "Linde",
+      "suppliers": 0,
+      "customers": 2,
+      "documented": true,
+      "levels": [
+        0,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        2,
+        14,
+        36
+      ],
+      "upstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "system-linde",
+          "samsung-electronics-company-limited"
+        ],
+        [
+          "system-linde",
+          "samsung-electronics-company-limited",
+          "apple-inc"
+        ],
+        [
+          "system-linde",
+          "samsung-electronics-company-limited",
+          "qualcomm-incorporated",
+          "system-vw"
+        ]
+      ],
+      "missingUpstreamLevels": [
+        1,
+        2,
+        3
+      ],
+      "missingDownstreamLevels": []
+    },
+    {
+      "id": "luxshare-precision-industry-company-limited",
+      "vaultId": "luxshare",
+      "name": "Luxshare",
+      "suppliers": 0,
+      "customers": 1,
+      "documented": true,
+      "levels": [
+        0,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        1,
+        0,
+        0
+      ],
+      "upstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "luxshare-precision-industry-company-limited",
+          "apple-inc"
+        ],
+        null,
+        null
+      ],
+      "missingUpstreamLevels": [
+        1,
+        2,
+        3
+      ],
+      "missingDownstreamLevels": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "system-marvell",
+      "vaultId": "marvell",
+      "name": "Marvell",
+      "suppliers": 1,
+      "customers": 0,
+      "documented": true,
+      "levels": [
+        1,
+        72,
+        16
+      ],
+      "downstreamLevels": [
+        0,
+        0,
+        0
+      ],
+      "upstreamPaths": [
+        [
+          "system-marvell",
+          "taiwan-semiconductor-manufacturing-company-limited"
+        ],
+        [
+          "system-marvell",
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "abb-ltd"
+        ],
+        [
+          "system-marvell",
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "applied-materials-inc",
+          "advanced-energy-industries"
+        ]
+      ],
+      "downstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "missingUpstreamLevels": [],
+      "missingDownstreamLevels": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "id": "system-mediatek",
+      "vaultId": "mediatek",
+      "name": "MediaTek",
+      "suppliers": 4,
+      "customers": 0,
+      "documented": true,
+      "levels": [
+        4,
+        75,
+        16
+      ],
+      "downstreamLevels": [
+        0,
+        0,
+        0
+      ],
+      "upstreamPaths": [
+        [
+          "system-mediatek",
+          "chipmos-technologies-inc"
+        ],
+        [
+          "system-mediatek",
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "abb-ltd"
+        ],
+        [
+          "system-mediatek",
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "applied-materials-inc",
+          "advanced-energy-industries"
+        ]
+      ],
+      "downstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "missingUpstreamLevels": [],
+      "missingDownstreamLevels": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "id": "system-meta",
+      "vaultId": "meta",
+      "name": "Meta",
+      "suppliers": 1,
+      "customers": 0,
+      "documented": true,
+      "levels": [
+        1,
+        9,
+        85
+      ],
+      "downstreamLevels": [
+        0,
+        0,
+        0
+      ],
+      "upstreamPaths": [
+        [
+          "system-meta",
+          "system-nvidia"
+        ],
+        [
+          "system-meta",
+          "system-nvidia",
+          "coherent-corporation"
+        ],
+        [
+          "system-meta",
+          "system-nvidia",
+          "hon-hai-precision-industry-company-limited-foxconn",
+          "alpha-and-omega-semiconductor-limited"
+        ]
+      ],
+      "downstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "missingUpstreamLevels": [],
+      "missingDownstreamLevels": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "id": "microchip-technology-incorporated",
+      "vaultId": "microchip",
+      "name": "Microchip",
+      "suppliers": 2,
+      "customers": 1,
+      "documented": true,
+      "levels": [
+        2,
+        1,
+        0
+      ],
+      "downstreamLevels": [
+        1,
+        0,
+        0
+      ],
+      "upstreamPaths": [
+        [
+          "microchip-technology-incorporated",
+          "arteris-ip"
+        ],
+        [
+          "microchip-technology-incorporated",
+          "semiconductor-manufacturing-international-corporation",
+          "system-nsig"
+        ],
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "microchip-technology-incorporated",
+          "apple-inc"
+        ],
+        null,
+        null
+      ],
+      "missingUpstreamLevels": [
+        3
+      ],
+      "missingDownstreamLevels": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "micron-technology-incorporated",
+      "vaultId": "micron",
+      "name": "Micron",
+      "suppliers": 6,
+      "customers": 3,
+      "documented": true,
+      "levels": [
+        6,
+        1,
+        0
+      ],
+      "downstreamLevels": [
+        3,
+        28,
+        3
+      ],
+      "upstreamPaths": [
+        [
+          "micron-technology-incorporated",
+          "chipmos-technologies-inc"
+        ],
+        [
+          "micron-technology-incorporated",
+          "system-siltronic",
+          "wacker-chemie-ag"
+        ],
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "micron-technology-incorporated",
+          "apple-inc"
+        ],
+        [
+          "micron-technology-incorporated",
+          "qualcomm-incorporated",
+          "samsung-electronics-company-limited"
+        ],
+        [
+          "micron-technology-incorporated",
+          "qualcomm-incorporated",
+          "samsung-electronics-company-limited",
+          "system-amd"
+        ]
+      ],
+      "missingUpstreamLevels": [
+        3
+      ],
+      "missingDownstreamLevels": []
+    },
+    {
+      "id": "system-microsoft",
+      "vaultId": "microsoft",
+      "name": "Microsoft (Azure)",
+      "suppliers": 1,
+      "customers": 0,
+      "documented": true,
+      "levels": [
+        1,
+        9,
+        85
+      ],
+      "downstreamLevels": [
+        0,
+        0,
+        0
+      ],
+      "upstreamPaths": [
+        [
+          "system-microsoft",
+          "system-nvidia"
+        ],
+        [
+          "system-microsoft",
+          "system-nvidia",
+          "coherent-corporation"
+        ],
+        [
+          "system-microsoft",
+          "system-nvidia",
+          "hon-hai-precision-industry-company-limited-foxconn",
+          "alpha-and-omega-semiconductor-limited"
+        ]
+      ],
+      "downstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "missingUpstreamLevels": [],
+      "missingDownstreamLevels": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "id": "system-nanya",
+      "vaultId": "nanya",
+      "name": "Nanya",
+      "suppliers": 1,
+      "customers": 0,
+      "documented": true,
+      "levels": [
+        1,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        0,
+        0,
+        0
+      ],
+      "upstreamPaths": [
+        [
+          "system-nanya",
+          "chipmos-technologies-inc"
+        ],
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "missingUpstreamLevels": [
+        2,
+        3
+      ],
+      "missingDownstreamLevels": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "id": "system-naura",
+      "vaultId": "naura",
+      "name": "NAURA",
+      "suppliers": 1,
+      "customers": 0,
+      "documented": true,
+      "levels": [
+        1,
+        2,
+        0
+      ],
+      "downstreamLevels": [
+        0,
+        0,
+        0
+      ],
+      "upstreamPaths": [
+        [
+          "system-naura",
+          "torlens-precision-jiangsu"
+        ],
+        [
+          "system-naura",
+          "torlens-precision-jiangsu",
+          "anhui-fude-technology"
+        ],
+        null
+      ],
+      "downstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "missingUpstreamLevels": [
+        3
+      ],
+      "missingDownstreamLevels": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "id": "system-nexchip",
+      "vaultId": "nexchip",
+      "name": "Nexchip",
+      "suppliers": 0,
+      "customers": 1,
+      "documented": true,
+      "levels": [
+        0,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        1,
+        0,
+        0
+      ],
+      "upstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "system-nexchip",
+          "himax-technologies-inc"
+        ],
+        null,
+        null
+      ],
+      "missingUpstreamLevels": [
+        1,
+        2,
+        3
+      ],
+      "missingDownstreamLevels": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "nikon-corporation",
+      "vaultId": "nikon",
+      "name": "Nikon",
+      "suppliers": 0,
+      "customers": 1,
+      "documented": true,
+      "levels": [
+        0,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        1,
+        4,
+        0
+      ],
+      "upstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "nikon-corporation",
+          "intel-corporation"
+        ],
+        [
+          "nikon-corporation",
+          "intel-corporation",
+          "apple-inc"
+        ],
+        null
+      ],
+      "missingUpstreamLevels": [
+        1,
+        2,
+        3
+      ],
+      "missingDownstreamLevels": [
+        3
+      ]
+    },
+    {
+      "id": "nova-ltd",
+      "vaultId": "nova",
+      "name": "Nova",
+      "suppliers": 0,
+      "customers": 1,
+      "documented": true,
+      "levels": [
+        0,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        1,
+        4,
+        0
+      ],
+      "upstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "nova-ltd",
+          "intel-corporation"
+        ],
+        [
+          "nova-ltd",
+          "intel-corporation",
+          "apple-inc"
+        ],
+        null
+      ],
+      "missingUpstreamLevels": [
+        1,
+        2,
+        3
+      ],
+      "missingDownstreamLevels": [
+        3
+      ]
+    },
+    {
+      "id": "system-nsig",
+      "vaultId": "nsig",
+      "name": "NSIG",
+      "suppliers": 0,
+      "customers": 7,
+      "documented": true,
+      "levels": [
+        0,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        7,
+        28,
+        32
+      ],
+      "upstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "system-nsig",
+          "semiconductor-manufacturing-international-corporation"
+        ],
+        [
+          "system-nsig",
+          "semiconductor-manufacturing-international-corporation",
+          "hisilicon-technologies-co-ltd"
+        ],
+        [
+          "system-nsig",
+          "semiconductor-manufacturing-international-corporation",
+          "hisilicon-technologies-co-ltd",
+          "huawei-technologies-co-ltd"
+        ]
+      ],
+      "missingUpstreamLevels": [
+        1,
+        2,
+        3
+      ],
+      "missingDownstreamLevels": []
+    },
+    {
+      "id": "system-nvidia",
+      "vaultId": "nvidia",
+      "name": "NVIDIA",
+      "suppliers": 9,
+      "customers": 25,
+      "documented": true,
+      "levels": [
+        9,
+        85,
+        21
+      ],
+      "downstreamLevels": [
+        25,
+        3,
+        11
+      ],
+      "upstreamPaths": [
+        [
+          "system-nvidia",
+          "coherent-corporation"
+        ],
+        [
+          "system-nvidia",
+          "hon-hai-precision-industry-company-limited-foxconn",
+          "alpha-and-omega-semiconductor-limited"
+        ],
+        [
+          "system-nvidia",
+          "micron-technology-incorporated",
+          "system-siltronic",
+          "wacker-chemie-ag"
+        ]
+      ],
+      "downstreamPaths": [
+        [
+          "system-nvidia",
+          "aivres-systems"
+        ],
+        [
+          "system-nvidia",
+          "hon-hai-precision-industry-company-limited-foxconn",
+          "apple-inc"
+        ],
+        [
+          "system-nvidia",
+          "pegatron-corporation",
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "advanced-semiconductor-engineering-technology-holding-co-ltd"
+        ]
+      ],
+      "missingUpstreamLevels": [],
+      "missingDownstreamLevels": []
+    },
+    {
+      "id": "nxp-semiconductors-n-v",
+      "vaultId": "nxp",
+      "name": "NXP",
+      "suppliers": 3,
+      "customers": 10,
+      "documented": true,
+      "levels": [
+        3,
+        72,
+        16
+      ],
+      "downstreamLevels": [
+        10,
+        3,
+        27
+      ],
+      "upstreamPaths": [
+        [
+          "nxp-semiconductors-n-v",
+          "arteris-ip"
+        ],
+        [
+          "nxp-semiconductors-n-v",
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "abb-ltd"
+        ],
+        [
+          "nxp-semiconductors-n-v",
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "applied-materials-inc",
+          "advanced-energy-industries"
+        ]
+      ],
+      "downstreamPaths": [
+        [
+          "nxp-semiconductors-n-v",
+          "apple-inc"
+        ],
+        [
+          "nxp-semiconductors-n-v",
+          "samsung-electronics-company-limited",
+          "qualcomm-incorporated"
+        ],
+        [
+          "nxp-semiconductors-n-v",
+          "samsung-electronics-company-limited",
+          "qualcomm-incorporated",
+          "system-vw"
+        ]
+      ],
+      "missingUpstreamLevels": [],
+      "missingDownstreamLevels": []
+    },
+    {
+      "id": "on-semiconductor-corporation",
+      "vaultId": "onsemi",
+      "name": "onsemi",
+      "suppliers": 0,
+      "customers": 1,
+      "documented": true,
+      "levels": [
+        0,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        1,
+        0,
+        0
+      ],
+      "upstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "on-semiconductor-corporation",
+          "apple-inc"
+        ],
+        null,
+        null
+      ],
+      "missingUpstreamLevels": [
+        1,
+        2,
+        3
+      ],
+      "missingDownstreamLevels": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "onto-innovation-inc",
+      "vaultId": "onto",
+      "name": "Onto Innovation",
+      "suppliers": 0,
+      "customers": 2,
+      "documented": true,
+      "levels": [
+        0,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        2,
+        14,
+        36
+      ],
+      "upstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "onto-innovation-inc",
+          "samsung-electronics-company-limited"
+        ],
+        [
+          "onto-innovation-inc",
+          "samsung-electronics-company-limited",
+          "apple-inc"
+        ],
+        [
+          "onto-innovation-inc",
+          "samsung-electronics-company-limited",
+          "qualcomm-incorporated",
+          "system-vw"
+        ]
+      ],
+      "missingUpstreamLevels": [
+        1,
+        2,
+        3
+      ],
+      "missingDownstreamLevels": []
+    },
+    {
+      "id": "system-pti",
+      "vaultId": "pti",
+      "name": "Powertech (PTI)",
+      "suppliers": 0,
+      "customers": 2,
+      "documented": true,
+      "levels": [
+        0,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        2,
+        3,
+        28
+      ],
+      "upstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "system-pti",
+          "micron-technology-incorporated"
+        ],
+        [
+          "system-pti",
+          "micron-technology-incorporated",
+          "apple-inc"
+        ],
+        [
+          "system-pti",
+          "micron-technology-incorporated",
+          "qualcomm-incorporated",
+          "samsung-electronics-company-limited"
+        ]
+      ],
+      "missingUpstreamLevels": [
+        1,
+        2,
+        3
+      ],
+      "missingDownstreamLevels": []
+    },
+    {
+      "id": "qualcomm-incorporated",
+      "vaultId": "qualcomm",
+      "name": "Qualcomm",
+      "suppliers": 8,
+      "customers": 4,
+      "documented": true,
+      "levels": [
+        8,
+        86,
+        18
+      ],
+      "downstreamLevels": [
+        4,
+        2,
+        25
+      ],
+      "upstreamPaths": [
+        [
+          "qualcomm-incorporated",
+          "advanced-semiconductor-engineering-technology-holding-co-ltd"
+        ],
+        [
+          "qualcomm-incorporated",
+          "advanced-semiconductor-engineering-technology-holding-co-ltd",
+          "advantest-corporation"
+        ],
+        [
+          "qualcomm-incorporated",
+          "advanced-semiconductor-engineering-technology-holding-co-ltd",
+          "lam-research-corporation",
+          "advanced-energy-industries"
+        ]
+      ],
+      "downstreamPaths": [
+        [
+          "qualcomm-incorporated",
+          "apple-inc"
+        ],
+        [
+          "qualcomm-incorporated",
+          "samsung-electronics-company-limited",
+          "system-amd"
+        ],
+        [
+          "qualcomm-incorporated",
+          "samsung-electronics-company-limited",
+          "system-amd",
+          "system-hp"
+        ]
+      ],
+      "missingUpstreamLevels": [],
+      "missingDownstreamLevels": []
+    },
+    {
+      "id": "quanta-computer-incorporated",
+      "vaultId": "quanta",
+      "name": "Quanta",
+      "suppliers": 2,
+      "customers": 1,
+      "documented": true,
+      "levels": [
+        2,
+        9,
+        84
+      ],
+      "downstreamLevels": [
+        1,
+        0,
+        0
+      ],
+      "upstreamPaths": [
+        [
+          "quanta-computer-incorporated",
+          "alpha-and-omega-semiconductor-limited"
+        ],
+        [
+          "quanta-computer-incorporated",
+          "system-nvidia",
+          "coherent-corporation"
+        ],
+        [
+          "quanta-computer-incorporated",
+          "system-nvidia",
+          "micron-technology-incorporated",
+          "chipmos-technologies-inc"
+        ]
+      ],
+      "downstreamPaths": [
+        [
+          "quanta-computer-incorporated",
+          "apple-inc"
+        ],
+        null,
+        null
+      ],
+      "missingUpstreamLevels": [],
+      "missingDownstreamLevels": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "system-rapidus",
+      "vaultId": "rapidus",
+      "name": "Rapidus",
+      "suppliers": 2,
+      "customers": 0,
+      "documented": true,
+      "levels": [
+        2,
+        5,
+        0
+      ],
+      "downstreamLevels": [
+        0,
+        0,
+        0
+      ],
+      "upstreamPaths": [
+        [
+          "system-rapidus",
+          "asml-holding-n-v"
+        ],
+        [
+          "system-rapidus",
+          "asml-holding-n-v",
+          "ichor-holdings-ltd"
+        ],
+        null
+      ],
+      "downstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "missingUpstreamLevels": [
+        3
+      ],
+      "missingDownstreamLevels": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "id": "renesas-electronics-corporation",
+      "vaultId": "renesas",
+      "name": "Renesas",
+      "suppliers": 2,
+      "customers": 1,
+      "documented": true,
+      "levels": [
+        2,
+        72,
+        16
+      ],
+      "downstreamLevels": [
+        1,
+        0,
+        0
+      ],
+      "upstreamPaths": [
+        [
+          "renesas-electronics-corporation",
+          "arteris-ip"
+        ],
+        [
+          "renesas-electronics-corporation",
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "abb-ltd"
+        ],
+        [
+          "renesas-electronics-corporation",
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "applied-materials-inc",
+          "advanced-energy-industries"
+        ]
+      ],
+      "downstreamPaths": [
+        [
+          "renesas-electronics-corporation",
+          "apple-inc"
+        ],
+        null,
+        null
+      ],
+      "missingUpstreamLevels": [],
+      "missingDownstreamLevels": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "resonac-corporation",
+      "vaultId": "resonac",
+      "name": "Resonac",
+      "suppliers": 0,
+      "customers": 1,
+      "documented": true,
+      "levels": [
+        0,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        1,
+        14,
+        37
+      ],
+      "upstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "resonac-corporation",
+          "taiwan-semiconductor-manufacturing-company-limited"
+        ],
+        [
+          "resonac-corporation",
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "advanced-semiconductor-engineering-technology-holding-co-ltd"
+        ],
+        [
+          "resonac-corporation",
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "intel-corporation",
+          "system-hp"
+        ]
+      ],
+      "missingUpstreamLevels": [
+        1,
+        2,
+        3
+      ],
+      "missingDownstreamLevels": []
+    },
+    {
+      "id": "samsung-electronics-company-limited",
+      "vaultId": "samsung",
+      "name": "Samsung",
+      "suppliers": 12,
+      "customers": 4,
+      "documented": true,
+      "levels": [
+        12,
+        10,
+        74
+      ],
+      "downstreamLevels": [
+        4,
+        27,
+        2
+      ],
+      "upstreamPaths": [
+        [
+          "samsung-electronics-company-limited",
+          "arteris-ip"
+        ],
+        [
+          "samsung-electronics-company-limited",
+          "nxp-semiconductors-n-v",
+          "system-vis"
+        ],
+        [
+          "samsung-electronics-company-limited",
+          "nxp-semiconductors-n-v",
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "abb-ltd"
+        ]
+      ],
+      "downstreamPaths": [
+        [
+          "samsung-electronics-company-limited",
+          "apple-inc"
+        ],
+        [
+          "samsung-electronics-company-limited",
+          "qualcomm-incorporated",
+          "system-vw"
+        ],
+        [
+          "samsung-electronics-company-limited",
+          "system-nvidia",
+          "hon-hai-precision-industry-company-limited-foxconn",
+          "broadcom-limited"
+        ]
+      ],
+      "missingUpstreamLevels": [],
+      "missingDownstreamLevels": []
+    },
+    {
+      "id": "samsung-electro-mechanics-company-limited",
+      "vaultId": "samsungem",
+      "name": "Samsung Electro-Mech",
+      "suppliers": 0,
+      "customers": 1,
+      "documented": true,
+      "levels": [
+        0,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        1,
+        0,
+        0
+      ],
+      "upstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "samsung-electro-mechanics-company-limited",
+          "apple-inc"
+        ],
+        null,
+        null
+      ],
+      "missingUpstreamLevels": [
+        1,
+        2,
+        3
+      ],
+      "missingDownstreamLevels": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "shin-etsu-chemical-co-ltd",
+      "vaultId": "shinetsu",
+      "name": "Shin-Etsu",
+      "suppliers": 0,
+      "customers": 2,
+      "documented": true,
+      "levels": [
+        0,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        2,
+        16,
+        34
+      ],
+      "upstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "shin-etsu-chemical-co-ltd",
+          "intel-corporation"
+        ],
+        [
+          "shin-etsu-chemical-co-ltd",
+          "intel-corporation",
+          "apple-inc"
+        ],
+        [
+          "shin-etsu-chemical-co-ltd",
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "nxp-semiconductors-n-v",
+          "aptiv-plc"
+        ]
+      ],
+      "missingUpstreamLevels": [
+        1,
+        2,
+        3
+      ],
+      "missingDownstreamLevels": []
+    },
+    {
+      "id": "system-shinko",
+      "vaultId": "shinko",
+      "name": "Shinko Electric",
+      "suppliers": 0,
+      "customers": 1,
+      "documented": true,
+      "levels": [
+        0,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        1,
+        4,
+        0
+      ],
+      "upstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "system-shinko",
+          "intel-corporation"
+        ],
+        [
+          "system-shinko",
+          "intel-corporation",
+          "apple-inc"
+        ],
+        null
+      ],
+      "missingUpstreamLevels": [
+        1,
+        2,
+        3
+      ],
+      "missingDownstreamLevels": [
+        3
+      ]
+    },
+    {
+      "id": "system-siemens_eda",
+      "vaultId": "siemens_eda",
+      "name": "Siemens EDA",
+      "suppliers": 0,
+      "customers": 1,
+      "documented": true,
+      "levels": [
+        0,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        1,
+        14,
+        37
+      ],
+      "upstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "system-siemens_eda",
+          "taiwan-semiconductor-manufacturing-company-limited"
+        ],
+        [
+          "system-siemens_eda",
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "advanced-semiconductor-engineering-technology-holding-co-ltd"
+        ],
+        [
+          "system-siemens_eda",
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "intel-corporation",
+          "system-hp"
+        ]
+      ],
+      "missingUpstreamLevels": [
+        1,
+        2,
+        3
+      ],
+      "missingDownstreamLevels": []
+    },
+    {
+      "id": "system-siltronic",
+      "vaultId": "siltronic",
+      "name": "Siltronic",
+      "suppliers": 1,
+      "customers": 4,
+      "documented": true,
+      "levels": [
+        1,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        4,
+        14,
+        24
+      ],
+      "upstreamPaths": [
+        [
+          "system-siltronic",
+          "wacker-chemie-ag"
+        ],
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "system-siltronic",
+          "intel-corporation"
+        ],
+        [
+          "system-siltronic",
+          "intel-corporation",
+          "apple-inc"
+        ],
+        [
+          "system-siltronic",
+          "micron-technology-incorporated",
+          "qualcomm-incorporated",
+          "system-vw"
+        ]
+      ],
+      "missingUpstreamLevels": [
+        2,
+        3
+      ],
+      "missingDownstreamLevels": []
+    },
+    {
+      "id": "sk-hynix-incorporated",
+      "vaultId": "skhynix",
+      "name": "SK hynix",
+      "suppliers": 4,
+      "customers": 2,
+      "documented": true,
+      "levels": [
+        4,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        2,
+        25,
+        2
+      ],
+      "upstreamPaths": [
+        [
+          "sk-hynix-incorporated",
+          "formfactor-incorporated"
+        ],
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "sk-hynix-incorporated",
+          "apple-inc"
+        ],
+        [
+          "sk-hynix-incorporated",
+          "system-nvidia",
+          "aivres-systems"
+        ],
+        [
+          "sk-hynix-incorporated",
+          "system-nvidia",
+          "hon-hai-precision-industry-company-limited-foxconn",
+          "broadcom-limited"
+        ]
+      ],
+      "missingUpstreamLevels": [
+        2,
+        3
+      ],
+      "missingDownstreamLevels": []
+    },
+    {
+      "id": "system-skmaterials",
+      "vaultId": "skmaterials",
+      "name": "SK Materials",
+      "suppliers": 0,
+      "customers": 1,
+      "documented": true,
+      "levels": [
+        0,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        1,
+        2,
+        25
+      ],
+      "upstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "system-skmaterials",
+          "sk-hynix-incorporated"
+        ],
+        [
+          "system-skmaterials",
+          "sk-hynix-incorporated",
+          "apple-inc"
+        ],
+        [
+          "system-skmaterials",
+          "sk-hynix-incorporated",
+          "system-nvidia",
+          "aivres-systems"
+        ]
+      ],
+      "missingUpstreamLevels": [
+        1,
+        2,
+        3
+      ],
+      "missingDownstreamLevels": []
+    },
+    {
+      "id": "system-sksiltron",
+      "vaultId": "sksiltron",
+      "name": "SK Siltron",
+      "suppliers": 0,
+      "customers": 4,
+      "documented": true,
+      "levels": [
+        0,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        4,
+        13,
+        25
+      ],
+      "upstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "system-sksiltron",
+          "samsung-electronics-company-limited"
+        ],
+        [
+          "system-sksiltron",
+          "samsung-electronics-company-limited",
+          "apple-inc"
+        ],
+        [
+          "system-sksiltron",
+          "samsung-electronics-company-limited",
+          "qualcomm-incorporated",
+          "system-vw"
+        ]
+      ],
+      "missingUpstreamLevels": [
+        1,
+        2,
+        3
+      ],
+      "missingDownstreamLevels": []
+    },
+    {
+      "id": "semiconductor-manufacturing-international-corporation",
+      "vaultId": "smic",
+      "name": "SMIC",
+      "suppliers": 1,
+      "customers": 2,
+      "documented": true,
+      "levels": [
+        1,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        2,
+        2,
+        0
+      ],
+      "upstreamPaths": [
+        [
+          "semiconductor-manufacturing-international-corporation",
+          "system-nsig"
+        ],
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "semiconductor-manufacturing-international-corporation",
+          "hisilicon-technologies-co-ltd"
+        ],
+        [
+          "semiconductor-manufacturing-international-corporation",
+          "hisilicon-technologies-co-ltd",
+          "huawei-technologies-co-ltd"
+        ],
+        null
+      ],
+      "missingUpstreamLevels": [
+        2,
+        3
+      ],
+      "missingDownstreamLevels": [
+        3
+      ]
+    },
+    {
+      "id": "sony-corporation",
+      "vaultId": "sonysemi",
+      "name": "Sony Semiconductor",
+      "suppliers": 0,
+      "customers": 1,
+      "documented": true,
+      "levels": [
+        0,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        1,
+        0,
+        0
+      ],
+      "upstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "sony-corporation",
+          "apple-inc"
+        ],
+        null,
+        null
+      ],
+      "missingUpstreamLevels": [
+        1,
+        2,
+        3
+      ],
+      "missingDownstreamLevels": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "siliconware-precision-industries-co-ltd",
+      "vaultId": "spil",
+      "name": "SPIL",
+      "suppliers": 0,
+      "customers": 5,
+      "documented": true,
+      "levels": [
+        0,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        5,
+        16,
+        31
+      ],
+      "upstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "siliconware-precision-industries-co-ltd",
+          "broadcom-limited"
+        ],
+        [
+          "siliconware-precision-industries-co-ltd",
+          "broadcom-limited",
+          "apple-inc"
+        ],
+        [
+          "siliconware-precision-industries-co-ltd",
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "nxp-semiconductors-n-v",
+          "aptiv-plc"
+        ]
+      ],
+      "missingUpstreamLevels": [
+        1,
+        2,
+        3
+      ],
+      "missingDownstreamLevels": []
+    },
+    {
+      "id": "stmicroelectronics-n-v",
+      "vaultId": "st",
+      "name": "STMicro",
+      "suppliers": 5,
+      "customers": 11,
+      "documented": true,
+      "levels": [
+        5,
+        1,
+        0
+      ],
+      "downstreamLevels": [
+        11,
+        3,
+        25
+      ],
+      "upstreamPaths": [
+        [
+          "stmicroelectronics-n-v",
+          "arteris-ip"
+        ],
+        [
+          "stmicroelectronics-n-v",
+          "system-siltronic",
+          "wacker-chemie-ag"
+        ],
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "stmicroelectronics-n-v",
+          "apple-inc"
+        ],
+        [
+          "stmicroelectronics-n-v",
+          "samsung-electronics-company-limited",
+          "qualcomm-incorporated"
+        ],
+        [
+          "stmicroelectronics-n-v",
+          "samsung-electronics-company-limited",
+          "qualcomm-incorporated",
+          "system-vw"
+        ]
+      ],
+      "missingUpstreamLevels": [
+        3
+      ],
+      "missingDownstreamLevels": []
+    },
+    {
+      "id": "sumco-corporation",
+      "vaultId": "sumco",
+      "name": "SUMCO",
+      "suppliers": 0,
+      "customers": 2,
+      "documented": true,
+      "levels": [
+        0,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        2,
+        17,
+        37
+      ],
+      "upstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "sumco-corporation",
+          "taiwan-semiconductor-manufacturing-company-limited"
+        ],
+        [
+          "sumco-corporation",
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "advanced-semiconductor-engineering-technology-holding-co-ltd"
+        ],
+        [
+          "sumco-corporation",
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "intel-corporation",
+          "system-hp"
+        ]
+      ],
+      "missingUpstreamLevels": [
+        1,
+        2,
+        3
+      ],
+      "missingDownstreamLevels": []
+    },
+    {
+      "id": "sumitomo-chemical-company-limited",
+      "vaultId": "sumitomo_chem",
+      "name": "Sumitomo Chemical",
+      "suppliers": 0,
+      "customers": 1,
+      "documented": true,
+      "levels": [
+        0,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        1,
+        0,
+        0
+      ],
+      "upstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "sumitomo-chemical-company-limited",
+          "apple-inc"
+        ],
+        null,
+        null
+      ],
+      "missingUpstreamLevels": [
+        1,
+        2,
+        3
+      ],
+      "missingDownstreamLevels": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "system-supermicro",
+      "vaultId": "supermicro",
+      "name": "Supermicro",
+      "suppliers": 3,
+      "customers": 0,
+      "documented": true,
+      "levels": [
+        3,
+        75,
+        84
+      ],
+      "downstreamLevels": [
+        0,
+        0,
+        0
+      ],
+      "upstreamPaths": [
+        [
+          "system-supermicro",
+          "intel-corporation"
+        ],
+        [
+          "system-supermicro",
+          "intel-corporation",
+          "aem-holdings-ltd"
+        ],
+        [
+          "system-supermicro",
+          "intel-corporation",
+          "applied-materials-inc",
+          "advanced-energy-industries"
+        ]
+      ],
+      "downstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "missingUpstreamLevels": [],
+      "missingDownstreamLevels": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "id": "system-synopsys",
+      "vaultId": "synopsys",
+      "name": "Synopsys",
+      "suppliers": 0,
+      "customers": 2,
+      "documented": true,
+      "levels": [
+        0,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        2,
+        16,
+        34
+      ],
+      "upstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "system-synopsys",
+          "intel-corporation"
+        ],
+        [
+          "system-synopsys",
+          "intel-corporation",
+          "apple-inc"
+        ],
+        [
+          "system-synopsys",
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "nxp-semiconductors-n-v",
+          "aptiv-plc"
+        ]
+      ],
+      "missingUpstreamLevels": [
+        1,
+        2,
+        3
+      ],
+      "missingDownstreamLevels": []
+    },
+    {
+      "id": "system-tnsc",
+      "vaultId": "tnsc",
+      "name": "Taiyo Nippon Sanso",
+      "suppliers": 0,
+      "customers": 1,
+      "documented": true,
+      "levels": [
+        0,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        1,
+        14,
+        37
+      ],
+      "upstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "system-tnsc",
+          "taiwan-semiconductor-manufacturing-company-limited"
+        ],
+        [
+          "system-tnsc",
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "advanced-semiconductor-engineering-technology-holding-co-ltd"
+        ],
+        [
+          "system-tnsc",
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "intel-corporation",
+          "system-hp"
+        ]
+      ],
+      "missingUpstreamLevels": [
+        1,
+        2,
+        3
+      ],
+      "missingDownstreamLevels": []
+    },
+    {
+      "id": "system-tesla",
+      "vaultId": "tesla",
+      "name": "Tesla",
+      "suppliers": 2,
+      "customers": 0,
+      "documented": true,
+      "levels": [
+        2,
+        14,
+        80
+      ],
+      "downstreamLevels": [
+        0,
+        0,
+        0
+      ],
+      "upstreamPaths": [
+        [
+          "system-tesla",
+          "stmicroelectronics-n-v"
+        ],
+        [
+          "system-tesla",
+          "stmicroelectronics-n-v",
+          "arteris-ip"
+        ],
+        [
+          "system-tesla",
+          "stmicroelectronics-n-v",
+          "system-siltronic",
+          "wacker-chemie-ag"
+        ]
+      ],
+      "downstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "missingUpstreamLevels": [],
+      "missingDownstreamLevels": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "id": "texas-instruments-incorporated",
+      "vaultId": "ti",
+      "name": "Texas Instruments",
+      "suppliers": 3,
+      "customers": 1,
+      "documented": true,
+      "levels": [
+        3,
+        7,
+        1
+      ],
+      "downstreamLevels": [
+        1,
+        0,
+        0
+      ],
+      "upstreamPaths": [
+        [
+          "texas-instruments-incorporated",
+          "arteris-ip"
+        ],
+        [
+          "texas-instruments-incorporated",
+          "united-microelectronics-corporation",
+          "shin-etsu-handotai-co-ltd"
+        ],
+        [
+          "texas-instruments-incorporated",
+          "united-microelectronics-corporation",
+          "system-imec",
+          "asml-holding-n-v"
+        ]
+      ],
+      "downstreamPaths": [
+        [
+          "texas-instruments-incorporated",
+          "apple-inc"
+        ],
+        null,
+        null
+      ],
+      "missingUpstreamLevels": [],
+      "missingDownstreamLevels": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "tokyo-ohka-kogyo-co-ltd",
+      "vaultId": "tok",
+      "name": "TOK",
+      "suppliers": 0,
+      "customers": 1,
+      "documented": true,
+      "levels": [
+        0,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        1,
+        14,
+        37
+      ],
+      "upstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "tokyo-ohka-kogyo-co-ltd",
+          "taiwan-semiconductor-manufacturing-company-limited"
+        ],
+        [
+          "tokyo-ohka-kogyo-co-ltd",
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "advanced-semiconductor-engineering-technology-holding-co-ltd"
+        ],
+        [
+          "tokyo-ohka-kogyo-co-ltd",
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "intel-corporation",
+          "system-hp"
+        ]
+      ],
+      "missingUpstreamLevels": [
+        1,
+        2,
+        3
+      ],
+      "missingDownstreamLevels": []
+    },
+    {
+      "id": "tokyo-electron-limited",
+      "vaultId": "tel",
+      "name": "Tokyo Electron",
+      "suppliers": 0,
+      "customers": 3,
+      "documented": true,
+      "levels": [
+        0,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        3,
+        15,
+        34
+      ],
+      "upstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "tokyo-electron-limited",
+          "advanced-semiconductor-engineering-technology-holding-co-ltd"
+        ],
+        [
+          "tokyo-electron-limited",
+          "advanced-semiconductor-engineering-technology-holding-co-ltd",
+          "apple-inc"
+        ],
+        [
+          "tokyo-electron-limited",
+          "advanced-semiconductor-engineering-technology-holding-co-ltd",
+          "qualcomm-incorporated",
+          "samsung-electronics-company-limited"
+        ]
+      ],
+      "missingUpstreamLevels": [
+        1,
+        2,
+        3
+      ],
+      "missingDownstreamLevels": []
+    },
+    {
+      "id": "system-tower",
+      "vaultId": "tower",
+      "name": "Tower Semi",
+      "suppliers": 3,
+      "customers": 0,
+      "documented": true,
+      "levels": [
+        3,
+        69,
+        71
+      ],
+      "downstreamLevels": [
+        0,
+        0,
+        0
+      ],
+      "upstreamPaths": [
+        [
+          "system-tower",
+          "intel-corporation"
+        ],
+        [
+          "system-tower",
+          "intel-corporation",
+          "aem-holdings-ltd"
+        ],
+        [
+          "system-tower",
+          "intel-corporation",
+          "applied-materials-inc",
+          "advanced-energy-industries"
+        ]
+      ],
+      "downstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "missingUpstreamLevels": [],
+      "missingDownstreamLevels": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "id": "system-denso",
+      "vaultId": "denso",
+      "name": "Toyota / Denso",
+      "suppliers": 2,
+      "customers": 0,
+      "documented": true,
+      "levels": [
+        2,
+        7,
+        71
+      ],
+      "downstreamLevels": [
+        0,
+        0,
+        0
+      ],
+      "upstreamPaths": [
+        [
+          "system-denso",
+          "nxp-semiconductors-n-v"
+        ],
+        [
+          "system-denso",
+          "nxp-semiconductors-n-v",
+          "arteris-ip"
+        ],
+        [
+          "system-denso",
+          "nxp-semiconductors-n-v",
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "abb-ltd"
+        ]
+      ],
+      "downstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "missingUpstreamLevels": [],
+      "missingDownstreamLevels": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "id": "taiwan-semiconductor-manufacturing-company-limited",
+      "vaultId": "tsmc",
+      "name": "TSMC",
+      "suppliers": 72,
+      "customers": 14,
+      "documented": true,
+      "levels": [
+        72,
+        16,
+        8
+      ],
+      "downstreamLevels": [
+        14,
+        37,
+        0
+      ],
+      "upstreamPaths": [
+        [
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "abb-ltd"
+        ],
+        [
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "applied-materials-inc",
+          "advanced-energy-industries"
+        ],
+        [
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "pegatron-corporation",
+          "system-nvidia",
+          "coherent-corporation"
+        ]
+      ],
+      "downstreamPaths": [
+        [
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "advanced-semiconductor-engineering-technology-holding-co-ltd"
+        ],
+        [
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "intel-corporation",
+          "system-hp"
+        ],
+        null
+      ],
+      "missingUpstreamLevels": [],
+      "missingDownstreamLevels": [
+        3
+      ]
+    },
+    {
+      "id": "united-microelectronics-corporation",
+      "vaultId": "umc",
+      "name": "UMC",
+      "suppliers": 7,
+      "customers": 7,
+      "documented": true,
+      "levels": [
+        7,
+        1,
+        5
+      ],
+      "downstreamLevels": [
+        7,
+        4,
+        0
+      ],
+      "upstreamPaths": [
+        [
+          "united-microelectronics-corporation",
+          "shin-etsu-handotai-co-ltd"
+        ],
+        [
+          "united-microelectronics-corporation",
+          "system-imec",
+          "asml-holding-n-v"
+        ],
+        [
+          "united-microelectronics-corporation",
+          "system-imec",
+          "asml-holding-n-v",
+          "ichor-holdings-ltd"
+        ]
+      ],
+      "downstreamPaths": [
+        [
+          "united-microelectronics-corporation",
+          "himax-technologies-inc"
+        ],
+        [
+          "united-microelectronics-corporation",
+          "intel-corporation",
+          "apple-inc"
+        ],
+        null
+      ],
+      "missingUpstreamLevels": [],
+      "missingDownstreamLevels": [
+        3
+      ]
+    },
+    {
+      "id": "unimicron-technology-corporation",
+      "vaultId": "unimicron",
+      "name": "Unimicron",
+      "suppliers": 0,
+      "customers": 3,
+      "documented": true,
+      "levels": [
+        0,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        3,
+        5,
+        3
+      ],
+      "upstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "unimicron-technology-corporation",
+          "advanced-semiconductor-engineering-technology-holding-co-ltd"
+        ],
+        [
+          "unimicron-technology-corporation",
+          "advanced-semiconductor-engineering-technology-holding-co-ltd",
+          "broadcom-limited"
+        ],
+        [
+          "unimicron-technology-corporation",
+          "advanced-semiconductor-engineering-technology-holding-co-ltd",
+          "qualcomm-incorporated",
+          "samsung-electronics-company-limited"
+        ]
+      ],
+      "missingUpstreamLevels": [
+        1,
+        2,
+        3
+      ],
+      "missingDownstreamLevels": []
+    },
+    {
+      "id": "system-unisoc",
+      "vaultId": "unisoc",
+      "name": "UNISOC",
+      "suppliers": 2,
+      "customers": 0,
+      "documented": true,
+      "levels": [
+        2,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        0,
+        0,
+        0
+      ],
+      "upstreamPaths": [
+        [
+          "system-unisoc",
+          "arteris-ip"
+        ],
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "missingUpstreamLevels": [
+        2,
+        3
+      ],
+      "missingDownstreamLevels": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "id": "united-test-and-assembly-center-limited",
+      "vaultId": "utac",
+      "name": "UTAC",
+      "suppliers": 0,
+      "customers": 2,
+      "documented": true,
+      "levels": [
+        0,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        2,
+        0,
+        0
+      ],
+      "upstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "united-test-and-assembly-center-limited",
+          "apple-inc"
+        ],
+        null,
+        null
+      ],
+      "missingUpstreamLevels": [
+        1,
+        2,
+        3
+      ],
+      "missingDownstreamLevels": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "system-vis",
+      "vaultId": "vis",
+      "name": "Vanguard (VIS)",
+      "suppliers": 0,
+      "customers": 2,
+      "documented": true,
+      "levels": [
+        0,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        2,
+        10,
+        3
+      ],
+      "upstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "system-vis",
+          "himax-technologies-inc"
+        ],
+        [
+          "system-vis",
+          "nxp-semiconductors-n-v",
+          "apple-inc"
+        ],
+        [
+          "system-vis",
+          "nxp-semiconductors-n-v",
+          "samsung-electronics-company-limited",
+          "qualcomm-incorporated"
+        ]
+      ],
+      "missingUpstreamLevels": [
+        1,
+        2,
+        3
+      ],
+      "missingDownstreamLevels": []
+    },
+    {
+      "id": "system-vw",
+      "vaultId": "vw",
+      "name": "VW Group",
+      "suppliers": 1,
+      "customers": 0,
+      "documented": true,
+      "levels": [
+        1,
+        8,
+        86
+      ],
+      "downstreamLevels": [
+        0,
+        0,
+        0
+      ],
+      "upstreamPaths": [
+        [
+          "system-vw",
+          "qualcomm-incorporated"
+        ],
+        [
+          "system-vw",
+          "qualcomm-incorporated",
+          "advanced-semiconductor-engineering-technology-holding-co-ltd"
+        ],
+        [
+          "system-vw",
+          "qualcomm-incorporated",
+          "advanced-semiconductor-engineering-technology-holding-co-ltd",
+          "advantest-corporation"
+        ]
+      ],
+      "downstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "missingUpstreamLevels": [],
+      "missingDownstreamLevels": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "id": "winbond-electronics-corporation",
+      "vaultId": "winbond",
+      "name": "Winbond",
+      "suppliers": 2,
+      "customers": 1,
+      "documented": true,
+      "levels": [
+        2,
+        0,
+        0
+      ],
+      "downstreamLevels": [
+        1,
+        0,
+        0
+      ],
+      "upstreamPaths": [
+        [
+          "winbond-electronics-corporation",
+          "chipmos-technologies-inc"
+        ],
+        null,
+        null
+      ],
+      "downstreamPaths": [
+        [
+          "winbond-electronics-corporation",
+          "apple-inc"
+        ],
+        null,
+        null
+      ],
+      "missingUpstreamLevels": [
+        2,
+        3
+      ],
+      "missingDownstreamLevels": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "wistron-corporation",
+      "vaultId": "wistron",
+      "name": "Wistron",
+      "suppliers": 2,
+      "customers": 2,
+      "documented": true,
+      "levels": [
+        2,
+        8,
+        84
+      ],
+      "downstreamLevels": [
+        2,
+        24,
+        2
+      ],
+      "upstreamPaths": [
+        [
+          "wistron-corporation",
+          "alpha-and-omega-semiconductor-limited"
+        ],
+        [
+          "wistron-corporation",
+          "system-nvidia",
+          "coherent-corporation"
+        ],
+        [
+          "wistron-corporation",
+          "system-nvidia",
+          "micron-technology-incorporated",
+          "chipmos-technologies-inc"
+        ]
+      ],
+      "downstreamPaths": [
+        [
+          "wistron-corporation",
+          "apple-inc"
+        ],
+        [
+          "wistron-corporation",
+          "system-nvidia",
+          "aivres-systems"
+        ],
+        [
+          "wistron-corporation",
+          "system-nvidia",
+          "hon-hai-precision-industry-company-limited-foxconn",
+          "broadcom-limited"
+        ]
+      ],
+      "missingUpstreamLevels": [],
+      "missingDownstreamLevels": []
+    },
+    {
+      "id": "system-xiaomi",
+      "vaultId": "xiaomi",
+      "name": "Xiaomi",
+      "suppliers": 1,
+      "customers": 0,
+      "documented": true,
+      "levels": [
+        1,
+        8,
+        86
+      ],
+      "downstreamLevels": [
+        0,
+        0,
+        0
+      ],
+      "upstreamPaths": [
+        [
+          "system-xiaomi",
+          "qualcomm-incorporated"
+        ],
+        [
+          "system-xiaomi",
+          "qualcomm-incorporated",
+          "advanced-semiconductor-engineering-technology-holding-co-ltd"
+        ],
+        [
+          "system-xiaomi",
+          "qualcomm-incorporated",
+          "advanced-semiconductor-engineering-technology-holding-co-ltd",
+          "advantest-corporation"
+        ]
+      ],
+      "downstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "missingUpstreamLevels": [],
+      "missingDownstreamLevels": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "id": "system-ymtc",
+      "vaultId": "ymtc",
+      "name": "YMTC",
+      "suppliers": 1,
+      "customers": 0,
+      "documented": true,
+      "levels": [
+        1,
+        1,
+        0
+      ],
+      "downstreamLevels": [
+        0,
+        0,
+        0
+      ],
+      "upstreamPaths": [
+        [
+          "system-ymtc",
+          "hubei-xingfu-electronic-materials"
+        ],
+        [
+          "system-ymtc",
+          "hubei-xingfu-electronic-materials",
+          "hubei-xingfa-chemicals"
+        ],
+        null
+      ],
+      "downstreamPaths": [
+        null,
+        null,
+        null
+      ],
+      "missingUpstreamLevels": [
+        3
+      ],
+      "missingDownstreamLevels": [
+        1,
+        2,
+        3
+      ]
+    }
+  ]
+}

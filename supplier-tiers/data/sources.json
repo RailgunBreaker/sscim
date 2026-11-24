@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated": "2026-11-23"
+    "generated": "2026-11-24"
   },
   "sources": {
     "apple-sl-fy2023": {
@@ -772,6 +772,292 @@
       "evidence": "P1-supplier",
       "quote": "Synopsys’ analog and digital flows, along with the enabled Synopsys.ai, are certified on TSMC N2P and A16™ processes using TSMC NanoFlex™ architecture. Synopsys IC Validator™ signoff physical verification solution is certified for TSMC A16™ process to support DRC and LVS checking.",
       "note": "Read for this dataset on 2026-11-23. Collaboration and certification language throughout; no purchase is described. Checked specifically for Ansys: the release names no Ansys product as certified for any TSMC process — \"Ansys\" appears in the body only inside the trademark notice — so no Ansys relationship is recorded from this document."
+    },
+    "marvell-2026-q2-foundry": {
+      "publisher": "Marvell Technology",
+      "title": "Form 10-Q, quarter ended August 1, 2026: manufacturing concentration",
+      "url": "https://investor.marvell.com/sec-filings/all-sec-filings/content/0001835632-26-000025/mrvl-20260801.htm",
+      "published": "2026-08-28",
+      "evidence": "P1-buyer",
+      "note": "Risk factors identify TSMC as the sole foundry for advanced process-node wafers. This does not identify all mature-node or packaging suppliers.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "ibiden-2026-customers": {
+      "publisher": "IBIDEN",
+      "title": "Consolidated financial statements, year ended March 31, 2026, printed page 45",
+      "url": "https://www.ibiden.com/ir/items/FinancialReview2026.pdf#page=53",
+      "published": "2026",
+      "evidence": "P1-supplier",
+      "note": "Major-customer table names NVIDIA and Intel for FY2026; FY2025 also names AMD. The disclosure is customer-level, not a particular chip bill of materials.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "shinko-intel-2025": {
+      "publisher": "Intel",
+      "title": "2025 EPIC supplier award recipients",
+      "url": "https://www.intel.com/content/www/us/en/newsroom/news/corporate/intel-announces-2025-epic-supplier-award-recipients.html",
+      "published": "2025-04-08",
+      "evidence": "P1-buyer",
+      "note": "Intel names Shinko for substrate technology, cost and scale. An award documents a relationship, not its quantity or continuation.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "broadcom-pcn-284825": {
+      "publisher": "Broadcom",
+      "title": "Product Change Notice PCN-284825: final-test site change",
+      "url": "https://www.mouser.com/PCN/Broadcom_Limited_PCN_284825_PCN_Letter.pdf",
+      "published": "2025-06-12",
+      "evidence": "P1-buyer",
+      "note": "Broadcom-authored notice hosted by distributor Mouser adds Inari Malaysia and removes UTAC Singapore for the listed BCM89834/BCM89836 automotive Ethernet parts.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "qualcomm-cariad-2022": {
+      "publisher": "Qualcomm",
+      "title": "CARIAD selects Qualcomm for Volkswagen automated driving",
+      "url": "https://www.qualcomm.com/news/releases/2022/05/cariad-selects-qualcomm-power-volkswagens-future-automated-driving",
+      "published": "2022-05-02",
+      "evidence": "P1-supplier",
+      "note": "Volkswagen subsidiary CARIAD selected Snapdragon Ride SoCs for a future software platform. Selection is not proof of production deliveries.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "nvidia-alibaba-2017": {
+      "publisher": "NVIDIA",
+      "title": "China cloud providers adopt NVIDIA Volta GPUs",
+      "url": "https://nvidianews.nvidia.com/news/china-s-top-cloud-providers-adopt-nvidia-volta-gpus-to-supercharge-next-gen-ai-services",
+      "published": "2017-09-25",
+      "evidence": "P1-supplier",
+      "note": "NVIDIA identifies Alibaba Cloud among adopters incorporating Tesla V100 accelerators. Historical adoption, not present export eligibility or a direct purchase channel.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "imec-asml-2026-delivery": {
+      "publisher": "imec",
+      "title": "Arrival of ASML EXE:5200 High NA EUV system",
+      "url": "https://www.imec-int.com/en/press/imec-receives-worlds-most-advanced-high-na-euv-system",
+      "published": "2026-03-18",
+      "evidence": "P1-buyer",
+      "note": "imec reports arrival and installation in Leuven; full qualification was anticipated for Q4 2026.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "leti-amat-1998-order": {
+      "publisher": "Applied Materials",
+      "title": "LETI selects DPS Centura silicon etch system",
+      "url": "https://ir.appliedmaterials.com/news-releases/news-release-details/leti-chooses-applied-materials-silicon-etch-dps-centura-sub-010",
+      "published": "1998",
+      "evidence": "P1-supplier",
+      "note": "LETI selected a DPS Centura etch system with delivery planned for Q4 1998. This is historical equipment-selection evidence.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "ansys-tsmc-a16-2025": {
+      "publisher": "Ansys",
+      "title": "TSMC A16 certification and 3D-IC multiphysics design solutions",
+      "url": "https://ansys.synopsys.com/en-in/news-center/press-releases/4-23-25-ansys-tools-certified-for-tsmc-16a",
+      "published": "2025-04-23",
+      "evidence": "P1-supplier",
+      "note": "RedHawk-SC, Totem and RedHawk-SC Electrothermal are certified for TSMC A16. Design-enablement dependency, not a disclosed software purchase by the foundry.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "unisoc-s752-arm": {
+      "publisher": "UNISOC",
+      "title": "S752 tablet-platform specifications",
+      "url": "https://www.unisoc.com/en/product/LaptopsTablets/S752",
+      "published": null,
+      "evidence": "P1-buyer",
+      "note": "Product specifications identify Arm Mali G57 graphics and A76/A55 CPU cores. Undated page checked November 25, 2026. No foundry is named by the process-node specification.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "empyrean-huahong-2017": {
+      "publisher": "Hua Hong Grace and Empyrean",
+      "title": "Hua Hong adopts ALPS and Skipper EDA tools (joint release)",
+      "url": "https://www.design-reuse-embedded.com/news/201704099",
+      "published": "2017-04-13",
+      "evidence": "P1-buyer",
+      "note": "Joint company announcement, reproduced by Design & Reuse, reports ALPS simulation used for completed IP tape-outs and earlier Skipper adoption.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "tsmc-2013-materials": {
+      "publisher": "TSMC",
+      "title": "2013 annual report: raw-material supply",
+      "url": "https://investor.tsmc.com/static/annualReports/2013/english/c_5_3.html",
+      "published": "2014",
+      "evidence": "P1-buyer",
+      "note": "The materials table names Air Liquide, Air Products, Linde and Taiyo Nippon Sanso as specialty-gas suppliers. Historical annual-report evidence.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "dupont-tsmc-2025-tcia": {
+      "publisher": "TSMC",
+      "title": "2025 Taiwan Continuous Improvement Awards: supplier participants",
+      "url": "https://www.tsmc.com/english/event/CSD_37",
+      "published": "2025",
+      "evidence": "P1-buyer",
+      "note": "TSMC identifies DuPont Specialty Materials Taiwan among its award-winning suppliers. Award groups are not supplier-chain depth levels.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "advanced-energy-2024-revenue": {
+      "publisher": "Advanced Energy Industries",
+      "title": "2024 Form 10-K, Note 3: significant customers",
+      "url": "https://www.sec.gov/Archives/edgar/data/927003/000155837025001038/R11.htm",
+      "published": "2025",
+      "evidence": "P1-supplier",
+      "note": "Applied Materials and Lam account for 26% and 11% of 2024 revenue respectively. This filing names these customers, correcting the earlier blanket anonymity claim.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "nsig-2025-trustee": {
+      "publisher": "CICC / National Silicon Industry Group",
+      "title": "NSIG bond trustee report based on issuer disclosures",
+      "url": "https://static.sse.com.cn/disclosure/bond/announcement/company/c/new/2025-03-14/240187_20250314_LLRS.pdf",
+      "published": "2025-03-14",
+      "evidence": "P1-self",
+      "note": "Issuer-supplied business information reproduced in the trustee filing names TSMC, UMC, GlobalFoundries, ST, Towerjazz, SMIC and Hua Hong Grace among wafer customers.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "xingfu-2024-ipo-response": {
+      "publisher": "Hubei Xingfu / Zhongqin Wanxin",
+      "title": "IPO inquiry response: customers and raw-material purchases",
+      "url": "https://static.sse.com.cn/stock/disclosure/announcement/c/202406/001800_20240629_94NS.pdf",
+      "published": "2024-06-29",
+      "evidence": "P1-self",
+      "note": "Printed pp.69-70 and 81 identify YMTC and CXMT sales and Hua Hong Grace as an existing customer. Printed p.3 identifies purchases of yellow phosphorus from Xingfa and subsidiaries. These are recorded transactions, not a list of competitors.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "arteris-customers-2022": {
+      "publisher": "Arteris IP / Sondrel",
+      "title": "AI and NoCs Are Driving the Future of ADAS, slide 8 (PDF page 10)",
+      "url": "https://www.techinsights.com/sites/default/files/2022-11/FPC-Day-1-Session-Slides-Track-B-PM_3.pdf#page=10",
+      "published": "2022-11-01",
+      "evidence": "P1-supplier",
+      "note": "Company-authored conference slides hosted by TechInsights. Visually checked the customer panel (data as of June 2022), which includes Biren, Cambricon, UNISOC, Bosch, NXP, Samsung, Renesas, ST, Microchip and TI. Ecosystem-partner logos below that panel are NOT treated as customers.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "arteris-cambricon-2017": {
+      "publisher": "Arteris",
+      "title": "Cambricon licenses FlexNoC interconnect IP",
+      "url": "https://www.arteris.com/press-releases/cambricon-arterisip-flexnoc-machine-learning-neural-networks/",
+      "published": "2017-04-18",
+      "evidence": "P1-supplier",
+      "note": "Supplier announcement explicitly records a Cambricon FlexNoC license for machine-learning SoCs.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "pti-2023-awards": {
+      "publisher": "Powertech Technology",
+      "title": "2023 ESG Insight: customer recognition, page 5",
+      "url": "https://www.pti.com.tw/Handlers/CsrDownload.ashx?id=a015f1d4-02a4-49c9-bf31-8196aa7da643&lang=en#page=5",
+      "published": "2024",
+      "evidence": "P1-supplier",
+      "note": "Downloaded and visually checked page 5: Micron external-manufacturing supplier award and Winbond assembly/testing supplier recognition, both for 2023.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "skmaterials-2019-airgas": {
+      "publisher": "SK Materials",
+      "title": "4Q2019 investor presentation: major subsidiaries, slide 7 (PDF page 8)",
+      "url": "https://www.sk-materials.com/new/pds/boards/ir/SKMR_4Q19(Eng)%5B1%5D.pdf#page=8",
+      "published": "2020-02-07",
+      "evidence": "P1-supplier",
+      "note": "Downloaded and visually checked the SK Airgas customer map: SK Hynix Icheon and Cheongju on-site supply. SK Airgas was then wholly owned by SK Materials.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "torlens-2026-ipo-response": {
+      "publisher": "Torlens Precision Manufacturing / CICC",
+      "title": "IPO inquiry response: customer sales and outsourced processing",
+      "url": "https://reportdocs.static.szse.cn/UpFiles/rasinfodisc1/202603/RAS_202603_12170502EC22EADB224924BFC1E1A03D70B0B1.pdf",
+      "published": "2026-03-12",
+      "evidence": "P1-self",
+      "note": "Printed p.260 shows sales to NAURA and AMEC; pp.286-287 name Donghelong Kunshan and Anhui Fude as paid surface-treatment subcontractors. Raw-material supplier names elsewhere are not automatically linked to the equipment buyers.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "renesas-tsmc-2012-outsourcing": {
+      "publisher": "Renesas",
+      "title": "TSMC microcontroller manufacturing agreement",
+      "url": "https://www.renesas.com/en/about/newsroom/renesas-electronics-and-tsmc-collaborate-construct-ecosystem-microcontrollers",
+      "published": "2012-05-28",
+      "evidence": "P1-buyer",
+      "note": "Renesas describes existing 90nm MCU outsourcing and an agreement to extend manufacturing to 40nm and future processes.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "infineon-tsmc-2009-production": {
+      "publisher": "TSMC / Infineon",
+      "title": "Extension of embedded-flash development and production agreement",
+      "url": "https://pr.tsmc.com/english/news/1584",
+      "published": "2009-11-05",
+      "evidence": "P1-supplier",
+      "note": "Joint announcement extends the development and production partnership to 65nm embedded flash.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "arm-nvidia-grace-ip": {
+      "publisher": "Arm",
+      "title": "NVIDIA partner profile: Grace CPU and BlueField processors",
+      "url": "https://www.arm.com/partners/catalog/nvidia",
+      "published": null,
+      "evidence": "P1-supplier",
+      "note": "Undated profile checked November 25, 2026 identifies Neoverse V2 cores in Grace and Arm processors in BlueField.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "nvidia-qct-2024-systems": {
+      "publisher": "NVIDIA",
+      "title": "Computer manufacturers announce Blackwell systems",
+      "url": "https://nvidianews.nvidia.com/news/computer-industry-ai-factories-data-centers/",
+      "published": "2024-06-02",
+      "evidence": "P1-supplier",
+      "note": "Names QCT among manufacturers announcing systems using NVIDIA GPUs and networking; Quanta chairman confirms participation.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "rapidus-asml-delivery-2024": {
+      "publisher": "Rapidus",
+      "title": "Engineering interview describing EUV equipment arrival",
+      "url": "https://www.rapidus.inc/en/interview/it0007/",
+      "published": "2026-01-26",
+      "evidence": "P1-buyer",
+      "note": "Rapidus describes receiving ASML EUV lithography equipment in December 2024.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
     }
   }
 }

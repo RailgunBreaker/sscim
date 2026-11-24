@@ -1,4 +1,5 @@
 import PUBLIC_SUPPLIER_TIERS from '../data/publicSupplierTiers.json';
+import { supplierCoverage } from '../../../supplier-tiers/coverage.mjs';
 
 /* ====================================================================
    supplierTiers — the public, document-cited supplier graph.
@@ -337,17 +338,7 @@ export function companyCoverage(index, id) {
 }
 
 export function systemCompanyCoverage(index) {
-  const grouped = new Map();
-  for (const [id, c] of Object.entries(index.companies)) {
-    if (!c.vaultId) continue;
-    const row = companyCoverage(index, id);
-    const existing = grouped.get(c.vaultId);
-    // Keep legal entities separate; choose the most connected entity for the directory.
-    if (!existing || row.suppliers + row.customers > existing.suppliers + existing.customers) {
-      grouped.set(c.vaultId, { ...row, vaultId: c.vaultId, name: c.aliases?.[0] || c.name });
-    }
-  }
-  return [...grouped.values()].sort((a, b) => a.name.localeCompare(b.name));
+  return supplierCoverage(index.companies, index.edges);
 }
 
 export function shortestSupplierPath(index, rootId, targetId, direction = 'upstream', hops = 3) {
