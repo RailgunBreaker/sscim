@@ -29,7 +29,7 @@ with animation disabled, so two runs of one build produce the same images.
 | Landing | [`before/landing-1366x936.png`](screenshots/before/landing-1366x936.png) | [`after/landing-1366x936.png`](screenshots/after/landing-1366x936.png) |
 | Dashboard | [`before/dashboard-1920x1080.png`](screenshots/before/dashboard-1920x1080.png) | [`after/dashboard-1920x1080.png`](screenshots/after/dashboard-1920x1080.png) |
 | Events | [`before/events-1366x936.png`](screenshots/before/events-1366x936.png) | [`after/events-1366x936.png`](screenshots/after/events-1366x936.png) |
-| Network | [`before/network-1366x936.png`](screenshots/before/network-1366x936.png) | [`after/network-1366x936.png`](screenshots/after/network-1366x936.png) |
+| Network — was a workspace, is now a section of the company profile | [`before/network-1366x936.png`](screenshots/before/network-1366x936.png) | [`after/company-tsmc-1366x936.png`](screenshots/after/company-tsmc-1366x936.png) |
 | Facilities, initial | [`before/playground-start-1366x936.png`](screenshots/before/playground-start-1366x936.png) | [`after/playground-start-1366x936.png`](screenshots/after/playground-start-1366x936.png) |
 | TSMC Fab 18, three hops | [`before/playground-tsmc-3hop-1920x1080.png`](screenshots/before/playground-tsmc-3hop-1920x1080.png) | [`after/playground-tsmc-3hop-1920x1080.png`](screenshots/after/playground-tsmc-3hop-1920x1080.png) |
 | Mobile facility detail | [`before/mobile-facility-detail-375x812.png`](screenshots/before/mobile-facility-detail-375x812.png) | [`after/mobile-facility-detail-375x812.png`](screenshots/after/mobile-facility-detail-375x812.png) |

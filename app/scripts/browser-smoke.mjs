@@ -419,26 +419,21 @@ async function main() {
 
     await context.close();
 
-    /* ---- the four Layer-1 views, and history review ---- */
-    console.log('\n── views and history review ────────');
+    /* ---- the Layer-1 workspaces, the company profile, history review ---- */
+    console.log('\n── workspaces, company profile, history review ────────');
     const vctx = await browser.newContext({ viewport: { width: 1600, height: 1000 } });
     const vp = await vctx.newPage();
     vp.on('pageerror', (e) => consoleErrors.push(`views: ${e.message}`));
     await openDashboard(vp, base);
 
-    /* The four view modes used to be four peers in a radiogroup labelled
-       "View mode": Geographic, Topology, Split and "⇄ Facility Playground".
-       They are now a three-option WORKSPACE control, with side-by-side as a
-       modifier on the two graph workspaces rather than a fourth peer. Every
-       mode is still reachable, which is what this asserts; the side-by-side
-       toggle is checked separately below. */
+    /* The view control used to be four peers in a radiogroup labelled
+       "View mode": Geographic, Topology, Split and "⇄ Facility Playground";
+       then three workspaces with side-by-side as a modifier. It is TWO now.
+       The documented supplier network was never a view of the world — it is
+       one firm and its counterparties — so it is a section of that firm's
+       profile, asserted below where it actually lives. */
     for (const [label, expect] of [
       ['Map', /World map/i],
-      /* This pane used to hold the functional-centre topology graph. It
-         now holds the public supplier network: firm-to-firm
-         relationships each named in a public document, in place of
-         1,030 connections the engine composed from declared priors. */
-      ['Network', /Public supplier network/i],
       ['Facilities', /Facility network/i],
     ]) {
       const btn = vp.locator('[role="radiogroup"][aria-label="Workspace"] [role="radio"]').filter({ hasText: new RegExp(`^${label}$`, 'i') }).first();
@@ -457,23 +452,73 @@ async function main() {
         `view "${label}" is announced as selected`, checkedLabel.trim());
     }
 
-    /* Side-by-side is not removed, only demoted from a peer to a modifier.
-       It has to still produce the combined view. */
+    /* The Network workspace and the side-by-side modifier that existed to
+       place it beside the map are both gone, and must not come back as
+       page-level chrome competing with Map and Facilities. */
     {
-      const mapBtn = vp.locator('[role="radiogroup"][aria-label="Workspace"] [role="radio"]').filter({ hasText: /^Map$/ }).first();
-      await mapBtn.click();
-      await vp.waitForTimeout(400);
-      const sbs = vp.locator('button', { hasText: /^Side by side/ }).first();
-      if (!(await sbs.count())) { fail('side-by-side modifier is offered'); } else {
-        pass('side-by-side modifier is offered');
-        await sbs.click();
-        await vp.waitForTimeout(700);
-        const title = await vp.locator('#pane-map').first().innerText();
-        check(/World map and network/i.test(title), 'side-by-side renders both graphs', title.split('\n')[0].slice(0, 70));
-        check(await sbs.getAttribute('aria-pressed') === 'true', 'side-by-side reports its pressed state');
-        const ov = await vp.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
-        check(ov <= 2, 'side-by-side: no horizontal overflow', `${ov}px`);
+      const views = await vp.locator('[role="radiogroup"][aria-label="Workspace"] [role="radio"]').allInnerTexts();
+      check(views.length === 2, 'the workspace control offers exactly two views', views.join(' · '));
+      check(!views.some((v) => /network/i.test(v)), 'no Network workspace competes with the company profile');
+      check(!(await vp.locator('button', { hasText: /^Side by side/ }).count()),
+        'no side-by-side modifier is left behind');
+    }
+
+    /* ---- THE COMPANY PROFILE IS THE WHOLE COMPANY ----
+
+       This is the gate jsdom cannot hold. The profile now carries three
+       things that used to live elsewhere — the documented supplier network,
+       the merged modeled chain, and the company's plants — and the industry
+       flow has become a sticky rail so the stage diagram stays on screen for
+       the whole length of that column. Whether a graph actually DREW, and
+       whether the rail is actually still on screen once a reader is deep in
+       the profile, are both questions about layout in a real browser. */
+    {
+      await openDashboard(vp, base, '#sel=company:tsmc');
+      await vp.waitForTimeout(1200);
+
+      const profile = await vp.locator('#pane-intel').first().innerText();
+      check(/TSMC/.test(profile), 'the linked company opens its profile');
+      /* One URL per company: the link is stated, not merely in the bar. */
+      check(profile.includes('#sel=company:tsmc'), 'the profile states the company’s own link');
+
+      /* The merged chain: one row through the company, not two trees that
+         each drew its card and broke the chain in the middle. */
+      check(/MODELED CHAIN · TWO LAYERS EACH SIDE/.test(profile), 'the modeled chain is one row through the company');
+      check(!/UPSTREAM ORIGINS/.test(profile) && !/CUSTOMER-GRAPH SPREAD/.test(profile),
+        'the two separate spread trees are gone');
+      for (const col of ['TIER-2 ORIGINS', 'DIRECT SUPPLIERS', 'THIS COMPANY', 'DIRECT CUSTOMERS', 'THEIR CUSTOMERS']) {
+        check(profile.includes(col), `the chain draws its "${col}" column`);
       }
+
+      const net = vp.locator('#company-network').first();
+      if (!(await net.count())) { fail('the documented network is a section of the profile'); } else {
+        pass('the documented network is a section of the profile');
+        await net.scrollIntoViewIfNeeded();
+        await vp.waitForTimeout(1500);
+        const nodes = await net.locator('svg circle').count();
+        check(nodes > 10, 'the network actually draws firms, not an empty canvas', `${nodes} nodes`);
+        /* The rail is the point of the layout change: a reader reading the
+           network must still be able to see the chain it belongs to. */
+        const railVisible = await vp.evaluate(() => {
+          const r = document.getElementById('pane-flow')?.getBoundingClientRect();
+          return Boolean(r && r.bottom > 0 && r.top < window.innerHeight && r.width > 100);
+        });
+        check(railVisible, 'the industry flow stays on screen beside the network');
+      }
+
+      const fac = vp.locator('#company-facilities').first();
+      if (!(await fac.count())) { fail("the company's plants are a section of the profile"); } else {
+        await fac.scrollIntoViewIfNeeded();
+        await vp.waitForTimeout(600);
+        const text = await fac.innerText();
+        check(/plants? in the facility register/i.test(text), "the company's plants are a section of the profile");
+        check(/TSMC Fab/i.test(text), 'it lists this company’s own plants', text.split('\n').slice(2, 3).join('').slice(0, 60));
+      }
+
+      const ov = await vp.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+      check(ov <= 2, 'the merged profile: no horizontal overflow', `${ov}px`);
+      await shot(vp, 'company-profile-merged');
+      await openDashboard(vp, base);
     }
 
     /* History review: a past date, then back to the live reading. The two
