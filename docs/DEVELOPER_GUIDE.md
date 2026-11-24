@@ -234,6 +234,33 @@ npm run snapshot && npm run audit:data && npm test
 
 The backfilled events are years old, so under the v7 persistence profiles they contribute very little to the CURRENT index — but not nothing, and they are not immaterial to the historical series, which is what they exist for. Standing-policy records in particular are in force or not rather than decaying, so age alone does not settle whether a record still counts. The dashboard's Layer 3 **HISTORY** tab (`components/DecadeHistory.jsx`) is where that series is read: the decade replay, per-event marginal attribution, and per-year and per-type breakdowns.
 
+### Daily source review: 2026-11-25
+
+The November 25 JST review adds two display-only records from company releases:
+[NVIDIA's November 23 leadership update](https://nvidianews.nvidia.com/news/nvidia-board-reinstates-jensen-huang-as-president-ceo-and-board-director)
+and [Analog Devices' November 24 results](https://www.analog.com/en/newsroom/press-releases/2026/11-24-26-adi-reports-record-4th-qtr-and-fiscal-2026-financial-results.html).
+The NVIDIA entry updates the earlier resignation report without deleting history.
+No new calibrated disruption assumptions were assigned. The vault now contains
+186 events, with ages recomputed against November 25.
+
+The reviewed window includes November 23 because its announcement was missed by
+the previous cutoff. From `server/`, against the previous November 23 vault:
+
+```powershell
+node scripts/apply-news.mjs --as-of 2026-11-25 --since 2026-11-22
+```
+
+`--since` is an exclusive lower bound and may only widen the previous window;
+the default remains the previous checked date. Stable event IDs preserve upsert
+behavior. The command refuses to advance an already-current vault. Commit the
+checkpointed database and source JSON, then regenerate the app snapshot.
+
+This is a selected-source review as of the run on November 25 JST, not a claim
+that every company's news or the remainder of that day has been reviewed.
+Micron, Samsung and TSMC searches did not yield additional verified in-window
+operating announcements for this pass; HP's scheduled earnings call was not
+treated as a published earnings result.
+
 ## Reviewing candidates
 
 Candidates arrive from the ingest feeds and wait for a human. Either interface works:

@@ -45,10 +45,15 @@ if (!/^\d{4}-\d{2}-\d{2}$/.test(asOf || '')) {
 const file = arg('file') || `../src/news-catchup-${asOf}.json`;
 const records = JSON.parse(readFileSync(new URL(file, import.meta.url), 'utf8'));
 
-/* The window opens where the last pass closed, so a record cannot be
-   entered twice under two different catch-ups and a gap cannot open
-   between passes unnoticed. */
+/* By default the window opens where the last pass closed. An explicit
+   overlap can capture missed announcements; use stable IDs for upserts.
+   A later lower bound is rejected so the review cannot skip a gap. */
 const previous = getMeta('news_checked_through') || getMeta('snapshot_date') || '0000-00-00';
+// Explicit overlap lets a later review capture announcements missed on the cutoff day.
+const since = arg('since') || previous;
+if (!/^\d{4}-\d{2}-\d{2}$/.test(since) || since > previous) {
+  throw new Error('--since must be a YYYY-MM-DD date no later than the last checked date');
+}
 if (asOf <= previous) {
   console.error(`as-of ${asOf} is not after the last checked date ${previous}; nothing to do.`);
   process.exit(1);
@@ -70,8 +75,8 @@ try {
 
   db.transaction(() => {
     for (const r of records) {
-      if (r.date <= previous || r.date > asOf) {
-        throw new Error(`Out-of-window news: ${r.id} dated ${r.date} (window ${previous} < d <= ${asOf})`);
+      if (r.date <= since || r.date > asOf) {
+        throw new Error(`Out-of-window news: ${r.id} dated ${r.date} (window ${since} < d <= ${asOf})`);
       }
       for (const s of r.stages) {
         if (!db.prepare('SELECT 1 FROM stages WHERE id=?').get(s)) throw new Error(`Unknown stage ${s} in ${r.id}`);

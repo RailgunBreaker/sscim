@@ -404,7 +404,8 @@ for (const m of [...new Set(METHOD_CITATIONS.map((c) => c.method))].sort()) {
   const group = METHOD_CITATIONS.filter((c) => c.method === m);
   push(`### ${m}`);
   push('');
-  push(`Implemented in \`${group[0].implementedIn}\`.`);
+  const legacy = /halfLifeDays|hhiWithResidual|combineSigned/.test(group[0].implementedIn);
+  push(`${legacy ? 'Historical v6 implementation (superseded; see MODEL_V7_SPEC.md)' : 'Implemented in'} \`${group[0].implementedIn}\`.`);
   push('');
   for (const c of group.sort((a, b) => String(a.author).localeCompare(String(b.author)))) {
     push(`- ${chicago({

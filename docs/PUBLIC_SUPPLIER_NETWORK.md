@@ -181,3 +181,20 @@ It uses installed Chrome, defaulting to `http://127.0.0.1:5173` (override with
 position, camera stability, eventual settling and browser errors. Engine tests
 also cover all-company profile coverage, the 109-company tracking boundary,
 three-step citation paths, cycles and depth limits.
+
+## Profile audit: 2026-11-25
+
+All 414 public-network company records resolve to a profile with a name,
+introduction and relationship source references. The 110 mapped registry nodes
+represent exactly 109 distinct tracked system companies; the other 304 profiles
+provide contextual supplier/customer information. Every tracked company has a
+control record. Contextual profiles have no modeled exposure, control record or
+tracking eligibility: profile availability does not mean ownership research is
+complete. The all-company tests in `companyProfile.test.js` check these boundaries.
+The separate vault evidence-note audit covers only 4 of 109 companies; that
+measures dedicated evidence notes, not availability of network relationship
+citations. The profile count must not be presented as fully researched dossiers.
+
+The chain-depth limits remain unchanged: 92 tracked companies reach a second
+level and 76 reach a third level in at least one direction. Profiles for all
+companies do not imply that every company has a documented three-level chain.

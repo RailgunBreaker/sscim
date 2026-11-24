@@ -1,0 +1,20 @@
+[
+  {
+    "id": "n261123_nvidia_reinstatement",
+    "date": "2026-11-23",
+    "title": "NVIDIA reinstates Jensen Huang as CEO and board director",
+    "summary": "NVIDIA announced that its board unanimously reinstated Jensen Huang as president, CEO and a director, effective immediately. Colette Kress continues as CFO and Harvey Jones remains board chair. The independent investigation continues; the company also describes an export-control oversight committee and a search for a chief compliance officer. This updates the leadership position reported in the November 12 news entry. It does not establish a change in chip output or supply capacity.",
+    "source": "https://nvidianews.nvidia.com/news/nvidia-board-reinstates-jensen-huang-as-president-ceo-and-board-director",
+    "stages": ["design", "logic_ai"],
+    "countries": ["us"]
+  },
+  {
+    "id": "n261124_adi_fy2026",
+    "date": "2026-11-24",
+    "title": "Analog Devices reports fiscal 2026 results and first-quarter outlook",
+    "summary": "Analog Devices reports fourth-quarter revenue of $4.37 billion and fiscal 2026 revenue of $15.2 billion, up 38% year on year, for the year ended October 31. Management forecasts first-quarter fiscal 2027 revenue of $4.4 billion, plus or minus $150 million. The outlook is forward-looking; financial growth does not by itself quantify physical semiconductor output or a supply disruption.",
+    "source": "https://www.analog.com/en/newsroom/press-releases/2026/11-24-26-adi-reports-record-4th-qtr-and-fiscal-2026-financial-results.html",
+    "stages": ["analog"],
+    "countries": ["us"]
+  }
+]

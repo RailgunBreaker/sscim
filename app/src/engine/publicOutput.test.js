@@ -130,12 +130,12 @@ describe('event provenance is truthful in the published bundle', () => {
 
   it('labels AI-reviewed news without claiming human review or a scored effect', () => {
     const news = events.filter((e) => e.provenance === 'ai');
-    /* Two catch-up passes so far: 7 records through 2026-10-14 and 10
-       through 2026-11-23. The count is asserted exactly, and raising it
+    /* Three catch-up passes: 7 records through 2026-10-14, 10 through
+       2026-11-23 and 2 through 2026-11-25. The count is asserted exactly, and raising it
        is meant to be a deliberate act when a pass is applied — an
        AI-sourced record appearing without anyone noticing is precisely
        what this test exists to prevent. */
-    expect(news.length).toBe(17);
+    expect(news.length).toBe(19);
     news.forEach((e) => {
       expect(e.source, e.id).toMatch(/AI source review; not human-reviewed/);
       expect(e.reviewedBy, e.id).toBe('Codex source review');
