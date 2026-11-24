@@ -1037,6 +1037,105 @@
       "seen": "fetched",
       "retrieved": "2026-11-25"
     },
+    "marvell-aws-agreement-2024": {
+      "publisher": "Marvell Technology",
+      "title": "Expanded AWS relationship: semiconductor supply and EDA cloud infrastructure",
+      "url": "https://investor.marvell.com/sec-filings/all-sec-filings/content/0001835632-24-000193/final2024_12x02xmarvell-.htm",
+      "published": "2024-12-02",
+      "evidence": "P1-self",
+      "note": "Five-year agreement names both directions: Marvell semiconductor products for AWS and AWS cloud compute for Marvell chip design.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "xiaomi-14t-specifications": {
+      "publisher": "Xiaomi",
+      "title": "Xiaomi 14T specifications",
+      "url": "https://www.mi.com/global/product/xiaomi-14t/specs/",
+      "published": "undated",
+      "evidence": "P1-buyer",
+      "note": "Official product specifications name the MediaTek Dimensity 8300-Ultra. Undated page; access date is not a shipment date.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "asm-supplier-day-2024": {
+      "publisher": "ASM International",
+      "title": "Supplier Day 2024 performance and sustainability awards",
+      "url": "https://www.asm.com/news/asm-celebrates-innovation-and-partnership-at-supplier-day-2024",
+      "published": "2024",
+      "evidence": "P1-buyer",
+      "note": "Names Benchmark Electronics, Foxsemicon, Horiba and Celestica as suppliers. KLK omitted because the short name does not resolve an unambiguous entity here.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "hemlock-sumco-award-2022": {
+      "publisher": "Hemlock Semiconductor",
+      "title": "SUMCO Japan 2022 Supplier of the Year award",
+      "url": "https://www.hscpoly.com/hemlock-semiconductor-wins-2022-supplier-of-the-year-award-from-sumco-japan/",
+      "published": "2023-07-07",
+      "evidence": "P1-supplier",
+      "note": "Article describes the 2022 award and polysilicon supply relationship. Page also displays a later September 2025 update date.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "aws-ansys-gateway-2023": {
+      "publisher": "Amazon Web Services",
+      "title": "Architecture of Ansys Gateway powered by AWS",
+      "url": "https://aws.amazon.com/blogs/apn/accelerate-your-ansys-simulations-with-ansys-gateway-powered-by-aws/",
+      "published": "2023-02-16",
+      "evidence": "P1-supplier",
+      "note": "Joint AWS/Ansys technical article states the control plane is hosted in Ansys AWS account; application compute runs in end customers accounts.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "azure-synopsys-cloud-2022": {
+      "publisher": "Microsoft Azure",
+      "title": "Synopsys Cloud on Azure",
+      "url": "https://azure.microsoft.com/en-us/blog/accelerate-silicon-design-innovation-on-azure-with-synopsys-cloud/",
+      "published": "2022-03-30",
+      "evidence": "P1-supplier",
+      "note": "Microsoft names Azure as the infrastructure running Synopsys Cloud chip-design and verification tools.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "alibaba-xpeng-cloud-2024": {
+      "publisher": "Alibaba Cloud",
+      "title": "Customer deployments of cloud infrastructure and AI models",
+      "url": "https://www.alibabacloud.com/en/press-room/alibaba-cloud-empowers-customers-and-partners-with?_p_lc=1",
+      "published": "2024-09-20",
+      "evidence": "P1-supplier",
+      "note": "Names XPENG as a user of Alibaba Cloud models and cloud computing for smart cockpit and autonomous driving.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "anthropic-cloud-compute-2025": {
+      "publisher": "Anthropic",
+      "title": "Expansion of Google Cloud TPUs and services",
+      "url": "https://www.anthropic.com/news/expanding-our-use-of-google-cloud-tpus-and-services",
+      "published": "2025-10-23",
+      "evidence": "P1-buyer",
+      "note": "Names Google Cloud TPU use and expansion plans, and Amazon as primary training partner and cloud provider.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "tower-semtech-shipments-2024": {
+      "publisher": "Tower Semiconductor",
+      "title": "Semtech recognizes CY2024 wafer manufacturing and shipments",
+      "url": "https://towersemi.com/2024/12/10/12102024/",
+      "published": "2024-12-10",
+      "evidence": "P1-supplier",
+      "note": "Names Semtech and actual CY2024 wafer shipments using Tower SiGe technology for connectivity ICs.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
     "renesas-tsmc-2012-outsourcing": {
       "publisher": "Renesas",
       "title": "TSMC microcontroller manufacturing agreement",

@@ -184,6 +184,56 @@ export function expandCoverage(data) {
     'Announced HybridPACK Drive G2, AURIX TC3x and OPTIREG supply for R2, expected to start in 2026. Actual start not confirmed by this source.');
   edge('infineon', 'rivian-automotive-inc', 'Traction inverter power modules, microcontrollers and power management ICs', 'infineon-rivian-r2-2025', 2025,
     'Announced future supply for the R2 platform; 2026 start was an expectation in May 2025, not verified deliveries.');
+  // Targeted zero-counterparty audit: documented physical and service supply.
+  firm('hemlock-semiconductor', 'Hemlock Semiconductor', 'us', 'materials', 'Semiconductor-grade polysilicon producer');
+  firm('benchmark-electronics', 'Benchmark Electronics', 'us', 'assembly', 'Electronics manufacturing and engineering services');
+  firm('foxsemicon-integrated-technology', 'Foxsemicon Integrated Technology', 'tw', 'equipment', 'Semiconductor equipment components and manufacturing');
+  firm('horiba-ltd', 'HORIBA', 'jp', 'equipment', 'Measurement and process-control equipment');
+  firm('celestica-inc', 'Celestica', 'ca', 'assembly', 'Electronics manufacturing services; group-level disclosure');
+  firm('xpeng-inc', 'XPENG', 'cn', 'brand', 'Electric vehicle manufacturer and cloud services customer');
+  firm('anthropic-pbc', 'Anthropic', 'us', 'services', 'AI model developer and cloud compute customer');
+  firm('semtech-corporation', 'Semtech', 'us', 'ic_other', 'Analog and connectivity semiconductor designer');
+
+  source('marvell-aws-agreement-2024', 'Marvell Technology', 'Expanded AWS relationship: semiconductor supply and EDA cloud infrastructure',
+    'https://investor.marvell.com/sec-filings/all-sec-filings/content/0001835632-24-000193/final2024_12x02xmarvell-.htm', '2024-12-02', 'P1-self',
+    'Five-year agreement names both directions: Marvell semiconductor products for AWS and AWS cloud compute for Marvell chip design.');
+  edge('marvell', 'amazon', 'AI and data-center semiconductors', 'marvell-aws-agreement-2024', 2024, 'Multi-year supply agreement includes custom AI, optical DSP, retimer and Ethernet products; no volumes inferred.');
+  edge('amazon', 'marvell', 'Cloud compute infrastructure for EDA', 'marvell-aws-agreement-2024', 2024, 'AWS supplies cloud infrastructure used by Marvell for silicon design. Service supply, not reverse shipment of chips.');
+  source('xiaomi-14t-specifications', 'Xiaomi', 'Xiaomi 14T specifications',
+    'https://www.mi.com/global/product/xiaomi-14t/specs/', 'undated', 'P1-buyer',
+    'Official product specifications name the MediaTek Dimensity 8300-Ultra. Undated page; access date is not a shipment date.');
+  edge('mediatek', 'xiaomi', 'Dimensity 8300-Ultra smartphone processor', 'xiaomi-14t-specifications', null, 'Named processor in Xiaomi 14T; product adoption does not disclose purchasing channel or volume.');
+  source('asm-supplier-day-2024', 'ASM International', 'Supplier Day 2024 performance and sustainability awards',
+    'https://www.asm.com/news/asm-celebrates-innovation-and-partnership-at-supplier-day-2024', '2024', 'P1-buyer',
+    'Names Benchmark Electronics, Foxsemicon, Horiba and Celestica as suppliers. KLK omitted because the short name does not resolve an unambiguous entity here.');
+  for (const supplier of ['benchmark-electronics', 'foxsemicon-integrated-technology', 'horiba-ltd', 'celestica-inc']) {
+    edge(supplier, 'asmi', 'Supplier contributions to ASM equipment operations', 'asm-supplier-day-2024', 2024, 'Buyer-named supplier award; exact part, volume and allocation to individual tool models are undisclosed. Celestica is represented at group level, not assigned to its Malaysian subsidiary.');
+  }
+  source('hemlock-sumco-award-2022', 'Hemlock Semiconductor', 'SUMCO Japan 2022 Supplier of the Year award',
+    'https://www.hscpoly.com/hemlock-semiconductor-wins-2022-supplier-of-the-year-award-from-sumco-japan/', '2023-07-07', 'P1-supplier',
+    'Article describes the 2022 award and polysilicon supply relationship. Page also displays a later September 2025 update date.');
+  edge('hemlock-semiconductor', 'sumco', 'Semiconductor-grade polysilicon', 'hemlock-sumco-award-2022', 2022, 'Historical supplier recognition; no current volume or exclusivity claim.');
+  source('aws-ansys-gateway-2023', 'Amazon Web Services', 'Architecture of Ansys Gateway powered by AWS',
+    'https://aws.amazon.com/blogs/apn/accelerate-your-ansys-simulations-with-ansys-gateway-powered-by-aws/', '2023-02-16', 'P1-supplier',
+    'Joint AWS/Ansys technical article states the control plane is hosted in Ansys AWS account; application compute runs in end customers accounts.');
+  edge('amazon', 'ansys', 'AWS hosting for Ansys Gateway control plane', 'aws-ansys-gateway-2023', 2023, 'Cloud service dependency in the documented architecture; end-customer application workloads are not attributed to Ansys purchases.');
+  source('azure-synopsys-cloud-2022', 'Microsoft Azure', 'Synopsys Cloud on Azure',
+    'https://azure.microsoft.com/en-us/blog/accelerate-silicon-design-innovation-on-azure-with-synopsys-cloud/', '2022-03-30', 'P1-supplier',
+    'Microsoft names Azure as the infrastructure running Synopsys Cloud chip-design and verification tools.');
+  edge('microsoft', 'synopsys', 'Azure infrastructure for Synopsys Cloud EDA', 'azure-synopsys-cloud-2022', 2022, 'Named cloud infrastructure dependency; not a physical semiconductor supply link.');
+  source('alibaba-xpeng-cloud-2024', 'Alibaba Cloud', 'Customer deployments of cloud infrastructure and AI models',
+    'https://www.alibabacloud.com/en/press-room/alibaba-cloud-empowers-customers-and-partners-with?_p_lc=1', '2024-09-20', 'P1-supplier',
+    'Names XPENG as a user of Alibaba Cloud models and cloud computing for smart cockpit and autonomous driving.');
+  edge('alibaba', 'xpeng-inc', 'Cloud computing and AI model services', 'alibaba-xpeng-cloud-2024', 2024, 'Named service customer; no inference of a particular chip installed in a vehicle.');
+  source('anthropic-cloud-compute-2025', 'Anthropic', 'Expansion of Google Cloud TPUs and services',
+    'https://www.anthropic.com/news/expanding-our-use-of-google-cloud-tpus-and-services', '2025-10-23', 'P1-buyer',
+    'Names Google Cloud TPU use and expansion plans, and Amazon as primary training partner and cloud provider.');
+  edge('google', 'anthropic-pbc', 'Cloud TPU compute and services', 'anthropic-cloud-compute-2025', 2025, 'Existing use plus announced expansion; planned capacity is not treated as delivered or as direct ownership of physical chips.');
+  edge('amazon', 'anthropic-pbc', 'Cloud compute and Trainium training infrastructure', 'anthropic-cloud-compute-2025', 2025, 'Buyer names Amazon as its primary cloud provider and training partner.');
+  source('tower-semtech-shipments-2024', 'Tower Semiconductor', 'Semtech recognizes CY2024 wafer manufacturing and shipments',
+    'https://towersemi.com/2024/12/10/12102024/', '2024-12-10', 'P1-supplier',
+    'Names Semtech and actual CY2024 wafer shipments using Tower SiGe technology for connectivity ICs.');
+  edge('tower', 'semtech-corporation', 'SiGe wafer fabrication for connectivity ICs', 'tower-semtech-shipments-2024', 2024, 'Supplier disclosure with named customer quotation and recognition of wafer shipments; no quantity inferred.');
   data.edges.sort((a, b) => a.customer.localeCompare(b.customer) || a.supplier.localeCompare(b.supplier));
   source('renesas-tsmc-2012-outsourcing', 'Renesas', 'TSMC microcontroller manufacturing agreement',
     'https://www.renesas.com/en/about/newsroom/renesas-electronics-and-tsmc-collaborate-construct-ecosystem-microcontrollers', '2012-05-28', 'P1-buyer',

@@ -79,16 +79,16 @@
       "tracked": 109,
       "level1": 109,
       "level2": 92,
-      "level3": 76,
+      "level3": 81,
       "upstream": [
-        59,
-        46,
-        34
+        63,
+        48,
+        36
       ],
       "downstream": [
-        82,
-        59,
-        49
+        89,
+        64,
+        61
       ],
       "noDocumentedCounterparty": [],
       "note": "Exact shortest-distance coverage, walking each direction separately. Combined coverage means at least one direction reaches that level. Missing paths are research gaps in this dataset, not proof that no supplier exists. Historical, planned and design-enablement links remain qualified by their evidence; paths do not establish simultaneous shipments or a product bill of materials."
@@ -1125,6 +1125,105 @@
       "published": "2025-05-19",
       "evidence": "P1-supplier",
       "note": "Announced HybridPACK Drive G2, AURIX TC3x and OPTIREG supply for R2, expected to start in 2026. Actual start not confirmed by this source.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "marvell-aws-agreement-2024": {
+      "publisher": "Marvell Technology",
+      "title": "Expanded AWS relationship: semiconductor supply and EDA cloud infrastructure",
+      "url": "https://investor.marvell.com/sec-filings/all-sec-filings/content/0001835632-24-000193/final2024_12x02xmarvell-.htm",
+      "published": "2024-12-02",
+      "evidence": "P1-self",
+      "note": "Five-year agreement names both directions: Marvell semiconductor products for AWS and AWS cloud compute for Marvell chip design.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "xiaomi-14t-specifications": {
+      "publisher": "Xiaomi",
+      "title": "Xiaomi 14T specifications",
+      "url": "https://www.mi.com/global/product/xiaomi-14t/specs/",
+      "published": "undated",
+      "evidence": "P1-buyer",
+      "note": "Official product specifications name the MediaTek Dimensity 8300-Ultra. Undated page; access date is not a shipment date.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "asm-supplier-day-2024": {
+      "publisher": "ASM International",
+      "title": "Supplier Day 2024 performance and sustainability awards",
+      "url": "https://www.asm.com/news/asm-celebrates-innovation-and-partnership-at-supplier-day-2024",
+      "published": "2024",
+      "evidence": "P1-buyer",
+      "note": "Names Benchmark Electronics, Foxsemicon, Horiba and Celestica as suppliers. KLK omitted because the short name does not resolve an unambiguous entity here.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "hemlock-sumco-award-2022": {
+      "publisher": "Hemlock Semiconductor",
+      "title": "SUMCO Japan 2022 Supplier of the Year award",
+      "url": "https://www.hscpoly.com/hemlock-semiconductor-wins-2022-supplier-of-the-year-award-from-sumco-japan/",
+      "published": "2023-07-07",
+      "evidence": "P1-supplier",
+      "note": "Article describes the 2022 award and polysilicon supply relationship. Page also displays a later September 2025 update date.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "aws-ansys-gateway-2023": {
+      "publisher": "Amazon Web Services",
+      "title": "Architecture of Ansys Gateway powered by AWS",
+      "url": "https://aws.amazon.com/blogs/apn/accelerate-your-ansys-simulations-with-ansys-gateway-powered-by-aws/",
+      "published": "2023-02-16",
+      "evidence": "P1-supplier",
+      "note": "Joint AWS/Ansys technical article states the control plane is hosted in Ansys AWS account; application compute runs in end customers accounts.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "azure-synopsys-cloud-2022": {
+      "publisher": "Microsoft Azure",
+      "title": "Synopsys Cloud on Azure",
+      "url": "https://azure.microsoft.com/en-us/blog/accelerate-silicon-design-innovation-on-azure-with-synopsys-cloud/",
+      "published": "2022-03-30",
+      "evidence": "P1-supplier",
+      "note": "Microsoft names Azure as the infrastructure running Synopsys Cloud chip-design and verification tools.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "alibaba-xpeng-cloud-2024": {
+      "publisher": "Alibaba Cloud",
+      "title": "Customer deployments of cloud infrastructure and AI models",
+      "url": "https://www.alibabacloud.com/en/press-room/alibaba-cloud-empowers-customers-and-partners-with?_p_lc=1",
+      "published": "2024-09-20",
+      "evidence": "P1-supplier",
+      "note": "Names XPENG as a user of Alibaba Cloud models and cloud computing for smart cockpit and autonomous driving.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "anthropic-cloud-compute-2025": {
+      "publisher": "Anthropic",
+      "title": "Expansion of Google Cloud TPUs and services",
+      "url": "https://www.anthropic.com/news/expanding-our-use-of-google-cloud-tpus-and-services",
+      "published": "2025-10-23",
+      "evidence": "P1-buyer",
+      "note": "Names Google Cloud TPU use and expansion plans, and Amazon as primary training partner and cloud provider.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "tower-semtech-shipments-2024": {
+      "publisher": "Tower Semiconductor",
+      "title": "Semtech recognizes CY2024 wafer manufacturing and shipments",
+      "url": "https://towersemi.com/2024/12/10/12102024/",
+      "published": "2024-12-10",
+      "evidence": "P1-supplier",
+      "note": "Names Semtech and actual CY2024 wafer shipments using Tower SiGe technology for connectivity ICs.",
       "kind": "Company disclosure",
       "seen": "fetched",
       "retrieved": "2026-11-25"
@@ -4299,6 +4398,54 @@
       "country": "us",
       "layer": "services",
       "role": "Payments network operator"
+    },
+    "hemlock-semiconductor": {
+      "name": "Hemlock Semiconductor",
+      "country": "us",
+      "layer": "materials",
+      "role": "Semiconductor-grade polysilicon producer"
+    },
+    "benchmark-electronics": {
+      "name": "Benchmark Electronics",
+      "country": "us",
+      "layer": "assembly",
+      "role": "Electronics manufacturing and engineering services"
+    },
+    "foxsemicon-integrated-technology": {
+      "name": "Foxsemicon Integrated Technology",
+      "country": "tw",
+      "layer": "equipment",
+      "role": "Semiconductor equipment components and manufacturing"
+    },
+    "horiba-ltd": {
+      "name": "HORIBA",
+      "country": "jp",
+      "layer": "equipment",
+      "role": "Measurement and process-control equipment"
+    },
+    "celestica-inc": {
+      "name": "Celestica",
+      "country": "ca",
+      "layer": "assembly",
+      "role": "Electronics manufacturing services; group-level disclosure"
+    },
+    "xpeng-inc": {
+      "name": "XPENG",
+      "country": "cn",
+      "layer": "brand",
+      "role": "Electric vehicle manufacturer and cloud services customer"
+    },
+    "anthropic-pbc": {
+      "name": "Anthropic",
+      "country": "us",
+      "layer": "services",
+      "role": "AI model developer and cloud compute customer"
+    },
+    "semtech-corporation": {
+      "name": "Semtech",
+      "country": "us",
+      "layer": "ic_other",
+      "role": "Analog and connectivity semiconductor designer"
     }
   },
   "edges": [
@@ -4510,6 +4657,38 @@
         2025
       ],
       "details": []
+    },
+    {
+      "supplier": "system-amazon",
+      "customer": "anthropic-pbc",
+      "products": [
+        "Cloud compute and Trainium training infrastructure"
+      ],
+      "sources": [
+        "anthropic-cloud-compute-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Buyer names Amazon as its primary cloud provider and training partner."
+      ]
+    },
+    {
+      "supplier": "system-google",
+      "customer": "anthropic-pbc",
+      "products": [
+        "Cloud TPU compute and services"
+      ],
+      "sources": [
+        "anthropic-cloud-compute-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Existing use plus announced expansion; planned capacity is not treated as delivered or as direct ownership of physical chips."
+      ]
     },
     {
       "supplier": "3m",
@@ -7225,6 +7404,70 @@
       ],
       "details": [
         "Named among the top 15 customers by revenue, listed alphabetically."
+      ]
+    },
+    {
+      "supplier": "benchmark-electronics",
+      "customer": "asm-international-n-v",
+      "products": [
+        "Supplier contributions to ASM equipment operations"
+      ],
+      "sources": [
+        "asm-supplier-day-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": [
+        "Buyer-named supplier award; exact part, volume and allocation to individual tool models are undisclosed. Celestica is represented at group level, not assigned to its Malaysian subsidiary."
+      ]
+    },
+    {
+      "supplier": "celestica-inc",
+      "customer": "asm-international-n-v",
+      "products": [
+        "Supplier contributions to ASM equipment operations"
+      ],
+      "sources": [
+        "asm-supplier-day-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": [
+        "Buyer-named supplier award; exact part, volume and allocation to individual tool models are undisclosed. Celestica is represented at group level, not assigned to its Malaysian subsidiary."
+      ]
+    },
+    {
+      "supplier": "foxsemicon-integrated-technology",
+      "customer": "asm-international-n-v",
+      "products": [
+        "Supplier contributions to ASM equipment operations"
+      ],
+      "sources": [
+        "asm-supplier-day-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": [
+        "Buyer-named supplier award; exact part, volume and allocation to individual tool models are undisclosed. Celestica is represented at group level, not assigned to its Malaysian subsidiary."
+      ]
+    },
+    {
+      "supplier": "horiba-ltd",
+      "customer": "asm-international-n-v",
+      "products": [
+        "Supplier contributions to ASM equipment operations"
+      ],
+      "sources": [
+        "asm-supplier-day-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": [
+        "Buyer-named supplier award; exact part, volume and allocation to individual tool models are undisclosed. Celestica is represented at group level, not assigned to its Malaysian subsidiary."
       ]
     },
     {
@@ -10045,6 +10288,22 @@
       ]
     },
     {
+      "supplier": "system-tower",
+      "customer": "semtech-corporation",
+      "products": [
+        "SiGe wafer fabrication for connectivity ICs"
+      ],
+      "sources": [
+        "tower-semtech-shipments-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": [
+        "Supplier disclosure with named customer quotation and recognition of wafer shipments; no quantity inferred."
+      ]
+    },
+    {
       "supplier": "system-amd",
       "customer": "servicenow-inc",
       "products": [
@@ -10217,6 +10476,22 @@
       ]
     },
     {
+      "supplier": "hemlock-semiconductor",
+      "customer": "sumco-corporation",
+      "products": [
+        "Semiconductor-grade polysilicon"
+      ],
+      "sources": [
+        "hemlock-sumco-award-2022"
+      ],
+      "years": [
+        2022
+      ],
+      "details": [
+        "Historical supplier recognition; no current volume or exclusivity claim."
+      ]
+    },
+    {
       "supplier": "system-amd",
       "customer": "system-alibaba",
       "products": [
@@ -10262,6 +10537,22 @@
       ],
       "details": [
         "Named Q4 2024 cloud instance launches. Product adoption; procurement through OEMs or distributors is not specified."
+      ]
+    },
+    {
+      "supplier": "system-marvell",
+      "customer": "system-amazon",
+      "products": [
+        "AI and data-center semiconductors"
+      ],
+      "sources": [
+        "marvell-aws-agreement-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": [
+        "Multi-year supply agreement includes custom AI, optical DSP, retimer and Ethernet products; no volumes inferred."
       ]
     },
     {
@@ -10394,6 +10685,22 @@
       ],
       "details": [
         "Named customer sales in the 2022 to first-half-2025 disclosure."
+      ]
+    },
+    {
+      "supplier": "system-amazon",
+      "customer": "system-ansys",
+      "products": [
+        "AWS hosting for Ansys Gateway control plane"
+      ],
+      "sources": [
+        "aws-ansys-gateway-2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": [
+        "Cloud service dependency in the documented architecture; end-customer application workloads are not attributed to Ansys purchases."
       ]
     },
     {
@@ -10709,6 +11016,22 @@
       ],
       "details": [
         "Historical selection/order; announced delivery schedule is not evidence of current equipment use."
+      ]
+    },
+    {
+      "supplier": "system-amazon",
+      "customer": "system-marvell",
+      "products": [
+        "Cloud compute infrastructure for EDA"
+      ],
+      "sources": [
+        "marvell-aws-agreement-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": [
+        "AWS supplies cloud infrastructure used by Marvell for silicon design. Service supply, not reverse shipment of chips."
       ]
     },
     {
@@ -11101,6 +11424,22 @@
       ]
     },
     {
+      "supplier": "system-microsoft",
+      "customer": "system-synopsys",
+      "products": [
+        "Azure infrastructure for Synopsys Cloud EDA"
+      ],
+      "sources": [
+        "azure-synopsys-cloud-2022"
+      ],
+      "years": [
+        2022
+      ],
+      "details": [
+        "Named cloud infrastructure dependency; not a physical semiconductor supply link."
+      ]
+    },
+    {
       "supplier": "stmicroelectronics-n-v",
       "customer": "system-tesla",
       "products": [
@@ -11238,6 +11577,20 @@
       ],
       "details": [
         "Named in the fiscal 2025 filing. Xiaomi is not among the 10%-or-more customers named in the fiscal 2026 filing."
+      ]
+    },
+    {
+      "supplier": "system-mediatek",
+      "customer": "system-xiaomi",
+      "products": [
+        "Dimensity 8300-Ultra smartphone processor"
+      ],
+      "sources": [
+        "xiaomi-14t-specifications"
+      ],
+      "years": [],
+      "details": [
+        "Named processor in Xiaomi 14T; product adoption does not disclose purchasing channel or volume."
       ]
     },
     {
@@ -12739,6 +13092,22 @@
       ],
       "details": [
         "Announced in March 2024 as \"expected to deliver\" servers based on Blackwell. Delivery and current status are not established by the release."
+      ]
+    },
+    {
+      "supplier": "system-alibaba",
+      "customer": "xpeng-inc",
+      "products": [
+        "Cloud computing and AI model services"
+      ],
+      "sources": [
+        "alibaba-xpeng-cloud-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": [
+        "Named service customer; no inference of a particular chip installed in a vehicle."
       ]
     },
     {

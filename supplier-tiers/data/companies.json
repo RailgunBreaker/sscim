@@ -79,16 +79,16 @@
       "tracked": 109,
       "level1": 109,
       "level2": 92,
-      "level3": 76,
+      "level3": 81,
       "upstream": [
-        59,
-        46,
-        34
+        63,
+        48,
+        36
       ],
       "downstream": [
-        82,
-        59,
-        49
+        89,
+        64,
+        61
       ],
       "noDocumentedCounterparty": [],
       "note": "Exact shortest-distance coverage, walking each direction separately. Combined coverage means at least one direction reaches that level. Missing paths are research gaps in this dataset, not proof that no supplier exists. Historical, planned and design-enablement links remain qualified by their evidence; paths do not establish simultaneous shipments or a product bill of materials."
@@ -3208,6 +3208,54 @@
       "country": "us",
       "layer": "services",
       "role": "Payments network operator"
+    },
+    "hemlock-semiconductor": {
+      "name": "Hemlock Semiconductor",
+      "country": "us",
+      "layer": "materials",
+      "role": "Semiconductor-grade polysilicon producer"
+    },
+    "benchmark-electronics": {
+      "name": "Benchmark Electronics",
+      "country": "us",
+      "layer": "assembly",
+      "role": "Electronics manufacturing and engineering services"
+    },
+    "foxsemicon-integrated-technology": {
+      "name": "Foxsemicon Integrated Technology",
+      "country": "tw",
+      "layer": "equipment",
+      "role": "Semiconductor equipment components and manufacturing"
+    },
+    "horiba-ltd": {
+      "name": "HORIBA",
+      "country": "jp",
+      "layer": "equipment",
+      "role": "Measurement and process-control equipment"
+    },
+    "celestica-inc": {
+      "name": "Celestica",
+      "country": "ca",
+      "layer": "assembly",
+      "role": "Electronics manufacturing services; group-level disclosure"
+    },
+    "xpeng-inc": {
+      "name": "XPENG",
+      "country": "cn",
+      "layer": "brand",
+      "role": "Electric vehicle manufacturer and cloud services customer"
+    },
+    "anthropic-pbc": {
+      "name": "Anthropic",
+      "country": "us",
+      "layer": "services",
+      "role": "AI model developer and cloud compute customer"
+    },
+    "semtech-corporation": {
+      "name": "Semtech",
+      "country": "us",
+      "layer": "ic_other",
+      "role": "Analog and connectivity semiconductor designer"
     }
   }
 }

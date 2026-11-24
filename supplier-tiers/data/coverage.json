@@ -4,16 +4,16 @@
     "tracked": 109,
     "level1": 109,
     "level2": 92,
-    "level3": 76,
+    "level3": 81,
     "upstream": [
-      59,
-      46,
-      34
+      63,
+      48,
+      36
     ],
     "downstream": [
-      82,
-      59,
-      49
+      89,
+      64,
+      61
     ],
     "noDocumentedCounterparty": [],
     "note": "Exact shortest-distance coverage, walking each direction separately. Combined coverage means at least one direction reaches that level. Missing paths are research gaps in this dataset, not proof that no supplier exists. Historical, planned and design-enablement links remain qualified by their evidence; paths do not establish simultaneous shipments or a product bill of materials."
@@ -116,7 +116,7 @@
       "vaultId": "alibaba",
       "name": "Alibaba Cloud",
       "suppliers": 2,
-      "customers": 0,
+      "customers": 1,
       "documented": true,
       "levels": [
         2,
@@ -124,7 +124,7 @@
         86
       ],
       "downstreamLevels": [
-        0,
+        1,
         0,
         0
       ],
@@ -146,13 +146,15 @@
         ]
       ],
       "downstreamPaths": [
-        null,
+        [
+          "system-alibaba",
+          "xpeng-inc"
+        ],
         null,
         null
       ],
       "missingUpstreamLevels": [],
       "missingDownstreamLevels": [
-        1,
         2,
         3
       ]
@@ -161,18 +163,18 @@
       "id": "system-amazon",
       "vaultId": "amazon",
       "name": "Amazon (AWS)",
-      "suppliers": 2,
-      "customers": 0,
+      "suppliers": 3,
+      "customers": 3,
       "documented": true,
       "levels": [
-        2,
+        3,
         13,
         86
       ],
       "downstreamLevels": [
-        0,
-        0,
-        0
+        3,
+        1,
+        13
       ],
       "upstreamPaths": [
         [
@@ -192,16 +194,24 @@
         ]
       ],
       "downstreamPaths": [
-        null,
-        null,
-        null
+        [
+          "system-amazon",
+          "anthropic-pbc"
+        ],
+        [
+          "system-amazon",
+          "system-ansys",
+          "taiwan-semiconductor-manufacturing-company-limited"
+        ],
+        [
+          "system-amazon",
+          "system-ansys",
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "advanced-semiconductor-engineering-technology-holding-co-ltd"
+        ]
       ],
       "missingUpstreamLevels": [],
-      "missingDownstreamLevels": [
-        1,
-        2,
-        3
-      ]
+      "missingDownstreamLevels": []
     },
     {
       "id": "system-amd",
@@ -213,12 +223,12 @@
       "levels": [
         7,
         81,
-        22
+        29
       ],
       "downstreamLevels": [
         15,
-        0,
-        0
+        5,
+        2
       ],
       "upstreamPaths": [
         [
@@ -242,14 +252,20 @@
           "system-amd",
           "akamai-technologies"
         ],
-        null,
-        null
+        [
+          "system-amd",
+          "system-alibaba",
+          "xpeng-inc"
+        ],
+        [
+          "system-amd",
+          "system-amazon",
+          "system-ansys",
+          "taiwan-semiconductor-manufacturing-company-limited"
+        ]
       ],
       "missingUpstreamLevels": [],
-      "missingDownstreamLevels": [
-        2,
-        3
-      ]
+      "missingDownstreamLevels": []
     },
     {
       "id": "system-amec",
@@ -350,7 +366,7 @@
       "levels": [
         1,
         72,
-        16
+        23
       ],
       "downstreamLevels": [
         1,
@@ -392,13 +408,13 @@
       "id": "system-ansys",
       "vaultId": "ansys",
       "name": "Ansys",
-      "suppliers": 0,
+      "suppliers": 1,
       "customers": 1,
       "documented": true,
       "levels": [
-        0,
-        0,
-        0
+        1,
+        3,
+        13
       ],
       "downstreamLevels": [
         1,
@@ -406,9 +422,21 @@
         47
       ],
       "upstreamPaths": [
-        null,
-        null,
-        null
+        [
+          "system-ansys",
+          "system-amazon"
+        ],
+        [
+          "system-ansys",
+          "system-amazon",
+          "system-amd"
+        ],
+        [
+          "system-ansys",
+          "system-amazon",
+          "system-amd",
+          "samsung-electronics-company-limited"
+        ]
       ],
       "downstreamPaths": [
         [
@@ -427,11 +455,7 @@
           "rivian-automotive-inc"
         ]
       ],
-      "missingUpstreamLevels": [
-        1,
-        2,
-        3
-      ],
+      "missingUpstreamLevels": [],
       "missingDownstreamLevels": []
     },
     {
@@ -444,7 +468,7 @@
       "levels": [
         187,
         133,
-        18
+        25
       ],
       "downstreamLevels": [
         0,
@@ -495,7 +519,7 @@
       "downstreamLevels": [
         3,
         16,
-        44
+        45
       ],
       "upstreamPaths": [
         [
@@ -517,9 +541,9 @@
         ],
         [
           "applied-materials-inc",
-          "taiwan-semiconductor-manufacturing-company-limited",
-          "infineon-technologies-ag",
-          "rivian-automotive-inc"
+          "intel-corporation",
+          "system-tower",
+          "semtech-corporation"
         ]
       ],
       "missingUpstreamLevels": [
@@ -542,8 +566,8 @@
       ],
       "downstreamLevels": [
         3,
-        30,
-        3
+        31,
+        8
       ],
       "upstreamPaths": [
         null,
@@ -557,8 +581,8 @@
         ],
         [
           "system-arm",
-          "system-nvidia",
-          "aivres-systems"
+          "system-mediatek",
+          "system-xiaomi"
         ],
         [
           "system-arm",
@@ -584,7 +608,7 @@
       "levels": [
         11,
         79,
-        4
+        11
       ],
       "downstreamLevels": [
         3,
@@ -604,8 +628,8 @@
         [
           "advanced-semiconductor-engineering-technology-holding-co-ltd",
           "taiwan-semiconductor-manufacturing-company-limited",
-          "asml-holding-n-v",
-          "nts-group"
+          "asm-international-n-v",
+          "benchmark-electronics"
         ]
       ],
       "downstreamPaths": [
@@ -632,21 +656,24 @@
       "id": "asm-international-n-v",
       "vaultId": "asmi",
       "name": "ASM International",
-      "suppliers": 0,
+      "suppliers": 4,
       "customers": 2,
       "documented": true,
       "levels": [
-        0,
+        4,
         0,
         0
       ],
       "downstreamLevels": [
         2,
         16,
-        44
+        45
       ],
       "upstreamPaths": [
-        null,
+        [
+          "asm-international-n-v",
+          "benchmark-electronics"
+        ],
         null,
         null
       ],
@@ -662,13 +689,12 @@
         ],
         [
           "asm-international-n-v",
-          "taiwan-semiconductor-manufacturing-company-limited",
-          "infineon-technologies-ag",
-          "rivian-automotive-inc"
+          "intel-corporation",
+          "system-tower",
+          "semtech-corporation"
         ]
       ],
       "missingUpstreamLevels": [
-        1,
         2,
         3
       ],
@@ -689,7 +715,7 @@
       "downstreamLevels": [
         4,
         17,
-        47
+        48
       ],
       "upstreamPaths": [
         [
@@ -711,9 +737,9 @@
         ],
         [
           "asml-holding-n-v",
-          "system-imec",
-          "united-microelectronics-corporation",
-          "novatek-microelectronics-corp"
+          "intel-corporation",
+          "system-tower",
+          "semtech-corporation"
         ]
       ],
       "missingUpstreamLevels": [
@@ -860,7 +886,7 @@
       "levels": [
         7,
         78,
-        22
+        29
       ],
       "downstreamLevels": [
         1,
@@ -1263,7 +1289,7 @@
       "downstreamLevels": [
         4,
         26,
-        40
+        41
       ],
       "upstreamPaths": [
         null,
@@ -1309,7 +1335,7 @@
       "downstreamLevels": [
         3,
         29,
-        1
+        6
       ],
       "upstreamPaths": [
         [
@@ -1363,7 +1389,7 @@
       "downstreamLevels": [
         3,
         19,
-        1
+        6
       ],
       "upstreamPaths": [
         [
@@ -1447,7 +1473,7 @@
       "vaultId": "google",
       "name": "Google (TPU/Cloud)",
       "suppliers": 2,
-      "customers": 0,
+      "customers": 1,
       "documented": true,
       "levels": [
         2,
@@ -1455,7 +1481,7 @@
         86
       ],
       "downstreamLevels": [
-        0,
+        1,
         0,
         0
       ],
@@ -1477,13 +1503,15 @@
         ]
       ],
       "downstreamPaths": [
-        null,
+        [
+          "system-google",
+          "anthropic-pbc"
+        ],
         null,
         null
       ],
       "missingUpstreamLevels": [],
       "missingDownstreamLevels": [
-        1,
         2,
         3
       ]
@@ -1548,7 +1576,7 @@
       "downstreamLevels": [
         1,
         4,
-        0
+        1
       ],
       "upstreamPaths": [
         null,
@@ -1565,16 +1593,19 @@
           "intel-corporation",
           "apple-inc"
         ],
-        null
+        [
+          "hitachi-high-tech-corporation",
+          "intel-corporation",
+          "system-tower",
+          "semtech-corporation"
+        ]
       ],
       "missingUpstreamLevels": [
         1,
         2,
         3
       ],
-      "missingDownstreamLevels": [
-        3
-      ]
+      "missingDownstreamLevels": []
     },
     {
       "id": "system-hp",
@@ -1586,7 +1617,7 @@
       "levels": [
         5,
         79,
-        78
+        83
       ],
       "downstreamLevels": [
         0,
@@ -1680,7 +1711,7 @@
       "downstreamLevels": [
         3,
         37,
-        2
+        8
       ],
       "upstreamPaths": [
         null,
@@ -1699,9 +1730,9 @@
         ],
         [
           "system-ibiden",
-          "system-nvidia",
-          "hon-hai-precision-industry-company-limited-foxconn",
-          "broadcom-limited"
+          "intel-corporation",
+          "system-tower",
+          "semtech-corporation"
         ]
       ],
       "missingUpstreamLevels": [
@@ -1766,7 +1797,7 @@
       "downstreamLevels": [
         1,
         7,
-        17
+        18
       ],
       "upstreamPaths": [
         [
@@ -1855,12 +1886,12 @@
       "levels": [
         1,
         72,
-        16
+        23
       ],
       "downstreamLevels": [
         3,
         3,
-        0
+        1
       ],
       "upstreamPaths": [
         [
@@ -1889,12 +1920,15 @@
           "intel-corporation",
           "system-hp"
         ],
-        null
+        [
+          "infineon-technologies-ag",
+          "intel-corporation",
+          "system-tower",
+          "semtech-corporation"
+        ]
       ],
       "missingUpstreamLevels": [],
-      "missingDownstreamLevels": [
-        3
-      ]
+      "missingDownstreamLevels": []
     },
     {
       "id": "intel-corporation",
@@ -1905,12 +1939,12 @@
       "documented": true,
       "levels": [
         66,
-        73,
-        1
+        78,
+        4
       ],
       "downstreamLevels": [
         4,
-        0,
+        1,
         0
       ],
       "upstreamPaths": [
@@ -1925,9 +1959,9 @@
         ],
         [
           "intel-corporation",
-          "taiwan-semiconductor-manufacturing-company-limited",
-          "pegatron-corporation",
-          "system-nvidia"
+          "system-synopsys",
+          "system-microsoft",
+          "system-amd"
         ]
       ],
       "downstreamPaths": [
@@ -1935,12 +1969,15 @@
           "intel-corporation",
           "apple-inc"
         ],
-        null,
+        [
+          "intel-corporation",
+          "system-tower",
+          "semtech-corporation"
+        ],
         null
       ],
       "missingUpstreamLevels": [],
       "missingDownstreamLevels": [
-        2,
         3
       ]
     },
@@ -2087,7 +2124,7 @@
       "downstreamLevels": [
         2,
         16,
-        44
+        45
       ],
       "upstreamPaths": [
         null,
@@ -2106,9 +2143,9 @@
         ],
         [
           "kla-corporation",
-          "taiwan-semiconductor-manufacturing-company-limited",
-          "infineon-technologies-ag",
-          "rivian-automotive-inc"
+          "intel-corporation",
+          "system-tower",
+          "semtech-corporation"
         ]
       ],
       "missingUpstreamLevels": [
@@ -2133,7 +2170,7 @@
       "downstreamLevels": [
         2,
         16,
-        44
+        45
       ],
       "upstreamPaths": [
         null,
@@ -2152,9 +2189,9 @@
         ],
         [
           "kokusai-electric-corporation",
-          "taiwan-semiconductor-manufacturing-company-limited",
-          "infineon-technologies-ag",
-          "rivian-automotive-inc"
+          "intel-corporation",
+          "system-tower",
+          "semtech-corporation"
         ]
       ],
       "missingUpstreamLevels": [
@@ -2179,7 +2216,7 @@
       "downstreamLevels": [
         1,
         15,
-        0
+        5
       ],
       "upstreamPaths": [
         null,
@@ -2196,16 +2233,19 @@
           "system-amd",
           "akamai-technologies"
         ],
-        null
+        [
+          "system-kyec",
+          "system-amd",
+          "system-alibaba",
+          "xpeng-inc"
+        ]
       ],
       "missingUpstreamLevels": [
         1,
         2,
         3
       ],
-      "missingDownstreamLevels": [
-        3
-      ]
+      "missingDownstreamLevels": []
     },
     {
       "id": "lam-research-corporation",
@@ -2222,7 +2262,7 @@
       "downstreamLevels": [
         3,
         15,
-        44
+        45
       ],
       "upstreamPaths": [
         [
@@ -2391,62 +2431,70 @@
       "id": "system-marvell",
       "vaultId": "marvell",
       "name": "Marvell",
-      "suppliers": 1,
-      "customers": 0,
+      "suppliers": 2,
+      "customers": 1,
       "documented": true,
       "levels": [
-        1,
-        72,
-        16
+        2,
+        74,
+        32
       ],
       "downstreamLevels": [
-        0,
-        0,
-        0
+        1,
+        2,
+        1
       ],
       "upstreamPaths": [
         [
           "system-marvell",
-          "taiwan-semiconductor-manufacturing-company-limited"
+          "system-amazon"
         ],
         [
           "system-marvell",
-          "taiwan-semiconductor-manufacturing-company-limited",
-          "abb-ltd"
+          "system-amazon",
+          "system-amd"
         ],
         [
           "system-marvell",
-          "taiwan-semiconductor-manufacturing-company-limited",
-          "applied-materials-inc",
-          "advanced-energy-industries"
+          "system-amazon",
+          "system-amd",
+          "samsung-electronics-company-limited"
         ]
       ],
       "downstreamPaths": [
-        null,
-        null,
-        null
+        [
+          "system-marvell",
+          "system-amazon"
+        ],
+        [
+          "system-marvell",
+          "system-amazon",
+          "anthropic-pbc"
+        ],
+        [
+          "system-marvell",
+          "system-amazon",
+          "system-ansys",
+          "taiwan-semiconductor-manufacturing-company-limited"
+        ]
       ],
       "missingUpstreamLevels": [],
-      "missingDownstreamLevels": [
-        1,
-        2,
-        3
-      ]
+      "missingDownstreamLevels": []
     },
     {
       "id": "system-mediatek",
       "vaultId": "mediatek",
       "name": "MediaTek",
       "suppliers": 4,
-      "customers": 0,
+      "customers": 1,
       "documented": true,
       "levels": [
         4,
         75,
-        16
+        23
       ],
       "downstreamLevels": [
-        0,
+        1,
         0,
         0
       ],
@@ -2468,13 +2516,15 @@
         ]
       ],
       "downstreamPaths": [
-        null,
+        [
+          "system-mediatek",
+          "system-xiaomi"
+        ],
         null,
         null
       ],
       "missingUpstreamLevels": [],
       "missingDownstreamLevels": [
-        1,
         2,
         3
       ]
@@ -2585,7 +2635,7 @@
       "downstreamLevels": [
         3,
         33,
-        3
+        8
       ],
       "upstreamPaths": [
         [
@@ -2626,7 +2676,7 @@
       "vaultId": "microsoft",
       "name": "Microsoft (Azure)",
       "suppliers": 2,
-      "customers": 0,
+      "customers": 1,
       "documented": true,
       "levels": [
         2,
@@ -2634,9 +2684,9 @@
         86
       ],
       "downstreamLevels": [
-        0,
-        0,
-        0
+        1,
+        2,
+        16
       ],
       "upstreamPaths": [
         [
@@ -2656,16 +2706,24 @@
         ]
       ],
       "downstreamPaths": [
-        null,
-        null,
-        null
+        [
+          "system-microsoft",
+          "system-synopsys"
+        ],
+        [
+          "system-microsoft",
+          "system-synopsys",
+          "intel-corporation"
+        ],
+        [
+          "system-microsoft",
+          "system-synopsys",
+          "intel-corporation",
+          "apple-inc"
+        ]
       ],
       "missingUpstreamLevels": [],
-      "missingDownstreamLevels": [
-        1,
-        2,
-        3
-      ]
+      "missingDownstreamLevels": []
     },
     {
       "id": "system-nanya",
@@ -2805,7 +2863,7 @@
       "downstreamLevels": [
         1,
         4,
-        0
+        1
       ],
       "upstreamPaths": [
         null,
@@ -2822,16 +2880,19 @@
           "intel-corporation",
           "apple-inc"
         ],
-        null
+        [
+          "nikon-corporation",
+          "intel-corporation",
+          "system-tower",
+          "semtech-corporation"
+        ]
       ],
       "missingUpstreamLevels": [
         1,
         2,
         3
       ],
-      "missingDownstreamLevels": [
-        3
-      ]
+      "missingDownstreamLevels": []
     },
     {
       "id": "nova-ltd",
@@ -2848,7 +2909,7 @@
       "downstreamLevels": [
         1,
         4,
-        0
+        1
       ],
       "upstreamPaths": [
         null,
@@ -2865,16 +2926,19 @@
           "intel-corporation",
           "apple-inc"
         ],
-        null
+        [
+          "nova-ltd",
+          "intel-corporation",
+          "system-tower",
+          "semtech-corporation"
+        ]
       ],
       "missingUpstreamLevels": [
         1,
         2,
         3
       ],
-      "missingDownstreamLevels": [
-        3
-      ]
+      "missingDownstreamLevels": []
     },
     {
       "id": "system-nsig",
@@ -2890,7 +2954,7 @@
       ],
       "downstreamLevels": [
         7,
-        28,
+        29,
         41
       ],
       "upstreamPaths": [
@@ -2932,12 +2996,12 @@
       "levels": [
         9,
         85,
-        21
+        28
       ],
       "downstreamLevels": [
         30,
-        3,
-        11
+        8,
+        10
       ],
       "upstreamPaths": [
         [
@@ -2986,7 +3050,7 @@
       "levels": [
         3,
         72,
-        16
+        23
       ],
       "downstreamLevels": [
         10,
@@ -3172,7 +3236,7 @@
       "levels": [
         8,
         86,
-        18
+        25
       ],
       "downstreamLevels": [
         4,
@@ -3317,7 +3381,7 @@
       "levels": [
         2,
         72,
-        16
+        23
       ],
       "downstreamLevels": [
         1,
@@ -3416,7 +3480,7 @@
       "downstreamLevels": [
         4,
         37,
-        2
+        7
       ],
       "upstreamPaths": [
         [
@@ -3447,9 +3511,9 @@
         ],
         [
           "samsung-electronics-company-limited",
-          "system-nvidia",
-          "hon-hai-precision-industry-company-limited-foxconn",
-          "broadcom-limited"
+          "system-amd",
+          "system-alibaba",
+          "xpeng-inc"
         ]
       ],
       "missingUpstreamLevels": [],
@@ -3510,7 +3574,7 @@
       "downstreamLevels": [
         2,
         16,
-        44
+        45
       ],
       "upstreamPaths": [
         null,
@@ -3529,9 +3593,9 @@
         ],
         [
           "shin-etsu-chemical-co-ltd",
-          "taiwan-semiconductor-manufacturing-company-limited",
-          "infineon-technologies-ag",
-          "rivian-automotive-inc"
+          "intel-corporation",
+          "system-tower",
+          "semtech-corporation"
         ]
       ],
       "missingUpstreamLevels": [
@@ -3556,7 +3620,7 @@
       "downstreamLevels": [
         1,
         4,
-        0
+        1
       ],
       "upstreamPaths": [
         null,
@@ -3573,16 +3637,19 @@
           "intel-corporation",
           "apple-inc"
         ],
-        null
+        [
+          "system-shinko",
+          "intel-corporation",
+          "system-tower",
+          "semtech-corporation"
+        ]
       ],
       "missingUpstreamLevels": [
         1,
         2,
         3
       ],
-      "missingDownstreamLevels": [
-        3
-      ]
+      "missingDownstreamLevels": []
     },
     {
       "id": "system-siemens_eda",
@@ -3645,7 +3712,7 @@
       "downstreamLevels": [
         4,
         14,
-        33
+        34
       ],
       "upstreamPaths": [
         [
@@ -3667,9 +3734,9 @@
         ],
         [
           "system-siltronic",
-          "micron-technology-incorporated",
-          "qualcomm-incorporated",
-          "system-vw"
+          "intel-corporation",
+          "system-tower",
+          "semtech-corporation"
         ]
       ],
       "missingUpstreamLevels": [
@@ -3693,7 +3760,7 @@
       "downstreamLevels": [
         2,
         30,
-        2
+        7
       ],
       "upstreamPaths": [
         [
@@ -3787,7 +3854,7 @@
       "downstreamLevels": [
         4,
         13,
-        34
+        35
       ],
       "upstreamPaths": [
         null,
@@ -3918,7 +3985,7 @@
       "downstreamLevels": [
         5,
         29,
-        28
+        33
       ],
       "upstreamPaths": [
         null,
@@ -3937,9 +4004,9 @@
         ],
         [
           "siliconware-precision-industries-co-ltd",
-          "taiwan-semiconductor-manufacturing-company-limited",
-          "infineon-technologies-ag",
-          "rivian-automotive-inc"
+          "intel-corporation",
+          "system-tower",
+          "semtech-corporation"
         ]
       ],
       "missingUpstreamLevels": [
@@ -3963,7 +4030,7 @@
       ],
       "downstreamLevels": [
         11,
-        3,
+        4,
         34
       ],
       "upstreamPaths": [
@@ -4004,11 +4071,11 @@
       "id": "sumco-corporation",
       "vaultId": "sumco",
       "name": "SUMCO",
-      "suppliers": 0,
+      "suppliers": 1,
       "customers": 2,
       "documented": true,
       "levels": [
-        0,
+        1,
         0,
         0
       ],
@@ -4018,7 +4085,10 @@
         47
       ],
       "upstreamPaths": [
-        null,
+        [
+          "sumco-corporation",
+          "hemlock-semiconductor"
+        ],
         null,
         null
       ],
@@ -4040,7 +4110,6 @@
         ]
       ],
       "missingUpstreamLevels": [
-        1,
         2,
         3
       ],
@@ -4096,7 +4165,7 @@
       "levels": [
         3,
         75,
-        84
+        89
       ],
       "downstreamLevels": [
         0,
@@ -4136,23 +4205,35 @@
       "id": "system-synopsys",
       "vaultId": "synopsys",
       "name": "Synopsys",
-      "suppliers": 0,
+      "suppliers": 1,
       "customers": 2,
       "documented": true,
       "levels": [
-        0,
-        0,
-        0
+        1,
+        2,
+        13
       ],
       "downstreamLevels": [
         2,
         16,
-        44
+        45
       ],
       "upstreamPaths": [
-        null,
-        null,
-        null
+        [
+          "system-synopsys",
+          "system-microsoft"
+        ],
+        [
+          "system-synopsys",
+          "system-microsoft",
+          "system-amd"
+        ],
+        [
+          "system-synopsys",
+          "system-microsoft",
+          "system-amd",
+          "samsung-electronics-company-limited"
+        ]
       ],
       "downstreamPaths": [
         [
@@ -4166,16 +4247,12 @@
         ],
         [
           "system-synopsys",
-          "taiwan-semiconductor-manufacturing-company-limited",
-          "infineon-technologies-ag",
-          "rivian-automotive-inc"
+          "intel-corporation",
+          "system-tower",
+          "semtech-corporation"
         ]
       ],
-      "missingUpstreamLevels": [
-        1,
-        2,
-        3
-      ],
+      "missingUpstreamLevels": [],
       "missingDownstreamLevels": []
     },
     {
@@ -4280,7 +4357,7 @@
       "levels": [
         3,
         7,
-        1
+        2
       ],
       "downstreamLevels": [
         1,
@@ -4300,8 +4377,8 @@
         [
           "texas-instruments-incorporated",
           "united-microelectronics-corporation",
-          "system-imec",
-          "asml-holding-n-v"
+          "sumco-corporation",
+          "hemlock-semiconductor"
         ]
       ],
       "downstreamPaths": [
@@ -4379,7 +4456,7 @@
       "downstreamLevels": [
         3,
         15,
-        44
+        45
       ],
       "upstreamPaths": [
         null,
@@ -4415,15 +4492,15 @@
       "vaultId": "tower",
       "name": "Tower Semi",
       "suppliers": 3,
-      "customers": 0,
+      "customers": 1,
       "documented": true,
       "levels": [
         3,
         69,
-        71
+        76
       ],
       "downstreamLevels": [
-        0,
+        1,
         0,
         0
       ],
@@ -4445,13 +4522,15 @@
         ]
       ],
       "downstreamPaths": [
-        null,
+        [
+          "system-tower",
+          "semtech-corporation"
+        ],
         null,
         null
       ],
       "missingUpstreamLevels": [],
       "missingDownstreamLevels": [
-        1,
         2,
         3
       ]
@@ -4511,13 +4590,13 @@
       "documented": true,
       "levels": [
         72,
-        16,
-        8
+        23,
+        10
       ],
       "downstreamLevels": [
         14,
         47,
-        0
+        5
       ],
       "upstreamPaths": [
         [
@@ -4546,12 +4625,15 @@
           "infineon-technologies-ag",
           "rivian-automotive-inc"
         ],
-        null
+        [
+          "taiwan-semiconductor-manufacturing-company-limited",
+          "intel-corporation",
+          "system-tower",
+          "semtech-corporation"
+        ]
       ],
       "missingUpstreamLevels": [],
-      "missingDownstreamLevels": [
-        3
-      ]
+      "missingDownstreamLevels": []
     },
     {
       "id": "united-microelectronics-corporation",
@@ -4562,13 +4644,13 @@
       "documented": true,
       "levels": [
         7,
-        1,
+        2,
         5
       ],
       "downstreamLevels": [
         7,
-        17,
-        0
+        18,
+        6
       ],
       "upstreamPaths": [
         [
@@ -4577,8 +4659,8 @@
         ],
         [
           "united-microelectronics-corporation",
-          "system-imec",
-          "asml-holding-n-v"
+          "sumco-corporation",
+          "hemlock-semiconductor"
         ],
         [
           "united-microelectronics-corporation",
@@ -4597,12 +4679,15 @@
           "intel-corporation",
           "apple-inc"
         ],
-        null
+        [
+          "united-microelectronics-corporation",
+          "intel-corporation",
+          "system-tower",
+          "semtech-corporation"
+        ]
       ],
       "missingUpstreamLevels": [],
-      "missingDownstreamLevels": [
-        3
-      ]
+      "missingDownstreamLevels": []
     },
     {
       "id": "unimicron-technology-corporation",
@@ -4619,7 +4704,7 @@
       "downstreamLevels": [
         3,
         5,
-        3
+        4
       ],
       "upstreamPaths": [
         null,
@@ -4879,7 +4964,7 @@
       "downstreamLevels": [
         2,
         29,
-        2
+        7
       ],
       "upstreamPaths": [
         [
@@ -4922,13 +5007,13 @@
       "id": "system-xiaomi",
       "vaultId": "xiaomi",
       "name": "Xiaomi",
-      "suppliers": 1,
+      "suppliers": 2,
       "customers": 0,
       "documented": true,
       "levels": [
-        1,
-        8,
-        86
+        2,
+        11,
+        87
       ],
       "downstreamLevels": [
         0,

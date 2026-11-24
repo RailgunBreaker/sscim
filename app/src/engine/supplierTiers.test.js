@@ -12,6 +12,20 @@ import { supplierCoverage, coverageSummary } from '../../../supplier-tiers/cover
 const index = buildSupplierIndex();
 
 describe('system-wide three-level tracking', () => {
+  it('retains the named counterparties that close the November 25 directional gaps', () => {
+    const rows = systemCompanyCoverage(index);
+    for (const id of ['ansys', 'asmi', 'sumco', 'synopsys']) {
+      expect(rows.find(r => r.vaultId === id).suppliers, id).toBeGreaterThan(0);
+    }
+    for (const id of ['alibaba', 'amazon', 'google', 'marvell', 'mediatek', 'microsoft', 'tower']) {
+      expect(rows.find(r => r.vaultId === id).customers, id).toBeGreaterThan(0);
+    }
+    const cloud = index.edges.find(e => e.supplier === 'system-amazon' && e.customer === 'system-marvell');
+    expect(cloud.products.join(' ')).toContain('Cloud');
+    expect(cloud.details.join(' ')).toContain('not reverse shipment');
+    expect(index.companies['anthropic-pbc'].vaultId).toBeUndefined();
+  });
+
   it('makes every system company discoverable, including evidence gaps', () => {
     const rows = systemCompanyCoverage(index);
     expect(rows.map(r => r.vaultId).sort()).toEqual(SNAPSHOT.companies.map(c => c.id).sort());

@@ -9,24 +9,24 @@ The public graph is separate from the propagation model defined in
 | Record | Current count |
 | --- | ---: |
 | System companies eligible for tracking and centring | 109 |
-| Companies with profiles in the public registry | 422 |
-| Documented relationships | 564 |
-| Public source documents | 98 |
+| Companies with profiles in the public registry | 430 |
+| Documented relationships | 578 |
+| Public source documents | 107 |
 | System companies with a documented connection | 109 |
 | System companies reaching level 2 in either direction | 92 |
-| System companies reaching level 3 in either direction | 76 |
+| System companies reaching level 3 in either direction | 81 |
 | System companies with no documented connection | 0 |
 
 All 109 tracked companies now have at least one sourced connection. **This is
 not complete three-level coverage**: 17 still lack level 2 in either direction,
-and 33 lack level 3. The additional registry companies provide context and
+and 28 lack level 3. The additional registry companies provide context and
 profiles; they do not acquire tracking controls or modeled scores.
 
 | Direction | Level 1 | Level 2 | Level 3 |
 | --- | ---: | ---: | ---: |
-| Upstream suppliers | 59 | 46 | 34 |
-| Downstream customers | 82 | 59 | 49 |
-| At least one direction | 109 | 92 | 76 |
+| Upstream suppliers | 63 | 48 | 36 |
+| Downstream customers | 89 | 64 | 61 |
+| At least one direction | 109 | 92 | 81 |
 
 Each count is the number of tracked companies with at least one firm at that
 exact shortest distance. A company can appear in both directional rows; those
@@ -203,11 +203,33 @@ separate from the model's Toyota / Denso grouping.
 This expansion increases downstream breadth; it does not close the remaining
 second- and third-level coverage gaps reported above.
 
+## Directional zero audit: 2026-11-25
+
+A targeted primary-source pass added 14 relationships, eight contextual firms
+and nine documents. Zero-supplier counts among the 109 tracked companies fell
+from 50 to 46; zero-customer counts fell from 27 to 20.
+
+- Newly documented upstream counterparties: Ansys, ASM International, SUMCO,
+  Synopsys.
+- Newly documented downstream counterparties: Alibaba Cloud, Amazon, Google,
+  Marvell, MediaTek, Microsoft, Tower Semiconductor.
+
+Evidence includes buyer specifications, named supplier awards, a filed supply
+agreement, cloud deployment architecture and recognition of actual wafer
+shipments. AWS-to-Marvell and Azure-to-Synopsys links describe cloud services;
+they are not reverse flows of physical chips. Anthropic capacity expansion
+remains a plan alongside evidence of existing cloud use. Awards describe their
+historical disclosure period. Missing evidence remains zero rather than being
+filled from sector similarity, unnamed customers or inferred purchasing chains.
+
+Third-level coverage increased from 76 to 81 tracked companies in at least one
+direction. This still leaves 28 without a documented third-level path.
+
 ## Profile audit: 2026-11-25
 
-All 422 public-network company records resolve to a profile with a name,
+All 430 public-network company records resolve to a profile with a name,
 introduction and relationship source references. The 110 mapped registry nodes
-represent exactly 109 distinct tracked system companies; the other 312 profiles
+represent exactly 109 distinct tracked system companies; the other 320 profiles
 provide contextual supplier/customer information. Every tracked company has a
 control record. Contextual profiles have no modeled exposure, control record or
 tracking eligibility: profile availability does not mean ownership research is
@@ -216,6 +238,6 @@ The separate vault evidence-note audit covers only 4 of 109 companies; that
 measures dedicated evidence notes, not availability of network relationship
 citations. The profile count must not be presented as fully researched dossiers.
 
-The chain-depth limits remain unchanged: 92 tracked companies reach a second
-level and 76 reach a third level in at least one direction. Profiles for all
+Current chain-depth coverage: 92 tracked companies reach a second
+level and 81 reach a third level in at least one direction. Profiles for all
 companies do not imply that every company has a documented three-level chain.
