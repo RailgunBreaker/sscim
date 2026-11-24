@@ -19,7 +19,6 @@ import TabBar from './components/TabBar.jsx';
 import Pane from './components/Pane.jsx';
 import OsmMap from './components/OsmMap.jsx';
 import FlowGraph from './components/FlowGraph.jsx';
-import SupplierTierExplorer from './components/SupplierTierExplorer.jsx';
 import { buildBaseGraph } from './engine/network.js';
 import Intel from './components/Intel.jsx';
 import Guide from './components/Guide.jsx';
@@ -175,8 +174,11 @@ function DashboardBody() {
   const sel = state.selected || fallbackSel || { type: 'none', id: null };
 
   const [tab, setTab] = useState("flow");
+  /* Asking for a company's documented network used to switch the Layer-1
+     workspace, because that is where the network lived. It lives in the
+     company profile now, which on the narrow layout is the Intel tab. */
   useEffect(() => {
-    if (state.publicNetworkRequest) setTab('map');
+    if (state.publicNetworkRequest) setTab('intel');
   }, [state.publicNetworkRequest]);
   const [feedTab, setFeedTab] = useState("events");
   const [wide, setWide] = useState(true);
@@ -422,55 +424,45 @@ function DashboardBody() {
 
   const panes = { map: t("Map"), flow: t("Flow"), intel: t("Intel") };
 
-  // Layer-1 content follows the view mode (§9): world map, functional-centre
-  // topology network, or both stacked.
+  // Layer-1 content follows the view mode (§9): the world map, or the
+  // full-width facility network.
   const mapPane = <OsmMap model={displayModel} hl={hl} onApplyHazard={setHazard} />;
-  /* The network pane is the PUBLIC SUPPLIER NETWORK.
+  /* THE NETWORK PANE IS GONE FROM LAYER 1, and nothing replaced it.
 
-     It replaced the functional-centre topology graph, which drew 126
-     country x stage centres and 1,030 modeled connections with tools to
-     remove a centre, apply a shock and compare the result. Every one of
-     those connections was composed by the engine from a stage flow and a
-     declared prior; none of them was a relationship anybody had stated
-     in public. The graph was therefore a picture of the model's own
-     assumptions, and a reader could not tell, from the picture, which
-     parts rested on evidence.
+     It held the public supplier network: firm-to-firm relationships, each
+     named in a public document citing both parties. That dataset has not
+     changed and is not reduced — but it was never a view of the world the
+     way the map is. It is a view of ONE FIRM and its counterparties, which
+     is why every visit to it began by choosing a firm, and why a reader
+     who arrived from a company had to re-find the company they came from.
 
-     What is here instead is the opposite construction: firm-to-firm
-     relationships, each one named in a public document that cites both
-     parties, each one opening that document. No weights, because none
-     were published; no shock tools, because there is no propagation
-     model attached to it to shock. */
-  const networkPane = (
-    <SupplierTierExplorer
-      /* Clicking a firm here lights its stages in the Industry flow pane
-         beside it, so the documented relationship and the modeled
-         position are legible in one glance rather than two views. */
-      onSelectVaultCompany={(id) => setSel({ type: 'company', id })}
-    />
-  );
-  /* The Facility Playground is a first-class view alongside Geographic,
-     Topology and Split — not a tab inside the Layer-3 sidebar. It takes
-     the full pane width because a facility network past one hop has
-     nowhere to go in a 360px column, and because its labels were being
-     scaled down to roughly six pixels there. The compact explorer in
-     Layer 3 remains as an entry point and shares this view's state. */
+     It is a section of the company profile now — embedded there and rooted
+     on that company — where the firm is named above it, its control and
+     its modeled chain are on the same page, and the industry flow it
+     should be read against is beside it rather than two scroll-lengths
+     away. */
+  /* The Facility Playground is the second workspace, beside the map —
+     not a tab inside the Layer-3 sidebar. It takes the full pane width
+     because a facility network past one hop has nowhere to go in a 360px
+     column, and because its labels were being scaled down to roughly six
+     pixels there. The compact explorer stays, in the Layer-3 Explore tab
+     AND now in the Facilities section of every company profile; all three
+     surfaces share this view's state, so a plant opened in one is the
+     plant open in the others. */
   const playgroundPane = <FacilityPlayground model={displayModel} />;
-  const layer1 = viewMode === 'topology' ? networkPane
-    : viewMode === 'playground' ? playgroundPane
-      : viewMode === 'split' ? (<>{mapPane}{networkPane}</>)
-        : mapPane;
+  /* An old shared link can still carry `view=topology` or `view=split`.
+     Both open the map: the honest fallback, because the network those
+     links meant is a company's section now and the link does not name a
+     company. */
+  const workspace = viewMode === 'playground' ? 'playground' : 'geographic';
+  const layer1 = workspace === 'playground' ? playgroundPane : mapPane;
   /* Descriptive names, sentence case. The hint is a separate line rather
      than a clause welded onto the title, and it keeps the modelled-not-
      measured qualification where a reader meets the graph. */
-  const workspaceTitle = viewMode === 'topology' ? 'Public supplier network'
-    : viewMode === 'playground' ? 'Facility network'
-      : viewMode === 'split' ? 'World map and network'
-        : 'World map';
-  const workspaceHint = viewMode === 'topology' ? 'Firm relationships named in public documents — every edge opens its source'
-    : viewMode === 'playground' ? 'Modeled plant-to-plant relationships, not confirmed shipments or contracts'
-      : viewMode === 'split' ? 'Both views of the same selection'
-        : 'Facilities and country exposure';
+  const workspaceTitle = workspace === 'playground' ? 'Facility network' : 'World map';
+  const workspaceHint = workspace === 'playground'
+    ? 'Modeled plant-to-plant relationships, not confirmed shipments or contracts'
+    : 'Facilities and country exposure';
 
   return (
     <div style={{ minHeight: "100vh", background: C.bg, color: C.text, fontFamily: FONT_SANS }}>
@@ -491,16 +483,42 @@ function DashboardBody() {
 
       {wide ? (
         <>
-          <div style={{ display: "grid", gridTemplateColumns: viewMode === 'playground' ? "minmax(0, 1fr)" : viewMode === 'geographic' ? "minmax(0, 1fr) minmax(0, 1.9fr)" : "minmax(0, 1.9fr) minmax(0, 1fr)", gap: 1, background: C.line }}>
+          {/* THE INDUSTRY FLOW IS A RAIL, NOT A ROW.
+
+              It used to sit in row 1 beside the map and scroll away the
+              moment a reader moved down into the intelligence panel —
+              which is where the company profile lives, and therefore
+              where the company's position in the chain matters most. The
+              profile now carries the documented supplier network, the
+              modeled chain and the company's plants, so that column is
+              long; reading any of it meant losing the stage diagram it
+              should be read against.
+
+              So column 2 spans both rows and sticks: the semiconductor
+              chain stays on screen for the whole of the map AND the whole
+              of the profile beneath it. The Facilities workspace keeps the
+              full width it needs, and drops the rail. */}
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: workspace === 'playground' ? "minmax(0, 1fr)" : "minmax(0, 1.9fr) minmax(0, 1fr)",
+            gap: 1, background: C.line, alignItems: 'stretch',
+          }}>
             <Pane id="pane-map" highlight={tourTarget === "pane-map"} title={workspaceTitle} hint={workspaceHint}>{layer1}</Pane>
-            {viewMode !== 'playground' && (
-              <Pane id="pane-flow" highlight={tourTarget === "pane-flow"} title="Industry flow" hint="Select a stage to open its subsection"><FlowGraph sel={sel} setSel={setSel} hl={hl} model={displayModel} scenarioActive={model.scenarioActive} /></Pane>
+            {workspace !== 'playground' && (
+              <div style={{ gridColumn: 2, gridRow: '1 / span 2', background: C.bg, minWidth: 0 }}>
+                {/* maxHeight plus its own scroller: the flow graph is
+                    taller than some viewports, and a sticky element taller
+                    than the viewport never finishes sticking. */}
+                <div style={{ position: 'sticky', top: 0, maxHeight: '100vh', overflowY: 'auto', overflowX: 'hidden' }}>
+                  <Pane id="pane-flow" highlight={tourTarget === "pane-flow"} title="Industry flow" hint="Select a stage to open its subsection"><FlowGraph sel={sel} setSel={setSel} hl={hl} model={displayModel} scenarioActive={model.scenarioActive} /></Pane>
+                </div>
+              </div>
             )}
-          </div>
-          <div style={{ borderTop: `1px solid ${C.line}` }}>
-            <Pane id="pane-intel" highlight={tourTarget === "pane-intel"} title="Intelligence">
-              <Intel sel={sel} setSel={setSel} model={model} scenario={scenario} onResetScenario={resetScenario} scenarioActive={model.scenarioActive} feedTab={feedTab} setFeedTab={setFeedTab} baseGraph={baseGraph} horizontal />
-            </Pane>
+            <div style={{ gridColumn: 1, gridRow: 2, borderTop: `1px solid ${C.line}`, minWidth: 0 }}>
+              <Pane id="pane-intel" highlight={tourTarget === "pane-intel"} title="Intelligence">
+                <Intel sel={sel} setSel={setSel} model={model} scenario={scenario} onResetScenario={resetScenario} scenarioActive={model.scenarioActive} feedTab={feedTab} setFeedTab={setFeedTab} baseGraph={baseGraph} horizontal />
+              </Pane>
+            </div>
           </div>
         </>
       ) : (

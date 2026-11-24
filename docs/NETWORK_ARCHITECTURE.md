@@ -1,6 +1,6 @@
 # SSCIM Multilayer Network Playground — Architecture & Technology Decision
 
-> Superseded UI design: the Network workspace now uses the [public supplier network](PUBLIC_SUPPLIER_NETWORK.md). This document preserves the design of the modeled functional-centre engine; its old toolbar and graph components are no longer mounted.
+> Superseded UI design: there is no Network workspace. The [public supplier network](PUBLIC_SUPPLIER_NETWORK.md) is a section of the company profile. This document preserves the design of the modeled functional-centre engine; its old toolbar and graph components are no longer mounted.
 
 This document records the architecture and the visualization-technology decision for turning SSCIM's world map from **bilateral country↔country** links into an **interactive multilayer functional-centre network** (spec §4–§8, §41.4/5/7/8).
 

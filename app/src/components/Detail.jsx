@@ -13,8 +13,6 @@ import Quote from './Quote.jsx';
 import StockChart from './StockChart.jsx';
 import Chip from './Chip.jsx';
 import SpreadTree from './SpreadTree.jsx';
-import UpstreamTree from './UpstreamTree.jsx';
-import CustomerSpreadTree from './CustomerSpreadTree.jsx';
 import EventSites from './EventSites.jsx';
 import FacilityDetail from './FacilityDetail.jsx';
 import TrackButton from './TrackButton.jsx';
@@ -171,7 +169,12 @@ export default function Detail({ sel, setSel, model, scenario, onResetScenario, 
   /* ---- COMPANY: vulnerability / contribution / criticality + spread ---- */
   if (sel.type === "company") {
     const co = COMPANY_BY_ID[sel.id];
-    const { field, value: criticality } = COMPANY_CRITICALITY[sel.id];
+    /* Two DIFFERENT fields reach the profile, and conflating them would
+       be a quiet lie. `criticalityField` is the counterfactual field for
+       disrupting THIS company — what the stage-level spread is about.
+       `model.activeField` is what the chain is actually doing right now,
+       which is what the modeled chain weights its downstream half by. */
+    const { field: criticalityField, value: criticality } = COMPANY_CRITICALITY[sel.id];
     const rank = COMPANY_RANK.findIndex((x) => x.id === sel.id) + 1;
     const vulnerability = companyVulnerability(co, model.activeField);
     const contribution = companyContribution(co, model.activeField);
@@ -207,10 +210,15 @@ export default function Detail({ sel, setSel, model, scenario, onResetScenario, 
             all 109, so no two profiles can drift apart in wording. What
             stays above is the ENGINE OUTPUT for this company, which is a
             different kind of claim and keeps its own formula. */}
-        <CompanyProfile companyId={co.id} setSel={setSel} showHeader={false} />
-        <UpstreamTree cid={co.id} setSel={setSel} />
-        <CustomerSpreadTree cid={co.id} field={model.activeField} setSel={setSel} />
-        <SpreadTree sourceStages={Object.keys(co.stakes)} field={field} exclude={co.id} setSel={setSel} title="STAGE-LEVEL SPREAD (CRITICALITY VIEW)" />
+        {/* The upstream-origins tree, the customer-spread tree and the
+            stage-level spread used to be three widgets stacked here,
+            underneath the profile, each repeating a column the next
+            one already had. They are inside the profile now — one
+            modeled chain with this company in the middle — along with
+            the documented supplier network and this company's plants,
+            which used to be workspaces of their own. */}
+        <CompanyProfile companyId={co.id} setSel={setSel} showHeader={false}
+          field={model.activeField} stageField={criticalityField} model={model} />
       </div>
     );
   }

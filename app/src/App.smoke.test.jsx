@@ -86,8 +86,11 @@ describe('App smoke (static snapshot, Leaflet mocked)', () => {
     // control rather than a peer of it.
     expect(text).toContain('Shading');
     expect(text).toContain('Map');
-    expect(text).toContain('Network');
     expect(text).toContain('Facilities');
+    /* The Network workspace is gone: the documented supplier network is
+       a section of the company profile now, so there is no page-level
+       control for it to compete with Map and Facilities. */
+    expect(text).not.toContain('Side by side');
     expect(text.toUpperCase()).toContain('SSCIM INTELLIGENCE');
 
     /* The header carried a hand-written build label reading
@@ -181,8 +184,14 @@ describe('App smoke (static snapshot, Leaflet mocked)', () => {
     container.remove();
   });
 
-  it('restores the network view from the URL hash and mounts the public supplier network', async () => {
-    window.location.hash = '#view=topology';
+  it('opens the map for an old network link, and gives a company its own URL', async () => {
+    /* Two things at once, because they are the same change. A link from
+       before the merge asked for a workspace that no longer exists; it
+       must land somewhere honest rather than on a network for a company
+       the link never named. And a link that DOES name a company must
+       open that company — which is what makes a company trackable by
+       its own address. */
+    window.location.hash = '#view=topology&sel=company:tsmc';
     const container = document.createElement('div');
     document.body.appendChild(container);
     const root = createRoot(container);
@@ -191,15 +200,20 @@ describe('App smoke (static snapshot, Leaflet mocked)', () => {
     await flush(0);
 
     const text = container.textContent || '';
-    /* This pane used to hold the functional-centre topology graph, whose
-       1,030 connections were all composed by the engine from declared
-       priors. It now holds the public supplier network, where every edge
-       cites a document naming both parties. The hash key is still
-       `topology` so old links keep working. */
-    expect(text.toUpperCase()).toContain('PUBLIC SUPPLIER NETWORK');
+    // The workspace fell back to the map, not to a stale network page.
+    expect(text).toContain('World map');
+    expect(text.toUpperCase()).not.toContain('PUBLIC SUPPLIER NETWORK');
     expect(text.toUpperCase()).not.toContain('FUNCTIONAL-CENTRE NETWORK');
-    // The lens must arrive with its provenance rule stated, not just a graph.
-    expect(text).toMatch(/named in a public document/i);
+    // The named company opened, with the link that addresses it stated.
+    expect(text).toContain('TSMC');
+    expect(text).toContain('#sel=company:tsmc');
+    // Its documented network and its plants are sections of that profile.
+    expect(text).toContain('Network — every firm within three documented steps');
+    expect(text).toMatch(/Facilities — this company/);
+    // The modeled chain is ONE row through the company, not two trees.
+    expect(text).toContain('MODELED CHAIN · TWO LAYERS EACH SIDE');
+    expect(text).not.toContain('UPSTREAM ORIGINS');
+    expect(text).not.toContain('CUSTOMER-GRAPH SPREAD');
 
     await act(async () => { root.unmount(); });
     container.remove();

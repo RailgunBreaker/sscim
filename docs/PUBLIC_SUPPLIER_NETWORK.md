@@ -1,7 +1,9 @@
 # Public supplier network
 
-Updated 2026-11-25. This guide describes the current **Network** workspace.
-The public graph is separate from the propagation model defined in
+Updated 2026-11-25. This guide describes the documented supplier network.
+It is no longer a workspace of its own: it is the **Network** section of a
+company profile, drawn around the company whose profile is open. The public
+graph is separate from the propagation model defined in
 [Model v7](MODEL_V7_SPEC.md); its connections feed no risk score or index.
 
 ## Scope and coverage

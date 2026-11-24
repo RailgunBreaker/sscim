@@ -1,8 +1,10 @@
 # SSCIM system architecture
 
-## Current Network workspace
+## Where the supplier network lives
 
-The visible Network view now renders the public supplier graph. The previous NetworkGraph, NetworkToolbar, NetworkRoutePanel, NetworkAnalysisPanel and NetworkComparePanel components have been removed. The modeled functional-centre engine remains available to the existing model. Public edges feed no propagation score. Company profiles cover all registry firms, but only the 109 system identities are tracked. See [Public supplier network](PUBLIC_SUPPLIER_NETWORK.md) for the current component and data architecture.
+There is no Network workspace. The documented supplier graph is a section of the company profile, rendered by `SupplierTierExplorer` in embedded mode and rooted on the company whose profile is open; the facility network is a section of the same profile. The workspace bar offers **Map** and **Facilities** only, and the industry-flow pane is a sticky right-hand rail so the stage diagram stays on screen for the whole length of a profile.
+
+The previous NetworkGraph, NetworkToolbar, NetworkRoutePanel, NetworkAnalysisPanel and NetworkComparePanel components have been removed. The modeled functional-centre engine remains available to the existing model. Public edges feed no propagation score. Company profiles cover all registry firms, but only the 109 system identities are tracked. A link carrying `view=topology` or `view=split` opens the map, because such a link names no company. Every tracked company is addressable at `#sel=company:<id>`, and its profile states that link. See [Public supplier network](PUBLIC_SUPPLIER_NETWORK.md) for the current component and data architecture.
 
 ## The shape of the system in one idea
 

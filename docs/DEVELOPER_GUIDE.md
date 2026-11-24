@@ -4,7 +4,7 @@ Local setup, code layout, the data flow, and the rules that keep the published s
 
 ## Public supplier network development
 
-The Network workspace uses SupplierTierExplorer and SupplierTierGraph. Supplier data is authored in supplier-tiers/author-dataset.mjs, expand-system.mjs and expand-filings.mjs; generated application data is publicSupplierTiers.json. The [network guide](PUBLIC_SUPPLIER_NETWORK.md#authoring-and-implementation) lists the data flow, regeneration commands and drag regression. Temporary browser captures, downloads and logs belong in app/scratch/ and are not committed.
+The documented supplier network is a section of the company profile: `CompanyProfile` renders `SupplierTierExplorer` with `fixedRootId` (embedded mode, no directory, no nested profile) over `SupplierTierGraph`, and `CompanyFacilities` renders the shared compact facility explorer for the same company. The modeled upstream and downstream trees are one component, `CompanyChainSpread`. Supplier data is authored in supplier-tiers/author-dataset.mjs, expand-system.mjs and expand-filings.mjs; generated application data is publicSupplierTiers.json. The [network guide](PUBLIC_SUPPLIER_NETWORK.md#authoring-and-implementation) lists the data flow, regeneration commands and drag regression. Temporary browser captures, downloads and logs belong in app/scratch/ and are not committed.
 
 ## Repository layout
 

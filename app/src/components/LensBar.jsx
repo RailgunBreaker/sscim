@@ -1,9 +1,8 @@
-import { useState, useEffect } from 'react';
 import { color, space, font, radius, typeStyle } from '../ui/tokens.js';
 import { SegmentedControl, Button, StatusBadge } from '../ui/primitives.jsx';
 import { useVault } from '../data/VaultContext.jsx';
 import { useInteraction } from '../interaction/InteractionContext.jsx';
-import { LENSES, LENS_LABELS, VIEW_MODES } from '../interaction/reducer.js';
+import { LENSES, LENS_LABELS } from '../interaction/reducer.js';
 
 /* WHAT THIS BAR USED TO BE. One row holding two radiogroups of identical
    appearance — VIEW (Geographic / Topology / Split / ⇄ Facility Playground)
@@ -14,23 +13,23 @@ import { LENSES, LENS_LABELS, VIEW_MODES } from '../interaction/reducer.js';
 
    They are not peers. The first picks WHICH WORKSPACE you are in; the
    second picks WHICH MEASUREMENT is shaded within it. So the workspace
-   choice is now primary and named for the task ("Map", "Network",
-   "Facilities"), and the lens is a secondary control that reads as
-   subordinate to it.
+   choice is now primary and named for the task, and the lens is a
+   secondary control that reads as subordinate to it.
 
-   Split view is not removed. It is a modifier on the two graph workspaces —
-   "show the other one alongside" — which is what it actually is, rather
-   than a fourth peer competing with them. */
+   THE NETWORK WORKSPACE IS GONE, and with it the side-by-side modifier
+   that existed to put it next to the map. The documented supplier
+   network was never a view of the world; it was a view of ONE FIRM and
+   its counterparties, which is why every visit to it began by choosing
+   a firm. It is a section of that firm's profile now, where the company
+   it is centred on is named above it, and the industry flow it should
+   be read against sits beside it. Old links carrying `view=topology` or
+   `view=split` open the map, which is the honest fallback: it never
+   shows a reader a network for a company they did not pick. */
 
 const WORKSPACES = [
   { value: 'geographic', label: 'Map', title: 'World map of facilities and country exposure' },
-  { value: 'topology', label: 'Network', title: 'Functional-centre network graph' },
-  { value: 'playground', label: 'Facilities', title: 'Trace the modeled network around one plant. Modeled relationships, not shipments.' },
+  { value: 'playground', label: 'Facilities', title: 'Trace the modeled network around one plant, at full width. Modeled relationships, not shipments.' },
 ];
-
-/* Which workspace a split view belongs to. Split shows both graphs, so the
-   primary control marks whichever single view the reader last chose. */
-const primaryFor = (viewMode, lastSingle) => (viewMode === 'split' ? lastSingle : viewMode);
 
 function entityLabel(sel, { COUNTRY_NAMES, STAGE_BY_ID, COMPANY_BY_ID, EVENTS }, scenarioName) {
   if (!sel) return null;
@@ -50,24 +49,18 @@ export default function LensBar({ scenarioName }) {
   const { data, engine } = useVault();
   const { state, setLens, clear, back, lensAvailable, setViewMode } = useInteraction();
   const { lens, selected, history, scenarioActive, viewMode } = state;
-  const [lastSingle, setLastSingle] = useState(viewMode === 'split' ? 'geographic' : viewMode);
-
-  useEffect(() => {
-    if (viewMode !== 'split' && VIEW_MODES.includes(viewMode)) setLastSingle(viewMode);
-  }, [viewMode]);
 
   const names = {
     COUNTRY_NAMES: data.COUNTRY_NAMES, STAGE_BY_ID: engine.STAGE_BY_ID,
     COMPANY_BY_ID: data.COMPANY_BY_ID, EVENTS: data.EVENTS,
   };
   const label = entityLabel(selected, names, scenarioName);
-  const workspace = primaryFor(viewMode, lastSingle);
-  const isGraphWorkspace = workspace === 'geographic' || workspace === 'topology';
-  const splitOn = viewMode === 'split';
+  /* A link from before the network workspace was folded into the company
+     profile can still carry `topology` or `split`; both open the map. */
+  const workspace = WORKSPACES.some((w) => w.value === viewMode) ? viewMode : 'geographic';
 
-  /* Only the lens applies to every workspace; the split modifier applies to
-     the two graph workspaces. Facilities has its own controls, which live
-     with the graph rather than in the chrome. */
+  /* Only the lens applies to both workspaces. Facilities has its own
+     controls, which live with the graph rather than in the chrome. */
   return (
     <nav
       className="cbar"
@@ -85,21 +78,6 @@ export default function LensBar({ scenarioName }) {
         value={workspace}
         onChange={(v) => setViewMode(v)}
       />
-
-      {isGraphWorkspace && (
-        <Button
-          variant="quiet"
-          size="sm"
-          aria-pressed={splitOn}
-          onClick={() => setViewMode(splitOn ? lastSingle : 'split')}
-          title={workspace === 'geographic'
-            ? 'Show the network graph beside the map'
-            : 'Show the world map beside the network graph'}
-          style={splitOn ? { color: color.text.accent, background: color.surface.selected } : undefined}
-        >
-          {splitOn ? 'Side by side · on' : 'Side by side'}
-        </Button>
-      )}
 
       <div style={{ display: 'flex', alignItems: 'center', gap: space.sm, minWidth: 0 }}>
         <span id="lens-label" style={{ ...typeStyle.meta, whiteSpace: 'nowrap' }}>Shading</span>

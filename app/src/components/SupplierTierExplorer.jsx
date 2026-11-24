@@ -35,15 +35,30 @@ const chip = {
   color: C.dim, fontSize: 12, padding: '4px 9px', cursor: 'pointer',
 };
 
-export default function SupplierTierExplorer({ compact = false, onSelectVaultCompany }) {
+/* EMBEDDED MODE (`fixedRootId`). The explorer no longer has a page of
+   its own: it is rendered inside the profile of the company it is
+   centred on. In that mode it loses the parts that only make sense on a
+   page of its own — the preamble, the company directory, the free-text
+   search, the "centre company" select — because the profile around it
+   already names the company, and it loses its nested profile panel,
+   because a profile that renders a profile is a loop. Clicking through
+   to another firm hands the whole profile over to that firm instead
+   (`onOpenCompany`), which is both what a reader means by the click and
+   what gives every company a URL of its own. */
+export default function SupplierTierExplorer({ compact = false, onSelectVaultCompany, fixedRootId = null, onOpenCompany = null }) {
   const { state: { publicNetworkRequest } } = useInteraction();
+  const embedded = Boolean(fixedRootId);
   const index = useMemo(() => buildSupplierIndex(), []);
 
   const coverage = useMemo(() => systemCompanyCoverage(index), [index]);
-  const [rootId, setRootId] = useState(null);
+  const [rootId, setRootId] = useState(fixedRootId);
   const [trail, setTrail] = useState([]);
   const [direction, setDirection] = useState('both');
-  const [hops, setHops] = useState(3);
+  /* Three documented steps from TSMC is 161 firms. That was a legible
+     first view at 1180px of workspace; in a profile column it is a cloud.
+     Embedded, the graph opens at two steps and the depth control is right
+     there — the table below it is complete at any depth either way. */
+  const [hops, setHops] = useState(fixedRootId ? 2 : 3);
   const [colourBy, setColourBy] = useState('tier');
   const [anchorTiers, setAnchorTiers] = useState(true);
   const [hiddenGroups, setHiddenGroups] = useState(() => new Set());
@@ -60,16 +75,29 @@ export default function SupplierTierExplorer({ compact = false, onSelectVaultCom
   const [profileId, setProfileId] = useState(null);
   const workspaceRef = useRef(null);
   useEffect(() => {
-    if (rootId) workspaceRef.current?.scrollIntoView({ block: 'start' });
-  }, [rootId, publicNetworkRequest]);
+    /* Embedded, the profile owns the scroll position: yanking the page
+       down to the graph every time a reader opens a company is the
+       opposite of what they asked for. */
+    if (rootId && !embedded) workspaceRef.current?.scrollIntoView({ block: 'start' });
+  }, [rootId, publicNetworkRequest, embedded]);
+  /* The profile hands the root down. Re-centre on it, and drop every
+     selection that belonged to the firm we just left. */
+  useEffect(() => {
+    if (!fixedRootId) return;
+    setRootId(fixedRootId);
+    setTrail([]); setSelectedKey(null); setDetailId(null); setProfileId(null);
+  }, [fixedRootId]);
   useEffect(() => {
     if (!publicNetworkRequest || !index.companies[publicNetworkRequest.id]) return;
-    setRootId(publicNetworkRequest.id);
+    /* Embedded, a request naming another firm is that firm's business;
+       only the direction applies here, and only for this firm. */
+    if (embedded && publicNetworkRequest.id !== fixedRootId) return;
+    if (!embedded) setRootId(publicNetworkRequest.id);
     setDirection(publicNetworkRequest.direction);
-    setHops(3);
+    setHops(embedded ? 2 : 3);
     setTrail([]); setSelectedKey(null); setDetailId(null); setProfileId(null);
     setHiddenGroups(new Set());
-  }, [publicNetworkRequest, index]);
+  }, [publicNetworkRequest, index, embedded, fixedRootId]);
 
   const groups = useMemo(
     () => (hiddenGroups.size ? new Set(CHAIN_GROUPS.filter((g) => !hiddenGroups.has(g))) : null),
@@ -99,6 +127,9 @@ export default function SupplierTierExplorer({ compact = false, onSelectVaultCom
   }, [index, rootId, detailId, direction, hops, traversal]);
 
   const focus = useCallback((id, { asRoot = false } = {}) => {
+    /* Embedded, "centre on this firm" means "open that firm's profile":
+       the graph follows the profile, never the other way round. */
+    if (embedded && onOpenCompany && index.companies[id]) { onOpenCompany(id); return; }
     if (!index.companies[id]?.vaultId) {
       setProfileId(id);
       setDetailId(id);
@@ -113,7 +144,7 @@ export default function SupplierTierExplorer({ compact = false, onSelectVaultCom
     setDetailId(null);
     setProfileId(null);
     if (asRoot) setTrail([]);
-  }, [index]);
+  }, [index, embedded, onOpenCompany]);
 
   /* Clicking a firm also lights its position in the industry-flow panel
      beside this one, for the 54 firms that are the same company the
@@ -132,12 +163,14 @@ export default function SupplierTierExplorer({ compact = false, onSelectVaultCom
   /* What the graph calls on a click: inspect without re-centring unless
      the reader actually asked to re-centre. */
   const inspect = useCallback((id, { recentre = false } = {}) => {
-    lightUpstreamPanel(id);
+    /* Reading a firm in the side panel must not change which company the
+       surrounding profile is about — that is what `recentre` is for. */
+    if (!embedded) lightUpstreamPanel(id);
     if (recentre) { focus(id); return; }
     setDetailId(id);
-    setProfileId(id);
+    if (!embedded) setProfileId(id);
     setSelectedKey(null);
-  }, [focus, lightUpstreamPanel]);
+  }, [focus, lightUpstreamPanel, embedded]);
 
   const back = useCallback(() => {
     setTrail((t) => {
@@ -161,6 +194,14 @@ export default function SupplierTierExplorer({ compact = false, onSelectVaultCom
   });
 
   /* ---------------- starting state ---------------- */
+  if (!rootId && embedded) {
+    return (
+      <p style={{ fontSize: 12.5, color: C.faint, fontStyle: 'italic', margin: 0, lineHeight: 1.6 }}>
+        This company is not registered in the documented-relationship dataset, so there is no documented network
+        to draw. An absence of disclosure, not of trade.
+      </p>
+    );
+  }
   if (!rootId) {
     const roots = suggestedRoots(index, Infinity).filter(id => index.companies[id].vaultId).slice(0, 9);
     const hits = searchCompanies(index, query, 10);
@@ -230,21 +271,25 @@ export default function SupplierTierExplorer({ compact = false, onSelectVaultCom
 
   return (
     <div ref={workspaceRef} style={{ display: 'grid', gap: 12, minWidth: 0, scrollMarginTop: 70 }}>
-      <details>
-        <summary style={{ cursor: 'pointer', color: C.accent }}>Browse all {coverage.length} tracked companies</summary>
-        <CompanyDirectory index={index} coverage={coverage} onFocus={(id, dir) => { setDirection(dir); focus(id); }} onProfile={setProfileId} />
-      </details>
-      <label style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 10, color: C.dim }}>
-        Centre company
-        <select aria-label="Centre company" value={rootId} onChange={e => focus(e.target.value)}
-          style={{ maxWidth: '100%', padding: 9, background: C.panel, color: C.text, border: `1px solid ${C.line}`, borderRadius: 4 }}>
-          <optgroup label="Companies tracked in the system">
-            {coverage.map(c => <option key={c.id} value={c.id}>{c.name}{c.documented ? '' : ' — evidence gap'}</option>)}
-          </optgroup>
-          {!index.companies[rootId].vaultId && <option value={rootId}>{root.name} (context company)</option>}
-        </select>
-        <Button variant="quiet" size="sm" onClick={() => { setProfileId(rootId); setDetailId(rootId); }}>Company profile</Button>
-      </label>
+      {!embedded && (
+        <details>
+          <summary style={{ cursor: 'pointer', color: C.accent }}>Browse all {coverage.length} tracked companies</summary>
+          <CompanyDirectory index={index} coverage={coverage} onFocus={(id, dir) => { setDirection(dir); focus(id); }} onProfile={setProfileId} />
+        </details>
+      )}
+      {!embedded && (
+        <label style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 10, color: C.dim }}>
+          Centre company
+          <select aria-label="Centre company" value={rootId} onChange={e => focus(e.target.value)}
+            style={{ maxWidth: '100%', padding: 9, background: C.panel, color: C.text, border: `1px solid ${C.line}`, borderRadius: 4 }}>
+            <optgroup label="Companies tracked in the system">
+              {coverage.map(c => <option key={c.id} value={c.id}>{c.name}{c.documented ? '' : ' — evidence gap'}</option>)}
+            </optgroup>
+            {!index.companies[rootId].vaultId && <option value={rootId}>{root.name} (context company)</option>}
+          </select>
+          <Button variant="quiet" size="sm" onClick={() => { setProfileId(rootId); setDetailId(rootId); }}>Company profile</Button>
+        </label>
+      )}
       <p style={{ margin: 0, fontSize: 12, color: C.dim }}>Levels are shortest documented steps from {root.name}. Evidence dates describe disclosures, not live shipments.</p>
       {/* ---- toolbar: history as actions, choices as segmented controls,
              the same division of form the facility lens uses ---- */}
@@ -354,8 +399,9 @@ export default function SupplierTierExplorer({ compact = false, onSelectVaultCom
             <Legend colourBy={colourBy} index={viewIndex} anchorTiers={anchorTiers}
               root={root}
               onOpenRoot={() => {
-                setProfileId(rootId);
                 setDetailId(rootId);
+                if (embedded) return;
+                setProfileId(rootId);
                 requestAnimationFrame(() => document.getElementById('chain-company-profile')?.scrollIntoView({ block: 'start' }));
               }} />
             {(selectedLink || detailId) && <div style={{ marginTop: 20, borderTop: `1px solid ${C.line}`, paddingTop: 16 }}>
@@ -364,7 +410,10 @@ export default function SupplierTierExplorer({ compact = false, onSelectVaultCom
                 ? <LinkDetail index={index} link={selectedLink} onClose={() => setSelectedKey(null)} onFocus={inspect} />
                 : detailId && index.companies[detailId]
                   ? <FirmDetail index={viewIndex} id={detailId} isRoot={detailId === rootId} onRecentre={focus}
-                      onFocus={inspect} onSelectLink={setSelectedKey} onOpenProfile={() => {
+                      onFocus={inspect} onSelectLink={setSelectedKey}
+                      profileLabel={embedded ? 'Open this firm as the profile' : 'View company profile'}
+                      onOpenProfile={() => {
+                        if (embedded) { onOpenCompany?.(detailId); return; }
                         setProfileId(detailId);
                         requestAnimationFrame(() => document.getElementById('chain-company-profile')?.scrollIntoView({ block: 'start' }));
                       }} />
@@ -378,7 +427,7 @@ export default function SupplierTierExplorer({ compact = false, onSelectVaultCom
 
       {/* ---- the complete table, which the graph's column caps never
              apply to: at any depth this reaches every drawn firm ---- */}
-      {profileId && <ChainCompanyProfile id={profileId} onOpen={inspect} onClose={() => setProfileId(null)} />}
+      {profileId && !embedded && <ChainCompanyProfile id={profileId} onOpen={inspect} onClose={() => setProfileId(null)} />}
       {traversal && [1, 2, 3].filter(level => level <= hops).map(level => {
         const firms = traversal.nodes.filter(n => Math.abs(n.hop) === level);
         return <Disclosure key={level} summary={`Level ${level}: ${firms.length} firms from ${root.name}`}>
@@ -401,7 +450,10 @@ export default function SupplierTierExplorer({ compact = false, onSelectVaultCom
           </div>)}
         </section>
       )}
-      <RelationshipTable index={viewIndex} traversal={traversal} onSelectLink={setSelectedKey} selectedKey={selectedKey} onOpenCompany={inspect} />
+      {/* Twenty-five relationships with their citations is a full-width
+             table. Inside a profile column it is a wall, so there it opens
+             on request — the count is in the summary either way. */}
+      <RelationshipTable index={viewIndex} traversal={traversal} onSelectLink={setSelectedKey} selectedKey={selectedKey} onOpenCompany={inspect} defaultOpen={!embedded} />
 
       <Disclosure summary={`The ${Object.keys(index.sources).length} documents this lens is built from`}>
         <ul style={{ margin: '4px 0 0', paddingLeft: 18, color: C.dim, fontSize: 12.5, lineHeight: 1.6 }}>
@@ -655,7 +707,7 @@ function RelList({ index, links, endOf, onFocus, onSelectLink, emptyText }) {
   );
 }
 
-function FirmDetail({ index, id, isRoot = true, onRecentre, onFocus, onSelectLink, onOpenProfile }) {
+function FirmDetail({ index, id, isRoot = true, onRecentre, onFocus, onSelectLink, onOpenProfile, profileLabel = 'View company profile' }) {
   const c = index.companies[id];
   const t = index.tier[id];
   const sup = index.suppliersOf[id];
@@ -671,7 +723,7 @@ function FirmDetail({ index, id, isRoot = true, onRecentre, onFocus, onSelectLin
             aria-label={`Re-centre the graph on ${c.name}`}>Centre</Button>
         )}
       </div>
-      <Button variant="quiet" size="sm" onClick={onOpenProfile}>View company profile</Button>
+      <Button variant="quiet" size="sm" onClick={onOpenProfile}>{profileLabel}</Button>
       <p style={{ margin: '3px 0 0', fontSize: 12, color: C.dim }}>
         Level {t ?? 'outside view'} &middot; {index.countryName(c.country)} &middot; {index.layerName(c.layer)}
       </p>
@@ -765,7 +817,7 @@ function LinkDetail({ index, link, onClose, onFocus }) {
    there — paging is a rendering decision, never a quiet truncation. */
 const PAGE = 25;
 
-function RelationshipTable({ index, traversal, onSelectLink, selectedKey, onOpenCompany }) {
+function RelationshipTable({ index, traversal, onSelectLink, selectedKey, onOpenCompany, defaultOpen = true }) {
   const [q, setQ] = useState('');
   const [limit, setLimit] = useState(PAGE);
   const rows = useMemo(() => {
@@ -790,7 +842,7 @@ function RelationshipTable({ index, traversal, onSelectLink, selectedKey, onOpen
   const td = { padding: '7px 10px 7px 0', verticalAlign: 'top', borderTop: `1px solid ${C.line}` };
 
   return (
-    <Disclosure defaultOpen summary={`Every drawn relationship, with its document (${traversal.links.length})`}>
+    <Disclosure defaultOpen={defaultOpen} summary={`Every drawn relationship, with its document (${traversal.links.length})`}>
       <input
         type="search" value={q} onChange={(e) => { setQ(e.target.value); setLimit(PAGE); }}
         placeholder="Filter by firm or product&hellip;" aria-label="Filter the relationship table"

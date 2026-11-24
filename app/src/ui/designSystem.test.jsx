@@ -84,7 +84,7 @@ describe('colour contrast (WCAG AA)', () => {
 describe('typography floor', () => {
   const SRC = resolve(import.meta.dirname, '..');
   const GRAPH_FILES = new Set(['FlowGraph.jsx', 'FacilityGraph.jsx', 'Spark.jsx',
-    'SpreadTree.jsx', 'UpstreamTree.jsx', 'CustomerSpreadTree.jsx', 'IndexHistory.jsx',
+    'SpreadTree.jsx', 'CompanyChainSpread.jsx', 'IndexHistory.jsx',
     'SupplierTierGraph.jsx']);
 
   const walk = (dir) => readdirSync(dir).flatMap((e) => {

@@ -59,7 +59,9 @@ const SCENES = [
   { id: 'landing', page: 'index.html', what: 'Landing page' },
   { id: 'dashboard', page: 'sscim-app.html', what: 'Default dashboard' },
   { id: 'events', page: 'sscim-app.html', hash: '#view=geographic', tab: 'events', what: 'Events view' },
-  { id: 'network', page: 'sscim-app.html', hash: '#view=topology', what: 'Network view' },
+  /* The network is no longer a view of its own: it is a section of the
+     company profile, so the scene that records it is a company. */
+  { id: 'company-tsmc', page: 'sscim-app.html', hash: '#sel=company:tsmc', what: 'Company profile, with its documented network and plants' },
   { id: 'playground-start', page: 'sscim-app.html', hash: '#view=playground', what: 'Facility Playground, initial state' },
   { id: 'playground-tsmc-3hop', page: 'sscim-app.html', hash: '#view=playground&fac=tsmc_fab18&facd=3', what: 'Facility Playground, TSMC Fab 18 at three hops' },
   /* Below 1080px the three panes collapse to one-at-a-time tabs, and the

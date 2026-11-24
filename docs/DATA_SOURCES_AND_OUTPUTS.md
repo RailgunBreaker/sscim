@@ -77,7 +77,7 @@ misled:
   omits everything indirect; award lists name winners, not suppliers.
 
 The dataset feeds **no score, no index and no propagation**. It powers the
-Network workspace and company-profile evidence sections. Regenerate it with
+company-profile network and evidence sections. Regenerate it with
 `node supplier-tiers/author-dataset.mjs`; this also runs `expand-system.mjs`, `expand-filings.mjs` and
 preserves the reviewed company crosswalk. Every edge must cite a registered
 source. The 109 system companies are the tracking set, while contextual firms

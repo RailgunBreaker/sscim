@@ -72,10 +72,11 @@ in identical chips, with 9px shouted group labels. They read as one list of
 eight peers. They are not peers: the first picks a **workspace**, the second
 picks a **measurement** shown inside it.
 
-Now: **Map · Network · Facilities** as the primary control, with the metric
-lens visibly subordinate under the label "Shading". Split view is not removed —
-it is a *Side by side* toggle on the two graph workspaces, which is what it
-actually is.
+Now: **Map · Facilities** as the primary control, with the metric lens
+visibly subordinate under the label "Shading". The Network workspace, and the
+*Side by side* toggle that existed to put it next to the map, are both gone:
+the documented supplier network was never a view of the world, it was a view
+of one firm, so it is a section of that firm's profile.
 
 `LAYER 1` / `LAYER 2` / `LAYER 3` are gone from the interface. They were the
 internal architecture, and they remain in the developer documentation, where

@@ -35,7 +35,14 @@ export function sameSel(a, b) {
 
 export const DRAFT_DIRECTIONS = ['adverse', 'mitigating', 'neutral'];
 
+/* `topology` and `split` were the public-supplier-network workspace and
+   the modifier that put it beside the map. The network is a section of a
+   company's profile now, so neither is reachable from the workspace bar.
+   They stay in this list so an old shared link still decodes to a legal
+   state rather than being dropped on the floor; LensBar and App both
+   render them as the map. */
 export const VIEW_MODES = ['geographic', 'topology', 'split', 'playground'];
+export const WORKSPACE_VIEW_MODES = ['geographic', 'playground'];
 
 /* Facility-playground defaults. This lives in the shared reducer rather
    than inside FacilityExplorer/FacilityPlayground because it was local
@@ -189,10 +196,15 @@ export function interactionReducer(state, action) {
     case 'SET_FOCUSED_PATH':
       return { ...state, focusedPath: action.payload };
 
+    /* Asks the documented network for a direction. It used to also switch
+       the dashboard to the network workspace; that workspace is gone, and
+       the network it addresses is now rendered inside the profile of the
+       company named here, so the request no longer moves the reader
+       anywhere — it only says which way to traverse. */
     case 'OPEN_PUBLIC_NETWORK': {
       const { id, direction = 'both' } = action.payload || {};
       if (!id || !FACILITY_DIRECTIONS.includes(direction)) return state;
-      return { ...state, viewMode: 'topology', publicNetworkRequest: {
+      return { ...state, publicNetworkRequest: {
         id, direction, revision: (state.publicNetworkRequest?.revision || 0) + 1,
       } };
     }

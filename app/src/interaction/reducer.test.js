@@ -8,7 +8,11 @@ describe('profile to public network navigation', () => {
     const initial = initInteraction(S('company', 'amd'));
     const action = { type: 'OPEN_PUBLIC_NETWORK', payload: { id: 'system-amd', direction: 'downstream' } };
     const next = interactionReducer(initial, action);
-    expect(next.viewMode).toBe('topology');
+    /* It used to also switch the dashboard to the network workspace.
+       That workspace is gone — the documented network is a section of
+       the company's own profile — so the request now says only which
+       way to traverse, and moves the reader nowhere. */
+    expect(next.viewMode).toBe('geographic');
     expect(next.selected).toEqual(initial.selected);
     expect(next.publicNetworkRequest).toEqual({ id: 'system-amd', direction: 'downstream', revision: 1 });
     expect(interactionReducer(next, action).publicNetworkRequest.revision).toBe(2);
