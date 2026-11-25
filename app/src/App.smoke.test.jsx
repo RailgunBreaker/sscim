@@ -245,12 +245,14 @@ describe('App smoke (static snapshot, Leaflet mocked)', () => {
     const heading = text.match(/Network — (\d+) documented suppliers?, (\d+) documented customers?/);
     expect(heading).not.toBeNull();
     const [, suppliers, customers] = heading.map(Number);
-    expect(suppliers).toBeGreaterThanOrEqual(6);
+    expect(suppliers).toBeGreaterThanOrEqual(10);
     // The point of the pass: more customers than suppliers, not one.
-    expect(customers).toBeGreaterThanOrEqual(10);
+    expect(customers).toBeGreaterThanOrEqual(20);
     expect(customers).toBeGreaterThan(suppliers);
-    // And the named ones are on the page, in both directions.
-    for (const firm of ['Wolfspeed', 'GlobalFoundries', 'Honda', 'VinFast', 'Nidec']) {
+    // And the named ones are on the page, in both directions and from
+    // all three passes: partnerships, design wins, and the rest.
+    for (const firm of ['Wolfspeed', 'GlobalFoundries', 'Honda', 'VinFast', 'Nidec',
+      'Bosch', 'Nissan', 'Samsung', 'Avnet']) {
       expect(text).toContain(firm);
     }
 

@@ -11,9 +11,9 @@ graph is separate from the propagation model defined in
 | Record | Current count |
 | --- | ---: |
 | System companies eligible for tracking and centring | 109 |
-| Companies with profiles in the public registry | 442 |
-| Documented relationships | 597 |
-| Public source documents | 128 |
+| Companies with profiles in the public registry | 447 |
+| Documented relationships | 605 |
+| Public source documents | 135 |
 | System companies with a documented connection | 109 |
 | System companies reaching level 2 in either direction | 92 |
 | System companies reaching level 3 in either direction | 81 |
@@ -193,9 +193,9 @@ the page to it, including when the profile belongs to an untracked contextual
 firm. Embedded in a profile the graph opens at **one** documented step — the
 firms that company is itself named with — and the depth control walks further;
 on its own page it still opens at three. One step rather than three because at
-three steps a profile stops being about its company: Renesas has 22 named
-counterparties and 117 firms within three documented steps, and 71 of the 72
-firms at its second upstream step arrive through one of those 22 — TSMC, whose
+three steps a profile stops being about its company: Renesas has 30 named
+counterparties and 157 firms within three documented steps, and 70 of the 74
+firms at its second upstream step arrive through one of those 30 — TSMC, whose
 own published supplier list is 72 firms long. On small screens the Intel tab
 opens automatically. The tracked-company directory
 remains accessible above an open graph; each row also opens the company profile.
@@ -248,19 +248,39 @@ reached arrived as somebody's *supplier*: 70 of those 74 were inherited from
 TSMC's own list, two steps away, and the side where an MCU and SoC maker
 actually trades was empty.
 
-The pass added 12 firms, 19 relationships and 21 documents, every one fetched
-and read on 2026-11-25. Renesas now carries **8 documented suppliers and 14
+Three passes, each finding a kind of counterparty the previous one could not
+see, added 17 firms, 28 relationships and 28 documents, every document fetched
+and read on 2026-11-25. Renesas now carries **10 documented suppliers and 20
 documented customers**.
 
 - Upstream: Wolfspeed (150mm SiC bare and epitaxial wafers, ten-year
   agreement), GlobalFoundries (FD-SOI, BCD and feature-rich CMOS capacity,
-  announced February 2026 with tape-outs stated for mid-2026), Andes Technology
-  and SiFive (RISC-V CPU IP), Arm (Cortex-A720AE and Cortex-R52 cores in the
-  R-Car X5H), Synopsys (DSO.ai design software), and two newer documents on the
-  existing TSMC pair naming the N3A automotive process.
+  announced February 2026 with tape-outs stated for mid-2026), four IP vendors
+  — Arm (Cortex-A720AE and Cortex-R52 in the R-Car X5H), Andes and SiFive
+  (RISC-V CPU cores) and Imagination (the IMG BXS GPU in R-Car Gen 5) — two EDA
+  vendors, Synopsys and Cadence, and two newer documents on the existing TSMC
+  pair naming the N3A automotive process.
 - Downstream: Honda, VinFast, Audi, Great Wall Motor, Nevs, Inventec, Nidec,
-  Nullmax and Tata Elxsi, alongside the existing Apple supplier-list entry; then
-  the tier ones — Toyota/Denso, Robert Bosch, Continental and ZF.
+  Nullmax and Tata Elxsi, alongside the existing Apple supplier-list entry; the
+  tier ones — Toyota/Denso, Robert Bosch, Continental and ZF — plus Nissan;
+  the memory-module business, Samsung and Micron; and the distribution channel,
+  Avnet, Future Electronics and WT Microelectronics.
+
+Each pass is a different kind of document, and that is the lesson of doing one
+company properly. A **partnership release** is what a chipmaker publishes when
+it wants a name beside its own, and searching for those found nine firms. A
+**design win** is announced as a product, which is where the tier ones and the
+carmakers were. A **part launch** carries its customer in a quote near the
+bottom, which is where the memory-module business was — Samsung and Micron, a
+line of work with nothing to do with cars. And the **distribution channel**
+appears in none of those, because a distributor is not a design win; it took a
+document about the channel itself.
+
+The three distributor edges are the weakest customers in this dataset and say
+so on themselves: a distributor buys to resell, so the edge records where the
+parts go next and nothing about who finally uses them. The fourth distributor
+in that 2020 announcement, WPI Group, is deliberately absent — the only thing
+the document says about it is that the relationship ended.
 
 The tier ones came from a second pass over the same company, because the first
 pass had a bias of its own. Partnership releases are what a chipmaker publishes
@@ -290,11 +310,22 @@ nothing about the facility assembling or testing anything for Renesas. A
 shareholding is not a supply relationship. Renesas still has no documented
 packaging or test supplier, and that hole is left visible.
 
-The demand side is also exactly one step deep: none of the 14 documented
-customers has a documented customer of its own here. Tier ones do not publish
-their carmakers, and the Continental release is explicit about it — its Body
-HPC is "already going into production at a global vehicle manufacturer" who is
-never named.
+After two passes the demand side was exactly one step deep: not one documented
+customer had a documented customer of its own. The memory-module work changed
+that, and only there — Renesas now reaches Qualcomm, NVIDIA and AMD at two
+steps, through Samsung and Micron, because DRAM makers' customers are
+themselves disclosed. The automotive side is still one step deep: tier ones do
+not publish their carmakers, and the Continental release is explicit about it
+— its Body HPC was "already going into production at a global vehicle
+manufacturer" who is never named.
+
+What is still missing after three passes is as informative as what was found.
+There is no packaging or test supplier, no wafer or equipment supplier for
+Renesas' own fabs, and **no industrial customer at all** — searches for
+Panasonic, Omron, Yaskawa, Mitsubishi Electric and Fanuc returned product
+pages and no document naming a pair. Roughly half of this company's units are
+said to go to industrial, IoT and infrastructure markets, and this dataset can
+see almost none of it.
 
 Each downstream edge carries its own qualification on the edge itself, because
 they are not equally strong and the reader has to see which is which without
@@ -322,9 +353,9 @@ six firms to the left of Renesas, ten to the right.
 
 ## Profile audit: 2026-11-25
 
-All 442 public-network company records resolve to a profile with a name,
+All 447 public-network company records resolve to a profile with a name,
 introduction and relationship source references. The 110 mapped registry nodes
-represent exactly 109 distinct tracked system companies; the other 332 profiles
+represent exactly 109 distinct tracked system companies; the other 337 profiles
 provide contextual supplier/customer information. Every tracked company has a
 control record. Contextual profiles have no modeled exposure, control record or
 tracking eligibility: profile availability does not mean ownership research is

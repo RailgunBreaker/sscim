@@ -1421,6 +1421,83 @@
       "kind": "Company disclosure",
       "seen": "fetched",
       "retrieved": "2026-11-25"
+    },
+    "renesas-imagination-gpu-2025": {
+      "publisher": "Imagination Technologies",
+      "title": "Imagination GPU Powers Renesas R-Car Gen 5 SoC",
+      "url": "https://www.imaginationtech.com/news/imagination-gpu-powers-renesas-r-car-gen-5-soc/",
+      "published": "2025-03-10",
+      "evidence": "P1-supplier",
+      "note": "IP vendor names its licensee: the IMG BXS automotive-grade B-Series GPU is licensed by Renesas and powers the next-generation R-Car Gen 5 SoC. The two companies have licensed graphics IP to each other's products since at least 2011, when the agreement covered the PowerVR Series6 family. No volume or royalty figure is given.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "renesas-cadence-verisium-2023": {
+      "publisher": "Cadence Design Systems",
+      "title": "Cadence Verisium AI-Driven Verification Platform Accelerates Debug Productivity for Renesas",
+      "url": "https://www.eejournal.com/industry_news/cadence-verisium-ai-driven-verification-platform-accelerates-debug-productivity-for-renesas",
+      "published": "2023-03-09",
+      "evidence": "P1-supplier",
+      "note": "Cadence's own press release, carrying its San Jose dateline and 'today announced' wording, read on EE Journal because both cadence.com and the Business Wire original answer 403 to an automated fetch. The release names the Verisium platform and its AutoTriage, SemanticDiff, WaveMiner, PinDown, Debug and Manager apps as deployed by Renesas on an R-Car SoC, and quotes the president of Renesas Design Vietnam. The productivity multiples in it are the vendor's own.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "renesas-gen6-ddr5-rcd-2025": {
+      "publisher": "Renesas",
+      "title": "Renesas' Industry-First Gen6 DDR5 Registered Clock Driver Sets Performance Benchmark by Delivering 9600 MT/s",
+      "url": "https://www.renesas.com/en/about/newsroom/renesas-industry-first-gen6-ddr5-registered-clock-driver-sets-performance-benchmark-delivering-9600",
+      "published": "2025-11-12",
+      "evidence": "P1-supplier",
+      "note": "A product launch whose customer quote carries the evidence: Samsung's VP of DRAM Product Planning says Samsung has collaborated with Renesas across multiple generations of memory interface components, including the successful qualification of Gen5 DDR5 RCD and PMIC5030, and that it will integrate Gen6 into its DDR5 DIMMs. The Gen6 part itself is sampling, with production expected in the first half of 2027; the page claims 'all major DRAM suppliers' as sampling customers without naming them.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "renesas-industrial-rcd-micron-2021": {
+      "publisher": "Renesas",
+      "title": "Renesas Introduces Industry's First Industrial Temperature Grade DDR5 and DDR4 Registered Clock Drivers",
+      "url": "https://www.renesas.com/en/about/newsroom/renesas-introduces-industry-s-first-industrial-temperature-grade-ddr5-and-ddr4-registered-clock",
+      "published": "2021-11-04",
+      "evidence": "P1-supplier",
+      "note": "Product launch quoting Micron's VP and GM of Core Compute Business on a collaboration with partners like Renesas opening new markets for memory at the intelligent edge. Read carefully, the quote does not say that Micron uses these parts, and the page makes no qualification or deployment claim about Micron.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "renesas-nissan-skyline-propilot-2019": {
+      "publisher": "Renesas",
+      "title": "Renesas Electronics Innovative Automotive Chips Adopted by Nissan for its New Skyline ProPILOT 2.0",
+      "url": "https://www.renesas.com/en/about/press-room/renesas-electronics-innovative-automotive-chips-adopted-nissan-its-new-skyline-propilot-20",
+      "published": "2019-08-07",
+      "evidence": "P1-supplier",
+      "note": "Supplier names the carmaker and the parts: Nissan adopted the Renesas R-Car SoC and RH850 control MCU for the ProPILOT 2.0 system in the Skyline unveiled in July 2019. The R-Car builds the environment map, the RH850 sends commands to the steering, accelerator and brake ECUs.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "renesas-nissan-leaf-propilot-park-2017": {
+      "publisher": "Renesas",
+      "title": "Renesas' SoC and MCU Adopted by Nissan for its New LEAF Automated-Parking System",
+      "url": "https://www.renesas.com/en-us/about/press-center/news/2017/news20170907.html",
+      "published": "2017-09-07",
+      "evidence": "P1-supplier",
+      "note": "The earlier of two Nissan releases: the R-Car SoC and RH850 MCU adopted for ProPILOT Park in the LEAF that debuted on 2017-09-06. The R-Car recognises the parking space and issues acceleration, braking, steering and shifting commands.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "renesas-distribution-consolidation-2020": {
+      "publisher": "Renesas",
+      "title": "Renesas Continues its Transformation with Distribution Channel Consolidation Guided by Sharpened Market Strategy and Broader Portfolio to Serve More Customers",
+      "url": "https://www.renesas.com/en/about/press-room/renesas-continues-its-transformation-distribution-channel-consolidation-guided-sharpened-market",
+      "published": "2020-06-10",
+      "evidence": "P1-supplier",
+      "note": "Renesas names its own channel: Avnet, Future Electronics and WT Microelectronics as its top three distributors, with WT newly engaged and the WPI Group relationship terminated. Six years old at the date checked, and a distribution agreement is a route to market rather than a disclosed volume. WPI is deliberately NOT recorded as an edge: this document is the only one naming it, and what it says is that the relationship ended.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
     }
   }
 }

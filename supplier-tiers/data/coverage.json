@@ -8,12 +8,12 @@
     "upstream": [
       63,
       48,
-      36
+      37
     ],
     "downstream": [
       89,
-      64,
-      61
+      65,
+      62
     ],
     "noDocumentedCounterparty": [],
     "note": "Exact shortest-distance coverage, walking each direction separately. Combined coverage means at least one direction reaches that level. Missing paths are research gaps in this dataset, not proof that no supplier exists. Historical, planned and design-enablement links remain qualified by their evidence; paths do not establish simultaneous shipments or a product bill of materials."
@@ -34,7 +34,7 @@
       "downstreamLevels": [
         2,
         14,
-        56
+        60
       ],
       "upstreamPaths": [
         null,
@@ -80,7 +80,7 @@
       "downstreamLevels": [
         2,
         14,
-        55
+        60
       ],
       "upstreamPaths": [
         null,
@@ -121,7 +121,7 @@
       "levels": [
         2,
         13,
-        86
+        87
       ],
       "downstreamLevels": [
         1,
@@ -169,7 +169,7 @@
       "levels": [
         3,
         13,
-        86
+        87
       ],
       "downstreamLevels": [
         3,
@@ -222,8 +222,8 @@
       "documented": true,
       "levels": [
         7,
-        81,
-        29
+        82,
+        35
       ],
       "downstreamLevels": [
         15,
@@ -419,7 +419,7 @@
       "downstreamLevels": [
         1,
         14,
-        56
+        61
       ],
       "upstreamPaths": [
         [
@@ -467,7 +467,7 @@
       "documented": true,
       "levels": [
         187,
-        138,
+        139,
         24
       ],
       "downstreamLevels": [
@@ -519,7 +519,7 @@
       "downstreamLevels": [
         3,
         16,
-        54
+        59
       ],
       "upstreamPaths": [
         [
@@ -566,8 +566,8 @@
       ],
       "downstreamLevels": [
         4,
-        43,
-        7
+        49,
+        9
       ],
       "upstreamPaths": [
         null,
@@ -586,9 +586,9 @@
         ],
         [
           "system-arm",
-          "system-nvidia",
-          "hon-hai-precision-industry-company-limited-foxconn",
-          "broadcom-limited"
+          "renesas-electronics-corporation",
+          "micron-technology-incorporated",
+          "qualcomm-incorporated"
         ]
       ],
       "missingUpstreamLevels": [
@@ -667,7 +667,7 @@
       "downstreamLevels": [
         2,
         16,
-        54
+        59
       ],
       "upstreamPaths": [
         [
@@ -715,7 +715,7 @@
       "downstreamLevels": [
         4,
         17,
-        57
+        62
       ],
       "upstreamPaths": [
         [
@@ -837,8 +837,8 @@
       "documented": true,
       "levels": [
         4,
-        12,
-        71
+        14,
+        70
       ],
       "downstreamLevels": [
         1,
@@ -929,7 +929,7 @@
       "vaultId": "cadence",
       "name": "Cadence",
       "suppliers": 0,
-      "customers": 1,
+      "customers": 2,
       "documented": true,
       "levels": [
         0,
@@ -937,9 +937,9 @@
         0
       ],
       "downstreamLevels": [
-        1,
-        14,
-        56
+        2,
+        32,
+        42
       ],
       "upstreamPaths": [
         null,
@@ -949,12 +949,12 @@
       "downstreamPaths": [
         [
           "system-cadence",
-          "taiwan-semiconductor-manufacturing-company-limited"
+          "renesas-electronics-corporation"
         ],
         [
           "system-cadence",
-          "taiwan-semiconductor-manufacturing-company-limited",
-          "advanced-semiconductor-engineering-technology-holding-co-ltd"
+          "renesas-electronics-corporation",
+          "apple-inc"
         ],
         [
           "system-cadence",
@@ -1025,7 +1025,7 @@
       "downstreamLevels": [
         2,
         14,
-        55
+        60
       ],
       "upstreamPaths": [
         null,
@@ -1157,7 +1157,7 @@
       "downstreamLevels": [
         1,
         14,
-        56
+        61
       ],
       "upstreamPaths": [
         null,
@@ -1203,7 +1203,7 @@
       "downstreamLevels": [
         1,
         14,
-        56
+        61
       ],
       "upstreamPaths": [
         null,
@@ -1289,7 +1289,7 @@
       "downstreamLevels": [
         4,
         26,
-        50
+        55
       ],
       "upstreamPaths": [
         null,
@@ -1330,7 +1330,7 @@
       "levels": [
         2,
         8,
-        84
+        85
       ],
       "downstreamLevels": [
         3,
@@ -1478,7 +1478,7 @@
       "levels": [
         2,
         13,
-        86
+        87
       ],
       "downstreamLevels": [
         1,
@@ -1617,7 +1617,7 @@
       "levels": [
         5,
         79,
-        83
+        84
       ],
       "downstreamLevels": [
         0,
@@ -2036,7 +2036,7 @@
       "downstreamLevels": [
         1,
         14,
-        56
+        61
       ],
       "upstreamPaths": [
         null,
@@ -2124,7 +2124,7 @@
       "downstreamLevels": [
         2,
         16,
-        54
+        59
       ],
       "upstreamPaths": [
         null,
@@ -2170,7 +2170,7 @@
       "downstreamLevels": [
         2,
         16,
-        54
+        59
       ],
       "upstreamPaths": [
         null,
@@ -2262,7 +2262,7 @@
       "downstreamLevels": [
         3,
         15,
-        54
+        59
       ],
       "upstreamPaths": [
         [
@@ -2305,7 +2305,7 @@
       "levels": [
         2,
         13,
-        86
+        87
       ],
       "downstreamLevels": [
         0,
@@ -2356,7 +2356,7 @@
       "downstreamLevels": [
         2,
         14,
-        55
+        60
       ],
       "upstreamPaths": [
         null,
@@ -2539,7 +2539,7 @@
       "levels": [
         1,
         9,
-        85
+        86
       ],
       "downstreamLevels": [
         0,
@@ -2624,13 +2624,13 @@
       "id": "micron-technology-incorporated",
       "vaultId": "micron",
       "name": "Micron",
-      "suppliers": 6,
+      "suppliers": 7,
       "customers": 3,
       "documented": true,
       "levels": [
-        6,
-        1,
-        0
+        7,
+        11,
+        70
       ],
       "downstreamLevels": [
         3,
@@ -2644,10 +2644,15 @@
         ],
         [
           "micron-technology-incorporated",
-          "system-siltronic",
-          "wacker-chemie-ag"
+          "renesas-electronics-corporation",
+          "andes-technology-corporation"
         ],
-        null
+        [
+          "micron-technology-incorporated",
+          "renesas-electronics-corporation",
+          "system-synopsys",
+          "system-microsoft"
+        ]
       ],
       "downstreamPaths": [
         [
@@ -2666,9 +2671,7 @@
           "system-amd"
         ]
       ],
-      "missingUpstreamLevels": [
-        3
-      ],
+      "missingUpstreamLevels": [],
       "missingDownstreamLevels": []
     },
     {
@@ -2681,12 +2684,12 @@
       "levels": [
         2,
         13,
-        86
+        87
       ],
       "downstreamLevels": [
         1,
         3,
-        28
+        34
       ],
       "upstreamPaths": [
         [
@@ -2955,7 +2958,7 @@
       "downstreamLevels": [
         7,
         29,
-        50
+        55
       ],
       "upstreamPaths": [
         null,
@@ -2995,8 +2998,8 @@
       "documented": true,
       "levels": [
         9,
-        85,
-        28
+        86,
+        33
       ],
       "downstreamLevels": [
         30,
@@ -3016,8 +3019,8 @@
         [
           "system-nvidia",
           "micron-technology-incorporated",
-          "system-siltronic",
-          "wacker-chemie-ag"
+          "renesas-electronics-corporation",
+          "andes-technology-corporation"
         ]
       ],
       "downstreamPaths": [
@@ -3149,7 +3152,7 @@
       "downstreamLevels": [
         2,
         14,
-        55
+        60
       ],
       "upstreamPaths": [
         null,
@@ -3235,8 +3238,8 @@
       "documented": true,
       "levels": [
         8,
-        86,
-        25
+        87,
+        31
       ],
       "downstreamLevels": [
         4,
@@ -3290,7 +3293,7 @@
       "levels": [
         2,
         9,
-        84
+        85
       ],
       "downstreamLevels": [
         1,
@@ -3375,18 +3378,18 @@
       "id": "renesas-electronics-corporation",
       "vaultId": "renesas",
       "name": "Renesas",
-      "suppliers": 8,
-      "customers": 14,
+      "suppliers": 10,
+      "customers": 20,
       "documented": true,
       "levels": [
-        8,
-        72,
+        10,
+        71,
         23
       ],
       "downstreamLevels": [
-        14,
-        0,
-        0
+        20,
+        3,
+        35
       ],
       "upstreamPaths": [
         [
@@ -3410,14 +3413,20 @@
           "renesas-electronics-corporation",
           "apple-inc"
         ],
-        null,
-        null
+        [
+          "renesas-electronics-corporation",
+          "micron-technology-incorporated",
+          "qualcomm-incorporated"
+        ],
+        [
+          "renesas-electronics-corporation",
+          "micron-technology-incorporated",
+          "qualcomm-incorporated",
+          "system-vw"
+        ]
       ],
       "missingUpstreamLevels": [],
-      "missingDownstreamLevels": [
-        2,
-        3
-      ]
+      "missingDownstreamLevels": []
     },
     {
       "id": "resonac-corporation",
@@ -3434,7 +3443,7 @@
       "downstreamLevels": [
         1,
         14,
-        56
+        61
       ],
       "upstreamPaths": [
         null,
@@ -3469,13 +3478,13 @@
       "id": "samsung-electronics-company-limited",
       "vaultId": "samsung",
       "name": "Samsung",
-      "suppliers": 12,
+      "suppliers": 13,
       "customers": 4,
       "documented": true,
       "levels": [
-        12,
-        10,
-        74
+        13,
+        18,
+        73
       ],
       "downstreamLevels": [
         4,
@@ -3574,7 +3583,7 @@
       "downstreamLevels": [
         2,
         16,
-        54
+        59
       ],
       "upstreamPaths": [
         null,
@@ -3666,7 +3675,7 @@
       "downstreamLevels": [
         1,
         14,
-        56
+        61
       ],
       "upstreamPaths": [
         null,
@@ -3985,7 +3994,7 @@
       "downstreamLevels": [
         5,
         29,
-        42
+        47
       ],
       "upstreamPaths": [
         null,
@@ -4082,7 +4091,7 @@
       "downstreamLevels": [
         2,
         17,
-        56
+        61
       ],
       "upstreamPaths": [
         [
@@ -4165,7 +4174,7 @@
       "levels": [
         3,
         75,
-        89
+        90
       ],
       "downstreamLevels": [
         0,
@@ -4215,8 +4224,8 @@
       ],
       "downstreamLevels": [
         3,
-        28,
-        41
+        34,
+        40
       ],
       "upstreamPaths": [
         [
@@ -4270,7 +4279,7 @@
       "downstreamLevels": [
         1,
         14,
-        56
+        61
       ],
       "upstreamPaths": [
         null,
@@ -4311,7 +4320,7 @@
       "levels": [
         2,
         14,
-        80
+        81
       ],
       "downstreamLevels": [
         0,
@@ -4410,7 +4419,7 @@
       "downstreamLevels": [
         1,
         14,
-        56
+        61
       ],
       "upstreamPaths": [
         null,
@@ -4456,7 +4465,7 @@
       "downstreamLevels": [
         3,
         15,
-        54
+        59
       ],
       "upstreamPaths": [
         null,
@@ -4544,8 +4553,8 @@
       "documented": true,
       "levels": [
         3,
-        13,
-        71
+        15,
+        70
       ],
       "downstreamLevels": [
         0,
@@ -4595,7 +4604,7 @@
       ],
       "downstreamLevels": [
         14,
-        56,
+        61,
         5
       ],
       "upstreamPaths": [
@@ -4871,7 +4880,7 @@
       "levels": [
         1,
         8,
-        86
+        87
       ],
       "downstreamLevels": [
         0,
@@ -4959,7 +4968,7 @@
       "levels": [
         2,
         8,
-        84
+        85
       ],
       "downstreamLevels": [
         2,
@@ -5013,7 +5022,7 @@
       "levels": [
         2,
         11,
-        87
+        88
       ],
       "downstreamLevels": [
         0,

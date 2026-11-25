@@ -1,7 +1,7 @@
 {
   "meta": {
     "generated": "2026-11-25",
-    "count": 597
+    "count": 605
   },
   "edges": [
     {
@@ -3193,6 +3193,22 @@
       ]
     },
     {
+      "supplier": "renesas-electronics-corporation",
+      "customer": "avnet-incorporated",
+      "products": [
+        "Distribution of Renesas components to end customers"
+      ],
+      "sources": [
+        "renesas-distribution-consolidation-2020"
+      ],
+      "years": [
+        2020
+      ],
+      "details": [
+        "Channel, not demand: a distributor buys to resell, so this edge says where the parts go next and nothing about who finally uses them. Named in a 2020 consolidation announcement that also ended a fourth distributor relationship."
+      ]
+    },
+    {
       "supplier": "advanced-semiconductor-engineering-technology-holding-co-ltd",
       "customer": "broadcom-limited",
       "products": [
@@ -3497,6 +3513,22 @@
       ],
       "details": [
         "Announced in March 2024 as \"expected to deliver\" servers based on Blackwell. Delivery and current status are not established by the release."
+      ]
+    },
+    {
+      "supplier": "renesas-electronics-corporation",
+      "customer": "future-electronics-incorporated",
+      "products": [
+        "Distribution of Renesas components to end customers"
+      ],
+      "sources": [
+        "renesas-distribution-consolidation-2020"
+      ],
+      "years": [
+        2020
+      ],
+      "details": [
+        "Channel, not demand: a distributor buys to resell, so this edge says where the parts go next and nothing about who finally uses them. Named in a 2020 consolidation announcement that also ended a fourth distributor relationship."
       ]
     },
     {
@@ -5220,6 +5252,22 @@
       ]
     },
     {
+      "supplier": "renesas-electronics-corporation",
+      "customer": "micron-technology-incorporated",
+      "products": [
+        "Industrial temperature-grade DDR5 and DDR4 registered clock drivers"
+      ],
+      "sources": [
+        "renesas-industrial-rcd-micron-2021"
+      ],
+      "years": [
+        2021
+      ],
+      "details": [
+        "The weakest memory edge and among the weakest in the set: a named executive describing a collaboration in general terms, with no part, volume or qualification attached to it. Kept because both parties are named in the same document, and marked because that is all it is."
+      ]
+    },
+    {
       "supplier": "silicon-motion-technology-corp",
       "customer": "micron-technology-incorporated",
       "products": [
@@ -5343,6 +5391,26 @@
       "details": [
         "Joint development of an E-Axle proof of concept: an agreement to develop together, with no part number, order or volume disclosed.",
         "The second documented phase of the Nidec relationship, which is why this pair carries two dates. Nidec states an intention to productize, and an intention to productize is not production."
+      ]
+    },
+    {
+      "supplier": "renesas-electronics-corporation",
+      "customer": "nissan-motor-co-ltd",
+      "products": [
+        "R-Car SoC and RH850 control MCU for ProPILOT 2.0",
+        "R-Car SoC and RH850 MCU for the ProPILOT Park automated-parking system"
+      ],
+      "sources": [
+        "renesas-nissan-skyline-propilot-2019",
+        "renesas-nissan-leaf-propilot-park-2017"
+      ],
+      "years": [
+        2017,
+        2019
+      ],
+      "details": [
+        "A design win in a shipping vehicle, named at the part level. Seven years old at the date checked, and the second of two on this pair.",
+        "Two documents eight years apart on the same carmaker, each naming a different vehicle and system. Neither says anything about volume, and nothing here establishes that either relationship continues."
       ]
     },
     {
@@ -5716,6 +5784,22 @@
       ]
     },
     {
+      "supplier": "imagination-technologies-limited",
+      "customer": "renesas-electronics-corporation",
+      "products": [
+        "IMG BXS automotive GPU intellectual property"
+      ],
+      "sources": [
+        "renesas-imagination-gpu-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "The graphics block of the R-Car Gen 5 line. Renesas licenses CPU IP from Arm, Andes and SiFive and GPU IP here: four IP suppliers, none of which ships anything physical."
+      ]
+    },
+    {
       "supplier": "sifive-inc",
       "customer": "renesas-electronics-corporation",
       "products": [
@@ -5745,6 +5829,22 @@
       ],
       "details": [
         "Named CPU cores in a named product. Renesas licenses RISC-V cores from two other vendors in this dataset as well; the architectures are alternatives in its line-up, not a succession."
+      ]
+    },
+    {
+      "supplier": "system-cadence",
+      "customer": "renesas-electronics-corporation",
+      "products": [
+        "Verisium AI-driven verification platform for R-Car SoC debug"
+      ],
+      "sources": [
+        "renesas-cadence-verisium-2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": [
+        "The second EDA dependency on this company, after Synopsys. Cited from a reposted copy of the vendor release because the vendor and wire originals refuse automated readers; the text carries its own dateline."
       ]
     },
     {
@@ -5993,6 +6093,22 @@
       ],
       "details": [
         "Samsung is disclosed as both a foundry/memory supplier and a customer above 10% of revenue. The two are separate relationships."
+      ]
+    },
+    {
+      "supplier": "renesas-electronics-corporation",
+      "customer": "samsung-electronics-company-limited",
+      "products": [
+        "DDR5 registered clock drivers and DIMM power-management ICs"
+      ],
+      "sources": [
+        "renesas-gen6-ddr5-rcd-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "The buyer states qualification of the previous generation — Gen5 RCD and PMIC5030 — which is the strongest form of words in this dataset short of a shipment. The newest part named is sampling, not in production."
       ]
     },
     {
@@ -8954,6 +9070,22 @@
       ],
       "details": [
         "Announced in March 2024 as \"expected to deliver\" servers based on Blackwell. Delivery and current status are not established by the release."
+      ]
+    },
+    {
+      "supplier": "renesas-electronics-corporation",
+      "customer": "wt-microelectronics-co-ltd",
+      "products": [
+        "Distribution of Renesas components to end customers"
+      ],
+      "sources": [
+        "renesas-distribution-consolidation-2020"
+      ],
+      "years": [
+        2020
+      ],
+      "details": [
+        "Channel, not demand: a distributor buys to resell, so this edge says where the parts go next and nothing about who finally uses them. Named in a 2020 consolidation announcement that also ended a fourth distributor relationship."
       ]
     },
     {

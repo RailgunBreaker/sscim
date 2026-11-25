@@ -548,17 +548,17 @@ async function main() {
         if (!counts) { fail('the network heading counts both directions', heading.split('\n')[0].slice(0, 70)); } else {
           const [, sup, cus] = counts.map(Number);
           pass('the network heading counts both directions', `${sup} suppliers · ${cus} customers`);
-          check(cus >= 14, 'the customer side is populated, not a single firm', `${cus} documented customers`);
+          check(cus >= 20, 'the customer side is populated, not a single firm', `${cus} documented customers`);
           check(cus > sup, 'Renesas has more documented customers than suppliers');
         }
 
         await net.scrollIntoViewIfNeeded();
         await vp.waitForTimeout(1600);
         const nodes = await net.locator('svg circle').count();
-        /* One step each way: 6 + 10 + the company itself. If this ever
-           draws ninety, the embedded graph has gone back to two steps
+        /* One step each way: 10 + 20 + the company itself. If this ever
+           draws a hundred, the embedded graph has gone back to two steps
            and the page is showing TSMC's supplier list again. */
-        check(nodes >= 15 && nodes <= 40, 'the graph opens on this company, not on a cloud', `${nodes} nodes`);
+        check(nodes >= 25 && nodes <= 60, 'the graph opens on this company, not on a cloud', `${nodes} nodes`);
 
         /* The customer side has to be drawn to the RIGHT of the company,
            which is the whole convention the layout rests on. Renesas

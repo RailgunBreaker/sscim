@@ -188,9 +188,45 @@ describe('Renesas, in both directions', () => {
   const customers = () => index.customersOf[R];
 
   it('names more customers than suppliers, because that is the half that was missing', () => {
-    expect(suppliers().length).toBeGreaterThanOrEqual(8);
-    expect(customers().length).toBeGreaterThanOrEqual(14);
+    expect(suppliers().length).toBeGreaterThanOrEqual(10);
+    expect(customers().length).toBeGreaterThanOrEqual(20);
     expect(customers().length).toBeGreaterThan(suppliers().length);
+  });
+
+  it('carries the non-automotive half of the company too', () => {
+    /* Three passes, three kinds of document. Partnership releases found
+       the firms Renesas puts its name beside; design wins found the tier
+       ones; and product launches found the memory-module business, which
+       has nothing to do with cars and is announced as a customer quote
+       near the bottom of a part announcement. The channel came from a
+       document about the channel itself. */
+    const by = Object.fromEntries(customers().map((e) => [e.customer, e]));
+    expect(by['samsung-electronics-company-limited'].products.join(' ')).toMatch(/DDR5/);
+    expect(by['samsung-electronics-company-limited'].details.join(' ')).toMatch(/qualification of the previous generation/i);
+    expect(by['micron-technology-incorporated'].details.join(' ')).toMatch(/weakest memory edge/i);
+    /* A distributor is a counterparty, never an end user, and the edges
+       have to say so or the graph implies demand it cannot see. */
+    for (const d of ['avnet-incorporated', 'future-electronics-incorporated', 'wt-microelectronics-co-ltd']) {
+      expect(by[d], d).toBeTruthy();
+      expect(by[d].details.join(' ')).toMatch(/Channel, not demand/);
+    }
+    /* The fourth distributor in that document is the one whose contract
+       had just ended. Naming it would record a relationship the document
+       says stopped. */
+    expect(customers().map((e) => e.customer).join(' ')).not.toMatch(/wpi/i);
+  });
+
+  it('licenses four IP vendors and buys from two EDA vendors, none of whom ship anything', () => {
+    const by = Object.fromEntries(suppliers().map((e) => [e.supplier, e]));
+    for (const ip of ['system-arm', 'andes-technology-corporation', 'sifive-inc', 'imagination-technologies-limited']) {
+      expect(by[ip], ip).toBeTruthy();
+    }
+    expect(by['imagination-technologies-limited'].products.join(' ')).toMatch(/GPU/);
+    for (const eda of ['system-cadence', 'system-synopsys']) expect(by[eda], eda).toBeTruthy();
+    /* Cited from a repost because the vendor's own copy and the wire
+       original both refuse automated readers. The note says so rather
+       than leaving a reader to assume it came from cadence.com. */
+    expect(index.sources['renesas-cadence-verisium-2023'].note).toMatch(/403/);
   });
 
   it('reaches the tier ones that actually put its parts in boxes', () => {

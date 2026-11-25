@@ -83,12 +83,12 @@
       "upstream": [
         63,
         48,
-        36
+        37
       ],
       "downstream": [
         89,
-        64,
-        61
+        65,
+        62
       ],
       "noDocumentedCounterparty": [],
       "note": "Exact shortest-distance coverage, walking each direction separately. Combined coverage means at least one direction reaches that level. Missing paths are research gaps in this dataset, not proof that no supplier exists. Historical, planned and design-enablement links remain qualified by their evidence; paths do not establish simultaneous shipments or a product bill of materials."
@@ -3328,6 +3328,36 @@
       "country": "de",
       "layer": "mechanical",
       "role": "Automotive driveline, chassis and ADAS systems supplier."
+    },
+    "imagination-technologies-limited": {
+      "name": "Imagination Technologies Limited",
+      "country": "uk",
+      "layer": "services",
+      "role": "Licenses GPU intellectual property; formerly the PowerVR line."
+    },
+    "nissan-motor-co-ltd": {
+      "name": "Nissan Motor Co., Ltd.",
+      "country": "jp",
+      "layer": "brand",
+      "role": "Vehicle manufacturer."
+    },
+    "avnet-incorporated": {
+      "name": "Avnet, Inc.",
+      "country": "us",
+      "layer": "services",
+      "role": "Electronic component distributor."
+    },
+    "future-electronics-incorporated": {
+      "name": "Future Electronics Inc.",
+      "country": "ca",
+      "layer": "services",
+      "role": "Electronic component distributor."
+    },
+    "wt-microelectronics-co-ltd": {
+      "name": "WT Microelectronics Co., Ltd.",
+      "country": "tw",
+      "layer": "services",
+      "role": "Electronic component distributor."
     }
   }
 }

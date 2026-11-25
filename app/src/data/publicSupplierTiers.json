@@ -83,12 +83,12 @@
       "upstream": [
         63,
         48,
-        36
+        37
       ],
       "downstream": [
         89,
-        64,
-        61
+        65,
+        62
       ],
       "noDocumentedCounterparty": [],
       "note": "Exact shortest-distance coverage, walking each direction separately. Combined coverage means at least one direction reaches that level. Missing paths are research gaps in this dataset, not proof that no supplier exists. Historical, planned and design-enablement links remain qualified by their evidence; paths do not establish simultaneous shipments or a product bill of materials."
@@ -1510,6 +1510,83 @@
       "published": "2021-04-15",
       "evidence": "P1-supplier",
       "note": "Tool vendor names its customer: Synopsys announces the adoption of its DSO.ai design-space optimization system into the Renesas automotive design environment, with a Renesas director quoted. Design software, not silicon.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "renesas-imagination-gpu-2025": {
+      "publisher": "Imagination Technologies",
+      "title": "Imagination GPU Powers Renesas R-Car Gen 5 SoC",
+      "url": "https://www.imaginationtech.com/news/imagination-gpu-powers-renesas-r-car-gen-5-soc/",
+      "published": "2025-03-10",
+      "evidence": "P1-supplier",
+      "note": "IP vendor names its licensee: the IMG BXS automotive-grade B-Series GPU is licensed by Renesas and powers the next-generation R-Car Gen 5 SoC. The two companies have licensed graphics IP to each other's products since at least 2011, when the agreement covered the PowerVR Series6 family. No volume or royalty figure is given.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "renesas-cadence-verisium-2023": {
+      "publisher": "Cadence Design Systems",
+      "title": "Cadence Verisium AI-Driven Verification Platform Accelerates Debug Productivity for Renesas",
+      "url": "https://www.eejournal.com/industry_news/cadence-verisium-ai-driven-verification-platform-accelerates-debug-productivity-for-renesas",
+      "published": "2023-03-09",
+      "evidence": "P1-supplier",
+      "note": "Cadence's own press release, carrying its San Jose dateline and 'today announced' wording, read on EE Journal because both cadence.com and the Business Wire original answer 403 to an automated fetch. The release names the Verisium platform and its AutoTriage, SemanticDiff, WaveMiner, PinDown, Debug and Manager apps as deployed by Renesas on an R-Car SoC, and quotes the president of Renesas Design Vietnam. The productivity multiples in it are the vendor's own.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "renesas-gen6-ddr5-rcd-2025": {
+      "publisher": "Renesas",
+      "title": "Renesas' Industry-First Gen6 DDR5 Registered Clock Driver Sets Performance Benchmark by Delivering 9600 MT/s",
+      "url": "https://www.renesas.com/en/about/newsroom/renesas-industry-first-gen6-ddr5-registered-clock-driver-sets-performance-benchmark-delivering-9600",
+      "published": "2025-11-12",
+      "evidence": "P1-supplier",
+      "note": "A product launch whose customer quote carries the evidence: Samsung's VP of DRAM Product Planning says Samsung has collaborated with Renesas across multiple generations of memory interface components, including the successful qualification of Gen5 DDR5 RCD and PMIC5030, and that it will integrate Gen6 into its DDR5 DIMMs. The Gen6 part itself is sampling, with production expected in the first half of 2027; the page claims 'all major DRAM suppliers' as sampling customers without naming them.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "renesas-industrial-rcd-micron-2021": {
+      "publisher": "Renesas",
+      "title": "Renesas Introduces Industry's First Industrial Temperature Grade DDR5 and DDR4 Registered Clock Drivers",
+      "url": "https://www.renesas.com/en/about/newsroom/renesas-introduces-industry-s-first-industrial-temperature-grade-ddr5-and-ddr4-registered-clock",
+      "published": "2021-11-04",
+      "evidence": "P1-supplier",
+      "note": "Product launch quoting Micron's VP and GM of Core Compute Business on a collaboration with partners like Renesas opening new markets for memory at the intelligent edge. Read carefully, the quote does not say that Micron uses these parts, and the page makes no qualification or deployment claim about Micron.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "renesas-nissan-skyline-propilot-2019": {
+      "publisher": "Renesas",
+      "title": "Renesas Electronics Innovative Automotive Chips Adopted by Nissan for its New Skyline ProPILOT 2.0",
+      "url": "https://www.renesas.com/en/about/press-room/renesas-electronics-innovative-automotive-chips-adopted-nissan-its-new-skyline-propilot-20",
+      "published": "2019-08-07",
+      "evidence": "P1-supplier",
+      "note": "Supplier names the carmaker and the parts: Nissan adopted the Renesas R-Car SoC and RH850 control MCU for the ProPILOT 2.0 system in the Skyline unveiled in July 2019. The R-Car builds the environment map, the RH850 sends commands to the steering, accelerator and brake ECUs.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "renesas-nissan-leaf-propilot-park-2017": {
+      "publisher": "Renesas",
+      "title": "Renesas' SoC and MCU Adopted by Nissan for its New LEAF Automated-Parking System",
+      "url": "https://www.renesas.com/en-us/about/press-center/news/2017/news20170907.html",
+      "published": "2017-09-07",
+      "evidence": "P1-supplier",
+      "note": "The earlier of two Nissan releases: the R-Car SoC and RH850 MCU adopted for ProPILOT Park in the LEAF that debuted on 2017-09-06. The R-Car recognises the parking space and issues acceleration, braking, steering and shifting commands.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "renesas-distribution-consolidation-2020": {
+      "publisher": "Renesas",
+      "title": "Renesas Continues its Transformation with Distribution Channel Consolidation Guided by Sharpened Market Strategy and Broader Portfolio to Serve More Customers",
+      "url": "https://www.renesas.com/en/about/press-room/renesas-continues-its-transformation-distribution-channel-consolidation-guided-sharpened-market",
+      "published": "2020-06-10",
+      "evidence": "P1-supplier",
+      "note": "Renesas names its own channel: Avnet, Future Electronics and WT Microelectronics as its top three distributors, with WT newly engaged and the WPI Group relationship terminated. Six years old at the date checked, and a distribution agreement is a route to market rather than a disclosed volume. WPI is deliberately NOT recorded as an edge: this document is the only one naming it, and what it says is that the relationship ended.",
       "kind": "Company disclosure",
       "seen": "fetched",
       "retrieved": "2026-11-25"
@@ -4749,6 +4826,36 @@
       "country": "de",
       "layer": "mechanical",
       "role": "Automotive driveline, chassis and ADAS systems supplier."
+    },
+    "imagination-technologies-limited": {
+      "name": "Imagination Technologies Limited",
+      "country": "uk",
+      "layer": "services",
+      "role": "Licenses GPU intellectual property; formerly the PowerVR line."
+    },
+    "nissan-motor-co-ltd": {
+      "name": "Nissan Motor Co., Ltd.",
+      "country": "jp",
+      "layer": "brand",
+      "role": "Vehicle manufacturer."
+    },
+    "avnet-incorporated": {
+      "name": "Avnet, Inc.",
+      "country": "us",
+      "layer": "services",
+      "role": "Electronic component distributor."
+    },
+    "future-electronics-incorporated": {
+      "name": "Future Electronics Inc.",
+      "country": "ca",
+      "layer": "services",
+      "role": "Electronic component distributor."
+    },
+    "wt-microelectronics-co-ltd": {
+      "name": "WT Microelectronics Co., Ltd.",
+      "country": "tw",
+      "layer": "services",
+      "role": "Electronic component distributor."
     }
   },
   "edges": [
@@ -7941,6 +8048,22 @@
       ]
     },
     {
+      "supplier": "renesas-electronics-corporation",
+      "customer": "avnet-incorporated",
+      "products": [
+        "Distribution of Renesas components to end customers"
+      ],
+      "sources": [
+        "renesas-distribution-consolidation-2020"
+      ],
+      "years": [
+        2020
+      ],
+      "details": [
+        "Channel, not demand: a distributor buys to resell, so this edge says where the parts go next and nothing about who finally uses them. Named in a 2020 consolidation announcement that also ended a fourth distributor relationship."
+      ]
+    },
+    {
       "supplier": "advanced-semiconductor-engineering-technology-holding-co-ltd",
       "customer": "broadcom-limited",
       "products": [
@@ -8245,6 +8368,22 @@
       ],
       "details": [
         "Announced in March 2024 as \"expected to deliver\" servers based on Blackwell. Delivery and current status are not established by the release."
+      ]
+    },
+    {
+      "supplier": "renesas-electronics-corporation",
+      "customer": "future-electronics-incorporated",
+      "products": [
+        "Distribution of Renesas components to end customers"
+      ],
+      "sources": [
+        "renesas-distribution-consolidation-2020"
+      ],
+      "years": [
+        2020
+      ],
+      "details": [
+        "Channel, not demand: a distributor buys to resell, so this edge says where the parts go next and nothing about who finally uses them. Named in a 2020 consolidation announcement that also ended a fourth distributor relationship."
       ]
     },
     {
@@ -9968,6 +10107,22 @@
       ]
     },
     {
+      "supplier": "renesas-electronics-corporation",
+      "customer": "micron-technology-incorporated",
+      "products": [
+        "Industrial temperature-grade DDR5 and DDR4 registered clock drivers"
+      ],
+      "sources": [
+        "renesas-industrial-rcd-micron-2021"
+      ],
+      "years": [
+        2021
+      ],
+      "details": [
+        "The weakest memory edge and among the weakest in the set: a named executive describing a collaboration in general terms, with no part, volume or qualification attached to it. Kept because both parties are named in the same document, and marked because that is all it is."
+      ]
+    },
+    {
       "supplier": "silicon-motion-technology-corp",
       "customer": "micron-technology-incorporated",
       "products": [
@@ -10091,6 +10246,26 @@
       "details": [
         "Joint development of an E-Axle proof of concept: an agreement to develop together, with no part number, order or volume disclosed.",
         "The second documented phase of the Nidec relationship, which is why this pair carries two dates. Nidec states an intention to productize, and an intention to productize is not production."
+      ]
+    },
+    {
+      "supplier": "renesas-electronics-corporation",
+      "customer": "nissan-motor-co-ltd",
+      "products": [
+        "R-Car SoC and RH850 control MCU for ProPILOT 2.0",
+        "R-Car SoC and RH850 MCU for the ProPILOT Park automated-parking system"
+      ],
+      "sources": [
+        "renesas-nissan-skyline-propilot-2019",
+        "renesas-nissan-leaf-propilot-park-2017"
+      ],
+      "years": [
+        2017,
+        2019
+      ],
+      "details": [
+        "A design win in a shipping vehicle, named at the part level. Seven years old at the date checked, and the second of two on this pair.",
+        "Two documents eight years apart on the same carmaker, each naming a different vehicle and system. Neither says anything about volume, and nothing here establishes that either relationship continues."
       ]
     },
     {
@@ -10464,6 +10639,22 @@
       ]
     },
     {
+      "supplier": "imagination-technologies-limited",
+      "customer": "renesas-electronics-corporation",
+      "products": [
+        "IMG BXS automotive GPU intellectual property"
+      ],
+      "sources": [
+        "renesas-imagination-gpu-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "The graphics block of the R-Car Gen 5 line. Renesas licenses CPU IP from Arm, Andes and SiFive and GPU IP here: four IP suppliers, none of which ships anything physical."
+      ]
+    },
+    {
       "supplier": "sifive-inc",
       "customer": "renesas-electronics-corporation",
       "products": [
@@ -10493,6 +10684,22 @@
       ],
       "details": [
         "Named CPU cores in a named product. Renesas licenses RISC-V cores from two other vendors in this dataset as well; the architectures are alternatives in its line-up, not a succession."
+      ]
+    },
+    {
+      "supplier": "system-cadence",
+      "customer": "renesas-electronics-corporation",
+      "products": [
+        "Verisium AI-driven verification platform for R-Car SoC debug"
+      ],
+      "sources": [
+        "renesas-cadence-verisium-2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": [
+        "The second EDA dependency on this company, after Synopsys. Cited from a reposted copy of the vendor release because the vendor and wire originals refuse automated readers; the text carries its own dateline."
       ]
     },
     {
@@ -10741,6 +10948,22 @@
       ],
       "details": [
         "Samsung is disclosed as both a foundry/memory supplier and a customer above 10% of revenue. The two are separate relationships."
+      ]
+    },
+    {
+      "supplier": "renesas-electronics-corporation",
+      "customer": "samsung-electronics-company-limited",
+      "products": [
+        "DDR5 registered clock drivers and DIMM power-management ICs"
+      ],
+      "sources": [
+        "renesas-gen6-ddr5-rcd-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "The buyer states qualification of the previous generation — Gen5 RCD and PMIC5030 — which is the strongest form of words in this dataset short of a shipment. The newest part named is sampling, not in production."
       ]
     },
     {
@@ -13702,6 +13925,22 @@
       ],
       "details": [
         "Announced in March 2024 as \"expected to deliver\" servers based on Blackwell. Delivery and current status are not established by the release."
+      ]
+    },
+    {
+      "supplier": "renesas-electronics-corporation",
+      "customer": "wt-microelectronics-co-ltd",
+      "products": [
+        "Distribution of Renesas components to end customers"
+      ],
+      "sources": [
+        "renesas-distribution-consolidation-2020"
+      ],
+      "years": [
+        2020
+      ],
+      "details": [
+        "Channel, not demand: a distributor buys to resell, so this edge says where the parts go next and nothing about who finally uses them. Named in a 2020 consolidation announcement that also ended a fourth distributor relationship."
       ]
     },
     {

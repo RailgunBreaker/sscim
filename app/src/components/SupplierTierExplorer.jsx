@@ -61,12 +61,12 @@ export default function SupplierTierExplorer({ compact = false, onSelectVaultCom
      and the depth control is right there to go further.
 
      One step rather than two, because two is where a profile stops being
-     about its company. Renesas has eight documented suppliers and
-     fourteen documented customers; at two steps it has 94 counterparties,
-     and 71 of the 72 new ones arrive through a single one of those 22 —
-     TSMC, whose published supplier list is 72 firms long. The reader
-     opened a Renesas page, so the first thing drawn is Renesas's network,
-     not TSMC's. The table below is complete at any depth. */
+     about its company. Renesas has ten documented suppliers and twenty
+     documented customers; at two steps it has 104 counterparties, and 70
+     of the 74 new ones arrive through a single one of those 30 — TSMC,
+     whose published supplier list is 72 firms long. The reader opened a
+     Renesas page, so the first thing drawn is Renesas's network, not
+     TSMC's. The table below is complete at any depth. */
   const [hops, setHops] = useState(fixedRootId ? 1 : 3);
   const [colourBy, setColourBy] = useState('tier');
   const [anchorTiers, setAnchorTiers] = useState(true);
