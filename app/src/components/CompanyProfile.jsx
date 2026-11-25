@@ -389,10 +389,22 @@ export default function CompanyProfile({
       {/* ---- the documented network, drawn ---- */}
       {embedNetwork && (
         <section id="company-network" aria-label="Documented supplier network" style={{ scrollMarginTop: 70 }}>
-          <Head>Network — every firm within three documented steps</Head>
+          <Head>
+            {doc.covered
+              ? `Network — ${doc.suppliers.length} documented supplier${doc.suppliers.length === 1 ? '' : 's'}, ${doc.customers.length} documented customer${doc.customers.length === 1 ? '' : 's'}`
+              : 'Network — nothing documented'}
+          </Head>
+          {/* The counts belong in the heading because the graph opens on
+              one step, and a reader who sees ten nodes is entitled to
+              know whether ten is the whole of what is documented. They
+              are also the honest way to show an imbalance: a company
+              with six suppliers and no customers has a disclosure gap on
+              its customer side, and that is a finding, not a blank. */}
           <p className="mono" style={{ fontSize: 12, color: C.faint, margin: '0 0 8px', lineHeight: 1.55 }}>
-            The same dataset as the list above, drawn. Distance is documented steps from this company, never
-            importance; an edge missing here means no document names the pair. Opening a firm the model also
+            The same dataset as the list above, drawn. Suppliers sit to the left of this company and customers to
+            the right, both at once. It opens on the firms this company is itself documented with; the depth
+            control walks out to their counterparties and theirs again. Distance is documented steps, never
+            importance, and an edge missing here means no document names the pair. Opening a firm the model also
             carries moves this whole profile to it.
           </p>
           {networkRootId

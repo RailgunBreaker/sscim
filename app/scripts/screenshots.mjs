@@ -61,7 +61,14 @@ const SCENES = [
   { id: 'events', page: 'sscim-app.html', hash: '#view=geographic', tab: 'events', what: 'Events view' },
   /* The network is no longer a view of its own: it is a section of the
      company profile, so the scene that records it is a company. */
-  { id: 'company-tsmc', page: 'sscim-app.html', hash: '#sel=company:tsmc', what: 'Company profile, with its documented network and plants' },
+  { id: 'company-tsmc', page: 'sscim-app.html', hash: '#sel=company:tsmc', scrollTo: '#company-network',
+    what: 'Company profile, with its documented network and plants' },
+  /* Renesas is the case the directional pass was built for: a company
+     whose documented network was 74 firms upstream and one downstream
+     until its customer side was researched. Captured so the balance of
+     the two sides is a thing that can be looked at. */
+  { id: 'company-renesas', page: 'sscim-app.html', hash: '#sel=company:renesas', scrollTo: '#company-network',
+    what: 'Documented network inside a company profile: six suppliers left, ten customers right' },
   { id: 'playground-start', page: 'sscim-app.html', hash: '#view=playground', what: 'Facility Playground, initial state' },
   { id: 'playground-tsmc-3hop', page: 'sscim-app.html', hash: '#view=playground&fac=tsmc_fab18&facd=3', what: 'Facility Playground, TSMC Fab 18 at three hops' },
   /* Below 1080px the three panes collapse to one-at-a-time tabs, and the
@@ -157,7 +164,16 @@ async function capture(browser, vp, scene) {
   /* One settle window for layout, fonts and the graph's first paint. */
   await page.waitForLoadState('networkidle').catch(() => {});
   await page.waitForTimeout(1200);
-  await page.evaluate(() => window.scrollTo(0, 0));
+  /* Scenes are captured from the top of the page unless one names a
+     section to scroll to. A company's documented network and its plants
+     sit a long way down a scrolling column, and a scene that claims to
+     record them while showing the map above them records nothing. */
+  if (scene.scrollTo) {
+    await page.locator(scene.scrollTo).first().scrollIntoViewIfNeeded({ timeout: 5000 }).catch(() => {});
+    await page.waitForTimeout(900);
+  } else {
+    await page.evaluate(() => window.scrollTo(0, 0));
+  }
   await page.waitForTimeout(150);
 
   const file = path.join(outDir, `${scene.id}-${vp.name}.png`);

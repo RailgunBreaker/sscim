@@ -11,9 +11,9 @@ graph is separate from the propagation model defined in
 | Record | Current count |
 | --- | ---: |
 | System companies eligible for tracking and centring | 109 |
-| Companies with profiles in the public registry | 430 |
-| Documented relationships | 578 |
-| Public source documents | 107 |
+| Companies with profiles in the public registry | 441 |
+| Documented relationships | 591 |
+| Public source documents | 122 |
 | System companies with a documented connection | 109 |
 | System companies reaching level 2 in either direction | 92 |
 | System companies reaching level 3 in either direction | 81 |
@@ -140,6 +140,7 @@ Chaining disclosures from different years does not establish simultaneous trade.
 | `supplier-tiers/expand-filings.mjs` | Relationships named in annual securities filings and company releases; resolves firms by normalised name so a second spelling cannot create a duplicate node |
 | `supplier-tiers/data/company-crosswalk.json` | Reviewed mapping from public legal entities to system IDs |
 | `supplier-tiers/expand-coverage.mjs` | November 25 primary-source expansion and explicit historical/announced relationship qualifications |
+| `supplier-tiers/expand-renesas.mjs` | One company in both directions: the Renesas pass, ten of whose fourteen edges are downstream |
 | `supplier-tiers/coverage.mjs` | Shared directional coverage and example-path calculation |
 | `supplier-tiers/data/{companies,edges,sources,coverage}.json` | Generated research outputs and all-company coverage ledger |
 | `app/src/data/publicSupplierTiers.json` | Generated application dataset |
@@ -187,9 +188,16 @@ three-step citation paths, cycles and depth limits.
 ## Profile and customer navigation
 
 Every company profile offers Suppliers, Customers and Full network actions.
-They open that company at three documented steps in the chosen direction,
-including when the profile belongs to an untracked contextual firm. On small
-screens the workspace tab opens automatically. The tracked-company directory
+They set the direction on the network drawn inside that same profile and move
+the page to it, including when the profile belongs to an untracked contextual
+firm. Embedded in a profile the graph opens at **one** documented step — the
+firms that company is itself named with — and the depth control walks further;
+on its own page it still opens at three. One step rather than three because at
+three steps a profile stops being about its company: Renesas has 16 named
+counterparties and 111 firms within three documented steps, and all 72 of the
+firms at its second upstream step arrive through one of those 16 — TSMC, whose
+own published supplier list is exactly 72 firms long. On small screens the
+Intel tab opens automatically. The tracked-company directory
 remains accessible above an open graph; each row also opens the company profile.
 Choosing a company in the directory respects its upstream/downstream filter.
 
@@ -227,11 +235,56 @@ filled from sector similarity, unnamed customers or inferred purchasing chains.
 Third-level coverage increased from 76 to 81 tracked companies in at least one
 direction. This still leaves 28 without a documented third-level path.
 
+## Single-company pass: Renesas, 2026-11-25
+
+A pass covering **one company in both directions**, which is a different
+exercise from the breadth passes above and was done because breadth had left a
+specific distortion behind.
+
+Renesas had 74 documented firms upstream and **one** downstream. That is not a
+finding about Renesas. The earlier passes grew out of buyer-published supplier
+lists — Apple's, Intel's, TSMC's award announcements — so every firm they
+reached arrived as somebody's *supplier*: 70 of those 74 were inherited from
+TSMC's own list, two steps away, and the side where an MCU and SoC maker
+actually trades was empty.
+
+The pass added 11 firms, 14 relationships and 15 documents, every one fetched
+and read on 2026-11-25. **Ten of the fourteen edges are downstream.** Renesas
+now carries 6 documented suppliers and 10 documented customers.
+
+- Upstream: Wolfspeed (150mm SiC bare and epitaxial wafers, ten-year
+  agreement), GlobalFoundries (FD-SOI, BCD and feature-rich CMOS capacity,
+  announced February 2026 with tape-outs stated for mid-2026), Andes Technology
+  and SiFive (RISC-V CPU IP), and a 2025 document on the existing TSMC pair
+  naming 3nm automotive process for the fifth-generation R-Car SoC.
+- Downstream: Honda, VinFast, Audi, Great Wall Motor, Nevs, Inventec, Nidec,
+  Nullmax and Tata Elxsi, alongside the existing Apple supplier-list entry.
+
+Each downstream edge carries its own qualification on the edge itself, because
+they are not equally strong and the reader has to see which is which without
+opening the source. VinFast is the strongest: Renesas states its SoCs, R-Car
+and analog products are *already implemented* in two named vehicle models.
+Honda is an agreement to develop a chiplet SoC for vehicles late in the 2020s,
+not a shipment. Inventec and Nidec are proofs of concept. Nullmax and Tata
+Elxsi are design-ins by software and services houses that are not stated to buy
+silicon. Audi (2015), Nevs (2015) and Great Wall (2017) name no part and no
+volume, and the oldest is eleven years old at the date checked.
+
+Where a joint release exists on both companies' sites, the copy hosted by
+whichever party is the **buyer** is the one cited, so the evidence class states
+who disclosed what about whom. The Honda announcement is therefore two sources:
+the Honda-hosted copy evidences Renesas→Honda, and the Renesas-hosted copy
+evidences TSMC→Renesas, where Renesas is the buyer naming its foundry.
+
+Directional coverage across the 109 tracked companies is unchanged by this
+pass: Renesas already reached all three levels upstream. What changed is that
+its profile no longer presents one customer as the whole of its demand side.
+
 ## Profile audit: 2026-11-25
 
-All 430 public-network company records resolve to a profile with a name,
+All 441 public-network company records resolve to a profile with a name,
 introduction and relationship source references. The 110 mapped registry nodes
-represent exactly 109 distinct tracked system companies; the other 320 profiles
+represent exactly 109 distinct tracked system companies; the other 331 profiles
 provide contextual supplier/customer information. Every tracked company has a
 control record. Contextual profiles have no modeled exposure, control record or
 tracking eligibility: profile availability does not mean ownership research is

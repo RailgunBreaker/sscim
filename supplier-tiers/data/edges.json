@@ -1,7 +1,7 @@
 {
   "meta": {
-    "generated": "2026-11-24",
-    "count": 578
+    "generated": "2026-11-25",
+    "count": 591
   },
   "edges": [
     {
@@ -3145,6 +3145,22 @@
       ]
     },
     {
+      "supplier": "renesas-electronics-corporation",
+      "customer": "audi-ag",
+      "products": [
+        "Automotive semiconductors under the Audi Progressive SemiConductor Program"
+      ],
+      "sources": [
+        "renesas-audi-pscp-2015"
+      ],
+      "years": [
+        2015
+      ],
+      "details": [
+        "A direct carmaker-to-chipmaker programme covering control, automated drive, connected car and EV applications. Historical and part-free: evidence of a relationship in 2015, not of supply today."
+      ]
+    },
+    {
       "supplier": "nxp-semiconductors-n-v",
       "customer": "aumovio-se",
       "products": [
@@ -3500,6 +3516,22 @@
       ]
     },
     {
+      "supplier": "renesas-electronics-corporation",
+      "customer": "great-wall-motor-company-limited",
+      "products": [
+        "Automotive semiconductor technologies for new-energy and self-driving vehicles"
+      ],
+      "sources": [
+        "renesas-great-wall-nev-2017"
+      ],
+      "years": [
+        2017
+      ],
+      "details": [
+        "A 2017 development collaboration with a Chinese carmaker, nine years old at the date checked and never followed in this set by a part-level disclosure."
+      ]
+    },
+    {
       "supplier": "nxp-semiconductors-n-v",
       "customer": "harman-international",
       "products": [
@@ -3764,6 +3796,22 @@
       ],
       "details": [
         "Announced in March 2024 as \"expected to deliver\" servers based on Blackwell. Delivery and current status are not established by the release."
+      ]
+    },
+    {
+      "supplier": "renesas-electronics-corporation",
+      "customer": "honda-motor-co-ltd",
+      "products": [
+        "Fifth-generation R-Car X5 SoC for software-defined vehicles"
+      ],
+      "sources": [
+        "renesas-honda-soc-2025-honda"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Development agreement for a multi-die chiplet SoC pairing R-Car X5 with Honda's own AI accelerator. The stated target is Honda 0 Series vehicles late in the 2020s, so no shipment is claimed."
       ]
     },
     {
@@ -4860,6 +4908,22 @@
       "details": []
     },
     {
+      "supplier": "renesas-electronics-corporation",
+      "customer": "inventec-corporation",
+      "products": [
+        "R-Car SoCs, analog and power products with engineering support"
+      ],
+      "sources": [
+        "renesas-inventec-gateway-2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": [
+        "Parts and engineering supplied into a joint proof of concept with an ODM. A PoC programme, not a production gateway and not a disclosed order."
+      ]
+    },
+    {
       "supplier": "system-nvidia",
       "customer": "inventec-corporation",
       "products": [
@@ -5230,6 +5294,42 @@
       "details": []
     },
     {
+      "supplier": "renesas-electronics-corporation",
+      "customer": "national-electric-vehicle-sweden-ab",
+      "products": [
+        "System solutions for new-energy vehicles"
+      ],
+      "sources": [
+        "renesas-nevs-china-nev-2015"
+      ],
+      "years": [
+        2015
+      ],
+      "details": [
+        "The oldest edge on this company and the thinnest: a 2015 partnership aimed at the China NEV market, with no part named and no later document."
+      ]
+    },
+    {
+      "supplier": "renesas-electronics-corporation",
+      "customer": "nidec-corporation",
+      "products": [
+        "Semiconductors and reference designs for X-in-1 E-Axle systems",
+        "Components and reference design for the 8-in-1 E-Axle proof of concept"
+      ],
+      "sources": [
+        "renesas-nidec-eaxle-2023",
+        "renesas-nidec-8in1-2024"
+      ],
+      "years": [
+        2023,
+        2024
+      ],
+      "details": [
+        "Joint development of an E-Axle proof of concept: an agreement to develop together, with no part number, order or volume disclosed.",
+        "The second documented phase of the Nidec relationship, which is why this pair carries two dates. Nidec states an intention to productize, and an intention to productize is not production."
+      ]
+    },
+    {
       "supplier": "chipmos-technologies-inc",
       "customer": "novatek-microelectronics-corp",
       "products": [
@@ -5259,6 +5359,22 @@
       ],
       "details": [
         "Named among primary customers as a fabless design company."
+      ]
+    },
+    {
+      "supplier": "renesas-electronics-corporation",
+      "customer": "nullmax",
+      "products": [
+        "R-Car V4 and R-Car X5 series SoCs for ADAS software"
+      ],
+      "sources": [
+        "renesas-nullmax-adas-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "Named silicon under a third party ADAS stack. The weakest form of downstream evidence here: adoption by a software partner, with no channel, order or volume."
       ]
     },
     {
@@ -5533,6 +5649,22 @@
       ]
     },
     {
+      "supplier": "andes-technology-corporation",
+      "customer": "renesas-electronics-corporation",
+      "products": [
+        "32-bit RISC-V CPU core intellectual property"
+      ],
+      "sources": [
+        "renesas-andes-riscv-2020"
+      ],
+      "years": [
+        2020
+      ],
+      "details": [
+        "Licensed CPU IP designed into ASSPs. A design-in of intellectual property, with no wafer, part or royalty figure disclosed."
+      ]
+    },
+    {
       "supplier": "arteris-ip",
       "customer": "renesas-electronics-corporation",
       "products": [
@@ -5549,19 +5681,71 @@
       ]
     },
     {
+      "supplier": "globalfoundries-inc",
+      "customer": "renesas-electronics-corporation",
+      "products": [
+        "FD-SOI, BCD and feature-rich CMOS foundry capacity"
+      ],
+      "sources": [
+        "renesas-gf-foundry-2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": [
+        "Expanded foundry access announced February 2026, with first tape-outs stated for mid-2026 and a possible porting of GF processes into Renesas fabs still under consideration. The newest document on this company, and the least settled."
+      ]
+    },
+    {
+      "supplier": "sifive-inc",
+      "customer": "renesas-electronics-corporation",
+      "products": [
+        "High-end RISC-V core intellectual property for automotive"
+      ],
+      "sources": [
+        "renesas-sifive-riscv-2021"
+      ],
+      "years": [
+        2021
+      ],
+      "details": [
+        "An IP licence plus joint development for future automotive designs. Nothing here names a shipped part."
+      ]
+    },
+    {
       "supplier": "taiwan-semiconductor-manufacturing-company-limited",
       "customer": "renesas-electronics-corporation",
       "products": [
-        "Outsourced microcontroller wafer manufacturing"
+        "Outsourced microcontroller wafer manufacturing",
+        "3nm automotive process for the fifth-generation R-Car SoC"
       ],
       "sources": [
-        "renesas-tsmc-2012-outsourcing"
+        "renesas-tsmc-2012-outsourcing",
+        "renesas-honda-soc-2025-renesas"
       ],
       "years": [
-        2012
+        2012,
+        2025
       ],
       "details": [
-        "Historical existing 90nm arrangement and announced 40nm extension; not a claim about current production mix."
+        "Historical existing 90nm arrangement and announced 40nm extension; not a claim about current production mix.",
+        "Named process technology for an SoC still in development as of January 2025. It refreshes a pair whose only other document was thirteen years older; it does not establish a current production volume."
+      ]
+    },
+    {
+      "supplier": "wolfspeed-inc",
+      "customer": "renesas-electronics-corporation",
+      "products": [
+        "Silicon carbide bare and epitaxial wafers"
+      ],
+      "sources": [
+        "renesas-wolfspeed-sic-2023"
+      ],
+      "years": [
+        2023
+      ],
+      "details": [
+        "Ten-year supply agreement for 150mm SiC wafers, with 200mm anticipated once new capacity runs. A contracted commitment and a deposit, not a record of shipments."
       ]
     },
     {
@@ -8294,6 +8478,22 @@
       "details": []
     },
     {
+      "supplier": "renesas-electronics-corporation",
+      "customer": "tata-elxsi-limited",
+      "products": [
+        "Reference designs for EV battery-management and motor-control subsystems"
+      ],
+      "sources": [
+        "renesas-tata-elxsi-ev-2022"
+      ],
+      "years": [
+        2022
+      ],
+      "details": [
+        "A joint innovation centre, which puts Renesas parts into other companies’ designs rather than into products of its own. Counted as a documented counterparty, not as an end customer."
+      ]
+    },
+    {
       "supplier": "system-amd",
       "customer": "tencent-holdings",
       "products": [
@@ -8523,6 +8723,22 @@
       ],
       "details": [
         "Named enterprise deployment in supplier earnings presentation; end user, not necessarily a direct chip purchaser."
+      ]
+    },
+    {
+      "supplier": "renesas-electronics-corporation",
+      "customer": "vinfast-auto-ltd",
+      "products": [
+        "R-Car SoCs, microcontrollers, analog and power semiconductors"
+      ],
+      "sources": [
+        "renesas-vinfast-2022"
+      ],
+      "years": [
+        2022
+      ],
+      "details": [
+        "The strongest downstream evidence on this company: devices stated as already implemented in two named vehicle models, plus an agreement to widen the range. Still no volume and no share."
       ]
     },
     {

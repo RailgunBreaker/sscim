@@ -232,7 +232,9 @@ export default function SupplierTierGraph({
   const layout = layoutRef.current;
   const pos = layout ? layout.positions() : null;
   const box = useMemo(
-    () => gestureRef.current?.bounds || (layout ? layout.bounds(compact ? 70 : 100) : null),
+    /* Wider than it is tall, because the names are drawn beside the
+       nodes and the firms at the edges are the ones that get cut. */
+    () => gestureRef.current?.bounds || (layout ? layout.bounds(compact ? 70 : 100, compact ? 110 : 140) : null),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [layout, compact, progress],
   );

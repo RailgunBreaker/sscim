@@ -34,7 +34,7 @@
       "downstreamLevels": [
         2,
         14,
-        47
+        55
       ],
       "upstreamPaths": [
         null,
@@ -80,7 +80,7 @@
       "downstreamLevels": [
         2,
         14,
-        46
+        54
       ],
       "upstreamPaths": [
         null,
@@ -419,7 +419,7 @@
       "downstreamLevels": [
         1,
         14,
-        47
+        55
       ],
       "upstreamPaths": [
         [
@@ -467,7 +467,7 @@
       "documented": true,
       "levels": [
         187,
-        133,
+        137,
         25
       ],
       "downstreamLevels": [
@@ -519,7 +519,7 @@
       "downstreamLevels": [
         3,
         16,
-        45
+        53
       ],
       "upstreamPaths": [
         [
@@ -667,7 +667,7 @@
       "downstreamLevels": [
         2,
         16,
-        45
+        53
       ],
       "upstreamPaths": [
         [
@@ -715,7 +715,7 @@
       "downstreamLevels": [
         4,
         17,
-        48
+        56
       ],
       "upstreamPaths": [
         [
@@ -939,7 +939,7 @@
       "downstreamLevels": [
         1,
         14,
-        47
+        55
       ],
       "upstreamPaths": [
         null,
@@ -1025,7 +1025,7 @@
       "downstreamLevels": [
         2,
         14,
-        46
+        54
       ],
       "upstreamPaths": [
         null,
@@ -1157,7 +1157,7 @@
       "downstreamLevels": [
         1,
         14,
-        47
+        55
       ],
       "upstreamPaths": [
         null,
@@ -1203,7 +1203,7 @@
       "downstreamLevels": [
         1,
         14,
-        47
+        55
       ],
       "upstreamPaths": [
         null,
@@ -1289,7 +1289,7 @@
       "downstreamLevels": [
         4,
         26,
-        41
+        49
       ],
       "upstreamPaths": [
         null,
@@ -2036,7 +2036,7 @@
       "downstreamLevels": [
         1,
         14,
-        47
+        55
       ],
       "upstreamPaths": [
         null,
@@ -2124,7 +2124,7 @@
       "downstreamLevels": [
         2,
         16,
-        45
+        53
       ],
       "upstreamPaths": [
         null,
@@ -2170,7 +2170,7 @@
       "downstreamLevels": [
         2,
         16,
-        45
+        53
       ],
       "upstreamPaths": [
         null,
@@ -2262,7 +2262,7 @@
       "downstreamLevels": [
         3,
         15,
-        45
+        53
       ],
       "upstreamPaths": [
         [
@@ -2356,7 +2356,7 @@
       "downstreamLevels": [
         2,
         14,
-        46
+        54
       ],
       "upstreamPaths": [
         null,
@@ -2955,7 +2955,7 @@
       "downstreamLevels": [
         7,
         29,
-        41
+        49
       ],
       "upstreamPaths": [
         null,
@@ -3149,7 +3149,7 @@
       "downstreamLevels": [
         2,
         14,
-        46
+        54
       ],
       "upstreamPaths": [
         null,
@@ -3375,23 +3375,23 @@
       "id": "renesas-electronics-corporation",
       "vaultId": "renesas",
       "name": "Renesas",
-      "suppliers": 2,
-      "customers": 1,
+      "suppliers": 6,
+      "customers": 10,
       "documented": true,
       "levels": [
-        2,
+        6,
         72,
         23
       ],
       "downstreamLevels": [
-        1,
+        10,
         0,
         0
       ],
       "upstreamPaths": [
         [
           "renesas-electronics-corporation",
-          "arteris-ip"
+          "andes-technology-corporation"
         ],
         [
           "renesas-electronics-corporation",
@@ -3434,7 +3434,7 @@
       "downstreamLevels": [
         1,
         14,
-        47
+        55
       ],
       "upstreamPaths": [
         null,
@@ -3574,7 +3574,7 @@
       "downstreamLevels": [
         2,
         16,
-        45
+        53
       ],
       "upstreamPaths": [
         null,
@@ -3666,7 +3666,7 @@
       "downstreamLevels": [
         1,
         14,
-        47
+        55
       ],
       "upstreamPaths": [
         null,
@@ -3985,7 +3985,7 @@
       "downstreamLevels": [
         5,
         29,
-        33
+        41
       ],
       "upstreamPaths": [
         null,
@@ -4082,7 +4082,7 @@
       "downstreamLevels": [
         2,
         17,
-        47
+        55
       ],
       "upstreamPaths": [
         [
@@ -4216,7 +4216,7 @@
       "downstreamLevels": [
         2,
         16,
-        45
+        53
       ],
       "upstreamPaths": [
         [
@@ -4270,7 +4270,7 @@
       "downstreamLevels": [
         1,
         14,
-        47
+        55
       ],
       "upstreamPaths": [
         null,
@@ -4410,7 +4410,7 @@
       "downstreamLevels": [
         1,
         14,
-        47
+        55
       ],
       "upstreamPaths": [
         null,
@@ -4456,7 +4456,7 @@
       "downstreamLevels": [
         3,
         15,
-        45
+        53
       ],
       "upstreamPaths": [
         null,
@@ -4595,7 +4595,7 @@
       ],
       "downstreamLevels": [
         14,
-        47,
+        55,
         5
       ],
       "upstreamPaths": [

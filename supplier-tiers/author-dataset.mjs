@@ -31,6 +31,7 @@
 import { expandSystem } from './expand-system.mjs';
 import { expandFilings } from './expand-filings.mjs';
 import { expandCoverage } from './expand-coverage.mjs';
+import { expandRenesas } from './expand-renesas.mjs';
 import { supplierCoverage, coverageSummary } from './coverage.mjs';
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -1145,6 +1146,10 @@ const meta = {
 expandSystem({ meta, sources: SOURCES, companies, edges });
 expandFilings({ meta, sources: SOURCES, companies, edges });
 expandCoverage({ meta, sources: SOURCES, companies, edges });
+/* One company, both directions. Runs last because it adds a document to
+   a pair an earlier pass created (TSMC → Renesas), and merging into an
+   existing edge requires that edge to exist. */
+expandRenesas({ meta, sources: SOURCES, companies, edges });
 const coverage = supplierCoverage(companies, edges);
 meta.documentedLevels = coverageSummary(coverage);
 

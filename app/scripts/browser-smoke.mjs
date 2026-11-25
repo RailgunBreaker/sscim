@@ -521,6 +521,89 @@ async function main() {
       await openDashboard(vp, base);
     }
 
+    /* ---- THE CUSTOMER SIDE OF A NETWORK IS HALF OF IT ----
+
+       Renesas is the company the directional pass was built around, and
+       the reason it was needed: its documented network was 74 firms
+       upstream and ONE downstream, because the dataset grew out of
+       buyer-published supplier lists in which every firm arrives as
+       somebody's supplier. A graph drawn from that reads as if an MCU
+       maker sells to nobody.
+
+       Checked in a browser rather than in jsdom because what matters is
+       what gets DRAWN: how many nodes land on each side of the company,
+       and whether the customer half is on screen at all. */
+    {
+      await openDashboard(vp, base, '#sel=company:renesas');
+      await vp.waitForTimeout(1200);
+
+      const net = vp.locator('#company-network').first();
+      if (!(await net.count())) { fail('Renesas has a documented network section'); } else {
+        pass('Renesas has a documented network section');
+        /* The section heading is a styled div, uppercased by CSS, so a
+           real browser reports it uppercase where jsdom does not. Match
+           case-insensitively or this passes in tests and fails here. */
+        const heading = await net.innerText();
+        const counts = heading.match(/(\d+) documented suppliers?, (\d+) documented customers?/i);
+        if (!counts) { fail('the network heading counts both directions', heading.split('\n')[0].slice(0, 70)); } else {
+          const [, sup, cus] = counts.map(Number);
+          pass('the network heading counts both directions', `${sup} suppliers · ${cus} customers`);
+          check(cus >= 10, 'the customer side is populated, not a single firm', `${cus} documented customers`);
+          check(cus > sup, 'Renesas has more documented customers than suppliers');
+        }
+
+        await net.scrollIntoViewIfNeeded();
+        await vp.waitForTimeout(1600);
+        const nodes = await net.locator('svg circle').count();
+        /* One step each way: 6 + 10 + the company itself. If this ever
+           draws ninety, the embedded graph has gone back to two steps
+           and the page is showing TSMC's supplier list again. */
+        check(nodes >= 15 && nodes <= 40, 'the graph opens on this company, not on a cloud', `${nodes} nodes`);
+
+        /* The customer side has to be drawn to the RIGHT of the company,
+           which is the whole convention the layout rests on. Renesas
+           sits in the middle; its customers must have nodes beyond it. */
+        const spread = await net.evaluate((root) => {
+          const svg = root.querySelector('svg');
+          if (!svg) return null;
+          const cs = [...svg.querySelectorAll('circle')].map((c) => c.getBoundingClientRect());
+          if (!cs.length) return null;
+          const xs = cs.map((r) => r.left + r.width / 2).sort((a, b) => a - b);
+          const mid = (xs[0] + xs[xs.length - 1]) / 2;
+          return { left: xs.filter((x) => x < mid).length, right: xs.filter((x) => x > mid).length };
+        });
+        check(Boolean(spread && spread.left > 0 && spread.right > 0),
+          'suppliers and customers are drawn on opposite sides',
+          spread ? `${spread.left} left · ${spread.right} right` : 'no circles');
+
+        /* Read the names out of the SVG itself. innerText does not reach
+           SVG text nodes, and the complete relationship table is
+           collapsed in an embedded graph, so either of those would be
+           checking something other than what a reader can see.
+
+           Each node carries its name in its accessible name, which is
+           what a screen reader and the hover title both read; the drawn
+           text labels are a separate claim, because collision rejection
+           is allowed to drop a label in a crowded place. */
+        const drawn = await net.evaluate((root) => ({
+          accessible: [...root.querySelectorAll('svg [aria-label]')].map((n) => n.getAttribute('aria-label')).join(' | '),
+          visible: [...root.querySelectorAll('svg text')].map((t) => t.textContent).join(' | '),
+          nodes: root.querySelectorAll('svg circle').length,
+        }));
+        for (const firm of ['Wolfspeed', 'GlobalFoundries', 'Honda', 'VinFast', 'Nidec']) {
+          check(drawn.accessible.includes(firm), `the drawn network carries ${firm}`);
+        }
+        const namesShown = ['Wolfspeed', 'GlobalFoundries', 'Honda', 'VinFast', 'Nidec']
+          .filter((f) => drawn.visible.includes(f)).length;
+        check(namesShown >= 3, 'most of those names are also drawn as labels', `${namesShown}/5 labelled`);
+      }
+
+      const ov = await vp.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+      check(ov <= 2, 'the Renesas profile: no horizontal overflow', `${ov}px`);
+      await shot(vp, 'company-renesas-network');
+      await openDashboard(vp, base);
+    }
+
     /* History review: a past date, then back to the live reading. The two
        are different claims and must be labelled differently. */
     await vp.locator('[role="radiogroup"][aria-label="Workspace"] [role="radio"]').filter({ hasText: /^Map$/i }).first().click();

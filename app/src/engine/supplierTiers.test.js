@@ -175,6 +175,85 @@ describe('the dataset keeps its one promise', () => {
   });
 });
 
+describe('Renesas, in both directions', () => {
+  /* The company the November 25 directional pass was built around, and
+     the clearest case of an artefact the earlier passes left behind.
+     Those passes grew out of buyer-published supplier lists, so every
+     firm they reached arrived as somebody's SUPPLIER: Renesas ended up
+     with 74 firms upstream, 70 of them inherited from TSMC's list two
+     steps away, and exactly one downstream. Renesas sells automotive
+     and industrial MCUs and SoCs. The customer side is its business. */
+  const R = 'renesas-electronics-corporation';
+  const suppliers = () => index.suppliersOf[R];
+  const customers = () => index.customersOf[R];
+
+  it('names more customers than suppliers, because that is the half that was missing', () => {
+    expect(suppliers().length).toBeGreaterThanOrEqual(6);
+    expect(customers().length).toBeGreaterThanOrEqual(10);
+    expect(customers().length).toBeGreaterThan(suppliers().length);
+  });
+
+  it('documents the supply side at the level of wafers, foundry capacity and CPU IP', () => {
+    const by = Object.fromEntries(suppliers().map((e) => [e.supplier, e]));
+    expect(by['wolfspeed-inc'].products.join(' ')).toMatch(/silicon carbide/i);
+    expect(by['globalfoundries-inc'].products.join(' ')).toMatch(/FD-SOI/);
+    for (const ip of ['andes-technology-corporation', 'sifive-inc']) {
+      expect(by[ip].products.join(' ')).toMatch(/RISC-V/);
+    }
+    /* One pair, two documents, thirteen years apart — not two edges.
+       The 2012 announcement was 90nm and 40nm microcontrollers; the
+       2025 one is a 3nm automotive SoC. */
+    const tsmc = by['taiwan-semiconductor-manufacturing-company-limited'];
+    expect(tsmc.years).toEqual([2012, 2025]);
+    expect(tsmc.sources.length).toBe(2);
+  });
+
+  it('reaches carmakers, an ODM, a motor maker and two software houses downstream', () => {
+    const reached = customers().map((e) => e.customer);
+    for (const id of ['honda-motor-co-ltd', 'vinfast-auto-ltd', 'audi-ag',
+      'great-wall-motor-company-limited', 'national-electric-vehicle-sweden-ab',
+      'inventec-corporation', 'nidec-corporation', 'nullmax', 'tata-elxsi-limited', 'apple-inc']) {
+      expect(reached, id).toContain(id);
+    }
+    /* Drawn as one step each way, which is what the profile opens on:
+       six firms left, ten right, and the company in the middle. */
+    const t = traverseSuppliers(index, R, { direction: 'both', hops: 1 });
+    expect(t.nodes.filter((n) => n.hop === -1).length).toBe(suppliers().length);
+    expect(t.nodes.filter((n) => n.hop === 1).length).toBe(customers().length);
+  });
+
+  it('qualifies every soft edge on the edge itself, where the interface shows it', () => {
+    /* A development agreement, a proof of concept, a design-in and an
+       eleven-year-old partnership are all weaker than a shipment, and
+       the reader has to be able to see which one they are looking at
+       without opening the source. */
+    const by = Object.fromEntries(customers().map((e) => [e.customer, e.details.join(' ')]));
+    expect(by['honda-motor-co-ltd']).toMatch(/no shipment is claimed/i);
+    expect(by['nullmax']).toMatch(/weakest form of downstream evidence/i);
+    expect(by['tata-elxsi-limited']).toMatch(/not as an end customer/i);
+    expect(by['audi-ag']).toMatch(/not of supply today/i);
+    expect(by['inventec-corporation']).toMatch(/not a production gateway/i);
+    expect(by['nidec-corporation']).toMatch(/is not production/i);
+    // And the one that does name shipped product says so plainly.
+    expect(by['vinfast-auto-ltd']).toMatch(/already implemented in two named vehicle models/i);
+  });
+
+  it('files each joint release under the party that published it', () => {
+    /* The Honda announcement exists on both companies' sites. The
+       Honda-hosted copy evidences Renesas→Honda; the Renesas-hosted
+       copy evidences TSMC→Renesas, because there Renesas is the buyer
+       naming its foundry. Same news, two directions, two sources. */
+    const honda = customers().find((e) => e.customer === 'honda-motor-co-ltd');
+    expect(honda.sources).toEqual(['renesas-honda-soc-2025-honda']);
+    expect(index.sources['renesas-honda-soc-2025-honda'].publisher).toBe('Honda');
+    expect(index.sources['renesas-honda-soc-2025-renesas'].publisher).toBe('Renesas');
+    for (const id of ['renesas-honda-soc-2025-honda', 'renesas-honda-soc-2025-renesas']) {
+      expect(index.sources[id].evidence).toBe('P1-buyer');
+      expect(index.sources[id].seen).toBe('fetched');
+    }
+  });
+});
+
 describe('tier derivation', () => {
   it('puts the focal buyers at tier 0', () => {
     for (const id of index.meta.focal) expect(index.tier[id]).toBe(0);

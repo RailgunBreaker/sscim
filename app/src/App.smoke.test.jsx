@@ -207,13 +207,52 @@ describe('App smoke (static snapshot, Leaflet mocked)', () => {
     // The named company opened, with the link that addresses it stated.
     expect(text).toContain('TSMC');
     expect(text).toContain('#sel=company:tsmc');
-    // Its documented network and its plants are sections of that profile.
-    expect(text).toContain('Network — every firm within three documented steps');
+    /* Its documented network and its plants are sections of that
+       profile, and the network heading counts BOTH directions: a
+       profile that reported only suppliers was the thing being fixed. */
+    expect(text).toMatch(/Network — \d+ documented suppliers?, \d+ documented customers?/);
     expect(text).toMatch(/Facilities — this company/);
     // The modeled chain is ONE row through the company, not two trees.
     expect(text).toContain('MODELED CHAIN · TWO LAYERS EACH SIDE');
     expect(text).not.toContain('UPSTREAM ORIGINS');
     expect(text).not.toContain('CUSTOMER-GRAPH SPREAD');
+
+    await act(async () => { root.unmount(); });
+    container.remove();
+    window.location.hash = '';
+  });
+
+  it('gives Renesas a network with customers in it, not only suppliers', async () => {
+    /* The company this pass was built for. Its documented network used
+       to be 74 firms upstream and one downstream — an artefact of a
+       dataset assembled out of buyer-published supplier lists, where
+       every firm arrives as somebody's supplier. Renesas sells MCUs and
+       SoCs; the customer side is the half that matters on its page.
+
+       Asserted through the whole app rather than against the dataset,
+       because the dataset test next door already checks the edges: what
+       this one checks is that the PROFILE puts them on screen. */
+    window.location.hash = '#sel=company:renesas';
+    const container = document.createElement('div');
+    document.body.appendChild(container);
+    const root = createRoot(container);
+    await act(async () => { root.render(<App />); });
+    await flush(0);
+    await flush(0);
+
+    const text = container.textContent || '';
+    expect(text).toContain('Renesas');
+    const heading = text.match(/Network — (\d+) documented suppliers?, (\d+) documented customers?/);
+    expect(heading).not.toBeNull();
+    const [, suppliers, customers] = heading.map(Number);
+    expect(suppliers).toBeGreaterThanOrEqual(6);
+    // The point of the pass: more customers than suppliers, not one.
+    expect(customers).toBeGreaterThanOrEqual(10);
+    expect(customers).toBeGreaterThan(suppliers);
+    // And the named ones are on the page, in both directions.
+    for (const firm of ['Wolfspeed', 'GlobalFoundries', 'Honda', 'VinFast', 'Nidec']) {
+      expect(text).toContain(firm);
+    }
 
     await act(async () => { root.unmount(); });
     container.remove();

@@ -179,8 +179,14 @@ export function createLayout(nodeIds, links, { tierX = null, ...opts } = {}) {
 
   /* The drawn extent, so the caller can fit the viewBox to what the
      simulation actually produced rather than to a guessed canvas. */
-  const bounds = (pad = 90) => {
-    if (!n) return { minX: -pad, minY: -pad, w: pad * 2, h: pad * 2 };
+  /* padX defaults to pad, but a caller that draws names under its nodes
+     needs more room sideways than vertically: a name is a horizontal
+     object centred on a point, so the firm at the right-hand edge of a
+     graph has half its name outside a symmetrically padded frame. That
+     is how "National Electric Vehicle Sweden AB" arrived on screen as
+     "National Electric Vehicle Swede". */
+  const bounds = (pad = 90, padX = pad) => {
+    if (!n) return { minX: -padX, minY: -pad, w: padX * 2, h: pad * 2 };
     let minX = Infinity; let minY = Infinity; let maxX = -Infinity; let maxY = -Infinity;
     for (let i = 0; i < n; i += 1) {
       if (x[i] < minX) minX = x[i];
@@ -188,7 +194,7 @@ export function createLayout(nodeIds, links, { tierX = null, ...opts } = {}) {
       if (y[i] < minY) minY = y[i];
       if (y[i] > maxY) maxY = y[i];
     }
-    return { minX: minX - pad, minY: minY - pad, w: (maxX - minX) + pad * 2, h: (maxY - minY) + pad * 2 };
+    return { minX: minX - padX, minY: minY - pad, w: (maxX - minX) + padX * 2, h: (maxY - minY) + pad * 2 };
   };
 
   /* Move a node and hold it there. Used by dragging: the position comes

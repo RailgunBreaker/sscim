@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Public multi-tier semiconductor supplier graph",
-    "generated": "2026-11-24",
+    "generated": "2026-11-25",
     "focal": [
       "apple-inc",
       "huawei-technologies-co-ltd"
@@ -3256,6 +3256,72 @@
       "country": "us",
       "layer": "ic_other",
       "role": "Analog and connectivity semiconductor designer"
+    },
+    "wolfspeed-inc": {
+      "name": "Wolfspeed, Inc.",
+      "country": "us",
+      "layer": "wafers",
+      "role": "Silicon carbide substrate, epitaxial wafer and power device maker."
+    },
+    "globalfoundries-inc": {
+      "name": "GlobalFoundries Inc.",
+      "country": "us",
+      "layer": "foundry_idm",
+      "role": "Specialty foundry: FD-SOI, BCD and feature-rich CMOS rather than leading-edge logic."
+    },
+    "andes-technology-corporation": {
+      "name": "Andes Technology Corporation",
+      "country": "tw",
+      "layer": "services",
+      "role": "Licenses RISC-V CPU cores as design intellectual property."
+    },
+    "sifive-inc": {
+      "name": "SiFive, Inc.",
+      "country": "us",
+      "layer": "services",
+      "role": "Licenses RISC-V CPU core intellectual property."
+    },
+    "honda-motor-co-ltd": {
+      "name": "Honda Motor Co., Ltd.",
+      "country": "jp",
+      "layer": "brand",
+      "role": "Vehicle manufacturer; co-develops its own vehicle SoC and develops its own AI accelerator."
+    },
+    "vinfast-auto-ltd": {
+      "name": "VinFast Auto Ltd.",
+      "country": "vn",
+      "layer": "brand",
+      "role": "Vietnamese electric vehicle manufacturer."
+    },
+    "audi-ag": {
+      "name": "AUDI AG",
+      "country": "de",
+      "layer": "brand",
+      "role": "Vehicle manufacturer; runs the Progressive SemiConductor Program, which contracts chipmakers directly."
+    },
+    "great-wall-motor-company-limited": {
+      "name": "Great Wall Motor Company Limited",
+      "country": "cn",
+      "layer": "brand",
+      "role": "Chinese SUV, pickup and new-energy vehicle manufacturer."
+    },
+    "national-electric-vehicle-sweden-ab": {
+      "name": "National Electric Vehicle Sweden AB (Nevs)",
+      "country": "se",
+      "layer": "brand",
+      "role": "Electric vehicle developer built on the former Saab Automobile operations."
+    },
+    "nullmax": {
+      "name": "Nullmax",
+      "country": "cn",
+      "layer": "services",
+      "role": "Autonomous-driving software company; builds ADAS stacks on third-party automotive SoCs."
+    },
+    "tata-elxsi-limited": {
+      "name": "Tata Elxsi Limited",
+      "country": "in",
+      "layer": "services",
+      "role": "Automotive and electronics design-services house."
     }
   }
 }

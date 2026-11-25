@@ -38,16 +38,20 @@ fitted to nothing.
   anything, walk back and forward, filter by company / country / stage /
   relationship type / strength, and open any connection to see exactly which
   company edge and which stage reach produced it.
-- **Public supplier network** - explore 430 registered firms and 578 cited
-  relationships from any of the 109 system companies. Levels 1-3 measure
+- **Public supplier network** - explore 441 registered firms and 591 cited
+  relationships from any of the 109 system companies, inside that company's own
+  profile rather than in a workspace of its own. Levels 1-3 measure
   distance from the selected company; each connection points supplier to
   customer and opens its evidence. A persistent legend, level lists and
   shortest citation paths explain the graph. Dragging a node animates its
   neighbours while keeping the node under the pointer, then settles on release.
-- **A profile for every chain company** - all 430 use the standard profile
-  format. Tracking and modeled scores remain limited to the 109 system
-  companies; outside firms provide context and explicitly mark unknown control
-  fields. Of the 109, 73 have documented connections and 36 have evidence gaps.
+- **A profile for every chain company** - all 441 use the standard profile
+  format, each at its own `#sel=company:<id>` URL, and each carrying its own
+  documented network and its own plants. Tracking and modeled scores remain
+  limited to the 109 system companies; outside firms provide context and
+  explicitly mark unknown control fields. All 109 now have at least one
+  documented connection; 17 still lack a second level in either direction and
+  28 lack a third.
   Modeled relationships and public disclosures stay separate. See the
   [public supplier network guide](docs/PUBLIC_SUPPLIER_NETWORK.md).
 - **Geographic view** — every plant on a world map with the modeled links

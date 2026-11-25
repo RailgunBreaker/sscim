@@ -56,9 +56,18 @@ export default function SupplierTierExplorer({ compact = false, onSelectVaultCom
   const [direction, setDirection] = useState('both');
   /* Three documented steps from TSMC is 161 firms. That was a legible
      first view at 1180px of workspace; in a profile column it is a cloud.
-     Embedded, the graph opens at two steps and the depth control is right
-     there — the table below it is complete at any depth either way. */
-  const [hops, setHops] = useState(fixedRootId ? 2 : 3);
+     Embedded, the graph opens at ONE step — this company's own named
+     counterparties, suppliers to the left and customers to the right —
+     and the depth control is right there to go further.
+
+     One step rather than two, because two is where a profile stops being
+     about its company. Renesas has six documented suppliers and ten
+     documented customers; at two steps it has 88 counterparties, and all
+     72 of the new ones arrive through a single one of those six — TSMC,
+     whose published supplier list is 72 firms long. The reader opened a
+     Renesas page, so the first thing drawn is Renesas's network, not
+     TSMC's. The table below is complete at any depth. */
+  const [hops, setHops] = useState(fixedRootId ? 1 : 3);
   const [colourBy, setColourBy] = useState('tier');
   const [anchorTiers, setAnchorTiers] = useState(true);
   const [hiddenGroups, setHiddenGroups] = useState(() => new Set());
@@ -94,7 +103,7 @@ export default function SupplierTierExplorer({ compact = false, onSelectVaultCom
     if (embedded && publicNetworkRequest.id !== fixedRootId) return;
     if (!embedded) setRootId(publicNetworkRequest.id);
     setDirection(publicNetworkRequest.direction);
-    setHops(embedded ? 2 : 3);
+    setHops(embedded ? 1 : 3);
     setTrail([]); setSelectedKey(null); setDetailId(null); setProfileId(null);
     setHiddenGroups(new Set());
   }, [publicNetworkRequest, index, embedded, fixedRootId]);
