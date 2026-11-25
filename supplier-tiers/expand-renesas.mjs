@@ -193,6 +193,108 @@ export function expandRenesas(data) {
   edge('renesas', 'tata-elxsi-limited', 'Reference designs for EV battery-management and motor-control subsystems', 'renesas-tata-elxsi-ev-2022', 2022,
     'A joint innovation centre, which puts Renesas parts into other companies’ designs rather than into products of its own. Counted as a documented counterparty, not as an end customer.');
 
+  /* ======================================================================
+     SECOND PASS, same company.
+
+     The first pass found the firms Renesas announces partnerships WITH.
+     That is a particular kind of document: a partnership release is what
+     a chipmaker publishes when it wants a name beside its own. It left
+     out the plainest kind of customer there is — the tier-one supplier
+     that puts the part in a box and ships it to a carmaker — because
+     those relationships are announced as design wins, in releases whose
+     headline is a product rather than a partnership.
+
+     Four of the five firms added here are automotive tier ones and one
+     is a carmaker group. Two of them, Bosch and Toyota/Denso, are also
+     the modeled customers the engine already carried for Renesas, at 8%
+     and 20% supplier-revenue share. Until now the modeled chain and the
+     documented chain named none of the same firms on this company. They
+     do now, which is worth saying precisely because the two datasets are
+     built to be independent: this is agreement found, not agreement
+     arranged.
+     ====================================================================== */
+
+  firm('zf-friedrichshafen-ag', 'ZF Friedrichshafen AG', 'de', 'mechanical',
+    'Automotive driveline, chassis and ADAS systems supplier.');
+
+  source('renesas-toyota-rav4-2026', 'Renesas', 'Renesas R-Car V4H ADAS SoC Selected for Toyota RAV4 Model',
+    'https://www.renesas.com/en/about/newsroom/renesas-r-car-v4h-adas-soc-selected-toyota-rav4-model', '2026-02-24', 'P1-supplier',
+    "A design win, named at the part level: the R-Car V4H was selected for the TSS(LSS) control unit in Toyota's new RAV4, and the page states that the control unit is supplied by Denso Corporation. The strongest downstream document on this company — a named part, in a named unit, in a named vehicle.");
+  /* One edge, not two. The tracked identity here is "Toyota / Denso",
+     which the vault merges because Denso is Toyota's affiliated supplier;
+     the public registry also carries Toyota Motor Corporation separately
+     for the NVIDIA DRIVE edges. Recording this against both nodes would
+     put one relationship in the dataset twice and make the carmaker
+     appear as two firms in the same graph. The merge is stated on the
+     edge instead, where a reader meets it. */
+  edge('renesas', 'denso', 'R-Car V4H ADAS SoC for the TSS(LSS) control unit', 'renesas-toyota-rav4-2026', 2026,
+    'Named part in a named ECU in a named vehicle: the Toyota Safety Sense control unit of the RAV4 that went on sale in December 2025. The tracked node merges Toyota and Denso; the document names Denso as the unit supplier and Toyota as the carmaker, and no separate Toyota edge is recorded for the same relationship.');
+
+  source('renesas-continental-bodyhpc-2020', 'Renesas', 'Renesas Advanced Automotive SoC Adopted by Continental for Its Body High-Performance Computer',
+    'https://www.renesas.com/en/about/press-room/renesas-advanced-automotive-soc-adopted-continental-its-body-high-performance-computer', '2020-07-07', 'P1-supplier',
+    "Supplier names the tier one and the part: Continental adopted the Renesas R-Car M3 SoC for its first-generation Body High-Performance Computer. A Continental executive is quoted saying that computer is already going into production at a global vehicle manufacturer, who is not named.");
+  edge('renesas', 'continental-ag', 'R-Car M3 SoC for the first-generation Body High-Performance Computer', 'renesas-continental-bodyhpc-2020', 2020,
+    'A design win with a production claim attached, which is rare in this set — though the vehicle manufacturer taking it is left unnamed. Six years old at the date checked, and never updated by a later document here.');
+
+  source('renesas-rcar-gen5-platform-2025', 'Renesas', 'Renesas Fast-Tracks SDV Innovation with R-Car Gen 5 SoC-Based End-to-End Multi-Domain Solution Platform',
+    'https://www.renesas.com/en/about/newsroom/renesas-fast-tracks-sdv-innovation-r-car-gen-5-soc-based-end-end-multi-domain-solution-platform', '2025-12-16', 'P1-supplier',
+    "Platform launch carrying quotes from two tier ones ahead of CES 2026: Bosch's Cross-Domain Computing Solutions division on integrating the R-Car X5 generation into its high-performance computing portfolio, and ZF's Electronics & ADAS division on combining the X5H with its own ADAS software. Silicon samples and evaluation boards are stated as shipping to select customers and partners. Nullmax is also named, among the software partners of the RoX Whitebox SDK.");
+  edge('renesas', 'robert-bosch-gmbh', 'R-Car X5 generation SoCs for high-performance compute', 'renesas-rcar-gen5-platform-2025', 2025,
+    'Stated intent to integrate, from the buyer, built on a collaboration the buyer calls existing. Samples were shipping at the date of the release; production was not claimed.');
+  edge('renesas', 'zf-friedrichshafen-ag', 'R-Car X5H SoC under ZF ADAS software', 'renesas-rcar-gen5-platform-2025', 2025,
+    'A full-stack ADAS combination announced ahead of a trade show. The weaker of the two tier-one edges from this release: it describes what the two companies will show, not what either has bought.');
+  /* A second document on a pair the first pass called the weakest kind
+     of downstream evidence. It is still a software partner, but it is
+     now one the chipmaker lists in its own platform launch. */
+  edge('renesas', 'nullmax', 'R-Car Gen 5 software partner in the RoX Whitebox SDK', 'renesas-rcar-gen5-platform-2025', 2025,
+    'Named among the SDK software partners in the platform launch, eleven months after the ADAS partnership release. Two documents, both describing software built on Renesas silicon rather than silicon bought.');
+
+  source('renesas-rh850-u2c-bosch-2026', 'Renesas', 'Renesas Expands Auto MCU Portfolio with 28nm RH850/U2C for Vehicle Control and Automotive Safety Applications',
+    'https://www.renesas.com/en/about/newsroom/renesas-expands-auto-mcu-portfolio-28nm-rh850u2c-vehicle-control-and-automotive-safety-applications', '2026-03-04', 'P1-supplier',
+    "A product launch whose customer quote is the evidence: Bosch's Chief Expert Semiconductor at Vehicle Motion says the 28nm MCUs offer strong performance and quality and that Bosch looks forward to continuing the collaboration, and that the RH850 family has long supported Bosch systems. The page names no foundry for the 28nm process.");
+  edge('renesas', 'robert-bosch-gmbh', 'RH850/U2C 28nm vehicle-control microcontrollers', 'renesas-rh850-u2c-bosch-2026', 2026,
+    'The buyer describes an existing, long-standing use of the RH850 family, which is stronger than the forward-looking X5 statement on the same pair. Two documents, fifteen months apart, on two different product lines.');
+
+  /* ---- upstream, from the company's own product announcements ---- */
+
+  source('renesas-rcar-x5h-3nm-2024', 'Renesas', "Renesas Unveils Industry's First Automotive Multi-Domain SoC Built with 3-nm Process Technology",
+    'https://www.renesas.com/en/about/newsroom/renesas-unveils-industry-s-first-automotive-multi-domain-soc-built-3-nm-process-technology', '2024-11-13', 'P1-buyer',
+    "A product announcement that names two of its own inputs: 32 Arm Cortex-A720AE application cores and six Arm Cortex-R52 lockstep cores, and manufacture on TSMC's N3A automotive process, with a TSMC executive quoted. A buyer naming its IP supplier and its foundry in the same document.");
+  edge('arm', 'renesas', 'Cortex-A720AE and Cortex-R52 CPU core intellectual property', 'renesas-rcar-x5h-3nm-2024', 2024,
+    'Named CPU cores in a named product. Renesas licenses RISC-V cores from two other vendors in this dataset as well; the architectures are alternatives in its line-up, not a succession.');
+  edge('taiwan-semiconductor-manufacturing-company-limited', 'renesas', 'N3A 3nm automotive process for the R-Car X5H', 'renesas-rcar-x5h-3nm-2024', 2024,
+    'The third document on this pair and the most specific about process: N3A, named by both companies, for a product announced in November 2024.');
+
+  source('renesas-synopsys-dso-ai-2021', 'Synopsys', 'Synopsys AI-Driven Design System Enables Renesas to Achieve Breakthrough in Productivity',
+    'https://news.synopsys.com/2021-04-15-Synopsys-AI-Driven-Design-System-Enables-Renesas-to-Achieve-Breakthrough-in-Productivity', '2021-04-15', 'P1-supplier',
+    'Tool vendor names its customer: Synopsys announces the adoption of its DSO.ai design-space optimization system into the Renesas automotive design environment, with a Renesas director quoted. Design software, not silicon.');
+  edge('synopsys', 'renesas', 'DSO.ai design-space optimization software for automotive SoCs', 'renesas-synopsys-dso-ai-2021', 2021,
+    'An EDA dependency rather than a material one: nothing ships, but no modern SoC is designed without tools of this kind. Five years old at the date checked.');
+
+  /* ---- THREE THINGS DELIBERATELY NOT ADDED ----
+
+     Cadence published a March 2023 release on Renesas using Verisium to
+     debug an R-Car SoC, and Mouser publishes releases calling itself an
+     authorized Renesas distributor. Neither page could be read: the
+     Cadence copies answered 403 and the Mouser copies timed out at every
+     domain tried. The rule is a document that was read, not a document
+     that is believed to exist, so neither is recorded and the EDA side
+     of this company stays thinner than it really is.
+
+     The third is a stronger case for restraint. CG Power, Renesas and
+     Stars Microelectronics announced an OSAT joint venture in India on
+     2024-03-01, and that page WAS read. It describes a joint venture and
+     an equity split — 92.3 / 6.8 / 0.9 — and states nothing about the
+     facility assembling or testing anything for Renesas. A shareholding
+     is not a supply relationship, so it is not an edge here, and the
+     packaging gap on this company stays open and visible. */
+
+  /* Years arrive in the order the passes happen to add them, and the
+     interface prints them as a list under each relationship. A pair
+     carrying "2012, 2025, 2024" reads as a mistake even though the set
+     is right, so they are ordered here, in the pass that runs last. */
+  for (const e of data.edges) e.years.sort((a, b) => a - b);
+
   data.edges.sort((a, b) => a.customer.localeCompare(b.customer) || a.supplier.localeCompare(b.supplier));
   return data;
 }

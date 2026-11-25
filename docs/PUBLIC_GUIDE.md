@@ -8,7 +8,7 @@ This guide assumes no background in semiconductors, networks, or statistics. It 
 
 ## Public supplier network
 
-Open any company to find its documented network inside its own profile: there is no separate Network view. The graph opens on the firms that company is itself documented with — suppliers to the left, customers to the right — and the depth control walks out to their counterparties and theirs again. The heading counts both directions, so a company with suppliers and no customers reads as a disclosure gap rather than a blank. All 441 registry firms have profiles; outside firms provide context only. Arrows point supplier to customer. Drag a node and its neighbours move with the simulation, then settle. See the [network guide](PUBLIC_SUPPLIER_NETWORK.md) for profiles, controls and evidence limits.
+Open any company to find its documented network inside its own profile: there is no separate Network view. The graph opens on the firms that company is itself documented with — suppliers to the left, customers to the right — and the depth control walks out to their counterparties and theirs again. The heading counts both directions, so a company with suppliers and no customers reads as a disclosure gap rather than a blank. All 442 registry firms have profiles; outside firms provide context only. Arrows point supplier to customer. Drag a node and its neighbours move with the simulation, then settle. See the [network guide](PUBLIC_SUPPLIER_NETWORK.md) for profiles, controls and evidence limits.
 
 ## The one-paragraph version
 

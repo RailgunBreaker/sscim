@@ -3322,6 +3322,12 @@
       "country": "in",
       "layer": "services",
       "role": "Automotive and electronics design-services house."
+    },
+    "zf-friedrichshafen-ag": {
+      "name": "ZF Friedrichshafen AG",
+      "country": "de",
+      "layer": "mechanical",
+      "role": "Automotive driveline, chassis and ADAS systems supplier."
     }
   }
 }

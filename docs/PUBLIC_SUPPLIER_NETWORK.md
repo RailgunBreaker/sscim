@@ -11,9 +11,9 @@ graph is separate from the propagation model defined in
 | Record | Current count |
 | --- | ---: |
 | System companies eligible for tracking and centring | 109 |
-| Companies with profiles in the public registry | 441 |
-| Documented relationships | 591 |
-| Public source documents | 122 |
+| Companies with profiles in the public registry | 442 |
+| Documented relationships | 597 |
+| Public source documents | 128 |
 | System companies with a documented connection | 109 |
 | System companies reaching level 2 in either direction | 92 |
 | System companies reaching level 3 in either direction | 81 |
@@ -193,11 +193,11 @@ the page to it, including when the profile belongs to an untracked contextual
 firm. Embedded in a profile the graph opens at **one** documented step — the
 firms that company is itself named with — and the depth control walks further;
 on its own page it still opens at three. One step rather than three because at
-three steps a profile stops being about its company: Renesas has 16 named
-counterparties and 111 firms within three documented steps, and all 72 of the
-firms at its second upstream step arrive through one of those 16 — TSMC, whose
-own published supplier list is exactly 72 firms long. On small screens the
-Intel tab opens automatically. The tracked-company directory
+three steps a profile stops being about its company: Renesas has 22 named
+counterparties and 117 firms within three documented steps, and 71 of the 72
+firms at its second upstream step arrive through one of those 22 — TSMC, whose
+own published supplier list is 72 firms long. On small screens the Intel tab
+opens automatically. The tracked-company directory
 remains accessible above an open graph; each row also opens the company profile.
 Choosing a company in the directory respects its upstream/downstream filter.
 
@@ -248,17 +248,53 @@ reached arrived as somebody's *supplier*: 70 of those 74 were inherited from
 TSMC's own list, two steps away, and the side where an MCU and SoC maker
 actually trades was empty.
 
-The pass added 11 firms, 14 relationships and 15 documents, every one fetched
-and read on 2026-11-25. **Ten of the fourteen edges are downstream.** Renesas
-now carries 6 documented suppliers and 10 documented customers.
+The pass added 12 firms, 19 relationships and 21 documents, every one fetched
+and read on 2026-11-25. Renesas now carries **8 documented suppliers and 14
+documented customers**.
 
 - Upstream: Wolfspeed (150mm SiC bare and epitaxial wafers, ten-year
   agreement), GlobalFoundries (FD-SOI, BCD and feature-rich CMOS capacity,
   announced February 2026 with tape-outs stated for mid-2026), Andes Technology
-  and SiFive (RISC-V CPU IP), and a 2025 document on the existing TSMC pair
-  naming 3nm automotive process for the fifth-generation R-Car SoC.
+  and SiFive (RISC-V CPU IP), Arm (Cortex-A720AE and Cortex-R52 cores in the
+  R-Car X5H), Synopsys (DSO.ai design software), and two newer documents on the
+  existing TSMC pair naming the N3A automotive process.
 - Downstream: Honda, VinFast, Audi, Great Wall Motor, Nevs, Inventec, Nidec,
-  Nullmax and Tata Elxsi, alongside the existing Apple supplier-list entry.
+  Nullmax and Tata Elxsi, alongside the existing Apple supplier-list entry; then
+  the tier ones — Toyota/Denso, Robert Bosch, Continental and ZF.
+
+The tier ones came from a second pass over the same company, because the first
+pass had a bias of its own. Partnership releases are what a chipmaker publishes
+when it wants a name beside its own; a design win is announced as a product.
+Searching for partnerships found nine firms and missed the four companies that
+actually put Renesas parts into boxes and ship them to carmakers. The RAV4
+release is the strongest downstream document on this company in the whole
+dataset: a named part (R-Car V4H), in a named unit (the Toyota Safety Sense
+control unit), in a named vehicle, with Denso named as the unit's supplier.
+
+Two of those tier ones, Toyota/Denso and Bosch, are also the two customers the
+**modeled** chain already carried for Renesas, at 20% and 8% supplier-revenue
+share. Until this pass the modeled chain and the documented chain named none of
+the same firms on this company. The two datasets share no inputs and are built
+to be independent, so the overlap is agreement found rather than agreement
+arranged — and it is the only point on this company where either can be
+checked against the other.
+
+Three things were deliberately left out. Cadence published a March 2023 release
+on Renesas using Verisium, and Mouser publishes releases calling itself an
+authorized Renesas distributor; neither page could be read (403 and repeated
+timeouts), and the rule is a document that was read, not one believed to exist.
+The third is a stronger case: the CG Power / Renesas / Stars Microelectronics
+OSAT joint venture in India, announced 2024-03-01, **was** read, and it
+describes a joint venture and an equity split of 92.3 / 6.8 / 0.9 while stating
+nothing about the facility assembling or testing anything for Renesas. A
+shareholding is not a supply relationship. Renesas still has no documented
+packaging or test supplier, and that hole is left visible.
+
+The demand side is also exactly one step deep: none of the 14 documented
+customers has a documented customer of its own here. Tier ones do not publish
+their carmakers, and the Continental release is explicit about it — its Body
+HPC is "already going into production at a global vehicle manufacturer" who is
+never named.
 
 Each downstream edge carries its own qualification on the edge itself, because
 they are not equally strong and the reader has to see which is which without
@@ -286,9 +322,9 @@ six firms to the left of Renesas, ten to the right.
 
 ## Profile audit: 2026-11-25
 
-All 441 public-network company records resolve to a profile with a name,
+All 442 public-network company records resolve to a profile with a name,
 introduction and relationship source references. The 110 mapped registry nodes
-represent exactly 109 distinct tracked system companies; the other 331 profiles
+represent exactly 109 distinct tracked system companies; the other 332 profiles
 provide contextual supplier/customer information. Every tracked company has a
 control record. Contextual profiles have no modeled exposure, control record or
 tracking eligibility: profile availability does not mean ownership research is

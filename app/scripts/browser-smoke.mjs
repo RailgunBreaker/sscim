@@ -548,7 +548,7 @@ async function main() {
         if (!counts) { fail('the network heading counts both directions', heading.split('\n')[0].slice(0, 70)); } else {
           const [, sup, cus] = counts.map(Number);
           pass('the network heading counts both directions', `${sup} suppliers · ${cus} customers`);
-          check(cus >= 10, 'the customer side is populated, not a single firm', `${cus} documented customers`);
+          check(cus >= 14, 'the customer side is populated, not a single firm', `${cus} documented customers`);
           check(cus > sup, 'Renesas has more documented customers than suppliers');
         }
 
@@ -590,12 +590,15 @@ async function main() {
           visible: [...root.querySelectorAll('svg text')].map((t) => t.textContent).join(' | '),
           nodes: root.querySelectorAll('svg circle').length,
         }));
-        for (const firm of ['Wolfspeed', 'GlobalFoundries', 'Honda', 'VinFast', 'Nidec']) {
+        /* Two suppliers, two partnership customers, and the two tier
+           ones the second pass added — the firms that actually put the
+           parts in boxes, and the pair the modeled chain also names. */
+        const expected = ['Wolfspeed', 'GlobalFoundries', 'Honda', 'VinFast', 'Bosch', 'Denso'];
+        for (const firm of expected) {
           check(drawn.accessible.includes(firm), `the drawn network carries ${firm}`);
         }
-        const namesShown = ['Wolfspeed', 'GlobalFoundries', 'Honda', 'VinFast', 'Nidec']
-          .filter((f) => drawn.visible.includes(f)).length;
-        check(namesShown >= 3, 'most of those names are also drawn as labels', `${namesShown}/5 labelled`);
+        const namesShown = expected.filter((f) => drawn.visible.includes(f)).length;
+        check(namesShown >= 4, 'most of those names are also drawn as labels', `${namesShown}/${expected.length} labelled`);
       }
 
       const ov = await vp.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);

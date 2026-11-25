@@ -34,7 +34,7 @@
       "downstreamLevels": [
         2,
         14,
-        55
+        56
       ],
       "upstreamPaths": [
         null,
@@ -80,7 +80,7 @@
       "downstreamLevels": [
         2,
         14,
-        54
+        55
       ],
       "upstreamPaths": [
         null,
@@ -228,7 +228,7 @@
       "downstreamLevels": [
         15,
         5,
-        2
+        3
       ],
       "upstreamPaths": [
         [
@@ -419,7 +419,7 @@
       "downstreamLevels": [
         1,
         14,
-        55
+        56
       ],
       "upstreamPaths": [
         [
@@ -467,8 +467,8 @@
       "documented": true,
       "levels": [
         187,
-        137,
-        25
+        138,
+        24
       ],
       "downstreamLevels": [
         0,
@@ -519,7 +519,7 @@
       "downstreamLevels": [
         3,
         16,
-        53
+        54
       ],
       "upstreamPaths": [
         [
@@ -557,7 +557,7 @@
       "vaultId": "arm",
       "name": "Arm",
       "suppliers": 0,
-      "customers": 3,
+      "customers": 4,
       "documented": true,
       "levels": [
         0,
@@ -565,9 +565,9 @@
         0
       ],
       "downstreamLevels": [
-        3,
-        31,
-        8
+        4,
+        43,
+        7
       ],
       "upstreamPaths": [
         null,
@@ -577,18 +577,18 @@
       "downstreamPaths": [
         [
           "system-arm",
-          "system-mediatek"
+          "renesas-electronics-corporation"
         ],
         [
           "system-arm",
-          "system-mediatek",
-          "system-xiaomi"
+          "renesas-electronics-corporation",
+          "apple-inc"
         ],
         [
           "system-arm",
           "system-nvidia",
-          "byd-company-limited",
-          "apple-inc"
+          "hon-hai-precision-industry-company-limited-foxconn",
+          "broadcom-limited"
         ]
       ],
       "missingUpstreamLevels": [
@@ -667,7 +667,7 @@
       "downstreamLevels": [
         2,
         16,
-        53
+        54
       ],
       "upstreamPaths": [
         [
@@ -715,7 +715,7 @@
       "downstreamLevels": [
         4,
         17,
-        56
+        57
       ],
       "upstreamPaths": [
         [
@@ -832,12 +832,12 @@
       "id": "robert-bosch-gmbh",
       "vaultId": "bosch",
       "name": "Bosch",
-      "suppliers": 3,
+      "suppliers": 4,
       "customers": 1,
       "documented": true,
       "levels": [
-        3,
-        6,
+        4,
+        12,
         71
       ],
       "downstreamLevels": [
@@ -939,7 +939,7 @@
       "downstreamLevels": [
         1,
         14,
-        55
+        56
       ],
       "upstreamPaths": [
         null,
@@ -1025,7 +1025,7 @@
       "downstreamLevels": [
         2,
         14,
-        54
+        55
       ],
       "upstreamPaths": [
         null,
@@ -1157,7 +1157,7 @@
       "downstreamLevels": [
         1,
         14,
-        55
+        56
       ],
       "upstreamPaths": [
         null,
@@ -1203,7 +1203,7 @@
       "downstreamLevels": [
         1,
         14,
-        55
+        56
       ],
       "upstreamPaths": [
         null,
@@ -1289,7 +1289,7 @@
       "downstreamLevels": [
         4,
         26,
-        49
+        50
       ],
       "upstreamPaths": [
         null,
@@ -2036,7 +2036,7 @@
       "downstreamLevels": [
         1,
         14,
-        55
+        56
       ],
       "upstreamPaths": [
         null,
@@ -2124,7 +2124,7 @@
       "downstreamLevels": [
         2,
         16,
-        53
+        54
       ],
       "upstreamPaths": [
         null,
@@ -2170,7 +2170,7 @@
       "downstreamLevels": [
         2,
         16,
-        53
+        54
       ],
       "upstreamPaths": [
         null,
@@ -2262,7 +2262,7 @@
       "downstreamLevels": [
         3,
         15,
-        53
+        54
       ],
       "upstreamPaths": [
         [
@@ -2356,7 +2356,7 @@
       "downstreamLevels": [
         2,
         14,
-        54
+        55
       ],
       "upstreamPaths": [
         null,
@@ -2685,8 +2685,8 @@
       ],
       "downstreamLevels": [
         1,
-        2,
-        16
+        3,
+        28
       ],
       "upstreamPaths": [
         [
@@ -2955,7 +2955,7 @@
       "downstreamLevels": [
         7,
         29,
-        49
+        50
       ],
       "upstreamPaths": [
         null,
@@ -3149,7 +3149,7 @@
       "downstreamLevels": [
         2,
         14,
-        54
+        55
       ],
       "upstreamPaths": [
         null,
@@ -3375,16 +3375,16 @@
       "id": "renesas-electronics-corporation",
       "vaultId": "renesas",
       "name": "Renesas",
-      "suppliers": 6,
-      "customers": 10,
+      "suppliers": 8,
+      "customers": 14,
       "documented": true,
       "levels": [
-        6,
+        8,
         72,
         23
       ],
       "downstreamLevels": [
-        10,
+        14,
         0,
         0
       ],
@@ -3395,14 +3395,14 @@
         ],
         [
           "renesas-electronics-corporation",
-          "taiwan-semiconductor-manufacturing-company-limited",
-          "abb-ltd"
+          "system-synopsys",
+          "system-microsoft"
         ],
         [
           "renesas-electronics-corporation",
-          "taiwan-semiconductor-manufacturing-company-limited",
-          "applied-materials-inc",
-          "advanced-energy-industries"
+          "system-synopsys",
+          "system-microsoft",
+          "system-amd"
         ]
       ],
       "downstreamPaths": [
@@ -3434,7 +3434,7 @@
       "downstreamLevels": [
         1,
         14,
-        55
+        56
       ],
       "upstreamPaths": [
         null,
@@ -3574,7 +3574,7 @@
       "downstreamLevels": [
         2,
         16,
-        53
+        54
       ],
       "upstreamPaths": [
         null,
@@ -3666,7 +3666,7 @@
       "downstreamLevels": [
         1,
         14,
-        55
+        56
       ],
       "upstreamPaths": [
         null,
@@ -3985,7 +3985,7 @@
       "downstreamLevels": [
         5,
         29,
-        41
+        42
       ],
       "upstreamPaths": [
         null,
@@ -4082,7 +4082,7 @@
       "downstreamLevels": [
         2,
         17,
-        55
+        56
       ],
       "upstreamPaths": [
         [
@@ -4206,7 +4206,7 @@
       "vaultId": "synopsys",
       "name": "Synopsys",
       "suppliers": 1,
-      "customers": 2,
+      "customers": 3,
       "documented": true,
       "levels": [
         1,
@@ -4214,9 +4214,9 @@
         13
       ],
       "downstreamLevels": [
-        2,
-        16,
-        53
+        3,
+        28,
+        41
       ],
       "upstreamPaths": [
         [
@@ -4270,7 +4270,7 @@
       "downstreamLevels": [
         1,
         14,
-        55
+        56
       ],
       "upstreamPaths": [
         null,
@@ -4410,7 +4410,7 @@
       "downstreamLevels": [
         1,
         14,
-        55
+        56
       ],
       "upstreamPaths": [
         null,
@@ -4456,7 +4456,7 @@
       "downstreamLevels": [
         3,
         15,
-        53
+        54
       ],
       "upstreamPaths": [
         null,
@@ -4539,12 +4539,12 @@
       "id": "system-denso",
       "vaultId": "denso",
       "name": "Toyota / Denso",
-      "suppliers": 2,
+      "suppliers": 3,
       "customers": 0,
       "documented": true,
       "levels": [
-        2,
-        7,
+        3,
+        13,
         71
       ],
       "downstreamLevels": [
@@ -4595,7 +4595,7 @@
       ],
       "downstreamLevels": [
         14,
-        55,
+        56,
         5
       ],
       "upstreamPaths": [

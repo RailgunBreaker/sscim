@@ -38,14 +38,14 @@ fitted to nothing.
   anything, walk back and forward, filter by company / country / stage /
   relationship type / strength, and open any connection to see exactly which
   company edge and which stage reach produced it.
-- **Public supplier network** - explore 441 registered firms and 591 cited
+- **Public supplier network** - explore 442 registered firms and 597 cited
   relationships from any of the 109 system companies, inside that company's own
   profile rather than in a workspace of its own. Levels 1-3 measure
   distance from the selected company; each connection points supplier to
   customer and opens its evidence. A persistent legend, level lists and
   shortest citation paths explain the graph. Dragging a node animates its
   neighbours while keeping the node under the pointer, then settles on release.
-- **A profile for every chain company** - all 441 use the standard profile
+- **A profile for every chain company** - all 442 use the standard profile
   format, each at its own `#sel=company:<id>` URL, and each carrying its own
   documented network and its own plants. Tracking and modeled scores remain
   limited to the 109 system companies; outside firms provide context and

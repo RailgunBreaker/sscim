@@ -1355,6 +1355,72 @@
       "kind": "Company disclosure",
       "seen": "fetched",
       "retrieved": "2026-11-25"
+    },
+    "renesas-toyota-rav4-2026": {
+      "publisher": "Renesas",
+      "title": "Renesas R-Car V4H ADAS SoC Selected for Toyota RAV4 Model",
+      "url": "https://www.renesas.com/en/about/newsroom/renesas-r-car-v4h-adas-soc-selected-toyota-rav4-model",
+      "published": "2026-02-24",
+      "evidence": "P1-supplier",
+      "note": "A design win, named at the part level: the R-Car V4H was selected for the TSS(LSS) control unit in Toyota's new RAV4, and the page states that the control unit is supplied by Denso Corporation. The strongest downstream document on this company — a named part, in a named unit, in a named vehicle.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "renesas-continental-bodyhpc-2020": {
+      "publisher": "Renesas",
+      "title": "Renesas Advanced Automotive SoC Adopted by Continental for Its Body High-Performance Computer",
+      "url": "https://www.renesas.com/en/about/press-room/renesas-advanced-automotive-soc-adopted-continental-its-body-high-performance-computer",
+      "published": "2020-07-07",
+      "evidence": "P1-supplier",
+      "note": "Supplier names the tier one and the part: Continental adopted the Renesas R-Car M3 SoC for its first-generation Body High-Performance Computer. A Continental executive is quoted saying that computer is already going into production at a global vehicle manufacturer, who is not named.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "renesas-rcar-gen5-platform-2025": {
+      "publisher": "Renesas",
+      "title": "Renesas Fast-Tracks SDV Innovation with R-Car Gen 5 SoC-Based End-to-End Multi-Domain Solution Platform",
+      "url": "https://www.renesas.com/en/about/newsroom/renesas-fast-tracks-sdv-innovation-r-car-gen-5-soc-based-end-end-multi-domain-solution-platform",
+      "published": "2025-12-16",
+      "evidence": "P1-supplier",
+      "note": "Platform launch carrying quotes from two tier ones ahead of CES 2026: Bosch's Cross-Domain Computing Solutions division on integrating the R-Car X5 generation into its high-performance computing portfolio, and ZF's Electronics & ADAS division on combining the X5H with its own ADAS software. Silicon samples and evaluation boards are stated as shipping to select customers and partners. Nullmax is also named, among the software partners of the RoX Whitebox SDK.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "renesas-rh850-u2c-bosch-2026": {
+      "publisher": "Renesas",
+      "title": "Renesas Expands Auto MCU Portfolio with 28nm RH850/U2C for Vehicle Control and Automotive Safety Applications",
+      "url": "https://www.renesas.com/en/about/newsroom/renesas-expands-auto-mcu-portfolio-28nm-rh850u2c-vehicle-control-and-automotive-safety-applications",
+      "published": "2026-03-04",
+      "evidence": "P1-supplier",
+      "note": "A product launch whose customer quote is the evidence: Bosch's Chief Expert Semiconductor at Vehicle Motion says the 28nm MCUs offer strong performance and quality and that Bosch looks forward to continuing the collaboration, and that the RH850 family has long supported Bosch systems. The page names no foundry for the 28nm process.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "renesas-rcar-x5h-3nm-2024": {
+      "publisher": "Renesas",
+      "title": "Renesas Unveils Industry's First Automotive Multi-Domain SoC Built with 3-nm Process Technology",
+      "url": "https://www.renesas.com/en/about/newsroom/renesas-unveils-industry-s-first-automotive-multi-domain-soc-built-3-nm-process-technology",
+      "published": "2024-11-13",
+      "evidence": "P1-buyer",
+      "note": "A product announcement that names two of its own inputs: 32 Arm Cortex-A720AE application cores and six Arm Cortex-R52 lockstep cores, and manufacture on TSMC's N3A automotive process, with a TSMC executive quoted. A buyer naming its IP supplier and its foundry in the same document.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "renesas-synopsys-dso-ai-2021": {
+      "publisher": "Synopsys",
+      "title": "Synopsys AI-Driven Design System Enables Renesas to Achieve Breakthrough in Productivity",
+      "url": "https://news.synopsys.com/2021-04-15-Synopsys-AI-Driven-Design-System-Enables-Renesas-to-Achieve-Breakthrough-in-Productivity",
+      "published": "2021-04-15",
+      "evidence": "P1-supplier",
+      "note": "Tool vendor names its customer: Synopsys announces the adoption of its DSO.ai design-space optimization system into the Renesas automotive design environment, with a Renesas director quoted. Design software, not silicon.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
     }
   }
 }

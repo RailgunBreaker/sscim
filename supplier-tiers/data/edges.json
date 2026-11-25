@@ -1,7 +1,7 @@
 {
   "meta": {
     "generated": "2026-11-25",
-    "count": 591
+    "count": 597
   },
   "edges": [
     {
@@ -3376,6 +3376,22 @@
       "details": []
     },
     {
+      "supplier": "renesas-electronics-corporation",
+      "customer": "continental-ag",
+      "products": [
+        "R-Car M3 SoC for the first-generation Body High-Performance Computer"
+      ],
+      "sources": [
+        "renesas-continental-bodyhpc-2020"
+      ],
+      "years": [
+        2020
+      ],
+      "details": [
+        "A design win with a production claim attached, which is rare in this set — though the vehicle manufacturer taking it is left unnamed. Six years old at the date checked, and never updated by a later document here."
+      ]
+    },
+    {
       "supplier": "stmicroelectronics-n-v",
       "customer": "continental-ag",
       "products": [
@@ -4815,8 +4831,8 @@
         "umc-20f-2025"
       ],
       "years": [
-        2026,
-        2025
+        2025,
+        2026
       ],
       "details": [
         "Named among primary customers as a integrated device manufacturer.",
@@ -5365,16 +5381,19 @@
       "supplier": "renesas-electronics-corporation",
       "customer": "nullmax",
       "products": [
-        "R-Car V4 and R-Car X5 series SoCs for ADAS software"
+        "R-Car V4 and R-Car X5 series SoCs for ADAS software",
+        "R-Car Gen 5 software partner in the RoX Whitebox SDK"
       ],
       "sources": [
-        "renesas-nullmax-adas-2025"
+        "renesas-nullmax-adas-2025",
+        "renesas-rcar-gen5-platform-2025"
       ],
       "years": [
         2025
       ],
       "details": [
-        "Named silicon under a third party ADAS stack. The weakest form of downstream evidence here: adoption by a software partner, with no channel, order or volume."
+        "Named silicon under a third party ADAS stack. The weakest form of downstream evidence here: adoption by a software partner, with no channel, order or volume.",
+        "Named among the SDK software partners in the platform launch, eleven months after the ADAS partnership release. Two documents, both describing software built on Renesas silicon rather than silicon bought."
       ]
     },
     {
@@ -5713,23 +5732,59 @@
       ]
     },
     {
+      "supplier": "system-arm",
+      "customer": "renesas-electronics-corporation",
+      "products": [
+        "Cortex-A720AE and Cortex-R52 CPU core intellectual property"
+      ],
+      "sources": [
+        "renesas-rcar-x5h-3nm-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": [
+        "Named CPU cores in a named product. Renesas licenses RISC-V cores from two other vendors in this dataset as well; the architectures are alternatives in its line-up, not a succession."
+      ]
+    },
+    {
+      "supplier": "system-synopsys",
+      "customer": "renesas-electronics-corporation",
+      "products": [
+        "DSO.ai design-space optimization software for automotive SoCs"
+      ],
+      "sources": [
+        "renesas-synopsys-dso-ai-2021"
+      ],
+      "years": [
+        2021
+      ],
+      "details": [
+        "An EDA dependency rather than a material one: nothing ships, but no modern SoC is designed without tools of this kind. Five years old at the date checked."
+      ]
+    },
+    {
       "supplier": "taiwan-semiconductor-manufacturing-company-limited",
       "customer": "renesas-electronics-corporation",
       "products": [
         "Outsourced microcontroller wafer manufacturing",
-        "3nm automotive process for the fifth-generation R-Car SoC"
+        "3nm automotive process for the fifth-generation R-Car SoC",
+        "N3A 3nm automotive process for the R-Car X5H"
       ],
       "sources": [
         "renesas-tsmc-2012-outsourcing",
-        "renesas-honda-soc-2025-renesas"
+        "renesas-honda-soc-2025-renesas",
+        "renesas-rcar-x5h-3nm-2024"
       ],
       "years": [
         2012,
+        2024,
         2025
       ],
       "details": [
         "Historical existing 90nm arrangement and announced 40nm extension; not a claim about current production mix.",
-        "Named process technology for an SoC still in development as of January 2025. It refreshes a pair whose only other document was thirteen years older; it does not establish a current production volume."
+        "Named process technology for an SoC still in development as of January 2025. It refreshes a pair whose only other document was thirteen years older; it does not establish a current production volume.",
+        "The third document on this pair and the most specific about process: N3A, named by both companies, for a product announced in November 2024."
       ]
     },
     {
@@ -5810,6 +5865,26 @@
       ],
       "details": [
         "Some of the ten are supplied through distributors rather than directly."
+      ]
+    },
+    {
+      "supplier": "renesas-electronics-corporation",
+      "customer": "robert-bosch-gmbh",
+      "products": [
+        "R-Car X5 generation SoCs for high-performance compute",
+        "RH850/U2C 28nm vehicle-control microcontrollers"
+      ],
+      "sources": [
+        "renesas-rcar-gen5-platform-2025",
+        "renesas-rh850-u2c-bosch-2026"
+      ],
+      "years": [
+        2025,
+        2026
+      ],
+      "details": [
+        "Stated intent to integrate, from the buyer, built on a collaboration the buyer calls existing. Samples were shipping at the date of the release; production was not claimed.",
+        "The buyer describes an existing, long-standing use of the RH850 family, which is stronger than the forward-looking X5 statement on the same pair. Two documents, fifteen months apart, on two different product lines."
       ]
     },
     {
@@ -6470,8 +6545,8 @@
         "arteris-cambricon-2017"
       ],
       "years": [
-        2022,
-        2017
+        2017,
+        2022
       ],
       "details": [
         "Listed as a publicly disclosed customer in the June 2022 customer panel. Historical license relationship; no product-specific IP version or present license availability inferred.",
@@ -6508,6 +6583,22 @@
       ],
       "details": [
         "Some of the ten are supplied through distributors rather than directly."
+      ]
+    },
+    {
+      "supplier": "renesas-electronics-corporation",
+      "customer": "system-denso",
+      "products": [
+        "R-Car V4H ADAS SoC for the TSS(LSS) control unit"
+      ],
+      "sources": [
+        "renesas-toyota-rav4-2026"
+      ],
+      "years": [
+        2026
+      ],
+      "details": [
+        "Named part in a named ECU in a named vehicle: the Toyota Safety Sense control unit of the RAV4 that went on sale in December 2025. The tracked node merges Toyota and Denso; the document names Denso as the unit supplier and Toyota as the carmaker, and no separate Toyota edge is recorded for the same relationship."
       ]
     },
     {
@@ -7131,8 +7222,8 @@
         "amd-q4-2024-downstream"
       ],
       "years": [
-        2026,
-        2024
+        2024,
+        2026
       ],
       "details": [
         "Disclosed as a development collaboration with a processor vendor rather than as a procurement contract.",
@@ -8287,8 +8378,8 @@
         "synopsys-tsmc-2025"
       ],
       "years": [
-        2026,
-        2025
+        2025,
+        2026
       ],
       "details": [
         "A certification and ecosystem relationship in TSMC’s own words, not a disclosed purchase. The tools are certified against TSMC processes so that TSMC’s design customers can use them; the page does not say TSMC buys them.",
@@ -8879,6 +8970,22 @@
       ],
       "details": [
         "Named service customer; no inference of a particular chip installed in a vehicle."
+      ]
+    },
+    {
+      "supplier": "renesas-electronics-corporation",
+      "customer": "zf-friedrichshafen-ag",
+      "products": [
+        "R-Car X5H SoC under ZF ADAS software"
+      ],
+      "sources": [
+        "renesas-rcar-gen5-platform-2025"
+      ],
+      "years": [
+        2025
+      ],
+      "details": [
+        "A full-stack ADAS combination announced ahead of a trade show. The weaker of the two tier-one edges from this release: it describes what the two companies will show, not what either has bought."
       ]
     },
     {

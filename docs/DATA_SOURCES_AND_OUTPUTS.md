@@ -26,7 +26,7 @@ Every meaningful statement is traceable to exactly one of three things: **a sour
 | Facility geography | 275 sites, 24 countries, all 109 companies | C + D | Named plants with operator, coordinates, what they make, and the stages they feed. Site identity and rough location are Tier C (public company site listings); the `scale` 1–5 significance ordinal is Tier D and is **the only field the impact math uses**. Coordinates are site/city approximations good to a few km. Coverage is a **curated sample, not a census** — an empty hazard radius means no site *in this sample*. Eight of the 24 countries are **host-only**: they carry no stage share, contribute nothing to any score, and exist so that real plants (Infineon Villach, ST Catania, onsemi Rožnov, Micron Sanand, IBM Bromont) can be mapped at all. Before they were added, the country list was a scoring list being used as a geography list, and the map implied the industry stopped at sixteen borders. |
 | Site-to-site network | ~890 modeled links | — | **Derived, not input.** Composed from the company `customers` edges and the stage flow graph — see below. No dataset here records which plant ships to which plant. |
 | Customer relationships | 243 supplier→customer edges | C + B | Disclosed customer concentration plus trade-press estimates, top customers only. This is *supplier-revenue share*, which is **not** buyer input-dependence — the two directions are different quantities and are modeled separately. |
-| Public supplier tiers | 441 registered firms, 591 named relationships, 122 documents | C | **Separate dataset, separate lens, no engine input.** Every edge cites a public document naming *both* parties. Carries no weights and feeds no score. See below. |
+| Public supplier tiers | 442 registered firms, 597 named relationships, 128 documents | C | **Separate dataset, separate lens, no engine input.** Every edge cites a public document naming *both* parties. Carries no weights and feeds no score. See below. |
 | Ownership | 75 shareholder rows | C | 13F filings, annual reports, exchange disclosures. Ages quickly; the most compliance-sensitive dataset here. |
 | Company control | 109 of 109 companies | C / B / D | **Who can actually direct the company**, which is a different question from who holds the most shares. Reference only; feeds no score. See below. |
 | Policy instruments | 7 | C + D | Rule texts are Tier C; the severity score and the 0.4 additional-instrument discount are Tier D judgments. |
@@ -140,7 +140,7 @@ be this year.
 
 ### Every company has a standardized profile
 
-All 441 public-registry companies use the standard profile format in
+All 442 public-registry companies use the standard profile format in
 `app/src/engine/companyProfile.js`. The 109 system-company profiles retain their
 control records, modeled stages and tracking controls. Other profiles describe
 chain context, mark unresearched control fields explicitly and carry no modeled

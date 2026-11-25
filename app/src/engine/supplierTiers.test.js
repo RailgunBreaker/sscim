@@ -188,9 +188,44 @@ describe('Renesas, in both directions', () => {
   const customers = () => index.customersOf[R];
 
   it('names more customers than suppliers, because that is the half that was missing', () => {
-    expect(suppliers().length).toBeGreaterThanOrEqual(6);
-    expect(customers().length).toBeGreaterThanOrEqual(10);
+    expect(suppliers().length).toBeGreaterThanOrEqual(8);
+    expect(customers().length).toBeGreaterThanOrEqual(14);
     expect(customers().length).toBeGreaterThan(suppliers().length);
+  });
+
+  it('reaches the tier ones that actually put its parts in boxes', () => {
+    /* The second pass. Partnership releases, which is what the first
+       pass found, are what a chipmaker publishes when it wants a name
+       beside its own; design wins are announced as products. These five
+       are the plainest customers a vehicle-chip maker has. */
+    const reached = customers().map((e) => e.customer);
+    for (const id of ['system-denso', 'continental-ag', 'robert-bosch-gmbh', 'zf-friedrichshafen-ag']) {
+      expect(reached, id).toContain(id);
+    }
+    const denso = customers().find((e) => e.customer === 'system-denso');
+    expect(denso.products.join(' ')).toMatch(/R-Car V4H/);
+    /* One relationship, one edge. The tracked identity merges Toyota and
+       Denso, and the registry also carries Toyota Motor Corporation for
+       the NVIDIA edges; recording the RAV4 design win against both would
+       put the carmaker in the same graph twice. */
+    expect(denso.details.join(' ')).toMatch(/no separate Toyota edge/i);
+    const toyota = index.suppliersOf['toyota-motor-corporation'].map((e) => e.supplier);
+    expect(toyota).not.toContain('renesas-electronics-corporation');
+  });
+
+  it('agrees with the modeled chain on two customers, without being arranged to', () => {
+    /* The modeled chain gave Renesas two customer edges, Toyota/Denso at
+       20% and Bosch at 8%, composed from declared priors. The documented
+       chain now names both, from public documents. The two datasets are
+       built to be independent and share no inputs, so an overlap is a
+       thing found. It is also the only place either dataset can be
+       checked against the other on this company. */
+    const reached = customers().map((e) => e.customer);
+    expect(reached).toContain('system-denso');
+    expect(reached).toContain('robert-bosch-gmbh');
+    for (const e of index.edges) {
+      for (const banned of ['weight', 'share', 'strength']) expect(Object.keys(e)).not.toContain(banned);
+    }
   });
 
   it('documents the supply side at the level of wafers, foundry capacity and CPU IP', () => {
@@ -200,12 +235,17 @@ describe('Renesas, in both directions', () => {
     for (const ip of ['andes-technology-corporation', 'sifive-inc']) {
       expect(by[ip].products.join(' ')).toMatch(/RISC-V/);
     }
-    /* One pair, two documents, thirteen years apart — not two edges.
-       The 2012 announcement was 90nm and 40nm microcontrollers; the
-       2025 one is a 3nm automotive SoC. */
+    /* The design tools and the CPU architecture Renesas buys are
+       dependencies too, even though nothing ships. */
+    expect(by['system-arm'].products.join(' ')).toMatch(/Cortex/);
+    expect(by['system-synopsys'].products.join(' ')).toMatch(/DSO\.ai/);
+    /* One pair, three documents spanning thirteen years — not three
+       edges. The 2012 announcement was 90nm and 40nm microcontrollers;
+       2024 and 2025 are 3nm automotive SoCs. Years are ordered, because
+       the interface prints them as they are stored. */
     const tsmc = by['taiwan-semiconductor-manufacturing-company-limited'];
-    expect(tsmc.years).toEqual([2012, 2025]);
-    expect(tsmc.sources.length).toBe(2);
+    expect(tsmc.years).toEqual([2012, 2024, 2025]);
+    expect(tsmc.sources.length).toBe(3);
   });
 
   it('reaches carmakers, an ODM, a motor maker and two software houses downstream', () => {
