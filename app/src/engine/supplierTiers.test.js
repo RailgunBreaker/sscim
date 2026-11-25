@@ -189,8 +189,50 @@ describe('Renesas, in both directions', () => {
 
   it('names more customers than suppliers, because that is the half that was missing', () => {
     expect(suppliers().length).toBeGreaterThanOrEqual(10);
-    expect(customers().length).toBeGreaterThanOrEqual(20);
+    expect(customers().length).toBeGreaterThanOrEqual(27);
     expect(customers().length).toBeGreaterThan(suppliers().length);
+  });
+
+  it('reaches the small and unlisted end, which only arrives when a big firm names it', () => {
+    /* 中小企業 and 非上場企業. Every firm here entered through somebody
+       else's award or support page, because a GmbH files no report
+       naming its customers and a development house files nothing at
+       all. Their own sites could not be read on 2026-11-25 — a TLS
+       error, a dead domain, a 404 and an empty body, four firms and
+       four different failures. */
+    const reached = customers().map((e) => e.customer);
+    for (const id of ['emtrion-gmbh', 'bfg-engineering', 'rochester-electronics-llc', 'flip-electronics-llc']) {
+      expect(reached, id).toContain(id);
+    }
+    /* The end-of-life channel is a standing arrangement on an undated
+       page, so those edges carry no year. Inventing one would be the
+       easiest lie in the dataset. */
+    for (const id of ['rochester-electronics-llc', 'flip-electronics-llc']) {
+      expect(customers().find((e) => e.customer === id).years).toEqual([]);
+    }
+  });
+
+  it('records listing as a fact about the documents, never about the firm', () => {
+    /* Three states only, and the third is the common one. A company
+       with no `listing` is a company this dataset cannot classify —
+       which is different from a company that is private, and very
+       different from a company that is small. */
+    for (const [id, c] of Object.entries(index.companies)) {
+      if (!c.listing) continue;
+      expect(['ticker-printed', 'legal-form-private'], id).toContain(c.listing);
+      expect(c.listingBasis, id).toBeTruthy();
+    }
+    expect(index.companies['honda-motor-co-ltd'].listingBasis).toMatch(/TSE: 7267/);
+    expect(index.companies['emtrion-gmbh'].listing).toBe('legal-form-private');
+    /* The case that stops this being read as a size proxy: Bosch is one
+       of the largest suppliers in the industry and has no listing. */
+    expect(index.companies['robert-bosch-gmbh'].listing).toBe('legal-form-private');
+    expect(index.companies['robert-bosch-gmbh'].listingBasis).toMatch(/different questions/);
+    /* Most of this company's own counterparties are unclassified, and
+       the interface says so rather than leaving a blank chip. */
+    const counterparties = [...suppliers().map((e) => e.supplier), ...customers().map((e) => e.customer)];
+    const silent = counterparties.filter((id) => !index.companies[id].listing);
+    expect(silent.length).toBeGreaterThan(counterparties.length / 2);
   });
 
   it('carries the non-automotive half of the company too', () => {

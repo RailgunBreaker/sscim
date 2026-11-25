@@ -11,9 +11,9 @@ graph is separate from the propagation model defined in
 | Record | Current count |
 | --- | ---: |
 | System companies eligible for tracking and centring | 109 |
-| Companies with profiles in the public registry | 447 |
-| Documented relationships | 605 |
-| Public source documents | 135 |
+| Companies with profiles in the public registry | 452 |
+| Documented relationships | 612 |
+| Public source documents | 141 |
 | System companies with a documented connection | 109 |
 | System companies reaching level 2 in either direction | 92 |
 | System companies reaching level 3 in either direction | 81 |
@@ -193,9 +193,9 @@ the page to it, including when the profile belongs to an untracked contextual
 firm. Embedded in a profile the graph opens at **one** documented step — the
 firms that company is itself named with — and the depth control walks further;
 on its own page it still opens at three. One step rather than three because at
-three steps a profile stops being about its company: Renesas has 30 named
-counterparties and 157 firms within three documented steps, and 70 of the 74
-firms at its second upstream step arrive through one of those 30 — TSMC, whose
+three steps a profile stops being about its company: Renesas has 37 named
+counterparties and 163 firms within three documented steps, and almost every
+firm at its second upstream step arrives through one of those 37 — TSMC, whose
 own published supplier list is 72 firms long. On small screens the Intel tab
 opens automatically. The tracked-company directory
 remains accessible above an open graph; each row also opens the company profile.
@@ -248,9 +248,9 @@ reached arrived as somebody's *supplier*: 70 of those 74 were inherited from
 TSMC's own list, two steps away, and the side where an MCU and SoC maker
 actually trades was empty.
 
-Three passes, each finding a kind of counterparty the previous one could not
-see, added 17 firms, 28 relationships and 28 documents, every document fetched
-and read on 2026-11-25. Renesas now carries **10 documented suppliers and 20
+Four passes, each finding a kind of counterparty the previous one could not
+see, added 22 firms, 35 relationships and 34 documents, every document fetched
+and read on 2026-11-25. Renesas now carries **10 documented suppliers and 27
 documented customers**.
 
 - Upstream: Wolfspeed (150mm SiC bare and epitaxial wafers, ten-year
@@ -263,8 +263,10 @@ documented customers**.
 - Downstream: Honda, VinFast, Audi, Great Wall Motor, Nevs, Inventec, Nidec,
   Nullmax and Tata Elxsi, alongside the existing Apple supplier-list entry; the
   tier ones — Toyota/Denso, Robert Bosch, Continental and ZF — plus Nissan;
-  the memory-module business, Samsung and Micron; and the distribution channel,
-  Avnet, Future Electronics and WT Microelectronics.
+  the memory-module business, Samsung and Micron; the distribution channel,
+  Avnet, Future Electronics and WT Microelectronics; buyers who awarded Renesas
+  supplier prizes, Panasonic, BYD and HARMAN; and the small, unlisted end —
+  emtrion, BFG Engineering, Rochester Electronics and Flip Electronics.
 
 Each pass is a different kind of document, and that is the lesson of doing one
 company properly. A **partnership release** is what a chipmaker publishes when
@@ -319,13 +321,70 @@ not publish their carmakers, and the Continental release is explicit about it
 — its Body HPC was "already going into production at a global vehicle
 manufacturer" who is never named.
 
-What is still missing after three passes is as informative as what was found.
-There is no packaging or test supplier, no wafer or equipment supplier for
-Renesas' own fabs, and **no industrial customer at all** — searches for
-Panasonic, Omron, Yaskawa, Mitsubishi Electric and Fanuc returned product
-pages and no document naming a pair. Roughly half of this company's units are
-said to go to industrial, IoT and infrastructure markets, and this dataset can
-see almost none of it.
+### 中小企業 and 非上場企業: the end this lens sees worst
+
+Everything the first three passes found shares a property nobody chose: it is
+**large and listed**. That is not a fact about supply chains, it is a fact
+about disclosure. Documents exist because a firm is obliged to publish, or big
+enough that publishing is worth doing, so a graph assembled out of documents is
+a graph of large listed firms with a hole where everyone else works.
+
+The fourth pass went after that hole deliberately. It is hard in three distinct
+ways, and each one is worth recording because each is a different kind of
+blindness:
+
+1. **They do not file.** A GmbH or an S.r.l. publishes no annual report naming
+   its customers, so a small firm enters this dataset only if a large one names
+   it. Every small firm here arrived through somebody else's award: emtrion
+   GmbH (Renesas European Alliance Partner of the Year 2017) and BFG
+   Engineering, a development house in Vicenza with more than sixty customised
+   designs for Renesas customers (2018). Rochester Electronics and Flip
+   Electronics appear only on a Renesas support page as authorized resellers of
+   end-of-life products — undated, so those two edges carry no year at all.
+2. **Their own sites cannot be read.** Checked on 2026-11-25: emtrion.com
+   failed with a TLS internal error, bfgengineering.com did not resolve,
+   rocelec.com/about-us returned 404, and flipelectronics.com returned HTTP 200
+   with an empty body. Four firms, four different failures. A listed company's
+   investor-relations page is a maintained asset; a small firm's "about us" is
+   not.
+3. **The obvious source disqualifies itself.** Renesas runs a partner directory
+   full of exactly these firms, and it states that a listing there "does not
+   constitute any legal agency, joint venture, endorsement, or other formal
+   relationship." A company saying its own page is not evidence of a
+   relationship is a company telling you not to build edges from it, so none
+   are. (Its names are also rendered by JavaScript and are not in the HTML.)
+
+Company records now carry an optional `listing` field recording what the
+**documents** establish, never a claim about the firm:
+
+| Value | Meaning |
+| --- | --- |
+| `ticker-printed` | a cited document prints its exchange ticker |
+| `legal-form-private` | a cited document prints a form that cannot be exchange-listed, such as GmbH |
+| absent | no document here says either way |
+
+Of Renesas' 37 named counterparties, 5 are `ticker-printed`, 2 are
+`legal-form-private` and **30 say nothing either way**. The profile states that
+count in the network section, because it measures the lens rather than the
+chain.
+
+Two cautions are built into the field. It is **not a size proxy**: Robert Bosch
+GmbH is one of the largest suppliers in the industry and has no listing to
+print, which is why its basis line says so explicitly. And 中小企業 status is
+**never asserted**: no document read here gives a headcount or a capital
+figure, so the dataset cannot certify anybody as a small or medium enterprise.
+What it can show is which firms exist here only because a larger counterparty
+named them.
+
+### What is still missing
+
+What four passes did not find is as informative as what they did. There is no
+packaging or test supplier, and no wafer or equipment supplier for Renesas' own
+fabs. The industrial customer base is nearly invisible: searches for Omron,
+Yaskawa, Mitsubishi Electric and Fanuc returned product pages and no document
+naming a pair, and Panasonic is here only through a 2016 award. Roughly half of
+this company's units are said to go to industrial, IoT and infrastructure
+markets, and this dataset can see almost none of it.
 
 Each downstream edge carries its own qualification on the edge itself, because
 they are not equally strong and the reader has to see which is which without

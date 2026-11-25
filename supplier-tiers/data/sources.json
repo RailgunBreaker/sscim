@@ -1498,6 +1498,72 @@
       "kind": "Company disclosure",
       "seen": "fetched",
       "retrieved": "2026-11-25"
+    },
+    "renesas-emtrion-alliance-2017": {
+      "publisher": "Renesas",
+      "title": "Renesas Electronics Europe Names emtrion European Alliance Partner of the Year 2017 Award Winner",
+      "url": "https://www.renesas.com/en/about/newsroom/renesas-electronics-europe-names-emtrion-european-alliance-partner-year-2017-award-winner",
+      "published": "2017-07-07",
+      "evidence": "P1-supplier",
+      "note": "The first small, unlisted firm in this company's network, and it is here only because Renesas chose to name it. The release describes emtrion as a partner of more than ten years whose work ranges from embedded hardware and firmware design to software development and series production, with modules and developer kits for R-Car, RZ/A and RZ/G and the Synergy platform. emtrion's own site, read 2026-11-25, lists an emSBC-RZ/N1D single-board computer built on the Renesas R9A06G032. No headcount, revenue or ownership is stated anywhere that could be read.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "renesas-bfg-alliance-2018": {
+      "publisher": "Renesas",
+      "title": "Renesas Electronics Recognizes BFG Engineering With 2018 Renesas European Alliance Partner of the Year Award",
+      "url": "https://www.renesas.com/en/about/newsroom/renesas-electronics-recognizes-bfg-engineering-2018-renesas-european-alliance-partner-year-award",
+      "published": "2018-10-19",
+      "evidence": "P1-supplier",
+      "note": "Renesas names a development house in Vicenza, Italy that has completed more than sixty customised designs for Renesas customers and built development tools for the Synergy platform and RX microcontrollers. The release gives no legal form, headcount or revenue, and the firm’s own domain did not resolve on 2026-11-25.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "renesas-eol-authorized-resellers": {
+      "publisher": "Renesas",
+      "title": "End-of-Life (EOL) Products: authorized resellers",
+      "url": "https://www.renesas.com/en/support/end-of-life-eol-products",
+      "published": null,
+      "evidence": "P1-supplier",
+      "note": "A support page rather than an announcement, and the only document in this set naming the end-of-life channel: \"Rochester and Flip Electronics are authorized resellers of Renesas’ end-of-life/obsolete products.\" Undated, and read on 2026-11-25. Neither firm’s own site could be read: rocelec.com/about-us returned 404 and flipelectronics.com returned an empty body.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "renesas-panasonic-awards-2016": {
+      "publisher": "Renesas",
+      "title": "Renesas Electronics Becomes the First Panasonic Supplier to Win Triple Award",
+      "url": "https://www.renesas.com/en/about/press-room/renesas-electronics-becomes-first-panasonic-supplier-win-triple-award-best-partner-award",
+      "published": "2016-11-30",
+      "evidence": "P1-supplier",
+      "note": "Supplier reports a buyer’s award: of over 200 companies at Panasonic’s Excellent Partners Meeting, Renesas took the Best Partner award, citing supply of R-Car SoCs for in-vehicle infotainment and the RH850 microcontroller. Ten years old at the date checked.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "renesas-byd-partner-award-2022": {
+      "publisher": "Renesas",
+      "title": "Renesas Electronics Named BYD NEV’s Annual Outstanding Strategic Partner Award",
+      "url": "https://www.renesas.com/en/about/newsroom/renesas-electronics-named-byd-nevs-annual-outstanding-strategic-partner-award",
+      "published": "2022-11-30",
+      "evidence": "P1-supplier",
+      "note": "BYD Auto gave Renesas its Outstanding Strategic Partner award at the BYD NEV Core Supplier Convention 2022, the second consecutive year. The page calls Renesas an excellent supplier of automotive electronic products and system technology and names no product line at all.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "renesas-harman-award-2024": {
+      "publisher": "Renesas",
+      "title": "Awards and Recognitions: HARMAN 2024 Supplier of the Year, Best Delivery",
+      "url": "https://www.renesas.com/en/about/sustainability/awards",
+      "published": null,
+      "evidence": "P1-supplier",
+      "note": "An undated awards listing on the supplier’s own site, recording that HARMAN International named Renesas its 2024 Supplier of the Year in the Best Delivery category for automotive microcontrollers, chosen from over 150 suppliers globally. No HARMAN-published copy could be found, so this rests on the supplier’s account of a buyer’s award.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
     }
   }
 }

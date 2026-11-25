@@ -385,6 +385,127 @@ export function expandRenesas(data) {
      almost none of it. That is a statement about disclosure, and it is
      the kind of hole the lens exists to show. */
 
+  /* ======================================================================
+     FOURTH PASS: 中小企業 and 非上場企業 — the small and the unlisted.
+
+     Everything in the three passes above shares a property that nobody
+     chose and that quietly shapes the whole dataset: it is large and it
+     is listed. That is not a fact about supply chains. It is a fact
+     about DISCLOSURE. Documents exist because somebody is obliged to
+     publish, or big enough that publishing is worth it, so a graph
+     assembled out of documents is a graph of large listed firms with a
+     hole where everyone else works.
+
+     The hole is not small. Renesas ships to tool makers, module houses,
+     design shops and regional distributors, and almost none of them
+     appear above. This pass goes after that end deliberately, and the
+     going is hard in three distinct ways, each worth recording:
+
+       1. THEY DO NOT FILE. A GmbH or an S.r.l. publishes no annual
+          report naming its customers, so the only way a small firm
+          enters this dataset is if a LARGE firm names it. Every small
+          firm below arrived through somebody else's award.
+
+       2. THEIR OWN SITES CANNOT BE READ. Checked on 2026-11-25:
+          emtrion.com failed with a TLS internal error, bfgengineering.com
+          did not resolve at all, rocelec.com/about-us returned 404, and
+          flipelectronics.com returned 200 with an empty body. Four firms,
+          four different failures. A large company's investor-relations
+          page is a maintained asset; a small company's "about us" is not.
+
+       3. THE OBVIOUS SOURCE DISQUALIFIES ITSELF. Renesas runs a partner
+          directory full of exactly these firms, and the directory says
+          in its own words that a listing there "does not constitute any
+          legal agency, joint venture, endorsement, or other formal
+          relationship." A company telling you its page is not evidence
+          of a relationship is a company telling you not to make edges
+          from it, so none are made from it here — and the directory's
+          names are not JavaScript the fetcher could read in any case.
+
+     What this pass can honestly do is mark what the documents establish
+     about standing. A `listing` field records the DOCUMENTARY status of
+     each firm, never a claim about the world:
+
+       'ticker-printed'      a cited document prints its exchange ticker
+       'legal-form-private'  a cited document prints a form that cannot
+                             be exchange-listed, such as GmbH
+       undefined             no document here says either way
+
+     That third case is the honest answer for most of the chain, and the
+     reason 中小企業 is not asserted anywhere below: no document read here
+     gives a headcount or a capital figure, so the dataset cannot certify
+     anybody as a small or medium enterprise. What it CAN show is which
+     firms exist here only because a larger counterparty named them.
+     ====================================================================== */
+
+  /* Standing, from documents already cited above. Only the firms whose
+     ticker was actually printed in a page that was read are marked. */
+  const standing = (ref, listing, basis) => {
+    const c = data.companies[idOf(ref)];
+    c.listing = listing;
+    c.listingBasis = basis;
+  };
+  standing('renesas', 'ticker-printed', 'TSE: 6723, printed in its own releases cited here.');
+  standing('honda-motor-co-ltd', 'ticker-printed', 'TSE: 7267, printed in the January 2025 SoC agreement.');
+  standing('nidec-corporation', 'ticker-printed', 'TSE: 6594 and OTC US: NJDCY, printed in the June 2023 E-Axle release.');
+  standing('inventec-corporation', 'ticker-printed', 'TPE: 2356, printed in the September 2023 gateway release.');
+  standing('globalfoundries-inc', 'ticker-printed', 'Nasdaq: GFS, printed in the February 2026 partnership release.');
+  /* The interesting case, and the reason this field is not a proxy for
+     size: Bosch is one of the largest suppliers in the industry and is
+     not listed. A GmbH has no exchange listing to print. */
+  standing('robert-bosch-gmbh', 'legal-form-private', 'Named as Robert Bosch GmbH; a GmbH cannot be exchange-listed. Size and listing are different questions, and this field answers only the second.');
+
+  firm('panasonic-holdings-corporation', 'Panasonic Holdings Corporation', 'jp', 'brand',
+    'Electronics and automotive systems maker; named as Panasonic Corporation (TSE: 6752) in the 2016 award.');
+  firm('emtrion-gmbh', 'emtrion GmbH', 'de', 'assembly',
+    'Embedded module, single-board-computer and mainboard maker; builds on Renesas MPUs.');
+  firm('bfg-engineering', 'BFG Engineering', 'it', 'services',
+    'Development house for hardware and software, specialising in advanced control of electric drives.');
+  firm('rochester-electronics-llc', 'Rochester Electronics', 'us', 'services',
+    'Authorized reseller and continuing source of end-of-life semiconductors.');
+  firm('flip-electronics-llc', 'Flip Electronics', 'us', 'services',
+    'Authorized reseller of end-of-life and obsolete semiconductors.');
+  standing('panasonic-holdings-corporation', 'ticker-printed', 'TSE: 6752, printed in the November 2016 award release.');
+  standing('emtrion-gmbh', 'legal-form-private', 'Named as emtrion GmbH in the 2017 award release; a GmbH cannot be exchange-listed.');
+
+  source('renesas-emtrion-alliance-2017', 'Renesas', 'Renesas Electronics Europe Names emtrion European Alliance Partner of the Year 2017 Award Winner',
+    'https://www.renesas.com/en/about/newsroom/renesas-electronics-europe-names-emtrion-european-alliance-partner-year-2017-award-winner', '2017-07-07', 'P1-supplier',
+    "The first small, unlisted firm in this company's network, and it is here only because Renesas chose to name it. The release describes emtrion as a partner of more than ten years whose work ranges from embedded hardware and firmware design to software development and series production, with modules and developer kits for R-Car, RZ/A and RZ/G and the Synergy platform. emtrion's own site, read 2026-11-25, lists an emSBC-RZ/N1D single-board computer built on the Renesas R9A06G032. No headcount, revenue or ownership is stated anywhere that could be read.");
+  edge('renesas', 'emtrion-gmbh', 'MPUs for embedded modules, single-board computers and developer kits', 'renesas-emtrion-alliance-2017', 2017,
+    'A module maker designing Renesas MPUs into its own products — commercially a customer, documented only as an award winner. Nine years old at the date checked, and the kind of firm this dataset sees worst: unlisted, small enough to file nothing, and named here only because a chipmaker gave it a prize.');
+
+  source('renesas-bfg-alliance-2018', 'Renesas', 'Renesas Electronics Recognizes BFG Engineering With 2018 Renesas European Alliance Partner of the Year Award',
+    'https://www.renesas.com/en/about/newsroom/renesas-electronics-recognizes-bfg-engineering-2018-renesas-european-alliance-partner-year-award', '2018-10-19', 'P1-supplier',
+    'Renesas names a development house in Vicenza, Italy that has completed more than sixty customised designs for Renesas customers and built development tools for the Synergy platform and RX microcontrollers. The release gives no legal form, headcount or revenue, and the firm’s own domain did not resolve on 2026-11-25.');
+  edge('renesas', 'bfg-engineering', 'Synergy and RX microcontrollers in customised motor-control designs', 'renesas-bfg-alliance-2018', 2018,
+    'A design house between the chipmaker and its customers: it buys nothing in volume itself, and it decides what goes into sixty designs that do. The chain position the modeled network cannot represent at all, and the documented one can only see when somebody hands it an award.');
+
+  source('renesas-eol-authorized-resellers', 'Renesas', 'End-of-Life (EOL) Products: authorized resellers',
+    'https://www.renesas.com/en/support/end-of-life-eol-products', null, 'P1-supplier',
+    'A support page rather than an announcement, and the only document in this set naming the end-of-life channel: "Rochester and Flip Electronics are authorized resellers of Renesas’ end-of-life/obsolete products." Undated, and read on 2026-11-25. Neither firm’s own site could be read: rocelec.com/about-us returned 404 and flipelectronics.com returned an empty body.');
+  for (const reseller of ['rochester-electronics-llc', 'flip-electronics-llc']) {
+    edge('renesas', reseller, 'Authorized resale of end-of-life and obsolete Renesas products', 'renesas-eol-authorized-resellers', null,
+      'The after-market: parts Renesas has stopped making, still supplied through firms it authorises. Undated, so this edge carries no year at all — it is a standing arrangement rather than an event, and the dataset should not invent a date for it.');
+  }
+
+  source('renesas-panasonic-awards-2016', 'Renesas', 'Renesas Electronics Becomes the First Panasonic Supplier to Win Triple Award',
+    'https://www.renesas.com/en/about/press-room/renesas-electronics-becomes-first-panasonic-supplier-win-triple-award-best-partner-award', '2016-11-30', 'P1-supplier',
+    'Supplier reports a buyer’s award: of over 200 companies at Panasonic’s Excellent Partners Meeting, Renesas took the Best Partner award, citing supply of R-Car SoCs for in-vehicle infotainment and the RH850 microcontroller. Ten years old at the date checked.');
+  edge('renesas', 'panasonic-holdings-corporation', 'R-Car SoCs for in-vehicle infotainment and RH850 microcontrollers', 'renesas-panasonic-awards-2016', 2016,
+    'A supplier award is the buyer’s own judgement that the relationship exists and works, which makes it better evidence than a partnership announcement and worse than a part number in a shipping product.');
+
+  source('renesas-byd-partner-award-2022', 'Renesas', 'Renesas Electronics Named BYD NEV’s Annual Outstanding Strategic Partner Award',
+    'https://www.renesas.com/en/about/newsroom/renesas-electronics-named-byd-nevs-annual-outstanding-strategic-partner-award', '2022-11-30', 'P1-supplier',
+    'BYD Auto gave Renesas its Outstanding Strategic Partner award at the BYD NEV Core Supplier Convention 2022, the second consecutive year. The page calls Renesas an excellent supplier of automotive electronic products and system technology and names no product line at all.');
+  edge('renesas', 'byd-company-limited', 'Automotive electronic products and system technology', 'renesas-byd-partner-award-2022', 2022,
+    'Named supplier status from the buyer, with no part named. Two consecutive years of the same award is evidence of continuity, which few documents in this set offer.');
+
+  source('renesas-harman-award-2024', 'Renesas', 'Awards and Recognitions: HARMAN 2024 Supplier of the Year, Best Delivery',
+    'https://www.renesas.com/en/about/sustainability/awards', null, 'P1-supplier',
+    'An undated awards listing on the supplier’s own site, recording that HARMAN International named Renesas its 2024 Supplier of the Year in the Best Delivery category for automotive microcontrollers, chosen from over 150 suppliers globally. No HARMAN-published copy could be found, so this rests on the supplier’s account of a buyer’s award.');
+  edge('renesas', 'harman-international', 'Automotive microcontrollers', 'renesas-harman-award-2024', 2024,
+    'Delivery performance, specifically — an award about logistics rather than design, which is the only evidence in this set that speaks to whether parts actually arrived.');
+
   /* Years arrive in the order the passes happen to add them, and the
      interface prints them as a list under each relationship. A pair
      carrying "2012, 2025, 2024" reads as a mistake even though the set

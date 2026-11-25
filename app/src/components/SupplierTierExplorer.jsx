@@ -61,12 +61,13 @@ export default function SupplierTierExplorer({ compact = false, onSelectVaultCom
      and the depth control is right there to go further.
 
      One step rather than two, because two is where a profile stops being
-     about its company. Renesas has ten documented suppliers and twenty
-     documented customers; at two steps it has 104 counterparties, and 70
-     of the 74 new ones arrive through a single one of those 30 — TSMC,
-     whose published supplier list is 72 firms long. The reader opened a
-     Renesas page, so the first thing drawn is Renesas's network, not
-     TSMC's. The table below is complete at any depth. */
+     about its company. Renesas has ten documented suppliers and
+     twenty-seven documented customers; at two steps it has 111
+     counterparties, and almost all of the 74 new ones arrive through a
+     single one of those 37 — TSMC, whose published supplier list is 72
+     firms long. The reader opened a Renesas page, so the first thing
+     drawn is Renesas's network, not TSMC's. The table below is complete
+     at any depth. */
   const [hops, setHops] = useState(fixedRootId ? 1 : 3);
   const [colourBy, setColourBy] = useState('tier');
   const [anchorTiers, setAnchorTiers] = useState(true);
@@ -742,6 +743,26 @@ function FirmDetail({ index, id, isRoot = true, onRecentre, onFocus, onSelectLin
           : `${t} documented step${t === 1 ? '' : 's'} from the selected company. Distance, not rank — it says nothing about size or importance.`}
       </p>
       {c.role && <p style={{ margin: '9px 0 0', fontSize: 12.5, color: C.dim, lineHeight: 1.6 }}>{c.role}</p>}
+
+      {/* Standing, which is a question about the DOCUMENTS and not about
+          the firm. A listed company publishes because it must, so the
+          dataset sees it well; an unlisted one — 非上場企業 — and a small
+          one — 中小企業 — enter only when somebody larger names them, and
+          most of the chain says nothing either way. Saying "not stated"
+          out loud is the point: it marks where the lens is blind rather
+          than letting a missing chip read as a missing company. */}
+      <p className="mono" style={{ margin: '9px 0 0', fontSize: 12, color: C.faint, lineHeight: 1.6 }}>
+        <span style={{
+          border: `1px solid ${c.listing === 'legal-form-private' ? C.amber : C.line}`,
+          color: c.listing === 'legal-form-private' ? C.amber : C.dim,
+          borderRadius: 3, padding: '0 6px', marginRight: 7,
+        }}>
+          {c.listing === 'ticker-printed' ? 'Listed'
+            : c.listing === 'legal-form-private' ? 'Unlisted'
+              : 'Listing not stated'}
+        </span>
+        {c.listingBasis || 'No document cited here prints a ticker or a legal form for this firm, so this dataset cannot say whether it is listed, private, large or small.'}
+      </p>
 
       {(c.annotations || []).map((a, i) => (
         <p key={i} style={{ margin: '11px 0 0', padding: '8px 10px', borderLeft: `2px solid ${C.accent}`, background: accentWash(0.06), fontSize: 12.5, color: C.dim, lineHeight: 1.6 }}>

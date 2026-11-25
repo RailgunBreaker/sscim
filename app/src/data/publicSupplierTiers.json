@@ -1590,6 +1590,72 @@
       "kind": "Company disclosure",
       "seen": "fetched",
       "retrieved": "2026-11-25"
+    },
+    "renesas-emtrion-alliance-2017": {
+      "publisher": "Renesas",
+      "title": "Renesas Electronics Europe Names emtrion European Alliance Partner of the Year 2017 Award Winner",
+      "url": "https://www.renesas.com/en/about/newsroom/renesas-electronics-europe-names-emtrion-european-alliance-partner-year-2017-award-winner",
+      "published": "2017-07-07",
+      "evidence": "P1-supplier",
+      "note": "The first small, unlisted firm in this company's network, and it is here only because Renesas chose to name it. The release describes emtrion as a partner of more than ten years whose work ranges from embedded hardware and firmware design to software development and series production, with modules and developer kits for R-Car, RZ/A and RZ/G and the Synergy platform. emtrion's own site, read 2026-11-25, lists an emSBC-RZ/N1D single-board computer built on the Renesas R9A06G032. No headcount, revenue or ownership is stated anywhere that could be read.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "renesas-bfg-alliance-2018": {
+      "publisher": "Renesas",
+      "title": "Renesas Electronics Recognizes BFG Engineering With 2018 Renesas European Alliance Partner of the Year Award",
+      "url": "https://www.renesas.com/en/about/newsroom/renesas-electronics-recognizes-bfg-engineering-2018-renesas-european-alliance-partner-year-award",
+      "published": "2018-10-19",
+      "evidence": "P1-supplier",
+      "note": "Renesas names a development house in Vicenza, Italy that has completed more than sixty customised designs for Renesas customers and built development tools for the Synergy platform and RX microcontrollers. The release gives no legal form, headcount or revenue, and the firm’s own domain did not resolve on 2026-11-25.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "renesas-eol-authorized-resellers": {
+      "publisher": "Renesas",
+      "title": "End-of-Life (EOL) Products: authorized resellers",
+      "url": "https://www.renesas.com/en/support/end-of-life-eol-products",
+      "published": null,
+      "evidence": "P1-supplier",
+      "note": "A support page rather than an announcement, and the only document in this set naming the end-of-life channel: \"Rochester and Flip Electronics are authorized resellers of Renesas’ end-of-life/obsolete products.\" Undated, and read on 2026-11-25. Neither firm’s own site could be read: rocelec.com/about-us returned 404 and flipelectronics.com returned an empty body.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "renesas-panasonic-awards-2016": {
+      "publisher": "Renesas",
+      "title": "Renesas Electronics Becomes the First Panasonic Supplier to Win Triple Award",
+      "url": "https://www.renesas.com/en/about/press-room/renesas-electronics-becomes-first-panasonic-supplier-win-triple-award-best-partner-award",
+      "published": "2016-11-30",
+      "evidence": "P1-supplier",
+      "note": "Supplier reports a buyer’s award: of over 200 companies at Panasonic’s Excellent Partners Meeting, Renesas took the Best Partner award, citing supply of R-Car SoCs for in-vehicle infotainment and the RH850 microcontroller. Ten years old at the date checked.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "renesas-byd-partner-award-2022": {
+      "publisher": "Renesas",
+      "title": "Renesas Electronics Named BYD NEV’s Annual Outstanding Strategic Partner Award",
+      "url": "https://www.renesas.com/en/about/newsroom/renesas-electronics-named-byd-nevs-annual-outstanding-strategic-partner-award",
+      "published": "2022-11-30",
+      "evidence": "P1-supplier",
+      "note": "BYD Auto gave Renesas its Outstanding Strategic Partner award at the BYD NEV Core Supplier Convention 2022, the second consecutive year. The page calls Renesas an excellent supplier of automotive electronic products and system technology and names no product line at all.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
+    },
+    "renesas-harman-award-2024": {
+      "publisher": "Renesas",
+      "title": "Awards and Recognitions: HARMAN 2024 Supplier of the Year, Best Delivery",
+      "url": "https://www.renesas.com/en/about/sustainability/awards",
+      "published": null,
+      "evidence": "P1-supplier",
+      "note": "An undated awards listing on the supplier’s own site, recording that HARMAN International named Renesas its 2024 Supplier of the Year in the Best Delivery category for automotive microcontrollers, chosen from over 150 suppliers globally. No HARMAN-published copy could be found, so this rests on the supplier’s account of a buyer’s award.",
+      "kind": "Company disclosure",
+      "seen": "fetched",
+      "retrieved": "2026-11-25"
     }
   },
   "companies": {
@@ -2362,7 +2428,9 @@
       "name": "Nidec Corporation",
       "country": "jp",
       "layer": "mechanical",
-      "role": "Motors"
+      "role": "Motors",
+      "listing": "ticker-printed",
+      "listingBasis": "TSE: 6594 and OTC US: NJDCY, printed in the June 2023 E-Axle release."
     },
     "nissha-company-limited": {
       "name": "Nissha Company Limited",
@@ -2518,7 +2586,9 @@
       "aliases": [
         "Renesas",
         "renesas"
-      ]
+      ],
+      "listing": "ticker-printed",
+      "listingBasis": "TSE: 6723, printed in its own releases cited here."
     },
     "robert-bosch-gmbh": {
       "name": "Robert Bosch GmbH",
@@ -2529,7 +2599,9 @@
       "aliases": [
         "Bosch",
         "bosch"
-      ]
+      ],
+      "listing": "legal-form-private",
+      "listingBasis": "Named as Robert Bosch GmbH; a GmbH cannot be exchange-listed. Size and listing are different questions, and this field answers only the second."
     },
     "rohm-company-limited": {
       "name": "Rohm Company Limited",
@@ -4561,7 +4633,9 @@
       "name": "Inventec",
       "country": "tw",
       "layer": "assembly",
-      "role": "Notebook and server ODM."
+      "role": "Notebook and server ODM.",
+      "listing": "ticker-printed",
+      "listingBasis": "TPE: 2356, printed in the September 2023 gateway release."
     },
     "zt-systems": {
       "name": "ZT Systems",
@@ -4765,7 +4839,9 @@
       "name": "GlobalFoundries Inc.",
       "country": "us",
       "layer": "foundry_idm",
-      "role": "Specialty foundry: FD-SOI, BCD and feature-rich CMOS rather than leading-edge logic."
+      "role": "Specialty foundry: FD-SOI, BCD and feature-rich CMOS rather than leading-edge logic.",
+      "listing": "ticker-printed",
+      "listingBasis": "Nasdaq: GFS, printed in the February 2026 partnership release."
     },
     "andes-technology-corporation": {
       "name": "Andes Technology Corporation",
@@ -4783,7 +4859,9 @@
       "name": "Honda Motor Co., Ltd.",
       "country": "jp",
       "layer": "brand",
-      "role": "Vehicle manufacturer; co-develops its own vehicle SoC and develops its own AI accelerator."
+      "role": "Vehicle manufacturer; co-develops its own vehicle SoC and develops its own AI accelerator.",
+      "listing": "ticker-printed",
+      "listingBasis": "TSE: 7267, printed in the January 2025 SoC agreement."
     },
     "vinfast-auto-ltd": {
       "name": "VinFast Auto Ltd.",
@@ -4856,6 +4934,40 @@
       "country": "tw",
       "layer": "services",
       "role": "Electronic component distributor."
+    },
+    "panasonic-holdings-corporation": {
+      "name": "Panasonic Holdings Corporation",
+      "country": "jp",
+      "layer": "brand",
+      "role": "Electronics and automotive systems maker; named as Panasonic Corporation (TSE: 6752) in the 2016 award.",
+      "listing": "ticker-printed",
+      "listingBasis": "TSE: 6752, printed in the November 2016 award release."
+    },
+    "emtrion-gmbh": {
+      "name": "emtrion GmbH",
+      "country": "de",
+      "layer": "assembly",
+      "role": "Embedded module, single-board-computer and mainboard maker; builds on Renesas MPUs.",
+      "listing": "legal-form-private",
+      "listingBasis": "Named as emtrion GmbH in the 2017 award release; a GmbH cannot be exchange-listed."
+    },
+    "bfg-engineering": {
+      "name": "BFG Engineering",
+      "country": "it",
+      "layer": "services",
+      "role": "Development house for hardware and software, specialising in advanced control of electric drives."
+    },
+    "rochester-electronics-llc": {
+      "name": "Rochester Electronics",
+      "country": "us",
+      "layer": "services",
+      "role": "Authorized reseller and continuing source of end-of-life semiconductors."
+    },
+    "flip-electronics-llc": {
+      "name": "Flip Electronics",
+      "country": "us",
+      "layer": "services",
+      "role": "Authorized reseller of end-of-life and obsolete semiconductors."
     }
   },
   "edges": [
@@ -8064,6 +8176,22 @@
       ]
     },
     {
+      "supplier": "renesas-electronics-corporation",
+      "customer": "bfg-engineering",
+      "products": [
+        "Synergy and RX microcontrollers in customised motor-control designs"
+      ],
+      "sources": [
+        "renesas-bfg-alliance-2018"
+      ],
+      "years": [
+        2018
+      ],
+      "details": [
+        "A design house between the chipmaker and its customers: it buys nothing in volume itself, and it decides what goes into sixty designs that do. The chain position the modeled network cannot represent at all, and the documented one can only see when somebody hands it an award."
+      ]
+    },
+    {
       "supplier": "advanced-semiconductor-engineering-technology-holding-co-ltd",
       "customer": "broadcom-limited",
       "products": [
@@ -8166,6 +8294,22 @@
       ],
       "details": [
         "The notice REMOVES UTAC-SG for the listed parts. Retained as historical evidence, not current supply."
+      ]
+    },
+    {
+      "supplier": "renesas-electronics-corporation",
+      "customer": "byd-company-limited",
+      "products": [
+        "Automotive electronic products and system technology"
+      ],
+      "sources": [
+        "renesas-byd-partner-award-2022"
+      ],
+      "years": [
+        2022
+      ],
+      "details": [
+        "Named supplier status from the buyer, with no part named. Two consecutive years of the same award is evidence of continuity, which few documents in this set offer."
       ]
     },
     {
@@ -8355,6 +8499,22 @@
       ]
     },
     {
+      "supplier": "renesas-electronics-corporation",
+      "customer": "emtrion-gmbh",
+      "products": [
+        "MPUs for embedded modules, single-board computers and developer kits"
+      ],
+      "sources": [
+        "renesas-emtrion-alliance-2017"
+      ],
+      "years": [
+        2017
+      ],
+      "details": [
+        "A module maker designing Renesas MPUs into its own products — commercially a customer, documented only as an award winner. Nine years old at the date checked, and the kind of firm this dataset sees worst: unlisted, small enough to file nothing, and named here only because a chipmaker gave it a prize."
+      ]
+    },
+    {
       "supplier": "system-nvidia",
       "customer": "eviden-atos",
       "products": [
@@ -8368,6 +8528,20 @@
       ],
       "details": [
         "Announced in March 2024 as \"expected to deliver\" servers based on Blackwell. Delivery and current status are not established by the release."
+      ]
+    },
+    {
+      "supplier": "renesas-electronics-corporation",
+      "customer": "flip-electronics-llc",
+      "products": [
+        "Authorized resale of end-of-life and obsolete Renesas products"
+      ],
+      "sources": [
+        "renesas-eol-authorized-resellers"
+      ],
+      "years": [],
+      "details": [
+        "The after-market: parts Renesas has stopped making, still supplied through firms it authorises. Undated, so this edge carries no year at all — it is a standing arrangement rather than an event, and the dataset should not invent a date for it."
       ]
     },
     {
@@ -8448,6 +8622,22 @@
       ],
       "details": [
         "Some of the ten are supplied through distributors rather than directly."
+      ]
+    },
+    {
+      "supplier": "renesas-electronics-corporation",
+      "customer": "harman-international",
+      "products": [
+        "Automotive microcontrollers"
+      ],
+      "sources": [
+        "renesas-harman-award-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": [
+        "Delivery performance, specifically — an award about logistics rather than design, which is the only evidence in this set that speaks to whether parts actually arrived."
       ]
     },
     {
@@ -10368,6 +10558,22 @@
       ]
     },
     {
+      "supplier": "renesas-electronics-corporation",
+      "customer": "panasonic-holdings-corporation",
+      "products": [
+        "R-Car SoCs for in-vehicle infotainment and RH850 microcontrollers"
+      ],
+      "sources": [
+        "renesas-panasonic-awards-2016"
+      ],
+      "years": [
+        2016
+      ],
+      "details": [
+        "A supplier award is the buyer’s own judgement that the relationship exists and works, which makes it better evidence than a partnership announcement and worse than a part number in a shipping product."
+      ]
+    },
+    {
       "supplier": "system-nvidia",
       "customer": "pegatron-corporation",
       "products": [
@@ -10855,6 +11061,20 @@
         2025
       ],
       "details": []
+    },
+    {
+      "supplier": "renesas-electronics-corporation",
+      "customer": "rochester-electronics-llc",
+      "products": [
+        "Authorized resale of end-of-life and obsolete Renesas products"
+      ],
+      "sources": [
+        "renesas-eol-authorized-resellers"
+      ],
+      "years": [],
+      "details": [
+        "The after-market: parts Renesas has stopped making, still supplied through firms it authorises. Undated, so this edge carries no year at all — it is a standing arrangement rather than an event, and the dataset should not invent a date for it."
+      ]
     },
     {
       "supplier": "arteris-ip",

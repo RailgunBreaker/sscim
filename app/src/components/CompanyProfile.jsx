@@ -161,6 +161,24 @@ export default function CompanyProfile({
     ...doc.customers.map((e) => ({ e, other: e.customer, dir: 'it supplies' })),
   ];
   const shown = showAllDoc ? docRows : docRows.slice(0, 6);
+  /* Standing of this company's documented counterparties: how many of
+     them this dataset can say anything about at all. `listing` is a
+     fact about the DOCUMENTS, never about the firm, so a count of the
+     silent ones is a measurement of the lens rather than of the chain. */
+  const standing = useMemo(() => {
+    const ids = new Set([
+      ...doc.suppliers.map((e) => e.supplier),
+      ...doc.customers.map((e) => e.customer),
+    ]);
+    let listed = 0; let unlisted = 0;
+    for (const id of ids) {
+      const l = publicCompanyRecord(id)?.listing;
+      if (l === 'ticker-printed') listed += 1;
+      else if (l === 'legal-form-private') unlisted += 1;
+    }
+    return { total: ids.size, listed, unlisted, silent: ids.size - listed - unlisted };
+  }, [doc]);
+
   /* The one id the documented network is keyed on. The model's own id
      and the public register's id are different strings for the same
      firm, and only 54 of the 109 are crosswalked at all. */
@@ -407,6 +425,21 @@ export default function CompanyProfile({
             importance, and an edge missing here means no document names the pair. Opening a firm the model also
             carries moves this whole profile to it.
           </p>
+          {/* Who the lens can see, stated as a count. A dataset built out
+              of documents is a dataset of firms that publish, so the
+              unlisted (非上場企業) and the small (中小企業) are here only
+              when somebody larger named them — and for most of the chain
+              nothing is stated either way. That last number is the
+              honest one, and it is usually the biggest. */}
+          {doc.covered && standing.total > 0 && (
+            <p className="mono" style={{ fontSize: 12, color: C.faint, margin: '0 0 8px', lineHeight: 1.55 }}>
+              Of the {standing.total} firms named here, {standing.listed} publish under a stock ticker printed in a
+              document cited above{standing.unlisted > 0 ? `, ${standing.unlisted} are named in a legal form that cannot be exchange-listed` : ''}, and{' '}
+              <b style={{ color: standing.silent > 0 ? C.amber : C.faint }}>{standing.silent}</b> say nothing either way.
+              Disclosure is what makes a document, so the small and the unlisted end of a chain is the part this
+              lens sees worst — not the part that matters least.
+            </p>
+          )}
           {networkRootId
             ? <SupplierTierExplorer compact fixedRootId={networkRootId} onOpenCompany={openFromNetwork} />
             : <p style={{ fontSize: 12.5, color: C.faint, fontStyle: 'italic', margin: 0, lineHeight: 1.6 }}>

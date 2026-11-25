@@ -864,7 +864,9 @@
       "name": "Nidec Corporation",
       "country": "jp",
       "layer": "mechanical",
-      "role": "Motors"
+      "role": "Motors",
+      "listing": "ticker-printed",
+      "listingBasis": "TSE: 6594 and OTC US: NJDCY, printed in the June 2023 E-Axle release."
     },
     "nissha-company-limited": {
       "name": "Nissha Company Limited",
@@ -1020,7 +1022,9 @@
       "aliases": [
         "Renesas",
         "renesas"
-      ]
+      ],
+      "listing": "ticker-printed",
+      "listingBasis": "TSE: 6723, printed in its own releases cited here."
     },
     "robert-bosch-gmbh": {
       "name": "Robert Bosch GmbH",
@@ -1031,7 +1035,9 @@
       "aliases": [
         "Bosch",
         "bosch"
-      ]
+      ],
+      "listing": "legal-form-private",
+      "listingBasis": "Named as Robert Bosch GmbH; a GmbH cannot be exchange-listed. Size and listing are different questions, and this field answers only the second."
     },
     "rohm-company-limited": {
       "name": "Rohm Company Limited",
@@ -3063,7 +3069,9 @@
       "name": "Inventec",
       "country": "tw",
       "layer": "assembly",
-      "role": "Notebook and server ODM."
+      "role": "Notebook and server ODM.",
+      "listing": "ticker-printed",
+      "listingBasis": "TPE: 2356, printed in the September 2023 gateway release."
     },
     "zt-systems": {
       "name": "ZT Systems",
@@ -3267,7 +3275,9 @@
       "name": "GlobalFoundries Inc.",
       "country": "us",
       "layer": "foundry_idm",
-      "role": "Specialty foundry: FD-SOI, BCD and feature-rich CMOS rather than leading-edge logic."
+      "role": "Specialty foundry: FD-SOI, BCD and feature-rich CMOS rather than leading-edge logic.",
+      "listing": "ticker-printed",
+      "listingBasis": "Nasdaq: GFS, printed in the February 2026 partnership release."
     },
     "andes-technology-corporation": {
       "name": "Andes Technology Corporation",
@@ -3285,7 +3295,9 @@
       "name": "Honda Motor Co., Ltd.",
       "country": "jp",
       "layer": "brand",
-      "role": "Vehicle manufacturer; co-develops its own vehicle SoC and develops its own AI accelerator."
+      "role": "Vehicle manufacturer; co-develops its own vehicle SoC and develops its own AI accelerator.",
+      "listing": "ticker-printed",
+      "listingBasis": "TSE: 7267, printed in the January 2025 SoC agreement."
     },
     "vinfast-auto-ltd": {
       "name": "VinFast Auto Ltd.",
@@ -3358,6 +3370,40 @@
       "country": "tw",
       "layer": "services",
       "role": "Electronic component distributor."
+    },
+    "panasonic-holdings-corporation": {
+      "name": "Panasonic Holdings Corporation",
+      "country": "jp",
+      "layer": "brand",
+      "role": "Electronics and automotive systems maker; named as Panasonic Corporation (TSE: 6752) in the 2016 award.",
+      "listing": "ticker-printed",
+      "listingBasis": "TSE: 6752, printed in the November 2016 award release."
+    },
+    "emtrion-gmbh": {
+      "name": "emtrion GmbH",
+      "country": "de",
+      "layer": "assembly",
+      "role": "Embedded module, single-board-computer and mainboard maker; builds on Renesas MPUs.",
+      "listing": "legal-form-private",
+      "listingBasis": "Named as emtrion GmbH in the 2017 award release; a GmbH cannot be exchange-listed."
+    },
+    "bfg-engineering": {
+      "name": "BFG Engineering",
+      "country": "it",
+      "layer": "services",
+      "role": "Development house for hardware and software, specialising in advanced control of electric drives."
+    },
+    "rochester-electronics-llc": {
+      "name": "Rochester Electronics",
+      "country": "us",
+      "layer": "services",
+      "role": "Authorized reseller and continuing source of end-of-life semiconductors."
+    },
+    "flip-electronics-llc": {
+      "name": "Flip Electronics",
+      "country": "us",
+      "layer": "services",
+      "role": "Authorized reseller of end-of-life and obsolete semiconductors."
     }
   }
 }

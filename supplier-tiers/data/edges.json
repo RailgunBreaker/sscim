@@ -1,7 +1,7 @@
 {
   "meta": {
     "generated": "2026-11-25",
-    "count": 605
+    "count": 612
   },
   "edges": [
     {
@@ -3209,6 +3209,22 @@
       ]
     },
     {
+      "supplier": "renesas-electronics-corporation",
+      "customer": "bfg-engineering",
+      "products": [
+        "Synergy and RX microcontrollers in customised motor-control designs"
+      ],
+      "sources": [
+        "renesas-bfg-alliance-2018"
+      ],
+      "years": [
+        2018
+      ],
+      "details": [
+        "A design house between the chipmaker and its customers: it buys nothing in volume itself, and it decides what goes into sixty designs that do. The chain position the modeled network cannot represent at all, and the documented one can only see when somebody hands it an award."
+      ]
+    },
+    {
       "supplier": "advanced-semiconductor-engineering-technology-holding-co-ltd",
       "customer": "broadcom-limited",
       "products": [
@@ -3311,6 +3327,22 @@
       ],
       "details": [
         "The notice REMOVES UTAC-SG for the listed parts. Retained as historical evidence, not current supply."
+      ]
+    },
+    {
+      "supplier": "renesas-electronics-corporation",
+      "customer": "byd-company-limited",
+      "products": [
+        "Automotive electronic products and system technology"
+      ],
+      "sources": [
+        "renesas-byd-partner-award-2022"
+      ],
+      "years": [
+        2022
+      ],
+      "details": [
+        "Named supplier status from the buyer, with no part named. Two consecutive years of the same award is evidence of continuity, which few documents in this set offer."
       ]
     },
     {
@@ -3500,6 +3532,22 @@
       ]
     },
     {
+      "supplier": "renesas-electronics-corporation",
+      "customer": "emtrion-gmbh",
+      "products": [
+        "MPUs for embedded modules, single-board computers and developer kits"
+      ],
+      "sources": [
+        "renesas-emtrion-alliance-2017"
+      ],
+      "years": [
+        2017
+      ],
+      "details": [
+        "A module maker designing Renesas MPUs into its own products — commercially a customer, documented only as an award winner. Nine years old at the date checked, and the kind of firm this dataset sees worst: unlisted, small enough to file nothing, and named here only because a chipmaker gave it a prize."
+      ]
+    },
+    {
       "supplier": "system-nvidia",
       "customer": "eviden-atos",
       "products": [
@@ -3513,6 +3561,20 @@
       ],
       "details": [
         "Announced in March 2024 as \"expected to deliver\" servers based on Blackwell. Delivery and current status are not established by the release."
+      ]
+    },
+    {
+      "supplier": "renesas-electronics-corporation",
+      "customer": "flip-electronics-llc",
+      "products": [
+        "Authorized resale of end-of-life and obsolete Renesas products"
+      ],
+      "sources": [
+        "renesas-eol-authorized-resellers"
+      ],
+      "years": [],
+      "details": [
+        "The after-market: parts Renesas has stopped making, still supplied through firms it authorises. Undated, so this edge carries no year at all — it is a standing arrangement rather than an event, and the dataset should not invent a date for it."
       ]
     },
     {
@@ -3593,6 +3655,22 @@
       ],
       "details": [
         "Some of the ten are supplied through distributors rather than directly."
+      ]
+    },
+    {
+      "supplier": "renesas-electronics-corporation",
+      "customer": "harman-international",
+      "products": [
+        "Automotive microcontrollers"
+      ],
+      "sources": [
+        "renesas-harman-award-2024"
+      ],
+      "years": [
+        2024
+      ],
+      "details": [
+        "Delivery performance, specifically — an award about logistics rather than design, which is the only evidence in this set that speaks to whether parts actually arrived."
       ]
     },
     {
@@ -5513,6 +5591,22 @@
       ]
     },
     {
+      "supplier": "renesas-electronics-corporation",
+      "customer": "panasonic-holdings-corporation",
+      "products": [
+        "R-Car SoCs for in-vehicle infotainment and RH850 microcontrollers"
+      ],
+      "sources": [
+        "renesas-panasonic-awards-2016"
+      ],
+      "years": [
+        2016
+      ],
+      "details": [
+        "A supplier award is the buyer’s own judgement that the relationship exists and works, which makes it better evidence than a partnership announcement and worse than a part number in a shipping product."
+      ]
+    },
+    {
       "supplier": "system-nvidia",
       "customer": "pegatron-corporation",
       "products": [
@@ -6000,6 +6094,20 @@
         2025
       ],
       "details": []
+    },
+    {
+      "supplier": "renesas-electronics-corporation",
+      "customer": "rochester-electronics-llc",
+      "products": [
+        "Authorized resale of end-of-life and obsolete Renesas products"
+      ],
+      "sources": [
+        "renesas-eol-authorized-resellers"
+      ],
+      "years": [],
+      "details": [
+        "The after-market: parts Renesas has stopped making, still supplied through firms it authorises. Undated, so this edge carries no year at all — it is a standing arrangement rather than an event, and the dataset should not invent a date for it."
+      ]
     },
     {
       "supplier": "arteris-ip",

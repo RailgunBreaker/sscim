@@ -247,8 +247,11 @@ describe('App smoke (static snapshot, Leaflet mocked)', () => {
     const [, suppliers, customers] = heading.map(Number);
     expect(suppliers).toBeGreaterThanOrEqual(10);
     // The point of the pass: more customers than suppliers, not one.
-    expect(customers).toBeGreaterThanOrEqual(20);
+    expect(customers).toBeGreaterThanOrEqual(27);
     expect(customers).toBeGreaterThan(suppliers);
+    /* And the profile states how much of its own network it can
+       classify at all — the measurement of the lens, not the chain. */
+    expect(text).toMatch(/say nothing either way/);
     // And the named ones are on the page, in both directions and from
     // all three passes: partnerships, design wins, and the rest.
     for (const firm of ['Wolfspeed', 'GlobalFoundries', 'Honda', 'VinFast', 'Nidec',
