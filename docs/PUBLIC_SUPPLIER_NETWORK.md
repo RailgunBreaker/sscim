@@ -280,6 +280,10 @@ Directional coverage across the 109 tracked companies is unchanged by this
 pass: Renesas already reached all three levels upstream. What changed is that
 its profile no longer presents one customer as the whole of its demand side.
 
+The drawn result is recorded at
+[`after/company-renesas-1366x936.png`](screenshots/after/company-renesas-1366x936.png):
+six firms to the left of Renesas, ten to the right.
+
 ## Profile audit: 2026-11-25
 
 All 441 public-network company records resolve to a profile with a name,
